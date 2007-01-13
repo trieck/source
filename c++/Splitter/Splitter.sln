@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Splitter", "Splitter.vcproj", "{6EAAF346-E3F8-4A36-A55C-8D4C202CB85D}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = \u0022$/Source/c++/SPLITTER\u0022,\u0020IYCAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SolutionUniqueID = {3D4B43FE-6032-49AB-A376-EE3B1C9D6529}
+		SccProjectUniqueName1 = Splitter.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{6EAAF346-E3F8-4A36-A55C-8D4C202CB85D}.Debug.ActiveCfg = Debug|Win32
+		{6EAAF346-E3F8-4A36-A55C-8D4C202CB85D}.Debug.Build.0 = Debug|Win32
+		{6EAAF346-E3F8-4A36-A55C-8D4C202CB85D}.Release.ActiveCfg = Release|Win32
+		{6EAAF346-E3F8-4A36-A55C-8D4C202CB85D}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

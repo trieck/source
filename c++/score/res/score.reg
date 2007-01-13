@@ -1,0 +1,12 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Rieck Enterprises]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Rieck Enterprises\Score]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Rieck Enterprises\Score\1.00]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Rieck Enterprises\Score\1.00\midi]
+"velocity"=dword:0000007f
+"channel"=dword:00000000
+"instrument"=dword:00000004

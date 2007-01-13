@@ -1,0 +1,184 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_MAINICON            ICON    DISCARDABLE     "mainicon.ico"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x2bL
+#else
+ FILEFLAGS 0x2aL
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Custom Bitmap Functions\0"
+            VALUE "CompanyName", "Rieck Enterprises\0"
+            VALUE "FileDescription", "bm\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "bm\0"
+            VALUE "LegalCopyright", "Copyright © 1997 Rieck Enterprises\0"
+            VALUE "LegalTrademarks", "BM (TM) is a trademark of Rieck Enterprises\0"
+            VALUE "OriginalFilename", "bm.dll\0"
+            VALUE "PrivateBuild", "1\0"
+            VALUE "ProductName", "bm\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_BMINFO DIALOGEX 0, 0, 221, 181
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CLIPCHILDREN | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTROLPARENT
+CAPTION "Bitmap Information"
+FONT 8, "MS Sans Serif"
+BEGIN
+    RTEXT           "Bitmap Filename:",IDC_STBMNAMECAP,13,14,59,8,0,
+                    WS_EX_TRANSPARENT
+    RTEXT           "Size in Bytes:",IDC_STBMFILESIZECAP,15,34,57,10,0,
+                    WS_EX_TRANSPARENT
+    LTEXT           "",IDC_BMFILESIZE,77,34,77,11,SS_SUNKEN
+    LTEXT           "",IDC_BMDIMENSIONS,77,54,77,11,SS_SUNKEN
+    RTEXT           "Dimensions:",IDC_STBMDIMENSIONS,13,54,59,10,0,
+                    WS_EX_TRANSPARENT
+    RTEXT           "Bit Count:",IDC_STBMBITCOUNTCAP,13,77,59,10,0,
+                    WS_EX_TRANSPARENT
+    CONTROL         "",IDC_BMBITCOUNT,"Static",SS_LEFTNOWORDWRAP | SS_SUNKEN | 
+                    WS_GROUP,77,75,77,11
+    CONTROL         "",IDC_PICTURE,"Static",SS_GRAYFRAME | SS_SUNKEN,77,93,
+                    78,60
+    EDITTEXT        IDC_FILENAME,77,13,131,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Flip",IDC_FLIP,97,160,40,14
+    PUSHBUTTON      "Strip Red",IDC_STRIPRED,29,93,46,14
+    PUSHBUTTON      "Strip Green",IDC_STRIPGREEN,29,114,46,14
+    PUSHBUTTON      "Strip Blue",IDC_STRIPBLUE,29,136,46,16
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_BMINFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 208
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 174
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MEMERROR            "There was an error allocating memory.\nPlease close unneeded programs and retry."
+    IDS_INVALIDBITMAP       "This file is not a valid Windows Bitmap.\nPlease check the path and filename and retry."
+    IDS_DEVNOTCAPABLE       "An error has occured while drawing.\nThis device is not capable of rendering the image."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

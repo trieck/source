@@ -1,0 +1,51 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChargeService", "ChargeService.vcproj", "{93BF354B-8BAC-46E6-B73F-2F837471FE02}"
+	ProjectSection(ProjectDependencies) = postProject
+		{81BBD337-B3D8-47FA-9116-6896C08B2DBE} = {81BBD337-B3D8-47FA-9116-6896C08B2DBE}
+		{67C2CF59-372A-4E18-9228-CFF63623C23D} = {67C2CF59-372A-4E18-9228-CFF63623C23D}
+		{1C9469B3-769C-49F4-AD24-47238DF397AD} = {1C9469B3-769C-49F4-AD24-47238DF397AD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "retrieval", "..\..\Library\Retrieval\retrieval.vcproj", "{81BBD337-B3D8-47FA-9116-6896C08B2DBE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Socket", "..\..\Library\Socket\Socket.vcproj", "{1C9469B3-769C-49F4-AD24-47238DF397AD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utility", "..\..\Library\Utility\utility.vcproj", "{67C2CF59-372A-4E18-9228-CFF63623C23D}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectUniqueName0 = ..\\..\\Library\\Retrieval\\retrieval.vcproj
+		SccProjectName0 = \u0022$/SQL2000/Library/Retrieval\u0022,\u0020CGMAAAAA
+		SccLocalPath0 = ..\\..\\Library\\Retrieval
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		SccProjectUniqueName1 = ..\\..\\Library\\Utility\\utility.vcproj
+		SccProjectName1 = \u0022$/SQL2000/Library/Utility\u0022,\u0020CVLAAAAA
+		SccLocalPath1 = ..\\..\\Library\\Utility
+		SccProvider1 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93BF354B-8BAC-46E6-B73F-2F837471FE02}.Debug|Win32.ActiveCfg = Debug|Win32
+		{93BF354B-8BAC-46E6-B73F-2F837471FE02}.Debug|Win32.Build.0 = Debug|Win32
+		{93BF354B-8BAC-46E6-B73F-2F837471FE02}.Release|Win32.ActiveCfg = Release|Win32
+		{93BF354B-8BAC-46E6-B73F-2F837471FE02}.Release|Win32.Build.0 = Release|Win32
+		{81BBD337-B3D8-47FA-9116-6896C08B2DBE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{81BBD337-B3D8-47FA-9116-6896C08B2DBE}.Debug|Win32.Build.0 = Debug|Win32
+		{81BBD337-B3D8-47FA-9116-6896C08B2DBE}.Release|Win32.ActiveCfg = Release|Win32
+		{81BBD337-B3D8-47FA-9116-6896C08B2DBE}.Release|Win32.Build.0 = Release|Win32
+		{1C9469B3-769C-49F4-AD24-47238DF397AD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1C9469B3-769C-49F4-AD24-47238DF397AD}.Release|Win32.ActiveCfg = Release|Win32
+		{67C2CF59-372A-4E18-9228-CFF63623C23D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{67C2CF59-372A-4E18-9228-CFF63623C23D}.Debug|Win32.Build.0 = Debug|Win32
+		{67C2CF59-372A-4E18-9228-CFF63623C23D}.Release|Win32.ActiveCfg = Release|Win32
+		{67C2CF59-372A-4E18-9228-CFF63623C23D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

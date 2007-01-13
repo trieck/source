@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cmpnt2", "Cmpnt2.vcproj", "{EF0BD847-648E-419B-8C08-2085CCB58515}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = \u0022$/Source/c++/Aggregate/cmpnt2\u0022,\u0020YUBAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SccProjectUniqueName1 = Cmpnt2.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF0BD847-648E-419B-8C08-2085CCB58515}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EF0BD847-648E-419B-8C08-2085CCB58515}.Debug|Win32.Build.0 = Debug|Win32
+		{EF0BD847-648E-419B-8C08-2085CCB58515}.Release|Win32.ActiveCfg = Release|Win32
+		{EF0BD847-648E-419B-8C08-2085CCB58515}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

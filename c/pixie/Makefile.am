@@ -1,0 +1,33 @@
+BUILT_SOURCES = parse.h
+AM_YFLAGS = -d
+AM_CFLAGS = -Wall -Wstrict-prototypes
+bin_PROGRAMS = pixie
+pixie_SOURCES = array.c	\
+	array.h				\
+	block.c				\
+	block.h				\
+	eval.c				\
+	eval.h				\
+	global.c			\
+	global.h			\
+	lex.l				\
+	main.c				\
+	memcheck.c			\
+	memcheck.h			\
+	parse.y 			\
+	pixie.c				\
+	pixie.h				\
+	proctab.c			\
+	proctab.h			\
+	strutil.c			\
+	strutil.h			\
+	symbol.c			\
+	symbol.h			\
+	temp.c				\
+	temp.h				\
+	tree.c				\
+	tree.h				\
+	xmalloc.c			\
+	xmalloc.h
+
+pixie_LDADD = @LEXLIB@ -lm

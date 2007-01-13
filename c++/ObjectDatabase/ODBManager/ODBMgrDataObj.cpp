@@ -1,0 +1,104 @@
+/////////////////////////////////////////////////////////////////////////////
+//
+// ODBMgrDataObjOBJ.CPP : Object database manager data object
+//
+// Copyright (c) 2006 Thomas A. Rieck, All Rights Reserved
+//
+
+#include "stdafx.h"
+#include "ODBMgrDataObj.h"
+
+/////////////////////////////////////////////////////////////////////////////
+ODBMgrDataObj::ODBMgrDataObj(LPUNKNOWN pUnknown)
+ : m_cRef(0), m_pUnknown(pUnknown)
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
+ODBMgrDataObj::~ODBMgrDataObj()
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP ODBMgrDataObj::QueryInterface(REFIID riid, LPVOID *ppv)
+{
+	*ppv = NULL;
+
+    if (riid == IID_IUnknown || riid == IID_IDataObject)
+        *ppv = this;
+    
+    if (*ppv) {
+        ((LPUNKNOWN)*ppv)->AddRef();
+        return S_OK;
+    }
+
+    return E_NOINTERFACE;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP_(ULONG) ODBMgrDataObj::AddRef()
+{
+	InterlockedIncrement(&m_cRef);
+	return m_pUnknown->AddRef();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP_(ULONG) ODBMgrDataObj::Release()
+{
+	InterlockedDecrement(&m_cRef);
+	return m_pUnknown->Release();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP ODBMgrDataObj::GetData(LPFORMATETC, LPSTGMEDIUM)
+{
+	return E_NOTIMPL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP ODBMgrDataObj::GetDataHere(LPFORMATETC, LPSTGMEDIUM)
+{
+	return E_NOTIMPL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP ODBMgrDataObj::QueryGetData(LPFORMATETC)
+{
+	return E_NOTIMPL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP ODBMgrDataObj::GetCanonicalFormatEtc(LPFORMATETC, LPFORMATETC)
+{
+	return E_NOTIMPL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP ODBMgrDataObj::SetData(LPFORMATETC, LPSTGMEDIUM, BOOL)
+{
+	return E_NOTIMPL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP ODBMgrDataObj::EnumFormatEtc(DWORD, LPENUMFORMATETC*)
+{
+	return E_NOTIMPL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP ODBMgrDataObj::DAdvise(LPFORMATETC, DWORD, LPADVISESINK, LPDWORD)
+{
+	return E_NOTIMPL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP ODBMgrDataObj::DUnadvise(DWORD)
+{
+	return E_NOTIMPL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+STDMETHODIMP ODBMgrDataObj::EnumDAdvise(LPENUMSTATDATA*)
+{
+	return E_NOTIMPL;
+}

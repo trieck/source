@@ -1,0 +1,550 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+// Generated Help ID header file
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "resource.hm"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\emu6502.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDB_6502                BITMAP                  "res\\6502.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  16, 15
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    SEPARATOR
+    BUTTON      IDM_REGISTERS
+    BUTTON      IDM_STACK
+    BUTTON      IDM_MEMORY
+    BUTTON      IDM_DISASSEMBLY
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Disassembly",                IDM_DISASSEMBLY, INACTIVE
+        MENUITEM "&Memory",                     IDM_MEMORY
+        MENUITEM "&Registers",                  IDM_REGISTERS
+        MENUITEM "S&tack",                      IDM_STACK
+        MENUITEM SEPARATOR
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About emu6502...",           ID_APP_ABOUT
+    END
+END
+
+IDR_DROPMENU MENU 
+BEGIN
+    POPUP "OnToolbarDropArrow"
+    BEGIN
+        MENUITEM "Recent ",                     ID_FILE_MRU_FILE1, GRAYED
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG  0, 0, 275, 111
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About emu6502"
+FONT 8, "Tahoma"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,112,90,50,14,WS_GROUP
+    CONTROL         134,IDC_STATIC,"Static",SS_BITMAP | SS_SUNKEN,7,7,101,65
+    CONTROL         "",IDC_PRODUCTNAME,
+                    "{978C9E23-D4B0-11CE-BF2D-00AA003F40D0}",0x0,125,29,143,
+                    21
+    CONTROL         "",IDC_COMPANYNAME,
+                    "{978C9E23-D4B0-11CE-BF2D-00AA003F40D0}",0x0,125,7,143,
+                    21
+    CONTROL         "",IDC_VERSION,"{978C9E23-D4B0-11CE-BF2D-00AA003F40D0}",
+                    0x0,125,51,143,10
+    CONTROL         "",IDC_COPYRIGHT,"{978C9E23-D4B0-11CE-BF2D-00AA003F40D0}",
+                    0x0,125,65,143,10
+END
+
+IDD_REGISTERS DIALOGEX 0, 0, 93, 128
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Registers"
+FONT 8, "Tahoma", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_E_REGA,29,7,20,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_E_REGX,29,24,20,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_E_REGY,29,41,20,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_E_REGPCL,29,58,20,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_E_REGPCH,29,75,20,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_E_REGS,29,92,20,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_E_REGP,29,109,20,12,ES_AUTOHSCROLL
+    CONTROL         "N",IDC_FLAGN,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
+                    WS_TABSTOP,61,12,16,12
+    CONTROL         "V",IDC_FLAGV,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
+                    WS_TABSTOP,61,25,16,12
+    CONTROL         "-",IDC_FLAGU,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
+                    WS_TABSTOP,61,38,16,12
+    CONTROL         "B",IDC_FLAGB,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
+                    WS_TABSTOP,61,51,16,12
+    CONTROL         "D",IDC_FLAGD,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
+                    WS_TABSTOP,61,64,16,12
+    CONTROL         "I",IDC_FLAGI,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
+                    WS_TABSTOP,61,77,16,12
+    CONTROL         "Z",IDC_FLAGZ,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
+                    WS_TABSTOP,61,90,16,12,0,HIDC_FLAGZ
+    CONTROL         "C",IDC_FLAGC,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
+                    WS_TABSTOP,61,103,16,12
+    CONTROL         "",IDC_REGISTERA,"{978C9E23-D4B0-11CE-BF2D-00AA003F40D0}",
+                    0x0,7,7,20,12
+    CONTROL         "",IDC_REGISTERX,"{978C9E23-D4B0-11CE-BF2D-00AA003F40D0}",
+                    0x0,7,24,20,12
+    CONTROL         "",IDC_REGISTERY,"{978C9E23-D4B0-11CE-BF2D-00AA003F40D0}",
+                    0x0,7,41,20,12
+    CONTROL         "",IDC_REGISTERPCL,
+                    "{978C9E23-D4B0-11CE-BF2D-00AA003F40D0}",0x0,7,58,20,12
+    CONTROL         "",IDC_REGISTERPCH,
+                    "{978C9E23-D4B0-11CE-BF2D-00AA003F40D0}",0x0,7,75,20,12
+    CONTROL         "",IDC_REGISTERS,"{978C9E23-D4B0-11CE-BF2D-00AA003F40D0}",
+                    0x0,7,92,20,12
+    CONTROL         "",IDC_REGISTERP,"{978C9E23-D4B0-11CE-BF2D-00AA003F40D0}",
+                    0x0,7,109,20,12
+    GROUPBOX        "Flags",IDC_STATIC,53,3,33,118
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "Rieck Enterprises"
+            VALUE "FileDescription", "6502 Emulator"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "emu6502"
+            VALUE "LegalCopyright", "Copyright ©2003"
+            VALUE "OriginalFilename", "emu6502.exe"
+            VALUE "ProductName", "emu6502 Application"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 268
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 104
+    END
+
+    IDD_REGISTERS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 86
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 121
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\emu65023.ico"
+IDR_MAINFRAME3          ICON                    "res\\emu6502.ico"
+IDR_MAINFRAME2          ICON                    "res\\emu65022.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_ABOUTBOX DLGINIT
+BEGIN
+    IDC_PRODUCTNAME, 0x376, 80, 0
+0x0000, 0x0000, 0x0200, 0x0024, 0x002f, 0x0000, 0x80ff, 0x0000, 0x0000, 
+0x0000, 0x0013, 0x0080, 0x0007, 0x8000, 0x6d65, 0x3675, 0x3035, 0x0032, 
+0x1639, 0x0000, 0x0384, 0x0000, 0x0200, 0x0020, 0x00f7, 0x0000, 0x0006, 
+0x8000, 0x0001, 0x4000, 0x01b3, 0x0000, 0x0200, 0x0003, 0x02bc, 0x0000, 
+0x6154, 0x6f68, 0x616d, 0x0017, 
+    IDC_COMPANYNAME, 0x376, 88, 0
+0x0000, 0x0000, 0x0200, 0x0030, 0x002f, 0x0000, 0x0080, 0x0000, 0x0000, 
+0x0000, 0x0013, 0x0080, 0x0011, 0x8000, 0x6952, 0x6365, 0x206b, 0x6e45, 
+0x6574, 0x7072, 0x6972, 0x6573, 0x0073, 0x0000, 0x1639, 0x0000, 0x0384, 
+0x0000, 0x0200, 0x001c, 0x00b7, 0x0000, 0x0006, 0x8000, 0x0001, 0x4000, 
+0x0168, 0x0000, 0x0200, 0x02bc, 0x6154, 0x6f68, 0x616d, 0x001a, 
+    IDC_VERSION, 0x376, 88, 0
+0x0000, 0x0000, 0x0200, 0x002c, 0x002f, 0x0000, 0x00ff, 0x0000, 0x0000, 
+0x0000, 0x0013, 0x0080, 0x000d, 0x8000, 0x6556, 0x7372, 0x6f69, 0x206e, 
+0x2e30, 0x2e30, 0x0131, 0x0093, 0x1639, 0x0000, 0x01a7, 0x0000, 0x0200, 
+0x0020, 0x00f7, 0x0000, 0x0006, 0x8000, 0x0001, 0x4000, 0x00c3, 0x0000, 
+0x0200, 0x0002, 0x02bc, 0x0000, 0x6154, 0x6f68, 0x616d, 0x001a, 
+    IDC_COPYRIGHT, 0x376, 100, 0
+0x0000, 0x0000, 0x0200, 0x0040, 0x002f, 0x0000, 0x0000, 0x0000, 0x0000, 
+0x0000, 0x0013, 0x0080, 0x0021, 0x8000, 0x6f43, 0x7970, 0x6972, 0x6867, 
+0x2074, 0x32a9, 0x3030, 0x2033, 0x6952, 0x6365, 0x206b, 0x6e45, 0x6574, 
+0x7072, 0x6972, 0x6573, 0x0073, 0x0065, 0x1639, 0x0000, 0x01a7, 0x0000, 
+0x0200, 0x0018, 0x0075, 0x0000, 0x0006, 0x8000, 0x00a5, 0x0000, 0x0200, 
+0x0002, 0x6154, 0x6f68, 0x616d, 0x001a, 
+    0
+END
+
+IDD_REGISTERS DLGINIT
+BEGIN
+    IDC_REGISTERA, 0x376, 72, 0
+0x0000, 0x0000, 0x0200, 0x0024, 0x013b, 0x0000, 0x0000, 0x0000, 0xffff, 
+0x00c0, 0x0001, 0x8000, 0x0004, 0x0004, 0x0001, 0x0000, 0x0041, 0x0000, 
+0x031a, 0x0000, 0x0211, 0x0000, 0x0200, 0x0018, 0x0075, 0x0000, 0x0006, 
+0x8000, 0x00a5, 0x0000, 0x0200, 0x0003, 0x6154, 0x6f68, 0x616d, 0x0015, 
+
+    IDC_REGISTERX, 0x376, 72, 0
+0x0000, 0x0000, 0x0200, 0x0024, 0x013b, 0x0000, 0x0000, 0x0000, 0xe0ff, 
+0x00c0, 0x0001, 0x8000, 0x0004, 0x0004, 0x0001, 0x0000, 0x0058, 0x0000, 
+0x031a, 0x0000, 0x0211, 0x0000, 0x0200, 0x0018, 0x0075, 0x0000, 0x0006, 
+0x8000, 0x00a5, 0x0000, 0x0200, 0x0003, 0x6154, 0x6f68, 0x616d, 0x0015, 
+
+    IDC_REGISTERY, 0x376, 72, 0
+0x0000, 0x0000, 0x0200, 0x0024, 0x013b, 0x0000, 0x0000, 0x0000, 0xc0ff, 
+0x0080, 0x0001, 0x8000, 0x0004, 0x0004, 0x0001, 0x0000, 0x0059, 0x0000, 
+0x031a, 0x0000, 0x0211, 0x0000, 0x0200, 0x0018, 0x0075, 0x0000, 0x0006, 
+0x8000, 0x00a5, 0x0000, 0x0200, 0x0003, 0x6154, 0x6f68, 0x616d, 0x0015, 
+
+    IDC_REGISTERPCL, 0x376, 72, 0
+0x0000, 0x0000, 0x0200, 0x0024, 0x013b, 0x0000, 0x0000, 0x0000, 0x80ff, 
+0x0000, 0x0003, 0x8000, 0x0004, 0x0004, 0x0001, 0x0000, 0x4350, 0x004c, 
+0x031a, 0x0000, 0x0211, 0x0000, 0x0200, 0x0018, 0x0075, 0x0000, 0x0006, 
+0x8000, 0x00a5, 0x0000, 0x0200, 0x0003, 0x6154, 0x6f68, 0x616d, 0x0000, 
+
+    IDC_REGISTERPCH, 0x376, 72, 0
+0x0000, 0x0000, 0x0200, 0x0024, 0x013b, 0x0000, 0xffff, 0x00c0, 0x40c0, 
+0x0000, 0x0003, 0x8000, 0x0004, 0x0004, 0x0001, 0x0000, 0x4350, 0x0048, 
+0x031a, 0x0000, 0x0211, 0x0000, 0x0200, 0x0018, 0x0075, 0x0000, 0x0006, 
+0x8000, 0x00a5, 0x0000, 0x0200, 0x0003, 0x6154, 0x6f68, 0x616d, 0x0000, 
+
+    IDC_REGISTERS, 0x376, 72, 0
+0x0000, 0x0000, 0x0200, 0x0024, 0x013b, 0x0000, 0xffff, 0x00c0, 0x4080, 
+0x0000, 0x0001, 0x8000, 0x0004, 0x0004, 0x0001, 0x0000, 0x0053, 0x0000, 
+0x031a, 0x0000, 0x0211, 0x0000, 0x0200, 0x0018, 0x0075, 0x0000, 0x0006, 
+0x8000, 0x00a5, 0x0000, 0x0200, 0x0003, 0x6154, 0x6f68, 0x616d, 0x0015, 
+
+    IDC_REGISTERP, 0x376, 72, 0
+0x0000, 0x0000, 0x0200, 0x0024, 0x013b, 0x0000, 0xffff, 0x00c0, 0x0040, 
+0x0000, 0x0001, 0x8000, 0x0004, 0x0004, 0x0001, 0x0000, 0x0050, 0x0000, 
+0x031a, 0x0000, 0x0211, 0x0000, 0x0200, 0x0018, 0x0075, 0x0000, 0x0006, 
+0x8000, 0x00a5, 0x0000, 0x0200, 0x0003, 0x6154, 0x6f68, 0x616d, 0x0015, 
+
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "emu6502\n\nEmu650\n\n\nEmu6502.Document\nEmu650 Document"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "emu6502"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE 
+BEGIN
+    IDM_REGISTERS           "View Registers Window\nView Registers"
+    IDM_STACK               "View Stack Window\nView Stack"
+    IDM_MEMORY              "View Memory Window\nView Memory"
+    IDM_DISASSEMBLY         "View Disassembly Window\nView Disassembly"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\emu6502.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

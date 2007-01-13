@@ -1,0 +1,5 @@
+
+Email josephco_@hotmail.com with any errors or problems
+
+This program is not compiled to pcode.
+ It is VB6 native

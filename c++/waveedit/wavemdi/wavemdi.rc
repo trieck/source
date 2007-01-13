@@ -1,0 +1,391 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "New\tCtrl+N",                 ID_FILE_NEW
+        MENUITEM "Open\tCtrl+O",                ID_FILE_OPEN
+        MENUITEM "Close",                       ID_FILE_CLOSE
+        MENUITEM SEPARATOR
+        MENUITEM "Save\tCtrl+S",                ID_FILE_SAVE
+        MENUITEM "Save As\tCtrl+A",             ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "Exit",                        ID_FILE_EXIT
+    END
+    POPUP "&Tools"
+    BEGIN
+        MENUITEM "Device Information...\tCtrl+D", ID_DEVICEINFO
+        MENUITEM "Device Player\tCtrl+P",       ID_DEVICEPLAYER
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "Current Device\tCtrl+V",      ID_CURRENTDEVICE
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "Arrange\tCtrl+R",             ID_WINDOW_ARRANGE
+        MENUITEM "Cascade Windows\tCtrl+W",     ID_WINDOW_CASCADE
+        MENUITEM "Tile Horizontally\tCtrl+H",   ID_WINDOW_TILE_HORZ
+        MENUITEM "Tile Vertically\tCtrl+L",     ID_WINDOW_TILE_VERT
+    END
+    POPUP "&Help", HELP
+    BEGIN
+        MENUITEM "&About",                      IDM_ABOUT
+    END
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "Music.ico"
+IDI_PLAYBTN             ICON    DISCARDABLE     "playbtn.ico"
+IDI_STOPBTN             ICON    DISCARDABLE     "stopbtn.ico"
+IDI_PAUSEBTN            ICON    DISCARDABLE     "pausebtn.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DEVICEINFO DIALOGEX 0, 0, 255, 151
+STYLE DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CLIENTEDGE | WS_EX_APPWINDOW
+CAPTION "Device Information"
+FONT 8, "Tahoma"
+BEGIN
+    DEFPUSHBUTTON   "&OK",IDOK,105,135,46,14
+    GROUPBOX        "Wave Devices",IDC_WAVEDEVICES,7,1,241,61,0,
+                    WS_EX_TRANSPARENT
+    CTEXT           "Input Devices",IDC_INPUTCAPTION,13,11,111,12
+    CTEXT           "Output Devices",IDC_OUTPUTCAPTION,131,11,111,12
+    COMBOBOX        IDC_INPUTDEVICES,13,25,111,59,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_OUTPUTDEVICES,130,25,111,59,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "",IDC_DEVICEINFO,7,61,241,69,0,WS_EX_TRANSPARENT
+    PUSHBUTTON      "&Input Device Information",IDC_QUERYINPUT,13,40,111,15,
+                    WS_DISABLED
+    PUSHBUTTON      "O&utput Device Information",IDC_QUERYOUTPUT,130,40,111,
+                    15,WS_DISABLED
+    LTEXT           "Driver Version:",IDC_DVCAP,11,71,115,10
+    LTEXT           "Product Name:",IDC_PNCAP,11,85,115,10
+    CTEXT           "",IDC_DV,129,71,115,10,SS_SUNKEN
+    RTEXT           "",IDC_PN,129,85,115,10,SS_SUNKEN
+    LTEXT           "Formats:",IDC_FORMATCAP,11,99,115,10
+    COMBOBOX        IDC_FORMATS,129,98,115,45,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Channels:",IDC_CHANNELCAP,11,114,115,10
+    RTEXT           "",IDC_CHANNELS,129,114,115,10,SS_SUNKEN
+END
+
+IDD_ABOUT DIALOG DISCARDABLE  0, 0, 114, 61
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Wave Editor"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,47,40,20,14
+    ICON            IDR_MAINFRAME,IDI_MAIN,5,5,21,20,SS_SUNKEN
+    LTEXT           "Wave Editor",IDC_WAVEEDITOR,39,5,68,10
+    LTEXT           "By: Thomas A. Rieck",IDC_AUTHOR,39,15,68,10
+    LTEXT           "Copyright (c) 1997",IDC_COPYRIGHT,39,25,68,10
+END
+
+IDD_PLAYER DIALOGEX 0, 0, 87, 119
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Device Player"
+FONT 8, "Tahoma"
+BEGIN
+    PUSHBUTTON      "",IDC_PLAY,32,28,23,18,BS_ICON | NOT WS_TABSTOP,
+                    WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
+    PUSHBUTTON      "",IDC_PAUSE,57,28,23,18,BS_ICON | WS_DISABLED | NOT 
+                    WS_TABSTOP,WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
+    PUSHBUTTON      "",IDC_STOP,7,28,23,18,BS_ICON | WS_DISABLED | NOT 
+                    WS_TABSTOP,WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
+    CONTROL         "Slider1",IDC_VOLUME,"msctls_trackbar32",TBS_TOP | 
+                    TBS_NOTICKS,7,76,71,15,WS_EX_STATICEDGE
+    CONTROL         "Slider1",IDC_POSITION,"msctls_trackbar32",TBS_TOP | 
+                    TBS_NOTICKS,7,99,71,15,WS_EX_STATICEDGE
+    LTEXT           "Position:",IDC_STPOSITION,7,91,71,8
+    LTEXT           "Volume:",IDC_STVOLUME,7,68,71,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 15
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_CLOSE
+    SEPARATOR
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_DEVICEPLAYER
+    SEPARATOR
+    BUTTON      IDM_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  DISCARDABLE     "mainfram.bmp"
+IDB_DIGIT9              BITMAP  DISCARDABLE     "digit9.bmp"
+IDB_DIGIT1              BITMAP  DISCARDABLE     "digit1.bmp"
+IDB_DIGIT2              BITMAP  DISCARDABLE     "digit2.bmp"
+IDB_DIGIT3              BITMAP  DISCARDABLE     "digit3.bmp"
+IDB_DIGIT4              BITMAP  DISCARDABLE     "digit4.bmp"
+IDB_DIGIT5              BITMAP  DISCARDABLE     "digit5.bmp"
+IDB_DIGIT6              BITMAP  DISCARDABLE     "digit6.bmp"
+IDB_DIGIT7              BITMAP  DISCARDABLE     "digit7.bmp"
+IDB_DIGIT8              BITMAP  DISCARDABLE     "digit8.bmp"
+IDB_DIGIT0              BITMAP  DISCARDABLE     "digit0.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS DISCARDABLE 
+BEGIN
+    "A",            ID_FILE_SAVE_AS,        VIRTKEY, CONTROL, NOINVERT
+    "F",            ID_PLAY_FILE,           VIRTKEY, CONTROL, NOINVERT
+    "H",            ID_WINDOW_TILE_HORZ,    VIRTKEY, CONTROL, NOINVERT
+    "L",            ID_WINDOW_TILE_VERT,    VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_DEVICEPLAYER,        VIRTKEY, CONTROL, NOINVERT
+    "R",            ID_WINDOW_ARRANGE,      VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    "W",            ID_WINDOW_CASCADE,      VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 107
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 54
+    END
+
+    IDD_PLAYER, DIALOG
+    BEGIN
+        VERTGUIDE, 7
+        VERTGUIDE, 79
+        BOTTOMMARGIN, 114
+        HORZGUIDE, 50
+        HORZGUIDE, 57
+        HORZGUIDE, 60
+        HORZGUIDE, 66
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Custom Wave Editor\0"
+            VALUE "CompanyName", "Rieck Enterprises\0"
+            VALUE "FileDescription", "waveedit\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "waveedit\0"
+            VALUE "LegalCopyright", "Copyright © 1997\0"
+            VALUE "OriginalFilename", "waveedit.exe\0"
+            VALUE "ProductName", "waveedit\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "Wave Editor\nUntitled\nUntitled\nWAV Files(*.wav)\n.wav"
+    IDS_BADOBJECT           "A fatal error occured while creating an object instance."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new .WAV file.\nNew"
+    ID_FILE_OPEN            "Open an existing .WAV file.\nOpen"
+    ID_FILE_CLOSE           "Close current file.\nClose"
+    ID_FILE_SAVE            "Save the current .WAV file.\nSave"
+    ID_FILE_SAVE_AS         "Save with a new name.\nSave As..."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_EXIT            "Exit the Wave Editor."
+    IDM_ABOUT               "About Wave Editor\nAbout"
+    ID_DEVICEINFO           "Review device information.\nDevice Information"
+    ID_PLAY_FILE            "Play the currently open .WAV file."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Wave File Editor"
+    AFX_IDS_IDLEMESSAGE     "Ready."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_ARRANGE       "Arrange Windows\nArrange"
+    ID_WINDOW_CASCADE       "Cascade Windows\nCascade"
+    ID_WINDOW_TILE_HORZ     "Tile Windows Horizontally\nTile Horizontally"
+    ID_WINDOW_TILE_VERT     "Tile Windows Vertically\nTile Vertically"
+    IDS_INVALIDFILE         "This file is not a valid RIFF/WAV image.\nPlease check the path and filename and retry."
+    IDS_FILEERROR           "A fatal error has occured attempting to open a file.\nThis operation will be halted."
+    IDS_NOFMTCHUNK          "This file does not appear to contain an 'FMT' chunk.\nThe file may be damaged or not in a valid RIFF/WAV format."
+    IDS_OUTOFMEMORY         "A fatal error has occured while allocating memory.\nThe current task has been halted.\nPlease close any unneeded applications and retry."
+    IDS_FILEREADERROR       "The application encountered an error while reading from a file.\nThe file may be damaged, or not in proper format."
+    IDS_NODATACHUNK         "This file does not appear to contain a data chunk.\nThe file may be damaged or not in a valid RIFF/WAV format."
+    IDS_DATACHUNKNODATA     "The data chunk contains no valid data.\nThis file may be damaged."
+    IDS_ERRORREADDATA       "An error has occured while reading audio data.\n The current task has been halted."
+    IDS_NODOCDATA           "There is no valid WAVE data to play."
+    IDS_MMSYSERR_ALLOCATED  "The specified resource is already allocated."
+    IDS_MMSYSERR_BADDEVICEID 
+                            "The specified device identifier is out of range."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MMSYSERR_NODRIVER   "There is no device driver is present."
+    IDS_MMSYSERR_NOMEM      "Unable to allocate or lock memory."
+    IDS_WAVERR_BADFORMAT    "An attempt was made to open an unsupported waveform-audio format."
+    IDS_WAVERR_SYNC         "The device is synchronous but was called without using the WAVE_ALLOWSYNC flag."
+    IDS_ERRORPREPAREHEADER  "An error ocurred while preparing the wave header for output."
+    IDS_NOTPCMFILE          "This file is not a valid PCM Wave image.\nPlease check the path and filename and retry."
+    IDS_TIMELEN             "00:00:00"
+    IDS_CANTCREATESOUNDBUFFER 
+                            "An error occured while attempting to create a sound buffer.\nThe current task will be halted."
+    IDS_CANTLOCKSOUNDBUFFER "An error has occured while attempting to lock the sound buffer.\nThe current task will be halted."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_DEVICEPLAYER         "Display the device player.\nPlayer"
+    ID_CURRENTDEVICE        "Set current device.\nCurrent Device"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

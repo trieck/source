@@ -1,0 +1,20 @@
+#!/usr/local/bin/pixie
+
+# factorial function
+def factorial {
+	var n = shift argv;
+	if (n <= 0) return 1;
+	return n * factorial(n-1);
+}
+
+# choose function
+def choose {
+	var n = shift argv;
+	var k = shift argv;
+	return factorial(n) / (factorial(k) * factorial (n-k));
+}
+
+var n = 8, k = 2;
+println(strcat("permutations with repetition: ", (n ^ k)));
+println(strcat("permutations without repetition: " , choose(n,k)*factorial(k)));
+println(strcat("combinations without repetition: ", choose(n, k)));

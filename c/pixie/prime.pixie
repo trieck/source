@@ -1,0 +1,6 @@
+#!/usr/local/bin/pixie
+
+include 'lib/euclid'
+
+println euclid(9, 3);
+

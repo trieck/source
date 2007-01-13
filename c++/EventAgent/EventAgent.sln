@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EventAgent", "EventAgent.vcproj", "{064FAD60-3F7F-4C38-8AC5-8B807531268B}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = \u0022$/Source/c++/EVENTAGENT\u0022,\u0020KKCAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SolutionUniqueID = {FD21BD2C-9021-41FA-9C34-7963600CD6BA}
+		SccProjectUniqueName1 = EventAgent.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{064FAD60-3F7F-4C38-8AC5-8B807531268B}.Debug.ActiveCfg = Debug|Win32
+		{064FAD60-3F7F-4C38-8AC5-8B807531268B}.Debug.Build.0 = Debug|Win32
+		{064FAD60-3F7F-4C38-8AC5-8B807531268B}.Release.ActiveCfg = Release|Win32
+		{064FAD60-3F7F-4C38-8AC5-8B807531268B}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

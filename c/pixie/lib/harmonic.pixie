@@ -1,0 +1,14 @@
+# 
+# Harmonic Series
+#
+def harmonic {
+	var t, i = 1, n = shift argv;
+			
+	while (i <= n) {
+		t = t + (1 / i);
+		i = i + 1;
+	}
+	
+	return t;
+}
+

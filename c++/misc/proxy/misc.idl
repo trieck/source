@@ -1,0 +1,56 @@
+//
+// MISC.IDL - IDL source
+//
+// This file will be processed by MIDL
+// to produce the type library (misc.tlb) and marshaling code.
+// marshaling will be handled by OLEAUT32.DLL.  Proxy/Stub code
+// will be ignored.
+
+import "unknwn.idl";
+
+// Interface IMiscellaneous
+[
+	object,
+	uuid(813C3190-4E36-11d1-B1D5-000000000000),
+	helpstring("IMiscellaneous Interface"),
+	pointer_default(unique),
+	dual,
+	oleautomation
+]
+
+interface IMiscellaneous : IDispatch
+{
+	import "oaidl.idl";
+
+	HRESULT GetDate([out, retval]BSTR* pbstrDate);
+	HRESULT GetTime([out, retval]BSTR* pbstrTime);
+	HRESULT GetDateTime([out, retval]BSTR* pbstrDateTime);
+	HRESULT	GetDriveSpace([in, string]const BSTR bstrDrive, [out, retval]long* pBytes);
+	HRESULT EnumDrives([out, retval]BSTR* pbstrDrives);
+};
+
+//
+// Component and type library descriptions
+//
+[
+	uuid(73BC7900-5A3E-11d1-80B5-00207812120D),
+	version(1.0),
+	helpstring("Miscellaneous Component Type Library")
+]
+
+library MiscLib
+{
+	importlib("stdole32.tlb");
+	
+	// Component
+	[
+		uuid(813C3191-4E36-11d1-B1D5-000000000000),
+		helpstring("Miscellaneous Component")
+	]
+	
+	coclass Miscellaneous
+	{
+		[default]interface IMiscellaneous;
+	};
+};
+

@@ -1,0 +1,33 @@
+# Shell Sort; Sedgwick 6.6
+#
+# The idea is to rearrange the file to give it the property that taking every
+# hth element (starting anywhere) yields a sorted file.  Such a file is said to 
+# be h-sorted.   Put another way, an h-sorted file is h independent sorted files,
+# interleaved together.  By h-sorting for some large values of h, we can move elements
+# in the array long distances and thus make it easier to h-sort for smaller values of h.
+
+def shellsort {
+
+	var a = shift argv;
+	var n = length a;	
+	
+	var h = 1;
+	while (h <= int((n-1) / 9)) {
+		h = 3 * h + 1;
+	}
+	
+	while (h > 0) {
+		var i = h;
+		while (i <= n - 1) {
+			var j = i, t = a[i];
+			while (j >= h && t < a[j-h]) {
+				a[j] = a[j-h]; j = j - h;
+			}
+			a[j] = t;
+			i = i + 1;
+		}		
+		h = int(h / 3);
+	}
+	
+	return a;
+}

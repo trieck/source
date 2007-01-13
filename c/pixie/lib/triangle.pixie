@@ -1,0 +1,19 @@
+#
+# TRIANGLE.PIXIE
+#
+# Calculate the "triangular numbers"
+#
+# To calculate the triangular numbers
+# we use a trick that Gauss reportedly 
+# came up with in 1786, when he was nine 
+# years old.
+#
+
+def triangle {
+	var n = shift argv;
+	if (n) {
+		return n * (n + 1) / 2;
+	}
+	
+	return 0;
+}

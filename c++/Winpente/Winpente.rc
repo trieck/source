@@ -1,0 +1,312 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+MAINMENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New Game",                   ID_NEWGAME
+        MENUITEM "&Open Game",                  ID_OPENGAME
+        MENUITEM "&Save Game",                  ID_SAVEGAME, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_FILE_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Scores...",                  ID_SCORES
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "&Game",                       ID_GAMEOPTIONS
+        MENUITEM "&Colors...",                  ID_COLORS
+        MENUITEM "Pieces...",                   ID_PIECES
+    END
+    POPUP "&Help", HELP
+    BEGIN
+        MENUITEM "&Help on Pente",              ID_HELPCONTENTS
+        MENUITEM "&About",                      ID_ABOUT
+    END
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+MAINICON                ICON    DISCARDABLE     "mainicon.ico"
+00STEVE                 ICON    DISCARDABLE     "ico00ste.ico"
+BLUEBALL                ICON    DISCARDABLE     "blueball.ico"
+GREENBALL               ICON    DISCARDABLE     "greenbal.ico"
+REDBALL                 ICON    DISCARDABLE     "redball.ico"
+LTBLUEBALL              ICON    DISCARDABLE     "ltblueba.ico"
+PURPLEBALL              ICON    DISCARDABLE     "purpleba.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+ABOUT_BOX DIALOG DISCARDABLE  0, 0, 182, 90
+STYLE DS_SYSMODAL | DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "About Pente for Windows"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "OK",IDOK,70,70,50,15,BS_CENTER | BS_VCENTER | NOT 
+                    WS_TABSTOP
+    ICON            "00STEVE",IDC_STATIC,5,10,20,20,SS_CENTERIMAGE | 
+                    SS_REALSIZEIMAGE | SS_SUNKEN
+    CTEXT           "Designed and Developed by: Thomas A. Rieck",IDC_ABOUT,
+                    45,5,95,20,SS_SUNKEN
+    CTEXT           "Theme music composed by: Stephen M. Rieck",IDC_MUSIC,45,
+                    30,95,20,SS_SUNKEN
+END
+
+COLOR_BOX DIALOG DISCARDABLE  0, 0, 182, 78
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Colors"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "&OK",IDOK,125,5,50,14
+    PUSHBUTTON      "&Cancel",IDCANCEL,125,20,50,14
+    GROUPBOX        "Grid Color",IDC_GRIDCOLORS,5,25,105,45,WS_GROUP
+    CONTROL         "White",IDC_GRIDWHITE,"Button",BS_AUTORADIOBUTTON | 
+                    BS_PUSHLIKE,13,36,90,13
+    CONTROL         "Black",IDC_GRIDBLACK,"Button",BS_AUTORADIOBUTTON | 
+                    BS_PUSHLIKE,13,51,90,14
+    PUSHBUTTON      "Background Color...",ID_BACKCOLOR,5,5,105,15
+END
+
+SCORES DIALOG DISCARDABLE  0, 0, 246, 166
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Pente Scores"
+FONT 10, "Tahoma"
+BEGIN
+    LTEXT           "Player One:",IDC_STPLAYERONE,6,5,35,8
+    LTEXT           "Player Two:",IDC_STPLAYERTWO,58,5,35,8
+    LTEXT           "Winner:",IDC_STWINNER,110,5,25,8
+    PUSHBUTTON      "&OK",IDOK,100,146,45,13,NOT WS_TABSTOP
+    LTEXT           "Date:",IDC_STDATE,161,5,40,8
+    LTEXT           "",ID_FRAME,5,15,235,125,SS_SUNKEN | WS_BORDER | NOT 
+                    WS_GROUP
+    SCROLLBAR       ID_SCROLL,230,140,8,15,SBS_VERT
+END
+
+PLAYERS DIALOG DISCARDABLE  0, 0, 227, 86
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Player Names"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,90,70,50,14
+    LTEXT           "Player One, Enter your name:",ID_STPLAYER1,5,5,150,10
+    LTEXT           "Player Two, Enter your name:",ID_STPLAYER2,5,35,150,10
+    COMBOBOX        ID_PLAYERONE,45,15,145,65,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_PLAYERTWO,45,45,145,65,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+GAME_BOX DIALOG DISCARDABLE  0, 0, 186, 46
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Game Options"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+    CONTROL         "Player vs. Player",ID_PLAYERVSPLAYER,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,15,10,110,10
+    CONTROL         "Player vs. Computer",ID_PLAYERVSCOMP,"Button",
+                    BS_AUTORADIOBUTTON,15,25,110,10
+END
+
+PLAYERPIECES DIALOGEX 0, 0, 216, 103
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Player Pieces"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,159,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,159,22,50,14
+    GROUPBOX        "Player One",IDC_PLAYER1FRAME,7,7,142,40
+    ICON            "BLUEBALL",IDC_PLAYERONEPIECE,17,20,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE | WS_GROUP,
+                    WS_EX_DLGMODALFRAME
+    ICON            "GREENBALL",IDC_PLAYERONEPIECE2,42,20,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE,WS_EX_DLGMODALFRAME
+    ICON            "LTBLUEBALL",IDC_PLAYERONEPIECE3,67,20,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE,WS_EX_DLGMODALFRAME
+    ICON            "PURPLEBALL",IDC_PLAYERONEPIECE4,92,20,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE,WS_EX_DLGMODALFRAME
+    ICON            "REDBALL",IDC_PLAYERONEPIECE5,118,20,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE,WS_EX_DLGMODALFRAME
+    GROUPBOX        "Player Two",IDC_PLAYER2FRAME,7,54,142,40
+    ICON            "BLUEBALL",IDC_PLAYERTWOPIECE,17,67,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE | WS_GROUP,
+                    WS_EX_DLGMODALFRAME
+    ICON            "GREENBALL",IDC_PLAYERTWOPIECE2,42,67,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE,WS_EX_DLGMODALFRAME
+    ICON            "LTBLUEBALL",IDC_PLAYERTWOPIECE3,67,67,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE,WS_EX_DLGMODALFRAME
+    ICON            "PURPLEBALL",IDC_PLAYERTWOPIECE4,92,67,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE,WS_EX_DLGMODALFRAME
+    ICON            "REDBALL",IDC_PLAYERTWOPIECE5,118,67,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE,WS_EX_DLGMODALFRAME
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    "ABOUT_BOX", DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 175
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 83
+    END
+
+    "COLOR_BOX", DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 175
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 71
+    END
+
+    "SCORES", DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 237
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 159
+    END
+
+    "PLAYERS", DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 220
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 79
+    END
+
+    "GAME_BOX", DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 39
+    END
+
+    "PLAYERPIECES", DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 209
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 96
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// WAVE
+//
+
+THEME                   WAVE    DISCARDABLE     "theme.wav"
+WINNER                  WAVE    DISCARDABLE     "Winner.wav"
+PIECE                   WAVE    DISCARDABLE     "piece.wav"
+CAPTURE                 WAVE    DISCARDABLE     "blip.wav"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_PLAYER2WINNER       "Player Two Wins!"
+    IDS_PLAYER1WINNER       "Player One Wins!"
+    IDS_PLAYER1TURN         "Player One's turn."
+    IDS_PLAYER2TURN         "Players Two's turn."
+    IDS_MEMERROR            "An Error has occured allocating memory.\nPlease close uneeded programs and retry."
+    IDS_PIECEEQUAL          "Both pieces may not be the same color.\nPlease make another choice for one color."
+    IDS_P1CAPTURES          "Player One Captures: "
+    IDS_P2CAPTURES          "Player Two Captures: "
+    IDS_OPENERROR           "An error has occured while attempting to open a file."
+    IDS_SAVEERROR           "An error has occured while attempting to save a file."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

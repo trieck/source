@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "modulo", "modulo.vcproj", "{95F41BC4-7209-409F-A5E9-03423D99E012}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = \u0022$/Source/c++/modulo\u0022,\u0020FVDAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SolutionUniqueID = {4DCDC090-5DE7-4BAA-B5F3-6C3D3AC46A00}
+		SccProjectUniqueName1 = modulo.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{95F41BC4-7209-409F-A5E9-03423D99E012}.Debug.ActiveCfg = Debug|Win32
+		{95F41BC4-7209-409F-A5E9-03423D99E012}.Debug.Build.0 = Debug|Win32
+		{95F41BC4-7209-409F-A5E9-03423D99E012}.Release.ActiveCfg = Release|Win32
+		{95F41BC4-7209-409F-A5E9-03423D99E012}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

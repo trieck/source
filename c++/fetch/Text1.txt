@@ -1,0 +1,32 @@
+	try {
+		LPNETRESOURCEENUM proot = GetRootEnum();
+
+		EnumerateResources(proot);
+
+	}catch (NetError & E) {
+		TRACE3("Network Error: Error Code: %d, Provider: %s, Description: %s.\n",
+			E.GetErrorCode(),
+			E.GetProvider(),
+			E.GetDescription());
+		E.GetErrorCode();
+	}
+
+void ChildView::EnumerateResources(LPNETRESOURCEENUM penum)
+{
+	if (penum->lpRemoteName != NULL)
+		GetListCtrl().InsertItem(GetListCtrl().GetItemCount(),
+			penum->lpRemoteName, 0);
+
+	for (DWORD i = 0; i < penum->count(); i++) {
+		try{
+			LPNETRESOURCEENUM p = penum->GetAt(i);
+			EnumerateResources(p);
+		}catch (const NetError & E) {
+			TRACE3("Network Error: Error Code: %d, Provider: %s, Description: %s.\n",
+			E.GetErrorCode(),
+			E.GetProvider(),
+			E.GetDescription());
+			E.GetErrorCode();
+		}
+	}
+}

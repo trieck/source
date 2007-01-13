@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winhex", "winhex.vcproj", "{9CE3A194-AC23-4B5B-A0F8-7EE2FE6A796C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = \u0022$/Source/c++/WINHEX\u0022,\u0020GFDAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SolutionUniqueID = {33697056-5173-470C-BC0D-2F6B6FBE3A2F}
+		SccProjectUniqueName1 = winhex.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{9CE3A194-AC23-4B5B-A0F8-7EE2FE6A796C}.Debug.ActiveCfg = Debug|Win32
+		{9CE3A194-AC23-4B5B-A0F8-7EE2FE6A796C}.Debug.Build.0 = Debug|Win32
+		{9CE3A194-AC23-4B5B-A0F8-7EE2FE6A796C}.Release.ActiveCfg = Release|Win32
+		{9CE3A194-AC23-4B5B-A0F8-7EE2FE6A796C}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

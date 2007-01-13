@@ -1,0 +1,15 @@
+-- change func->function and proc->sub
+--implement ++, --, +=, -=, *=, /=, &=, |=, <<=, >>=, etc.
+ok -- implement argument assignment
+ok --implement printf instead.
+ok -- fix implementation of if, else, and while
+ok -- implement printing strings / remove the bizarre quoted literals
+ok --implement "if" and "if / else" constructs.
+ok --implement logical "&&" and "||".
+ok --implement bitwise "&" and "|".
+ok -- implement functions and procedures.
+ok --implement the equality operator ==.
+ok -- recursive funcs / procs don't work
+ok -- whiles / ifs don't work in funcs / procs
+ok -- arglist doesn't work properly
+

@@ -1,0 +1,59 @@
+/////////////////////////////////////////////////////////////////////////////
+//	
+//	NEPTUNE.IDL : IDL source for neptune.dll
+//
+//	This file will be processed by the MIDL tool to
+//	produce the type library (neptune.tlb) and marshalling code.
+//
+//	Copyright (c) 2001, KnowX.com, All Rights Reserved
+
+import "oaidl.idl";
+import "ocidl.idl";
+	
+	// IComputer Interface
+	[
+		object,
+		uuid(C7EFC9B2-E499-42a8-A465-AB645A02A77A),
+		helpstring("IComputer Interface"),
+		pointer_default(unique)
+	]
+	interface IComputer : IUnknown
+	{
+		[propget, helpstring("property Name")] HRESULT Name([out, retval] BSTR *pVal);
+		[propget, helpstring("property SystemDirectory")] HRESULT SystemDirectory([out, retval] BSTR *pVal);
+	};
+
+	// IStringUtil Interface
+	[
+		object,
+		uuid(77D29F5F-B2B5-48cc-84DC-F71D281ECD77),
+		helpstring("IStringUtil Interface"),
+		pointer_default(unique)
+	]
+	interface IStringUtil : IUnknown
+	{
+		[vararg, helpstring("method format string with variable number of arguments")] HRESULT FormatString([in] BSTR fmt, 
+			[out] BSTR *output, [in] SAFEARRAY(VARIANT) *args);
+	};
+
+// Neptune Type Library
+[
+	uuid(9A8053C1-7DD0-4f1b-90E0-509C030CEFC5),
+	version(1.0),
+	helpstring("Neptune 1.0 Type Library")
+]
+library NeptuneLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(51017D31-9CEF-42bd-B6C4-2A3270DE3C97),
+		helpstring("Neptune Class")
+	]
+	coclass Neptune
+	{
+		interface IStringUtil;
+		interface IComputer;
+	};
+};

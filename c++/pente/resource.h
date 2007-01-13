@@ -1,0 +1,35 @@
+//{{NO_DEPENDENCIES}}
+// Microsoft Developer Studio generated include file.
+// Used by pente.rc
+//
+#define IDD_ABOUTBOX                    100
+#define IDR_LISTVIEW                    103
+#define IDR_MAINFRAME                   128
+#define IDI_DOCUMENT                    130
+#define IDI_REDPIECE                    131
+#define IDI_GREENPIECE                  132
+#define IDB_PLAYER1CAP                  134
+#define IDB_PLAYER2CAP                  135
+#define IDD_OPTIONS                     138
+#define IDC_PLAYERVSPLAYER              1000
+#define IDC_PLAYERVSCOMPUTER            1001
+#define IDM_OPTIONS                     32771
+#define IDM_BOARDBKGCOLOR               32772
+#define IDM_GRIDCOLOR                   32773
+#define IDM_TABLECOLOR                  32774
+#define IDM_SHOWLOG                     32776
+#define IDS_TURN                        61447
+#define IDS_CAPTURES                    61448
+#define IDS_INVALIDFILEFORMAT           61449
+
+// Next default values for new objects
+// 
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_3D_CONTROLS                     1
+#define _APS_NEXT_RESOURCE_VALUE        139
+#define _APS_NEXT_COMMAND_VALUE         32777
+#define _APS_NEXT_CONTROL_VALUE         1001
+#define _APS_NEXT_SYMED_VALUE           104
+#endif
+#endif

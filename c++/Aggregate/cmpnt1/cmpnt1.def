@@ -1,0 +1,10 @@
+;
+;	CMPNT1 Module Definition File
+;
+
+LIBRARY	CMPNT1.DLL         	
+EXPORTS	DllMain	PRIVATE
+		DllGetClassObject   PRIVATE
+        DllCanUnloadNow     PRIVATE
+		DllRegisterServer	PRIVATE
+		DllUnregisterServer	PRIVATE

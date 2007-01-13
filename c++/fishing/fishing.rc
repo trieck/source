@@ -1,0 +1,155 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINMENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "E&xit\tCtrl+X",               IDM_EXIT
+    END
+    POPUP "&Tools"
+    BEGIN
+        MENUITEM "&Options\tCtrl+O",            IDM_OPTIONS
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DATABASE DIALOG DISCARDABLE  0, 0, 154, 137
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Database Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Server:",IDC_STATIC,7,7,85,11,SS_CENTERIMAGE
+    EDITTEXT        IDC_SERVER,7,20,116,12,ES_AUTOHSCROLL
+    LTEXT           "User ID:",IDC_STATIC,7,39,85,11,SS_CENTERIMAGE
+    EDITTEXT        IDC_UID,7,52,116,12,ES_AUTOHSCROLL
+    LTEXT           "Password:",IDC_STATIC,7,71,85,11,SS_CENTERIMAGE
+    EDITTEXT        IDC_PWD,7,84,116,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,7,116,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,60,116,50,14
+END
+
+IDD_PANEL DIALOG DISCARDABLE  0, 0, 295, 127
+STYLE WS_CHILD | WS_VISIBLE
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "&Save...",IDC_SAVE,7,7,64,15
+    PUSHBUTTON      "<<<",IDC_PREVIOUS,157,7,64,15
+    PUSHBUTTON      ">>>",IDC_NEXT,224,7,64,15
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_DATABASE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 147
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 130
+    END
+
+    IDD_PANEL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 288
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 120
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_APPTITLE            "Fishing Log"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_EXIT                "Exit the application"
+    IDM_OPTIONS             "Set application options."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

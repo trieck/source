@@ -1,0 +1,224 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_STARTPAGE DIALOG DISCARDABLE  0, 0, 286, 126
+STYLE WS_CHILD | WS_CAPTION
+CAPTION "OneChase"
+FONT 8, "Arial"
+BEGIN
+    CTEXT           "",IDC_TITLE,79,6,197,43
+    LTEXT           "",IDC_START,83,57,193,49
+    CONTROL         117,IDC_PICTURE,"Static",SS_BITMAP,7,5,67,114
+END
+
+IDD_PAGETWO DIALOG DISCARDABLE  0, 0, 286, 99
+STYLE WS_CHILD | WS_CAPTION
+CAPTION "OneChase"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "",IDC_PAGETWO,7,7,270,22
+    EDITTEXT        IDC_SERVER,128,30,118,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_DATABASE,128,49,118,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_REPORTPATH,128,68,118,12,ES_AUTOHSCROLL
+    RTEXT           "Server Name:",IDC_SRVRCAPTION,58,31,63,11,NOT WS_GROUP
+    RTEXT           "Database Name:",IDC_DBCAPTION,60,50,61,11,NOT WS_GROUP
+    RTEXT           "Report Path:",IDC_RPTCAPTION,62,68,59,10,NOT WS_GROUP
+END
+
+IDD_PAGETHREE DIALOG DISCARDABLE  0, 0, 286, 99
+STYLE WS_CHILD | WS_CAPTION
+CAPTION "OneChase"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "",IDC_PAGETHREE,17,7,234,25
+    LTEXT           "",IDC_PAGETHREESERVER,140,35,103,11,SS_SUNKEN
+    LTEXT           "",IDC_PAGETHREEDBNAME,140,50,104,11,SS_SUNKEN
+    LTEXT           "",IDC_PAGETHREEREPORTPATH,140,66,104,11,SS_SUNKEN
+    LTEXT           "Server Name:",IDC_SERVERCAPTION,45,35,92,9
+    LTEXT           "Database Name:",IDC_DBNAMECAPTION,45,51,92,9
+    LTEXT           "Report Path:",IDC_REPORTPATHCAPTION,46,67,92,9
+    CONTROL         "Progress1",IDC_REGPROGRESS,"msctls_progress32",0x0,45,
+                    86,199,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_STARTPAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 276
+        BOTTOMMARGIN, 117
+    END
+
+    IDD_PAGETWO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 277
+        TOPMARGIN, 7
+    END
+
+    IDD_PAGETHREE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 278
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 96
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Programmed by: Thomas A. Rieck\0"
+            VALUE "CompanyName", "Watson Wyatt Worldwide\0"
+            VALUE "FileDescription", "RegWizard\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "RegWizard\0"
+            VALUE "LegalCopyright", "Copyright © 1997\0"
+            VALUE "OriginalFilename", "RegWizard.exe\0"
+            VALUE "ProductName", "  RegWizard\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_MAIN                ICON    DISCARDABLE     "main.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_HOMER               BITMAP  DISCARDABLE     "HOMER.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_WELCOME             "Welcome to the OneChase Call Center Registry Wizard!"
+    IDS_STARTPAGE           "This Wizard will walk you through the steps of updating your system registry.  If you have trouble running the OneChase system after making changes here, please contact your system administrator."
+    IDS_PAGETWO             "Please complete the following information:"
+    IDS_PAGETHREEREVIEW     "The following items have been selected.  If these are items are correct, select 'Finish' to update your registry.  If these items are not correct select 'Back' to correct the error."
+    IDS_REGERROR            "There has been an error setting registry information.  Please contact your system administrator to correct the problem."
+    IDS_REGMAINKEY          "SOFTWARE\\Wyatt\\Chase"
+    IDS_REGSERVERKEY        "Server"
+    IDS_REGDBKEY            "DB"
+    IDS_REGREPORTKEY        "Reports"
+    IDS_SERVERVALUE         "ServerName"
+    IDS_DBVALUE             "DBName"
+    IDS_REPORTVALUE         "ReportPath"
+    IDS_REGSUCCESS          "Congratulations!  Your registry has been updated successfully.\nIf you are currently logged on to the OneChase system,\nyou must log off and relogon to see your changes."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

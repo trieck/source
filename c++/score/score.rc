@@ -1,0 +1,575 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\score.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open\tCtrl+O",               ID_FILE_OPEN
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Tools"
+    BEGIN
+        MENUITEM "Select",                      IDM_SELECT
+        MENUITEM "Add Note",                    IDM_ADDNOTE
+        MENUITEM "Erase Note",                  IDM_ERASENOTE
+        MENUITEM SEPARATOR
+        MENUITEM "&Settings\tCtrl+S",           IDM_SETTINGS
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About Score...",             ID_APP_ABOUT
+    END
+END
+
+IDR_CONTEXTMENU MENU DISCARDABLE 
+BEGIN
+    POPUP "Context_Menu"
+    BEGIN
+        MENUITEM "&Play Selected Measure\tCtrl+P", IDM_PLAYMEASURE
+        MENUITEM "Set Tempo",                   IDM_SETMEASURETEMPO
+        MENUITEM "Key Signature\tCtrl+K",       IDM_KEYSIGNATURE
+        MENUITEM SEPARATOR
+        MENUITEM "Settings",                    IDM_SETTINGS
+        MENUITEM "Toolbox",                     IDM_TOOLBOX
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 210, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Score"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,165,16,38,14,WS_GROUP
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,7,20,20,SS_REALSIZEIMAGE
+    LTEXT           "Score\nCopyright© 1999 Rieck Enterprises",IDC_STATIC,39,
+                    15,117,22
+END
+
+IDR_MAINFRAME DIALOG DISCARDABLE  0, 0, 194, 22
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Instrument:",IDC_STATIC,5,5,37,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_CB_INSTRUMENT,44,5,145,99,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_SETTINGS DIALOGEX 0, 0, 225, 74
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Settings"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    COMBOBOX        IDC_CB_OUTPUTDEVICES,73,7,145,99,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CB_INPUTDEVICES,73,23,145,99,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "&OK",IDOK,114,53,50,14
+    PUSHBUTTON      "&Cancel",IDCANCEL,168,53,50,14
+    LTEXT           "Output Device:",IDC_STATIC,7,7,62,12,SS_CENTERIMAGE
+    LTEXT           "Input Device:",IDC_STATIC,7,23,62,12,SS_CENTERIMAGE
+END
+
+IDD_TOOLBOX DIALOGEX 0, 0, 41, 126
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Toolbox"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_WHOLENOTE,"Button",BS_AUTORADIOBUTTON | BS_ICON | 
+                    BS_PUSHLIKE,0,0,20,20,WS_EX_STATICEDGE
+    CONTROL         "",IDC_HALFNOTE,"Button",BS_AUTORADIOBUTTON | BS_ICON | 
+                    BS_PUSHLIKE,0,21,20,20,WS_EX_STATICEDGE
+    CONTROL         "",IDC_QUARTERNOTE,"Button",BS_AUTORADIOBUTTON | BS_ICON | 
+                    BS_PUSHLIKE,0,42,20,20,WS_EX_STATICEDGE
+    CONTROL         "",IDC_EIGTHNOTE,"Button",BS_AUTORADIOBUTTON | BS_ICON | 
+                    BS_PUSHLIKE,0,63,20,20,WS_EX_STATICEDGE
+    CONTROL         "",IDC_SIXTEENTHNOTE,"Button",BS_AUTORADIOBUTTON | 
+                    BS_ICON | BS_PUSHLIKE,0,84,20,20,WS_EX_STATICEDGE
+    CONTROL         "",IDC_THIRTYSECONDNOTE,"Button",BS_AUTORADIOBUTTON | 
+                    BS_ICON | BS_PUSHLIKE,0,105,20,20,WS_EX_STATICEDGE
+    CONTROL         "",IDC_FLATTEN,"Button",BS_AUTORADIOBUTTON | BS_ICON | 
+                    BS_PUSHLIKE,21,0,20,20,WS_EX_STATICEDGE
+    CONTROL         "",IDC_SHARPEN,"Button",BS_AUTORADIOBUTTON | BS_ICON | 
+                    BS_PUSHLIKE,21,21,20,20,WS_EX_STATICEDGE
+    CONTROL         "",IDC_NATURALIZE,"Button",BS_AUTORADIOBUTTON | BS_ICON | 
+                    BS_PUSHLIKE,21,42,20,20,WS_EX_STATICEDGE
+END
+
+IDD_TEMPO DIALOG DISCARDABLE  0, 0, 169, 70
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Tempo"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_TEMPO,61,15,41,12,ES_AUTOHSCROLL
+    CONTROL         "Spin1",IDC_SPINTEMPO,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,103,15,9,
+                    11
+    LTEXT           "Tempo:",IDC_STATIC,16,15,29,12,SS_CENTERIMAGE
+    DEFPUSHBUTTON   "&OK",IDOK,60,49,50,14
+    PUSHBUTTON      "&Cancel",IDCANCEL,112,49,50,14
+    CONTROL         "Apply to all measures forward",
+                    IDC_CHKAPPLYMEASURESAHEAD,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,16,33,137,10
+END
+
+IDD_KEYSIGNATURE DIALOG DISCARDABLE  0, 0, 181, 85
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Key Signature"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,124,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,124,24,50,14
+    COMBOBOX        IDC_KEYSIGNATURE,7,15,108,63,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "Rieck Enterprises\0"
+            VALUE "FileDescription", "Score\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "score\0"
+            VALUE "LegalCopyright", "Copyright© 1999\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "score.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "score\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 203
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDR_MAINFRAME, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 189
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 17
+    END
+
+    IDD_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 218
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 67
+    END
+
+    IDD_TOOLBOX, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 125
+    END
+
+    IDD_TEMPO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 162
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 63
+    END
+
+    IDD_KEYSIGNATURE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 174
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 78
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      IDM_PLAYALL
+    BUTTON      IDM_PLAYMEASURE
+    BUTTON      IDM_STOP
+    SEPARATOR
+    BUTTON      IDM_SELECT
+    BUTTON      IDM_ADDNOTE
+    BUTTON      IDM_ERASENOTE
+    SEPARATOR
+    BUTTON      IDM_TOOLBOX
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  DISCARDABLE     "res\\mainfram.bmp"
+IDB_TREBLECLEF          BITMAP  DISCARDABLE     "res\\trebleclef.bmp"
+IDB_KEYCFLAT            BITMAP  DISCARDABLE     "res\\keycflat.bmp"
+IDB_KEYGFLAT            BITMAP  DISCARDABLE     "res\\keygflat.bmp"
+IDB_KEYDFLAT            BITMAP  DISCARDABLE     "res\\keydflat.bmp"
+IDB_KEYAFLAT            BITMAP  DISCARDABLE     "res\\keyaflat.bmp"
+IDB_KEYEFLAT            BITMAP  DISCARDABLE     "res\\keyeflat.bmp"
+IDB_KEYBFLAT            BITMAP  DISCARDABLE     "res\\keybflat.bmp"
+IDB_KEYF                BITMAP  DISCARDABLE     "res\\keyf.bmp"
+IDB_KEYCSHARP           BITMAP  DISCARDABLE     "res\\keycsharp.bmp"
+IDB_KEYFSHARP           BITMAP  DISCARDABLE     "res\\keyfsharp.bmp"
+IDB_KEYB                BITMAP  DISCARDABLE     "res\\keyb.bmp"
+IDB_KEYE                BITMAP  DISCARDABLE     "res\\keye..bmp"
+IDB_KEYA                BITMAP  DISCARDABLE     "res\\keya.bmp"
+IDB_KEYD                BITMAP  DISCARDABLE     "res\\keyd.bmp"
+IDB_KEYG                BITMAP  DISCARDABLE     "res\\keyg.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\idr_main.ico"
+IDI_QUARTERNOTE         ICON    DISCARDABLE     "res\\qnote.ico"
+IDI_EIGTHNOTE           ICON    DISCARDABLE     "res\\8note.ico"
+IDI_SIXTEENTHNOTE       ICON    DISCARDABLE     "res\\16not.ico"
+IDI_THIRTYSECONDNOTE    ICON    DISCARDABLE     "res\\32not.ico"
+IDI_HALFNOTE            ICON    DISCARDABLE     "res\\halfnote.ico"
+IDI_WHOLENOTE           ICON    DISCARDABLE     "res\\wholenot.ico"
+IDI_FLAT                ICON    DISCARDABLE     "res\\flat.ico"
+IDI_SHARP               ICON    DISCARDABLE     "res\\sharp.ico"
+IDI_NATURAL             ICON    DISCARDABLE     "res\\natural.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS DISCARDABLE 
+BEGIN
+    "S",            IDM_SETTINGS,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXT
+//
+
+IDR_INSTRUMENTS         TEXT    DISCARDABLE     "res\\instuments.txt"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDC_QNOTE               CURSOR  DISCARDABLE     "res\\qnote.cur"
+IDC_8NOTE               CURSOR  DISCARDABLE     "res\\8note.cur"
+IDC_16NOTE              CURSOR  DISCARDABLE     "res\\16not.cur"
+IDC_32NOTE              CURSOR  DISCARDABLE     "res\\32not.cur"
+IDC_HNOTE               CURSOR  DISCARDABLE     "res\\halfnote.cur"
+IDC_WNOTE               CURSOR  DISCARDABLE     "res\\wholenot.cur"
+IDC_ERASENOTE           CURSOR  DISCARDABLE     "res\\erasenot.cur"
+IDC_SHARP               CURSOR  DISCARDABLE     "res\\sharp.cur"
+IDC_FLAT                CURSOR  DISCARDABLE     "res\\flat.cur"
+IDC_NATURAL             CURSOR  DISCARDABLE     "res\\natural.cur"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_KEYSIGNATURE DLGINIT
+BEGIN
+    IDC_KEYSIGNATURE, 0x403, 18, 0
+0x2043, 0x616d, 0x6f6a, 0x2072, 0x202f, 0x2041, 0x696d, 0x6f6e, 0x0072, 
+
+    IDC_KEYSIGNATURE, 0x403, 18, 0
+0x2046, 0x616d, 0x6f6a, 0x2072, 0x202f, 0x2044, 0x696d, 0x6f6e, 0x0072, 
+
+    IDC_KEYSIGNATURE, 0x403, 19, 0
+0x6242, 0x6d20, 0x6a61, 0x726f, 0x2f20, 0x4720, 0x6d20, 0x6e69, 0x726f, 
+"\000" 
+    IDC_KEYSIGNATURE, 0x403, 19, 0
+0x6245, 0x6d20, 0x6a61, 0x726f, 0x2f20, 0x4320, 0x6d20, 0x6e69, 0x726f, 
+"\000" 
+    IDC_KEYSIGNATURE, 0x403, 19, 0
+0x6241, 0x6d20, 0x6a61, 0x726f, 0x2f20, 0x4620, 0x6d20, 0x6e69, 0x726f, 
+"\000" 
+    IDC_KEYSIGNATURE, 0x403, 20, 0
+0x6244, 0x6d20, 0x6a61, 0x726f, 0x2f20, 0x4220, 0x2062, 0x696d, 0x6f6e, 
+0x0072, 
+    IDC_KEYSIGNATURE, 0x403, 20, 0
+0x6247, 0x6d20, 0x6a61, 0x726f, 0x2f20, 0x4520, 0x2062, 0x696d, 0x6f6e, 
+0x0072, 
+    IDC_KEYSIGNATURE, 0x403, 20, 0
+0x6243, 0x6d20, 0x6a61, 0x726f, 0x2f20, 0x4120, 0x2062, 0x696d, 0x6f6e, 
+0x0072, 
+    IDC_KEYSIGNATURE, 0x403, 18, 0
+0x2047, 0x616d, 0x6f6a, 0x2072, 0x202f, 0x2045, 0x696d, 0x6f6e, 0x0072, 
+
+    IDC_KEYSIGNATURE, 0x403, 18, 0
+0x2044, 0x616d, 0x6f6a, 0x2072, 0x202f, 0x2042, 0x696d, 0x6f6e, 0x0072, 
+
+    IDC_KEYSIGNATURE, 0x403, 19, 0
+0x2041, 0x616d, 0x6f6a, 0x2072, 0x202f, 0x2346, 0x6d20, 0x6e69, 0x726f, 
+"\000" 
+    IDC_KEYSIGNATURE, 0x403, 19, 0
+0x2045, 0x616d, 0x6f6a, 0x2072, 0x202f, 0x2343, 0x6d20, 0x6e69, 0x726f, 
+"\000" 
+    IDC_KEYSIGNATURE, 0x403, 19, 0
+0x2042, 0x616d, 0x6f6a, 0x2072, 0x202f, 0x2347, 0x6d20, 0x6e69, 0x726f, 
+"\000" 
+    IDC_KEYSIGNATURE, 0x403, 20, 0
+0x2346, 0x6d20, 0x6a61, 0x726f, 0x2f20, 0x4420, 0x2023, 0x696d, 0x6f6e, 
+0x0072, 
+    IDC_KEYSIGNATURE, 0x403, 20, 0
+0x2343, 0x6d20, 0x6a61, 0x726f, 0x2f20, 0x4120, 0x2023, 0x696d, 0x6f6e, 
+0x0072, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_REGISTRY            REGISTRY DISCARDABLE    "res\\score.reg"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "Score\n\n\nScore Sheets(*.scr)\n.scr\nScore.Sheet\nScore Sheet"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Score"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+    IDS_COULDNOTOPENMIDIMAPPER "Unable to open the midi mapper."
+    IDS_COULDNOTSETTIMEDIVISION "Unable to set the MIDI time division."
+    IDS_NOMIDISTREAMOUT     "This application requires support for midi streams.\nYour midi device does not support this capability.\nThe application will terminate."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_SETTINGS            "Settings\nSettings"
+    IDM_EXECUTE             "Execute\nExecute"
+    IDM_TOOLBOX             "Toolbox\nToolbox"
+    IDM_PLAYMEASURE         "Play the selected measure\nPlay selected measure"
+    IDM_SELECT              "Select\nSelect"
+    IDM_ADDNOTE             "Add Note\nAdd Note"
+    IDM_ERASENOTE           "Erase Note\nErase Note"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_PLAYALL             "Play all\nPlay all"
+    IDM_SETMEASURETEMPO     "Set tempo\nSet tempo"
+    IDM_STOP                "Stop\nStop"
+    IDM_KEYSIGNATURE        "Key Signature\nKey Signature"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\score.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

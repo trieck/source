@@ -1,0 +1,21 @@
+# bubble sort version 2
+#
+def bubblesort {
+	var a = shift argv;	
+	var i, n = length a;	
+		
+	while (i < n - 1) {
+		var j = n - 1;
+		while (j > i) {
+			if (a[j-1] > a[j]) {
+				var t = a[j-1];
+				a[j-1] = a[j];
+				a[j] = t;
+			}		
+			j = j - 1;
+		}
+		i = i + 1;
+	}
+			
+	return a;
+}

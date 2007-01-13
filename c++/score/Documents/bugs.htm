@@ -1,0 +1,616 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Excel.Sheet>
+<meta name=Generator content="Microsoft Excel 9">
+<link rel=File-List href="./bugs2_files/filelist.xml">
+<link rel=Edit-Time-Data href="./bugs2_files/editdata.mso">
+<link rel=OLE-Object-Data href="./bugs2_files/oledata.mso">
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:LastAuthor>Thomas A. Rieck</o:LastAuthor>
+  <o:Created>1999-06-19T17:29:05Z</o:Created>
+  <o:LastSaved>1999-06-19T17:29:05Z</o:LastSaved>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--table
+	{mso-displayed-decimal-separator:"\.";
+	mso-displayed-thousand-separator:"\,";}
+@page
+	{margin:1.0in .75in 1.0in .75in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;}
+tr
+	{mso-height-source:auto;}
+col
+	{mso-width-source:auto;}
+br
+	{mso-data-placement:same-cell;}
+.style0
+	{mso-number-format:General;
+	text-align:general;
+	vertical-align:bottom;
+	white-space:nowrap;
+	mso-rotate:0;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Verdana;
+	mso-generic-font-family:auto;
+	mso-font-charset:0;
+	border:none;
+	mso-protection:locked visible;
+	mso-style-name:Normal;
+	mso-style-id:0;}
+td
+	{mso-style-parent:style0;
+	padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Verdana;
+	mso-generic-font-family:auto;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:bottom;
+	border:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	mso-protection:locked visible;
+	white-space:nowrap;
+	mso-rotate:0;}
+.xl24
+	{mso-style-parent:style0;
+	border:.5pt solid silver;}
+.xl25
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	border:.5pt solid silver;}
+.xl26
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mmmm\\ d\\\,\\ yyyy";
+	border:.5pt solid silver;}
+.xl27
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	border:.5pt solid silver;}
+.xl28
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-weight:700;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	border:.5pt solid silver;
+	background:#FFCC99;
+	mso-pattern:auto none;}
+.xl29
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-weight:700;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mmmm\\ d\\\,\\ yyyy";
+	text-align:center;
+	border-top:.5pt solid silver;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;
+	background:#FFCC99;
+	mso-pattern:auto none;}
+.xl30
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-weight:700;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	border-top:.5pt solid silver;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;
+	background:#FFCC99;
+	mso-pattern:auto none;}
+.xl31
+	{mso-style-parent:style0;
+	color:silver;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	border:.5pt solid silver;}
+.xl32
+	{mso-style-parent:style0;
+	color:silver;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:.5pt solid silver;}
+.xl33
+	{mso-style-parent:style0;
+	color:silver;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mmmm\\ d\\\,\\ yyyy";
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;}
+.xl34
+	{mso-style-parent:style0;
+	color:silver;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;}
+.xl35
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	border:.5pt solid silver;
+	background:#CCFFCC;
+	mso-pattern:auto none;}
+.xl36
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:.5pt solid silver;
+	background:#CCFFCC;
+	mso-pattern:auto none;
+	white-space:normal;}
+.xl37
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mmmm\\ d\\\,\\ yyyy";
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;
+	background:#CCFFCC;
+	mso-pattern:auto none;}
+.xl38
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;
+	background:#CCFFCC;
+	mso-pattern:auto none;}
+.xl39
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:.5pt solid silver;}
+.xl40
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mmmm\\ d\\\,\\ yyyy";
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;}
+.xl41
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;}
+.xl42
+	{mso-style-parent:style0;
+	color:silver;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:.5pt solid silver;}
+.xl43
+	{mso-style-parent:style0;
+	color:silver;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mmmm\\ d\\\,\\ yyyy";
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;}
+.xl44
+	{mso-style-parent:style0;
+	color:silver;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;}
+.xl45
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	border:.5pt solid silver;
+	background:#CCFFFF;
+	mso-pattern:auto none;}
+.xl46
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:.5pt solid silver;
+	background:#CCFFFF;
+	mso-pattern:auto none;}
+.xl47
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mmmm\\ d\\\,\\ yyyy";
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;
+	background:#CCFFFF;
+	mso-pattern:auto none;}
+.xl48
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"Short Date";
+	text-align:center;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;
+	background:#CCFFFF;
+	mso-pattern:auto none;}
+.xl49
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:none;
+	background:#CCFFFF;
+	mso-pattern:auto none;}
+.xl50
+	{mso-style-parent:style0;
+	font-size:8.0pt;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	border-top:none;
+	border-right:.5pt solid silver;
+	border-bottom:.5pt solid silver;
+	border-left:.5pt solid silver;
+	background:#CCFFCC;
+	mso-pattern:auto none;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <x:ExcelWorkbook>
+  <x:ExcelWorksheets>
+   <x:ExcelWorksheet>
+    <x:Name>bugs</x:Name>
+    <x:WorksheetOptions>
+     <x:Print>
+      <x:ValidPrinterInfo/>
+      <x:VerticalResolution>600</x:VerticalResolution>
+     </x:Print>
+     <x:Selected/>
+     <x:DoNotDisplayGridlines/>
+     <x:TopRowVisible>6</x:TopRowVisible>
+     <x:Panes>
+      <x:Pane>
+       <x:Number>3</x:Number>
+       <x:ActiveRow>21</x:ActiveRow>
+      </x:Pane>
+     </x:Panes>
+     <x:ProtectContents>False</x:ProtectContents>
+     <x:ProtectObjects>False</x:ProtectObjects>
+     <x:ProtectScenarios>False</x:ProtectScenarios>
+    </x:WorksheetOptions>
+   </x:ExcelWorksheet>
+  </x:ExcelWorksheets>
+  <x:WindowHeight>7770</x:WindowHeight>
+  <x:WindowWidth>11655</x:WindowWidth>
+  <x:WindowTopX>360</x:WindowTopX>
+  <x:WindowTopY>60</x:WindowTopY>
+  <x:ProtectStructure>False</x:ProtectStructure>
+  <x:ProtectWindows>False</x:ProtectWindows>
+ </x:ExcelWorkbook>
+</xml><![endif]-->
+</head>
+
+<body link=blue vlink=purple class=xl24>
+<!--The following information was generated by Microsoft Excel's Publish as Web
+Page wizard.--><!--If the same item is republished from Excel, all information between the DIV
+tags will be replaced.--><!-----------------------------><!--START OF OUTPUT FROM EXCEL PUBLISH AS WEB PAGE WIZARD --><!----------------------------->
+
+<table x:str border=0 cellpadding=0 cellspacing=0 width=845 style='border-collapse:
+ collapse;table-layout:fixed;width:634pt'>
+ <col class=xl25 width=589 style='mso-width-source:userset;mso-width-alt:18848;
+ width:442pt'>
+ <col class=xl26 width=96 span=2 style='mso-width-source:userset;mso-width-alt:
+ 3072;width:72pt'>
+ <col class=xl27 width=64 style='mso-width-source:userset;mso-width-alt:2048;
+ width:48pt'>
+ <tr class=xl28 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl28 width=589 style='height:10.5pt;width:442pt'><!--The following information was generated by Microsoft Excel's Publish as Web
+Page wizard.--><!--If the same item is republished from Excel, all information between the DIV
+tags will be replaced.--><!-----------------------------><!--START OF OUTPUT FROM EXCEL PUBLISH AS WEB PAGE WIZARD --><!----------------------------->Issue</td>
+  <td class=xl29 width=96 style='width:72pt'>Entered</td>
+  <td class=xl29 width=96 style='width:72pt'>Completed</td>
+  <td class=xl30 width=64 style='width:48pt'>Priority</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Cursors don’t extend to bottom
+  of staff properly.</td>
+  <td class=xl33 align=right x:num="36287">May 7, 1999</td>
+  <td class=xl33>&nbsp;</td>
+  <td class=xl34>&nbsp;</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Staff is an array of notes,
+  this design is not clean and is awkward.</td>
+  <td class=xl33 align=right x:num="36288">May 8, 1999</td>
+  <td class=xl33>&nbsp;</td>
+  <td class=xl34>&nbsp;</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>When you double click a note,
+  it moves it to the leftmost part of the screen.</td>
+  <td class=xl33 align=right x:num="36288">May 8, 1999</td>
+  <td class=xl33>&nbsp;</td>
+  <td class=xl34>&nbsp;</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>There should be a better
+  separation from Note mouse positions and icon locations.</td>
+  <td class=xl33 align=right x:num="36288">May 8, 1999</td>
+  <td class=xl33>&nbsp;</td>
+  <td class=xl34>&nbsp;</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Add a remove note feature</td>
+  <td class=xl33 align=right x:num="36301">May 21, 1999</td>
+  <td class=xl33>&nbsp;</td>
+  <td class=xl34>&nbsp;</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Allow a note to be placed
+  between two notes</td>
+  <td class=xl33 align=right x:num="36301">May 21, 1999</td>
+  <td class=xl33 align=right x:num="36308">May 28, 1999</td>
+  <td class=xl34>H</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Moving notes doesn't work when
+  the window is scrolled</td>
+  <td class=xl33 align=right x:num="36296">May 16, 1999</td>
+  <td class=xl33>&nbsp;</td>
+  <td class=xl34>&nbsp;</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Allow a measure to be double
+  clicked</td>
+  <td class=xl33 align=right x:num="36297">May 17, 1999</td>
+  <td class=xl33>&nbsp;</td>
+  <td class=xl34>&nbsp;</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Allow a measure to be played</td>
+  <td class=xl33 align=right x:num="36297">May 17, 1999</td>
+  <td class=xl33 align=right x:num="36309">May 29, 1999</td>
+  <td class=xl34>&nbsp;</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Implement the play engine</td>
+  <td class=xl33 align=right x:num="36297">May 17, 1999</td>
+  <td class=xl33>&nbsp;</td>
+  <td class=xl34>&nbsp;</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Allow the clef bitmaps to use
+  masks</td>
+  <td class=xl33 align=right x:num="36298">May 18, 1999</td>
+  <td class=xl33>&nbsp;</td>
+  <td class=xl34>&nbsp;</td>
+ </tr>
+ <tr class=xl35 height=32 style='mso-height-source:userset;height:24.0pt'>
+  <td height=32 class=xl36 width=589 style='height:24.0pt;width:442pt'>Problem
+  with staffs where measure width is determined by staff width, if the measures
+  do not divide evenly into the width of the staff</td>
+  <td class=xl37 align=right x:num="36298">May 18, 1999</td>
+  <td class=xl37>&nbsp;</td>
+  <td class=xl38>H</td>
+ </tr>
+ <tr class=xl25 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl39 style='height:10.5pt'>Selected measures overlay
+  notes from other measures</td>
+  <td class=xl40 align=right x:num="36300">May 20, 1999</td>
+  <td class=xl40>&nbsp;</td>
+  <td class=xl41>M</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl42 style='height:10.5pt'><s>Make note icons bitmaps</s></td>
+  <td class=xl43 align=right x:num="36301"><s>May 21, 1999</s></td>
+  <td class=xl43><s style='visibility:hidden;mso-ignore:visibility'>&nbsp;</s></td>
+  <td class=xl44><s>L</s></td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Enable playing of all measures</td>
+  <td class=xl33 align=right x:num="36301">May 21, 1999</td>
+  <td class=xl33 align=right x:num="36303">May 23, 1999</td>
+  <td class=xl34>H</td>
+ </tr>
+ <tr class=xl25 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl39 style='height:10.5pt'>Selection does not work on 256
+  colors</td>
+  <td class=xl40 align=right x:num="36301">May 21, 1999</td>
+  <td class=xl40>&nbsp;</td>
+  <td class=xl41>&nbsp;</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Implement a tempo feature
+  specific to measures</td>
+  <td class=xl33 align=right x:num="36303">May 23, 1999</td>
+  <td class=xl33 align=right x:num="36308">May 28, 1999</td>
+  <td class=xl34>H</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Don't need message pump loop
+  in ScoreApp::PlayStaff()</td>
+  <td class=xl33 align=right x:num="36303">May 23, 1999</td>
+  <td class=xl33 align=right x:num="36308">May 28, 1999</td>
+  <td class=xl34>L</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Sequencer::PlayStaff() has
+  hard coded measures for 0, 1 -&gt; double buffer</td>
+  <td class=xl33 align=right x:num="36303">May 23, 1999</td>
+  <td class=xl33 align=right x:num="36308">May 28, 1999</td>
+  <td class=xl34>H</td>
+ </tr>
+ <tr class=xl25 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl39 style='height:10.5pt'>DataEngine uses heap memory;
+  this could be too slow?</td>
+  <td class=xl40 align=right x:num="36303">May 23, 1999</td>
+  <td class=xl40>&nbsp;</td>
+  <td class=xl41>M</td>
+ </tr>
+ <tr class=xl25 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl39 style='height:10.5pt'>MidiStream::RegisterHook() and
+  MidiStream::RevokeHook() could move to base class</td>
+  <td class=xl40 align=right x:num="36303">May 23, 1999</td>
+  <td class=xl40>&nbsp;</td>
+  <td class=xl41>L</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>A document / view model might
+  be appropriate</td>
+  <td class=xl33 align=right x:num="36308">May 28, 1999</td>
+  <td class=xl33 align=right x:num="36309">May 29, 1999</td>
+  <td class=xl34>M</td>
+ </tr>
+ <tr class=xl25 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl39 style='height:10.5pt'>Measure class needs a lot of
+  rework</td>
+  <td class=xl40 align=right x:num="36308">May 28, 1999</td>
+  <td class=xl40>&nbsp;</td>
+  <td class=xl41>M</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl32 style='height:10.5pt'>Get a single measure to play</td>
+  <td class=xl33 align=right x:num="36308">May 28, 1999</td>
+  <td class=xl33 align=right x:num="36309">May 29, 1999</td>
+  <td class=xl34>H</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl42 style='height:10.5pt'><s>Note needs to be able to
+  change value based on an anchor</s></td>
+  <td class=xl43 align=right x:num="36309"><s>May 29, 1999</s></td>
+  <td class=xl43><s style='visibility:hidden;mso-ignore:visibility'>&nbsp;</s></td>
+  <td class=xl44><s>M</s></td>
+ </tr>
+ <tr class=xl45 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl46 style='height:10.5pt'>Implement a key signature</td>
+  <td class=xl47 align=right x:num="36309">May 29, 1999</td>
+  <td class=xl47>&nbsp;</td>
+  <td class=xl48>M</td>
+ </tr>
+ <tr class=xl31 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl42 style='height:10.5pt'><s>Implement voices in order
+  to play chords</s></td>
+  <td class=xl43 align=right x:num="36309"><s>May 29, 1999</s></td>
+  <td class=xl43 align=right x:num="36347"><s>July 6, 1999</s></td>
+  <td class=xl44><s>M</s></td>
+ </tr>
+ <tr class=xl35 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl50 style='height:10.5pt'>Implement accidentals ---
+  please!</td>
+  <td class=xl37 align=right x:num="36309">May 29, 1999</td>
+  <td class=xl37 align=right x:num="36347">July 6, 1999</td>
+  <td class=xl38>M</td>
+ </tr>
+ <tr class=xl45 height=14 style='mso-height-source:userset;height:10.5pt'>
+  <td height=14 class=xl46 style='height:10.5pt'>Implement ledger lines above
+  and below the staff</td>
+  <td class=xl47 align=right x:num="36309">May 29, 1999</td>
+  <td class=xl47>&nbsp;</td>
+  <td class=xl49>M<!-----------------------------><!--END OF OUTPUT FROM EXCEL PUBLISH AS WEB PAGE WIZARD--><!-----------------------------><!-----------------------------><!--END OF OUTPUT FROM EXCEL PUBLISH AS WEB PAGE WIZARD--><!-----------------------------></td>
+ </tr>
+ <![if supportMisalignedColumns]>
+ <tr height=0 style='display:none'>
+  <td width=589 style='width:442pt'></td>
+  <td width=96 style='width:72pt'></td>
+  <td width=96 style='width:72pt'></td>
+  <td width=64 style='width:48pt'></td>
+ </tr>
+ <![endif]>
+</table>
+
+</body>
+
+</html>

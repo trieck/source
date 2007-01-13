@@ -1,0 +1,134 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA = {
+		activeBuildStyle = 4A9504CCFFE6A4B311CA0CBA;
+		activeTarget = 29B97326FDCFA39411CA2CEA;
+		breakpoints = (
+			F5E9B8010232F5F601A80003,
+			F5E9B802023312F501A80003,
+		);
+		perUserDictionary = {
+			PBXWorkspaceConfiguration = {
+				ContentSize = "{1024, 629}";
+				LeftSlideOut = {
+					ActiveTab = 0;
+					Frame = "{{0, 23}, {1024, 606}}";
+					Split0 = {
+						Frame = "{{224, 0}, {800, 606}}";
+						Split0 = {
+							Frame = "{{0, 24}, {800, 582}}";
+						};
+						SplitCount = 1;
+						Tab0 = {
+							Debugger = {
+								ActiveTab = 0;
+								Frame = "{{0, 0}, {1000, 289}}";
+								Split0 = {
+									Frame = "{{0, 57}, {1000, 232}}";
+									Split0 = {
+										Frame = "{{0, 0}, {487, 232}}";
+									};
+									Split1 = {
+										Frame = "{{496, 0}, {504, 232}}";
+									};
+									SplitCount = 2;
+								};
+								SplitCount = 1;
+								Tab0 = {
+									Frame = "{{0, 0}, {1000, 33}}";
+								};
+								Tab1 = {
+									Frame = "{{0, 0}, {1000, 157}}";
+								};
+								TabCount = 2;
+							};
+							Frame = "{{0, 0}, {1000, 289}}";
+							LauncherConfigVersion = 4;
+						};
+						Tab1 = {
+							Frame = "{{0, 0}, {1000, 208}}";
+							LauncherConfigVersion = 3;
+							Runner = {
+								Frame = "{{0, 0}, {1000, 208}}";
+							};
+						};
+						Tab2 = {
+							BuildMessageFrame = "{{0, 0}, {1002, 73}}";
+							BuildTranscriptFrame = "{{0, 82}, {1002, 112}}";
+							Frame = "{{0, 0}, {1000, 192}}";
+						};
+						Tab3 = {
+							Frame = "{{0, 0}, {1000, 295}}";
+						};
+						TabCount = 4;
+					};
+					SplitCount = 1;
+					Tab0 = {
+						Frame = "{{0, 0}, {200, 606}}";
+					};
+					Tab1 = {
+						ClassesFrame = "{{0, 0}, {202, 367}}";
+						Frame = "{{0, 0}, {200, 606}}";
+						MembersFrame = "{{0, 376}, {202, 230}}";
+						OptionsSetName = "Hierarchy, all classes";
+					};
+					Tab2 = {
+						Frame = "{{0, 0}, {200, 100}}";
+					};
+					Tab3 = {
+						Frame = "{{0, 0}, {200, 100}}";
+						Split0 = {
+							Frame = "{{0, 0}, {200, 45}}";
+						};
+						Split1 = {
+							Frame = "{{0, 54}, {200, 46}}";
+						};
+						SplitCount = 2;
+					};
+					Tab4 = {
+						Frame = "{{0, 0}, {250, 606}}";
+					};
+					TabCount = 5;
+				};
+				WindowLocation = "{0, 53}";
+			};
+		};
+		wantsIndex = 1;
+		wantsSCM = -1;
+	};
+	29B97326FDCFA39411CA2CEA = {
+		activeExec = 0;
+		targetExecs = {
+			macosx = (
+				F5E9B7FC0232EB7101A80003,
+			);
+		};
+	};
+	F5E9B7FC0232EB7101A80003 = {
+		activeArgIndex = 2147483647;
+		argumentStrings = (
+		);
+		debuggerPlugin = GDBDebugging;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		isa = PBXExecutable;
+		shlibInfoDictList = (
+		);
+		sourceDirectories = (
+		);
+	};
+	F5E9B8010232F5F601A80003 = {
+		fileReference = F5E9B7FD0232EDEF01A80003;
+		isa = PBXFileBreakpoint;
+		lineNumber = 27;
+		state = 1;
+	};
+	F5E9B802023312F501A80003 = {
+		fileReference = F5E9B7FD0232EDEF01A80003;
+		isa = PBXFileBreakpoint;
+		lineNumber = 16;
+		state = 1;
+	};
+}

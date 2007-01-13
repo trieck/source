@@ -1,0 +1,72 @@
+// Color Button.odl : type library source for OLE Control project.
+
+// This file will be processed by the Make Type Library (mktyplib) tool to
+// produce the type library (Color Button.tlb) that will become a resource in
+// Color Button.ocx.
+
+#include <olectl.h>
+
+[ uuid(A3AFC613-B347-11D0-97F7-444553540000), version(1.0),
+  helpstring("Color Button"), control ]
+library COLORBUTTONLib
+{
+	importlib(STDOLE_TLB);
+	importlib(STDTYPE_TLB);
+
+	//  Primary dispatch interface for CColorButtonCtrl
+
+	[ uuid(A3AFC614-B347-11D0-97F7-444553540000),
+	  helpstring("Dispatch interface for ColorButton Control"), hidden ]
+	dispinterface _DColorButton
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CColorButtonCtrl)
+			[id(DISPID_FONT), bindable] IFontDisp* Font;
+			[id(DISPID_BACKCOLOR)] OLE_COLOR BackColor;
+			[id(DISPID_FORECOLOR)] OLE_COLOR ForeColor;
+			[id(DISPID_CAPTION)] BSTR Caption;
+			[id(DISPID_ENABLED), bindable, requestedit] boolean Enabled;
+			[id(1)] short BevelWidth;
+			//}}AFX_ODL_PROP
+
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CColorButtonCtrl)
+			//}}AFX_ODL_METHOD
+
+			[id(DISPID_ABOUTBOX)] void AboutBox();
+	};
+
+	//  Event dispatch interface for CColorButtonCtrl
+
+	[ uuid(A3AFC615-B347-11D0-97F7-444553540000),
+	  helpstring("Event interface for ColorButton Control") ]
+	dispinterface _DColorButtonEvents
+	{
+		properties:
+			//  Event interface has no properties
+
+		methods:
+			// NOTE - ClassWizard will maintain event information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_EVENT(CColorButtonCtrl)
+			[id(DISPID_CLICK)] void Click();
+			//}}AFX_ODL_EVENT
+	};
+
+	//  Class information for CColorButtonCtrl
+
+	[ uuid(A3AFC616-B347-11D0-97F7-444553540000),
+	  helpstring("ColorButton Control"), control ]
+	coclass ColorButton
+	{
+		[default] dispinterface _DColorButton;
+		[default, source] dispinterface _DColorButtonEvents;
+	};
+
+
+	//{{AFX_APPEND_ODL}}
+};

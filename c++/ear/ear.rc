@@ -1,0 +1,262 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\ear.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 158, 57
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Ear Training"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,131,7,20,14,WS_GROUP
+    LTEXT           "Ear Training\nCopyright ©2000 Rieck Enterprises",
+                    IDC_STATIC,7,28,121,21
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,7,21,20
+END
+IDD_EAR_DIALOG DIALOGEX 0, 0, 302, 167
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Ear Training"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "&Interval",IDC_STATIC,7,7,215,104
+    CONTROL         "Minor 2nd",IDC_RDINTERVALMIN2ND,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,19,20,65,15
+    CONTROL         "Major 2nd",IDC_RDINTERVALMAJ2ND,"Button",
+                    BS_AUTORADIOBUTTON,19,36,65,15
+    CONTROL         "Minor 3rd",IDC_RDINTERVALMIN3,"Button",
+                    BS_AUTORADIOBUTTON,19,52,65,15
+    CONTROL         "Major 3rd",IDC_RDINTERVALMAJ3,"Button",
+                    BS_AUTORADIOBUTTON,19,68,65,15
+    CONTROL         "Perfect 4th",IDC_RDINTERVALPER4TH,"Button",
+                    BS_AUTORADIOBUTTON,19,84,65,15
+    CONTROL         "Augmented 4th",IDC_RDINTERVALAUG4TH,"Button",
+                    BS_AUTORADIOBUTTON,85,20,65,15
+    CONTROL         "Perfect 5th",IDC_RDINTERVALPER5TH,"Button",
+                    BS_AUTORADIOBUTTON,85,36,65,15
+    CONTROL         "Minor 6th",IDC_RDINTERVALMIN6TH,"Button",
+                    BS_AUTORADIOBUTTON,85,52,65,15
+    CONTROL         "Major 6th",IDC_RDINTERVALMAJ6TH,"Button",
+                    BS_AUTORADIOBUTTON,85,68,65,15
+    CONTROL         "Minor 7th",IDC_RDINTERVALMIN7TH,"Button",
+                    BS_AUTORADIOBUTTON,85,84,65,15
+    CONTROL         "Major 7th",IDC_RDINTERVALMAJ7TH,"Button",
+                    BS_AUTORADIOBUTTON,152,20,65,15
+    CONTROL         "Octave",IDC_RDINTERVALOCT,"Button",BS_AUTORADIOBUTTON,
+                    152,36,65,15
+    PUSHBUTTON      "&Listen",IDLISTEN,245,7,50,14
+    PUSHBUTTON      "&Enter",IDENTER,245,23,50,14
+    PUSHBUTTON      "&Settings",IDSETTINGS,245,39,50,14
+    PUSHBUTTON      "E&xit",IDCANCEL,245,55,50,14
+    CTEXT           "0",IDC_CORRECT,230,91,30,9,SS_SUNKEN
+    LTEXT           "Correct",IDC_STATIC,262,91,33,9,SS_SUNKEN
+    CTEXT           "0",IDC_INCORRECT,230,102,30,9,SS_SUNKEN
+    LTEXT           "Incorrect",IDC_STATIC,262,102,33,9,SS_SUNKEN
+    CTEXT           "",IDC_OUTPUT,7,148,215,10,SS_SUNKEN
+    LTEXT           "",IDC_TOTAL,230,113,30,9,SS_SUNKEN
+    LTEXT           "Total",IDC_STATIC,262,113,33,9,SS_SUNKEN
+    GROUPBOX        "S&core",IDC_STATIC,7,112,215,22
+END
+IDD_SETTINGS DIALOG DISCARDABLE  0, 0, 184, 134
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,127,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,127,23,50,14
+    COMBOBOX        IDC_INSTRUMENTS,7,109,118,72,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Instrument:",IDC_STATIC,7,98,118,9
+    GROUPBOX        "Intervals",IDC_STATIC,7,7,118,90
+    CONTROL         "Seconds",IDC_CHKSECONDS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,15,19,103,10
+    CONTROL         "Thirds",IDC_CHKTHIRDS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,15,29,103,10
+    CONTROL         "Fourths",IDC_CHKFOURTHS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,15,39,103,10
+    CONTROL         "Fifths",IDC_CHKFIFTHS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,15,49,103,10
+    CONTROL         "Sixths",IDC_CHKSIXTHS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,15,59,103,10
+    CONTROL         "Sevenths",IDC_CHKSEVENTHS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,15,69,103,10
+    CONTROL         "Octaves",IDC_CHKOCTAVES,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,15,79,103,10
+END
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "Rieck Enterprises\0"
+            VALUE "FileDescription", "Ear Training\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "Ear Training\0"
+            VALUE "LegalCopyright", "Copyright (C) 2000\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "ear.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "Ear Training\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+#endif    // !_MAC
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 151
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 50
+    END
+    IDD_EAR_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 295
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 158
+    END
+    IDD_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 177
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 127
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXT
+//
+IDR_INSTRUMENTS         TEXT    DISCARDABLE     "res\\instuments.txt"
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\ear.ico"
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About Ear Training..."
+    IDS_COULDNOTOPENMIDIMAPPER "Unable to open the midi mapper."
+    IDS_COULDNOTSETTIMEDIVISION "Unable to set the MIDI time division."
+    IDS_INCORRECT           "Sorry!  The interval played was a %s."
+    IDS_CORRECT             "Correct!"
+END
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Ear Training"
+END
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\ear.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

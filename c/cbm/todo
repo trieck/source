@@ -1,0 +1,28 @@
+-----------------------------------------------------------------------------						
+						Neptune64 Emulator TODO List
+									1/2001
+-----------------------------------------------------------------------------
+* 	it should NOT be possible to assemble code at ROM locations.  
+	More specifically code should not be able to be written to these locations
+	This should some how be handled internally by the emulator.  I think we have the 
+	wrong concept / idea here.
+	
+	[done]
+	
+* 	support undocumented opcodes.
+* 	create subdirectories for win32, bcc for t6502, td6502 
+	and remove Makefile.win32
+	
+	[done]
+	
+* 	6502 emulation should be decoupled from the C64 issues, ie, kernal, basic ROM, etc.
+	[done]
+	
+* 	readline needs to work for Unix.
+* 	set up memory management module.  we really cannot proceed without this
+	[done]
+* 	make common a library
+	[done]
+	
+* 	it is time for interrupts!
+* 	change go operation in monitor to do a pc->push

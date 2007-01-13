@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wavelib", "wavelib.vcproj", "{F55C812B-6503-451F-9D5F-281A581445A7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = \u0022$/Source/c++/WAVEEDIT/wavelib\u0022,\u0020RCDAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SolutionUniqueID = {FB7646C1-8F43-4135-A103-B928366831F7}
+		SccProjectUniqueName1 = wavelib.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{F55C812B-6503-451F-9D5F-281A581445A7}.Debug.ActiveCfg = Debug|Win32
+		{F55C812B-6503-451F-9D5F-281A581445A7}.Debug.Build.0 = Debug|Win32
+		{F55C812B-6503-451F-9D5F-281A581445A7}.Release.ActiveCfg = Release|Win32
+		{F55C812B-6503-451F-9D5F-281A581445A7}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

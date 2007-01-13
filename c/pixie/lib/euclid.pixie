@@ -1,0 +1,18 @@
+# 
+# Euclid's Algorithm
+#
+# Given two positive integers m and n, find
+# their greatest common divisor, that is, the largest
+# positive integer that evenly divides both m and n.
+#
+def euclid {
+	var m = shift argv;
+	var n = shift argv;
+	
+	var r = m % n;
+	if (r == 0) {
+		return n;
+	}
+	
+	return euclid(n, r);	
+}

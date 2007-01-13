@@ -1,0 +1,16 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+HCW=0
+LCID=0x409 0x0 0x0 ;English (United States)
+REPORT=Yes
+CONTENTS=Main
+TITLE=Pente for Windows
+CNT=.\winpente.cnt
+COPYRIGHT=Copyright 1998 Rieck Enterprises
+DEFFONT=Tahoma,8,0
+BMROOT=..\v2.0\ResDLL
+HLP=.\winpente.hlp
+
+[FILES]
+.\winpente.rtf

@@ -1,0 +1,17 @@
+LIBRARY   	BM
+DESCRIPTION "Custom Bitmap Functions"
+CODE      	PRELOAD MOVEABLE DISCARDABLE
+DATA      	PRELOAD MOVEABLE SINGLE
+EXPORTS
+			GetBitmapSize
+			GetBMISize
+			PaintWindow
+			ExtractBMFH
+			ExtractBMI
+			BlastBitmapFile
+			BlastBitmap
+			StretchBitmapFile
+			StretchBitmap
+			GetBitSize
+			GetBMBits
+			ShowBitmapInfo

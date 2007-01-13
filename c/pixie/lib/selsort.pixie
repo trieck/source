@@ -1,0 +1,31 @@
+# Selection Sort; Sedgwick 6.2
+#
+# First, find the smallest element in the array, and exchange it with the element
+# in the first position.  Then, find the second smallest element and exchange it
+# with the element in the second position.  Continue in this way until the entire
+# array is sorted.  This method is called selection sort because it works by repeatedly
+# selecting the smallest remaining element.
+#
+def selsort {
+
+	var a = shift argv;
+	var i, n = length a;	
+		
+	while (i < n) {
+		var min = i;
+		var j = i + 1;
+		
+		while (j <= n - 1) {
+			if (a[j] < a[min]) min = j;
+			j = j + 1;
+		}
+		
+		var t = a[i];
+		a[i] = a[min];
+		a[min] = t;
+		
+		i = i + 1;
+	}
+	
+	return a;
+}

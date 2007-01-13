@@ -1,0 +1,7 @@
+# master sort library
+#
+include 'lib/bsort'
+include 'lib/isort'
+include 'lib/selsort'
+include 'lib/shellsort'
+

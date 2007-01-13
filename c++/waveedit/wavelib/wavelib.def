@@ -1,0 +1,12 @@
+;	WAVELIB.DEF
+;	Module Definition File
+;	11/22/1997
+
+LIBRARY			WAVELIB.DLL
+DESCRIPTION		"Custom Wave Function Library"
+EXPORTS			DllMain					@1	PRIVATE
+				DllGetClassObject		@2	PRIVATE
+				DllRegisterServer		@3	PRIVATE
+				DllUnregisterServer		@4	PRIVATE
+				DllCanUnloadNow			@5	PRIVATE
+

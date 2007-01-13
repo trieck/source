@@ -1,0 +1,7 @@
+Teeny Tiny CBM 6502 Assembler
+Copyright(c) 1999-2001 Thomas A. Rieck
+Version 0.0.1
+Assembler should support new 65link.exe format, including:
+-> extern declared routines
+-> see readme in /65link
+	

@@ -1,0 +1,15 @@
+; JDBLIB.def : declares the module parameters for the DLL.
+
+LIBRARY	     "JDBLIB"
+
+EXPORTS
+	DllMain										
+	Java_com_knowx_kxtrieck_JDBLib_dblogin		
+	Java_com_knowx_kxtrieck_JDBLib_dbfreelogin	
+	Java_com_knowx_kxtrieck_JDBLib_dbsetluser	
+	Java_com_knowx_kxtrieck_JDBLib_dbsetlpwd	
+	Java_com_knowx_kxtrieck_JDBLib_dbopen		
+	Java_com_knowx_kxtrieck_JDBLib_dbclose		
+	Java_com_knowx_kxtrieck_JDBLib_dbcmd
+	Java_com_knowx_kxtrieck_JDBLib_dbsqlexec
+

@@ -1,0 +1,7 @@
+frmPhoneBook2 = 97, 104, 768, 511, C, 44, 44, 478, 381, CZ
+modPhoneModule = 66, 79, 500, 403, C
+basUsers = 0, 0, 0, 0, C
+basTapi = 110, 110, 588, 369, C
+frmUsers = 0, 0, 0, 0, C, 88, 88, 430, 433, C
+frmAbout = 0, 0, 0, 0, C, 22, 22, 456, 359, C
+frmDialingOptions = 0, 0, 0, 0, C, 44, 44, 386, 389, C

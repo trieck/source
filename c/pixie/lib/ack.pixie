@@ -1,0 +1,10 @@
+# Compute Ackermann's function
+#
+def ack {
+	var arg1 = shift argv;
+	var arg2 = shift argv;
+	
+	if (arg1 == 0) return arg2 + 1;
+	if (arg2 == 0) return ack(arg1 - 1, 1);
+	return ack(arg1 - 1, ack(arg1, arg2 - 1));
+}

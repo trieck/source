@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Created-By: 1.5.0_01 (Sun Microsystems Inc.)
+Main-class: org.trieck.games.pente.Game
+
+

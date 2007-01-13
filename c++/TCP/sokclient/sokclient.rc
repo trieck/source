@@ -1,0 +1,379 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "winsock.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""winsock.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_MAIN DIALOGEX 0, 0, 216, 140
+STYLE DS_3DLOOK | WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS
+EXSTYLE WS_EX_CONTROLPARENT | WS_EX_STATICEDGE
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_MESSAGE,7,66,201,39,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    NOT WS_TABSTOP
+    COMBOBOX        IDC_HOSTNAME,7,17,202,40,CBS_DROPDOWN | WS_TABSTOP
+    LTEXT           "Message:",IDC_STMESSAGE,7,55,76,8
+    LTEXT           "Host Name:",IDC_STHOSTNAME,7,7,76,8
+END
+
+IDD_DISKINFO DIALOG DISCARDABLE  0, 0, 156, 119
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Server Disk Information"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,60,97,38,14
+    LTEXT           "Server Address:",IDC_STSERVERADDR,7,7,52,11
+    CTEXT           "",IDC_SERVERADDRESS,60,7,88,10,SS_SUNKEN
+    LISTBOX         IDC_DRIVELIST,7,36,142,57,LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Drives:",IDC_STDRIVES,7,26,48,9
+END
+
+IDD_ABOUT DIALOGEX 0, 0, 110, 159
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Socket Client"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,39,138,31,14
+    CTEXT           "Socket Client\n Written by: Thomas A. Rieck\nCopyright 1997",
+                    IDC_STATIC,7,106,96,28
+    CONTROL         114,IDC_STATIC,"Static",SS_BITMAP,7,7,96,97,
+                    WS_EX_CLIENTEDGE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_MAIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 209
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 133
+    END
+
+    IDD_DISKINFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 149
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 111
+    END
+
+    IDD_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 103
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 152
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINMENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Connect",                    IDM_CONNECT
+        MENUITEM "&Disconnect",                 IDM_DISCONNECT, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       IDM_EXIT
+    END
+    POPUP "&Tools"
+    BEGIN
+        MENUITEM "Send &Message",               IDM_SENDMESSAGE, GRAYED
+        MENUITEM "Server &Disk Information",    IDM_DISKINFO, GRAYED
+    END
+    POPUP "&Help", HELP
+    BEGIN
+        MENUITEM "&About",                      IDM_ABOUT, HELP
+    END
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Winsock Client Utility\0"
+            VALUE "CompanyName", "Rieck Enterprises\0"
+            VALUE "FileDescription", "sokclient\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "sokclient\0"
+            VALUE "LegalCopyright", "Copyright © 1997\0"
+            VALUE "OriginalFilename", "sokclient.exe\0"
+            VALUE "ProductName", "  sokclient\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_TBARMAIN TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      IDT_SEPERATOR
+    BUTTON      IDT_CONNECT
+    BUTTON      IDT_DISCONNECT
+    BUTTON      IDT_SEPERATOR2
+    BUTTON      IDT_SEND
+    BUTTON      IDT_DISKINFO
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_TBARMAIN            BITMAP  DISCARDABLE     "tbarmain.bmp"
+IDB_WS2                 BITMAP  DISCARDABLE     "Ws2.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_MAIN DLGINIT
+BEGIN
+    IDC_HOSTNAME, 0x403, 10, 0
+0x6f6c, 0x6163, 0x686c, 0x736f, 0x0074, 
+    IDC_HOSTNAME, 0x403, 7, 0
+0x4952, 0x4345, 0x544b, "\000" 
+    IDC_HOSTNAME, 0x403, 9, 0
+0x4843, 0x4952, 0x5453, 0x4c53, "\000" 
+    IDC_HOSTNAME, 0x403, 9, 0
+0x4f47, 0x4452, 0x4e4f, 0x4e44, "\000" 
+    IDC_HOSTNAME, 0x403, 9, 0
+0x4145, 0x4e41, 0x5244, 0x5745, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_MAIN                ICON    DISCARDABLE     "main.ico"
+//IDI_DRIVE               ICON    DISCARDABLE     "drive.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TIPS_CONNECT        "Connect to Host"
+    IDS_TIPS_SENDMESSAGE    "Send command to Host"
+    IDS_TIPS_EXIT           "Disconnect"
+    IDS_HOSTNAMEERR         "Host name has not been specified."
+    IDS_CREATESOCKERR       "Failure creating socket."
+    IDS_CONNECTERR          "An error has occured while connecting.\nPlease ensure the server is running."
+    IDS_ASYNCERR            "An error has occured in WSAAsyncSelect()."
+    IDS_CONNECTSUCCESS      "Connection has been established."
+    IDS_CONNECTDROP         "The connection has unexpectantly dropped."
+    IDS_HOSTBYNAMEERR       "Unable to resolve host name.\nMake sure it is listed in the hosts file."
+    IDS_SENDERR             "An error has occured during data transmission."
+    IDS_STATUSBYTES         "%d Bytes Sent."
+    IDS_CONNECTED           "Connected."
+    IDS_NOTCONNECTED        "Not Connected."
+    IDS_TIPS_DISKINFO       "Server Disk Information"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    WSABASEERR              "[0] No Error"
+    WSAEINTR                "[10004] Interrupted system call"
+    WSAEBADF                "[10009] Bad file number"
+    WSAEACCES               "[10013] Permission denied"
+    WSAEFAULT               "[10014] Bad address"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    WSAEINVAL               "[10022] Invalid argument"
+    WSAEMFILE               "[10024] Too many open files"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    WSAEWOULDBLOCK          "[10035] Operation would block"
+    WSAEINPROGRESS          "[10036] Operation now in progress"
+    WSAEALREADY             "[10037] Operation already in progress"
+    WSAENOTSOCK             "[10038] Socket operation on non-socket"
+    WSAEDESTADDRREQ         "[10039] Destination address required"
+    WSAEMSGSIZE             "[10040] Message too long"
+    WSAEPROTOTYPE           "[10041] Protocol wrong type for socket"
+    WSAENOPROTOOPT          "[10042] Bad protocol option"
+    WSAEPROTONOSUPPORT      "[10043] Protocol not supported"
+    WSAESOCKTNOSUPPORT      "[10044] Socket type not supported"
+    WSAEOPNOTSUPP           "[10045] Operation not supported on socket"
+    WSAEPFNOSUPPORT         "[10046] Protocol family not supported"
+    WSAEAFNOSUPPORT         "[10047] Address family not supported by protocol family"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    WSAEADDRINUSE           "[10048] Address already in use"
+    WSAEADDRNOTAVAIL        "[10049] Can't assign requested address"
+    WSAENETDOWN             "[10050] Network is down"
+    WSAENETUNREACH          "[10051] Network is unreachable"
+    WSAENETRESET            "[10052] Net dropped connection or reset"
+    WSAECONNABORTED         "[10053] Software caused connection abort"
+    WSAECONNRESET           "[10054] Connection reset by peer"
+    WSAENOBUFS              "[10055] No buffer space available"
+    WSAEISCONN              "[10056] Socket is already connected"
+    WSAENOTCONN             "[10057] Socket is not connected"
+    WSAESHUTDOWN            "[10058] Can't send after socket shutdown"
+    WSAETOOMANYREFS         "[10059] Too many references, can't splice"
+    WSAETIMEDOUT            "[10060] Connection timed out"
+    WSAECONNREFUSED         "[10061] Connection refused"
+    WSAELOOP                "[10062] Too many levels of symbolic links"
+    WSAENAMETOOLONG         "[10063] File name too long"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    WSAEHOSTDOWN            "[10064] Host is down"
+    WSAEHOSTUNREACH         "[10065] No Route to Host"
+    WSAENOTEMPTY            "[10066] Directory not empty"
+    WSAEPROCLIM             "[10067] Too many processes"
+    WSAEUSERS               "[10068] Too many users"
+    WSAEDQUOT               "[10069] Disc Quota Exceeded"
+    WSAESTALE               "[10070] Stale NFS file handle"
+    WSAEREMOTE              "[10071] Too many levels of remote in path"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    WSASYSNOTREADY          "[10091] Network SubSystem is unavailable"
+    WSAVERNOTSUPPORTED      "[10092] WINSOCK DLL Version out of range"
+    WSANOTINITIALISED       "[10093] Successful WSASTARTUP not yet performed"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    WSAHOST_NOT_FOUND       "[11001] Host not found"
+    WSATRY_AGAIN            "[11002] Non-Authoritative Host not found"
+    WSANO_RECOVERY          "[11003] Non-Recoverable errors: FORMERR, REFUSED, NOTIMP"
+    WSANO_DATA              "[11004] Valid name, no data record of requested"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RCVERR              "An error has occured while receiving data."
+    IDS_REQERR              "An error has occured while requesting data."
+    IDS_DISKINFO            "Total Number of Bytes:\t%d\nTotal Number of Free Bytes:\t%d"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

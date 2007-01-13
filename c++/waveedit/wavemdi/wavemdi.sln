@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wavemdi", "wavemdi.vcproj", "{42E876EE-A470-4A9D-8C7C-2E48DE50C8A2}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = \u0022$/Source/c++/WAVEEDIT/wavemdi\u0022,\u0020ZCDAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SolutionUniqueID = {5C7B48E6-13D3-4DC6-B938-1FB91AB3643C}
+		SccProjectUniqueName1 = wavemdi.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{42E876EE-A470-4A9D-8C7C-2E48DE50C8A2}.Debug.ActiveCfg = Debug|Win32
+		{42E876EE-A470-4A9D-8C7C-2E48DE50C8A2}.Debug.Build.0 = Debug|Win32
+		{42E876EE-A470-4A9D-8C7C-2E48DE50C8A2}.Release.ActiveCfg = Release|Win32
+		{42E876EE-A470-4A9D-8C7C-2E48DE50C8A2}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

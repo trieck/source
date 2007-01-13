@@ -1,0 +1,10 @@
+//////////////////////////////////////////////////////	
+//	Module	:	BMMAIN.H							//
+//	Purpose	:	custom bitmap functions				//
+//	Author	:	Thomas A. Rieck						//
+//	Date	:	4/26/97								//
+//////////////////////////////////////////////////////
+
+#include <windows.h>
+
+HINSTANCE hInstance;

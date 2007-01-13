@@ -1,0 +1,457 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_REDBALL             ICON    DISCARDABLE     "redball.ico"
+IDI_GREENBALL           ICON    DISCARDABLE     "greenbal.ico"
+IDI_LTBLUEBALL          ICON    DISCARDABLE     "ltblueba.ico"
+IDI_PURPLEBALL          ICON    DISCARDABLE     "purpleba.ico"
+IDI_BLUEBALL            ICON    DISCARDABLE     "blueball.ico"
+IDR_MAINFRAME           ICON    DISCARDABLE     "mainicon.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUT DIALOGEX 0, 0, 147, 106
+STYLE DS_SYSMODAL | DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "About Pente for Windows"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "OK",IDOK,64,90,20,15,BS_CENTER | BS_VCENTER | NOT 
+                    WS_TABSTOP
+    ICON            IDR_MAINFRAME,IDC_STATIC,5,5,20,20,SS_REALSIZEIMAGE | 
+                    SS_SUNKEN,WS_EX_CLIENTEDGE
+    LTEXT           "Designed and Developed by: Thomas A. Rieck",IDC_ABOUT,
+                    35,5,110,20
+    LTEXT           "Theme music composed by: Stephen M. Rieck",IDC_MUSIC,35,
+                    25,110,20
+    LTEXT           "Please send comments and suggestions to:\ntbone@atlcom.net",
+                    IDC_COMMENTS,35,50,110,25
+END
+
+IDD_SCORES DIALOG DISCARDABLE  0, 0, 355, 231
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Pente Scores"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "&Close",IDOK,309,212,39,15
+    CONTROL         "List2",IDC_SCORES,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | 
+                    LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,341,202
+    PUSHBUTTON      "P&review",IDC_PRINTPREVIEW,268,212,39,15
+END
+
+IDD_PIECEPAGE DIALOG DISCARDABLE  0, 0, 223, 135
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Pieces"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Player One",IDC_PLAYER1FRAME,43,23,135,35
+    ICON            IDI_REDBALL,IDC_PLAYERONEPIECE,51,33,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE | WS_GROUP
+    ICON            IDI_GREENBALL,IDC_PLAYERONEPIECE2,76,33,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE
+    ICON            IDI_LTBLUEBALL,IDC_PLAYERONEPIECE3,101,33,20,20,
+                    SS_NOTIFY | SS_CENTERIMAGE | SS_REALSIZEIMAGE
+    ICON            IDI_PURPLEBALL,IDC_PLAYERONEPIECE4,126,33,20,20,
+                    SS_NOTIFY | SS_CENTERIMAGE | SS_REALSIZEIMAGE
+    ICON            IDI_BLUEBALL,IDC_PLAYERONEPIECE5,151,33,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE
+    GROUPBOX        "Player Two",IDC_PLAYER2FRAME,43,62,135,35
+    ICON            IDI_REDBALL,IDC_PLAYERTWOPIECE,51,72,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE | WS_GROUP
+    ICON            IDI_GREENBALL,IDC_PLAYERTWOPIECE2,76,72,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE
+    ICON            IDI_LTBLUEBALL,IDC_PLAYERTWOPIECE3,101,72,20,20,
+                    SS_NOTIFY | SS_CENTERIMAGE | SS_REALSIZEIMAGE
+    ICON            IDI_PURPLEBALL,IDC_PLAYERTWOPIECE4,126,72,20,20,
+                    SS_NOTIFY | SS_CENTERIMAGE | SS_REALSIZEIMAGE
+    ICON            IDI_BLUEBALL,IDC_PLAYERTWOPIECE5,151,72,20,20,SS_NOTIFY | 
+                    SS_CENTERIMAGE | SS_REALSIZEIMAGE
+END
+
+IDD_COLORPAGE DIALOGEX 0, 0, 223, 135
+STYLE WS_CHILD | WS_CAPTION
+CAPTION "Colors"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "",IDC_GRIDCOLOR,106,41,85,16,SS_NOTIFY | SS_SUNKEN | 
+                    NOT WS_GROUP,WS_EX_CLIENTEDGE
+    RTEXT           "Background Color:",IDC_STBKGCOLOR,29,20,60,10,NOT 
+                    WS_GROUP
+    RTEXT           "Grid Color:",IDC_STGRIDCOLOR,29,41,60,10,NOT WS_GROUP
+    LTEXT           "",IDC_BACKCOLOR,106,20,85,16,SS_NOTIFY | SS_SUNKEN | 
+                    NOT WS_GROUP,WS_EX_CLIENTEDGE
+    GROUPBOX        "",IDC_COLORFRAME,15,9,193,115
+    CONTROL         "Use Background Color",IDC_USEBKGND,"Button",
+                    BS_AUTORADIOBUTTON | BS_NOTIFY | WS_GROUP,24,66,117,12
+    CONTROL         "Use Background Wallpaper",IDC_USETHEME,"Button",
+                    BS_AUTORADIOBUTTON | BS_NOTIFY,24,82,118,12
+END
+
+IDD_BKGNDPAGE DIALOG DISCARDABLE  0, 0, 223, 135
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Backgrounds"
+FONT 8, "MS Sans Serif"
+BEGIN
+END
+
+IDD_MISCPAGE DIALOG DISCARDABLE  0, 0, 223, 135
+STYLE WS_CHILD | WS_CAPTION
+CAPTION "Miscellaneous"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "Enable Debug Options",IDC_DEBUGOPTIONS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,7,87,11
+    PUSHBUTTON      "Clear &Player Names",IDC_FLUSHPLAYERS,112,18,97,15
+    PUSHBUTTON      "Clear &Scores",IDC_FLUSHSCORES,112,34,97,15
+    GROUPBOX        "Cleanup",IDC_STATIC,105,7,111,50
+END
+
+IDD_PLAYERNAMES DIALOGEX 0, 0, 225, 79
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "WinPente - Player Names"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,168,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,168,24,50,14
+    CONTROL         "Two Player Game",IDC_TWOPLAYERGAME,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,49,152,10
+    COMBOBOX        IDC_PLAYERONENAME,7,7,153,65,CBS_DROPDOWN | 
+                    CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP,
+                    WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
+    COMBOBOX        IDC_PLAYERTWONAME,7,24,153,65,CBS_DROPDOWN | 
+                    CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP,
+                    WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New Game\tCtrl+N",           ID_FILE_NEW
+        MENUITEM SEPARATOR
+        MENUITEM "&Load Game\tCtrl+L",          ID_FILE_OPEN
+        MENUITEM SEPARATOR
+        MENUITEM "&Save Game\tCtrl+S",          ID_FILE_SAVE
+        MENUITEM "S&ave Game As...",            ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_FILE_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Scores\tCtrl+O",             IDM_SCORES
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "P&references\tCtrl+P",        IDM_PREFERENCES
+        MENUITEM SEPARATOR
+        MENUITEM "S&ettings\tCtrl+E",           IDM_SETTINGS
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Help on Pente\tF1",          ID_HELP
+        MENUITEM "&About\tCtrl+A",              IDM_ABOUT
+    END
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Resource only DLL for Winpente\0"
+            VALUE "CompanyName", "Rieck Enterprises\0"
+            VALUE "FileDescription", "wpres32\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "wpres32\0"
+            VALUE "LegalCopyright", "Copyright © 1997\0"
+            VALUE "OriginalFilename", "wpres32.dll\0"
+            VALUE "ProductName", "wpres32\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "Toolbar.bmp"
+IDB_PSYCHADELIC         BITMAP  DISCARDABLE     "1u.bmp"
+IDB_GRAIN1              BITMAP  DISCARDABLE     "aw.bmp"
+IDB_GRAIN2              BITMAP  DISCARDABLE     "aj.bmp"
+IDB_GREENROPE           BITMAP  DISCARDABLE     "1c.bmp"
+IDB_ROPE                BITMAP  DISCARDABLE     "af.bmp"
+IDB_GRAIN3              BITMAP  DISCARDABLE     "ax.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_FILE_NEW
+    SEPARATOR
+    BUTTON      ID_FILE_OPEN
+    SEPARATOR
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      IDM_SCORES
+    SEPARATOR
+    BUTTON      IDM_PREFERENCES
+    SEPARATOR
+    BUTTON      IDM_SETTINGS
+    SEPARATOR
+    BUTTON      ID_HELP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// WAVE
+//
+
+IDR_WINNER              WAVE    DISCARDABLE     "Winner.wav"
+IDR_PIECE               WAVE    DISCARDABLE     "piece.wav"
+IDR_THEME               WAVE    DISCARDABLE     "theme.wav"
+IDR_BLIP                WAVE    DISCARDABLE     "blip.wav"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS DISCARDABLE 
+BEGIN
+    "A",            IDM_ABOUT,              VIRTKEY, CONTROL, NOINVERT
+    "E",            IDM_SETTINGS,           VIRTKEY, CONTROL, NOINVERT
+    "L",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            IDM_SCORES,             VIRTKEY, CONTROL, NOINVERT
+    "P",            IDM_PREFERENCES,        VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_SCORES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 348
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 227
+    END
+
+    IDD_PIECEPAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 216
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 128
+    END
+
+    IDD_COLORPAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 216
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 128
+    END
+
+    IDD_BKGNDPAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 210
+        BOTTOMMARGIN, 134
+    END
+
+    IDD_MISCPAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 216
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 128
+    END
+
+    IDD_PLAYERNAMES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 218
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 72
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "Pente for Windows\nUntitled\nUntitled\nPente Games(*.pte)\n.pte"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_PREFERENCES         "Display Preferences.\nDisplay Preferences"
+    ID_FILE_EXIT            "Exit WinPente."
+    IDM_ABOUT               "About WinPente."
+    IDM_SCORES              "View Scores.\nView Scores"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_PLAYERONECAPTURES   "Player One Captures: %d"
+    IDS_PLAYERTWOCAPTURES   "Player Two Captures: %d"
+    IDS_WINNER              "Smashing good show %s.\nDo you wish to play another game?"
+    IDS_CLOSEDOC            "The document '%s' has been modified.\nDo you wish to save your changes?"
+    IDS_EXITPENTE           "Exit Winpente"
+    IDS_INVALIDGAME         "This file is not a valid WinPente archive.\nFile loading operation has been aborted."
+    IDS_FILEERROR           "A fatal error has occured attempting to open a file.\nThis operation will be halted."
+    IDS_PREFERENCES         "Preferences"
+    IDS_BADRES              "Sorry.  WinPente requires a screen resolution at least %d X %d.\nIf possible change your resolution, and retry."
+    IDS_PLAYERTURN          "Player %s's turn."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "Begin a new game.\nNew Game"
+    ID_FILE_OPEN            "Load a game from disk.\nLoad Game"
+    ID_FILE_SAVE            "Save current game to disk.\nSave Game"
+    ID_FILE_SAVE_AS         "Save current game to disk with new filename.\nSave Game As"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_HELP                 "Help on WinPente.\nHelp"
+    IDS_COMPUTERWIN         "Computers are of course superior!\nDo you wish to play another game?"
+    IDS_HUMANWIN            "Humans are lucky.\nDo you wish to play another game?"
+    IDS_CREATEOBJECTERROR   "A fatal error occured while creating an object instance.\nThe current task will be halted."
+    IDS_OBJECTMETHODERROR   "A fatal error occured while calling an object method.\nThe current task will be halted."
+    IDS_CLEARALLPLAYERS     "Continuing will clear all players.\nAre you sure you wish to continue?"
+    IDS_SETTINGS            "Settings"
+    IDS_CLEARALLSCORES      "Continuing will clear all scores.\nAre you sure you wish to continue?"
+    IDS_SCORESPREVIEWTITLE  "Pente for Windows Score Report"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_PLAYEROPTIONS       "Player Options.\nPlayer Options"
+    IDM_SETTINGS            "Display Settings.\nDisplay Settings"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

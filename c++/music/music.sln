@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "music", "music.vcproj", "{D3B6B071-B8A2-4488-A85B-7ED22BF7E98E}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = \u0022$/Source/c++/MUSIC\u0022,\u0020BTCAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SolutionUniqueID = {B51FC5AE-877A-4F50-BDEA-86B520901302}
+		SccProjectUniqueName1 = music.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{D3B6B071-B8A2-4488-A85B-7ED22BF7E98E}.Debug.ActiveCfg = Debug|Win32
+		{D3B6B071-B8A2-4488-A85B-7ED22BF7E98E}.Debug.Build.0 = Debug|Win32
+		{D3B6B071-B8A2-4488-A85B-7ED22BF7E98E}.Release.ActiveCfg = Release|Win32
+		{D3B6B071-B8A2-4488-A85B-7ED22BF7E98E}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

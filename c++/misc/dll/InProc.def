@@ -1,0 +1,11 @@
+;	INPROC.DEF
+;	Module Definition File
+;	10/31/1997
+
+LIBRARY	MISCOBJ.DLL
+EXPORTS	DllMain				PRIVATE
+		DllGetClassObject	PRIVATE
+		DllRegisterServer	PRIVATE
+		DllUnregisterServer	PRIVATE
+		DllCanUnloadNow		PRIVATE
+

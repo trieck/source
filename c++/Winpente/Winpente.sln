@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Winpente", "Winpente.vcproj", "{3E54E9B5-7BD9-4C4F-A302-4015243019B9}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = \u0022$/Source/c++/WINPENTE\u0022,\u0020DGDAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SolutionUniqueID = {F76A002F-09AF-40A9-9AB5-8EC2F2850447}
+		SccProjectUniqueName1 = Winpente.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{3E54E9B5-7BD9-4C4F-A302-4015243019B9}.Debug.ActiveCfg = Debug|Win32
+		{3E54E9B5-7BD9-4C4F-A302-4015243019B9}.Debug.Build.0 = Debug|Win32
+		{3E54E9B5-7BD9-4C4F-A302-4015243019B9}.Release.ActiveCfg = Release|Win32
+		{3E54E9B5-7BD9-4C4F-A302-4015243019B9}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
