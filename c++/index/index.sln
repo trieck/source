@@ -9,15 +9,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JupiterLib", "..\JupiterLib\JupiterLib.vcproj", "{628D204A-0A7A-4F2A-A887-9FC32A22F9B4}"
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 3
-		SccProjectUniqueName0 = ..\\JupiterLib\\JupiterLib.vcproj
-		SccProjectName0 = \u0022$/source/c++/JupiterLib\u0022,\u0020YCFAAAAA
-		SccLocalPath0 = ..\\JupiterLib
-		SccLocalPath1 = .
-		SccProjectUniqueName2 = index.vcproj
-		SccLocalPath2 = .
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32

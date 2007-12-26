@@ -5,10 +5,6 @@
 	Name="index"
 	ProjectGUID="{3E5D1B86-901A-4798-B497-44D5B6AE827F}"
 	RootNamespace="index"
-	SccProjectName="SAK"
-	SccAuxPath="SAK"
-	SccLocalPath="SAK"
-	SccProvider="SAK"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
