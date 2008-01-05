@@ -247,3 +247,36 @@ Page_t *split(BTree_t * tree, Page_t * h)
 
 	return t;
 }
+
+/* put item in tree */
+void btree_put(BTree_t *tree, Item_t item)
+{
+	Page_t *u = insertR(tree, tree->pages[0], item, 0);
+	if (u == 0) return;
+	
+	/* 
+	 * The basic idea with the root page split is that we create a new 
+	 * internal root page t with 2 links. The first link points to 
+	 * the old root page and the second link points to the page that caused 
+	 * the split.  The height of the tree is increased by one.
+	 */
+	Page_t *t = tree->frame[1];
+	memset(t, 0, PAGE_SIZE);
+
+	insertpage(tree, tree->pages[0]);	// relocate old root page
+
+	SETNONLEAF(t);
+	CELLS(t) = 2;
+	KEY(t, 0) = KEY(tree->pages[0], 0);
+	KEY(t, 1) = KEY(u, 0);
+	NEXT(t, 0) = PAGENO(tree->pages[0]); NEXT(t, 1) = PAGENO(u);
+	 
+	memcpy(tree->pages[0], t, PAGE_SIZE);
+	writepage(tree, tree->pages[0]);
+}
+
+/* get item from tree */
+uint64_t btree_get(BTree_t *tree, uint64_t k)
+{
+	return searchR(tree, tree->pages[0], k, 0);
+}

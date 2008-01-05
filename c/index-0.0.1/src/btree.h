@@ -68,5 +68,7 @@ typedef struct BTree BTree_t;
 
 BTree_t *btree_open(const char *filename, int mode);
 void btree_close(BTree_t * tree);
+void btree_put(BTree_t *tree, Item_t item);
+uint64_t btree_get(BTree_t *tree, uint64_t k);
 
 #endif							/* __BTREE_H__ */
