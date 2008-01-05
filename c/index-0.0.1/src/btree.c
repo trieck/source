@@ -34,7 +34,7 @@
 #define NEXT(p, n)		(p->data[n].next)
 
 /* Allocate a new page */
-#define MKPAGE()	((Page_t*)malloc(PAGE_SIZE))
+#define MKPAGE()	((Page_t*)calloc(PAGE_SIZE, sizeof(uint8_t)))
 
 /* Free an allocated page */
 #define FREEPAGE(p)	\
@@ -73,19 +73,19 @@ BTree_t *btree_open(const char *filename, int mode)
 		return NULL;
 	}
 
-	/* stat underlying file */
-	if (stat(filename, &buf) == -1)
-		return NULL;			/* can't stat file */
-
 	/* open underlying file */
 	if ((fp = fopen(filename, pm)) == NULL)
 		return NULL;			/* unable to open file */
+		
+	/* stat underlying file */
+	if (fstat(fileno(fp), &buf) == -1)
+		return NULL;			/* can't stat file */
 
 	/* allocate tree struct */
 	tree = (BTree_t *) malloc(sizeof(BTree_t));
 	tree->fp = fp;
 
-	/* make pages */
+	/* allocate pages */
 	for (i = 0; i < MAXDEPTH; i++) {
 		tree->pages[i] = MKPAGE();
 	}
@@ -97,6 +97,7 @@ BTree_t *btree_open(const char *filename, int mode)
 	if (buf.st_size != 0) {
 		readpage(tree, 0, 0);
 	} else {
+		SETLEAF(tree->pages[0]);	/* set root page to leaf */
 		writepage(tree, tree->pages[0]);
 	}
 
@@ -222,7 +223,7 @@ Page_t *insertR(BTree_t * tree, Page_t * h, Item_t x, uint8_t level)
 		writepage(tree, h);		// write dirty page
 		return 0;
 	}
-
+	
 	return split(tree, h);
 }
 
@@ -253,7 +254,7 @@ void btree_put(BTree_t *tree, Item_t item)
 {
 	Page_t *u = insertR(tree, tree->pages[0], item, 0);
 	if (u == 0) return;
-	
+		
 	/* 
 	 * The basic idea with the root page split is that we create a new 
 	 * internal root page t with 2 links. The first link points to 

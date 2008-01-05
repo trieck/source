@@ -13,7 +13,7 @@ extern int vsnprintf(char *, size_t n, char const *, va_list);
 /* print usage message and exit */
 void usage(void)
 {
-	error("usage: index pattern");
+	error("usage: index files");
 }
 
 /* main entry point */
