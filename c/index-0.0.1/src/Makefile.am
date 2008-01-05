@@ -1,6 +1,8 @@
 bin_PROGRAMS = index
 index_SOURCES = btree.c	\
 	btree.h				\
+	concord.c			\
+	concord.h			\
 	global.h			\
 	index.c				\
 	index.h				\

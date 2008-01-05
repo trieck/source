@@ -24,7 +24,7 @@ const char *gettok(void)
 			while (isalnum(c) || c == '_') {
 				lexbuf[b++] = c;
 				if (b >= BSIZE)
-					error("buffer overflow.");
+					error("lexical buffer overflow.");
 				c = fgetc(fpin);
 			}
 			lexbuf[b] = '\0';

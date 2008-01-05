@@ -7,9 +7,6 @@
 #ifndef __BTREE_H__
 #define __BTREE_H__
 
-/* ensure one byte packing under GCC */
-#define PACK_ONE	__attribute__((aligned(1)))
-
 /* item struct */
 struct Item {
 	uint64_t key;

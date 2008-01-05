@@ -1,0 +1,38 @@
+/*
+ * CONCORD.H
+ * 
+ * Concordance
+ */
+
+#ifndef __CONCORD_H__
+#define __CONCORD_H__
+
+/* concordance page header */
+struct ConcordHeader {
+	uint8_t flags;			/* page flags */
+	uint64_t pageno;		/* page number */
+	uint64_t next;			/* link to next page */
+	uint16_t nentries;		/* number of entries on the page */
+} PACK_ONE;
+
+typedef struct ConcordHeader ConcordHeader_t;
+
+/* file info struct */
+struct FileInfo {
+	uint16_t fileno;		/* file number */
+	int8_t filename[BSIZE];	/* file name */
+	uint8_t filelen;		/* length of file name */
+} PACK_ONE;
+
+typedef struct FileInfo FileInfo_t;
+
+/* file info page */
+struct FileInfoPage {
+	ConcordHeader_t header;	/* page header */
+	FileInfo_t files[1];	/* file information */
+} PACK_ONE;
+
+typedef struct FileInfoPage FileInfoPage_t;
+	
+
+#endif /* __CONCORD_H__ */

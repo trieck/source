@@ -12,8 +12,11 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-/* buffer size */
+/* lexical buffer size */
 #define BSIZE 128
+
+/* ensure one byte packing under GCC */
+#define PACK_ONE	__attribute__((aligned(1)))
 
 extern void error(const char *fmt, ...);
 
