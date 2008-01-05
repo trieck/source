@@ -47,12 +47,6 @@ enum { MAXDEPTH = 5 };
 /* maximum value */
 enum { MAXV = -1 };
 
-/* open modes */
-enum {
-	OM_READ_ONLY,
-	OM_WRITE
-};
-
 /* btree definition */
 struct BTree {
 	uint64_t npages;			/* # of pages */

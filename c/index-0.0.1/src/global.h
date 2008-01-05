@@ -18,6 +18,12 @@
 /* ensure one byte packing under GCC */
 #define PACK_ONE	__attribute__((aligned(1)))
 
+/* file open modes */
+enum {
+	OM_READ_ONLY,
+	OM_WRITE
+};
+
 extern void error(const char *fmt, ...);
 
 #endif							/* __GLOBAL_H__ */

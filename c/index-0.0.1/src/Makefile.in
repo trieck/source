@@ -43,8 +43,8 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_index_OBJECTS = btree.$(OBJEXT) concord.$(OBJEXT) index.$(OBJEXT) \
-	lex.$(OBJEXT) main.$(OBJEXT)
+am_index_OBJECTS = blockio.$(OBJEXT) btree.$(OBJEXT) concord.$(OBJEXT) \
+	index.$(OBJEXT) lex.$(OBJEXT) main.$(OBJEXT)
 index_OBJECTS = $(am_index_OBJECTS)
 index_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -140,15 +140,17 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-index_SOURCES = btree.c	\
-	btree.h				\
-	concord.c			\
-	concord.h			\
-	global.h			\
-	index.c				\
-	index.h				\
-	lex.c				\
-	lex.h				\
+index_SOURCES = blockio.c	\
+	blockio.h				\
+	btree.c					\
+	btree.h					\
+	concord.c				\
+	concord.h				\
+	global.h				\
+	index.c					\
+	index.h					\
+	lex.c					\
+	lex.h					\
 	main.c
 
 all: all-am
@@ -217,6 +219,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/blockio.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/btree.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/concord.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index.Po@am__quote@

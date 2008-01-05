@@ -34,5 +34,22 @@ struct FileInfoPage {
 
 typedef struct FileInfoPage FileInfoPage_t;
 	
+/* term info struct */
+struct TermInfo {
+	uint64_t hash;			/* 64-bit hash of term */
+	int8_t term[BSIZE];		/* term */
+	uint8_t len;			/* length of term */
+} PACK_ONE;
+
+typedef struct TermInfo TermInfo_t;
+
+/* term info page */
+struct TermInfoPage {
+	ConcordHeader_t header;	/* page header */
+	TermInfo_t terms[1];	/* term information */
+} PACK_ONE;
+
+typedef struct TermInfoPage TermInfoPage_t;
+
 
 #endif /* __CONCORD_H__ */
