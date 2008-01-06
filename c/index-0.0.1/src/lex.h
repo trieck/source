@@ -9,4 +9,4 @@
 
 const char *gettok(void);
 
-#endif							/* __INDEX_H__ */
+#endif				/* __INDEX_H__ */

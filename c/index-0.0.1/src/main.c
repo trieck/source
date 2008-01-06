@@ -10,13 +10,17 @@
 
 extern int vsnprintf(char *, size_t n, char const *, va_list);
 
-/* print usage message and exit */
+/*
+ * print usage message and exit 
+ */
 void usage(void)
 {
 	error("usage: index files");
 }
 
-/* main entry point */
+/*
+ * main entry point 
+ */
 int main(int argc, char *argv[])
 {
 	if (argc < 2)
@@ -27,7 +31,9 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-/* error routine */
+/*
+ * error routine 
+ */
 void error(const char *fmt, ...)
 {
 	va_list arglist;

@@ -9,9 +9,8 @@
 
 #define BLOCK_SIZE	(4096)
 
-int readblock(FILE *fp, uint64_t blockno, void *buf);
-int writeblock(FILE *fp, uint64_t blockno, const void *buf);
+int readblock(FILE * fp, uint64_t blockno, void *buf);
+int writeblock(FILE * fp, uint64_t blockno, const void *buf);
+int insertblock(FILE * fp, const void *buf);
 
-#endif /* __BLOCKIO_H__ */
- 
-
+#endif				/* __BLOCKIO_H__ */

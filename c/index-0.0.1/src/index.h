@@ -9,4 +9,4 @@
 
 void mkindex(int nfiles, char **files);
 
-#endif							/* __INDEX_H__ */
+#endif				/* __INDEX_H__ */
