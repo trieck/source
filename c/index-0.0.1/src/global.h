@@ -11,6 +11,7 @@
 #include <ctype.h>		/* load character test routines */
 #include <stdlib.h>
 #include <stdint.h>
+#include <memory.h>
 
 /*
  * lexical buffer size 
