@@ -1,0 +1,76 @@
+CFLAGS = -nologo -Iwin32 /W3 /Zi /MLd /Od /Fdindex.pdb /DDEBUG
+CC = cl
+LFLAGS = -nologo /link /DEBUG /out:$@.exe
+TARGET = index
+OBJECTS = \
+	blockio.obj \
+	btree.obj \
+	concord.obj \
+	global.obj \
+	index.obj \
+	inverter.obj \
+	lex.obj \
+	main.obj \
+	sort.obj
+
+.SUFFIXES: .o .c
+.c.obj:
+	@$(CC) $(CFLAGS) /c $<
+index: $(OBJECTS)
+	@$(CC) $(OBJECTS) $(LFLAGS)
+
+clean: 
+	@erase /F /Q *.obj *.pdb *.exe *.ilk *.suo 2>/nul
+
+blockio.obj : \
+	blockio.c \
+	blockio.h \
+	global.h
+
+btree.obj : \
+	btree.c \
+	blockio.h \
+	btree.h \
+	global.h
+
+concord.obj : \
+	concord.c \
+	blockio.h \
+	concord.h \
+	global.h
+
+global.obj : \
+	global.c \
+	global.h
+
+index.obj : \
+	index.c \
+	blockio.h \
+	btree.h \
+	concord.h \
+	global.h \
+	index.h \
+	inverter.h \
+	lex.h
+
+inverter.obj : \
+	inverter.c \
+	global.h \
+	inverter.h \
+	sort.h
+
+lex.obj : \
+	lex.c \
+	global.h \
+	lex.h
+
+main.obj : \
+	main.c \
+	global.h \
+	index.h
+
+sort.obj : \
+	sort.c \
+	global.h \
+	sort.h
+
