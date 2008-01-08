@@ -11,6 +11,7 @@
 #include "blockio.h"
 #include "btree.h"
 #include "concord.h"
+#include "inverter.h"
 
 static void cleanup(void);
 static void parse(void);
@@ -23,10 +24,16 @@ static const char *infile;
 /*
  * btree index 
  */
-static BTree_t *tree = NULL;
+static BTree_t *tree;
 
 /* Concordance file */
-static Concord_t *concord = NULL;
+static Concord_t *concord;
+
+/* inverter */
+static Inverter_t *inverter;
+
+/* current file number */
+static uint32_t filenum;
 
 /*
  * current input file ptr 
@@ -41,20 +48,23 @@ void mkindex(int nfiles, char **files)
 	int i;
 
 	atexit(cleanup);
+	
+	/* create inverter */
+	inverter = inverter_create();
 
 	/*
 	 * open btree 
 	 */
-	if ((tree = btree_open("index.idx", OM_WRITE)) == NULL) {
+	/*if ((tree = btree_open("index.idx", OM_WRITE)) == NULL) {
 		error("unable to open index.idx");
-	}
+	}*/
 
 	/* open concordance */
-	if ((concord = concord_open("index.dat", OM_WRITE)) == NULL) {
+	/*if ((concord = concord_open("index.dat", OM_WRITE)) == NULL) {
 		error("unable to open index.dat");
-	}
+	}*/
 
-	for (i = 0; i < nfiles; i++) {
+	for (i = 0; i < nfiles; i++, filenum++) {
 		infile = files[i];
 		if ((fpin = fopen(files[i], "r")) == NULL) {
 			error("unable to open file \"%s\".", files[i]);
@@ -64,16 +74,23 @@ void mkindex(int nfiles, char **files)
 		fclose(fpin);
 		fpin = NULL;
 	}
-
+	
+	/* free inverter */
+	inverter_free(inverter);
+	
 	/* close concordance     */
-	concord_close(concord);
-	concord = NULL;
+	if (concord != NULL) {
+		concord_close(concord);
+		concord = NULL;
+	}
 
 	/*
 	 * close btree 
 	 */
-	btree_close(tree);
-	tree = NULL;
+	if (tree != NULL) {
+		btree_close(tree);
+		tree = NULL;
+	}
 }
 
 /*
@@ -86,8 +103,11 @@ void parse(void)
 
 	while ((tok = gettok()) != NULL) {
 		item.key = doublehash(tok, strlen(tok));
-		item.val = 1;
-		btree_put(tree, item);
+		item.val = filenum+1;
+		
+		inverter_insert(inverter, tok, filenum);
+		
+		/* btree_put(tree, item); */
 	}
 }
 
@@ -102,6 +122,12 @@ void cleanup(void)
 	if (fpin != NULL) {
 		fclose(fpin);
 		fpin = NULL;
+	}
+	
+	/* free inverter */
+	if (inverter != NULL) {
+		inverter_free(inverter);
+		inverter = NULL;
 	}
 
 	/* close concordance */
