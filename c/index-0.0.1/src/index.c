@@ -48,7 +48,7 @@ void mkindex(int nfiles, char **files)
 	int i;
 
 	atexit(cleanup);
-	
+
 	/* create inverter */
 	inverter = inverter_create();
 
@@ -56,13 +56,13 @@ void mkindex(int nfiles, char **files)
 	 * open btree 
 	 */
 	/*if ((tree = btree_open("index.idx", OM_WRITE)) == NULL) {
-		error("unable to open index.idx");
-	}*/
+	   error("unable to open index.idx");
+	   } */
 
 	/* open concordance */
 	/*if ((concord = concord_open("index.dat", OM_WRITE)) == NULL) {
-		error("unable to open index.dat");
-	}*/
+	   error("unable to open index.dat");
+	   } */
 
 	for (i = 0; i < nfiles; i++, filenum++) {
 		infile = files[i];
@@ -74,13 +74,13 @@ void mkindex(int nfiles, char **files)
 		fclose(fpin);
 		fpin = NULL;
 	}
-	
+
 	/* free inverter */
 	if (inverter != NULL) {
 		inverter_free(inverter);
 		inverter = NULL;
 	}
-	
+
 	/* close concordance     */
 	if (concord != NULL) {
 		concord_close(concord);
@@ -106,12 +106,12 @@ void parse(void)
 
 	while ((tok = gettok()) != NULL) {
 		item.key = doublehash(tok, strlen(tok));
-		item.val = filenum+1;
-		
+		item.val = filenum + 1;
+
 		printf("%s:%d\n", tok, filenum);
-		
+
 		inverter_insert(inverter, tok, filenum);
-		
+
 		/* btree_put(tree, item); */
 	}
 }
@@ -128,7 +128,7 @@ void cleanup(void)
 		fclose(fpin);
 		fpin = NULL;
 	}
-	
+
 	/* free inverter */
 	if (inverter != NULL) {
 		inverter_free(inverter);

@@ -23,13 +23,13 @@
 /* ensure one byte packing under GCC */
 #define PACK_ONE	__attribute__((aligned(1)))
 #define FSEEK	fseek
-#else	/* __GNU_C__ */
+#else				/* __GNU_C__ */
 #define PACK_ONE
 #define PLATFORM_S64(x) x##i64
 #define FSEEK	_fseeki64
 
 #define vsnprintf	_vsnprintf
-#endif /* __GNUC__ */
+#endif				/* __GNUC__ */
 
 /*
  * lexical buffer size 

@@ -8,13 +8,11 @@
 #include "global.h"
 #include "blockio.h"
 
-#ifdef _MSC_VER 
-extern int __cdecl _fseeki64(FILE *stream, __int64 offset, int whence);
-#endif /* _MSC_VER
+#ifdef _MSC_VER
+extern int __cdecl _fseeki64(FILE * stream, __int64 offset, int whence);
+#endif				/* _MSC_VER
 
-/*
- * read a block 
- */
+				   /* read a block */
 int readblock(FILE * fp, uint64_t blockno, void *buf)
 {
 	uint64_t offset = blockno * BLOCK_SIZE;

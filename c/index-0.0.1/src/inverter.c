@@ -65,7 +65,7 @@ void inverter_free(Inverter_t * v)
 /* allocate memory for inverter */
 void inverter_alloc(Inverter_t * v)
 {
-	v->size = (uint32_t)prime(FILL_RATIO * MAX_COUNT);
+	v->size = (uint32_t) prime(FILL_RATIO * MAX_COUNT);
 	v->maxpool = 2 * MEMORY_SIZE;
 	v->count = 0;
 	v->record = (char **) malloc(v->size * sizeof(char *));
@@ -202,5 +202,6 @@ int inverter_write(Inverter_t * v, FILE * fp)
 
 int inverter_isfull(Inverter_t * v)
 {
-	return (v->count > MAX_COUNT || v->ppool-v->pool > (int)v->maxpool);
+	return (v->count > MAX_COUNT
+		|| v->ppool - v->pool > (int) v->maxpool);
 }
