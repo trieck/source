@@ -2,6 +2,7 @@
  * INDEX.C
  * 
  * Index content
+ * Copyright (c) 2008 Thomas A. Rieck
  */
 
 #include "global.h"
@@ -13,7 +14,6 @@
 
 static void cleanup(void);
 static void parse(void);
-static uint64_t doublehash(const void *key, uint32_t len);
 
 /*
  * current input file 
@@ -48,7 +48,7 @@ void mkindex(int nfiles, char **files)
 	if ((tree = btree_open("index.idx", OM_WRITE)) == NULL) {
 		error("unable to open index.idx");
 	}
-	
+
 	/* open concordance */
 	if ((concord = concord_open("index.dat", OM_WRITE)) == NULL) {
 		error("unable to open index.dat");
@@ -65,10 +65,10 @@ void mkindex(int nfiles, char **files)
 		fpin = NULL;
 	}
 
-	/* close concordance	 */
+	/* close concordance     */
 	concord_close(concord);
 	concord = NULL;
-	
+
 	/*
 	 * close btree 
 	 */
@@ -103,7 +103,7 @@ void cleanup(void)
 		fclose(fpin);
 		fpin = NULL;
 	}
-	
+
 	/* close concordance */
 	if (concord != NULL) {
 		concord_close(concord);
@@ -117,28 +117,4 @@ void cleanup(void)
 		btree_close(tree);
 		tree = NULL;
 	}
-}
-
-/*
- * 64-bit Fowler/Noll/Vo double-hash function 
- */
-uint64_t doublehash(const void *key, uint32_t len)
-{
-	uint32_t i;
-	uint64_t hash;
-	const uint8_t *k = (const uint8_t *) key;
-
-	for (hash = 0, i = 0; i < len; ++i) {
-		hash *= 1099511628211LLU;
-		hash ^= k[i];
-	}
-
-	k = (const uint8_t *) &hash;
-
-	for (i = 0; i < sizeof(uint64_t); ++i) {
-		hash *= 1099511628211LLU;
-		hash ^= k[i];
-	}
-
-	return hash;
 }

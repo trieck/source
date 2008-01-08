@@ -2,6 +2,7 @@
  * BLOCKIO.C
  * 
  * Block i/o interface
+ * Copyright (c) 2008 Thomas A. Rieck
  */
 
 #include <sys/stat.h>
@@ -24,7 +25,6 @@ int readblock(FILE * fp, uint64_t blockno, void *buf)
 
 	return 1;
 }
-
 
 /*
  * write a block 

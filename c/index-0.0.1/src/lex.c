@@ -2,6 +2,7 @@
  * LEX.C
  * 
  * Lexical analyzer
+ * Copyright (c) 2008 Thomas A. Rieck
  */
 
 #include "global.h"

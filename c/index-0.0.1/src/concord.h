@@ -2,6 +2,7 @@
  * CONCORD.H
  * 
  * Concordance
+ * Copyright (c) 2008 Thomas A. Rieck
  */
 
 #ifndef __CONCORD_H__

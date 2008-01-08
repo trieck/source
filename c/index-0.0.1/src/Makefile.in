@@ -44,7 +44,8 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_index_OBJECTS = blockio.$(OBJEXT) btree.$(OBJEXT) concord.$(OBJEXT) \
-	index.$(OBJEXT) lex.$(OBJEXT) main.$(OBJEXT)
+	global.$(OBJEXT) index.$(OBJEXT) inverter.$(OBJEXT) \
+	lex.$(OBJEXT) main.$(OBJEXT) sort.$(OBJEXT)
 index_OBJECTS = $(am_index_OBJECTS)
 index_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -146,12 +147,17 @@ index_SOURCES = blockio.c	\
 	btree.h					\
 	concord.c				\
 	concord.h				\
+	global.c				\
 	global.h				\
 	index.c					\
 	index.h					\
+	inverter.c				\
+	inverter.h				\
 	lex.c					\
 	lex.h					\
-	main.c
+	main.c					\
+	sort.c					\
+	sort.h
 
 all: all-am
 
@@ -222,9 +228,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/blockio.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/btree.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/concord.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/global.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inverter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lex.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sort.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

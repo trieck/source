@@ -2,6 +2,7 @@
  * BTREE.H
  * 
  * B-tree
+ * Copyright (c) 2008 Thomas A. Rieck
  */
 
 #ifndef __BTREE_H__

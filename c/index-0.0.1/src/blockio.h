@@ -2,6 +2,7 @@
  * BLOCKIO.H
  * 
  * Block i/o interface
+ * Copyright (c) 2008 Thomas A. Rieck
  */
 
 #ifndef __BLOCKIO_H__

@@ -2,6 +2,7 @@
  * GLOBAL.H
  *
  * Global definitions
+ * Copyright (c) 2008 Thomas A. Rieck
  */
 
 #ifndef __GLOBAL_H__
@@ -31,6 +32,13 @@ enum {
 	OM_WRITE
 };
 
+/* Macros for min/max. */
+#define    MIN(a,b)    (((a)<(b))?(a):(b))
+#define    MAX(a,b)    (((a)>(b))?(a):(b))
+
+/* utility functions */
 extern void error(const char *fmt, ...);
+uint64_t doublehash(const void *key, uint32_t len);
+uint64_t prime(uint64_t i);
 
 #endif				/* __GLOBAL_H__ */

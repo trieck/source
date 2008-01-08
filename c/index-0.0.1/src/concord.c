@@ -2,6 +2,7 @@
  * CONCORD.C
  * 
  * Concordance
+ * Copyright (c) 2008 Thomas A. Rieck
  */
 
 #include <sys/stat.h>

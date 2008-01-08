@@ -2,6 +2,7 @@
  * LEX.H
  * 
  * Lexical analyzer
+ * Copyright (c) 2008 Thomas A. Rieck
  */
 
 #ifndef __LEX_H__
