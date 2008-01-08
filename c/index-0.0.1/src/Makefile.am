@@ -17,6 +17,11 @@ index_SOURCES = blockio.c	\
 	sort.c					\
 	sort.h
 
-	
+EXTRA_DIST = win32 			\
+	Configure-win32.pl 		\
+	Makefile.win32			\
+	clean-win32.bat			\
+	make-win32.bat
+
 
 

@@ -76,7 +76,10 @@ void mkindex(int nfiles, char **files)
 	}
 	
 	/* free inverter */
-	inverter_free(inverter);
+	if (inverter != NULL) {
+		inverter_free(inverter);
+		inverter = NULL;
+	}
 	
 	/* close concordance     */
 	if (concord != NULL) {
@@ -104,6 +107,8 @@ void parse(void)
 	while ((tok = gettok()) != NULL) {
 		item.key = doublehash(tok, strlen(tok));
 		item.val = filenum+1;
+		
+		printf("%s:%d\n", tok, filenum);
 		
 		inverter_insert(inverter, tok, filenum);
 		

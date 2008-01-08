@@ -5,9 +5,6 @@
  * Copyright (c) 2008 Thomas A. Rieck
  */
 
-#include <sys/stat.h>
-#include <unistd.h>
-
 #include "global.h"
 #include "btree.h"
 #include "blockio.h"
@@ -54,13 +51,13 @@
 		p = NULL;	\
 	} while(0)
 
-static int readpage(BTree_t * tree, uint64_t pageno, uint8_t level);
+static int readpage(BTree_t * tree, uint64_t pageno, uint32_t level);
 static int writepage(BTree_t * tree, Page_t * page);
-static int insertpage(BTree_t * tree, Page_t * page);
+static uint64_t insertpage(BTree_t * tree, Page_t * page);
 static uint64_t searchR(BTree_t * tree, Page_t * h, uint64_t k,
-			uint8_t level);
+			uint32_t level);
 static Page_t *insertR(BTree_t * tree, Page_t * h, Item_t x,
-		       uint8_t level);
+		       uint32_t level);
 static Page_t *split(BTree_t * tree, Page_t * h);
 
 /*
@@ -152,7 +149,7 @@ void btree_close(BTree_t * tree)
 /*
  * read a page 
  */
-int readpage(BTree_t * tree, uint64_t pageno, uint8_t level)
+int readpage(BTree_t * tree, uint64_t pageno, uint32_t level)
 {
 	return readblock(tree->fp, pageno, tree->pages[level]);
 }
@@ -168,7 +165,7 @@ int writepage(BTree_t * tree, Page_t * page)
 /*
  * insert a page 
  */
-int insertpage(BTree_t * tree, Page_t * h)
+uint64_t insertpage(BTree_t * tree, Page_t * h)
 {
 	PAGENO(h) = tree->npages;
 
@@ -181,7 +178,7 @@ int insertpage(BTree_t * tree, Page_t * h)
 /*
  * search tree recursively 
  */
-uint64_t searchR(BTree_t * tree, Page_t * h, uint64_t k, uint8_t level)
+uint64_t searchR(BTree_t * tree, Page_t * h, uint64_t k, uint32_t level)
 {
 	int j;
 
@@ -208,7 +205,7 @@ uint64_t searchR(BTree_t * tree, Page_t * h, uint64_t k, uint8_t level)
 /*
  * insert item recursively 
  */
-Page_t *insertR(BTree_t * tree, Page_t * h, Item_t x, uint8_t level)
+Page_t *insertR(BTree_t * tree, Page_t * h, Item_t x, uint32_t level)
 {
 	int i, j;
 	uint64_t v = x.key;
@@ -279,8 +276,8 @@ Page_t *split(BTree_t * tree, Page_t * h)
  */
 void btree_put(BTree_t * tree, Item_t item)
 {
-	Page_t *u = insertR(tree, tree->pages[0], item, 0);
-	if (u == 0)
+	Page_t *u, *t;
+	if ((u = insertR(tree, tree->pages[0], item, 0)) == 0)
 		return;
 
 	/*
@@ -289,7 +286,7 @@ void btree_put(BTree_t * tree, Item_t item)
 	 * the old root page and the second link points to the page that caused 
 	 * the split.  The height of the tree is increased by one.
 	 */
-	Page_t *t = tree->frame[1];
+	t = tree->frame[1];
 	memset(t, 0, BLOCK_SIZE);
 
 	insertpage(tree, tree->pages[0]);	// relocate old root page

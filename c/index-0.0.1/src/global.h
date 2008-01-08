@@ -8,21 +8,33 @@
 #ifndef __GLOBAL_H__
 #define __GLOBAL_H__
 
-#include <stdio.h>		/* load i/o routines */
-#include <ctype.h>		/* load character test routines */
+#include <stdio.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <memory.h>
+#include <sys/stat.h>
+#include <stdarg.h>
+#include <string.h>
+
+#ifdef __GNUC__
+#include <unistd.h>
+#define PLATFORM_S64(x) x##ll
+/* ensure one byte packing under GCC */
+#define PACK_ONE	__attribute__((aligned(1)))
+#define FSEEK	fseek
+#else	/* __GNU_C__ */
+#define PACK_ONE
+#define PLATFORM_S64(x) x##i64
+#define FSEEK	_fseeki64
+
+#define vsnprintf	_vsnprintf
+#endif /* __GNUC__ */
 
 /*
  * lexical buffer size 
  */
 #define BSIZE 128
-
-/*
- * ensure one byte packing under GCC 
- */
-#define PACK_ONE	__attribute__((aligned(1)))
 
 /*
  * file open modes 

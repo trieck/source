@@ -5,7 +5,6 @@
  * Copyright (c) 2008 Thomas A. Rieck
  */
 
-#include <stdarg.h>
 #include "global.h"
 
 extern int vsnprintf(char *, size_t n, char const *, va_list);
@@ -56,14 +55,14 @@ uint64_t doublehash(const void *key, uint32_t len)
 	const uint8_t *k = (const uint8_t *) key;
 
 	for (hash = 0, i = 0; i < len; ++i) {
-		hash *= 1099511628211LLU;
+		hash *= PLATFORM_S64(1099511628211);
 		hash ^= k[i];
 	}
 
 	k = (const uint8_t *) &hash;
 
 	for (i = 0; i < sizeof(uint64_t); ++i) {
-		hash *= 1099511628211LLU;
+		hash *= PLATFORM_S64(1099511628211);
 		hash ^= k[i];
 	}
 
@@ -81,5 +80,5 @@ uint64_t prime(uint64_t i)
 	while (i >>= 1)
 		j++;
 
-	return (1llu << j) - delta[j];
+	return (PLATFORM_S64(1) << j) - delta[j];
 }

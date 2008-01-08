@@ -18,6 +18,10 @@ struct Item {
 
 typedef struct Item Item_t;
 
+#ifdef _MSCVER
+#pragma pack(1)
+#endif /* _MSCVER */
+
 /*
  * cell struct 
  */
@@ -49,6 +53,10 @@ struct Page {
 } PACK_ONE;
 
 typedef struct Page Page_t;
+
+#ifdef _MSCVER
+#pragma pack()
+#endif /* _MSCVER */
 
 /*
  * maximum depth of tree 

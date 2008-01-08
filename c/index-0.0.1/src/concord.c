@@ -5,9 +5,6 @@
  * Copyright (c) 2008 Thomas A. Rieck
  */
 
-#include <sys/stat.h>
-#include <unistd.h>
-
 #include "global.h"
 #include "blockio.h"
 #include "concord.h"
@@ -61,7 +58,7 @@
 
 static int readpage(Concord_t * concord, uint64_t pageno);
 static int writepage(Concord_t * concord, uint64_t pageno);
-static int insertpage(Concord_t * concord);
+static uint64_t insertpage(Concord_t * concord);
 
 /*
  * open concordance file returning instance 
@@ -132,7 +129,7 @@ int writepage(Concord_t * concord, uint64_t pageno)
 }
 
 /* insert a page */
-int insertpage(Concord_t * concord)
+uint64_t insertpage(Concord_t * concord)
 {
 	ConcordHeader_t *header = (ConcordHeader_t *) concord->buf;
 	header->pageno = concord->npages;
