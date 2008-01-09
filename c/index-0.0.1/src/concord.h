@@ -8,6 +8,8 @@
 #ifndef __CONCORD_H__
 #define __CONCORD_H__
 
+#include "inverter.h"
+
 /*
  * concordance page header 
  */
@@ -75,5 +77,6 @@ typedef struct Concord Concord_t;
 
 Concord_t *concord_open(const char *filename, int mode);
 void concord_close(Concord_t * concord);
+void concord_insert(Concord_t * concord, const char *term, uint32_t docid);
 
 #endif				/* __CONCORD_H__ */

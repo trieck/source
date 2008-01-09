@@ -9,9 +9,7 @@
 #include "index.h"
 #include "lex.h"
 #include "blockio.h"
-#include "btree.h"
 #include "concord.h"
-#include "inverter.h"
 
 static void cleanup(void);
 static void parse(void);
@@ -21,16 +19,8 @@ static void parse(void);
  */
 static const char *infile;
 
-/*
- * btree index 
- */
-static BTree_t *tree;
-
 /* Concordance file */
 static Concord_t *concord;
-
-/* inverter */
-static Inverter_t *inverter;
 
 /* current file number */
 static uint32_t filenum;
@@ -49,16 +39,6 @@ void mkindex(int nfiles, char **files)
 
 	atexit(cleanup);
 
-	/* create inverter */
-	inverter = inverter_create();
-
-	/*
-	 * open btree 
-	 */
-	/*if ((tree = btree_open("index.idx", OM_WRITE)) == NULL) {
-	   error("unable to open index.idx");
-	   } */
-
 	/* open concordance */
 	/*if ((concord = concord_open("index.dat", OM_WRITE)) == NULL) {
 	   error("unable to open index.dat");
@@ -75,24 +55,10 @@ void mkindex(int nfiles, char **files)
 		fpin = NULL;
 	}
 
-	/* free inverter */
-	if (inverter != NULL) {
-		inverter_free(inverter);
-		inverter = NULL;
-	}
-
 	/* close concordance     */
 	if (concord != NULL) {
 		concord_close(concord);
 		concord = NULL;
-	}
-
-	/*
-	 * close btree 
-	 */
-	if (tree != NULL) {
-		btree_close(tree);
-		tree = NULL;
 	}
 }
 
@@ -102,17 +68,8 @@ void mkindex(int nfiles, char **files)
 void parse(void)
 {
 	const char *tok;
-	Item_t item;
-
 	while ((tok = gettok()) != NULL) {
-		item.key = doublehash(tok, strlen(tok));
-		item.val = filenum + 1;
-
-		printf("%s:%d\n", tok, filenum);
-
-		inverter_insert(inverter, tok, filenum);
-
-		/* btree_put(tree, item); */
+		concord_insert(concord, tok, filenum);
 	}
 }
 
@@ -129,23 +86,9 @@ void cleanup(void)
 		fpin = NULL;
 	}
 
-	/* free inverter */
-	if (inverter != NULL) {
-		inverter_free(inverter);
-		inverter = NULL;
-	}
-
 	/* close concordance */
 	if (concord != NULL) {
 		concord_close(concord);
 		concord = NULL;
-	}
-
-	/*
-	 * close btree 
-	 */
-	if (tree != NULL) {
-		btree_close(tree);
-		tree = NULL;
 	}
 }

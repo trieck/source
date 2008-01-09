@@ -139,3 +139,7 @@ uint64_t insertpage(Concord_t * concord)
 
 	return ++(concord->npages);
 }
+
+void concord_insert(Concord_t * concord, const char *term, uint32_t docid)
+{
+}
