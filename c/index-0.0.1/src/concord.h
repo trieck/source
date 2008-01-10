@@ -68,8 +68,8 @@ typedef struct TermInfoPage TermInfoPage_t;
  * concordance definition 
  */
 struct Concord {
-	uint64_t npages;	/* # of pages */
-	FILE *fp;		/* file pointer */
+	uint64_t npages;			/* # of pages */
+	FILE *fp;					/* file pointer */
 	uint8_t buf[BLOCK_SIZE];	/* page buffer */
 };
 
