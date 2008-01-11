@@ -9,8 +9,12 @@
 #include "global.h"
 #include "inverter.h"
 
+// maximum size of internal index in terms
+#define MEMORY_SIZE		(2000000)
+
 // maximum number of terms allowed
-#define MAX_COUNT 		(2000000)
+#define MAX_COUNT 		(MEMORY_SIZE / sizeof(entry*))
+
 #define FILL_FACTOR		(0.72)
 
 /////////////////////////////////////////////////////////////////////////////
@@ -18,11 +22,39 @@ Inverter::Inverter() : numentries(0)
 {
 	totalblocks = tablesize(MAX_COUNT);
 	maxblocks = (uint32_t)(totalblocks * FILL_FACTOR);
+	
+	blocks = new entry*[totalblocks];
+	memset(blocks, 0, totalblocks * sizeof(entry*));
 }
 	
 /////////////////////////////////////////////////////////////////////////////
 Inverter::~Inverter()
 {
+	delete []blocks;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Inverter::insert(const char *term, uint32_t docid)
+{
+	uint32_t i = lookup(term);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+uint32_t Inverter::lookup(const char *term)
+{
+	const char *p = term;
+
+	uint32_t i = 0;
+
+	while (*p)
+		i = 127 * i + *p++;
+
+	i = i % totalblocks;
+
+	while (blocks[i] && strcmp(blocks[i]->term, term))
+		i = ++i % totalblocks;
+
+	return i;	
 }
 
 ////////////////////////////////////////////////////////////////////////////

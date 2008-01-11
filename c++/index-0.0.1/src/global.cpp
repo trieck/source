@@ -69,7 +69,6 @@ uint64_t doublehash(const void *key, uint32_t len)
 	return hash;
 }
 
-
 /*
  * Compute the largest prime less than a specified power of two
  */
