@@ -1,5 +1,7 @@
 bin_PROGRAMS = index
-index_SOURCES = global.cpp	\
+index_SOURCES = content.cpp	\
+	content.h				\
+	global.cpp				\
 	global.h				\
 	inverter.cpp			\
 	inverter.h				\

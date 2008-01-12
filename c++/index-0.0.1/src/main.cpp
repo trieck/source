@@ -6,9 +6,22 @@
 //
 
 #include "global.h"
-#include "inverter.h"
+#include "content.h"
 
+/////////////////////////////////////////////////////////////////////////////
+void usage(void)
+{
+	error("usage: index files");
+}
+
+/////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
+	if (argc < 2)
+		usage();
+
+	Content content;
+	content.index(--argc, ++argv);
+	
 	return 0;
 }

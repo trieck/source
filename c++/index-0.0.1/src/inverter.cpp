@@ -11,7 +11,7 @@
 #include "inverter.h"
 #include "sort.h"
 
-// maximum size of internal index in terms
+// maximum ammount of memory available for concordance
 #define MEMORY_SIZE		(48000000)
 
 // initial record size
@@ -31,8 +31,8 @@
 /////////////////////////////////////////////////////////////////////////////
 Inverter::Inverter()
 {
-	size = prime(FILL_RATIO * maxcount);
 	maxcount = MEMORY_SIZE / AVERAGE_SIZE;
+	size = (uint32_t)prime(FILL_RATIO * maxcount);	
 
     count = 0;
     maxpool = 2 * MEMORY_SIZE;
@@ -156,7 +156,7 @@ void Inverter::clear()
 /////////////////////////////////////////////////////////////////////////////
 void Inverter::compact()
 {
-    for (int i = 0, j = 0; i < size; i++) {
+    for (uint32_t i = 0, j = 0; i < size; i++) {
         if (record[i])
             continue;
         for ( ; j < size; j++)

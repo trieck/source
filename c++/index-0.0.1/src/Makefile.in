@@ -43,8 +43,8 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_index_OBJECTS = global.$(OBJEXT) inverter.$(OBJEXT) lex.$(OBJEXT) \
-	main.$(OBJEXT) sort.$(OBJEXT)
+am_index_OBJECTS = content.$(OBJEXT) global.$(OBJEXT) \
+	inverter.$(OBJEXT) lex.$(OBJEXT) main.$(OBJEXT) sort.$(OBJEXT)
 index_OBJECTS = $(am_index_OBJECTS)
 index_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -145,7 +145,9 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-index_SOURCES = global.cpp	\
+index_SOURCES = content.cpp	\
+	content.h				\
+	global.cpp				\
 	global.h				\
 	inverter.cpp			\
 	inverter.h				\
@@ -227,6 +229,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/content.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/global.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inverter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lex.Po@am__quote@
