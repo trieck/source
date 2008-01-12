@@ -6,37 +6,125 @@
 // Copyright (c) 2008 Thomas A. Rieck
 //
 
+#include <limits.h>
 #include "global.h"
 #include "inverter.h"
+#include "sort.h"
 
 // maximum size of internal index in terms
-#define MEMORY_SIZE		(2000000)
+#define MEMORY_SIZE		(48000000)
 
-// maximum number of terms allowed
-#define MAX_COUNT 		(MEMORY_SIZE / sizeof(entry*))
+// initial record size
+#define INITIAL_SIZE	(80)
 
-#define FILL_FACTOR		(0.72)
+// average record size
+#define AVERAGE_SIZE	(50)
+
+// empty vector docid
+#define EMPTY           UINT_MAX
+
+#define PLIST(record) 	(((uint32_t**)record)[-1])
+#define PEND(record)  	(((uint32_t**)record)[-2])
+
+#define FILL_RATIO		(2)
 
 /////////////////////////////////////////////////////////////////////////////
-Inverter::Inverter() : numentries(0)
+Inverter::Inverter()
 {
-	totalblocks = tablesize(MAX_COUNT);
-	maxblocks = (uint32_t)(totalblocks * FILL_FACTOR);
-	
-	blocks = new entry*[totalblocks];
-	memset(blocks, 0, totalblocks * sizeof(entry*));
+	size = prime(FILL_RATIO * maxcount);
+	maxcount = MEMORY_SIZE / AVERAGE_SIZE;
+
+    count = 0;
+    maxpool = 2 * MEMORY_SIZE;
+
+    record = new char*[size];
+    memset(record, 0, size * sizeof(char*));
+
+    ppool = pool = new char[3 * MEMORY_SIZE];
 }
 	
 /////////////////////////////////////////////////////////////////////////////
 Inverter::~Inverter()
 {
-	delete []blocks;
+	delete []record;
+	delete []pool;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Inverter::insert(const char *term, uint32_t docid)
 {
 	uint32_t i = lookup(term);
+	
+	if (record[i] == NULL) {
+		alloc(i, term);
+		*PLIST(record[i])++ = docid;
+		count++;
+		return;
+	}
+	
+	if (docid > PLIST(record[i])[-1]) {
+		if (PLIST(record[i]) >= PEND(record[i]) - 1)
+			realloc(i);
+		*PLIST(record[i])++ = docid;
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Inverter::alloc(uint32_t i, const char *term)
+{
+	char *p = ppool + 2 * sizeof(uint32_t *);
+	char *pterm = p;
+
+	while (*pterm++ = *term++);
+
+	ppool = pterm + INITIAL_SIZE;
+
+	PLIST(p) = (uint32_t *) pterm;
+	PEND(p) = (uint32_t *) ppool;
+
+	record[i] = p;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Inverter::realloc(uint32_t i)
+{
+	uint32_t p1 = 1 + (100 * (ppool-pool)) / maxpool;
+	uint32_t p2 = 1 + (100 * count) / maxcount;
+
+	uint32_t oldsize = (char *) PLIST(record[i]) - record[i];
+	uint32_t newsize = (150 * oldsize) / MAX(p1, p2);
+
+	char *p = ppool + 2 * sizeof(uint32_t *);
+	ppool = p + newsize;
+
+	memcpy(p, record[i], oldsize);
+
+	PLIST(p) = (uint32_t *) (p + oldsize);
+	PEND(p) = (uint32_t *) (p + newsize);
+
+	record[i] = p;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+uint32_t Inverter::write(FILE *fp)
+{
+	compact();
+    radixsort(record, 0, count - 1, 0);
+
+    for (uint32_t i = 0; i < count; i++) {
+        *PLIST(record[i])++ = EMPTY;
+
+        uint32_t size = (char*)PLIST(record[i]) - record[i];
+        
+		if (fwrite(&size, sizeof(uint32_t), 1, fp) != 1)
+			return 0;	// can't write
+
+		if (fwrite(record[i], size, 1, fp) != 1)
+			return 0;	// can't write
+    }
+    clear();
+
+    return 1;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -49,39 +137,34 @@ uint32_t Inverter::lookup(const char *term)
 	while (*p)
 		i = 127 * i + *p++;
 
-	i = i % totalblocks;
+	i = i % size;
 
-	while (blocks[i] && strcmp(blocks[i]->term, term))
-		i = ++i % totalblocks;
+	while (record[i] && strcmp(record[i], term))
+		i = ++i % size;
 
 	return i;	
 }
 
-////////////////////////////////////////////////////////////////////////////
-// return a suitable prime number size for a hash table
-uint32_t Inverter::tablesize(uint32_t size)
+/////////////////////////////////////////////////////////////////////////////
+void Inverter::clear()
 {
-	static const uint32_t primes [] = {
-		19, 29, 41, 59, 79, 107, 149, 197, 263, 347, 457, 599, 787, 1031,
-		1361, 1777, 2333, 3037, 3967, 5167, 6719, 8737, 11369, 14783,
-		19219, 24989, 32491, 42257, 54941, 71429, 92861, 120721, 156941,
-		204047, 265271, 344857, 448321, 582821, 757693, 985003, 1280519,
-		1664681, 2164111, 2813353, 3657361, 4754591, 6180989, 8035301,
-		10445899, 13579681, 17653589, 22949669, 29834603, 38784989,
-		50420551, 65546729, 85210757, 110774011, 144006217, 187208107,
-		243370577, 316381771, 411296309, 534685237, 695090819, 903618083,
-		1174703521, 1527114613, 1985248999, 2580823717UL, 3355070839UL
-	};
+    memset(record, 0, size * sizeof(char*));
+    ppool = pool;
+    count = 0;
+}
 
-	int low, high, count = sizeof(primes) / sizeof(uint32_t);
-
-	for (low = 0, high = count - 1; high - low > 1;) {
-		int mid = (low + high) / 2;
-		if (primes [mid] < size)
-			low = mid;
-		else
-			high = mid;
+/////////////////////////////////////////////////////////////////////////////
+void Inverter::compact()
+{
+    for (int i = 0, j = 0; i < size; i++) {
+        if (record[i])
+            continue;
+        for ( ; j < size; j++)
+            if (j > i && record[j])
+                break;
+        if (j >= size)
+            break;
+        record[i] = record[j];
+        record[j] = NULL;
     }
-
-	return primes [high];
 }

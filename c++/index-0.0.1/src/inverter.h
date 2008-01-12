@@ -17,23 +17,26 @@ public:
 	Inverter();
 	~Inverter();
 
+	void insert(const char *term, uint32_t docid);
+	uint32_t write(FILE *fp);
+
 // Implementation
 private:
-	struct entry {
-		const char *term;	// term for entry
-		docentry *docvec;	// document vector
-		uint32_t ndocs;		// number of docs in vector
-	};
-	
-	void insert(const char *term, uint32_t docid);
+
 	uint32_t lookup(const char *term);
-	uint32_t tablesize(uint32_t size);
+	void alloc(uint32_t i, const char *term);
+	void realloc(uint32_t i);
+	void clear();
+	void compact();
 		
-	uint32_t numentries;	// number of entries
-	uint32_t maxblocks;		// maximum number of blocks
-	uint32_t totalblocks;	// total blocks in table
+	uint32_t count;			// number of entries
+	uint32_t maxcount;		// maximum number of records
+	uint32_t size;			// total records in table
+	uint32_t maxpool;		// maximum ammount of pool memory allowed
 	
-	entry **blocks;			// array of pointers to document lists
+	char **record;			// array of pointers to document lists
+	char *pool;				// inverter allocation pool
+	char *ppool;			// current allocation pointer	
 };
 
 #endif // __INVERTER_H__

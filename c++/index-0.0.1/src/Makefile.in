@@ -43,7 +43,8 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_index_OBJECTS = global.$(OBJEXT) inverter.$(OBJEXT) main.$(OBJEXT)
+am_index_OBJECTS = global.$(OBJEXT) inverter.$(OBJEXT) lex.$(OBJEXT) \
+	main.$(OBJEXT) sort.$(OBJEXT)
 index_OBJECTS = $(am_index_OBJECTS)
 index_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -148,9 +149,18 @@ index_SOURCES = global.cpp	\
 	global.h				\
 	inverter.cpp			\
 	inverter.h				\
-	main.cpp
+	lex.cpp					\
+	lex.h					\
+	main.cpp				\
+	sort.cpp				\
+	sort.h
 
-EXTRA_DIST = 
+EXTRA_DIST = win32 			\
+	Configure-win32.pl 		\
+	Makefile.win32			\
+	clean-win32.bat			\
+	make-win32.bat
+
 all: all-am
 
 .SUFFIXES:
@@ -219,7 +229,9 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/global.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inverter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lex.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sort.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

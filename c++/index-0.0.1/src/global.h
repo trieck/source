@@ -18,32 +18,26 @@
 
 #ifdef __GNUC__
 #include <unistd.h>
+
+// 64-bit constant integer suffix
 #define PLATFORM_S64(x) x##ll
+
 // ensure one byte packing under GCC
 #define PACK_ONE	__attribute__((aligned(1)))
 #define FSEEK	fseek
-#else	// __GNU_C__
+#else				// __GNU_C__
 #define PACK_ONE
+
+// 64-bit constant integer suffix
 #define PLATFORM_S64(x) x##i64
 #define FSEEK	_fseeki64
 
 #define vsnprintf	_vsnprintf
-#endif	// __GNUC__ 
+#endif				// __GNUC__
 
-// lexical buffer size 
-#define BSIZE 128
+// maximum term length
+#define MAXTERM 128
 
-// file open modes 
-enum {
-	OM_READ_ONLY,
-	OM_WRITE
-};
-
-struct docentry {
-	uint32_t docid;	// document identifier
-	uint32_t count;	// term-doc frequency
-};
-	
 // Macros for min/max
 #define    MIN(a,b)    (((a)<(b))?(a):(b))
 #define    MAX(a,b)    (((a)>(b))?(a):(b))
@@ -53,4 +47,4 @@ extern void error(const char *fmt, ...);
 uint64_t doublehash(const void *key, uint32_t len);
 uint64_t prime(uint64_t i);
 
-#endif // __GLOBAL_H__
+#endif				// __GLOBAL_H__

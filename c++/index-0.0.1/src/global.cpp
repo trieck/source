@@ -9,12 +9,10 @@
 
 extern int vsnprintf(char *, size_t n, char const *, va_list);
 
-/*
- * The delta table generates primes just less than a power of two.  A prime
- * number is calculated by subtracting its delta value from its 
- * corresponding power of two.
- */
-
+/////////////////////////////////////////////////////////////////////////////
+// The delta table generates primes just less than a power of two.  A prime
+// number is calculated by subtracting its delta value from its 
+// corresponding power of two.
 static uint8_t delta[] = {
 	0, 0, 1, 3, 3, 1, 3, 1, 5, 3,
 	3, 9, 3, 1, 3, 19, 15, 1, 5, 1,
@@ -27,16 +25,15 @@ static uint8_t delta[] = {
 	93, 1, 57, 25, 59
 };
 
-/*
- * error routine 
- */
+/////////////////////////////////////////////////////////////////////////////
+// error routine
 void error(const char *fmt, ...)
 {
 	va_list arglist;
-	char msg[BSIZE];
+	char msg[MAXTERM];
 
 	va_start(arglist, fmt);
-	vsnprintf(msg, BSIZE, fmt, arglist);
+	vsnprintf(msg, MAXTERM, fmt, arglist);
 	va_end(arglist);
 
 	fprintf(stderr, "%s\n", msg);
@@ -44,9 +41,8 @@ void error(const char *fmt, ...)
 	exit(1);
 }
 
-/*
- * 64-bit Fowler/Noll/Vo double-hash function 
- */
+/////////////////////////////////////////////////////////////////////////////
+// 64-bit Fowler/Noll/Vo double-hash function 
 uint64_t doublehash(const void *key, uint32_t len)
 {
 	uint32_t i;
@@ -69,9 +65,8 @@ uint64_t doublehash(const void *key, uint32_t len)
 	return hash;
 }
 
-/*
- * Compute the largest prime less than a specified power of two
- */
+/////////////////////////////////////////////////////////////////////////////
+// Compute the largest prime less than a specified power of two
 uint64_t prime(uint64_t i)
 {
 	uint32_t j = 1;
