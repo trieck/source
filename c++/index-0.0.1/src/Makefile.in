@@ -43,8 +43,9 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_index_OBJECTS = content.$(OBJEXT) global.$(OBJEXT) \
-	inverter.$(OBJEXT) lex.$(OBJEXT) main.$(OBJEXT) sort.$(OBJEXT)
+am_index_OBJECTS = index-content.$(OBJEXT) index-files.$(OBJEXT) \
+	index-global.$(OBJEXT) index-inverter.$(OBJEXT) \
+	index-lex.$(OBJEXT) index-main.$(OBJEXT) index-sort.$(OBJEXT)
 index_OBJECTS = $(am_index_OBJECTS)
 index_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -147,6 +148,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 index_SOURCES = content.cpp	\
 	content.h				\
+	files.cpp				\
+	files.h					\
 	global.cpp				\
 	global.h				\
 	inverter.cpp			\
@@ -157,6 +160,7 @@ index_SOURCES = content.cpp	\
 	sort.cpp				\
 	sort.h
 
+index_CPPFLAGS = -Wall -Werror
 EXTRA_DIST = win32 			\
 	Configure-win32.pl 		\
 	Makefile.win32			\
@@ -229,12 +233,13 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/content.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/global.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inverter.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lex.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sort.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-content.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-files.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-global.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-inverter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-lex.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-sort.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -249,6 +254,104 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+index-content.o: content.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-content.o -MD -MP -MF $(DEPDIR)/index-content.Tpo -c -o index-content.o `test -f 'content.cpp' || echo '$(srcdir)/'`content.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-content.Tpo $(DEPDIR)/index-content.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='content.cpp' object='index-content.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-content.o `test -f 'content.cpp' || echo '$(srcdir)/'`content.cpp
+
+index-content.obj: content.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-content.obj -MD -MP -MF $(DEPDIR)/index-content.Tpo -c -o index-content.obj `if test -f 'content.cpp'; then $(CYGPATH_W) 'content.cpp'; else $(CYGPATH_W) '$(srcdir)/content.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-content.Tpo $(DEPDIR)/index-content.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='content.cpp' object='index-content.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-content.obj `if test -f 'content.cpp'; then $(CYGPATH_W) 'content.cpp'; else $(CYGPATH_W) '$(srcdir)/content.cpp'; fi`
+
+index-files.o: files.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-files.o -MD -MP -MF $(DEPDIR)/index-files.Tpo -c -o index-files.o `test -f 'files.cpp' || echo '$(srcdir)/'`files.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-files.Tpo $(DEPDIR)/index-files.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='files.cpp' object='index-files.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-files.o `test -f 'files.cpp' || echo '$(srcdir)/'`files.cpp
+
+index-files.obj: files.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-files.obj -MD -MP -MF $(DEPDIR)/index-files.Tpo -c -o index-files.obj `if test -f 'files.cpp'; then $(CYGPATH_W) 'files.cpp'; else $(CYGPATH_W) '$(srcdir)/files.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-files.Tpo $(DEPDIR)/index-files.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='files.cpp' object='index-files.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-files.obj `if test -f 'files.cpp'; then $(CYGPATH_W) 'files.cpp'; else $(CYGPATH_W) '$(srcdir)/files.cpp'; fi`
+
+index-global.o: global.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-global.o -MD -MP -MF $(DEPDIR)/index-global.Tpo -c -o index-global.o `test -f 'global.cpp' || echo '$(srcdir)/'`global.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-global.Tpo $(DEPDIR)/index-global.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='global.cpp' object='index-global.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-global.o `test -f 'global.cpp' || echo '$(srcdir)/'`global.cpp
+
+index-global.obj: global.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-global.obj -MD -MP -MF $(DEPDIR)/index-global.Tpo -c -o index-global.obj `if test -f 'global.cpp'; then $(CYGPATH_W) 'global.cpp'; else $(CYGPATH_W) '$(srcdir)/global.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-global.Tpo $(DEPDIR)/index-global.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='global.cpp' object='index-global.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-global.obj `if test -f 'global.cpp'; then $(CYGPATH_W) 'global.cpp'; else $(CYGPATH_W) '$(srcdir)/global.cpp'; fi`
+
+index-inverter.o: inverter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-inverter.o -MD -MP -MF $(DEPDIR)/index-inverter.Tpo -c -o index-inverter.o `test -f 'inverter.cpp' || echo '$(srcdir)/'`inverter.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-inverter.Tpo $(DEPDIR)/index-inverter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='inverter.cpp' object='index-inverter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-inverter.o `test -f 'inverter.cpp' || echo '$(srcdir)/'`inverter.cpp
+
+index-inverter.obj: inverter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-inverter.obj -MD -MP -MF $(DEPDIR)/index-inverter.Tpo -c -o index-inverter.obj `if test -f 'inverter.cpp'; then $(CYGPATH_W) 'inverter.cpp'; else $(CYGPATH_W) '$(srcdir)/inverter.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-inverter.Tpo $(DEPDIR)/index-inverter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='inverter.cpp' object='index-inverter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-inverter.obj `if test -f 'inverter.cpp'; then $(CYGPATH_W) 'inverter.cpp'; else $(CYGPATH_W) '$(srcdir)/inverter.cpp'; fi`
+
+index-lex.o: lex.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-lex.o -MD -MP -MF $(DEPDIR)/index-lex.Tpo -c -o index-lex.o `test -f 'lex.cpp' || echo '$(srcdir)/'`lex.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-lex.Tpo $(DEPDIR)/index-lex.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='lex.cpp' object='index-lex.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-lex.o `test -f 'lex.cpp' || echo '$(srcdir)/'`lex.cpp
+
+index-lex.obj: lex.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-lex.obj -MD -MP -MF $(DEPDIR)/index-lex.Tpo -c -o index-lex.obj `if test -f 'lex.cpp'; then $(CYGPATH_W) 'lex.cpp'; else $(CYGPATH_W) '$(srcdir)/lex.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-lex.Tpo $(DEPDIR)/index-lex.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='lex.cpp' object='index-lex.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-lex.obj `if test -f 'lex.cpp'; then $(CYGPATH_W) 'lex.cpp'; else $(CYGPATH_W) '$(srcdir)/lex.cpp'; fi`
+
+index-main.o: main.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-main.o -MD -MP -MF $(DEPDIR)/index-main.Tpo -c -o index-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-main.Tpo $(DEPDIR)/index-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='main.cpp' object='index-main.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
+
+index-main.obj: main.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-main.obj -MD -MP -MF $(DEPDIR)/index-main.Tpo -c -o index-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-main.Tpo $(DEPDIR)/index-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='main.cpp' object='index-main.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`
+
+index-sort.o: sort.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-sort.o -MD -MP -MF $(DEPDIR)/index-sort.Tpo -c -o index-sort.o `test -f 'sort.cpp' || echo '$(srcdir)/'`sort.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-sort.Tpo $(DEPDIR)/index-sort.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='sort.cpp' object='index-sort.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-sort.o `test -f 'sort.cpp' || echo '$(srcdir)/'`sort.cpp
+
+index-sort.obj: sort.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-sort.obj -MD -MP -MF $(DEPDIR)/index-sort.Tpo -c -o index-sort.obj `if test -f 'sort.cpp'; then $(CYGPATH_W) 'sort.cpp'; else $(CYGPATH_W) '$(srcdir)/sort.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-sort.Tpo $(DEPDIR)/index-sort.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='sort.cpp' object='index-sort.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-sort.obj `if test -f 'sort.cpp'; then $(CYGPATH_W) 'sort.cpp'; else $(CYGPATH_W) '$(srcdir)/sort.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

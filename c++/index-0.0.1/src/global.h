@@ -15,6 +15,15 @@
 #include <sys/stat.h>
 #include <stdarg.h>
 #include <string.h>
+#include <limits.h>
+
+#include <string>
+#include <iostream>
+
+using std::string;
+using std::cout;
+using std::cerr;
+using std::endl;
 
 #ifdef __GNUC__
 #include <unistd.h>
@@ -33,10 +42,9 @@
 #define FSEEK	_fseeki64
 
 #define vsnprintf	_vsnprintf
-#endif				// __GNUC__
 
-// maximum term length
-#define MAXTERM 128
+#define PATH_MAX	_MAX_PATH
+#endif				// __GNUC__
 
 // Macros for min/max
 #define    MIN(a,b)    (((a)<(b))?(a):(b))
@@ -46,5 +54,6 @@
 extern void error(const char *fmt, ...);
 uint64_t doublehash(const void *key, uint32_t len);
 uint64_t prime(uint64_t i);
+string fullpath(const char *filename);
 
 #endif				// __GLOBAL_H__

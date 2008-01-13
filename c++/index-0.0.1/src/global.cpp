@@ -30,10 +30,10 @@ static uint8_t delta[] = {
 void error(const char *fmt, ...)
 {
 	va_list arglist;
-	char msg[MAXTERM];
+	char msg[PATH_MAX];
 
 	va_start(arglist, fmt);
-	vsnprintf(msg, MAXTERM, fmt, arglist);
+	vsnprintf(msg, PATH_MAX, fmt, arglist);
 	va_end(arglist);
 
 	fprintf(stderr, "%s\n", msg);
@@ -75,4 +75,22 @@ uint64_t prime(uint64_t i)
 		j++;
 
 	return (PLATFORM_S64(1) << j) - delta[j];
+}
+
+/////////////////////////////////////////////////////////////////////////////
+string fullpath(const char *filename)
+{
+	char buf[PATH_MAX];
+	buf[0] = '\0';
+	
+#if _MSC_VER
+	_fullpath( 
+   		buf,
+   		filename,
+   		PATH_MAX);
+#else	// _MSC_VER	
+	realpath(filename, buf);
+#endif 	// _MSC_VER
+
+	return buf;
 }
