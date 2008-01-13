@@ -108,20 +108,21 @@ void Inverter::realloc(uint32_t i)
 /////////////////////////////////////////////////////////////////////////////
 uint32_t Inverter::write(FILE *fp)
 {
-        compact();
-        radixsort(record, 0, count - 1, 0);
+    compact();
+    radixsort(record, 0, count - 1, 0);
 
-        for (uint32_t i = 0; i < count; i++) {
-        *PLIST(record[i])++ = EMPTY;
-
-        uint32_t size = (char*)PLIST(record[i]) - record[i];
-        
-	if (fwrite(&size, sizeof(uint32_t), 1, fp) != 1)
-	  return 0;	// can't write
-
-	if (fwrite(record[i], size, 1, fp) != 1)
-	  return 0;	// can't write
+    for (uint32_t i = 0; i < count; i++) {
+	    *PLIST(record[i])++ = EMPTY;
+	
+	    uint32_t size = (char*)PLIST(record[i]) - record[i];
+	        
+		if (fwrite(&size, sizeof(uint32_t), 1, fp) != 1)
+			return 0;	// can't write
+	
+		if (fwrite(record[i], size, 1, fp) != 1)
+			return 0;	// can't write
     }
+    
     clear();
 
     return 1;
@@ -140,7 +141,7 @@ uint32_t Inverter::lookup(const char *term)
 	i = i % size;
 
 	while (record[i] && strcmp(record[i], term))
-		i = ((i+1) % size);
+		i = (i+1) % size;
 
 	return i;	
 }

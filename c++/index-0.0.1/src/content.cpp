@@ -21,7 +21,7 @@ Content::~Content()
 /////////////////////////////////////////////////////////////////////////////
 void Content::index(int nfiles, char **pfiles, const char *outfile)
 {
-	outname  = basename(outfile);
+	outname = basefile(outfile);
 
 	for (int i = 0; i < nfiles; i++) {		
 		if (!lexer.open(pfiles[i])) {

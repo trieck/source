@@ -94,3 +94,19 @@ string fullpath(const char *filename)
 
 	return buf;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+string basefile(const char* path)
+{
+#if _MSC_VER
+	char output[PATH_MAX];
+	char filename[_MAX_FNAME] = { 0 };
+	char ext[_MAX_EXT] = { 0 };
+
+    _splitpath(path, NULL, NULL, filename, ext);
+	sprintf(output, "%s%s", filename, ext);
+	return output;
+#else	// _MSC_VER	
+	return basename(path);
+#endif 	// _MSC_VER	
+}

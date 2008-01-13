@@ -55,5 +55,6 @@ extern void error(const char *fmt, ...);
 uint64_t doublehash(const void *key, uint32_t len);
 uint64_t prime(uint64_t i);
 string fullpath(const char *filename);
+string basefile(const char *filename);
 
 #endif				// __GLOBAL_H__
