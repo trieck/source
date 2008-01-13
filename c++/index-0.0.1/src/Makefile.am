@@ -14,6 +14,7 @@ index_SOURCES = content.cpp	\
 	sort.h
 
 index_CPPFLAGS = -Wall -Werror
+CXXFLAGS = -O3
 
 EXTRA_DIST = win32 			\
 	Configure-win32.pl 		\
