@@ -1,11 +1,11 @@
 bin_PROGRAMS = index
-index_SOURCES = content.cpp	\
+index_SOURCES = content.cpp			\
 	content.h				\
 	files.cpp				\
 	files.h					\
 	global.cpp				\
 	global.h				\
-	inverter.cpp			\
+	inverter.cpp				\
 	inverter.h				\
 	lex.cpp					\
 	lex.h					\
@@ -21,3 +21,4 @@ EXTRA_DIST = win32 			\
 	Makefile.win32			\
 	clean-win32.bat			\
 	make-win32.bat
+

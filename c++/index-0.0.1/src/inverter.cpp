@@ -31,8 +31,8 @@
 /////////////////////////////////////////////////////////////////////////////
 Inverter::Inverter()
 {
-	maxcount = MEMORY_SIZE / AVERAGE_SIZE;
-	size = (uint32_t)prime(FILL_RATIO * maxcount);	
+    maxcount = MEMORY_SIZE / AVERAGE_SIZE;
+    size = (uint32_t)prime(FILL_RATIO * maxcount);	
 
     count = 0;
     maxpool = 2 * MEMORY_SIZE;
@@ -75,7 +75,7 @@ void Inverter::alloc(uint32_t i, const char *term)
 	char *p = ppool + 2 * sizeof(uint32_t *);
 	char *pterm = p;
 
-	while (*pterm++ = *term++);
+	while ((*pterm++ = *term++));
 
 	ppool = pterm + INITIAL_SIZE;
 
@@ -108,19 +108,19 @@ void Inverter::realloc(uint32_t i)
 /////////////////////////////////////////////////////////////////////////////
 uint32_t Inverter::write(FILE *fp)
 {
-	compact();
-    radixsort(record, 0, count - 1, 0);
+        compact();
+        radixsort(record, 0, count - 1, 0);
 
-    for (uint32_t i = 0; i < count; i++) {
+        for (uint32_t i = 0; i < count; i++) {
         *PLIST(record[i])++ = EMPTY;
 
         uint32_t size = (char*)PLIST(record[i]) - record[i];
         
-		if (fwrite(&size, sizeof(uint32_t), 1, fp) != 1)
-			return 0;	// can't write
+	if (fwrite(&size, sizeof(uint32_t), 1, fp) != 1)
+	  return 0;	// can't write
 
-		if (fwrite(record[i], size, 1, fp) != 1)
-			return 0;	// can't write
+	if (fwrite(record[i], size, 1, fp) != 1)
+	  return 0;	// can't write
     }
     clear();
 
@@ -140,7 +140,7 @@ uint32_t Inverter::lookup(const char *term)
 	i = i % size;
 
 	while (record[i] && strcmp(record[i], term))
-		i = ++i % size;
+		i = ((i+1) % size);
 
 	return i;	
 }
@@ -168,3 +168,4 @@ void Inverter::compact()
         record[j] = NULL;
     }
 }
+

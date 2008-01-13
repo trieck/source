@@ -31,7 +31,7 @@ public:
 // Implementation
 private:
 	enum { MAXFILES = 3000 };
-	FileInfo files[MAXFILES];	
+	FileInfo *files;	
 	uint16_t count;
 };
 

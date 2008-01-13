@@ -146,13 +146,13 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-index_SOURCES = content.cpp	\
+index_SOURCES = content.cpp			\
 	content.h				\
 	files.cpp				\
 	files.h					\
 	global.cpp				\
 	global.h				\
-	inverter.cpp			\
+	inverter.cpp				\
 	inverter.h				\
 	lex.cpp					\
 	lex.h					\
