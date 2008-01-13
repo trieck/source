@@ -22,14 +22,15 @@ public:
 
 // Interface
 public:
-	void index(int nfiles, char **files);
+	void index(int nfiles, char **files, const char *outfile);
 	
 // Implementation
 private:
 	void parse();	
-	Lex lexer;			// lexical analyzer	
+	Lex lexer;		// lexical analyzer	
 	Inverter block;		// inverted term list in memory
 	Files files;		// list of files
+	string outname;		// output index name
 };
 
 /////////////////////////////////////////////////////////////////////////////

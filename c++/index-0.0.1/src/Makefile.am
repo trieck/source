@@ -13,7 +13,7 @@ index_SOURCES = content.cpp			\
 	sort.cpp				\
 	sort.h
 
-index_CPPFLAGS = -Wall -Werror
+index_CPPFLAGS = -Wall 
 CXXFLAGS = -O3
 
 EXTRA_DIST = win32 			\

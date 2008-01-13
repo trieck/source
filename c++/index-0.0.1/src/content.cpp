@@ -19,8 +19,10 @@ Content::~Content()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Content::index(int nfiles, char **pfiles)
+void Content::index(int nfiles, char **pfiles, const char *outfile)
 {
+	outname  = basename(outfile);
+
 	for (int i = 0; i < nfiles; i++) {		
 		if (!lexer.open(pfiles[i])) {
 			error("unable to open file \"%s\".", pfiles[i]);
