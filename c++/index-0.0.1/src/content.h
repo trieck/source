@@ -27,7 +27,7 @@ public:
 // Implementation
 private:
 	void parse();	
-	Lex lexer;		// lexical analyzer	
+	Lex lexer;			// lexical analyzer	
 	Inverter block;		// inverted term list in memory
 	Files files;		// list of files
 	string outname;		// output index name

@@ -27,6 +27,7 @@ using std::endl;
 
 #ifdef __GNUC__
 #include <unistd.h>
+#include <libgen.h>
 
 // 64-bit constant integer suffix
 #define PLATFORM_S64(x) x##ll

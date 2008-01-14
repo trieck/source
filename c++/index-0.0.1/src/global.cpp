@@ -98,7 +98,7 @@ string fullpath(const char *filename)
 /////////////////////////////////////////////////////////////////////////////
 string basefile(const char* path)
 {
-#if _MSC_VER
+#if _MSC_VER	
 	char output[PATH_MAX];
 	char filename[_MAX_FNAME] = { 0 };
 	char ext[_MAX_EXT] = { 0 };
@@ -107,6 +107,6 @@ string basefile(const char* path)
 	sprintf(output, "%s%s", filename, ext);
 	return output;
 #else	// _MSC_VER	
-	return basename(path);
+	return basename((char*)path);
 #endif 	// _MSC_VER	
 }

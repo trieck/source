@@ -1,11 +1,13 @@
 bin_PROGRAMS = index
-index_SOURCES = content.cpp			\
+index_SOURCES = content.cpp	\
 	content.h				\
 	files.cpp				\
 	files.h					\
 	global.cpp				\
 	global.h				\
-	inverter.cpp				\
+	index.cpp				\
+	index.h					\
+	inverter.cpp			\
 	inverter.h				\
 	lex.cpp					\
 	lex.h					\
