@@ -32,6 +32,23 @@ int getopt(int argc, char **argv, const char *opts, char **optarg)
 }
  
 /////////////////////////////////////////////////////////////////////////////
+stringvec expandfiles(int argc, char **argv)
+{
+	stringvec output;
+	
+	for (int i = 0; i < argc; i++) {
+#ifdef _MSC_VER
+		stringvec t = expand(argv[i]);
+		output.insert(output.end(), t.begin(), t.end());
+#else
+		output.push_back(argv[i]);
+#endif	// _MSC_VER
+	}
+	
+	return output;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
 	if (argc < 2)
@@ -47,8 +64,10 @@ int main(int argc, char *argv[])
 	if (argc <= 0)
 		usage();
 
+	stringvec infiles = expandfiles(argc, argv);
+	
 	Content content;
-	content.index(argc, argv, outfile);
+	content.index(infiles, outfile);
 	
 	return 0;
 }

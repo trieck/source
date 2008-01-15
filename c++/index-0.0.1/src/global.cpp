@@ -110,3 +110,42 @@ string basefile(const char* path)
 	return basename((char*)path);
 #endif 	// _MSC_VER	
 }
+
+#ifdef _MSC_VER
+
+/////////////////////////////////////////////////////////////////////////////
+string dirname(const char* path)
+{
+	char drive[_MAX_DRIVE] = { 0 };
+	char dir[_MAX_PATH] = { 0 };
+
+    _splitpath(path, drive, dir, NULL, NULL);
+	
+	return string(drive) + dir;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+stringvec expand(const char* arg)
+{
+    stringvec files;
+    string dir = dirname(arg);
+
+    struct _finddata_t file;
+    long h = _findfirst(arg, &file);
+
+    if (h == -1)
+        return files;
+
+    do {
+		if (file.attrib & _A_SUBDIR)
+			continue;
+
+        files.push_back(dir+file.name);
+    } while (_findnext(h, &file) == 0);
+
+    _findclose(h);
+
+    return files;
+}
+
+#endif 	// _MSC_VER

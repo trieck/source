@@ -11,8 +11,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // information about a file
 struct FileInfo {
-	char filename[PATH_MAX];	// file name
 	uint8_t filelen;			// length of file name
+	char filename[PATH_MAX];	// file name	
 } PACK_ONE;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -23,9 +23,9 @@ public:
 	Files();
 	~Files();
 	
-// Interace
+// Interface
 	void insert(const char *filename);
-	int write(FILE *fp);		
+	int write(const char *filename);		
 	uint16_t size() const { return count; }
 
 // Implementation

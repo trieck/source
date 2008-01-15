@@ -22,7 +22,7 @@ public:
 
 // Interface
 public:
-	void index(int nfiles, char **files, const char *outfile);
+	void index(const stringvec &infiles, const char *outfile);
 	
 // Implementation
 private:

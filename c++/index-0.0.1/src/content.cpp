@@ -19,19 +19,26 @@ Content::~Content()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Content::index(int nfiles, char **pfiles, const char *outfile)
+void Content::index(const stringvec &infiles, const char *outfile)
 {
 	outname = basefile(outfile);
 
-	for (int i = 0; i < nfiles; i++) {		
-		if (!lexer.open(pfiles[i])) {
-			error("unable to open file \"%s\".", pfiles[i]);
+	stringvec::const_iterator it = infiles.begin();
+	for ( ; it != infiles.end(); it++) {
+		const string &infile = *it;		
+		if (!lexer.open(infile.c_str())) {
+			error("unable to open file \"%s\".", infile.c_str());
 		}		
 		
-		files.insert(pfiles[i]);		
+		files.insert(infile.c_str());		
 		parse();
 		
 		lexer.close();
+	}
+
+	// write the file list
+	if (!files.write(outfile)) {
+		error("can't write file list.");
 	}
 }
 

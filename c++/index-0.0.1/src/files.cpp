@@ -13,6 +13,7 @@ Files::Files()
  : count(0)
 {
 	files = new FileInfo[MAXFILES];
+	memset(files, 0, sizeof(FileInfo) * MAXFILES);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -26,20 +27,33 @@ void Files::insert(const char *filename)
 {
 	if (count >= MAXFILES)
 		error("too many files.");
-		
-	uint8_t len = MIN(strlen(filename), PATH_MAX-1);
-	strncpy(files[count].filename, filename, len);
+	
+	string fullname = fullpath(filename);	
+	uint8_t len = MIN(fullname.length(), PATH_MAX-1);
+
+	strncpy(files[count].filename, fullname.c_str(), len);
 	files[count].filename[len] = '\0';
 	files[count].filelen = len;
 	count++;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-int Files::write(FILE *fp)
+int Files::write(const char *filename)
 {
-	if (fwrite(files, sizeof(FileInfo) * count, 1, fp) != 1)
+	char outfile[PATH_MAX];
+	sprintf(outfile, "%s.files", filename);
+
+	FILE *fp;
+	if ((fp = fopen(outfile, "wb")) == NULL)
+		return 0;
+
+	if (fwrite(files, sizeof(FileInfo) * count, 1, fp) != 1) {
+		fclose(fp);
 		return 0;	// can't write
-			
-	return 0;
+	}
+	
+	fclose(fp);
+		
+	return 1;
 }
 
