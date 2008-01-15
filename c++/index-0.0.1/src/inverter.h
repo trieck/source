@@ -19,10 +19,11 @@ public:
 
 	void insert(const char *term, uint32_t docid);
 	uint32_t write(FILE *fp);
-
+    bool isfull() const;	// check if full
+    uint32_t getcount() const;
+    
 // Implementation
-private:
-
+private:	
 	uint32_t lookup(const char *term);
 	void alloc(uint32_t i, const char *term);
 	void realloc(uint32_t i);
@@ -38,5 +39,15 @@ private:
 	char *pool;				// inverter allocation pool
 	char *ppool;			// current allocation pointer	
 };
+
+/////////////////////////////////////////////////////////////////////////////
+inline bool Inverter::isfull() const {
+    return (count > maxcount || (uint32_t)(ppool-pool) > maxpool);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline uint32_t Inverter::getcount() const {
+	return count;
+}
 
 #endif // __INVERTER_H__

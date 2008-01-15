@@ -23,14 +23,17 @@ public:
 // Interface
 public:
 	void index(const stringvec &infiles, const char *outfile);
-	
+	void blocksave();
+
 // Implementation
 private:
 	void parse();	
 	Lex lexer;			// lexical analyzer	
 	Inverter block;		// inverted term list in memory
-	Files files;		// list of files
+	Files files;		// list of files indexed
+	stringvec datfiles;	// temporary dat files
 	string outname;		// output index name
+	uint64_t estimatedcount;
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -10,6 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Content::Content()
+ : estimatedcount(0)
 {
 }
 
@@ -53,5 +54,28 @@ void Content::parse(void)
 	while ((term = lexer.gettok()) != NULL) {
 		block.insert(term, filenum);		
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Content::blocksave()
+{
+	if (block.getcount() == 0)
+        return;
+        
+	char *tempfile = tmpnam(NULL);
+	datfiles.push_back(tempfile);
+	
+    estimatedcount += block.getcount();
+    
+    FILE *fp;
+    if ((fp = fopen(tempfile, "wb")) == NULL) {
+    	error("can't create file %s.", tempfile);
+    }	
+    
+    if (!block.write(fp)) {
+    	error("can't write concordance block.");
+    }
+    
+    fclose(fp);
 }
 
