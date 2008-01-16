@@ -23,11 +23,12 @@
 
 #include <string>
 #include <vector>
+#include <set>
 #include <iostream>
 
 using std::string;
 using std::vector;
-	
+using std::set;
 using std::cout;
 using std::cerr;
 using std::endl;

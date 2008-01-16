@@ -52,6 +52,12 @@ void Content::parse(void)
 	
 	filenum = files.size();	
 	while ((term = lexer.gettok()) != NULL) {
+		if (noise.isnoise(term))
+			continue;
+
+		if (block.isfull())
+			blocksave();
+
 		block.insert(term, filenum);		
 	}
 }
@@ -65,6 +71,8 @@ void Content::blocksave()
 	char *tempfile = tmpnam(NULL);
 	datfiles.push_back(tempfile);
 	
+	fprintf(stderr, "saving block to %s...\n", tempfile);
+
     estimatedcount += block.getcount();
     
     FILE *fp;

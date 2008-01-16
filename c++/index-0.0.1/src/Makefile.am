@@ -12,15 +12,20 @@ index_SOURCES = content.cpp	\
 	lex.cpp					\
 	lex.h					\
 	main.cpp				\
+	noise.cpp				\
+	noise.h					\
 	sort.cpp				\
 	sort.h
 
 index_CPPFLAGS = -Wall 
 CXXFLAGS = -O3
 
-EXTRA_DIST = win32 			\
+EXTRA_DIST = win32/stdint.h \
 	Configure-win32.pl 		\
 	Makefile.win32			\
 	clean-win32.bat			\
-	make-win32.bat
+	make-win32.bat			\
+	noise.txt
+
+
 

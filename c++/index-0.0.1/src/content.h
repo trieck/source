@@ -11,6 +11,7 @@
 #include "lex.h"
 #include "inverter.h"
 #include "files.h"
+#include "noise.h"
 
 /////////////////////////////////////////////////////////////////////////////
 class Content
@@ -28,11 +29,12 @@ public:
 // Implementation
 private:
 	void parse();	
-	Lex lexer;			// lexical analyzer	
-	Inverter block;		// inverted term list in memory
-	Files files;		// list of files indexed
-	stringvec datfiles;	// temporary dat files
-	string outname;		// output index name
+	Lex lexer;					// lexical analyzer	
+	Inverter block;				// inverted term list in memory
+	NoiseList noise;			// noise word list
+	Files files;				// list of files indexed
+	stringvec datfiles;			// temporary dat files
+	string outname;				// output index name
 	uint64_t estimatedcount;
 };
 
