@@ -30,3 +30,10 @@ Index::~Index()
 {
     delete [] records;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+void Index::insert(const char* term, uint64_t offset)	
+{
+	uint64_t h = fnvhash(term, strlen(term)) % size;
+}
+

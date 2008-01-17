@@ -71,8 +71,6 @@ void Content::blocksave()
 	char *tempfile = tmpnam(NULL);
 	datfiles.push_back(tempfile);
 	
-	fprintf(stderr, "saving block to %s...\n", tempfile);
-
     estimatedcount += block.getcount();
     
     FILE *fp;

@@ -24,7 +24,7 @@ NoiseList::~NoiseList()
 /////////////////////////////////////////////////////////////////////////////
 bool NoiseList::isnoise(const string &term)	const
 {
-	set<string>::const_iterator it = noise.find(term);
+	std::set<string>::const_iterator it = noise.find(term);
 	return it != noise.end();
 }
 

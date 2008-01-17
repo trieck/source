@@ -46,8 +46,8 @@ PROGRAMS = $(bin_PROGRAMS)
 am_index_OBJECTS = index-content.$(OBJEXT) index-files.$(OBJEXT) \
 	index-global.$(OBJEXT) index-index.$(OBJEXT) \
 	index-inverter.$(OBJEXT) index-lex.$(OBJEXT) \
-	index-main.$(OBJEXT) index-noise.$(OBJEXT) \
-	index-sort.$(OBJEXT)
+	index-main.$(OBJEXT) index-merge.$(OBJEXT) \
+	index-noise.$(OBJEXT) index-sort.$(OBJEXT)
 index_OBJECTS = $(am_index_OBJECTS)
 index_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -161,6 +161,8 @@ index_SOURCES = content.cpp	\
 	lex.cpp					\
 	lex.h					\
 	main.cpp				\
+	merge.cpp				\
+	merge.h					\
 	noise.cpp				\
 	noise.h					\
 	sort.cpp				\
@@ -172,6 +174,8 @@ EXTRA_DIST = win32/stdint.h \
 	Makefile.win32			\
 	clean-win32.bat			\
 	make-win32.bat			\
+	make-dsp.bat			\
+	make-dsp.pl				\
 	noise.txt
 
 all: all-am
@@ -247,6 +251,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-inverter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-lex.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-merge.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-noise.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index-sort.Po@am__quote@
 
@@ -361,6 +366,20 @@ index-main.obj: main.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='main.cpp' object='index-main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`
+
+index-merge.o: merge.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-merge.o -MD -MP -MF $(DEPDIR)/index-merge.Tpo -c -o index-merge.o `test -f 'merge.cpp' || echo '$(srcdir)/'`merge.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-merge.Tpo $(DEPDIR)/index-merge.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='merge.cpp' object='index-merge.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-merge.o `test -f 'merge.cpp' || echo '$(srcdir)/'`merge.cpp
+
+index-merge.obj: merge.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-merge.obj -MD -MP -MF $(DEPDIR)/index-merge.Tpo -c -o index-merge.obj `if test -f 'merge.cpp'; then $(CYGPATH_W) 'merge.cpp'; else $(CYGPATH_W) '$(srcdir)/merge.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/index-merge.Tpo $(DEPDIR)/index-merge.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='merge.cpp' object='index-merge.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o index-merge.obj `if test -f 'merge.cpp'; then $(CYGPATH_W) 'merge.cpp'; else $(CYGPATH_W) '$(srcdir)/merge.cpp'; fi`
 
 index-noise.o: noise.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(index_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT index-noise.o -MD -MP -MF $(DEPDIR)/index-noise.Tpo -c -o index-noise.o `test -f 'noise.cpp' || echo '$(srcdir)/'`noise.cpp

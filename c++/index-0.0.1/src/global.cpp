@@ -42,27 +42,27 @@ void error(const char *fmt, ...)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// 64-bit Fowler/Noll/Vo double-hash function 
-uint64_t doublehash(const void *key, uint32_t len)
+// 64-bit Fowler/Noll/Vo hash
+uint64_t fnvhash(const void *key, uint32_t len)
 {
 	uint32_t i;
-	uint64_t hash;
+	uint64_t h;
 
 	const uint8_t *k = (const uint8_t *) key;
 
-	for (hash = 0, i = 0; i < len; ++i) {
-		hash *= PLATFORM_S64(1099511628211);
-		hash ^= k[i];
+	for (h = 0, i = 0; i < len; ++i) {
+		h *= PLATFORM_S64(1099511628211);
+		h ^= k[i];
 	}
+	
+	return h;
+}
 
-	k = (const uint8_t *) &hash;
-
-	for (i = 0; i < sizeof(uint64_t); ++i) {
-		hash *= PLATFORM_S64(1099511628211);
-		hash ^= k[i];
-	}
-
-	return hash;
+/////////////////////////////////////////////////////////////////////////////
+uint64_t doublehash(const void *key, uint32_t len)
+{
+	uint64_t h = fnvhash(key, len);
+	return fnvhash(&h, sizeof(uint64_t));
 }
 
 /////////////////////////////////////////////////////////////////////////////

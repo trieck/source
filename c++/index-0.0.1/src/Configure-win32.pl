@@ -15,7 +15,7 @@ my %env = ('CC' => 'cl',
 # targets
 #
 my %targets = (
-	'clean' => "\n\t\@erase /F /Q *.obj *.pdb *.exe *.ilk *.suo 2>/nul"
+	'clean' => "\n\t\@erase /F /Q *.obj *.pdb *.exe *.ilk *.suo *.ncb *.opt *.plg Debug\\*.obj Debug\\*.exe Release\\*.obj Release\\*.exe 2>/nul"
 );
 
 # objects

@@ -12,6 +12,8 @@ index_SOURCES = content.cpp	\
 	lex.cpp					\
 	lex.h					\
 	main.cpp				\
+	merge.cpp				\
+	merge.h					\
 	noise.cpp				\
 	noise.h					\
 	sort.cpp				\
@@ -25,6 +27,8 @@ EXTRA_DIST = win32/stdint.h \
 	Makefile.win32			\
 	clean-win32.bat			\
 	make-win32.bat			\
+	make-dsp.bat			\
+	make-dsp.pl				\
 	noise.txt
 
 
