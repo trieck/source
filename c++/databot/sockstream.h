@@ -12,8 +12,9 @@
 class SockStream : public ISequentialStream
 {
 // Construction / Destruction
+protected:
+	SockStream();
 public:
-    SockStream();
     virtual ~SockStream();
 
 // Interface

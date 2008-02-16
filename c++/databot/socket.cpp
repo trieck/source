@@ -22,6 +22,12 @@ Socket::Socket()
 }
 
 /////////////////////////////////////////////////////////////////////////////
+Socket::Socket(SOCKET s)
+ : sock(s)
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
 Socket::~Socket() 
 {
 	close();
@@ -37,12 +43,21 @@ void Socket::close()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-bool Socket::connect(LPCSTR host, uint16_t port)
+bool Socket::mksock()
 {
 	close();
 
 	if ((sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) 
 		== INVALID_SOCKET)
+		return false;
+
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool Socket::connect(LPCSTR host, uint16_t port)
+{
+	if (!mksock())
 		return false;
 
 	SOCKADDR_IN addr;

@@ -125,6 +125,10 @@ SOURCE=.\socket.cpp
 
 SOURCE=.\sockstream.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\srvsock.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -168,6 +172,10 @@ SOURCE=.\socket.h
 # Begin Source File
 
 SOURCE=.\sockstream.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\srvsock.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

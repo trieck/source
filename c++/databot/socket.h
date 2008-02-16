@@ -14,6 +14,7 @@ class Socket
 // Construction / Destruction
 public:
 	Socket();
+	Socket(SOCKET s);
 	virtual ~Socket();
 
 // Interface
@@ -25,11 +26,15 @@ public:
 	static string lasterror();
 
 // Implementation
+protected:
+	bool mksock();
+	SOCKET getSock() const { return sock; }
 private:
 	bool gethost(LPCSTR host, uint16_t port, SOCKADDR_IN *addr);
-
 	SOCKET sock;
 };
 /////////////////////////////////////////////////////////////////////////////
+
+typedef auto_ptr<Socket> SocketPtr;
 
 #endif // __SOCKET_H__
