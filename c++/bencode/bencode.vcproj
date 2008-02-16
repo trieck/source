@@ -5,9 +5,6 @@
 	Name="bencode"
 	ProjectGUID="{F4BD7AEA-EDC3-496B-9BCF-2BF776574BE4}"
 	RootNamespace="bencode"
-	SccProjectName="&quot;$/source/c++/Bencode&quot;, GCFAAAAA"
-	SccLocalPath="."
-	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
