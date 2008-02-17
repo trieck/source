@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /W3 /GX /O2 /I "..\utility" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -63,8 +63,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ  /c
-# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
+# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /I "..\utility" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -86,62 +86,57 @@ LIB32=link.exe -lib
 # Begin Source File
 
 SOURCE=.\array.cpp
-# ADD CPP /YX"common.h"
-# End Source File
-# Begin Source File
-
-SOURCE=.\common.cpp
-# ADD CPP /Yc"common.h"
+# SUBTRACT CPP /YX
 # End Source File
 # Begin Source File
 
 SOURCE=.\dict.cpp
-# ADD CPP /YX"common.h"
+# SUBTRACT CPP /YX
 # End Source File
 # Begin Source File
 
 SOURCE=.\float.cpp
-# ADD CPP /YX"common.h"
+# SUBTRACT CPP /YX
 # End Source File
 # Begin Source File
 
 SOURCE=.\integer.cpp
-# ADD CPP /YX"common.h"
+# SUBTRACT CPP /YX
 # End Source File
 # Begin Source File
 
 SOURCE=.\main.cpp
-# ADD CPP /YX"common.h"
+# SUBTRACT CPP /YX
 # End Source File
 # Begin Source File
 
 SOURCE=.\message.cpp
-# ADD CPP /YX"common.h"
+# SUBTRACT CPP /YX
 # End Source File
 # Begin Source File
 
 SOURCE=.\mobject.cpp
-# ADD CPP /YX"common.h"
+# SUBTRACT CPP /YX
 # End Source File
 # Begin Source File
 
 SOURCE=.\mstring.cpp
-# ADD CPP /YX"common.h"
+# SUBTRACT CPP /YX
 # End Source File
 # Begin Source File
 
 SOURCE=.\socket.cpp
-# ADD CPP /YX"common.h"
+# SUBTRACT CPP /YX
 # End Source File
 # Begin Source File
 
 SOURCE=.\sockstream.cpp
-# ADD CPP /YX"common.h"
+# SUBTRACT CPP /YX
 # End Source File
 # Begin Source File
 
 SOURCE=.\srvsock.cpp
-# ADD CPP /YX"common.h"
+# SUBTRACT CPP /YX
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -150,10 +145,6 @@ SOURCE=.\srvsock.cpp
 # Begin Source File
 
 SOURCE=.\array.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\common.h
 # End Source File
 # Begin Source File
 
