@@ -115,6 +115,10 @@ SOURCE=.\mobject.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\msgparse.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\mstring.cpp
 # SUBTRACT CPP /YX
 # End Source File
@@ -160,6 +164,10 @@ SOURCE=.\message.h
 # Begin Source File
 
 SOURCE=.\mobject.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\msgparse.h
 # End Source File
 # Begin Source File
 

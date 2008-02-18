@@ -8,7 +8,6 @@
 #ifndef __MESSAGE_H__
 #define __MESSAGE_H__
 
-#import <msxml6.dll> no_namespace
 #include "mobject.h"
 #include "dict.h"
 
@@ -19,11 +18,12 @@ class Message
 public:
 	Message();
 	Message(const Message &rhs);
-	Message(const string &xml);
+	Message(LPMOBJECT pObj);
 	virtual ~Message();
 
 // Interface
 	Message &operator =(const Message &rhs);
+	Message &operator =(LPMOBJECT pObj);
 
 	void put(const string &key, const string &val);
 	void put(const string &key, int64_t val);
@@ -34,15 +34,6 @@ public:
 
 // Implementation
 private:
-	void parse(const string &xml);
-	MessageObjectPtr parseElement(IXMLDOMElementPtr element);
-	MessageObjectPtr parseDictionary(IXMLDOMElementPtr element);
-	MessageObjectPtr parseArray(IXMLDOMElementPtr element);
-	MessageObjectPtr parseString(IXMLDOMElementPtr element);
-	MessageObjectPtr parseInt(IXMLDOMElementPtr element);
-	MessageObjectPtr parseReal(IXMLDOMElementPtr element);
-	string parseKey(IXMLDOMElementPtr element);
-
 	Dictionary dict;	// underlying dictionary
 };
 /////////////////////////////////////////////////////////////////////////////

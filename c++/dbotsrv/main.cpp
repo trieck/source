@@ -11,14 +11,12 @@
 #include "srvsock.h"
 #include "dbotsrv.h"
 #include "cominit.h"
-
 #include "message.h"
 #include "array.h"
 #include "integer.h"
 #include "float.h"
 #include "mstring.h"
-
-#include <comdef.h>
+#include "msgparse.h"
 
 /////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
@@ -38,7 +36,8 @@ int main(int argc, char *argv[])
 		message.put("foobar", "foobaz");
 		message.put("foobat", array);
 
-		Message message2(message.toString());
+		MessageParser parser;
+		Message message2 = parser.parse(message.toString());
 		
 		cout << message.toString() << endl << endl;
 		cout << message2.toString() << endl;
