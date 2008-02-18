@@ -44,6 +44,6 @@ LPMOBJECT Integer::copy() const
 string Integer::toString() const
 {
 	char buf[BUF_SIZE];
-	sprintf(buf, "<int>%i64</int>", val);
+	sprintf(buf, "<integer>%I64d</integer>", val);
 	return buf;
 }

@@ -24,6 +24,7 @@ public:
 
 	LPMOBJECT copy() const;
 	string toString() const;
+	ObjectType getType() const { return MO_DICTIONARY; }
 
 // Implementation
 private:

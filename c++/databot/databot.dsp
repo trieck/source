@@ -105,11 +105,6 @@ SOURCE=.\integer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\main.cpp
-# SUBTRACT CPP /YX
-# End Source File
-# Begin Source File
-
 SOURCE=.\message.cpp
 # SUBTRACT CPP /YX
 # End Source File
@@ -169,6 +164,10 @@ SOURCE=.\mobject.h
 # Begin Source File
 
 SOURCE=.\mstring.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\protocol.h
 # End Source File
 # Begin Source File
 

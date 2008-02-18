@@ -21,6 +21,7 @@ public:
 	Float &operator =(const Float &rhs);
 	LPMOBJECT copy() const;
 	string toString() const;
+	ObjectType getType() const { return MO_FLOAT; }
 
 // Implementation
 private:	

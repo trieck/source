@@ -21,6 +21,7 @@ public:
 	String &operator=(const String &rhs);
 	LPMOBJECT copy() const;
 	string toString() const;
+	ObjectType getType() const { return MO_STRING; }
 
 // Implementation
 private:	

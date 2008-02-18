@@ -45,6 +45,6 @@ LPMOBJECT Float::copy() const
 string Float::toString() const
 {
 	char buf[BUF_SIZE];
-	sprintf(buf, "<float>%f</float>", val);
+	sprintf(buf, "<real>%f</real>", val);
 	return buf;
 }
