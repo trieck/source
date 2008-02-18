@@ -90,8 +90,16 @@ SOURCE=.\common.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\exception.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\options.cpp
 # ADD CPP /YX"common.h"
+# End Source File
+# Begin Source File
+
+SOURCE=.\sha1.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -99,11 +107,23 @@ SOURCE=.\options.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\cominit.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\common.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\exception.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\options.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\sha1.h
 # End Source File
 # End Group
 # End Target

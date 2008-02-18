@@ -17,8 +17,11 @@
 #include <map>
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 using std::string;
+using std::wstring;
+using std::ostringstream;
 using std::auto_ptr;
 using std::map;
 using std::vector;
@@ -26,6 +29,10 @@ using std::cout;
 using std::cerr;
 using std::endl;
 
+typedef map<string, string> stringmap;
+
 #define BUF_SIZE	(260)
+
+#include "exception.h"
 
 #endif // __COMMON_H__
