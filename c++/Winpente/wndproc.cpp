@@ -5,7 +5,7 @@
 #include "winpente.h"
 
 static COLORREF grid_color, back_color;  
-static			gMove =	0;					/* Computer Move */
+static int		gMove =	0;					/* Computer Move */
 static char		szP1Color[20];				/* Player One Color */
 static char		szP2Color[20];				/* Player Two Color */
 LPBOARD			p_Board;					/* Board Pointer */
@@ -24,7 +24,7 @@ long WINAPI WindowProc(HWND hWnd, UINT message,
 	POINT 		m_Point, c_position;
 	static char sz_filename[_MAX_PATH];
 	static char sz_titlename[_MAX_FNAME + _MAX_EXT];
-	static 		CurrentGame = 0, FirstMove = 0;
+	static int	CurrentGame = 0, FirstMove = 0;
 	char 		szBuffer[100];
 				
 	switch (message)
@@ -507,7 +507,7 @@ void ClearBoard(HWND hWnd)
 ////////////////////////
 void DoCaption(HWND hWnd, char* sz_titlename)
 {
-	const MAXCOUNT = 64 + _MAX_FNAME + _MAX_EXT; 
+	const int MAXCOUNT = 64 + _MAX_FNAME + _MAX_EXT; 
 	char sz_caption[MAXCOUNT];
 		
 	sprintf(sz_caption, "%s - %s", szTitle, sz_titlename);
