@@ -1,56 +1,31 @@
-Microsoft Visual Studio Solution File, Format Version 8.00
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Winpente", "Winpente.vcproj", "{69BABEFE-541C-4BED-8764-A043CA6034FF}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Think", "think\Think.vcproj", "{255CFC89-7A98-45F2-9C95-EB0FEC70B649}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ResDLL", "ResDLL\ResDLL.vcproj", "{11047940-A62F-4803-B614-101669CB7E70}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 4
-		SccProjectName0 = \u0022$/Source/c++/WINPENTE/v2.0\u0022,\u0020AHDAAAAA
-		SccLocalPath0 = .
-		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
-		CanCheckoutShared = false
-		SolutionUniqueID = {5E4E05B9-A26A-4266-B86E-9DE22CC046D7}
-		SccProjectUniqueName1 = Winpente.vcproj
-		SccLocalPath1 = .
-		CanCheckoutShared = false
-		SccProjectUniqueName2 = think\\Think.vcproj
-		SccProjectName2 = \u0022$/Source/c++/WINPENTE/v2.0/think\u0022,\u0020ZJDAAAAA
-		SccLocalPath2 = think
-		CanCheckoutShared = false
-		SccProjectUniqueName3 = ResDLL\\ResDLL.vcproj
-		SccLocalPath3 = .
-		CanCheckoutShared = false
-		SccProjectFilePathRelativizedFromConnection3 = ResDLL\\
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
 	EndGlobalSection
-	GlobalSection(SolutionConfiguration) = preSolution
-		Debug = Debug
-		Release = Release
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69BABEFE-541C-4BED-8764-A043CA6034FF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{69BABEFE-541C-4BED-8764-A043CA6034FF}.Debug|Win32.Build.0 = Debug|Win32
+		{69BABEFE-541C-4BED-8764-A043CA6034FF}.Release|Win32.ActiveCfg = Release|Win32
+		{69BABEFE-541C-4BED-8764-A043CA6034FF}.Release|Win32.Build.0 = Release|Win32
+		{255CFC89-7A98-45F2-9C95-EB0FEC70B649}.Debug|Win32.ActiveCfg = Debug|Win32
+		{255CFC89-7A98-45F2-9C95-EB0FEC70B649}.Debug|Win32.Build.0 = Debug|Win32
+		{255CFC89-7A98-45F2-9C95-EB0FEC70B649}.Release|Win32.ActiveCfg = Release|Win32
+		{255CFC89-7A98-45F2-9C95-EB0FEC70B649}.Release|Win32.Build.0 = Release|Win32
+		{11047940-A62F-4803-B614-101669CB7E70}.Debug|Win32.ActiveCfg = Debug|Win32
+		{11047940-A62F-4803-B614-101669CB7E70}.Debug|Win32.Build.0 = Debug|Win32
+		{11047940-A62F-4803-B614-101669CB7E70}.Release|Win32.ActiveCfg = Release|Win32
+		{11047940-A62F-4803-B614-101669CB7E70}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
-	GlobalSection(ProjectConfiguration) = postSolution
-		{69BABEFE-541C-4BED-8764-A043CA6034FF}.Debug.ActiveCfg = Debug|Win32
-		{69BABEFE-541C-4BED-8764-A043CA6034FF}.Debug.Build.0 = Debug|Win32
-		{69BABEFE-541C-4BED-8764-A043CA6034FF}.Release.ActiveCfg = Release|Win32
-		{69BABEFE-541C-4BED-8764-A043CA6034FF}.Release.Build.0 = Release|Win32
-		{255CFC89-7A98-45F2-9C95-EB0FEC70B649}.Debug.ActiveCfg = Debug|Win32
-		{255CFC89-7A98-45F2-9C95-EB0FEC70B649}.Debug.Build.0 = Debug|Win32
-		{255CFC89-7A98-45F2-9C95-EB0FEC70B649}.Release.ActiveCfg = Release|Win32
-		{255CFC89-7A98-45F2-9C95-EB0FEC70B649}.Release.Build.0 = Release|Win32
-		{11047940-A62F-4803-B614-101669CB7E70}.Debug.ActiveCfg = Debug|Win32
-		{11047940-A62F-4803-B614-101669CB7E70}.Debug.Build.0 = Debug|Win32
-		{11047940-A62F-4803-B614-101669CB7E70}.Release.ActiveCfg = Release|Win32
-		{11047940-A62F-4803-B614-101669CB7E70}.Release.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-	EndGlobalSection
-	GlobalSection(ExtensibilityAddIns) = postSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

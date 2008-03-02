@@ -304,9 +304,9 @@ VOID CPiecePage::OnPlayerTwoPiece5()
 
 VOID CPiecePage::RedrawPieces()
 {
-	UINT nCount = sizeof(PlayerOneCtrls) / sizeof(UINT);
+	UINT n, nCount = sizeof(PlayerOneCtrls) / sizeof(UINT);
 
-	for (UINT n = 0; n < nCount; n++)
+	for (n = 0; n < nCount; n++)
 	{
 		CWnd * pWnd = GetDlgItem(PlayerOneCtrls[n]);
 		if (pWnd == m_pCurrentPlayerOne)
