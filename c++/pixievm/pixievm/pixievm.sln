@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C++ Express 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pixievm", "pixievm.vcproj", "{870A2B25-074C-4B76-8664-B2BBFE2FE72B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{18677942-167D-438E-9A64-8C675E4F885B} = {18677942-167D-438E-9A64-8C675E4F885B}
