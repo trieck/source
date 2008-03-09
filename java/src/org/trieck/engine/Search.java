@@ -38,7 +38,7 @@ public class Search {
             System.out.println("   " + locality.size() + " hit(s).");
             System.out.print("   locations: (");
             Iterator<Location> it = locality.getLocations().iterator();
-            for (int i = 0; it.hasNextbbb(); i++) {
+            for (int i = 0; it.hasNext(); i++) {
                 if (i > 0) System.out.print(", ");
                 System.out.print(it.next().getOffset());
             }
