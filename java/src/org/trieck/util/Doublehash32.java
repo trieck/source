@@ -6,9 +6,7 @@ public class Doublehash32 implements Hash32 {
 		
 		Hash32 H = new FNVHash32();
 		
-		Integer v = H.hash(key);
-		
-		return H.hash(v.toString());
+		return H.hash(String.valueOf(H.hash(key)));
 	}
 
 }
