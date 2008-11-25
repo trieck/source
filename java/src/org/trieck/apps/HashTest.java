@@ -1,13 +1,10 @@
 package org.trieck.apps;
 
-import java.text.DecimalFormat;
 import java.nio.*;
 import org.trieck.util.*;
 
 public class HashTest {
 
-	private static final DecimalFormat df = new DecimalFormat("#.00");
-	
 	/* compare bits from key/result */
 	private float compare(int i, int j) {
 		int b = 32, diff = 0;
@@ -60,7 +57,7 @@ public class HashTest {
 				g += f = compare(k , h);
 				System.out.print("  ");
 				if (f * 100 < 10) System.out.print('*');
-				System.out.println(df.format(100 * f));
+				System.out.printf("%.2f\n", 100 * f);
 				t++;
 			} else {
 				System.out.println("  N/A");
@@ -68,7 +65,7 @@ public class HashTest {
 		}
 
 	    System.out.print("     avg. diff: ");
-	    System.out.println(df.format(100 * (g / t)));
+	    System.out.printf("%.2f\n", 100 * (g / t));
 	}
 
 	public static void main(String[] args) {
