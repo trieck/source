@@ -1,7 +1,7 @@
 package org.trieck.apps;
 
 import java.text.DecimalFormat;
-
+import java.nio.*;
 import org.trieck.util.*;
 
 public class HashTest {
@@ -38,11 +38,21 @@ public class HashTest {
 		int h = 0, i, j = 0, k = 0, t = 0;
 		float f = 0, g = 0;
 		String b, c;
-
+		byte[] bytes = new byte[Integer.SIZE / Byte.SIZE];
+		
+		ByteBuffer buf = ByteBuffer.allocate(Integer.SIZE / Byte.SIZE);
+		buf.order(ByteOrder.LITTLE_ENDIAN);
+		
 		for (i = 0; i < 32; i++) {
 			if (i > 0) k = h;
 			j = (j << 1) | 1;
-			h = fnc.hash(String.valueOf(j));
+			
+			buf.clear();
+			buf.putInt(j);
+			buf.flip();
+			buf.get(bytes);
+			
+			h = fnc.hash(bytes);
 			
 			b = bits(j); c = bits(h);
 			System.out.print(b + ' ' + c);
@@ -68,7 +78,7 @@ public class HashTest {
 		System.out.println("------------");
 		tester.hashtest(new FNVHash32());
 		
-		System.out.println("doublehash32");
+		System.out.println("\ndoublehash32");
 		System.out.println("------------");
 		tester.hashtest(new Doublehash32());
 	}
