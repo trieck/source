@@ -31,7 +31,7 @@ public:
 	bool removePiece(int x, int y);
 	void render(CDC *pDC, const CRect & rc);
 	void Serialize(CArchive & ar);
-	static getMaxCaptures();
+	static int getMaxCaptures();
 // Implementation
 protected:
 	void renderPieces(CDC *pDC, const CRect & rc) const;
@@ -64,7 +64,7 @@ inline bool Player::addCapture() {
 	return true;
 }
 /////////////////////////////////////////////////////////////////////////////
-inline Player::getMaxCaptures() {
+inline int Player::getMaxCaptures() {
 	return maxcaptures;
 }
 #endif // __PLAYER_H__

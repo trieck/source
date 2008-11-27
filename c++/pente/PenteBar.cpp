@@ -48,7 +48,8 @@ void PenteBar::DrawItem(LPDRAWITEMSTRUCT dis)
 	int cy1 = rc.top + ((rc.Height() - bm1.bmHeight) / 2);
 	int cy2 = rc.top + ((rc.Height() - bm2.bmHeight) / 2);
 	int offset = rc.left;
-	for (unsigned i = 0; i < playerOne->getCaptures(); i++) {
+	unsigned i;
+	for (i = 0; i < playerOne->getCaptures(); i++) {
 		imageList.DrawIndirect(&dc, 0, CPoint(offset, cy1), 
 			CSize(bm1.bmWidth, bm1.bmHeight), CPoint(0, 0));
 		offset += bm1.bmWidth;
@@ -69,7 +70,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // PenteBar message handlers
 
-PenteBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
+int PenteBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CStatusBar::OnCreate(lpCreateStruct) == -1)
 		return -1;
