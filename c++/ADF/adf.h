@@ -19,6 +19,12 @@
 #define FSTYPE_DIRCACHE    4	/* Directory Cache File System */
 
 /////////////////////////////////////////////////////////////////////////////
+// disk types
+#define DISKTYPE_FLOPDD 	1
+#define DISKTYPE_FLOPHD 	2
+#define DISKTYPE_HARDDISK 	3
+
+/////////////////////////////////////////////////////////////////////////////
 // block constants
 
 #define HT_SIZE				72	/* hash table size */

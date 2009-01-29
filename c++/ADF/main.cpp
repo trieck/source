@@ -6,8 +6,10 @@
 // All Rights Reserved
 //
 
-#include <stdint.h>
+#include "common.h"
 #include "adf.h"
+#include "volume.h"
+#include "disk.h"
 
 /////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])

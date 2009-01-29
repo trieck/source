@@ -6,5 +6,5 @@
 // All Rights Reserved
 //
 
-#include <stdint.h>
+#include "common.h"
 #include "adf.h"
