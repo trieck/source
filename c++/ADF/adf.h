@@ -167,4 +167,72 @@ struct dirblock_t {
 	int32_t	sectype;					/* secondary type = ST_DIR */
 };
 
+/////////////////////////////////////////////////////////////////////////////
+// old file system data block structure
+struct ofsblock_t {
+	int32_t type;		/* primary block type = T_DATA */ 
+	int32_t key;		/* pointer to file header block */
+	int32_t seqnum;		/* file data block number (first is 1) */
+	int32_t size;		/* data size (<= BSIZE-24) */
+	int32_t next;		/* next data block (0 for last) */
+	uint32_t checksum;	/* checksum */
+	uint8_t data[1];	/* file data  */
+};	
+
+/////////////////////////////////////////////////////////////////////////////
+// bitmap block structure
+struct bitmapblock_t {
+	uint32_t checksum;	/* checksum */
+	uint32_t map[127];	/* map */
+};
+
+/////////////////////////////////////////////////////////////////////////////
+// bitmap extension block structure
+struct bitmapextblock_t {
+	int32_t pages[127];	/* bitmap block pointers */
+	int32_t next;		/* next block (0 for last) */
+};
+
+/////////////////////////////////////////////////////////////////////////////
+// link block structure
+struct linkblock_t {
+	int32_t type;				/* primary block type = T_HEADER */
+	int32_t key;				/* self pointer */
+	int32_t r1[3];				/* RESERVED (= 0) */
+	uint32_t checksum;			/* checksum */
+	char realName[64];			/* Hard Link: UNUSED (= 0). Size = (BSIZE/4) - 54. For floppy disk = 74.
+								 * Soft Link: Path name to referenced object. Size = (BSIZE - 224) - 1).
+                				 * For floppy disk = 288 - 1 chars */
+	int32_t r2[83];				/* RESERVED (= 0) */
+	int32_t	days;				/* last access date (days since 1 jan 78) */
+	int32_t mins;				/* last access time (mins since midnight) */
+	int32_t ticks;				/* last access time (1/50ths of a second since last min) */
+	uint8_t namelen;			/* link name length */
+	char name[MAXNAMELEN+1];	/* link name */
+	int32_t r3;					/* RESERVED (= 0) */
+	int32_t realentry;			/* Hard Link: FFS: pointer to "real" file or directory.
+								 * Soft Link: UNUSED (= 0) */
+	int32_t next;				/* Hard Link: FFS : linked list of hardlinks (first = newest).
+								 * Soft Link: UNUSED (= 0) */
+	int32_t r4[5];				/* RESERVED (= 0) */
+	int32_t nextsamehash;		/* next entry ptr with same hash */
+	int32_t parent;				/* parent directory */
+	int32_t r5;					/* RESERVED (= 0) */
+	int32_t sectype;			/* secondary block type:
+								 * Hard Link: ST_LINKFILE or T_LINKDIR.
+								 * Soft Link: ST_SOFTLINK */
+};
+
+/////////////////////////////////////////////////////////////////////////////
+// directory cache block structure
+struct dircacheblock_t {
+	int32_t type;				/* T_DIRC */
+	int32_t key;				/* self pointer */
+	int32_t parent;				/* parent directory */
+	int32_t nrecs;				/* number of directory entry records in this block */
+	int32_t next;				/* directory cache linked list */
+	uint32_t checksum;			/* checksum */
+	uint8_t records[1];			/* list of entries */
+};
+
 #endif // __ADF_H__
