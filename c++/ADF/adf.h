@@ -22,7 +22,7 @@
 // disk types
 #define DISKTYPE_FLOPDD 	1
 #define DISKTYPE_FLOPHD 	2
-#define DISKTYPE_HARDDISK 	3
+#define DISKTYPE_HARDFILE 	3
 
 /////////////////////////////////////////////////////////////////////////////
 // block constants

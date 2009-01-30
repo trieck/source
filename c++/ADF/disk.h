@@ -9,6 +9,8 @@
 #ifndef __DISK_H__
 #define __DISK_H__
 
+#include "volume.h"
+
 class Disk;
 typedef auto_ptr<Disk> DiskPtr;
 
@@ -25,14 +27,17 @@ public:
 	static DiskPtr open(const char *filename);
 	void close();
 
-	void readblock(uint32_t blockno, uint8_t *block);
-
+	VolumePtr mount();
+	
 // Implementation
 private:
+	void readblock(uint32_t blockno, uint8_t *block);
+
 	uint32_t size;						// size in bytes of disk
 	uint32_t cylinders, heads, sectors; // geometry
 	string filename;					// file name
 	FILE *fp;							// file pointer		
+	friend class Volume;
 };
 
 #endif // __DISK_H__

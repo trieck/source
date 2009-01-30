@@ -10,6 +10,17 @@
 #include "adf.h"
 #include "disk.h"
 
+#define FLOPPY_CYLINDERS	(80)
+#define FLOPPY_HEADS		(2)
+#define FLOPDD_SECTORS		(11)
+#define FLOPHD_SECTORS		(FLOPDD_SECTORS*2)
+
+#define FLOPDD_SIZE			\
+	(BSIZE*FLOPDD_SECTORS*FLOPPY_HEADS*FLOPPY_CYLINDERS)
+
+#define FLOPHD_SIZE			\
+	(BSIZE*FLOPHD_SECTORS*FLOPPY_HEADS*FLOPPY_CYLINDERS)
+
 namespace { int32_t getDiskType(uint32_t size); }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -55,9 +66,10 @@ DiskPtr Disk::open(const char *filename)
 	pDisk->size = buf.st_size;
 
 	// TODO: floppy only
-	pDisk->cylinders = 80;
-	pDisk->heads = 2;
-	pDisk->sectors = type == DISKTYPE_FLOPDD ? 11 : 22;
+	pDisk->cylinders = FLOPPY_CYLINDERS;
+	pDisk->heads = FLOPPY_HEADS;
+	pDisk->sectors = type == DISKTYPE_FLOPDD ? 
+		FLOPDD_SECTORS : FLOPHD_SECTORS;
 
 	return DiskPtr(pDisk);
 }
@@ -77,9 +89,29 @@ void Disk::readblock(uint32_t blockno, uint8_t *block)
 	result = fread(block, 1, BSIZE, fp);
 
 	// TODO: read error
-	
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// mount disk
+VolumePtr Disk::mount()
+{
+	Volume *pVol = new Volume();
+
+	// TODO: floppy only
+
+	pVol->mounted = true;
+    pVol->firstblock = 0;
+    pVol->lastblock = (cylinders * heads * sectors)-1;
+    pVol->rootblock = (pVol->lastblock+1 - pVol->firstblock) / 2;
+    pVol->blocksize = BSIZE;
+	pVol->disk = this;
 
 
+	// TODO: read root block for volume name
+
+	// TODO: add to list of disks mounted volumes
+
+	return VolumePtr(pVol);
 }
 
 namespace {	// anonymous
@@ -87,15 +119,15 @@ namespace {	// anonymous
 /////////////////////////////////////////////////////////////////////////////
 int32_t getDiskType(uint32_t size)
 {
-	if ((size == 512*11*2*80) ||
-		(size == 512*11*2*81) ||
-        (size == 512*11*2*82) ||
-		(size == 512*11*2*83)) {
+	if ((size == FLOPDD_SIZE) ||
+		(size == FLOPDD_SIZE+1) ||
+        (size == FLOPDD_SIZE+2) ||
+		(size == FLOPDD_SIZE+3)) {
         return DISKTYPE_FLOPDD;
-	} else if (size == 512*22*2*80) {
+	} else if (size == FLOPHD_SIZE) {
         return DISKTYPE_FLOPHD;
-	} else if (size > 512*22*2*80) {
-        return DISKTYPE_HARDDISK;
+	} else if (size > FLOPHD_SIZE) {
+        return DISKTYPE_HARDFILE;
 	}
 
 	return -1;
