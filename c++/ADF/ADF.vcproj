@@ -46,7 +46,8 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="common.h"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -121,7 +122,8 @@
 				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="common.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -181,6 +183,30 @@
 				>
 			</File>
 			<File
+				RelativePath=".\adfutil.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\common.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\disk.cpp"
 				>
 			</File>
@@ -200,6 +226,10 @@
 			>
 			<File
 				RelativePath=".\adf.h"
+				>
+			</File>
+			<File
+				RelativePath=".\adfutil.h"
 				>
 			</File>
 			<File

@@ -8,6 +8,7 @@
 
 #include "common.h"
 #include "adf.h"
+#include "adfutil.h"
 #include "disk.h"
 #include "volume.h"
 
@@ -43,3 +44,48 @@ void Volume::readblock(uint32_t blockno, uint8_t *block)
 	disk->readblock(blockno, block);
 }
 
+/////////////////////////////////////////////////////////////////////////////
+void Volume::readbootblock()
+{
+	uint8_t buf[BOOTBLOCKSIZE];
+	bootblock_t *boot = (bootblock_t*)buf;
+
+	readblock(0, buf);
+	readblock(1, buf+BSIZE);
+
+#ifdef LITTLE_ENDIAN
+	boot->checksum = swap_endian(boot->checksum);
+	boot->rootblock = swap_endian(boot->rootblock);
+#endif	// LITTLE_ENDIAN
+
+	if (strncmp("DOS", boot->type, 3) != 0) {
+		;	// TODO: bad disk
+	}
+
+	if (boot->code[0] != 0 && bootsum(buf) != boot->checksum) {
+		;	// TODO : bad checksum
+	}
+
+	type = boot->type[3];
+	if (isFFS(type)) {
+		dblocksize = BSIZE;
+	} else {
+		dblocksize = OFS_DBSIZE;
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::readrootblock()
+{
+	uint8_t buf[BSIZE];
+	rootblock_t *prootblock = (rootblock_t*)buf;
+	readblock(rootblock, buf);
+
+	// copy diskname into volume
+	name = string(prootblock->diskname, prootblock->namelen);
+
+	// TODO: read bitmap
+
+	//nBlock = vol->lastBlock - vol->firstBlock +1 - 2;
+	//adfReadBitmap( vol, nBlock, &root );
+}

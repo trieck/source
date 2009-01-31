@@ -25,6 +25,8 @@ public:
 // Interface
 	void unmount();
 	void readblock(uint32_t blockno, uint8_t *block);
+	void readbootblock();
+	void readrootblock();
 
 // Implementation
 private:

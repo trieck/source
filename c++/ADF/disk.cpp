@@ -64,12 +64,25 @@ DiskPtr Disk::open(const char *filename)
 
 	pDisk->filename = filename;
 	pDisk->size = buf.st_size;
-
-	// TODO: floppy only
-	pDisk->cylinders = FLOPPY_CYLINDERS;
-	pDisk->heads = FLOPPY_HEADS;
-	pDisk->sectors = type == DISKTYPE_FLOPDD ? 
-		FLOPDD_SECTORS : FLOPHD_SECTORS;
+	
+	switch (type) {
+		case DISKTYPE_FLOPDD:
+			pDisk->cylinders = FLOPPY_CYLINDERS;
+			pDisk->heads = FLOPPY_HEADS;
+			pDisk->sectors = FLOPDD_SECTORS;
+			break;
+		case DISKTYPE_FLOPHD:
+			pDisk->cylinders = FLOPPY_CYLINDERS;
+			pDisk->heads = FLOPPY_HEADS;
+			pDisk->sectors = FLOPHD_SECTORS;
+			break;
+		default:	// DISKTYPE_HARDFILE
+			pDisk->cylinders = pDisk->size / BSIZE;
+			pDisk->heads = 1;
+			pDisk->sectors = 1;
+			// TODO: 
+			break;
+	}
 
 	return DiskPtr(pDisk);
 }
@@ -106,9 +119,13 @@ VolumePtr Disk::mount()
     pVol->blocksize = BSIZE;
 	pVol->disk = this;
 
+	// read boot block for volume
+	pVol->readbootblock();
 
-	// TODO: read root block for volume name
+	// read root block for volume
+	pVol->readrootblock();
 
+	
 	// TODO: add to list of disks mounted volumes
 
 	return VolumePtr(pVol);

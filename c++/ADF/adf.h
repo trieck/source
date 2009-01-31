@@ -9,7 +9,11 @@
 #ifndef __ADF_H__
 #define __ADF_H__
 
-#define BSIZE	(512)			/* logical block size */
+#define LITTLE_ENDIAN	1			/* for little endian machines */
+
+#define BSIZE			(512)		/* logical block size */
+#define OFS_DBSIZE		(488)		/* OFS data block size */
+#define BOOTBLOCKSIZE	(BSIZE*2)	/* boot block size */
 
 /////////////////////////////////////////////////////////////////////////////
 // file system types
@@ -17,6 +21,11 @@
 #define FSTYPE_FFS         1	/* Fast File System */
 #define FSTYPE_INTL        2	/* International File System */
 #define FSTYPE_DIRCACHE    4	/* Directory Cache File System */
+
+#define isFFS(c)           ((c)&FSTYPE_FFS)
+#define isOFS(c)           (!((c)&FSTYPE_FFS))
+#define isINTL(c)          ((c)&FSTYPE_INTL)
+#define isDIRCACHE(c)      ((c)&FSTYPE_DIRCACHE)
 
 /////////////////////////////////////////////////////////////////////////////
 // disk types
