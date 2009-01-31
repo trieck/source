@@ -78,11 +78,11 @@ void Volume::readbootblock()
 void Volume::readrootblock()
 {
 	uint8_t buf[BSIZE];
-	rootblock_t *prootblock = (rootblock_t*)buf;
+	rootblock_t *root = (rootblock_t*)buf;
 	readblock(rootblock, buf);
 
 	// copy diskname into volume
-	name = string(prootblock->diskname, prootblock->namelen);
+	name = string(root->diskname, root->namelen);
 
 	// TODO: read bitmap
 
