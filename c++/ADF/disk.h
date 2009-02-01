@@ -13,6 +13,8 @@
 class Disk;
 typedef auto_ptr<Disk> DiskPtr;
 
+typedef vector<Volume*> VolumeList;
+
 /////////////////////////////////////////////////////////////////////////////
 class Disk
 {
@@ -26,7 +28,8 @@ public:
 	static DiskPtr open(const char *filename);
 	void close();
 
-	VolumePtr mount();
+	Volume *mount();
+	void unmount();
 	
 // Implementation
 private:
@@ -35,7 +38,8 @@ private:
 	uint32_t size;						// size in bytes of disk
 	uint32_t cylinders, heads, sectors; // geometry
 	string filename;					// file name
-	FILE *fp;							// file pointer		
+	FILE *fp;							// file pointer	
+	VolumeList volumes;					// partitions
 	friend class Volume;
 };
 

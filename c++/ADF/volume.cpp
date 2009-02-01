@@ -165,14 +165,17 @@ void Volume::readbitmap(rootblock_t *root)
 {
 	freebitmap();
 
-	// TODO: no idea how this works yet
-	uint32_t totalblocks = BM_MAPSIZE * BM_BLOCKS_ENTRY;
+	// total number of blocks in bitmap block
+	uint32_t blocksmap = BM_MAPSIZE * BM_BLOCKS_ENTRY;
 
-	uint32_t blockno = lastblock - firstblock + 1 - 2;
-	uint32_t mapsize =  blockno / totalblocks;
+	// total number of blocks for volume minus bootblock
+	uint32_t nblocks = lastblock - firstblock + 1 - 2;
 
-    if (blockno % totalblocks != 0)
-        mapsize++;	// round up?
+	// bitmap size in blocks
+	uint32_t mapsize = nblocks / blocksmap;
+
+    if (nblocks % blocksmap != 0)
+        mapsize++;	
 
 	bitmapsize = mapsize;
 	bmtbl = (bitmapblock_t**) xmalloc(sizeof(bitmapblock_t*) * mapsize);
@@ -206,7 +209,7 @@ void Volume::readbmblock(uint32_t blockno, bitmapblock_t *bm)
 	uint32_t i;
 	for (i = 0; i < BM_MAPSIZE; i++)
 		bm->map[i] = swap_endian(bm->map[i]);
-#endif
+#endif	// LITTLE_ENDIAN
 
 	if (bm->checksum != adfchecksum(buf, 0, BSIZE)) {
 		ADFWarningDispatcher::dispatch("bad checksum.");
@@ -214,14 +217,27 @@ void Volume::readbmblock(uint32_t blockno, bitmapblock_t *bm)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+void Volume::readentry(uint32_t blockno, entryblock_t *e)
+{
+	uint8_t buf[BSIZE];
+
+	readblock(blockno, buf);
+	memcpy(e, buf, BSIZE);
+
+#ifdef LITTLE_ENDIAN
+#endif // LITTLE_ENDIAN
+
+
+}
+
+/////////////////////////////////////////////////////////////////////////////
 bool Volume::isBlockFree(uint32_t blockno)
 {
-	// TODO: no idea how this works yet
+	// total number of blocks in bitmap block
+	uint32_t blocksmap = BM_MAPSIZE * BM_BLOCKS_ENTRY;
 
-	uint32_t totalblocks = BM_MAPSIZE * BM_BLOCKS_ENTRY;
-
-	uint32_t blockmapno = blockno - 2;
-	uint32_t block = blockmapno / totalblocks;
+	uint32_t blockmapno = blockno - 2;	// first 2 blocks not in map
+	uint32_t block = blockmapno / blocksmap;
 	uint32_t index = (blockmapno / BM_BLOCKS_ENTRY) % BM_MAPSIZE;
 
 	return (bmtbl[block]->map[index] & 

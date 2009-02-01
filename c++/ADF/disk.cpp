@@ -32,6 +32,7 @@ Disk::Disk()
 /////////////////////////////////////////////////////////////////////////////
 Disk::~Disk()
 {
+	unmount();
 	close();
 }
 
@@ -42,6 +43,18 @@ void Disk::close()
 		fclose(fp);
 		fp = NULL;
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Disk::unmount()
+{
+	VolumeList::iterator it = volumes.begin();
+	for ( ; it != volumes.end(); it++) {
+		Volume *pVol = *it;
+		delete pVol;
+	}
+
+	volumes.erase(volumes.begin(), volumes.end());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -105,9 +118,10 @@ void Disk::readblock(uint32_t blockno, void *block)
 
 /////////////////////////////////////////////////////////////////////////////
 // mount disk
-VolumePtr Disk::mount()
+Volume *Disk::mount()
 {
-	VolumePtr pVol = VolumePtr(new Volume());
+	Volume *pVol = new Volume();
+	volumes.push_back(pVol);	
 
 	pVol->mounted = true;
 	pVol->firstblock = 0;
@@ -128,11 +142,7 @@ VolumePtr Disk::mount()
 	// read bitmap for volume
 	pVol->readbitmap(root);
 
-	// TODO: add to list of disks mounted volumes
-
-	
-
-	return VolumePtr(pVol);
+	return pVol;
 }
 
 namespace {	// anonymous

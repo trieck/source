@@ -28,6 +28,7 @@ public:
 	void readrootblock(rootblock_t *root);
 	void readbitmap(rootblock_t *root);
 	void readbmblock(uint32_t blockno, bitmapblock_t *bm);
+	void readentry(uint32_t blockno, entryblock_t *e);
 	bool isValidBlock(uint32_t blockno);
 	bool isBlockFree(uint32_t blockno);
 
@@ -40,7 +41,7 @@ private:
     uint32_t rootblock;		// root block from first block
 	uint32_t dblocksize;	// datablock size
 	uint32_t blocksize;		// block size
-	uint32_t bitmapsize;	// bitmap size
+	uint32_t bitmapsize;	// bitmap size in blocks
 	int8_t type;			// FFS/OFS, DIRCACHE, INTERNATIONAL
 	string name;			// volume name
 	bool mounted;			// volume is mounted

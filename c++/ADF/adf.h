@@ -252,4 +252,33 @@ struct dircacheblock_t {
 	uint8_t records[1];			/* list of entries */
 };
 
+/////////////////////////////////////////////////////////////////////////////
+// file/directory/link
+struct entryblock_t {
+	int32_t type;				/* T_HEADER == 2 */
+	int32_t key;				/* current block number */
+	int32_t r1[3];
+	uint32_t checksum;
+	int32_t tbl[HT_SIZE];	
+	int32_t r2[2];
+	int32_t access;				/* bit0=del, 1=modif, 2=write, 3=read */
+	int32_t bytesize;
+	uint8_t commlen;
+	char comment[MAXCOMMLEN+1];
+	char r3[913];
+	int32_t days;
+	int32_t mins;
+	int32_t ticks;
+	uint8_t namelen;
+	char name[MAXNAMELEN+1];
+	int32_t r4;
+	int32_t realentry;
+	int32_t nextlink;
+	int32_t r5[5];
+	int32_t nextsamehash;
+	int32_t parent;
+	int32_t extension;
+	int32_t sectype;
+};
+
 #endif // __ADF_H__

@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
 	try {
 		DiskPtr disk = Disk::open("d:\\amiga\\adf\\Workbench1.3.adf");
-		VolumePtr vol = disk->mount();
+		Volume *vol = disk->mount();
 	} catch (const ADFException &e) {
 		cerr << e.getDescription() << endl;
 		exit(1);
