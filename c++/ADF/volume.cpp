@@ -13,6 +13,17 @@
 #include "volume.h"
 #include "adfwarn.h"
 
+uint32_t bitmask[BM_BLOCKS_ENTRY] = { 
+    0x1, 0x2, 0x4, 0x8,
+	0x10, 0x20, 0x40, 0x80,
+    0x100, 0x200, 0x400, 0x800,
+	0x1000, 0x2000, 0x4000, 0x8000,
+	0x10000, 0x20000, 0x40000, 0x80000,
+	0x100000, 0x200000, 0x400000, 0x800000,
+	0x1000000, 0x2000000, 0x4000000, 0x8000000,
+	0x10000000, 0x20000000, 0x40000000, 0x80000000 
+};
+
 /////////////////////////////////////////////////////////////////////////////
 Volume::Volume()
 : blocksize(0), bitmapsize(0), dblocksize(0), firstblock(0), lastblock(0), 
@@ -61,7 +72,7 @@ void Volume::readblock(uint32_t blockno, void *block)
 	// translate logical sector to physical sector
     blockno = blockno + firstblock;
 
-	if (!isValidSector(blockno))
+	if (!isValidBlock(blockno))
 		throw ADFException("sector out of range.");
 
 	disk->readblock(blockno, block);
@@ -155,12 +166,12 @@ void Volume::readbitmap(rootblock_t *root)
 	freebitmap();
 
 	// TODO: no idea how this works yet
-	uint32_t nbits = BM_MAPSIZE * BM_BLOCKS_ENTRY;
+	uint32_t totalblocks = BM_MAPSIZE * BM_BLOCKS_ENTRY;
 
 	uint32_t blockno = lastblock - firstblock + 1 - 2;
-	uint32_t mapsize =  blockno / nbits;
+	uint32_t mapsize =  blockno / totalblocks;
 
-    if (blockno % nbits != 0)
+    if (blockno % totalblocks != 0)
         mapsize++;	// round up?
 
 	bitmapsize = mapsize;
@@ -175,7 +186,7 @@ void Volume::readbitmap(rootblock_t *root)
 	for (i = 0; i < BM_SIZE && root->bmpages[i] != 0; i++) {
 		bmblocks[i] = root->bmpages[i];
 
-		if (!isValidSector(bmblocks[i])) {
+		if (!isValidBlock(bmblocks[i])) {
 			ADFWarningDispatcher::dispatch("invalid sector.");
 		}
 		readbmblock(bmblocks[i], bmtbl[i]);
@@ -200,4 +211,19 @@ void Volume::readbmblock(uint32_t blockno, bitmapblock_t *bm)
 	if (bm->checksum != adfchecksum(buf, 0, BSIZE)) {
 		ADFWarningDispatcher::dispatch("bad checksum.");
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool Volume::isBlockFree(uint32_t blockno)
+{
+	// TODO: no idea how this works yet
+
+	uint32_t totalblocks = BM_MAPSIZE * BM_BLOCKS_ENTRY;
+
+	uint32_t blockmapno = blockno - 2;
+	uint32_t block = blockmapno / totalblocks;
+	uint32_t index = (blockmapno / BM_BLOCKS_ENTRY) % BM_MAPSIZE;
+
+	return (bmtbl[block]->map[index] & 
+		bitmask[blockmapno % BM_BLOCKS_ENTRY]) != 0;
 }

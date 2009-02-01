@@ -28,7 +28,8 @@ public:
 	void readrootblock(rootblock_t *root);
 	void readbitmap(rootblock_t *root);
 	void readbmblock(uint32_t blockno, bitmapblock_t *bm);
-	bool isValidSector(uint32_t blockno);
+	bool isValidBlock(uint32_t blockno);
+	bool isBlockFree(uint32_t blockno);
 
 // Implementation
 private:
@@ -51,7 +52,7 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline bool Volume::isValidSector(uint32_t blockno) {
+inline bool Volume::isValidBlock(uint32_t blockno) {
 	return (0 <= blockno && blockno <= (lastblock-firstblock));
 }
 
