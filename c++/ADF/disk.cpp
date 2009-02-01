@@ -2,12 +2,12 @@
 //
 // DISK.CPP : ADF disk definition
 //
-// Copyright(c) 2009 Thomas A. Rieck
-// All Rights Reserved
+// Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "common.h"
 #include "adf.h"
+#include "adfexcept.h"
 #include "disk.h"
 
 #define FLOPPY_CYLINDERS	(80)
@@ -47,20 +47,21 @@ void Disk::close()
 /////////////////////////////////////////////////////////////////////////////
 DiskPtr Disk::open(const char *filename)
 {
-	Disk *pDisk = new Disk();
+	DiskPtr pDisk = DiskPtr(new Disk());
 
 	struct _stat buf;
-	int result = _stat(filename, &buf);
+	if (_stat(filename, &buf) == -1) {
+		throw ADFException();
+	}
 
-	// TODO: result error
-
-	int32_t type = getDiskType(buf.st_size);
+	int32_t type;
+	if ((type = getDiskType(buf.st_size)) == -1) {
+		throw ADFException("unknown disk type.");
+	}
 	
-	// TODO: type error
-
-	pDisk->fp = fopen(filename, "rb");
-
-	// TODO : open error
+	if ((pDisk->fp = fopen(filename, "rb")) == NULL) {
+		throw ADFException();
+	}
 
 	pDisk->filename = filename;
 	pDisk->size = buf.st_size;
@@ -91,27 +92,24 @@ DiskPtr Disk::open(const char *filename)
 // read a physical block from disk
 void Disk::readblock(uint32_t blockno, void *block)
 {
-	// TODO: not open
+	if (fp == NULL) throw ADFException("disk not open.");
 
 	uint32_t offset = BSIZE * blockno;
 
-	int result = fseek(fp, offset, SEEK_SET);
+	if (fseek(fp, offset, SEEK_SET) != 0)
+		throw ADFException();
 
-	// TODO: seek error
-
-	result = fread(block, 1, BSIZE, fp);
-
-	// TODO: read error
+	if (fread(block, 1, BSIZE, fp) != BSIZE)
+		throw ADFException();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // mount disk
 VolumePtr Disk::mount()
 {
-	Volume *pVol = new Volume();
+	VolumePtr pVol = VolumePtr(new Volume());
 
-	// TODO: floppy only
-
+	pVol->mounted = true;
 	pVol->firstblock = 0;
     pVol->lastblock = (cylinders * heads * sectors)-1;
     pVol->rootblock = (pVol->lastblock+1 - pVol->firstblock) / 2;
@@ -132,7 +130,7 @@ VolumePtr Disk::mount()
 
 	// TODO: add to list of disks mounted volumes
 
-	pVol->mounted = true;
+	
 
 	return VolumePtr(pVol);
 }

@@ -2,13 +2,13 @@
 //
 // VOLUME.CPP : ADF volume definition
 //
-// Copyright(c) 2009 Thomas A. Rieck
-// All Rights Reserved
+// Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "common.h"
 #include "adf.h"
 #include "adfutil.h"
+#include "adfexcept.h"
 #include "disk.h"
 #include "volume.h"
 
@@ -55,12 +55,13 @@ void Volume::freebitmap()
 /////////////////////////////////////////////////////////////////////////////
 void Volume::readblock(uint32_t blockno, void *block)
 {
-	// TODO: check volume is mounted
+	if (!mounted) throw ADFException("volume not mounted.");
 	
 	// translate logical sector to physical sector
     blockno = blockno + firstblock;
 
-	// TODO: check blockno in range
+	if (!isValidSector(blockno))
+		throw ADFException("sector out of range.");
 
 	disk->readblock(blockno, block);
 }
@@ -80,13 +81,11 @@ void Volume::readbootblock(bootblock_t *boot)
 #endif	// LITTLE_ENDIAN
 
 	if (strncmp("DOS", boot->type, 3) != 0) {
-		;	// TODO: bad disk
+		// TODO: dos id not found, issue warning ??? 
 	}
 
 	if (boot->code[0] != 0 && bootsum(buf) != boot->checksum) {
-		;	// TODO : bad checksum
-		fprintf(stderr, "boot block checksum mismatch.\n");
-		exit(1);
+		// TODO : bad checksum, issue warning ???		
 	}
 
 	type = boot->type[3];
@@ -138,13 +137,11 @@ void Volume::readrootblock(rootblock_t *root)
 #endif // LITTLE_ENDIAN
 	
 	if (root->type != T_HEADER && root->sectype != ST_ROOT) {
-		fprintf(stderr, "bad root block.\n");
-		exit(1);
+		// TODO: issue warning
     }
 
 	if (root->checksum != adfchecksum(buf, 20, BSIZE)) {
-		fprintf(stderr, "invalid checksum.\n");
-		exit(1);
+		// TODO: issue warning
 	}
 
 	// copy diskname into volume
@@ -166,28 +163,20 @@ void Volume::readbitmap(rootblock_t *root)
         mapsize++;	// round up?
 
 	bitmapsize = mapsize;
-	bmtbl = (bitmapblock_t**) malloc(sizeof(bitmapblock_t*) * mapsize);
-	// TODO: alloc error
-
-	bmblocks = (uint32_t*) malloc(sizeof(uint32_t) * mapsize);
-	// TODO: alloc error
+	bmtbl = (bitmapblock_t**) xmalloc(sizeof(bitmapblock_t*) * mapsize);
+	bmblocks = (uint32_t*) xmalloc(sizeof(uint32_t) * mapsize);
 
 	uint32_t i;
 	for (i = 0; i < mapsize; i++) {
-        bmtbl[i] = (bitmapblock_t*)malloc(sizeof(bitmapblock_t));
-		// TODO: alloc error
+        bmtbl[i] = (bitmapblock_t*)xmalloc(sizeof(bitmapblock_t));
 	}
 
 	for (i = 0; i < BM_SIZE && root->bmpages[i] != 0; i++) {
 		bmblocks[i] = root->bmpages[i];
 
-		// TODO: check valid sector
 		if (!isValidSector(bmblocks[i])) {
-			fprintf(stderr, "invalid sector.\n");
-			exit(1);
+			; // TODO: issue warning
 		}
-
-
 		readbmblock(bmblocks[i], bmtbl[i]);
 	}
 }
@@ -208,7 +197,6 @@ void Volume::readbmblock(uint32_t blockno, bitmapblock_t *bm)
 #endif
 
 	if (bm->checksum != adfchecksum(buf, 0, BSIZE)) {
-		fprintf(stderr, "invalid checksum.\n");
-		exit(1);
+		// TODO: issue warning ??
 	}
 }

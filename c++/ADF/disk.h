@@ -2,8 +2,7 @@
 //
 // DISK.H : ADF disk definition
 //
-// Copyright(c) 2009 Thomas A. Rieck
-// All Rights Reserved
+// Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __DISK_H__

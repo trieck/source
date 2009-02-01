@@ -2,8 +2,7 @@
 //
 // ADF.H : Amiga Disk File system
 //
-// Copyright(c) 2009 Thomas A. Rieck
-// All Rights Reserved
+// Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __ADF_H__

@@ -183,6 +183,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\adfexcept.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\adfutil.cpp"
 				>
 			</File>
@@ -226,6 +230,10 @@
 			>
 			<File
 				RelativePath=".\adf.h"
+				>
+			</File>
+			<File
+				RelativePath=".\adfexcept.h"
 				>
 			</File>
 			<File

@@ -2,13 +2,13 @@
 //
 // ADFUTIL.CPP : ADF utility functions
 //
-// Copyright(c) 2009 Thomas A. Rieck
-// All Rights Reserved
+// Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "common.h"
 #include "adf.h"
 #include "adfutil.h"
+#include "adfexcept.h"
 #include <limits.h>
 
 /////////////////////////////////////////////////////////////////////////////
@@ -49,4 +49,15 @@ uint32_t adfchecksum(uint8_t *block, uint32_t offset, uint32_t len)
 	}
     
     return -sum;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void * xmalloc(uint32_t size)
+{
+	void *p; 
+	
+	if ((p = malloc(size)) == NULL) 
+		throw ADFException();
+
+	return p;
 }

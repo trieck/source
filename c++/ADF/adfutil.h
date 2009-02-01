@@ -2,8 +2,7 @@
 //
 // ADFUTIL.H : ADF utility functions
 //
-// Copyright(c) 2009 Thomas A. Rieck
-// All Rights Reserved
+// Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __ADFUTIL_H_INCLUDED
@@ -16,5 +15,6 @@
 int swap_endian(int d);
 uint32_t bootsum(uint8_t *block);
 uint32_t adfchecksum(uint8_t *block, uint32_t offset, uint32_t len);
+void * xmalloc(uint32_t size);
 
 #endif // __ADFUTIL_H_INCLUDED

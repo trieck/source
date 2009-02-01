@@ -2,8 +2,7 @@
 //
 // VOLUME.H : ADF volume definition
 //
-// Copyright(c) 2009 Thomas A. Rieck
-// All Rights Reserved
+// Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __VOLUME_H__
