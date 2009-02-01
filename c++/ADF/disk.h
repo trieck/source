@@ -31,7 +31,7 @@ public:
 	
 // Implementation
 private:
-	void readblock(uint32_t blockno, uint8_t *block);
+	void readblock(uint32_t blockno, void *block);
 
 	uint32_t size;						// size in bytes of disk
 	uint32_t cylinders, heads, sectors; // geometry

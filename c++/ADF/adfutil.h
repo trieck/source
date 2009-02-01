@@ -15,5 +15,6 @@
 /////////////////////////////////////////////////////////////////////////////
 int swap_endian(int d);
 uint32_t bootsum(uint8_t *block);
+uint32_t adfchecksum(uint8_t *block, uint32_t offset, uint32_t len);
 
 #endif // __ADFUTIL_H_INCLUDED

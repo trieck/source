@@ -89,7 +89,7 @@ DiskPtr Disk::open(const char *filename)
 
 /////////////////////////////////////////////////////////////////////////////
 // read a physical block from disk
-void Disk::readblock(uint32_t blockno, uint8_t *block)
+void Disk::readblock(uint32_t blockno, void *block)
 {
 	// TODO: not open
 
@@ -112,21 +112,27 @@ VolumePtr Disk::mount()
 
 	// TODO: floppy only
 
-	pVol->mounted = true;
-    pVol->firstblock = 0;
+	pVol->firstblock = 0;
     pVol->lastblock = (cylinders * heads * sectors)-1;
     pVol->rootblock = (pVol->lastblock+1 - pVol->firstblock) / 2;
     pVol->blocksize = BSIZE;
 	pVol->disk = this;
 
 	// read boot block for volume
-	pVol->readbootblock();
+	uint8_t buf[BOOTBLOCKSIZE];
+	bootblock_t *boot = (bootblock_t*)buf;
+	pVol->readbootblock(boot);
 
 	// read root block for volume
-	pVol->readrootblock();
+	rootblock_t *root = (rootblock_t*)buf;
+	pVol->readrootblock(root);
 
-	
+	// read bitmap for volume
+	pVol->readbitmap(root);
+
 	// TODO: add to list of disks mounted volumes
+
+	pVol->mounted = true;
 
 	return VolumePtr(pVol);
 }

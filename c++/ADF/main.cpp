@@ -14,5 +14,10 @@
 /////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
+	DiskPtr disk;
+	disk = Disk::open("d:\\amiga\\adf\\Workbench1.3.adf");
+
+	VolumePtr vol = disk->mount();
+
 	return 0;
 }

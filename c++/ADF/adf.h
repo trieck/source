@@ -38,6 +38,9 @@
 
 #define HT_SIZE				72	/* hash table size */
 #define BM_SIZE				25	/* bitmap size */
+#define BM_MAPSIZE			127	/* bitmap block map size */
+#define BM_BLOCKS_ENTRY		32	/* number of blocks per bitmap entry */
+
 #define MAX_DATABLK			72	/* maximum datablock size */
 
 #define MAXNAMELEN			30	/* maximum name length */
@@ -197,15 +200,15 @@ struct ofsblock_t {
 /////////////////////////////////////////////////////////////////////////////
 // bitmap block structure
 struct bitmapblock_t {
-	uint32_t checksum;	/* checksum */
-	uint32_t map[127];	/* map */
+	uint32_t checksum;			/* checksum */
+	uint32_t map[BM_MAPSIZE];	/* map */
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // bitmap extension block structure
 struct bitmapextblock_t {
-	int32_t pages[127];	/* bitmap block pointers */
-	int32_t next;		/* next block (0 for last) */
+	int32_t pages[BM_MAPSIZE];	/* bitmap block pointers */
+	int32_t next;				/* next block (0 for last) */
 };
 
 /////////////////////////////////////////////////////////////////////////////
