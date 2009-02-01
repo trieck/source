@@ -10,10 +10,28 @@
 #include "volume.h"
 #include "disk.h"
 #include "adfexcept.h"
+#include "adfwarn.h"
+
+/////////////////////////////////////////////////////////////////////////////
+class MyHandler : public IADFWarningHandler
+{
+public:
+	void handle(const string &s) const;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+void MyHandler::handle(const string &s) const
+{
+	cerr << s << endl;
+}
+
+MyHandler warning;
 
 /////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
+	ADFWarningRegistrar::Register(&warning);
+
 	try {
 		DiskPtr disk = Disk::open("d:\\amiga\\adf\\Workbench1.3.adf");
 		VolumePtr vol = disk->mount();

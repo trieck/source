@@ -11,6 +11,7 @@
 #include "adfexcept.h"
 #include "disk.h"
 #include "volume.h"
+#include "adfwarn.h"
 
 /////////////////////////////////////////////////////////////////////////////
 Volume::Volume()
@@ -81,11 +82,11 @@ void Volume::readbootblock(bootblock_t *boot)
 #endif	// LITTLE_ENDIAN
 
 	if (strncmp("DOS", boot->type, 3) != 0) {
-		// TODO: dos id not found, issue warning ??? 
+		ADFWarningDispatcher::dispatch("dos id not found.");
 	}
 
 	if (boot->code[0] != 0 && bootsum(buf) != boot->checksum) {
-		// TODO : bad checksum, issue warning ???		
+		ADFWarningDispatcher::dispatch("bad checksum.");
 	}
 
 	type = boot->type[3];
@@ -137,11 +138,11 @@ void Volume::readrootblock(rootblock_t *root)
 #endif // LITTLE_ENDIAN
 	
 	if (root->type != T_HEADER && root->sectype != ST_ROOT) {
-		// TODO: issue warning
+		ADFWarningDispatcher::dispatch("bad root block type.");
     }
 
 	if (root->checksum != adfchecksum(buf, 20, BSIZE)) {
-		// TODO: issue warning
+		ADFWarningDispatcher::dispatch("bad checksum.");
 	}
 
 	// copy diskname into volume
@@ -175,7 +176,7 @@ void Volume::readbitmap(rootblock_t *root)
 		bmblocks[i] = root->bmpages[i];
 
 		if (!isValidSector(bmblocks[i])) {
-			; // TODO: issue warning
+			ADFWarningDispatcher::dispatch("invalid sector.");
 		}
 		readbmblock(bmblocks[i], bmtbl[i]);
 	}
@@ -197,6 +198,6 @@ void Volume::readbmblock(uint32_t blockno, bitmapblock_t *bm)
 #endif
 
 	if (bm->checksum != adfchecksum(buf, 0, BSIZE)) {
-		// TODO: issue warning ??
+		ADFWarningDispatcher::dispatch("bad checksum.");
 	}
 }

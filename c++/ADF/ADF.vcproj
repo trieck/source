@@ -187,7 +187,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\adfhandle.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\adfutil.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\adwarn.cpp"
 				>
 			</File>
 			<File
@@ -237,7 +245,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\adfhandle.h"
+				>
+			</File>
+			<File
 				RelativePath=".\adfutil.h"
+				>
+			</File>
+			<File
+				RelativePath=".\adfwarn.h"
 				>
 			</File>
 			<File

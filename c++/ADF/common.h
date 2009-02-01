@@ -16,7 +16,9 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <vector>
 
+using std::vector;
 using std::string;
 using std::auto_ptr;
 using std::cout;
