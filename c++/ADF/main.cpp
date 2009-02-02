@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// MAIN.CPP : Amiga Disk File system driver
+// MAIN.CPP : Amiga Disk File driver program
 //
 // Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
 //
@@ -35,6 +35,9 @@ int main(int argc, char *argv[])
 	try {
 		DiskPtr disk = Disk::open("d:\\amiga\\adf\\Workbench1.3.adf");
 		Volume *vol = disk->mount();
+
+		vol->readdir(vol->getRootBlock(), false);
+
 	} catch (const ADFException &e) {
 		cerr << e.getDescription() << endl;
 		exit(1);

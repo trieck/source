@@ -8,6 +8,8 @@
 #ifndef __VOLUME_H__
 #define __VOLUME_H__
 
+#include "entry.h"
+
 class Disk;
 class Volume;
 typedef auto_ptr<Volume> VolumePtr;
@@ -32,6 +34,9 @@ public:
 	bool isValidBlock(uint32_t blockno);
 	bool isBlockFree(uint32_t blockno);
 
+	uint32_t getRootBlock() const;
+	EntryList readdir(uint32_t blockno, bool recurse);
+
 // Implementation
 private:
 	void freebitmap();
@@ -52,11 +57,16 @@ private:
 	friend class Disk;
 };
 
+typedef vector<Volume*> VolumeList;
+
 /////////////////////////////////////////////////////////////////////////////
 inline bool Volume::isValidBlock(uint32_t blockno) {
 	return (0 <= blockno && blockno <= (lastblock-firstblock));
 }
 
 /////////////////////////////////////////////////////////////////////////////
+inline uint32_t Volume::getRootBlock() const {
+	return rootblock;
+}
 
 #endif // __VOLUME_H__

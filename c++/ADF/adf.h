@@ -119,7 +119,7 @@ struct fileheader_t {
 	uint32_t fsize;						/* file size in bytes */
 	uint8_t commlen;					/* file comment length */
 	char comment[MAXCOMMLEN+1];			/* comment (max. 79 chars permitted) */
-	int8_t r3[13];						/* RESERVED (= 0) */
+	int8_t r3[11];						/* RESERVED (= 0) */
 	int32_t	days;						/* date of last change (days since 1 jan 78) */
 	int32_t mins;						/* time of last change (mins since midnight) */
 	int32_t ticks;						/* time of last change (1/50ths of a second since last min) */
@@ -168,7 +168,7 @@ struct dirblock_t {
 	int32_t	r4;							/* RESERVED (= 0) */
 	int8_t commlen;						/* directory comment length */
 	char comment[MAXCOMMLEN+1];			/* comment (max. 79 chars permitted) */
-	int8_t r5[13];						/* UNUSED (= 0) */
+	int8_t r5[11];						/* UNUSED (= 0) */
 	int32_t	days;						/* last access date (days since 1 jan 78) */
 	int32_t	mins;						/* last access time (mins since midnight) */
 	int32_t	ticks;						/* last access time (1/50ths of a second since last min) */
@@ -265,7 +265,7 @@ struct entryblock_t {
 	int32_t bytesize;
 	uint8_t commlen;
 	char comment[MAXCOMMLEN+1];
-	char r3[913];
+	char r3[11];
 	int32_t days;
 	int32_t mins;
 	int32_t ticks;

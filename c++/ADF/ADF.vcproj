@@ -223,6 +223,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\entry.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -262,6 +266,10 @@
 			</File>
 			<File
 				RelativePath=".\disk.h"
+				>
+			</File>
+			<File
+				RelativePath=".\entry.h"
 				>
 			</File>
 			<File

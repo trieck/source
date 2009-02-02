@@ -225,9 +225,39 @@ void Volume::readentry(uint32_t blockno, entryblock_t *e)
 	memcpy(e, buf, BSIZE);
 
 #ifdef LITTLE_ENDIAN
+	e->type = swap_endian(e->type);
+	e->key = swap_endian(e->key);
+	e->checksum = swap_endian(e->checksum);
+	
+	uint32_t i;
+	for (i = 0; i < HT_SIZE; i++) {
+		e->tbl[i] = swap_endian(e->tbl[i]);
+	}
+	
+	e->access = swap_endian(e->access);
+	e->bytesize = swap_endian(e->bytesize);
+	e->days = swap_endian(e->days);
+	e->mins = swap_endian(e->mins);
+	e->ticks = swap_endian(e->ticks);
+	e->realentry = swap_endian(e->realentry);
+	e->nextlink = swap_endian(e->nextlink);
+	e->nextsamehash = swap_endian(e->nextsamehash);
+	e->parent = swap_endian(e->parent);
+	e->extension = swap_endian(e->extension);
+	e->sectype = swap_endian(e->sectype);
 #endif // LITTLE_ENDIAN
 
+	if (e->checksum != adfchecksum(buf, 20, BSIZE)) {
+		ADFWarningDispatcher::dispatch("bad checksum.");
+	}
 
+	if (e->type != T_HEADER) {
+		ADFWarningDispatcher::dispatch("bad entry type.");
+	}
+
+	if (e->namelen > MAXNAMELEN || e->commlen > MAXCOMMLEN) {
+		ADFWarningDispatcher::dispatch("bad name or comment length.");
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -242,4 +272,62 @@ bool Volume::isBlockFree(uint32_t blockno)
 
 	return (bmtbl[block]->map[index] & 
 		bitmask[blockmapno % BM_BLOCKS_ENTRY]) != 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+EntryList Volume::readdir(uint32_t blockno, bool recurse)
+{
+	EntryList entries;
+
+	// TODO: dircache
+
+	entryblock_t parent, entryblk;
+	readentry(blockno, &parent);
+
+	int32_t *hashtable = parent.tbl;
+    for (uint32_t i = 0; i < HT_SIZE; i++) {
+		if (hashtable[i] != 0) {
+			readentry(hashtable[i], &entryblk);
+
+			// if (adfEntBlock2Entry(&entryBlk, entry)!=RC_OK) {
+			// entry->sector = hashTable[i];
+
+			// if (recurs && entry->type==ST_DIR)
+
+				/* same hashcode linked list */
+			/*
+             nextSector = entryBlk.nextSameHash;
+             while( nextSector!=0 ) {
+                 entry = (struct Entry *)malloc(sizeof(struct Entry));
+                 if (!entry) {
+                     adfFreeDirList(head);
+					 (*adfEnv.eFct)("adfGetDirEnt : malloc");
+                     return NULL;
+                 }
+                 if (adfReadEntryBlock(vol, nextSector, &entryBlk)!=RC_OK) {
+					 adfFreeDirList(head); return NULL;
+                 }
+
+                 if (adfEntBlock2Entry(&entryBlk, entry)!=RC_OK) {
+					 adfFreeDirList(head);
+                     return NULL;
+                 }
+                 entry->sector = nextSector;
+	
+                 cell = newCell(cell, (void*)entry);
+                 if (cell==NULL) {
+                     adfFreeDirList(head); return NULL;
+                 }
+				 
+                 if (recurs && entry->type==ST_DIR)
+                     cell->subdir = adfGetRDirEnt(vol,entry->sector,recurs);
+				 
+                 nextSector = entryBlk.nextSameHash;
+             }*/
+		}
+
+
+	}
+	
+	return entries;
 }

@@ -13,8 +13,6 @@
 class Disk;
 typedef auto_ptr<Disk> DiskPtr;
 
-typedef vector<Volume*> VolumeList;
-
 /////////////////////////////////////////////////////////////////////////////
 class Disk
 {
