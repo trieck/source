@@ -278,7 +278,7 @@ bool Volume::isBlockFree(uint32_t blockno)
 EntryList Volume::readdir(uint32_t blockno, bool recurse)
 {
 	EntryList entries;
-
+	Entry entry;
 	// TODO: dircache
 
 	entryblock_t parent, entryblk;
@@ -289,8 +289,8 @@ EntryList Volume::readdir(uint32_t blockno, bool recurse)
 		if (hashtable[i] != 0) {
 			readentry(hashtable[i], &entryblk);
 
-			// if (adfEntBlock2Entry(&entryBlk, entry)!=RC_OK) {
-			// entry->sector = hashTable[i];
+			entry = entryblk;
+			entry.blockno = hashtable[i];
 
 			// if (recurs && entry->type==ST_DIR)
 

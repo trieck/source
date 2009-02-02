@@ -14,12 +14,16 @@ class Entry
 // Construction / Destruction
 public:
 	Entry();
+	Entry(const Entry &e);
+	Entry(const entryblock_t &block);
 	~Entry();
 
 // Interface
+	Entry& operator = (const Entry &e);
+	Entry& operator = (const entryblock_t &block);
 
 // Implementation
-private:
+public:
 	int32_t type;		// entry type, ST_DIR or ST_FILE
 	string name;		// entry name
 	uint32_t blockno;	// block where entry is located
