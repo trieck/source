@@ -9,6 +9,7 @@
 #include "adf.h"
 #include "entry.h"
 #include "adfwarn.h"
+#include "adfutil.h"
 
 /////////////////////////////////////////////////////////////////////////////
 Entry::Entry() : access(0), blockno(0), days(0), hour(0), mins(0), month(0),
@@ -63,8 +64,11 @@ Entry& Entry::operator = (const entryblock_t &block)
 	parent = block.parent;
 	name = string(block.name, block.namelen);
 
-	// TODO: adfDays2Date( entryBlk->days, &(entry->year), &(entry->month), &(entry->days));
+	ADFDate date = adfDays2Date(block.days);
 
+	year = date.year;
+	month = date.month;
+	days = date.days;
 	hour = block.mins / 60;
 	mins = block.mins % 60;
 	secs = block.ticks / 50;

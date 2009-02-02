@@ -27,6 +27,26 @@
 #define isDIRCACHE(c)      ((c)&FSTYPE_DIRCACHE)
 
 /////////////////////////////////////////////////////////////////////////////
+// access constants
+#define ACCMASK_D	(1<<0)
+#define ACCMASK_E   (1<<1)
+#define ACCMASK_W   (1<<2)
+#define ACCMASK_R   (1<<3)
+#define ACCMASK_A   (1<<4)
+#define ACCMASK_P   (1<<5)
+#define ACCMASK_S   (1<<6)
+#define ACCMASK_H   (1<<7)
+
+#define hasD(c)	((c)&ACCMASK_D)
+#define hasE(c) ((c)&ACCMASK_E)
+#define hasW(c) ((c)&ACCMASK_W)
+#define hasR(c) ((c)&ACCMASK_R)
+#define hasA(c) ((c)&ACCMASK_A)
+#define hasP(c) ((c)&ACCMASK_P)
+#define hasS(c) ((c)&ACCMASK_S)
+#define hasH(c) ((c)&ACCMASK_H)
+
+/////////////////////////////////////////////////////////////////////////////
 // disk types
 #define DISKTYPE_FLOPDD 	1
 #define DISKTYPE_FLOPHD 	2
@@ -116,7 +136,7 @@ struct fileheader_t {
 	int32_t r1;							/* RESERVED (= 0) */
 	int32_t r2;							/* RESERVED (= 0) */
 	int32_t access;						/* protection flags (set to 0 by default) */
-	uint32_t fsize;						/* file size in bytes */
+	uint32_t bytesize;					/* file size in bytes */
 	uint8_t commlen;					/* file comment length */
 	char comment[MAXCOMMLEN+1];			/* comment (max. 79 chars permitted) */
 	int8_t r3[11];						/* RESERVED (= 0) */
@@ -187,13 +207,13 @@ struct dirblock_t {
 /////////////////////////////////////////////////////////////////////////////
 // old file system data block structure
 struct ofsblock_t {
-	int32_t type;		/* primary block type = T_DATA */ 
-	int32_t key;		/* pointer to file header block */
-	int32_t seqnum;		/* file data block number (first is 1) */
-	int32_t size;		/* data size (<= BSIZE-24) */
-	int32_t next;		/* next data block (0 for last) */
-	uint32_t checksum;	/* checksum */
-	uint8_t data[1];	/* file data  */
+	int32_t type;				/* primary block type = T_DATA */ 
+	int32_t key;				/* pointer to file header block */
+	int32_t seqnum;				/* file data block number (first is 1) */
+	int32_t size;				/* data size (<= BSIZE-24) */
+	int32_t next;				/* next data block (0 for last) */
+	uint32_t checksum;			/* checksum */
+	uint8_t data[OFS_DBSIZE];	/* file data  */
 };	
 
 /////////////////////////////////////////////////////////////////////////////

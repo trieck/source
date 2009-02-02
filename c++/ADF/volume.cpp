@@ -79,6 +79,48 @@ void Volume::readblock(uint32_t blockno, void *block)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+void Volume::readdatablock(uint32_t blockno, void *block)
+{
+	uint8_t buf[BSIZE];
+    
+	readblock(blockno, buf);
+	memcpy(block, buf, BSIZE);
+
+	if (isOFS(type)) {
+		ofsblock_t *dblock = (ofsblock_t*)block;
+
+#ifdef LITTLE_ENDIAN
+		dblock->type = swap_endian(dblock->type);
+		dblock->key = swap_endian(dblock->key);
+		dblock->seqnum = swap_endian(dblock->seqnum);
+		dblock->size = swap_endian(dblock->size);
+		dblock->next = swap_endian(dblock->next);
+		dblock->checksum = swap_endian(dblock->checksum);
+#endif // LITTLE_ENDIAN
+
+		if (dblock->checksum != adfchecksum(buf, 20, sizeof(ofsblock_t))) {
+			ADFWarningDispatcher::dispatch("invalid checksum.");
+		}
+
+		if (dblock->type != T_DATA) {
+			ADFWarningDispatcher::dispatch("bad datablock type.");
+		}
+
+		if (dblock->size < 0 || dblock->size > OFS_DBSIZE) {
+			ADFWarningDispatcher::dispatch("datablock size incorrect.");
+		}
+
+		if (!isValidBlock(dblock->key)) {
+			ADFWarningDispatcher::dispatch("header key out of range.");
+		}
+
+		if (!isValidBlock(dblock->next)) {
+			ADFWarningDispatcher::dispatch("next block out of range.");
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
 void Volume::readbootblock(bootblock_t *boot)
 {
 	uint8_t buf[BOOTBLOCKSIZE];
@@ -227,20 +269,34 @@ void Volume::readentry(uint32_t blockno, entryblock_t *e)
 #ifdef LITTLE_ENDIAN
 	e->type = swap_endian(e->type);
 	e->key = swap_endian(e->key);
-	e->checksum = swap_endian(e->checksum);
 	
 	uint32_t i;
+	for (i = 0; i < 3; i++) {
+		e->r1[i] = swap_endian(e->r1[i]);
+	}
+
+	e->checksum = swap_endian(e->checksum);
 	for (i = 0; i < HT_SIZE; i++) {
 		e->tbl[i] = swap_endian(e->tbl[i]);
 	}
 	
+	for (i = 0; i < 2; i++) {
+		e->r2[i] = swap_endian(e->r2[i]);
+	}
+
 	e->access = swap_endian(e->access);
 	e->bytesize = swap_endian(e->bytesize);
 	e->days = swap_endian(e->days);
 	e->mins = swap_endian(e->mins);
 	e->ticks = swap_endian(e->ticks);
+	e->r4 = swap_endian(e->r4);
 	e->realentry = swap_endian(e->realentry);
 	e->nextlink = swap_endian(e->nextlink);
+
+	for (i = 0; i < 5; i++) {
+		e->r5[i] = swap_endian(e->r5[i]);
+	}
+
 	e->nextsamehash = swap_endian(e->nextsamehash);
 	e->parent = swap_endian(e->parent);
 	e->extension = swap_endian(e->extension);
@@ -279,11 +335,13 @@ EntryList Volume::readdir(uint32_t blockno, bool recurse)
 {
 	EntryList entries;
 	Entry entry;
+
 	// TODO: dircache
 
 	entryblock_t parent, entryblk;
 	readentry(blockno, &parent);
 
+	uint32_t next;
 	int32_t *hashtable = parent.tbl;
     for (uint32_t i = 0; i < HT_SIZE; i++) {
 		if (hashtable[i] != 0) {
@@ -291,43 +349,68 @@ EntryList Volume::readdir(uint32_t blockno, bool recurse)
 
 			entry = entryblk;
 			entry.blockno = hashtable[i];
+			entries.push_back(entry);
+			
+			// TODO: if (recurs && entry->type==ST_DIR)
 
-			// if (recurs && entry->type==ST_DIR)
+			next = entryblk.nextsamehash;
+			while (next != 0) {
+				readentry(next, &entryblk);
+				entry = entryblk;
+				entry.blockno = next;
+				entries.push_back(entry);
+				
+				// TODO: if (recurs && entry->type==ST_DIR)
 
-				/* same hashcode linked list */
-			/*
-             nextSector = entryBlk.nextSameHash;
-             while( nextSector!=0 ) {
-                 entry = (struct Entry *)malloc(sizeof(struct Entry));
-                 if (!entry) {
-                     adfFreeDirList(head);
-					 (*adfEnv.eFct)("adfGetDirEnt : malloc");
-                     return NULL;
-                 }
-                 if (adfReadEntryBlock(vol, nextSector, &entryBlk)!=RC_OK) {
-					 adfFreeDirList(head); return NULL;
-                 }
-
-                 if (adfEntBlock2Entry(&entryBlk, entry)!=RC_OK) {
-					 adfFreeDirList(head);
-                     return NULL;
-                 }
-                 entry->sector = nextSector;
-	
-                 cell = newCell(cell, (void*)entry);
-                 if (cell==NULL) {
-                     adfFreeDirList(head); return NULL;
-                 }
-				 
-                 if (recurs && entry->type==ST_DIR)
-                     cell->subdir = adfGetRDirEnt(vol,entry->sector,recurs);
-				 
-                 nextSector = entryBlk.nextSameHash;
-             }*/
+				next = entryblk.nextsamehash;
+			}
 		}
-
-
 	}
 	
 	return entries;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+FilePtr Volume::openfile(const char *filename)
+{
+	// TODO: open read only+exists now
+
+	entryblock_t entry;
+	
+	if (!lookup(filename, &entry))
+		throw ADFException("file not found.");
+
+	// check access permissions
+	if (hasR(entry.access)) 
+		throw ADFException("access denied.");
+
+	return FilePtr(new File(this, &entry));
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool Volume::lookup(const char *name, entryblock_t *pblock)
+{
+	readentry(getRootBlock(), pblock);
+
+	bool intl = isINTL(type) || isDIRCACHE(type);
+
+	int32_t hash = adfhash(name, intl);
+	string ename, uname = adfToUpper(name, intl);
+
+	uint32_t blockno = pblock->tbl[hash];
+	if (blockno == 0)
+		return false;	// not found
+
+	do {
+		readentry(blockno, pblock);
+		ename = string(pblock->name, pblock->namelen);
+		ename = adfToUpper(ename.c_str(), intl);
+
+		if (uname == ename)
+			return true;
+
+		blockno = pblock->nextsamehash;
+	} while (blockno != 0);
+
+	return false;
 }

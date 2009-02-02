@@ -9,6 +9,7 @@
 #define __VOLUME_H__
 
 #include "entry.h"
+#include "file.h"
 
 class Disk;
 class Volume;
@@ -30,12 +31,19 @@ public:
 	void readrootblock(rootblock_t *root);
 	void readbitmap(rootblock_t *root);
 	void readbmblock(uint32_t blockno, bitmapblock_t *bm);
+	void readdatablock(uint32_t blockno, void *block);
 	void readentry(uint32_t blockno, entryblock_t *e);
 	bool isValidBlock(uint32_t blockno);
 	bool isBlockFree(uint32_t blockno);
 
 	uint32_t getRootBlock() const;
+	uint32_t getDataBlockSize() const;
+	int8_t getType() const;
+
 	EntryList readdir(uint32_t blockno, bool recurse);
+	FilePtr openfile(const char *filename);
+	bool lookup(const char *name, entryblock_t *eblock);
+
 
 // Implementation
 private:
@@ -67,6 +75,16 @@ inline bool Volume::isValidBlock(uint32_t blockno) {
 /////////////////////////////////////////////////////////////////////////////
 inline uint32_t Volume::getRootBlock() const {
 	return rootblock;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline uint32_t Volume::getDataBlockSize() const {
+	return dblocksize;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline int8_t Volume::getType() const {
+	return type;
 }
 
 #endif // __VOLUME_H__

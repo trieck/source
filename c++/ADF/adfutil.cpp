@@ -61,3 +61,97 @@ void * xmalloc(uint32_t size)
 
 	return p;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+bool adfIsLeap(int32_t y)
+{
+    return (!(y % 100) ? ! (y % 400) : !(y % 4));
+}
+
+/////////////////////////////////////////////////////////////////////////////
+ADFDate adfDays2Date(int32_t days)
+{
+	ADFDate date;
+
+	int jm[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+	int32_t nd = 365;
+	int32_t year = 1978;
+
+	if (adfIsLeap(year))
+		nd++;
+
+	// year
+	while (days >= nd) {
+		days -= nd;
+		year++;
+		nd = adfIsLeap(year) ? 366 : 365;
+	}
+
+	// month 
+    int32_t month = 1;
+    if (adfIsLeap(year))
+        jm[2-1] = 29;
+
+    while (days >= jm[month-1] ) {
+        days -= jm[month-1];
+        month++;
+    }
+
+	date.year = year;
+	date.month = month;
+	date.days = days + 1;
+
+	return date;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+char adfIntlToUpper(char c)
+{
+	return (c >= 'a' && c <= 'z') 
+		|| (c >= 224 && c <= 254 && c != 247) 
+		? c - ('a' - 'A') : c ;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+uint32_t adfhash(const char *k, bool intl)
+{
+	uint32_t hash, len;
+    uint32_t i;
+    char upper;
+
+    len = hash = strlen(k);
+
+    for (i = 0; i < len; i++) {
+        if (intl)
+            upper = adfIntlToUpper(k[i]);
+        else
+            upper = toupper(k[i]);
+
+        hash = (hash * 13 + upper) & 0x7ff;
+    }
+
+	hash = hash % HT_SIZE;
+
+    return hash;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+string adfToUpper(const char *str, bool intl)
+{
+	string output;
+
+    uint32_t i, nlen = strlen(str);
+
+	if (intl) {
+		for (i = 0; i < nlen; i++) {
+            output += adfIntlToUpper(str[i]);
+		}
+	} else {
+		for (i = 0; i < nlen; i++) {
+            output += toupper(str[i]);
+		}
+	}
+
+	return output;
+}
