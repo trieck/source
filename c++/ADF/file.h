@@ -21,6 +21,7 @@ public:
 // Interface
 	Volume *getVolume() const;
 	uint32_t read(uint32_t n, void *buf);
+	uint32_t getSize() const;
 	bool isEOF() const;
 
 // Implementation
@@ -41,6 +42,12 @@ typedef auto_ptr<File> FilePtr;
 inline Volume *File::getVolume() const
 {
 	return volume;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline uint32_t File::getSize() const
+{
+	return header.bytesize;
 }
 
 #endif // __FILE_H__
