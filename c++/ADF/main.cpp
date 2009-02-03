@@ -57,9 +57,17 @@ void openfile(const char *adffile, const char *filename)
 	uint32_t nread;
 	
 	while ((nread = file->read(100, buf))) {
-		string output = string(buf, nread);
-		cout << output;
+		;
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void chdir(const char *adffile, const char *dirname)
+{
+	DiskPtr disk = Disk::open(adffile);
+	Volume *vol = disk->mount();
+
+	vol->changedir(dirname);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -73,7 +81,10 @@ int main(int argc, char *argv[])
 	ADFWarningRegistrar::Register(&warning);
 
 	try {
-		openfile(argv[1], argv[2]);
+		DiskPtr disk = Disk::open(argv[1]);
+		Volume *vol = disk->mount();
+
+		vol->freeblocks();
 	} catch (const ADFException &e) {
 		cerr << e.getDescription() << endl;
 		exit(1);

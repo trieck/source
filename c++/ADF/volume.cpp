@@ -27,7 +27,8 @@ uint32_t bitmask[BM_BLOCKS_ENTRY] = {
 /////////////////////////////////////////////////////////////////////////////
 Volume::Volume()
 : blocksize(0), bitmapsize(0), dblocksize(0), firstblock(0), lastblock(0), 
- rootblock(0), type(0), mounted(false), bmtbl(0), bmblocks(0), disk(0)
+ rootblock(0), type(0), mounted(false), bmtbl(0), bmblocks(0), disk(0),
+ currdir(0)
 {
 }
 
@@ -390,7 +391,7 @@ FilePtr Volume::openfile(const char *filename)
 /////////////////////////////////////////////////////////////////////////////
 bool Volume::lookup(const char *name, entryblock_t *pblock)
 {
-	readentry(getRootBlock(), pblock);
+	readentry(currdir, pblock);
 
 	bool intl = isINTL(type) || isDIRCACHE(type);
 
@@ -413,4 +414,31 @@ bool Volume::lookup(const char *name, entryblock_t *pblock)
 	} while (blockno != 0);
 
 	return false;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::changedir(const char *name)
+{
+	entryblock_t entry;
+	
+	if (!lookup(name, &entry))
+		throw ADFException("can't find directory.");		
+
+	if (entry.sectype != ST_DIR)
+		throw ADFException("file not directory.");
+
+	currdir = entry.key;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+uint32_t Volume::freeblocks() 
+{
+	uint32_t nblocks = 0;
+
+	for (uint32_t i = firstblock + 2; i <= (lastblock - firstblock); i++) {
+		if (isBlockFree(i))
+			nblocks++;
+	}
+	
+	return nblocks;
 }

@@ -127,6 +127,7 @@ Volume *Disk::mount()
 	pVol->firstblock = 0;
     pVol->lastblock = (cylinders * heads * sectors)-1;
     pVol->rootblock = (pVol->lastblock+1 - pVol->firstblock) / 2;
+	pVol->currdir = pVol->rootblock;
     pVol->blocksize = BSIZE;
 	pVol->disk = this;
 

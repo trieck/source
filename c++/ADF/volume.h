@@ -38,15 +38,16 @@ public:
 
 	uint32_t getRootBlock() const;
 	uint32_t getDataBlockSize() const;
+	uint32_t freeblocks();
 	int8_t getType() const;
-
+	
 	EntryList readdir(uint32_t blockno, bool recurse);
 	FilePtr openfile(const char *filename);
-	bool lookup(const char *name, entryblock_t *eblock);
-
+	void changedir(const char *name);
 
 // Implementation
 private:
+	bool lookup(const char *name, entryblock_t *eblock);
 	void freebitmap();
 
 	uint32_t firstblock;	// first block of data area
@@ -55,6 +56,7 @@ private:
 	uint32_t dblocksize;	// datablock size
 	uint32_t blocksize;		// block size
 	uint32_t bitmapsize;	// bitmap size in blocks
+	uint32_t currdir;		// current directory block
 	int8_t type;			// FFS/OFS, DIRCACHE, INTERNATIONAL
 	string name;			// volume name
 	bool mounted;			// volume is mounted
