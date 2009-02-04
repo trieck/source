@@ -70,10 +70,11 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\drive.ico"
+IDR_MAINFRAME           ICON                    "res\\main.ico"
 IDR_WinADFTYPE          ICON                    "res\\floppy.ico"
 IDR_DOCUMENT            ICON                    "res\\doc.ico"
-IDR_FOLDER              ICON                    "res\\folder.ico"
+IDR_OPEN                ICON                    "res\\open.ico"
+IDR_CLOSED              ICON                    "res\\closed.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

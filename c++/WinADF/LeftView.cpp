@@ -25,10 +25,12 @@ BEGIN_MESSAGE_MAP(LeftView, CTreeView)
 	ON_NOTIFY_REFLECT(TVN_DELETEITEM, &LeftView::OnTvnDeleteitem)
 	ON_NOTIFY_REFLECT(TVN_SELCHANGED, &LeftView::OnTvnSelchanged)
 	ON_NOTIFY_REFLECT(TVN_ITEMEXPANDING, &LeftView::OnTvnItemexpanding)
+	ON_NOTIFY_REFLECT(TVN_ITEMEXPANDED, &LeftView::OnTvnItemexpanded)
 END_MESSAGE_MAP()
 
-static UINT images[] = {
-	IDR_FOLDER,	
+static uint32_t images[] = {
+	IDR_CLOSED,	
+	IDR_OPEN
 };
 
 // LeftView construction/destruction
@@ -55,7 +57,7 @@ int LeftView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CTreeView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	
-	if (!m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR8, 1, 0)) {
+	if (!m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR8, 2, 0)) {
 		TRACE0("Could not create image list.\n");
 		return -1;
 	}
@@ -70,9 +72,9 @@ int LeftView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void LeftView::AddImages()
 {
-	int nimages = sizeof(images) / sizeof(UINT);
+	uint32_t nimages = sizeof(images) / sizeof(uint32_t);
 
-	for (int i = 0; i < nimages; i++) {
+	for (uint32_t i = 0; i < nimages; i++) {
 		HICON hIcon = (HICON)::LoadImage(AfxGetResourceHandle(),
 			MAKEINTRESOURCE(images[i]),
 			IMAGE_ICON,
@@ -123,7 +125,8 @@ void LeftView::OnUpdate(CView* pSender, LPARAM /*lHint*/, CObject* /*pHint*/)
 	tvis.hInsertAfter = NULL;
 	tvis.itemex.mask = TVIF_CHILDREN | TVIF_TEXT | TVIF_IMAGE 
 		| TVIF_SELECTEDIMAGE | TVIF_PARAM;
-	tvis.itemex.iImage = tvis.itemex.iSelectedImage = 0;	
+	tvis.itemex.iImage = 0;
+	tvis.itemex.iSelectedImage = 1;	
 	tvis.itemex.cChildren = 1;
 	tvis.itemex.pszText = _T("/");
 	tvis.itemex.lParam = NULL;
@@ -137,7 +140,8 @@ void LeftView::InsertDir(HTREEITEM hParent, const EntryList &entries)
 	tvis.hInsertAfter = NULL;
 	tvis.itemex.mask = TVIF_CHILDREN | TVIF_TEXT | TVIF_IMAGE 
 		| TVIF_SELECTEDIMAGE | TVIF_PARAM;
-	tvis.itemex.iImage = tvis.itemex.iSelectedImage = 0;	
+	tvis.itemex.iImage = 0;
+	tvis.itemex.iSelectedImage = 1;	
 	tvis.itemex.cChildren = 1;
 
 	CTreeCtrl &tree = GetTreeCtrl();
@@ -152,7 +156,16 @@ void LeftView::InsertDir(HTREEITEM hParent, const EntryList &entries)
 		tree.InsertItem(&tvis);
 	}
 
-	tree.SortChildren(hParent);
+	HTREEITEM hChild;
+	if ((hChild = tree.GetChildItem(hParent)) == NULL) {
+		TVITEM item;
+		item.hItem = hParent;
+		item.mask = TVIF_CHILDREN;
+		item.cChildren = 0;
+		tree.SetItem(&item);
+	} else {
+		tree.SortChildren(hParent);
+	}
 }
 
 // LeftView diagnostics
@@ -222,7 +235,22 @@ void LeftView::OnTvnItemexpanding(NMHDR *pNMHDR, LRESULT *pResult)
 	
 	WinADFDoc *pDoc = GetDocument();
 	pDoc->chdir(pEntry);
+
 	InsertDir(item->hItem, pDoc->readdir());
+
+	*pResult = 0;
+}
+
+void LeftView::OnTvnItemexpanded(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+	
+	switch (pNMTreeView->action) {
+	case TVE_COLLAPSE:
+		break;
+	case TVE_EXPAND:
+		break;
+	}
 
 	*pResult = 0;
 }

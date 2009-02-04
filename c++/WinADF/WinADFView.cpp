@@ -135,7 +135,7 @@ int WinADFView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CListView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	
-	if (!m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR8, 2, 0)) {		
+	if (!m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 2, 0)) {		
 		TRACE0("Could not create image list.\n");		
 		return -1;	
 	}
@@ -151,7 +151,7 @@ int WinADFView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void WinADFView::AddImages()
 {
 	static uint32_t images[] = {
-		IDR_FOLDER,	
+		IDR_CLOSED,	
 		IDR_DOCUMENT
 	};
 
