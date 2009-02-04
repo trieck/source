@@ -1,57 +1,51 @@
-// WinADFView.h : interface of the WinADFView class
-//
-
-
 #pragma once
 
 
+// WinADFView view
+
 class WinADFView : public CListView
 {
-protected: // create from serialization only
-	WinADFView();
 	DECLARE_DYNCREATE(WinADFView)
 
-// Attributes
-public:
-	WinADFDoc* GetDocument() const;
-
-// Operations
-public:
-
-// Overrides
-public:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
-	virtual void OnInitialUpdate(); // called first time after construct
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
-	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
-
-// Implementation
-public:
+	WinADFView();           // protected constructor used by dynamic creation
 	virtual ~WinADFView();
+
+public:
 #ifdef _DEBUG
 	virtual void AssertValid() const;
+#ifndef _WIN32_WCE
 	virtual void Dump(CDumpContext& dc) const;
 #endif
+#endif
+
+public:
+	WinADFDoc* GetDocument() const;
 
 protected:
 	void AddImages();
 	void InsertHeaders();
-
 	CImageList m_ImageList;
 
-// Generated message map functions
-protected:
-	afx_msg void OnStyleChanged(int nStyleType, LPSTYLESTRUCT lpStyleStruct);
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	DECLARE_MESSAGE_MAP()
 public:
+	virtual void OnInitialUpdate();
+protected:
+	virtual void OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pHint*/);
+	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
+	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
+	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+public:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnStyleChanged(int nStyleType, LPSTYLESTRUCT lpStyleStruct);
+protected:
+	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+public:
+	afx_msg void OnLvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
-#ifndef _DEBUG  // debug version in WinADFView.cpp
-inline WinADFDoc* WinADFView::GetDocument() const
-   { return reinterpret_cast<WinADFDoc*>(m_pDocument); }
+#ifndef _DEBUG  //debug version in WinADFView.cpp
+inline WinADFDoc* WinADFView::GetDocument() const { 
+	return reinterpret_cast<WinADFDoc*>(m_pDocument); 
+}
 #endif
-

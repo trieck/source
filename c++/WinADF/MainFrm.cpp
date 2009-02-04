@@ -80,7 +80,7 @@ BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	if( !CMDIFrameWnd::PreCreateWindow(cs) )
 		return FALSE;
 
-	cs.cx = 600;
+	cs.cx = 650;
 	cs.cy = 400;
 
 	return TRUE;

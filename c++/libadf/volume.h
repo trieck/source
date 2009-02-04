@@ -42,8 +42,10 @@ public:
 	uint32_t freeblocks();
 	int8_t getType() const;
 	
+	void setCurrentDir(uint32_t blockno);
 	EntryList readdir(uint32_t blockno, bool recurse);
 	FilePtr openfile(const char *filename);
+	void changedir(Entry *pEntry);
 	void changedir(const char *name);
 
 // Implementation

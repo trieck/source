@@ -45,12 +45,16 @@ protected:
 
 // Generated message map functions
 protected:
+	void InsertDir(HTREEITEM hParent, const EntryList &entries);
+
 	//{{AFX_MSG(LeftView)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnTvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnTvnSelchanged(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnTvnItemexpanding(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 #ifndef _DEBUG  // debug version in LeftView.cpp

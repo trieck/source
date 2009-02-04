@@ -3,7 +3,6 @@
 
 #include "stdafx.h"
 #include "WinADF.h"
-
 #include "WinADFDoc.h"
 #include "LeftView.h"
 
@@ -24,6 +23,8 @@ BEGIN_MESSAGE_MAP(LeftView, CTreeView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CTreeView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CTreeView::OnFilePrintPreview)
 	ON_NOTIFY_REFLECT(TVN_DELETEITEM, &LeftView::OnTvnDeleteitem)
+	ON_NOTIFY_REFLECT(TVN_SELCHANGED, &LeftView::OnTvnSelchanged)
+	ON_NOTIFY_REFLECT(TVN_ITEMEXPANDING, &LeftView::OnTvnItemexpanding)
 END_MESSAGE_MAP()
 
 static UINT images[] = {
@@ -114,9 +115,6 @@ void LeftView::OnUpdate(CView* pSender, LPARAM /*lHint*/, CObject* /*pHint*/)
 	ASSERT(pSender != this);
 	UNUSED(pSender);     // unused in release builds
 
-	WinADFDoc *pdoc = GetDocument();
-	EntryList entries = pdoc->readdir();
-	
 	CTreeCtrl &tree = GetTreeCtrl();
 	tree.DeleteAllItems();
 	
@@ -127,24 +125,35 @@ void LeftView::OnUpdate(CView* pSender, LPARAM /*lHint*/, CObject* /*pHint*/)
 		| TVIF_SELECTEDIMAGE | TVIF_PARAM;
 	tvis.itemex.iImage = tvis.itemex.iSelectedImage = 0;	
 	tvis.itemex.cChildren = 1;
-
 	tvis.itemex.pszText = _T("/");
 	tvis.itemex.lParam = NULL;
-	tvis.hParent = tree.InsertItem(&tvis);
+	tree.InsertItem(&tvis);
+}
+
+void LeftView::InsertDir(HTREEITEM hParent, const EntryList &entries)
+{
+	TV_INSERTSTRUCT tvis;
+	tvis.hParent = hParent;
+	tvis.hInsertAfter = NULL;
+	tvis.itemex.mask = TVIF_CHILDREN | TVIF_TEXT | TVIF_IMAGE 
+		| TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvis.itemex.iImage = tvis.itemex.iSelectedImage = 0;	
+	tvis.itemex.cChildren = 1;
+
+	CTreeCtrl &tree = GetTreeCtrl();
 
 	EntryList::const_iterator it = entries.begin();
 	for ( ; it != entries.end(); it++) {
-		const Entry &entry = *it;
-		
+		const Entry &entry = *it;		
 		if (entry.type != ST_DIR) continue;		
+
 		tvis.itemex.pszText = (LPSTR)(LPCSTR)entry.name.c_str();
 		tvis.itemex.lParam = (LPARAM)new Entry(entry);
 		tree.InsertItem(&tvis);
 	}
 
-	tree.SortChildren(TVI_ROOT);
+	tree.SortChildren(hParent);
 }
-
 
 // LeftView diagnostics
 
@@ -177,6 +186,43 @@ void LeftView::OnTvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult)
 	if (pEntry != NULL) {
 		delete pEntry;
 	}
+
+	*pResult = 0;
+}
+
+void LeftView::OnTvnSelchanged(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+	if (pNMTreeView->action == TVC_UNKNOWN)
+		return;
+
+	HTREEITEM hItem = pNMTreeView->itemNew.hItem;
+	Entry *pEntry = (Entry *)pNMTreeView->itemNew.lParam;
+		
+	WinADFDoc *pDoc = GetDocument();
+	pDoc->chdir(pEntry);
+	pDoc->UpdateAllViews(this, (LPARAM)pEntry, NULL);
+
+	*pResult = 0;
+}
+
+void LeftView::OnTvnItemexpanding(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+
+	LPTVITEM item = &pNMTreeView->itemNew;
+
+	CTreeCtrl &tree = GetTreeCtrl();
+	HTREEITEM hChild = tree.GetChildItem(item->hItem);
+	if (hChild != NULL) return;	// already expanded
+
+	CWaitCursor cursor;
+
+	Entry *pEntry = (Entry *)pNMTreeView->itemNew.lParam;
+	
+	WinADFDoc *pDoc = GetDocument();
+	pDoc->chdir(pEntry);
+	InsertDir(item->hItem, pDoc->readdir());
 
 	*pResult = 0;
 }

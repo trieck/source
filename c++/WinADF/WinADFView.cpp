@@ -1,4 +1,4 @@
-// WinADFView.cpp : implementation of the WinADFView class
+// WinADFView.cpp : implementation file
 //
 
 #include "stdafx.h"
@@ -6,45 +6,63 @@
 #include "WinADFDoc.h"
 #include "WinADFView.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
-
 // WinADFView
 
 IMPLEMENT_DYNCREATE(WinADFView, CListView)
 
-BEGIN_MESSAGE_MAP(WinADFView, CListView)
-	ON_WM_CREATE()
-	ON_WM_STYLECHANGED()
-
-	// Standard printing commands
-	ON_COMMAND(ID_FILE_PRINT, &CListView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CListView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CListView::OnFilePrintPreview)	
-END_MESSAGE_MAP()
-
-// WinADFView construction/destruction
-
 WinADFView::WinADFView()
 {
+
 }
 
 WinADFView::~WinADFView()
 {
 }
 
-BOOL WinADFView::PreCreateWindow(CREATESTRUCT& cs)
+BEGIN_MESSAGE_MAP(WinADFView, CListView)
+	ON_WM_CREATE()
+	ON_WM_STYLECHANGED()	// Standard printing commands	
+	ON_COMMAND(ID_FILE_PRINT, &CListView::OnFilePrint)	
+	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CListView::OnFilePrint)	
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CListView::OnFilePrintPreview)	
+	ON_NOTIFY_REFLECT(LVN_DELETEITEM, &WinADFView::OnLvnDeleteitem)
+END_MESSAGE_MAP()
+
+// WinADFView diagnostics
+
+#ifdef _DEBUG
+void WinADFView::AssertValid() const
 {
-	cs.style |= LVS_REPORT;
-	return CListView::PreCreateWindow(cs);
+	CListView::AssertValid();
 }
+
+#ifndef _WIN32_WCE
+void WinADFView::Dump(CDumpContext& dc) const
+{
+	CListView::Dump(dc);
+}
+
+WinADFDoc* WinADFView::GetDocument() const // non-debug version is inline
+{
+	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WinADFDoc)));
+	return (WinADFDoc*)m_pDocument;
+}
+
+#endif
+#endif //_DEBUG
+
+
+// WinADFView message handlers
 
 void WinADFView::OnInitialUpdate()
 {
-	ListView_SetExtendedListViewStyleEx(*this, 		0, 		LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES |		LVS_EX_INFOTIP | LVS_EX_DOUBLEBUFFER |
+	ListView_SetExtendedListViewStyleEx(*this, 
+		0, 
+		LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES |
+		LVS_EX_INFOTIP | LVS_EX_DOUBLEBUFFER |
 		LVS_EX_SNAPTOGRID | LVS_EX_JUSTIFYCOLUMNS |
-		LVS_EX_TRANSPARENTBKGND | LVS_EX_AUTOSIZECOLUMNS	);
+		LVS_EX_TRANSPARENTBKGND | LVS_EX_AUTOSIZECOLUMNS
+	);
 	
 	InsertHeaders();
 
@@ -76,7 +94,8 @@ void WinADFView::InsertHeaders()
 	}
 }
 
-void WinADFView::OnUpdate(CView* pSender, LPARAM /*lHint*/, CObject* /*pHint*/)
+
+void WinADFView::OnUpdate(CView* pSender, LPARAM lHint, CObject* /*pHint*/)
 {
 	WinADFDoc *pdoc = GetDocument();
 	EntryList entries = pdoc->readdir();
@@ -86,7 +105,7 @@ void WinADFView::OnUpdate(CView* pSender, LPARAM /*lHint*/, CObject* /*pHint*/)
 	
 	LVITEM item;
 	memset(&item, 0, sizeof(LVITEM));
-	item.mask = LVIF_TEXT | LVIF_IMAGE;
+	item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
 	item.iSubItem = 0;
 
 	EntryList::const_iterator it = entries.begin();
@@ -98,6 +117,7 @@ void WinADFView::OnUpdate(CView* pSender, LPARAM /*lHint*/, CObject* /*pHint*/)
 		item.iImage = entry.type == ST_DIR ? 0 : 1;
 		item.pszText = (LPSTR)entry.name.c_str();
 		item.cchTextMax = strlen(item.pszText);
+		item.lParam = (LPARAM)new Entry(entry);
 		list.InsertItem(&item);
 
 		list.SetItemText(i, 1, entry.comment.c_str());
@@ -110,20 +130,20 @@ void WinADFView::OnUpdate(CView* pSender, LPARAM /*lHint*/, CObject* /*pHint*/)
 	}
 }
 
-int WinADFView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int WinADFView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CListView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	
-	if (!m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR8, 2, 0)) {
-		TRACE0("Could not create image list.\n");
-		return -1;
+	if (!m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR8, 2, 0)) {		
+		TRACE0("Could not create image list.\n");		
+		return -1;	
 	}
 
 	AddImages();
 
-	CListCtrl &list = GetListCtrl();
-	list.SetImageList(&m_ImageList, LVSIL_NORMAL);
+	CListCtrl &list = GetListCtrl();	
+	list.SetImageList(&m_ImageList, LVSIL_SMALL);		
 	
 	return 0;
 }
@@ -135,7 +155,7 @@ void WinADFView::AddImages()
 		IDR_DOCUMENT
 	};
 
-	int nimages = sizeof(images) / sizeof(UINT);
+	int nimages = sizeof(images) / sizeof(uint32_t);
 
 	for (int i = 0; i < nimages; i++) {
 		HICON hIcon = (HICON)::LoadImage(AfxGetResourceHandle(),
@@ -148,6 +168,11 @@ void WinADFView::AddImages()
 	}
 }
 
+BOOL WinADFView::PreCreateWindow(CREATESTRUCT& cs)
+{
+	cs.style |= LVS_REPORT;
+	return CListView::PreCreateWindow(cs);
+}
 
 // WinADFView printing
 
@@ -165,30 +190,19 @@ void WinADFView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 }
 
-
-// WinADFView diagnostics
-
-#ifdef _DEBUG
-void WinADFView::AssertValid() const
-{
-	CListView::AssertValid();
-}
-
-void WinADFView::Dump(CDumpContext& dc) const
-{
-	CListView::Dump(dc);
-}
-
-WinADFDoc* WinADFView::GetDocument() const // non-debug version is inline
-{
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WinADFDoc)));
-	return (WinADFDoc*)m_pDocument;
-}
-#endif //_DEBUG
-
-
 // WinADFView message handlers
 void WinADFView::OnStyleChanged(int nStyleType, LPSTYLESTRUCT lpStyleStruct)
 {
 	CListView::OnStyleChanged(nStyleType, lpStyleStruct);
+}
+
+void WinADFView::OnLvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
+
+	Entry *pEntry = (Entry*)pNMLV->lParam;
+	if (pEntry != NULL)
+		delete pEntry;
+
+	*pResult = 0;
 }

@@ -107,3 +107,14 @@ void WinADFDoc::OnUpdateFileSave(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable(m_bModified);
 }
+
+void WinADFDoc::chdir(Entry *pEntry)
+{
+	if (volume != NULL) {
+		if (pEntry == NULL) {
+			volume->setCurrentDir(volume->getRootBlock());
+		} else {
+			volume->changedir(pEntry);
+		}
+	}
+}

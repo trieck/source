@@ -425,9 +425,18 @@ void Volume::changedir(const char *name)
 		throw ADFException("can't find directory.");		
 
 	if (entry.sectype != ST_DIR)
-		throw ADFException("file not directory.");
+		throw ADFException("entry not directory.");
 
 	currdir = entry.key;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::changedir(Entry *pEntry)
+{
+	if (pEntry->type != ST_DIR)
+		throw ADFException("entry not directory.");
+
+	currdir = pEntry->blockno;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -441,4 +450,13 @@ uint32_t Volume::freeblocks()
 	}
 	
 	return nblocks;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::setCurrentDir(uint32_t blockno)
+{
+	if (!isValidBlock(blockno)) 
+		throw ADFException("sector out of range.");
+
+	currdir = blockno;
 }

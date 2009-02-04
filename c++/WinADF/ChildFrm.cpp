@@ -2,6 +2,7 @@
 //
 #include "stdafx.h"
 #include "WinADF.h"
+#include "disk.h"
 
 #include "ChildFrm.h"
 #include "LeftView.h"
@@ -26,7 +27,6 @@ END_MESSAGE_MAP()
 
 ChildFrame::ChildFrame()
 {
-	// TODO: add member initialization code here
 }
 
 ChildFrame::~ChildFrame()
@@ -45,7 +45,7 @@ BOOL ChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContex
 	if (!m_wndSplitter.CreateStatic(this, 1, 2))
 		return FALSE;
 
-	if (!m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(LeftView), CSize(100, 100), pContext) ||
+	if (!m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(LeftView), CSize(200, 100), pContext) ||
 		!m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(WinADFView), CSize(100, 100), pContext))
 	{
 		m_wndSplitter.DestroyWindow();

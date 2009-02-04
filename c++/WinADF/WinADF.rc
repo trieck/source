@@ -99,7 +99,6 @@ BEGIN
     SEPARATOR
     BUTTON      ID_FILE_PRINT
     SEPARATOR
-    BUTTON      ID_VIEW_LARGEICON
     BUTTON      ID_VIEW_SMALLICON
     BUTTON      ID_VIEW_LIST
     BUTTON      ID_VIEW_DETAILS
@@ -183,7 +182,6 @@ BEGIN
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
         MENUITEM "S&plit",                      ID_WINDOW_SPLIT
         MENUITEM SEPARATOR
-        MENUITEM "Lar&ge Icons",                ID_VIEW_LARGEICON
         MENUITEM "S&mall Icons",                ID_VIEW_SMALLICON
         MENUITEM "&List",                       ID_VIEW_LIST
         MENUITEM "&Details",                    ID_VIEW_DETAILS
