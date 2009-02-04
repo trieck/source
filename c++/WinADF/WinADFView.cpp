@@ -5,6 +5,7 @@
 #include "WinADF.h"
 #include "WinADFDoc.h"
 #include "WinADFView.h"
+#include "adfutil.h"
 
 // WinADFView
 
@@ -127,6 +128,8 @@ void WinADFView::OnUpdate(CView* pSender, LPARAM lHint, CObject* /*pHint*/)
 			size.Format("%d", entry.size);
 			list.SetItemText(i, 2, size);
 		}
+
+		list.SetItemText(i, 3, adfaccess(entry.access).c_str());
 	}
 }
 
