@@ -13,9 +13,6 @@
 #define max(a,b)    (((a)>(b))?(a):(b))
 #endif // min
 
-#define MAKEWORD(p) (((uint8_t*)p)[0]<<8 | ((uint8_t*)p)[1])
-#define MAKELONG(p) (MAKEWORD(p)<<16 | MAKEWORD(((uint8_t*)p)+2))
-
 /////////////////////////////////////////////////////////////////////////////
 struct ADFDate {
 	int32_t year;
@@ -30,5 +27,6 @@ uint32_t adfchecksum(uint8_t *block, uint32_t offset, uint32_t len);
 void * xmalloc(uint32_t size);
 uint32_t adfhash(const char *k, bool intl);
 string adfToUpper(const char *str, bool intl);
+string adfaccess(int32_t access);
 
 #endif // __ADFUTIL_H_INCLUDED

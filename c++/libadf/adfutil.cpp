@@ -11,6 +11,9 @@
 #include "adfexcept.h"
 #include <limits.h>
 
+#define MAKEWORD(p) (((uint8_t*)p)[0]<<8 | ((uint8_t*)p)[1])
+#define MAKELONG(p) (MAKEWORD(p)<<16 | MAKEWORD(((uint8_t*)p)+2))
+
 /////////////////////////////////////////////////////////////////////////////
 int swap_endian(int d)
 {
@@ -154,4 +157,22 @@ string adfToUpper(const char *str, bool intl)
 	}
 
 	return output;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+string adfaccess(int32_t acc)
+{
+    char ret[8+1];
+
+    strcpy(ret,"----rwed");
+    if (hasD(acc)) ret[7]='-';
+    if (hasE(acc)) ret[6]='-';
+    if (hasW(acc)) ret[5]='-';
+    if (hasR(acc)) ret[4]='-';
+    if (hasA(acc)) ret[3]='a';
+    if (hasP(acc)) ret[2]='p';
+    if (hasS(acc)) ret[1]='s';
+    if (hasH(acc)) ret[0]='h';
+
+    return ret;
 }
