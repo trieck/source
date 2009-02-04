@@ -23,10 +23,6 @@
 #include <afxext.h>         // MFC extensions
 #include <afxcview.h>
 
-
-
-
-
 #ifndef _AFX_NO_OLE_SUPPORT
 #include <afxdtctl.h>           // MFC support for Internet Explorer 4 Common Controls
 #endif
@@ -34,13 +30,9 @@
 #include <afxcmn.h>                     // MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
-
-
-
-
-
-
-
+#include "common.h"
+#include "adf.h"
+#include "adfexcept.h"
 
 #ifdef _UNICODE
 #if defined _M_IX86

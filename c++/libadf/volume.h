@@ -37,6 +37,7 @@ public:
 	bool isBlockFree(uint32_t blockno);
 
 	uint32_t getRootBlock() const;
+	uint32_t getCurrentDir() const;
 	uint32_t getDataBlockSize() const;
 	uint32_t freeblocks();
 	int8_t getType() const;
@@ -77,6 +78,11 @@ inline bool Volume::isValidBlock(uint32_t blockno) {
 /////////////////////////////////////////////////////////////////////////////
 inline uint32_t Volume::getRootBlock() const {
 	return rootblock;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline uint32_t Volume::getCurrentDir() const {
+	return currdir;
 }
 
 /////////////////////////////////////////////////////////////////////////////

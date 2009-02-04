@@ -1,9 +1,9 @@
 // WinADFDoc.h : interface of the WinADFDoc class
 //
 
-
 #pragma once
 
+#include "disk.h"
 
 class WinADFDoc : public CDocument
 {
@@ -16,11 +16,13 @@ public:
 
 // Operations
 public:
+	EntryList readdir();
 
 // Overrides
 public:
 	virtual BOOL OnNewDocument();
-	virtual void Serialize(CArchive& ar);
+	virtual BOOL OnOpenDocument(LPCTSTR filename);
+	virtual void DeleteContents(); // delete doc items etc
 
 // Implementation
 public:
@@ -31,10 +33,14 @@ public:
 #endif
 
 protected:
+	DiskPtr disk;	
+	Volume *volume;	// mounted volume
 
 // Generated message map functions
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnUpdateFileSave(CCmdUI *pCmdUI);
 };
 
 

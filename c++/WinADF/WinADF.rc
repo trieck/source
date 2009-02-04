@@ -70,8 +70,10 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\WinADF.ico"
-IDR_WinADFTYPE          ICON                    "res\\WinADFDoc.ico"
+IDR_MAINFRAME           ICON                    "res\\drive.ico"
+IDR_WinADFTYPE          ICON                    "res\\floppy.ico"
+IDR_DOCUMENT            ICON                    "res\\doc.ico"
+IDR_FOLDER              ICON                    "res\\folder.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -115,7 +117,7 @@ BEGIN
     POPUP "&File"
     BEGIN
         MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
-        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN, INACTIVE
         MENUITEM SEPARATOR
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
@@ -238,15 +240,14 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+IDD_ABOUTBOX DIALOGEX 0, 0, 212, 58
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About WinADF"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,20,20
-    LTEXT           "WinADF, Version 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
-    LTEXT           "Copyright (c) 2009 Thomas A. Rieck",IDC_STATIC,42,26,114,8
-    DEFPUSHBUTTON   "OK",IDOK,113,41,50,14,WS_GROUP
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,7,21,20
+    LTEXT           "WinADF Version 0.0.1\nCopyright (c) 2009 Thomas A. Rieck\nAll Rights Reserved",IDC_STATIC,39,7,122,25
+    DEFPUSHBUTTON   "OK",IDOK,155,37,50,14,WS_GROUP
 END
 
 
@@ -299,9 +300,9 @@ BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 163
+        RIGHTMARGIN, 205
         TOPMARGIN, 7
-        BOTTOMMARGIN, 55
+        BOTTOMMARGIN, 51
     END
 END
 #endif    // APSTUDIO_INVOKED

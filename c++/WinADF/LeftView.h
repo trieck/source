@@ -28,6 +28,7 @@ public:
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnDraw(CDC* pDC);
 	virtual void OnInitialUpdate(); // called first time after construct
+	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
 
 // Implementation
 public:
@@ -38,10 +39,18 @@ public:
 #endif
 
 protected:
+	void AddImages();
+
+	CImageList m_ImageList;
 
 // Generated message map functions
 protected:
+	//{{AFX_MSG(LeftView)
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnTvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 #ifndef _DEBUG  // debug version in LeftView.cpp

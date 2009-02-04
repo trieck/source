@@ -35,6 +35,12 @@ ChildFrame::~ChildFrame()
 
 BOOL ChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContext)
 {
+	if (!m_wndStatusBar.Create(this))
+	{
+		TRACE0("Failed to create status bar\n");
+		return -1;      // fail to create
+	}
+
 	// create splitter window
 	if (!m_wndSplitter.CreateStatic(this, 1, 2))
 		return FALSE;
@@ -45,6 +51,7 @@ BOOL ChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContex
 		m_wndSplitter.DestroyWindow();
 		return FALSE;
 	}
+
 	return TRUE;
 }
 

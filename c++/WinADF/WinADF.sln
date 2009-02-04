@@ -6,7 +6,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinADF", "WinADF.vcproj", "
 		{ECE4D6C0-0634-4C7F-9C68-BA992CDF3742} = {ECE4D6C0-0634-4C7F-9C68-BA992CDF3742}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libadf", "..\libadf\libadf.vcproj", "{ECE4D6C0-0634-4C7F-9C68-BA992CDF3742}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ME", "..\libadf\libadf.vcproj", "{ECE4D6C0-0634-4C7F-9C68-BA992CDF3742}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
