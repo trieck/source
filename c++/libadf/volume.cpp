@@ -272,10 +272,11 @@ void Volume::readentry(uint32_t blockno, entryblock_t *e)
 	e->key = swap_endian(e->key);
 	
 	uint32_t i;
-	for (i = 0; i < 3; i++) {
+	for (i = 0; i < 2; i++) {
 		e->r1[i] = swap_endian(e->r1[i]);
 	}
-
+	
+	e->firstblock = swap_endian(e->firstblock);
 	e->checksum = swap_endian(e->checksum);
 	for (i = 0; i < HT_SIZE; i++) {
 		e->tbl[i] = swap_endian(e->tbl[i]);
@@ -374,18 +375,23 @@ EntryList Volume::readdir(uint32_t blockno, bool recurse)
 /////////////////////////////////////////////////////////////////////////////
 FilePtr Volume::openfile(const char *filename)
 {
-	// TODO: open read only+exists now
-
 	entryblock_t entry;
-	
 	if (!lookup(filename, &entry))
 		throw ADFException("file not found.");
 
+	return Volume::openfile(entry);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+FilePtr Volume::openfile(const Entry &e)
+{
+	// TODO: open read only+exists now
+
 	// check access permissions
-	if (hasR(entry.access)) 
+	if (hasR(e.access)) 
 		throw ADFException("access denied.");
 
-	return FilePtr(new File(this, &entry));
+	return FilePtr(new File(this, e));
 }
 
 /////////////////////////////////////////////////////////////////////////////

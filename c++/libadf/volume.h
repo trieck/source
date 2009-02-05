@@ -45,6 +45,7 @@ public:
 	void setCurrentDir(uint32_t blockno);
 	EntryList readdir(uint32_t blockno, bool recurse);
 	FilePtr openfile(const char *filename);
+	FilePtr openfile(const Entry &e);
 	void changedir(Entry *pEntry);
 	void changedir(const char *name);
 

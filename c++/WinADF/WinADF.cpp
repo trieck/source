@@ -9,6 +9,9 @@
 #include "WinADFDoc.h"
 #include "LeftView.h"
 
+#include "FileViewFrame.h"
+#include "FileView.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -29,9 +32,8 @@ END_MESSAGE_MAP()
 // WinADFApp construction
 
 WinADFApp::WinADFApp()
+ : m_pFileViewTemplate(NULL)
 {
-	// TODO: add construction code here,
-	// Place all significant initialization in InitInstance
 }
 
 
@@ -65,6 +67,14 @@ BOOL WinADFApp::InitInstance()
 	if (!pDocTemplate)
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
+
+	m_pFileViewTemplate = new CMultiDocTemplate(IDR_FILEVIEWTYPE,
+		RUNTIME_CLASS(WinADFDoc),
+		RUNTIME_CLASS(FileViewFrame), // custom MDI child frame
+		RUNTIME_CLASS(FileView));
+	if (!m_pFileViewTemplate)
+		return FALSE;
+	AddDocTemplate(m_pFileViewTemplate);
 
 	// create main MDI Frame window
 	MainFrame* pMainFrame = new MainFrame;
@@ -142,3 +152,31 @@ void WinADFApp::OnAppAbout()
 
 // WinADFApp message handlers
 
+
+int WinADFApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt)
+{
+	MSGBOXPARAMS mbp;
+	
+	mbp.cbSize = sizeof(MSGBOXPARAMS);
+	mbp.hwndOwner = GetMainWnd()->GetSafeHwnd();
+	mbp.hInstance = AfxGetResourceHandle();
+	mbp.lpszText = lpszPrompt;
+	mbp.lpszCaption	= m_pszAppName;
+	mbp.dwStyle = nType | MB_USERICON;
+	mbp.lpszIcon = MAKEINTRESOURCE(IDR_MAINFRAME);
+	mbp.dwContextHelpId	= nIDPrompt;
+	mbp.lpfnMsgBoxCallback	= NULL;
+	mbp.dwLanguageId = MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL);
+
+	return ::MessageBoxIndirect(&mbp);
+}
+
+void WinADFApp::ShowFileView(CDocument *pDoc)
+{
+	CFrameWnd* pFrame = m_pFileViewTemplate->CreateNewFrame(pDoc, NULL);
+	FileView *pView = (FileView*)pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
+	ASSERT(pView != NULL);
+	ASSERT(pView->IsKindOf(RUNTIME_CLASS(FileView)));
+
+	m_pFileViewTemplate->InitialUpdateFrame(pFrame, pDoc);
+}

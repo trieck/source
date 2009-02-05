@@ -277,7 +277,8 @@ struct dircacheblock_t {
 struct entryblock_t {
 	int32_t type;				/* T_HEADER == 2 */
 	int32_t key;				/* current block number */
-	int32_t r1[3];
+	int32_t r1[2];
+	int32_t firstblock;			/* pointer to first data block */
 	uint32_t checksum;
 	int32_t tbl[HT_SIZE];	
 	int32_t r2[2];

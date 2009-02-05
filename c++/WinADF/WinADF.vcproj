@@ -195,6 +195,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FileView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FileViewFrame.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LeftView.cpp"
 				>
 			</File>
@@ -242,6 +250,14 @@
 			>
 			<File
 				RelativePath=".\ChildFrm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FileView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FileViewFrame.h"
 				>
 			</File>
 			<File
@@ -332,6 +348,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\TODO.txt"
+			>
+		</File>
 	</Files>
 	<Globals>
 		<Global

@@ -105,5 +105,3 @@ void MainFrame::Dump(CDumpContext& dc) const
 
 // MainFrame message handlers
 
-
-

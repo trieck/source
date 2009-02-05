@@ -209,6 +209,15 @@ BEGIN
     END
 END
 
+IDR_RIGHTPOPUP MENU 
+BEGIN
+	POPUP ""
+	BEGIN
+		MENUITEM "View as text",				ID_VIEWASTEXT
+		MENUITEM "View as binary",              ID_VIEWASBINARY
+	END
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

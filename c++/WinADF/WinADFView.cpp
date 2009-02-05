@@ -27,6 +27,9 @@ BEGIN_MESSAGE_MAP(WinADFView, CListView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CListView::OnFilePrint)	
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CListView::OnFilePrintPreview)	
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, &WinADFView::OnLvnDeleteitem)
+	ON_NOTIFY_REFLECT(NM_RCLICK, &WinADFView::OnNMRClick)
+	ON_COMMAND(ID_VIEWASTEXT, &WinADFView::OnViewasText)
+	ON_COMMAND(ID_VIEWASBINARY, &WinADFView::OnViewasBinary)
 END_MESSAGE_MAP()
 
 // WinADFView diagnostics
@@ -109,6 +112,7 @@ void WinADFView::OnUpdate(CView* pSender, LPARAM lHint, CObject* /*pHint*/)
 	item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
 	item.iSubItem = 0;
 
+	CTime time;
 	EntryList::const_iterator it = entries.begin();
 	uint32_t i;
 	for (i = 0; it != entries.end(); it++, i++) {
@@ -130,6 +134,9 @@ void WinADFView::OnUpdate(CView* pSender, LPARAM lHint, CObject* /*pHint*/)
 		}
 
 		list.SetItemText(i, 3, adfaccess(entry.access).c_str());
+		time = CTime(entry.year, entry.month, entry.days, 
+			entry.hour, entry.mins, entry.secs);
+		list.SetItemText(i, 4, time.Format("%m/%d/%Y %H:%M:%S"));
 	}
 }
 
@@ -173,7 +180,7 @@ void WinADFView::AddImages()
 
 BOOL WinADFView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style |= LVS_REPORT;
+	cs.style |= LVS_SINGLESEL | LVS_NOSORTHEADER | LVS_REPORT;
 	return CListView::PreCreateWindow(cs);
 }
 
@@ -208,4 +215,66 @@ void WinADFView::OnLvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult)
 		delete pEntry;
 
 	*pResult = 0;
+}
+
+void WinADFView::OnNMRClick(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+
+	Entry *pEntry = GetSelectedEntry();
+	if (pEntry == NULL)
+		return;	// nothing selected
+
+	if (pEntry->type != ST_FILE)
+		return;	// files only
+
+	// load and display popup menu
+	CMenu menu;
+	menu.LoadMenu(IDR_RIGHTPOPUP);
+	CMenu* pPopup = menu.GetSubMenu(0);
+	ASSERT(pPopup);
+	
+	CPoint point(pNMItemActivate->ptAction.x, pNMItemActivate->ptAction.y);
+	ClientToScreen(&point);
+
+	pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_VERTICAL,
+		point.x, point.y, this);
+
+	*pResult = 0;
+}
+
+Entry *WinADFView::GetSelectedEntry()
+{
+	CListCtrl &list = GetListCtrl();	
+	POSITION pos = list.GetFirstSelectedItemPosition();
+	if (pos == NULL)
+		return NULL;	// nothing selected
+	
+	int nItem = list.GetNextSelectedItem(pos);
+	return (Entry*)list.GetItemData(nItem);
+}
+
+void WinADFView::OnViewasText()
+{
+	Entry *pEntry = GetSelectedEntry();
+	if (pEntry == NULL)
+		return;	// nothing selected
+
+	if (pEntry->type != ST_FILE)
+		return;	// files only
+
+	WinADFDoc *pDoc = GetDocument();
+	pDoc->SetEntry(*pEntry);
+
+	theApp.ShowFileView(pDoc);
+}
+
+void WinADFView::OnViewasBinary()
+{
+	Entry *pEntry = GetSelectedEntry();
+	if (pEntry == NULL)
+		return;	// nothing selected
+
+	if (pEntry->type != ST_FILE)
+		return;	// files only
 }

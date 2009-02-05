@@ -24,6 +24,11 @@ public:
 	virtual BOOL OnOpenDocument(LPCTSTR filename);
 	virtual void DeleteContents(); // delete doc items etc
 
+	void SetEntry(const Entry &e);
+	const Entry *GetEntry() const;
+
+	Volume *GetVolume() const;
+
 // Implementation
 public:
 	virtual ~WinADFDoc();
@@ -33,8 +38,9 @@ public:
 #endif
 
 protected:
-	DiskPtr disk;	
-	Volume *volume;	// mounted volume
+	DiskPtr m_pDisk;		// ADF disk
+	Volume *m_pVolume;		// mounted volume
+	Entry *m_pEntry;		// current file entry
 
 // Generated message map functions
 protected:

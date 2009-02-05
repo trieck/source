@@ -21,7 +21,7 @@ END_MESSAGE_MAP()
 
 // WinADFDoc construction/destruction
 
-WinADFDoc::WinADFDoc() : volume(NULL)
+WinADFDoc::WinADFDoc() : m_pVolume(NULL), m_pEntry(NULL)
 {
 }
 
@@ -50,8 +50,8 @@ BOOL WinADFDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	
 	try {
 		CWaitCursor wait;
-		disk = Disk::open(lpszPathName);		
-		volume = disk->mount();
+		m_pDisk = Disk::open(lpszPathName);		
+		m_pVolume = m_pDisk->mount();
 	} catch (const ADFException &e) {
 		DeleteContents();   // remove failed contents
 		AfxMessageBox(e.getDescription().c_str());
@@ -67,21 +67,27 @@ BOOL WinADFDoc::OnOpenDocument(LPCTSTR lpszPathName)
 /////////////////////////////////////////////////////////////////////////////
 void WinADFDoc::DeleteContents()
 {
-	if (disk.get() != NULL) {
-		Disk *pDisk = disk.release();
-		delete pDisk;
+	m_pVolume = NULL;
+	
+	if (m_pEntry != NULL) {
+		delete m_pEntry;
+		m_pEntry = NULL;
 	}
 
-	volume = NULL;
+	if (m_pDisk.get() != NULL) {
+		Disk *pDisk = m_pDisk.release();
+		delete pDisk;
+	}	
 }
 
 /////////////////////////////////////////////////////////////////////////////
 EntryList WinADFDoc::readdir()
 {
-	if (volume == NULL)
+	if (m_pVolume == NULL)
 		return EntryList();
 
-	EntryList entries = volume->readdir(volume->getCurrentDir(), false);
+	EntryList entries = m_pVolume->readdir(m_pVolume->getCurrentDir(), 
+		false);
 
 	return entries;
 }
@@ -110,11 +116,30 @@ void WinADFDoc::OnUpdateFileSave(CCmdUI *pCmdUI)
 
 void WinADFDoc::chdir(Entry *pEntry)
 {
-	if (volume != NULL) {
+	if (m_pVolume != NULL) {
 		if (pEntry == NULL) {
-			volume->setCurrentDir(volume->getRootBlock());
+			m_pVolume->setCurrentDir(m_pVolume->getRootBlock());
 		} else {
-			volume->changedir(pEntry);
+			m_pVolume->changedir(pEntry);
 		}
 	}
+}
+
+
+void WinADFDoc::SetEntry(const Entry &e)
+{
+	if (m_pEntry != NULL)
+		delete m_pEntry;
+
+	m_pEntry = new Entry(e);
+}
+
+const Entry *WinADFDoc::GetEntry() const
+{
+	return m_pEntry;
+}
+
+Volume *WinADFDoc::GetVolume() const
+{
+	return m_pVolume;
 }

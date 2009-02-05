@@ -16,7 +16,15 @@
 File::File(Volume *pVol, entryblock_t *pEntry)
  : volume(pVol), pos(0), blockpos(0), nblock(0), data(&buffer[0])
 {
-	memcpy(&header, pEntry, sizeof(fileheader_t));
+	entry = *pEntry;
+	memset(buffer, 0, BSIZE);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+File::File(Volume *pVol, const Entry &e)
+ : volume(pVol), pos(0), blockpos(0), nblock(0), data(&buffer[0])
+{
+	entry = e;
 	memset(buffer, 0, BSIZE);
 }
 
@@ -34,8 +42,8 @@ uint32_t File::read(uint32_t n, void *buf)
 	uint32_t blocksize = volume->getDataBlockSize();
 
 	// calculate remaining bytes to read
-	if (pos + n > header.bytesize) {
-		n = header.bytesize - pos;
+	if (pos + n > entry.size) {
+		n = entry.size - pos;
 	}
 
 	uint8_t *pdata = isOFS(volume->getType()) ?
@@ -67,7 +75,7 @@ void File::readnext()
 
 	uint32_t blockno;
 	if (nblock ==0) {
-        blockno = header.firstblock;
+        blockno = entry.firstblock;
     } else if (isOFS(volume->getType())) {
         blockno = block->next;
 	} else {
@@ -106,5 +114,5 @@ void File::readnext()
 /////////////////////////////////////////////////////////////////////////////
 bool File::isEOF() const
 {
-	return pos == header.bytesize;
+	return pos == entry.size;
 }

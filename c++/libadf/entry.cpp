@@ -13,7 +13,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Entry::Entry() : access(0), blockno(0), days(0), hour(0), mins(0), month(0),
- parent(0), real(0), secs(0), size(0), type(0), year(0)
+ parent(0), real(0), secs(0), size(0), type(0), year(0), firstblock(0)
 {
 }
 
@@ -43,6 +43,7 @@ Entry& Entry::operator = (const Entry &e)
 		blockno = e.blockno;
 		real = e.real;
 		parent = e.parent;
+		firstblock = e.firstblock;
 		comment = e.comment;
 		size = e.size;
 		access = e.access;
@@ -62,6 +63,7 @@ Entry& Entry::operator = (const entryblock_t &block)
 {
 	type = block.sectype;
 	parent = block.parent;
+	firstblock = block.firstblock;
 	name = string(block.name, block.namelen);
 
 	ADFDate date = adfDays2Date(block.days);

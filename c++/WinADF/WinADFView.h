@@ -25,6 +25,8 @@ public:
 protected:
 	void AddImages();
 	void InsertHeaders();
+	Entry *GetSelectedEntry();
+
 	CImageList m_ImageList;
 
 	DECLARE_MESSAGE_MAP()
@@ -42,6 +44,9 @@ protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 public:
 	afx_msg void OnLvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMRClick(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnViewasText();
+	afx_msg void OnViewasBinary();
 };
 
 #ifndef _DEBUG  //debug version in WinADFView.cpp

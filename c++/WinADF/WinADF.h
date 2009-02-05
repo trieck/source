@@ -26,6 +26,12 @@ public:
 // Implementation
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
+	virtual int DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt);
+
+protected:
+	CMultiDocTemplate *m_pFileViewTemplate;
+public:
+	void ShowFileView(CDocument *pDoc);
 };
 
 extern WinADFApp theApp;

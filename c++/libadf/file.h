@@ -16,6 +16,7 @@ class File
 // Construction / Destruction
 public:
 	File(Volume *pVol, entryblock_t *pEntry);
+	File(Volume *pVol, const Entry &e);
 	~File();
 
 // Interface
@@ -28,7 +29,7 @@ public:
 private:
 	void readnext();		// read next data block
 	Volume *volume;			// parent volume
-	fileheader_t header;	// file header
+	Entry entry;
 	uint32_t pos;			// read/write position in file
 	uint32_t blockpos;		// block pointer position
 	uint32_t nblock;		// current data block number
@@ -47,7 +48,7 @@ inline Volume *File::getVolume() const
 /////////////////////////////////////////////////////////////////////////////
 inline uint32_t File::getSize() const
 {
-	return header.bytesize;
+	return entry.size;
 }
 
 #endif // __FILE_H__
