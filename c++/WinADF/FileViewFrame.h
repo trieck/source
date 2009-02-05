@@ -18,6 +18,8 @@ protected:
 //	virtual void OnUpdateFrameTitle(BOOL bAddToTitle);
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void OnUpdateFrameTitle(BOOL bAddToTitle);
+
+	CStatusBar  m_wndStatusBar;
 };
 
 
