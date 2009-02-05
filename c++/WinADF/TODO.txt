@@ -1,0 +1,12 @@
+-----------------------------------------------------------------------------
+LOG DATE: 02/04/2009
+-----------------------------------------------------------------------------
+COMPLETED DATE	PRIORITY	DESCRIPTION
+-----------------------------------------------------------------------------
+				2			ADD RW/CREATE SUPPORT TO LIBADF. 
+				2			COMPLETE HDF SUPPORT IN LIBADF.
+				1			ADD FILE/DIR PROPERTY DIALOGS.
+				1			ADD ABILITY TO OPEN FOLDERS IN RIGHT-VIEW.
+				1			ADD TEXT/BINARY FILE VIEWER/EDITOR
+				3			ADD 68000 DISASSEMBLY VIEWER
+				
