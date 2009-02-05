@@ -34,7 +34,7 @@ public:
 };
 
 #ifndef _DEBUG  //debug version in WinADFView.cpp
-inline WinADFDoc* WinADFView::GetDocument() const { 
+inline WinADFDoc* FileView::GetDocument() const { 
 	return reinterpret_cast<WinADFDoc*>(m_pDocument); 
 }
 #endif
