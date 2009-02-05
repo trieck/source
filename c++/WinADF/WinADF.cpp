@@ -174,9 +174,10 @@ int WinADFApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt)
 void WinADFApp::ShowFileView(CDocument *pDoc)
 {
 	CFrameWnd* pFrame = m_pFileViewTemplate->CreateNewFrame(pDoc, NULL);
-	FileView *pView = (FileView*)pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
-	ASSERT(pView != NULL);
-	ASSERT(pView->IsKindOf(RUNTIME_CLASS(FileView)));
-
-	m_pFileViewTemplate->InitialUpdateFrame(pFrame, pDoc);
+	if (pFrame != NULL) {
+		FileView *pView = (FileView*)pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
+		ASSERT(pView != NULL);
+		ASSERT(pView->IsKindOf(RUNTIME_CLASS(FileView)));
+		m_pFileViewTemplate->InitialUpdateFrame(pFrame, pDoc);
+	}
 }

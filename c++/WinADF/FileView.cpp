@@ -11,7 +11,7 @@
 
 // FileView
 
-IMPLEMENT_DYNCREATE(FileView, CEditView)
+IMPLEMENT_DYNCREATE(FileView, TextView)
 
 FileView::FileView()
 {
@@ -22,7 +22,7 @@ FileView::~FileView()
 {
 }
 
-BEGIN_MESSAGE_MAP(FileView, CEditView)
+BEGIN_MESSAGE_MAP(FileView, TextView)
 	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
@@ -31,8 +31,7 @@ END_MESSAGE_MAP()
 
 void FileView::OnDraw(CDC* pDC)
 {
-	CDocument* pDoc = GetDocument();
-	// TODO: add draw code here
+	TextView::OnDraw(pDC);
 }
 
 
@@ -41,13 +40,13 @@ void FileView::OnDraw(CDC* pDC)
 #ifdef _DEBUG
 void FileView::AssertValid() const
 {
-	CEditView::AssertValid();
+	TextView::AssertValid();
 }
 
 #ifndef _WIN32_WCE
 void FileView::Dump(CDumpContext& dc) const
 {
-	CEditView::Dump(dc);
+	TextView::Dump(dc);
 }
 
 WinADFDoc* FileView::GetDocument() const // non-debug version is inline
@@ -61,22 +60,21 @@ WinADFDoc* FileView::GetDocument() const // non-debug version is inline
 
 // FileView message handlers
 
-void FileView::OnUpdate(CEditView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pHint*/)
+void FileView::OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pHint*/)
 {
 }
 
 void FileView::OnInitialUpdate()
 {
-	CEditView::OnInitialUpdate();
+	TextView::OnInitialUpdate();
 }
 
 int FileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CEditView::OnCreate(lpCreateStruct) == -1)
+	if (TextView::OnCreate(lpCreateStruct) != 0)
 		return -1;
 
 	m_Font.CreatePointFont(90, _T("Courier New"));	
-	SetFont(&m_Font);	
 
 	WinADFDoc *pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
@@ -87,31 +85,24 @@ int FileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	const Entry *pEntry = pDoc->GetEntry();
 	ASSERT(pEntry != NULL);
 
-	CString buffer;
 	try {
 		FilePtr file = pVol->openfile(*pEntry);
 
-		LPSTR pbuf = buffer.GetBuffer(pEntry->size+1);
+		LPSTR pbuf = m_Text.GetBuffer(pEntry->size+1);
 		file->read(pEntry->size, pbuf);
 		pbuf[pEntry->size] = '\0';
-		buffer.ReleaseBuffer();
-
+		m_Text.ReleaseBuffer();
 	} catch (const ADFException &e) {
 		AfxMessageBox(e.getDescription().c_str());
 		return -1;
 	}
 
-	CEdit &edit = GetEditCtrl();
-	edit.SetReadOnly();	
-	edit.FmtLines(TRUE);
-	edit.SetWindowText(buffer);	
-
-	return 0;
+	return RecalcLayout();
 }
 
 BOOL FileView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style &= ~(ES_AUTOHSCROLL|WS_HSCROLL);	// Enable word-wrapping	
-
-	return CEditView::PreCreateWindow(cs);
+	return TextView::PreCreateWindow(cs);
 }
+
+

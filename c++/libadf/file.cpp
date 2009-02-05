@@ -11,6 +11,7 @@
 #include "file.h"
 #include "adfwarn.h"
 #include "adfutil.h"
+#include "adfexcept.h"
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, entryblock_t *pEntry)
@@ -79,25 +80,10 @@ void File::readnext()
     } else if (isOFS(volume->getType())) {
         blockno = block->next;
 	} else {
-		/* TODO:
-		if (file->nDataBlock<MAX_DATABLK)
-            nSect = file->fileHdr->dataBlocks[MAX_DATABLK-1-file->nDataBlock];
-        else {
-            if (file->nDataBlock==MAX_DATABLK) {
-                file->currentExt=(struct bFileExtBlock*)malloc(sizeof(struct bFileExtBlock));
-                if (!file->currentExt) (*adfEnv.eFct)("adfReadNextFileBlock : malloc");
-                adfReadFileExtBlock(file->volume, file->fileHdr->extension,
-                    file->currentExt);
-                file->posInExtBlk = 0;
-            }
-            else if (file->posInExtBlk==MAX_DATABLK) {
-                adfReadFileExtBlock(file->volume, file->currentExt->extension,
-                    file->currentExt);
-                file->posInExtBlk = 0;
-            }
-            nSect = file->currentExt->dataBlocks[MAX_DATABLK-1-file->posInExtBlk];
-            file->posInExtBlk++;
-		*/
+		if (isFFS(volume->getType())) {
+			throw ADFException("FFS not supported yet.");
+		}
+		throw ADFException("unknown filesystem type.");
 	}
 
 	volume->readdatablock(blockno, data);

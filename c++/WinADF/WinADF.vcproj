@@ -231,6 +231,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\TextView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\WinADF.cpp"
 				>
 			</File>
@@ -281,6 +285,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TextView.h"
+				>
+			</File>
+			<File
 				RelativePath=".\WinADF.h"
 				>
 			</File>
@@ -308,6 +316,10 @@
 			</File>
 			<File
 				RelativePath=".\res\drive.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\res\file.ico"
 				>
 			</File>
 			<File

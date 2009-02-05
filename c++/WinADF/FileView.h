@@ -1,9 +1,10 @@
 #pragma once
 
+#include "TextView.h"
 
 // FileView view
 
-class FileView : public CEditView
+class FileView : public TextView
 {
 	DECLARE_DYNCREATE(FileView)
 
@@ -23,14 +24,13 @@ public:
 
 protected:
 	DECLARE_MESSAGE_MAP()
-	virtual void OnUpdate(CEditView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pHint*/);
+	virtual void OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pHint*/);
 public:
 	virtual void OnInitialUpdate();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-private:
-	CFont m_Font;
 protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+public:
 };
 
 #ifndef _DEBUG  //debug version in WinADFView.cpp

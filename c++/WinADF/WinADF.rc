@@ -75,6 +75,7 @@ IDR_WinADFTYPE          ICON                    "res\\floppy.ico"
 IDR_DOCUMENT            ICON                    "res\\doc.ico"
 IDR_OPEN                ICON                    "res\\open.ico"
 IDR_CLOSED              ICON                    "res\\closed.ico"
+IDR_FILEVIEWTYPE        ICON                    "res\\file.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -211,11 +212,11 @@ END
 
 IDR_RIGHTPOPUP MENU 
 BEGIN
-	POPUP ""
-	BEGIN
-		MENUITEM "View as text",				ID_VIEWASTEXT
-		MENUITEM "View as binary",              ID_VIEWASBINARY
-	END
+    POPUP ""
+    BEGIN
+        MENUITEM "View as text",                ID_VIEWASTEXT
+        MENUITEM "View as binary",              ID_VIEWASBINARY
+    END
 END
 
 
