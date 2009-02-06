@@ -3,4 +3,5 @@
 . ./fast-clean.sh
 
 echo Making archive...
-tar cjf source.tar.bz2 *
+tar --exclude-vcs -cjvf source.tar.bz2 *
+
