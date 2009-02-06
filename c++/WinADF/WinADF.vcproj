@@ -223,6 +223,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\m68000.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.cpp"
 				>
 			</File>
@@ -302,6 +306,10 @@
 			</File>
 			<File
 				RelativePath=".\LeftView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\m68000.h"
 				>
 			</File>
 			<File
