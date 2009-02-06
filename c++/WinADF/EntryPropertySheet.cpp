@@ -23,7 +23,6 @@ EntryPropertySheet::EntryPropertySheet(UINT nIDCaption, CWnd* pParentWnd, UINT i
 	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage), 
 	m_pPages(0), m_nPages(0), m_pEntry(0)
 {
-
 }
 
 EntryPropertySheet::EntryPropertySheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)

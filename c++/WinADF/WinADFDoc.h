@@ -48,6 +48,8 @@ protected:
 public:
 	afx_msg void OnUpdateFileSave(CCmdUI *pCmdUI);
 	void chdir(Entry *pEntry);
+	afx_msg void OnUpdateFileDiskinformation(CCmdUI *pCmdUI);
+	afx_msg void OnFileDiskinformation();
 };
 
 

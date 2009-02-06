@@ -23,6 +23,7 @@ protected:
 	Entry *m_pEntry;
 
 	virtual void BuildPropPageArray();
+public:
 };
 
 inline Entry *EntryPropertySheet::GetEntry() const {

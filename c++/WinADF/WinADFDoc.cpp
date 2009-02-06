@@ -16,6 +16,8 @@ IMPLEMENT_DYNCREATE(WinADFDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(WinADFDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, &WinADFDoc::OnUpdateFileSave)
+	ON_UPDATE_COMMAND_UI(ID_FILE_DISKINFORMATION, &WinADFDoc::OnUpdateFileDiskinformation)
+	ON_COMMAND(ID_FILE_DISKINFORMATION, &WinADFDoc::OnFileDiskinformation)
 END_MESSAGE_MAP()
 
 
@@ -142,4 +144,12 @@ const Entry *WinADFDoc::GetEntry() const
 Volume *WinADFDoc::GetVolume() const
 {
 	return m_pVolume;
+}
+void WinADFDoc::OnUpdateFileDiskinformation(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_pDisk.get() != NULL);
+}
+
+void WinADFDoc::OnFileDiskinformation()
+{
 }

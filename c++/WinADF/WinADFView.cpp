@@ -189,22 +189,6 @@ BOOL WinADFView::PreCreateWindow(CREATESTRUCT& cs)
 	return CListView::PreCreateWindow(cs);
 }
 
-// WinADFView printing
-
-BOOL WinADFView::OnPreparePrinting(CPrintInfo* pInfo)
-{
-	// default preparation
-	return DoPreparePrinting(pInfo);
-}
-
-void WinADFView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-}
-
-void WinADFView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-}
-
 // WinADFView message handlers
 void WinADFView::OnStyleChanged(int nStyleType, LPSTYLESTRUCT lpStyleStruct)
 {
@@ -232,8 +216,8 @@ void WinADFView::OnNMRClick(NMHDR *pNMHDR, LRESULT *pResult)
 
 	// load and display popup menu
 	CMenu menu;
-	menu.LoadMenu(IDR_RIGHTPOPUP);
-	CMenu* pPopup = menu.GetSubMenu(0);
+	menu.LoadMenu(IDR_WINADFTYPE);
+	CMenu* pPopup = menu.GetSubMenu(3);
 	ASSERT(pPopup);
 	
 	CPoint point(pNMItemActivate->ptAction.x, pNMItemActivate->ptAction.y);
@@ -301,6 +285,8 @@ void WinADFView::OnUpdateProperties(CCmdUI *pCmdUI)
 void WinADFView::OnProperties()
 {
 	EntryPropertySheet sheet(_T("Properties"), this);
+	sheet.m_psh.dwFlags |= PSH_NOAPPLYNOW;
+
 	sheet.SetEntry(GetSelectedEntry());
 	INT_PTR result = sheet.DoModal();
 }

@@ -85,28 +85,6 @@ void LeftView::AddImages()
 	}
 }
 
-// LeftView printing
-
-BOOL LeftView::OnPreparePrinting(CPrintInfo* pInfo)
-{
-	// default preparation
-	return DoPreparePrinting(pInfo);
-}
-
-void LeftView::OnDraw(CDC* /*pDC*/)
-{
-	WinADFDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-}
-
-void LeftView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-}
-
-void LeftView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-}
-
 void LeftView::OnInitialUpdate()
 {
 	CTreeView::OnInitialUpdate();

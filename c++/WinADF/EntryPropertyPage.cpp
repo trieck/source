@@ -83,12 +83,18 @@ BOOL EntryPropertyPage::OnInitDialog()
 	CButton *pButton;
 	for (uint32_t i = 0; i < nbits; i++) {
 		state = pEntry->access & access[i][0];
-		state = access[i][2] == 0 ? state : !state;
+		state = access[i][2] == 0 ? state : ~state;
 
 		pButton = (CButton*)GetDlgItem(access[i][1]);
 		ASSERT(pButton != NULL);
 		pButton->SetCheck(state ? BST_CHECKED : BST_UNCHECKED);
 	}
+
+	CEdit *pEdit = (CEdit*)GetDlgItem(IDC_FILENAME);
+	pEdit->SetWindowText(pEntry->name.c_str());
+
+	pEdit = (CEdit*)GetDlgItem(IDC_COMMENT);
+	pEdit->SetWindowText(pEntry->comment.c_str());
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
