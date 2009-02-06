@@ -10,7 +10,8 @@
 #include "LeftView.h"
 
 #include "FileViewFrame.h"
-#include "FileView.h"
+#include "TextFileView.h"
+#include "BinaryFileView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -32,7 +33,7 @@ END_MESSAGE_MAP()
 // WinADFApp construction
 
 WinADFApp::WinADFApp()
- : m_pFileViewTemplate(NULL)
+ : m_pTextFileViewTemplate(NULL), m_pBinaryFileViewTemplate(NULL)
 {
 }
 
@@ -60,7 +61,7 @@ BOOL WinADFApp::InitInstance()
 	// Register the application's document templates.  Document templates
 	//  serve as the connection between documents, frame windows and views
 	CMultiDocTemplate* pDocTemplate;
-	pDocTemplate = new CMultiDocTemplate(IDR_WinADFTYPE,
+	pDocTemplate = new CMultiDocTemplate(IDR_WINADFTYPE,
 		RUNTIME_CLASS(WinADFDoc),
 		RUNTIME_CLASS(ChildFrame), // custom MDI child frame
 		RUNTIME_CLASS(LeftView));
@@ -68,13 +69,21 @@ BOOL WinADFApp::InitInstance()
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
 
-	m_pFileViewTemplate = new CMultiDocTemplate(IDR_FILEVIEWTYPE,
+	m_pTextFileViewTemplate = new CMultiDocTemplate(IDR_FILEVIEWTYPE,
 		RUNTIME_CLASS(WinADFDoc),
 		RUNTIME_CLASS(FileViewFrame), // custom MDI child frame
-		RUNTIME_CLASS(FileView));
-	if (!m_pFileViewTemplate)
+		RUNTIME_CLASS(TextFileView));
+	if (!m_pTextFileViewTemplate)
 		return FALSE;
-	AddDocTemplate(m_pFileViewTemplate);
+	AddDocTemplate(m_pTextFileViewTemplate);
+
+	m_pBinaryFileViewTemplate = new CMultiDocTemplate(IDR_FILEVIEWTYPE,
+		RUNTIME_CLASS(WinADFDoc),
+		RUNTIME_CLASS(FileViewFrame), // custom MDI child frame
+		RUNTIME_CLASS(BinaryFileView));
+	if (!m_pBinaryFileViewTemplate)
+		return FALSE;
+	AddDocTemplate(m_pBinaryFileViewTemplate);
 
 	// create main MDI Frame window
 	MainFrame* pMainFrame = new MainFrame;
@@ -171,13 +180,24 @@ int WinADFApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt)
 	return ::MessageBoxIndirect(&mbp);
 }
 
-void WinADFApp::ShowFileView(CDocument *pDoc)
+void WinADFApp::ShowTextFileView(CDocument *pDoc)
 {
-	CFrameWnd* pFrame = m_pFileViewTemplate->CreateNewFrame(pDoc, NULL);
+	CFrameWnd* pFrame = m_pTextFileViewTemplate->CreateNewFrame(pDoc, NULL);
 	if (pFrame != NULL) {
-		FileView *pView = (FileView*)pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
+		TextFileView *pView = (TextFileView*)pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
 		ASSERT(pView != NULL);
-		ASSERT(pView->IsKindOf(RUNTIME_CLASS(FileView)));
-		m_pFileViewTemplate->InitialUpdateFrame(pFrame, pDoc);
+		ASSERT(pView->IsKindOf(RUNTIME_CLASS(TextFileView)));
+		m_pTextFileViewTemplate->InitialUpdateFrame(pFrame, pDoc);
+	}
+}
+
+void WinADFApp::ShowBinaryFileView(CDocument *pDoc)
+{
+	CFrameWnd* pFrame = m_pBinaryFileViewTemplate->CreateNewFrame(pDoc, NULL);
+	if (pFrame != NULL) {
+		BinaryFileView *pView = (BinaryFileView*)pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
+		ASSERT(pView != NULL);
+		ASSERT(pView->IsKindOf(RUNTIME_CLASS(BinaryFileView)));
+		m_pBinaryFileViewTemplate->InitialUpdateFrame(pFrame, pDoc);
 	}
 }

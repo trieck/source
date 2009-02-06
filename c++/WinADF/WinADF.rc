@@ -71,7 +71,7 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\main.ico"
-IDR_WinADFTYPE          ICON                    "res\\floppy.ico"
+IDR_WINADFTYPE          ICON                    "res\\floppy.ico"
 IDR_DOCUMENT            ICON                    "res\\doc.ico"
 IDR_OPEN                ICON                    "res\\open.ico"
 IDR_CLOSED              ICON                    "res\\closed.ico"
@@ -152,7 +152,7 @@ BEGIN
     END
 END
 
-IDR_WinADFTYPE MENU 
+IDR_WINADFTYPE MENU 
 BEGIN
     POPUP "&File"
     BEGIN
@@ -214,8 +214,9 @@ IDR_RIGHTPOPUP MENU
 BEGIN
     POPUP ""
     BEGIN
-        MENUITEM "View as text",                ID_VIEWASTEXT
-        MENUITEM "View as binary",              ID_VIEWASBINARY
+        MENUITEM "View as &text",               ID_VIEWASTEXT
+        MENUITEM "View as &binary",             ID_VIEWASBINARY
+        MENUITEM "Properties",                  IDR_PROPERTIES
     END
 END
 
@@ -259,6 +260,22 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,155,37,50,14,WS_GROUP
 END
 
+IDD_ENTRY_PROPPAGE DIALOGEX 0, 0, 174, 147
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE | WS_CAPTION
+CAPTION "General"
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "Protection Flags",IDC_STATIC,7,27,159,74
+    CONTROL         "Read",IDC_CHK_READ,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,18,43,81,10
+    CONTROL         "Write",IDC_CHK_WRITE,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,18,54,81,10
+    CONTROL         "Execute",IDC_CHK_EXEC,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,18,65,81,10
+    CONTROL         "Delete",IDC_CHK_DELETE,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,18,76,81,10
+    CONTROL         "Script",IDC_CHK_SCRIPT,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,113,43,48,10
+    CONTROL         "Archive",IDC_CHK_ARCH,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,113,54,46,10
+    CONTROL         "Pure",IDC_CHK_PURE,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,113,65,43,10
+    CONTROL         "Hold",IDC_CHK_HOLD,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,113,76,44,10
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -284,7 +301,7 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Rieck Enterprises"
             VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "WinADF.exe"
+            VALUE "InternalName", "winadf.exe"
             VALUE "LegalCopyright", "Copyright(c) 2009 Thomas A. Rieck"
             VALUE "OriginalFilename", "winadf.exe"
             VALUE "ProductName", "WinADF"
@@ -313,6 +330,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 51
     END
+
+    IDD_ENTRY_PROPPAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 166
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 140
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -325,7 +350,7 @@ END
 STRINGTABLE 
 BEGIN
     IDR_MAINFRAME           "WinADF"
-    IDR_WinADFTYPE          "\nWinADF\nWinADF\nWinADF Files (*.ADF)\n.ADF\nWinADF.Document\nWinADF.Document"
+    IDR_WINADFTYPE          "\nWinADF\nWinADF\nWinADF Files (*.ADF)\n.ADF\nWinADF.Document\nWinADF.Document"
 END
 
 STRINGTABLE 

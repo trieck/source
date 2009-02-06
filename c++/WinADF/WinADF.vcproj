@@ -47,7 +47,7 @@
 				UseUnicodeResponseFiles="false"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\libadf"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
+				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -129,7 +129,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\libadf"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
+				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="false"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -191,15 +191,31 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\BigScrollView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\BinaryFileView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ChildFrm.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\FileView.cpp"
+				RelativePath=".\EntryPropertyPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\EntryPropertySheet.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\FileViewFrame.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\HexView.cpp"
 				>
 			</File>
 			<File
@@ -231,6 +247,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\TextFileView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TextView.cpp"
 				>
 			</File>
@@ -253,15 +273,31 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\BigScrollView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BinaryFileView.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ChildFrm.h"
 				>
 			</File>
 			<File
-				RelativePath=".\FileView.h"
+				RelativePath=".\EntryPropertyPage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\EntryPropertySheet.h"
 				>
 			</File>
 			<File
 				RelativePath=".\FileViewFrame.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HexView.h"
 				>
 			</File>
 			<File
@@ -282,6 +318,10 @@
 			</File>
 			<File
 				RelativePath=".\targetver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TextFileView.h"
 				>
 			</File>
 			<File

@@ -47,6 +47,10 @@ public:
 	afx_msg void OnNMRClick(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnViewasText();
 	afx_msg void OnViewasBinary();
+	afx_msg void OnUpdateViewAsText(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateViewAsBinary(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateProperties(CCmdUI *pCmdUI);
+	afx_msg void OnProperties();
 };
 
 #ifndef _DEBUG  //debug version in WinADFView.cpp

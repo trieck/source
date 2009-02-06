@@ -29,9 +29,11 @@ public:
 	virtual int DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt);
 
 protected:
-	CMultiDocTemplate *m_pFileViewTemplate;
+	CMultiDocTemplate *m_pTextFileViewTemplate;
+	CMultiDocTemplate *m_pBinaryFileViewTemplate;
 public:
-	void ShowFileView(CDocument *pDoc);
+	void ShowTextFileView(CDocument *pDoc);
+	void ShowBinaryFileView(CDocument *pDoc);
 };
 
 extern WinADFApp theApp;

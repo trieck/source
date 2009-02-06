@@ -15,11 +15,12 @@ protected:
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 protected:
-//	virtual void OnUpdateFrameTitle(BOOL bAddToTitle);
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual void OnUpdateFrameTitle(BOOL bAddToTitle);
-
 	CStatusBar  m_wndStatusBar;
+public:
+	virtual BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL);
+protected:
+	virtual void OnUpdateFrameTitle(BOOL bAddToTitle);
 };
 
 

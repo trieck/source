@@ -33,6 +33,7 @@
 #include "common.h"
 #include "adf.h"
 #include "adfexcept.h"
+#include <afxdlgs.h>
 
 #ifdef _UNICODE
 #if defined _M_IX86

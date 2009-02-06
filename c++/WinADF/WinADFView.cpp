@@ -6,6 +6,7 @@
 #include "WinADFDoc.h"
 #include "WinADFView.h"
 #include "adfutil.h"
+#include "EntryPropertySheet.h"
 
 // WinADFView
 
@@ -30,6 +31,10 @@ BEGIN_MESSAGE_MAP(WinADFView, CListView)
 	ON_NOTIFY_REFLECT(NM_RCLICK, &WinADFView::OnNMRClick)
 	ON_COMMAND(ID_VIEWASTEXT, &WinADFView::OnViewasText)
 	ON_COMMAND(ID_VIEWASBINARY, &WinADFView::OnViewasBinary)
+	ON_UPDATE_COMMAND_UI(ID_VIEWASTEXT, &WinADFView::OnUpdateViewAsText)
+	ON_UPDATE_COMMAND_UI(ID_VIEWASBINARY, &WinADFView::OnUpdateViewAsBinary)
+	ON_UPDATE_COMMAND_UI(IDR_PROPERTIES, &WinADFView::OnUpdateProperties)
+	ON_COMMAND(IDR_PROPERTIES, &WinADFView::OnProperties)
 END_MESSAGE_MAP()
 
 // WinADFView diagnostics
@@ -225,9 +230,6 @@ void WinADFView::OnNMRClick(NMHDR *pNMHDR, LRESULT *pResult)
 	if (pEntry == NULL)
 		return;	// nothing selected
 
-	if (pEntry->type != ST_FILE)
-		return;	// files only
-
 	// load and display popup menu
 	CMenu menu;
 	menu.LoadMenu(IDR_RIGHTPOPUP);
@@ -238,7 +240,7 @@ void WinADFView::OnNMRClick(NMHDR *pNMHDR, LRESULT *pResult)
 	ClientToScreen(&point);
 
 	pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_VERTICAL,
-		point.x, point.y, this);
+		point.x, point.y, GetParentFrame());
 
 	*pResult = 0;
 }
@@ -260,13 +262,10 @@ void WinADFView::OnViewasText()
 	if (pEntry == NULL)
 		return;	// nothing selected
 
-	if (pEntry->type != ST_FILE)
-		return;	// files only
-
 	WinADFDoc *pDoc = GetDocument();
 	pDoc->SetEntry(*pEntry);
 
-	theApp.ShowFileView(pDoc);
+	theApp.ShowTextFileView(pDoc);
 }
 
 void WinADFView::OnViewasBinary()
@@ -275,6 +274,33 @@ void WinADFView::OnViewasBinary()
 	if (pEntry == NULL)
 		return;	// nothing selected
 
-	if (pEntry->type != ST_FILE)
-		return;	// files only
+	WinADFDoc *pDoc = GetDocument();
+	pDoc->SetEntry(*pEntry);
+
+	theApp.ShowBinaryFileView(pDoc);
+}
+
+void WinADFView::OnUpdateViewAsText(CCmdUI *pCmdUI)
+{
+	Entry *pEntry = GetSelectedEntry();
+	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);
+}
+
+void WinADFView::OnUpdateViewAsBinary(CCmdUI *pCmdUI)
+{
+	Entry *pEntry = GetSelectedEntry();
+	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);	
+}
+
+void WinADFView::OnUpdateProperties(CCmdUI *pCmdUI)
+{
+	Entry *pEntry = GetSelectedEntry();
+	pCmdUI->Enable(pEntry != NULL);	
+}
+
+void WinADFView::OnProperties()
+{
+	EntryPropertySheet sheet(_T("Properties"), this);
+	sheet.SetEntry(GetSelectedEntry());
+	INT_PTR result = sheet.DoModal();
 }
