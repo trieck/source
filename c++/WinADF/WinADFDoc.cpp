@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "WinADF.h"
 #include "WinADFDoc.h"
+#include "DiskPropSheet.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -16,8 +17,8 @@ IMPLEMENT_DYNCREATE(WinADFDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(WinADFDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, &WinADFDoc::OnUpdateFileSave)
-	ON_UPDATE_COMMAND_UI(ID_FILE_DISKINFORMATION, &WinADFDoc::OnUpdateFileDiskinformation)
-	ON_COMMAND(ID_FILE_DISKINFORMATION, &WinADFDoc::OnFileDiskinformation)
+	ON_UPDATE_COMMAND_UI(ID_FILE_DISKINFORMATION, &WinADFDoc::OnUpdateDiskInfo)
+	ON_COMMAND(ID_FILE_DISKINFORMATION, &WinADFDoc::OnDiskInfo)
 END_MESSAGE_MAP()
 
 
@@ -141,15 +142,24 @@ const Entry *WinADFDoc::GetEntry() const
 	return m_pEntry;
 }
 
+Disk *WinADFDoc::GetDisk() const
+{
+	return m_pDisk.get();
+}
+
 Volume *WinADFDoc::GetVolume() const
 {
 	return m_pVolume;
 }
-void WinADFDoc::OnUpdateFileDiskinformation(CCmdUI *pCmdUI)
+
+void WinADFDoc::OnUpdateDiskInfo(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable(m_pDisk.get() != NULL);
 }
 
-void WinADFDoc::OnFileDiskinformation()
+void WinADFDoc::OnDiskInfo()
 {
+	DiskPropSheet sheet(theApp.GetMainWnd());
+	sheet.m_psh.dwFlags |= PSH_NOAPPLYNOW;
+	INT_PTR result = sheet.DoModal();
 }

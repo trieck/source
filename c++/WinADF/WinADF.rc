@@ -273,6 +273,27 @@ BEGIN
     EDITTEXT        IDC_COMMENT,45,105,160,15,ES_AUTOHSCROLL | WS_DISABLED
 END
 
+IDD_DISK_PROPPAGE DIALOGEX 0, 0, 213, 127
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE | WS_CAPTION
+CAPTION "Disk"
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "General",IDC_STATIC,7,6,198,56
+    LTEXT           "Path:",IDC_STATIC,18,19,29,11
+    LTEXT           "Size:",IDC_STATIC,18,32,29,11
+    LTEXT           "Type:",IDC_STATIC,18,44,29,11
+    LTEXT           "",IDC_DISKPATH,50,19,145,11
+    LTEXT           "",IDC_DISKSIZE,50,32,145,11
+    LTEXT           "",IDC_DISKTYPE,50,44,145,11
+    GROUPBOX        "Geometry",IDC_STATIC,7,64,198,56
+    LTEXT           "Cylinders:",IDC_STATIC,18,76,71,11
+    LTEXT           "Heads:",IDC_STATIC,18,89,71,11
+    LTEXT           "Sectors Per Cylinder:",IDC_STATIC,18,102,71,11
+    LTEXT           "",IDC_CYLINDERS,102,76,93,11
+    LTEXT           "",IDC_HEADS,102,89,93,11
+    LTEXT           "",IDC_SECTORS,102,102,93,11
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -335,9 +356,24 @@ BEGIN
         TOPMARGIN, 6
         BOTTOMMARGIN, 120
     END
+
+    IDD_DISK_PROPPAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 205
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 120
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// HTML
+//
+
+IDR_HTML_DISKPROPPAGE   HTML                    "DiskPropPage.htm"
 
 /////////////////////////////////////////////////////////////////////////////
 //

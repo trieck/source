@@ -27,6 +27,7 @@ public:
 	void SetEntry(const Entry &e);
 	const Entry *GetEntry() const;
 
+	Disk *GetDisk() const;
 	Volume *GetVolume() const;
 
 // Implementation
@@ -48,8 +49,8 @@ protected:
 public:
 	afx_msg void OnUpdateFileSave(CCmdUI *pCmdUI);
 	void chdir(Entry *pEntry);
-	afx_msg void OnUpdateFileDiskinformation(CCmdUI *pCmdUI);
-	afx_msg void OnFileDiskinformation();
+	afx_msg void OnUpdateDiskInfo(CCmdUI *pCmdUI);
+	afx_msg void OnDiskInfo();
 };
 
 

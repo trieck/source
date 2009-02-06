@@ -4,14 +4,13 @@
 #include "stdafx.h"
 #include "WinADF.h"
 #include "MainFrm.h"
-
 #include "ChildFrm.h"
 #include "WinADFDoc.h"
 #include "LeftView.h"
-
 #include "FileViewFrame.h"
 #include "TextFileView.h"
 #include "BinaryFileView.h"
+#include <algorithm>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -200,4 +199,25 @@ void WinADFApp::ShowBinaryFileView(CDocument *pDoc)
 		ASSERT(pView->IsKindOf(RUNTIME_CLASS(BinaryFileView)));
 		m_pBinaryFileViewTemplate->InitialUpdateFrame(pFrame, pDoc);
 	}
+}
+
+// Utility functions
+string comma(uint64_t i)
+{
+	string output;
+
+    char buff[20];
+    sprintf(buff,"%I64u", i);
+
+    int n = strlen(buff);
+
+    for (int j = n - 1, k = 1; j >= 0; j--, k++) {
+        output += buff[j];
+        if (k % 3 == 0 && j > 0 && j < n - 1)
+            output += ',';
+    }
+	
+	std::reverse(output.begin(), output.end());
+
+    return output;
 }

@@ -25,7 +25,7 @@ namespace { int32_t getDiskType(uint32_t size); }
 
 /////////////////////////////////////////////////////////////////////////////
 Disk::Disk()
- : cylinders(0), heads(0), sectors(0), size(0), fp(0)
+ : type(0), cylinders(0), heads(0), sectors(0), size(0), fp(0)
 {
 }
 
@@ -78,7 +78,8 @@ DiskPtr Disk::open(const char *filename)
 
 	pDisk->filename = filename;
 	pDisk->size = buf.st_size;
-	
+	pDisk->type = type;
+
 	switch (type) {
 		case DISKTYPE_FLOPDD:
 			pDisk->cylinders = FLOPPY_CYLINDERS;

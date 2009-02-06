@@ -203,6 +203,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DiskPropPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DiskPropSheet.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\EntryPropertyPage.cpp"
 				>
 			</File>
@@ -286,6 +294,14 @@
 			</File>
 			<File
 				RelativePath=".\ChildFrm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DiskPropPage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DiskPropSheet.h"
 				>
 			</File>
 			<File
@@ -408,6 +424,11 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\DiskPropPage.htm"
+			DeploymentContent="true"
+			>
+		</File>
 		<File
 			RelativePath=".\TODO.txt"
 			>

@@ -1,7 +1,7 @@
 #pragma once
 
 /////////////////////////////////////////////////////////////////////////////
-class BigScrollView : public CView
+class BigScrollView : public CScrollView
 {
 	DECLARE_DYNAMIC(BigScrollView)
 
