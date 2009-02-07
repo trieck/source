@@ -29,7 +29,8 @@ public:
 private:
 	void readnext();		// read next data block
 	Volume *volume;			// parent volume
-	Entry entry;
+	Entry entry;			// entry
+	fileheader_t header;	// file header
 	uint32_t pos;			// read/write position in file
 	uint32_t blockpos;		// block pointer position
 	uint32_t nblock;		// current data block number

@@ -17,6 +17,7 @@
 File::File(Volume *pVol, entryblock_t *pEntry)
  : volume(pVol), pos(0), blockpos(0), nblock(0), data(&buffer[0])
 {
+	memcpy(&header, pEntry, sizeof(fileheader_t));
 	entry = *pEntry;
 	memset(buffer, 0, BSIZE);
 }
@@ -26,6 +27,20 @@ File::File(Volume *pVol, const Entry &e)
  : volume(pVol), pos(0), blockpos(0), nblock(0), data(&buffer[0])
 {
 	entry = e;
+	volume->readblock(entry.blockno, &header);	
+#ifdef LITTLE_ENDIAN
+	header.type = swap_endian(header.type);
+	header.key = swap_endian(header.key);
+	header.nblocks = swap_endian(header.nblocks);
+	header.firstblock = swap_endian(header.firstblock);
+	header.checksum = swap_endian(header.checksum);
+
+	for (uint32_t i = 0; i < MAX_DATABLK; i++)
+		header.datablocks[i] = swap_endian(header.datablocks[i]);
+	header.extension = swap_endian(header.extension);
+	header.parent = swap_endian(header.parent);
+	header.sectype = swap_endian(header.sectype);
+#endif
 	memset(buffer, 0, BSIZE);
 }
 
@@ -80,24 +95,8 @@ void File::readnext()
     } else if (isOFS(volume->getType())) {
         blockno = block->next;
 	} else {	// FFS
-		fileheader_t header;
-		volume->readblock(entry.blockno, &header);
-
-		// SWAP
-#ifdef LITTLE_ENDIAN
-		header.type = swap_endian(header.type);
-		header.key = swap_endian(header.key);
-		header.nblocks = swap_endian(header.nblocks);
-		header.firstblock = swap_endian(header.firstblock);
-		header.checksum = swap_endian(header.checksum);
-
-		for (uint32_t i = 0; i < MAX_DATABLK; i++)
-			header.datablocks[i] = swap_endian(header.datablocks[i]);
-		header.extension = swap_endian(header.extension);
-#endif
-		if (header.nblocks < MAX_DATABLK) {
-			blockno = header.datablocks[MAX_DATABLK - 1 - header.nblocks];
-			;
+		if (nblock < MAX_DATABLK) {
+			blockno = header.datablocks[MAX_DATABLK-1-nblock];
 		} else {
 			;
 		}
