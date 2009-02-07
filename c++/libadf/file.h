@@ -30,8 +30,10 @@ private:
 	void readnext();		// read next data block
 	Volume *volume;			// parent volume
 	fileheader_t header;	// file header
+	fileext_t extent;		// file extension block
 	uint32_t pos;			// read/write position in file
 	uint32_t blockpos;		// block pointer position
+	uint32_t extentpos;		// extent pointer position
 	uint32_t nblock;		// current data block number
 	uint8_t *data;			// current data pointer
 	uint8_t buffer[BSIZE];	// data buffer

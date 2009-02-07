@@ -43,7 +43,8 @@ int FileViewFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 BOOL FileViewFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.style &= ~FWS_ADDTOTITLE;
-
+	cs.cx = 600;
+	cs.cy = 400;
 	return CMDIChildWnd::PreCreateWindow(cs);
 }
 

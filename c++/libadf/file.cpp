@@ -15,16 +15,19 @@
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, entryblock_t *pEntry)
- : volume(pVol), pos(0), blockpos(0), nblock(0), data(&buffer[0])
+ : volume(pVol), pos(0), blockpos(0), extentpos(0), nblock(0), data(&buffer[0])
 {
 	memcpy(&header, pEntry, sizeof(fileheader_t));
 	memset(buffer, 0, BSIZE);
+	memset(&extent, 0, sizeof(fileext_t));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, const Entry &e)
  : volume(pVol), pos(0), blockpos(0), nblock(0), data(&buffer[0])
 {
+	memset(buffer, 0, BSIZE);
+	memset(&extent, 0, sizeof(fileext_t));
 	volume->readblock(e.blockno, &header);	
 #ifdef LITTLE_ENDIAN
 	header.type = swap_endian(header.type);
@@ -46,8 +49,7 @@ File::File(Volume *pVol, const Entry &e)
 	header.parent = swap_endian(header.parent);
 	header.extension = swap_endian(header.extension);
 	header.sectype = swap_endian(header.sectype);
-#endif
-	memset(buffer, 0, BSIZE);
+#endif	
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -103,8 +105,16 @@ void File::readnext()
 	} else {	// FFS
 		if (nblock < MAX_DATABLK) {
 			blockno = header.datablocks[MAX_DATABLK-1-nblock];
-		} else {	// extension block
-			;
+		} else {
+			if (nblock == MAX_DATABLK) {	// extension block
+				volume->readextblock(header.extension, &extent);
+				extentpos = 0;
+			} else if (extentpos == MAX_DATABLK) {
+				volume->readextblock(extent.extension, &extent);
+				extentpos = 0;
+			}
+			blockno = extent.blocks[MAX_DATABLK-1-extentpos];
+			extentpos++;
 		}
 	}
 

@@ -33,6 +33,7 @@ public:
 	void readbmblock(uint32_t blockno, bitmapblock_t *bm);
 	void readdatablock(uint32_t blockno, void *block);
 	void readentry(uint32_t blockno, entryblock_t *e);
+	void readextblock(uint32_t blockno, fileext_t *block);
 	bool isValidBlock(uint32_t blockno);
 	bool isBlockFree(uint32_t blockno);
 

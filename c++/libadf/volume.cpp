@@ -319,6 +319,53 @@ void Volume::readentry(uint32_t blockno, entryblock_t *e)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+void Volume::readextblock(uint32_t blockno, fileext_t *block)
+{
+	uint8_t buf[BSIZE];
+
+	readblock(blockno, buf);
+	memcpy(block, buf, sizeof(fileext_t));
+
+#ifdef LITTLE_ENDIAN
+	block->type = swap_endian(block->type);
+	block->key = swap_endian(block->key);
+	block->highseq = swap_endian(block->highseq);
+	block->checksum = swap_endian(block->checksum);
+
+	for (uint32_t i = 0; i < MAX_DATABLK; i++) 
+		block->blocks[i] = swap_endian(block->blocks[i]);
+
+	block->parent = swap_endian(block->parent);
+	block->extension = swap_endian(block->extension);
+	block->sectype = swap_endian(block->sectype);
+#endif // LITTLE_ENDIAN
+
+	if (block->checksum != adfchecksum(buf, 20, BSIZE)) {
+		ADFWarningDispatcher::dispatch("bad checksum.");
+	}
+
+	if (block->type != T_LIST) {
+		ADFWarningDispatcher::dispatch("bad extension block.");
+	}
+
+	if (block->sectype != ST_FILE) {
+		ADFWarningDispatcher::dispatch("bad extension block.");
+	}
+
+	if (block->key != blockno) {
+		ADFWarningDispatcher::dispatch("bad extension block.");
+	}
+
+	if (block->highseq < 0 || block->highseq > MAX_DATABLK) {
+		ADFWarningDispatcher::dispatch("sequence out of range.");
+	}
+
+	if (block->extension != 0 && !isValidBlock(block->extension)) {
+		ADFWarningDispatcher::dispatch("extension out of range.");
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
 bool Volume::isBlockFree(uint32_t blockno)
 {
 	// total number of blocks in bitmap block
