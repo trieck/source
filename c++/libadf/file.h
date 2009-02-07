@@ -29,7 +29,6 @@ public:
 private:
 	void readnext();		// read next data block
 	Volume *volume;			// parent volume
-	Entry entry;			// entry
 	fileheader_t header;	// file header
 	uint32_t pos;			// read/write position in file
 	uint32_t blockpos;		// block pointer position
@@ -49,7 +48,7 @@ inline Volume *File::getVolume() const
 /////////////////////////////////////////////////////////////////////////////
 inline uint32_t File::getSize() const
 {
-	return entry.size;
+	return header.bytesize;
 }
 
 #endif // __FILE_H__

@@ -18,7 +18,6 @@ File::File(Volume *pVol, entryblock_t *pEntry)
  : volume(pVol), pos(0), blockpos(0), nblock(0), data(&buffer[0])
 {
 	memcpy(&header, pEntry, sizeof(fileheader_t));
-	entry = *pEntry;
 	memset(buffer, 0, BSIZE);
 }
 
@@ -26,8 +25,7 @@ File::File(Volume *pVol, entryblock_t *pEntry)
 File::File(Volume *pVol, const Entry &e)
  : volume(pVol), pos(0), blockpos(0), nblock(0), data(&buffer[0])
 {
-	entry = e;
-	volume->readblock(entry.blockno, &header);	
+	volume->readblock(e.blockno, &header);	
 #ifdef LITTLE_ENDIAN
 	header.type = swap_endian(header.type);
 	header.key = swap_endian(header.key);
@@ -37,8 +35,16 @@ File::File(Volume *pVol, const Entry &e)
 
 	for (uint32_t i = 0; i < MAX_DATABLK; i++)
 		header.datablocks[i] = swap_endian(header.datablocks[i]);
-	header.extension = swap_endian(header.extension);
+
+	header.access = swap_endian(header.access);
+	header.bytesize = swap_endian(header.bytesize);
+	header.days = swap_endian(header.days);
+	header.mins = swap_endian(header.mins);
+	header.ticks = swap_endian(header.ticks);
+	header.nextlink = swap_endian(header.nextlink);
+	header.nexthash = swap_endian(header.nexthash);
 	header.parent = swap_endian(header.parent);
+	header.extension = swap_endian(header.extension);
 	header.sectype = swap_endian(header.sectype);
 #endif
 	memset(buffer, 0, BSIZE);
@@ -58,8 +64,8 @@ uint32_t File::read(uint32_t n, void *buf)
 	uint32_t blocksize = volume->getDataBlockSize();
 
 	// calculate remaining bytes to read
-	if (pos + n > entry.size) {
-		n = entry.size - pos;
+	if (pos + n > header.bytesize) {
+		n = header.bytesize - pos;
 	}
 
 	uint8_t *pdata = isOFS(volume->getType()) ?
@@ -91,13 +97,13 @@ void File::readnext()
 
 	uint32_t blockno;
 	if (nblock ==0) {
-        blockno = entry.firstblock;
+        blockno = header.firstblock;
     } else if (isOFS(volume->getType())) {
         blockno = block->next;
 	} else {	// FFS
 		if (nblock < MAX_DATABLK) {
 			blockno = header.datablocks[MAX_DATABLK-1-nblock];
-		} else {
+		} else {	// extension block
 			;
 		}
 	}
@@ -116,5 +122,5 @@ void File::readnext()
 /////////////////////////////////////////////////////////////////////////////
 bool File::isEOF() const
 {
-	return pos == entry.size;
+	return pos == header.bytesize;
 }
