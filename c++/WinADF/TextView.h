@@ -32,10 +32,15 @@ public:
 protected:
 	CFont m_Font;
 	CString m_Text;
-	CDC m_MemDC;
-	CBitmap m_Bitmap;
+	CString m_blockedText;
+	uint32_t m_nLineLen;
+	uint32_t m_nBlockedLen;
+
 	void SetSizes(void);
-	int RecalcLayout(void);
+	void RecalcLayout(void);
+	void BlockText();
+	void DrawLines(CDC *pDC);
+	void DrawLine(CDC *pDC, const CRect &rc, uint32_t line);
 };
 
 

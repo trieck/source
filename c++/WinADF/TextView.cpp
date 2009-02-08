@@ -10,7 +10,7 @@
 
 IMPLEMENT_DYNCREATE(TextView, BigScrollView)
 
-TextView::TextView()
+TextView::TextView() : m_nLineLen(0), m_nBlockedLen(0)
 {
 }
 
@@ -27,16 +27,36 @@ END_MESSAGE_MAP()
 
 void TextView::OnDraw(CDC* pDC)
 {
-	CBitmap *pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);	
+	uint32_t nlen = m_blockedText.GetLength();
+	if (nlen == m_nBlockedLen) {
+		CFont * pOldFont = pDC->SelectObject(&m_Font);
+		DrawLines(pDC);
+		pDC->SelectObject(pOldFont);
+	}
+}
 
+void TextView::DrawLines(CDC *pDC)
+{
 	CRect rc;
 	pDC->GetClipBox(rc);
-	pDC->BitBlt(rc.left, rc.top, 
-		rc.Width(), rc.Height(), &m_MemDC, 
-		rc.left, rc.top, SRCCOPY
-	);
 
-	m_MemDC.SelectObject(pOldBitmap);
+	uint32_t nstart = rc.top / m_szChar.cy;
+	uint32_t nend = min(m_nLinesTotal - 1, 
+		(rc.bottom + m_szChar.cy - 1) / m_szChar.cy);
+
+	for (uint32_t n = nstart; n <= nend; n++) {
+		DrawLine(pDC, rc, n);
+	}
+}
+
+void TextView::DrawLine(CDC *pDC, const CRect &rc, uint32_t line)
+{
+	uint32_t offset = line * m_nLineLen;
+	LPCSTR pbuff = (LPCSTR)m_blockedText;
+	LPCSTR pline = &pbuff[offset];
+		
+	// TODO: BUGBUG
+	pDC->TextOut(0, line * m_szChar.cy, pline, m_nLineLen);
 }
 
 
@@ -91,12 +111,14 @@ void TextView::SetSizes(void)
 	m_szChar.cy = tm.tmHeight + tm.tmExternalLeading;
 
 	CRect rc;
+	rc.SetRectEmpty();
 	dc.DrawText(m_Text, -1, &rc, DT_CALCRECT | DT_EDITCONTROL);
 
 	m_nDocWidth = rc.Width();
 	m_nDocHeight = rc.Height();
-
 	m_nLinesTotal = rc.Height() / m_szChar.cy;
+	m_nLineLen = m_nDocWidth / m_szChar.cx;
+	m_nBlockedLen = m_nLineLen * m_nLinesTotal;
 
 	m_ScrollPos = CPoint(0, 0);
 
@@ -115,37 +137,39 @@ void TextView::SetSizes(void)
 	dc.SelectObject(pOldFont);
 }
 
-int TextView::RecalcLayout(void)
+void TextView::RecalcLayout(void)
 {
 	SetSizes();
-	
-	CClientDC dc(this);
+	BlockText();
+}
 
-	m_MemDC.DeleteDC();
-    if (!m_MemDC.CreateCompatibleDC(&dc))
-		return -1;
+void TextView::BlockText()
+{
+	m_blockedText.Empty();
+	LPSTR pout = m_blockedText.GetBufferSetLength(m_nBlockedLen);
+		
+	m_Text.Replace("\r\n", "\n");
+	m_Text.Replace("\r", "\n");
 
-	m_MemDC.SetBkMode(TRANSPARENT);
-    m_MemDC.SetMapMode(dc.GetMapMode());
+	LPCSTR ptext = m_Text;
 
-	m_Bitmap.DeleteObject();
-	if (!m_Bitmap.CreateCompatibleBitmap(&dc, m_nDocWidth, m_nDocHeight))
-		return -1;	
-
-	CRect rc(0, 0, m_nDocWidth, m_nDocHeight);
-
-	CBrush *pBrush = dc.GetCurrentBrush();
-	
-	CBrush *pOldBrush = m_MemDC.SelectObject(pBrush);
-	CFont *pOldFont = m_MemDC.SelectObject(&m_Font);
-	CBitmap *pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);	
-
-	m_MemDC.PatBlt(0, 0, rc.Width(), rc.Height(), PATCOPY);
-	m_MemDC.DrawText(m_Text, -1, &rc, DT_EDITCONTROL);
-
-	m_MemDC.SelectObject(pOldBitmap);	
-	m_MemDC.SelectObject(pOldFont);
-	m_MemDC.SelectObject(pOldBrush);
-
-	return 0;
+	uint32_t n = 0;
+	char c;
+	for (;;) {
+		switch (c = *ptext++) {
+		case '\0':
+			return;
+		case '\n':
+			while (n < m_nLineLen) {
+				*pout++ = ' ';
+				n++;
+			}
+			n = 0;			
+			break;
+		default:
+			*pout++ = c;
+			n++;
+			break;
+		}
+	}
 }

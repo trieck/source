@@ -187,7 +187,7 @@ void WinADFApp::ShowTextFileView(CDocument *pDoc)
 		ASSERT(pView != NULL);
 		ASSERT(pView->IsKindOf(RUNTIME_CLASS(TextFileView)));
 		m_pTextFileViewTemplate->InitialUpdateFrame(pFrame, pDoc);
-	}
+	} 
 }
 
 void WinADFApp::ShowBinaryFileView(CDocument *pDoc)
@@ -220,4 +220,32 @@ string comma(uint64_t i)
 	std::reverse(output.begin(), output.end());
 
     return output;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+CString LastError()
+{
+	CString output;
+
+	LPTSTR pmsg = NULL;
+
+    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
+		NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		(LPTSTR)&pmsg, 0, NULL);
+	
+	if (pmsg != NULL) {
+		uint32_t N = _tcslen(pmsg);
+        if (N > 1 && pmsg[N - 1] == _T('\n'))
+			pmsg[N - 1] = _T('\0');
+ 
+		if (N > 1 && pmsg[N - 2] == _T('\r'))
+			pmsg[N - 2] = _T('\0');
+
+		output = pmsg;
+		LocalFree(pmsg);
+	} else {
+		AfxMessageBox(LastError());
+	}
+
+    return output;                     
 }

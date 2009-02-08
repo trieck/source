@@ -97,7 +97,9 @@ int TextFileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	}
 
-	return RecalcLayout();
+	RecalcLayout();
+
+	return 0;
 }
 
 BOOL TextFileView::PreCreateWindow(CREATESTRUCT& cs)
