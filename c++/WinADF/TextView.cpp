@@ -28,7 +28,7 @@ END_MESSAGE_MAP()
 void TextView::OnDraw(CDC* pDC)
 {
 	uint32_t nlen = m_blockedText.GetLength();
-	if (nlen == m_nBlockedLen) {
+	if (nlen > 0) {
 		CFont * pOldFont = pDC->SelectObject(&m_Font);
 		DrawLines(pDC);
 		pDC->SelectObject(pOldFont);
