@@ -47,14 +47,7 @@ BOOL DiskPropPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 
-	CMDIFrameWnd* pFrame = (CMDIFrameWnd*)AfxGetMainWnd();
-	ASSERT_VALID(pFrame);
-	ASSERT(pFrame->IsKindOf(RUNTIME_CLASS(CMDIFrameWnd)));
-
-	CMDIChildWnd* pChild = pFrame->MDIGetActive();
-	ASSERT_VALID(pChild);
-
-	WinADFDoc *pDoc = (WinADFDoc*)pChild->GetActiveDocument();
+	WinADFDoc *pDoc = (WinADFDoc*)MDIGetActiveDoc();
 	ASSERT_VALID(pDoc);
 	ASSERT(pDoc->IsKindOf(RUNTIME_CLASS(WinADFDoc)));
 

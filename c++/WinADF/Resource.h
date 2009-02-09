@@ -6,6 +6,7 @@
 #define IDD_ENTRY_PROPPAGE              102
 #define IDD_DISK_PROPPAGE               103
 #define IDR_HTML_DISKPROPPAGE           104
+#define IDD_VOL_PROPPAGE                106
 #define ID_VIEW_ARRANGE                 127
 #define IDR_MAINFRAME                   128
 #define IDR_WINADFTYPE                  129
@@ -32,16 +33,26 @@
 #define IDC_CYLINDERS                   1013
 #define IDC_HEADS                       1014
 #define IDC_SECTORS                     1015
+#define IDC_VOLNAME                     1016
+#define IDC_FFS                         1018
+#define IDC_INTL                        1019
+#define IDC_DIRCACHE                    1020
+#define IDC_VOL_TOTAL                   1021
+#define IDC_VOL_FREE                    1022
+#define IDC_PROGRESS1                   1023
+#define IDC_FULL                        1023
 #define IDR_PROPERTIES                  32773
 #define ID_FILE_DISKINFORMATION         32775
+#define ID_FILE_PRINT32777              32777
+#define ID_FILE_PRINTPREVIEW            32778
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        145
-#define _APS_NEXT_COMMAND_VALUE         32776
-#define _APS_NEXT_CONTROL_VALUE         1016
-#define _APS_NEXT_SYMED_VALUE           105
+#define _APS_NEXT_COMMAND_VALUE         32779
+#define _APS_NEXT_CONTROL_VALUE         1024
+#define _APS_NEXT_SYMED_VALUE           106
 #endif
 #endif

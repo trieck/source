@@ -94,6 +94,7 @@ BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
     BUTTON      ID_FILE_SAVE
+    BUTTON      ID_FILE_PRINT
     SEPARATOR
     BUTTON      ID_FILE_DISKINFORMATION
     SEPARATOR
@@ -165,7 +166,12 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PRINTPREVIEW
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
         MENUITEM "E&xit",                       ID_APP_EXIT
+        MENUITEM SEPARATOR
     END
     POPUP "&Edit"
     BEGIN
@@ -294,6 +300,26 @@ BEGIN
     LTEXT           "",IDC_SECTORS,102,102,93,11
 END
 
+IDD_VOL_PROPPAGE DIALOGEX 0, 0, 213, 185
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE | WS_CAPTION
+CAPTION "Volume"
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "Label",IDC_STATIC,7,6,198,37
+    EDITTEXT        IDC_VOLNAME,17,20,180,15,ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "Filesystem",IDC_STATIC,7,48,198,55
+    CONTROL         "Fast filesystem",IDC_FFS,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,17,63,142,10
+    CONTROL         "International",IDC_INTL,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,17,73,142,10
+    CONTROL         "Directory caching",IDC_DIRCACHE,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,17,83,142,10
+    GROUPBOX        "Capacity",IDC_STATIC,7,109,198,69
+    LTEXT           "Total:",IDC_STATIC,17,127,59,12
+    LTEXT           "",IDC_VOL_TOTAL,79,127,112,9
+    LTEXT           "Free:",IDC_STATIC,17,140,59,12
+    LTEXT           "",IDC_VOL_FREE,79,140,112,9
+    LTEXT           "Full:",IDC_STATIC,17,153,59,12
+    CONTROL         "",IDC_FULL,"msctls_progress32",PBS_SMOOTH | WS_BORDER,79,154,112,9
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -364,16 +390,17 @@ BEGIN
         TOPMARGIN, 6
         BOTTOMMARGIN, 120
     END
+
+    IDD_VOL_PROPPAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 205
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 178
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// HTML
-//
-
-IDR_HTML_DISKPROPPAGE   HTML                    "DiskPropPage.htm"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -515,6 +542,7 @@ END
 STRINGTABLE 
 BEGIN
     ID_FILE_DISKINFORMATION "View disk information\nDisk info"
+    ID_FILE_PRINTPREVIEW    "Display full pages\nPrint Preview"
 END
 
 #endif    // English (U.S.) resources

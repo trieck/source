@@ -41,3 +41,4 @@ extern WinADFApp theApp;
 // utility functions
 string comma(uint64_t i);
 CString LastError();
+CDocument *MDIGetActiveDoc();

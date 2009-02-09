@@ -7,6 +7,9 @@ BEGIN_MESSAGE_MAP(BigScrollView, CScrollView)
 	ON_WM_HSCROLL()
 	ON_WM_VSCROLL()
 	ON_WM_SIZE()
+	ON_COMMAND(ID_FILE_PRINT, &CScrollView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CScrollView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CScrollView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -28,6 +31,23 @@ void BigScrollView::OnInitialUpdate()
 		m_szChar);
 
 	CScrollView::OnInitialUpdate();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// BigScrollView printing
+
+BOOL BigScrollView::OnPreparePrinting(CPrintInfo* pInfo)
+{
+	// default preparation
+	return DoPreparePrinting(pInfo);
+}
+
+void BigScrollView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+{
+}
+
+void BigScrollView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+{
 }
 
 // BigScrollView diagnostics

@@ -83,7 +83,7 @@ BOOL EntryPropertyPage::OnInitDialog()
 	CButton *pButton;
 	for (uint32_t i = 0; i < nbits; i++) {
 		state = pEntry->access & access[i][0];
-		state = access[i][2] == 0 ? state : ~state;
+		state = access[i][2] == 0 ? state : !state;
 
 		pButton = (CButton*)GetDlgItem(access[i][1]);
 		ASSERT(pButton != NULL);

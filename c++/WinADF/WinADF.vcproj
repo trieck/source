@@ -263,6 +263,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\VolPropPage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\WinADF.cpp"
 				>
 			</File>
@@ -342,6 +346,10 @@
 			</File>
 			<File
 				RelativePath=".\TextView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VolPropPage.h"
 				>
 			</File>
 			<File

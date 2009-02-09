@@ -249,3 +249,17 @@ CString LastError()
 
     return output;                     
 }
+
+/////////////////////////////////////////////////////////////////////////////
+CDocument *MDIGetActiveDoc()
+{
+	CMDIFrameWnd* pFrame = (CMDIFrameWnd*)AfxGetMainWnd();
+	ASSERT_VALID(pFrame);
+	ASSERT(pFrame->IsKindOf(RUNTIME_CLASS(CMDIFrameWnd)));
+
+	CMDIChildWnd* pChild = pFrame->MDIGetActive();
+	ASSERT_VALID(pChild);
+
+	return pChild->GetActiveDocument();
+}
+
