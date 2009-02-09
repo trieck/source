@@ -40,9 +40,12 @@ public:
 	uint32_t getRootBlock() const;
 	uint32_t getCurrentDir() const;
 	uint32_t getDataBlockSize() const;
+	uint32_t getFirstBlock() const;
+	uint32_t getLastBlock() const;
 	uint32_t freeblocks();
 	int8_t getType() const;
-	
+	string getName() const;
+
 	void setCurrentDir(uint32_t blockno);
 	EntryList readdir(uint32_t blockno, bool recurse);
 	FilePtr openfile(const char *filename);
@@ -85,6 +88,16 @@ inline uint32_t Volume::getRootBlock() const {
 }
 
 /////////////////////////////////////////////////////////////////////////////
+inline uint32_t Volume::getFirstBlock() const {
+	return firstblock;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline uint32_t Volume::getLastBlock() const {
+	return lastblock;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 inline uint32_t Volume::getCurrentDir() const {
 	return currdir;
 }
@@ -97,6 +110,11 @@ inline uint32_t Volume::getDataBlockSize() const {
 /////////////////////////////////////////////////////////////////////////////
 inline int8_t Volume::getType() const {
 	return type;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline string Volume::getName() const {
+	return name;
 }
 
 #endif // __VOLUME_H__
