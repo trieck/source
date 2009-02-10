@@ -28,8 +28,11 @@ public:
 	static DiskPtr open(const char *filename, const char *mode);
 	void close();
 
+	Volume *createVolume(uint32_t start, uint32_t len, 
+		const char *name, uint32_t type);
 	Volume *mount();
 	void unmount();
+
 	string Filename() const;
 	uint32_t Size() const;
 	uint32_t Type() const;
@@ -40,10 +43,12 @@ public:
 // Implementation
 private:
 	void readblock(uint32_t blockno, void *block);
+	void writeblock(uint32_t blockno, void *block);
 
 	uint32_t size;						// size in bytes of disk
 	uint32_t type;						// disk type
 	uint32_t cylinders, heads, sectors; // geometry
+	bool readonly;						// disk is read only
 	string filename;					// file name
 	FILE *fp;							// file pointer	
 	VolumeList volumes;					// partitions

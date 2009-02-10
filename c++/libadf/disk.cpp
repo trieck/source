@@ -8,6 +8,7 @@
 #include "common.h"
 #include "adf.h"
 #include "adfexcept.h"
+#include "adfutil.h"
 #include "disk.h"
 
 #define FLOPPY_CYLINDERS	(80)
@@ -25,7 +26,8 @@ namespace { int32_t getDiskType(uint32_t size); }
 
 /////////////////////////////////////////////////////////////////////////////
 Disk::Disk()
- : type(0), cylinders(0), heads(0), sectors(0), size(0), fp(0)
+ : type(0), cylinders(0), heads(0), sectors(0), size(0), fp(0), 
+ readonly(false)
 {
 }
 
@@ -181,6 +183,87 @@ Volume *Disk::mount()
 	pVol->readbitmap(root);
 
 	return pVol;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Volume *Disk::createVolume(uint32_t start, uint32_t len, const char *name, 
+	uint32_t type)
+{
+	Volume *pVol = new Volume();
+	volumes.push_back(pVol);	
+
+	pVol->disk = this;
+	pVol->firstblock = heads * sectors * start;
+	pVol->lastblock = (pVol->firstblock + (heads * sectors) * len) - 1;
+	pVol->rootblock = (pVol->lastblock - pVol->firstblock + 1) / 2;
+
+	pVol->currdir = pVol->rootblock;
+	pVol->readonly = readonly;
+	pVol->mounted = true;
+	
+	uint32_t namelen = min(MAXNAMELEN, strlen(name));
+	pVol->name = string(name, namelen);
+
+	uint8_t buf[BOOTBLOCKSIZE];
+	memset(buf, 0, BOOTBLOCKSIZE);
+	bootblock_t *boot = (bootblock_t*)buf;
+
+	boot->type[3] = type;
+	pVol->writebootblock(boot);
+
+	pVol->createbitmap();
+
+	/*
+	  if ( isDIRCACHE(volType) )
+        adfGetFreeBlocks( vol, 2, blkList );
+    else
+        adfGetFreeBlocks( vol, 1, blkList );
+
+    memset(&root, 0, LOGICAL_BLOCK_SIZE);
+
+    if (strlen(volName)>MAXNAMELEN)
+        volName[MAXNAMELEN]='\0';
+    root.nameLen = strlen(volName);
+    memcpy(root.diskName,volName,root.nameLen);
+    adfTime2AmigaTime(adfGiveCurrentTime(),&(root.coDays),&(root.coMins),&(root.coTicks));
+
+    // dircache block 
+    if ( isDIRCACHE(volType) ) {
+        root.extension = 0L;
+        root.secType = ST_ROOT; // needed by adfCreateEmptyCache() 
+        adfCreateEmptyCache(vol, (struct bEntryBlock*)&root, blkList[1]);
+    }
+
+    if (adfWriteRootBlock(vol, blkList[0], &root)!=RC_OK) {
+        free(vol->volName); free(vol);
+        return NULL;
+    }
+
+   // fills root->bmPages[] and writes filled bitmapExtBlocks 
+    if (adfWriteNewBitmap(vol)!=RC_OK)
+		return NULL;
+    if (adfUpdateBitmap(vol)!=RC_OK)
+		return NULL;
+    // will be managed by adfMount() later 
+    adfFreeBitmap(vol);
+*/
+	pVol->mounted = false;
+
+	return pVol;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Disk::writeblock(uint32_t blockno, void *block)
+{
+	if (fp == NULL) throw ADFException("disk not open.");
+	
+	uint32_t offset = BSIZE * blockno;
+
+	if (fseek(fp, offset, SEEK_SET) != 0)
+		throw ADFException();
+
+	if (fwrite(block, 1, BSIZE, fp) != BSIZE)
+		throw ADFException();
 }
 
 namespace {	// anonymous

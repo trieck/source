@@ -53,11 +53,17 @@ public:
 	void changedir(Entry *pEntry);
 	void changedir(const char *name);
 
+	void writeblock(uint32_t blockno, void *block);
+	void writebootblock(bootblock_t *boot);
+	void createbitmap();
+	void freeblock(uint32_t blockno);
+
 // Implementation
 private:
 	bool lookup(const char *name, entryblock_t *eblock);
+	void allocbitmap();
 	void freebitmap();
-
+	
 	uint32_t firstblock;	// first block of data area
     uint32_t lastblock;		// last block of data area
     uint32_t rootblock;		// root block from first block
@@ -68,6 +74,7 @@ private:
 	int8_t type;			// FFS/OFS, DIRCACHE, INTERNATIONAL
 	string name;			// volume name
 	bool mounted;			// volume is mounted
+	bool readonly;			// volume is read only
 	Disk *disk;				// disk mounted from
 	bitmapblock_t **bmtbl;	// bitmap table
 	uint32_t *bmblocks;		// bitmap blocks

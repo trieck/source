@@ -28,7 +28,7 @@ uint32_t bitmask[BM_BLOCKS_ENTRY] = {
 Volume::Volume()
 : blocksize(0), bitmapsize(0), dblocksize(0), firstblock(0), lastblock(0), 
  rootblock(0), type(0), mounted(false), bmtbl(0), bmblocks(0), disk(0),
- currdir(0)
+ currdir(0), readonly(false)
 {
 }
 
@@ -204,7 +204,7 @@ void Volume::readrootblock(rootblock_t *root)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Volume::readbitmap(rootblock_t *root)
+void Volume::allocbitmap()
 {
 	freebitmap();
 
@@ -228,7 +228,14 @@ void Volume::readbitmap(rootblock_t *root)
 	for (i = 0; i < mapsize; i++) {
         bmtbl[i] = (bitmapblock_t*)xmalloc(sizeof(bitmapblock_t));
 	}
+}
 
+/////////////////////////////////////////////////////////////////////////////
+void Volume::readbitmap(rootblock_t *root)
+{
+	allocbitmap();
+
+	uint32_t i;
 	for (i = 0; i < BM_SIZE && root->bmpages[i] != 0; i++) {
 		bmblocks[i] = root->bmpages[i];
 
@@ -513,3 +520,69 @@ void Volume::setCurrentDir(uint32_t blockno)
 
 	currdir = blockno;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::writebootblock(bootblock_t *boot)
+{
+	boot->type[0] = 'D';
+    boot->type[1] = 'O';
+    boot->type[2] = 'S';
+
+	uint8_t buf[BOOTBLOCKSIZE];
+	memcpy(buf, boot, BOOTBLOCKSIZE*2);
+
+#ifdef LITTLE_ENDIAN
+	boot->checksum = swap_endian(boot->checksum);
+	boot->rootblock = swap_endian(boot->rootblock);
+#endif
+
+	// calculate boot block checksum
+	if (boot->rootblock == 880 || boot->code[0] != 0) {
+		uint32_t sum = bootsum(buf);
+		*(uint32_t*)(buf+4) = swap_endian(sum);
+	}
+
+	writeblock(0, buf);
+	writeblock(1, buf+BSIZE);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::writeblock(uint32_t blockno, void *block)
+{
+	if (!mounted) throw ADFException("volume not mounted.");
+	
+	if (readonly) throw ADFException("can't write block, read only volume.");
+
+	// translate logical sector to physical sector
+    blockno = blockno + firstblock;
+
+	if (!isValidBlock(blockno))
+		throw ADFException("sector out of range.");
+
+	disk->writeblock(blockno, block);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::createbitmap()
+{
+	allocbitmap();
+
+	uint32_t i;
+	for (i = firstblock+2; i <= (lastblock-firstblock); i++) {
+		freeblock(i);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::freeblock(uint32_t blockno)
+{
+	// total number of blocks in bitmap block
+	uint32_t blocksmap = BM_MAPSIZE * BM_BLOCKS_ENTRY;
+
+	uint32_t blockmapno = blockno - 2;	// first 2 blocks not in map
+	uint32_t block = blockmapno / blocksmap;
+	uint32_t index = (blockmapno / BM_BLOCKS_ENTRY) % BM_MAPSIZE;
+
+	bmtbl[block]->map[index] |= bitmask[blockmapno % BM_BLOCKS_ENTRY];
+}
+
