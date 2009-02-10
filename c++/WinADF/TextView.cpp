@@ -45,18 +45,25 @@ void TextView::DrawLines(CDC *pDC)
 		(rc.bottom + m_szChar.cy - 1) / m_szChar.cy);
 
 	for (uint32_t n = nstart; n <= nend; n++) {
-		DrawLine(pDC, rc, n);
+		DrawLine(pDC, n);
 	}
 }
 
-void TextView::DrawLine(CDC *pDC, const CRect &rc, uint32_t line)
+void TextView::DrawLine(CDC *pDC, uint32_t line)
 {
 	uint32_t offset = line * m_nLineLen;
 	LPCSTR pbuff = (LPCSTR)m_blockedText;
 	LPCSTR pline = &pbuff[offset];
 		
-	// TODO: BUGBUG
-	pDC->TextOut(0, line * m_szChar.cy, pline, m_nLineLen);
+	CRect rc;
+	rc.left = 0;	// TODO: BUGBUG
+	rc.top = line * m_szChar.cy;
+	rc.right = rc.left + (m_nLineLen * m_szChar.cx);
+	rc.bottom = rc.top + m_szChar.cy;
+
+	pDC->DrawText(pline, m_nLineLen, rc, DT_EXPANDTABS|DT_EDITCONTROL);
+
+	//pDC->TextOut(0, line * m_szChar.cy, pline, m_nLineLen);
 }
 
 
@@ -112,7 +119,7 @@ void TextView::SetSizes(void)
 
 	CRect rc;
 	rc.SetRectEmpty();
-	dc.DrawText(m_Text, -1, &rc, DT_CALCRECT | DT_EDITCONTROL);
+	dc.DrawText(m_Text, -1, &rc, DT_EXPANDTABS|DT_CALCRECT|DT_EDITCONTROL);
 
 	m_nDocWidth = rc.Width();
 	m_nDocHeight = rc.Height();
@@ -146,28 +153,29 @@ void TextView::RecalcLayout(void)
 void TextView::BlockText()
 {
 	m_blockedText.Empty();
-	LPSTR pout = m_blockedText.GetBufferSetLength(m_nBlockedLen);
-		
+	
 	m_Text.Replace("\r\n", "\n");
 	m_Text.Replace("\r", "\n");
 
 	LPCSTR ptext = m_Text;
-
+		
 	uint32_t n = 0;
 	char c;
 	for (;;) {
 		switch (c = *ptext++) {
 		case '\0':
+			if (m_blockedText.GetLength() < (int)m_nBlockedLen) {
+				if (n < m_nLineLen)
+					m_blockedText += CString(' ', m_nLineLen-n);
+			}
 			return;
 		case '\n':
-			while (n < m_nLineLen) {
-				*pout++ = ' ';
-				n++;
-			}
+			if (n < m_nLineLen)
+				m_blockedText += CString(' ', m_nLineLen-n);
 			n = 0;			
 			break;
 		default:
-			*pout++ = c;
+			m_blockedText += c;
 			n++;
 			break;
 		}

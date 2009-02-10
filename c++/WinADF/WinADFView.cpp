@@ -7,6 +7,7 @@
 #include "WinADFView.h"
 #include "adfutil.h"
 #include "EntryPropertySheet.h"
+#include "LeftView.h"
 
 // WinADFView
 
@@ -35,6 +36,9 @@ BEGIN_MESSAGE_MAP(WinADFView, CListView)
 	ON_UPDATE_COMMAND_UI(ID_VIEWASBINARY, &WinADFView::OnUpdateViewAsBinary)
 	ON_UPDATE_COMMAND_UI(IDR_PROPERTIES, &WinADFView::OnUpdateProperties)
 	ON_COMMAND(IDR_PROPERTIES, &WinADFView::OnProperties)
+	ON_UPDATE_COMMAND_UI(ID_ENTRY_OPEN, &WinADFView::OnUpdateEntryOpen)
+	ON_COMMAND(ID_ENTRY_OPEN, &WinADFView::OnEntryOpen)
+	ON_NOTIFY_REFLECT(NM_DBLCLK, &WinADFView::OnNMDblclk)
 END_MESSAGE_MAP()
 
 // WinADFView diagnostics
@@ -289,4 +293,40 @@ void WinADFView::OnProperties()
 
 	sheet.SetEntry(GetSelectedEntry());
 	INT_PTR result = sheet.DoModal();
+}
+
+void WinADFView::OnUpdateEntryOpen(CCmdUI *pCmdUI)
+{
+	Entry *pEntry = GetSelectedEntry();
+	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_DIR);	
+}
+
+void WinADFView::OnEntryOpen()
+{
+	Entry *pEntry = GetSelectedEntry();
+	if (pEntry == NULL || pEntry->type != ST_DIR)
+		return;	// nothing selected
+
+	CString name = pEntry->name.c_str();
+
+	WinADFDoc*pDoc = GetDocument();
+	POSITION pos = pDoc->GetFirstViewPosition();
+	while (pos != NULL) {
+		CView* pView = pDoc->GetNextView(pos);
+		if (pView->IsKindOf(RUNTIME_CLASS(LeftView))) {
+			LeftView *pLeft = (LeftView*)pView;
+			pLeft->SelectFolder(name);
+			break;
+		}
+	}
+
+}
+
+void WinADFView::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	
+	OnEntryOpen();
+
+	*pResult = 0;
 }

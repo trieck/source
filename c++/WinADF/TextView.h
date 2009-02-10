@@ -40,7 +40,7 @@ protected:
 	void RecalcLayout(void);
 	void BlockText();
 	void DrawLines(CDC *pDC);
-	void DrawLine(CDC *pDC, const CRect &rc, uint32_t line);
+	void DrawLine(CDC *pDC, uint32_t line);
 };
 
 

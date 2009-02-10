@@ -18,6 +18,7 @@ public:
 
 // Operations
 public:
+	BOOL SelectFolder(const CString &name);
 
 // Overrides
 	public:
@@ -25,7 +26,7 @@ public:
 	protected:
 	virtual void OnInitialUpdate(); // called first time after construct
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
-
+	
 // Implementation
 public:
 	virtual ~LeftView();

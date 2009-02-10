@@ -235,6 +235,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\NewVolume.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -326,6 +330,10 @@
 			</File>
 			<File
 				RelativePath=".\MainFrm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NewVolume.h"
 				>
 			</File>
 			<File

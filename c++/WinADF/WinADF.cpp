@@ -10,6 +10,7 @@
 #include "FileViewFrame.h"
 #include "TextFileView.h"
 #include "BinaryFileView.h"
+#include "NewVolume.h"
 #include <algorithm>
 
 #ifdef _DEBUG
@@ -22,7 +23,7 @@
 BEGIN_MESSAGE_MAP(WinADFApp, CWinApp)
 	ON_COMMAND(ID_APP_ABOUT, &WinADFApp::OnAppAbout)
 	// Standard file based document commands
-	ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
+	ON_COMMAND(ID_FILE_NEW, &WinADFApp::OnFileNew)
 	// Standard print setup command
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
 	ON_COMMAND(ID_FILE_OPEN, &WinADFApp::OnFileOpen)
@@ -157,6 +158,12 @@ void WinADFApp::OnAppAbout()
 	aboutDlg.DoModal();
 }
 
+void WinADFApp::OnFileNew()
+{
+	NewVolumeDlg dlg;
+	if (IDOK == dlg.DoModal())
+		CWinApp::OnFileNew();
+}
 
 // WinADFApp message handlers
 

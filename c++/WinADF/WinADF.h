@@ -25,6 +25,8 @@ public:
 
 // Implementation
 	afx_msg void OnAppAbout();
+	afx_msg void OnFileNew();
+
 	DECLARE_MESSAGE_MAP()
 	virtual int DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt);
 

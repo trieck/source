@@ -48,6 +48,9 @@ public:
 	afx_msg void OnUpdateViewAsBinary(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateProperties(CCmdUI *pCmdUI);
 	afx_msg void OnProperties();
+	afx_msg void OnUpdateEntryOpen(CCmdUI *pCmdUI);
+	afx_msg void OnEntryOpen();
+	afx_msg void OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 #ifndef _DEBUG  //debug version in WinADFView.cpp

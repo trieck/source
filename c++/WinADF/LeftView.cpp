@@ -184,8 +184,6 @@ void LeftView::OnTvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult)
 void LeftView::OnTvnSelchanged(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
-	if (pNMTreeView->action == TVC_UNKNOWN)
-		return;
 
 	HTREEITEM hItem = pNMTreeView->itemNew.hItem;
 	Entry *pEntry = (Entry *)pNMTreeView->itemNew.lParam;
@@ -231,4 +229,33 @@ void LeftView::OnTvnItemexpanded(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 
 	*pResult = 0;
+}
+
+BOOL LeftView::SelectFolder(const CString &name)
+{
+	// select a subfolder by name
+	
+	CTreeCtrl &tree = GetTreeCtrl();
+	HTREEITEM hItem = tree.GetSelectedItem();
+	if (hItem == NULL)
+		return FALSE;	// nothing selected
+
+	tree.Expand(hItem, TVE_EXPAND);
+	
+	CString text;
+	HTREEITEM hNext;
+	HTREEITEM hChild = tree.GetChildItem(hItem);
+	while (hChild != NULL) {
+		hNext = tree.GetNextItem(hChild, TVGN_NEXT);
+		
+		text = tree.GetItemText(hChild);
+		if (name == text) {	// found
+			tree.SelectItem(hChild);
+			return tree.EnsureVisible(hChild);
+		}
+
+		hChild = hNext;
+	}
+
+	return FALSE;
 }
