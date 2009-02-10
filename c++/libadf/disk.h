@@ -23,7 +23,9 @@ public:
 	~Disk();
 
 // Interface
-	static DiskPtr open(const char *filename);
+	static DiskPtr create(const char *filename, 
+		uint32_t cylinders, uint32_t heads, uint32_t sectors);
+	static DiskPtr open(const char *filename, const char *mode);
 	void close();
 
 	Volume *mount();

@@ -58,7 +58,43 @@ void Disk::unmount()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-DiskPtr Disk::open(const char *filename)
+DiskPtr Disk::create(const char *filename, uint32_t cylinders, 
+	uint32_t heads, uint32_t sectors)
+{
+	DiskPtr pDisk = DiskPtr(new Disk());
+
+	if ((pDisk->fp = fopen(filename, "wb")) == NULL) {
+		throw ADFException();
+	}
+
+	uint32_t offset = ((cylinders * heads * sectors)-1) * BSIZE;
+
+	if (fseek(pDisk->fp, offset, SEEK_SET) != 0) {
+		throw ADFException();
+	}
+	 
+	uint8_t buf[BSIZE];
+	if (fwrite(buf, BSIZE, 1, pDisk->fp) != BSIZE) {
+		throw ADFException();
+	}
+
+	pDisk->close();
+
+	if ((pDisk->fp = fopen(filename, "rb+")) == NULL) {
+		throw ADFException();
+	}
+
+	pDisk->cylinders = cylinders;
+    pDisk->heads = heads;
+    pDisk->sectors = sectors;
+    pDisk->size = cylinders * heads * sectors * BSIZE;
+	pDisk->type = getDiskType(pDisk->size);
+
+	return pDisk;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+DiskPtr Disk::open(const char *filename, const char *mode)
 {
 	DiskPtr pDisk = DiskPtr(new Disk());
 
@@ -72,7 +108,7 @@ DiskPtr Disk::open(const char *filename)
 		throw ADFException("unknown disk type.");
 	}
 	
-	if ((pDisk->fp = fopen(filename, "rb")) == NULL) {
+	if ((pDisk->fp = fopen(filename, mode)) == NULL) {
 		throw ADFException();
 	}
 

@@ -35,6 +35,7 @@ void NewVolumeDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHK_BOOT, m_boot);
 	DDX_Control(pDX, IDC_E_PATH, m_path);
 	DDX_Control(pDX, IDC_ST_PRESET, m_PresetText);
+	DDX_Control(pDX, IDC_E_LABEL, m_label);
 }
 
 BEGIN_MESSAGE_MAP(NewVolumeDlg, CDialog)

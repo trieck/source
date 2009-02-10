@@ -46,4 +46,6 @@ public:
 	afx_msg void OnCustomSize();
 	afx_msg void OnPresetSize();
 	afx_msg void OnDirCache();
+private:
+	CEdit m_label;
 };

@@ -58,6 +58,8 @@
 #define IDC_E_CUSTOM                    1037
 #define IDC_E_PATH                      1038
 #define IDC_ST_PRESET                   1039
+#define IDC_E_PATH2                     1040
+#define IDC_E_LABEL                     1040
 #define IDR_PROPERTIES                  32773
 #define ID_FILE_DISKINFORMATION         32775
 #define ID_FILE_PRINTPREVIEW            32778
