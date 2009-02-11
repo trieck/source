@@ -12,6 +12,7 @@
 #define IDR_WINADFTYPE                  129
 #define IDR_FILEVIEWTYPE                130
 #define IDS_NOPATH                      130
+#define IDS_BADSIZE                     131
 #define IDR_DOCUMENT                    134
 #define IDR_OPEN                        136
 #define IDR_CLOSED                      137

@@ -54,6 +54,17 @@
 #define DISKTYPE_FLOPHD 	2
 #define DISKTYPE_HARDFILE 	3
 
+#define FLOPPY_CYLINDERS	(80)
+#define FLOPPY_HEADS		(2)
+#define FLOPDD_SECTORS		(11)
+#define FLOPHD_SECTORS		(FLOPDD_SECTORS*2)
+
+#define FLOPDD_SIZE			\
+	(BSIZE*FLOPDD_SECTORS*FLOPPY_HEADS*FLOPPY_CYLINDERS)
+
+#define FLOPHD_SIZE			\
+	(BSIZE*FLOPHD_SECTORS*FLOPPY_HEADS*FLOPPY_CYLINDERS)
+
 /////////////////////////////////////////////////////////////////////////////
 // block constants
 

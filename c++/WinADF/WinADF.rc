@@ -357,7 +357,7 @@ IDD_WAIT DIALOGEX 0, 0, 197, 52
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "",IDC_WAIT_PROGRESS,"msctls_progress32",PBS_MARQUEE | WS_BORDER,7,7,183,13
+    CONTROL         "",IDC_WAIT_PROGRESS,"msctls_progress32",WS_BORDER,7,7,183,13
     CTEXT           "Please wait...",IDC_STATIC,52,34,93,11
 END
 
@@ -469,6 +469,7 @@ BEGIN
     IDR_MAINFRAME           "WinADF"
     IDR_WINADFTYPE          "\nWinADF\nWinADF\nWinADF Files (*.adf; *.hdf)\n.ADF;.HDF\nWinADF.Document\nWinADF.Document"
     IDS_NOPATH              "Please specify a path."
+    IDS_BADSIZE             "The custom size you specified is invalid."
     ID_VIEWASTEXT           "Open file as text"
     ID_VIEWASBINARY         "Open file as binary"
 END

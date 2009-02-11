@@ -13,17 +13,6 @@
 #include "adfutil.h"
 #include "disk.h"
 
-#define FLOPPY_CYLINDERS	(80)
-#define FLOPPY_HEADS		(2)
-#define FLOPDD_SECTORS		(11)
-#define FLOPHD_SECTORS		(FLOPDD_SECTORS*2)
-
-#define FLOPDD_SIZE			\
-	(BSIZE*FLOPDD_SECTORS*FLOPPY_HEADS*FLOPPY_CYLINDERS)
-
-#define FLOPHD_SIZE			\
-	(BSIZE*FLOPHD_SECTORS*FLOPPY_HEADS*FLOPPY_CYLINDERS)
-
 namespace { int32_t getDiskType(uint32_t size); }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -78,7 +67,8 @@ DiskPtr Disk::create(const char *filename, uint32_t cylinders,
 	}
 	 
 	uint8_t buf[BSIZE];
-	if (fwrite(buf, BSIZE, 1, pDisk->fp) != BSIZE) {
+	memset(buf, 0, BSIZE);
+	if (fwrite(buf, BSIZE, 1, pDisk->fp) != 1) {
 		throw ADFException();
 	}
 

@@ -1,13 +1,12 @@
 #pragma once
 #include "afxcmn.h"
-#include "NewVolume.h"
 
 // WaitDlg dialog
 
 class WaitDlg : public CDialog
 {
+public:
 	DECLARE_DYNAMIC(WaitDlg)
-private:
 	WaitDlg(CWnd* pParent = NULL);   // standard constructor
 public:
 	virtual ~WaitDlg();
@@ -15,8 +14,8 @@ public:
 // Dialog Data
 	enum { IDD = IDD_WAIT };
 
-	static WaitDlg *newInstance(NewVolumeDlg *pParent);
-
+	void SetCreateParams(uint32_t size, 
+		const CString &path, const CString &label, uint32_t flags);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
@@ -32,8 +31,14 @@ protected:
 public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnDestroy();
-	UINT nTimer;
-	bool done;
+private:
+	UINT m_nTimer;
+	bool m_bDone;
+	CWinThread *m_pThread;
+	static UINT CreateVolume(LPVOID);
 
 	enum { EVENT_ID = 0xFFFFFFFF };
+
+	uint32_t m_nSize, m_nFlags;
+	CString m_Path, m_Label;
 };

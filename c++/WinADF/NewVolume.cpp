@@ -100,24 +100,56 @@ void NewVolumeDlg::OnTypeHDF()
 
 void NewVolumeDlg::OnOK()
 {
-	CString text;
-	m_path.GetWindowText(text);
-	text.Trim();
+	CString path;
+	m_path.GetWindowText(path);
+	path.Trim();
 
-	if (text.GetLength() == 0) {
+	if (path.GetLength() == 0) {
 		AfxMessageBox(IDS_NOPATH);
 		return;
 	}
 
-	EnableWindow(FALSE);
-	
-	WaitDlg *pDlg = WaitDlg::newInstance(this);
-	while (IsWindow(pDlg->GetSafeHwnd())) {
-		PumpMessages();
-		Sleep(20);
+	CString label;
+	m_label.GetWindowText(label);
+	label.Trim();
+
+	uint32_t size;
+	int type = GetCheckedRadioButton(IDC_TYPE_ADF, IDC_TYPE_HDF);
+	if (type == IDC_TYPE_ADF) {	// adf
+		size = m_HighDensity.GetCheck() == BST_CHECKED ? FLOPHD_SIZE : FLOPDD_SIZE;
+	} else {	// hdf
+		type = GetCheckedRadioButton(IDC_RD_PRESET, IDC_RD_CUSTOM);
+		if (type == IDC_RD_PRESET) {
+			size = (1 << m_HDFSizeSlider.GetPos()) * 1024;
+		} else {
+			CString strSize;
+			m_CustomSizeEdit.GetWindowText(strSize);
+			size = atoi(strSize) << 1;
+		}
 	}
 
-	EnableWindow(TRUE);
+	if (size == 0) {
+		AfxMessageBox(IDS_BADSIZE);
+		return;
+	}
+
+	uint32_t flags = 0;
+	if (m_boot.GetCheck() == BST_CHECKED) {
+		// TODO
+	}
+	if (m_dircache.GetCheck() == BST_CHECKED) {
+		flags |= FSTYPE_DIRCACHE;
+	}
+	if (m_FFS.GetCheck() == BST_CHECKED) {
+		flags |= FSTYPE_FFS;
+	}
+	if (m_Intl.GetCheck() == BST_CHECKED) {
+		flags |= FSTYPE_INTL;
+	}
+
+	WaitDlg dlg(this);
+	dlg.SetCreateParams(size, path, label, flags);
+	dlg.DoModal();
 
 	
 //	CDialog::OnOK();
