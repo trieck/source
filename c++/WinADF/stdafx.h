@@ -49,3 +49,4 @@
 #endif
 
 
+#define COLOR_PURPLE		RGB(170, 37, 255)

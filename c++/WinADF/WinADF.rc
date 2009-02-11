@@ -173,7 +173,6 @@ BEGIN
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
         MENUITEM "E&xit",                       ID_APP_EXIT
-        MENUITEM SEPARATOR
     END
     POPUP "&Edit"
     BEGIN
@@ -354,6 +353,14 @@ BEGIN
     EDITTEXT        IDC_E_LABEL,19,135,172,14,ES_AUTOHSCROLL
 END
 
+IDD_WAIT DIALOGEX 0, 0, 197, 52
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_WAIT_PROGRESS,"msctls_progress32",PBS_MARQUEE | WS_BORDER,7,7,183,13
+    CTEXT           "Please wait...",IDC_STATIC,52,34,93,11
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -440,6 +447,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 213
     END
+
+    IDD_WAIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 190
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 45
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -452,7 +467,7 @@ END
 STRINGTABLE 
 BEGIN
     IDR_MAINFRAME           "WinADF"
-    IDR_WINADFTYPE          "\nWinADF\nWinADF\nWinADF Files (*.ADF;*.HDF)\n.ADF\nWinADF.Document\nWinADF.Document"
+    IDR_WINADFTYPE          "\nWinADF\nWinADF\nWinADF Files (*.adf; *.hdf)\n.ADF;.HDF\nWinADF.Document\nWinADF.Document"
     IDS_NOPATH              "Please specify a path."
     ID_VIEWASTEXT           "Open file as text"
     ID_VIEWASBINARY         "Open file as binary"

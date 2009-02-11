@@ -2,7 +2,9 @@
 //
 // DISK.CPP : ADF disk definition
 //
+// LIBADF : A C++ Amiga Disk File Libary
 // Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
+// Adapted from ADF Library, Copyright(c) 1997-2002 Laurent Clevy.
 //
 
 #include "common.h"
@@ -189,8 +191,7 @@ Volume *Disk::mount()
 Volume *Disk::createVolume(uint32_t start, uint32_t len, const char *name, 
 	uint32_t type)
 {
-	Volume *pVol = new Volume();
-	volumes.push_back(pVol);	
+	VolumePtr pVol = VolumePtr(new Volume());
 
 	pVol->disk = this;
 	pVol->firstblock = heads * sectors * start;
@@ -213,43 +214,41 @@ Volume *Disk::createVolume(uint32_t start, uint32_t len, const char *name,
 
 	pVol->createbitmap();
 
-	/*
-	  if ( isDIRCACHE(volType) )
-        adfGetFreeBlocks( vol, 2, blkList );
-    else
-        adfGetFreeBlocks( vol, 1, blkList );
+	vector<uint32_t> blocks;
+	blocks.resize(2);
+	if (isDIRCACHE(type)) {
+		pVol->getFreeBlocks(2, blocks);
+	} else {
+		pVol->getFreeBlocks(1, blocks);
+	}
 
-    memset(&root, 0, LOGICAL_BLOCK_SIZE);
+	rootblock_t root;
+	memset(&root, 0, BSIZE);
 
-    if (strlen(volName)>MAXNAMELEN)
-        volName[MAXNAMELEN]='\0';
-    root.nameLen = strlen(volName);
-    memcpy(root.diskName,volName,root.nameLen);
-    adfTime2AmigaTime(adfGiveCurrentTime(),&(root.coDays),&(root.coMins),&(root.coTicks));
+	root.namelen = namelen;
+	memcpy(root.diskname, pVol->name.c_str(), namelen);
 
-    // dircache block 
-    if ( isDIRCACHE(volType) ) {
-        root.extension = 0L;
-        root.secType = ST_ROOT; // needed by adfCreateEmptyCache() 
-        adfCreateEmptyCache(vol, (struct bEntryBlock*)&root, blkList[1]);
+	ADFDateTime dt = adfGetCurrentTime();
+	adfTime2AmigaTime(dt, root.codays, root.comins, root.coticks);
+
+	// dircache block 
+    if (isDIRCACHE(type) ) {
+        root.extension = 0;
+        root.sectype = ST_ROOT; 
+		pVol->createEmptyCache((entryblock_t*)&root, blocks[1]);
     }
 
-    if (adfWriteRootBlock(vol, blkList[0], &root)!=RC_OK) {
-        free(vol->volName); free(vol);
-        return NULL;
-    }
+	pVol->writerootblock(blocks[0], &root);
+	
+	pVol->writenewbitmap();
 
-   // fills root->bmPages[] and writes filled bitmapExtBlocks 
-    if (adfWriteNewBitmap(vol)!=RC_OK)
-		return NULL;
-    if (adfUpdateBitmap(vol)!=RC_OK)
-		return NULL;
-    // will be managed by adfMount() later 
-    adfFreeBitmap(vol);
-*/
+	pVol->updatebitmap();
+
+	pVol->freebitmap();
+
 	pVol->mounted = false;
 
-	return pVol;
+	return pVol.release();
 }
 
 /////////////////////////////////////////////////////////////////////////////

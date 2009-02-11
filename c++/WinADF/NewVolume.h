@@ -21,7 +21,19 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
-private:
+public:
+	afx_msg void OnBrowse();
+	virtual BOOL OnInitDialog();
+	afx_msg void OnTypeADF();
+	afx_msg void OnTypeHDF();
+	afx_msg void OnOK();
+	CStatic m_PresetText;
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnCustomSize();
+	afx_msg void OnPresetSize();
+	afx_msg void OnDirCache();
+public:
+	CEdit m_label;
 	CButton m_DiskType;
 	CButton m_HighDensity;
 	CSliderCtrl m_HDFSizeSlider;
@@ -35,17 +47,5 @@ private:
 	CButton m_dircache;
 	CButton m_boot;
 	CEdit m_path;
-public:
-	afx_msg void OnBrowse();
-	virtual BOOL OnInitDialog();
-	afx_msg void OnTypeADF();
-	afx_msg void OnTypeHDF();
-	afx_msg void OnOK();
-	CStatic m_PresetText;
-	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	afx_msg void OnCustomSize();
-	afx_msg void OnPresetSize();
-	afx_msg void OnDirCache();
-private:
-	CEdit m_label;
+protected:
 };

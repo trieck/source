@@ -2,7 +2,9 @@
 //
 // ADF.H : Amiga Disk File system
 //
+// LIBADF : A C++ Amiga Disk File Libary
 // Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
+// Adapted from ADF Library, Copyright(c) 1997-2002 Laurent Clevy.
 //
 
 #ifndef __ADF_H__
@@ -54,6 +56,9 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // block constants
+
+#define BM_VALID			-1	/* valid bitmap */				
+#define BM_INVALID			0	/* invalid bitmap */
 
 #define HT_SIZE				72	/* hash table size */
 #define BM_SIZE				25	/* bitmap size */

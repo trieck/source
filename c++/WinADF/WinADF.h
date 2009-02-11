@@ -8,7 +8,6 @@
 
 #include "resource.h"       // main symbols
 
-
 // WinADFApp:
 // See WinADF.cpp for the implementation of this class
 //
@@ -40,7 +39,13 @@ public:
 
 extern WinADFApp theApp;
 
+struct PageDef {
+	CRuntimeClass* Class;
+	UINT id;
+};
+
 // utility functions
 string comma(uint64_t i);
 CString LastError();
 CDocument *MDIGetActiveDoc();
+void PumpMessages();

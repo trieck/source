@@ -7,7 +7,6 @@
 #include "WinADFDoc.h"
 
 // VolPropPage dialog
-#define COLOR_BAR RGB(0x40, 0xE0, 0x40)
 
 IMPLEMENT_DYNCREATE(VolPropPage, CPropertyPage)
 
@@ -86,7 +85,7 @@ BOOL VolPropPage::OnInitDialog()
 
 	m_FullProgress.SetRange32(0, totalblocks);
 	m_FullProgress.SetPos(full);
-	m_FullProgress.SendMessage(PBM_SETBARCOLOR, 0, COLOR_BAR);
+	m_FullProgress.SendMessage(PBM_SETBARCOLOR, 0, COLOR_PURPLE);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE

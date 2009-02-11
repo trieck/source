@@ -2,7 +2,9 @@
 //
 // VOLUME.H : ADF volume definition
 //
+// LIBADF : A C++ Amiga Disk File Libary
 // Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
+// Adapted from ADF Library, Copyright(c) 1997-2002 Laurent Clevy.
 //
 
 #ifndef __VOLUME_H__
@@ -55,9 +57,20 @@ public:
 
 	void writeblock(uint32_t blockno, void *block);
 	void writebootblock(bootblock_t *boot);
-	void createbitmap();
-	void freeblock(uint32_t blockno);
+	void writerootblock(uint32_t blockno, rootblock_t *root);
+	void writedircblock(uint32_t blockno, dircacheblock_t *dirc);
+	void writebmextblock(uint32_t blockno, bitmapextblock_t *block);
+	void writebmblock(uint32_t blockno, bitmapblock_t *block);
 
+	void createbitmap();
+	void setBlockFree(uint32_t blockno);
+	void setBlockUsed(uint32_t blockno);
+	bool writenewbitmap();
+	void updatebitmap();
+	bool getFreeBlocks(uint32_t blockno, vector<uint32_t> &blocks);
+	uint32_t getFreeBlock(); 
+	void createEmptyCache(entryblock_t *parent, uint32_t blockno);
+	
 // Implementation
 private:
 	bool lookup(const char *name, entryblock_t *eblock);

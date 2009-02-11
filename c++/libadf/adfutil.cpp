@@ -2,7 +2,9 @@
 //
 // ADFUTIL.CPP : ADF utility functions
 //
+// LIBADF : A C++ Amiga Disk File Libary
 // Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
+// Adapted from ADF Library, Copyright(c) 1997-2002 Laurent Clevy.
 //
 
 #include "common.h"
@@ -10,6 +12,7 @@
 #include "adfutil.h"
 #include "adfexcept.h"
 #include <limits.h>
+#include <time.h>
 
 #define MAKEWORD(p) (((uint8_t*)p)[0]<<8 | ((uint8_t*)p)[1])
 #define MAKELONG(p) (MAKEWORD(p)<<16 | MAKEWORD(((uint8_t*)p)+2))
@@ -26,13 +29,13 @@ int swap_endian(int d)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-uint32_t bootsum(uint8_t *block)
+uint32_t bootsum(void *block)
 {
     uint32_t d, sum = 0;
     
     for (int i = 0; i < BOOTBLOCKSIZE/4; i++) {
 		if (i == 1) continue;
-		d = MAKELONG(block+i*4);
+		d = MAKELONG(((uint8_t*)block)+i*4);
 		if ((ULONG_MAX - sum) < d)
 			sum++;
 		sum += d;
@@ -42,13 +45,13 @@ uint32_t bootsum(uint8_t *block)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-uint32_t adfchecksum(uint8_t *block, uint32_t offset, uint32_t len)
+uint32_t adfchecksum(void *block, uint32_t offset, uint32_t len)
 {
 	int32_t sum = 0;
 
-	for (uint32_t i=0; i < len/4; i++) {
+	for (uint32_t i = 0; i < len/4; i++) {
 		if (i != (offset/4))	/* old chksum */
-            sum += MAKELONG(block+i*4);
+            sum += MAKELONG(((uint8_t*)block)+i*4);
 	}
     
     return -sum;
@@ -175,4 +178,61 @@ string adfaccess(int32_t acc)
     if (hasH(acc)) ret[0]='h';
 
     return ret;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+ADFDateTime adfGetCurrentTime()
+{
+	ADFDateTime dt;
+
+    time_t cal;
+	time(&cal);
+        
+    struct tm *local = localtime(&cal);
+
+	dt.year = local->tm_year;         // since 1900 
+    dt.month = local->tm_mon+1;
+    dt.day = local->tm_mday;
+    dt.hour = local->tm_hour;
+    dt.min = local->tm_min;
+    dt.sec = local->tm_sec;
+
+	return dt;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void adfTime2AmigaTime(ADFDateTime dt, int32_t &day, int32_t &min, 
+	int32_t &ticks)
+{
+    int jm[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+    min = dt.hour * 60 + dt.min;	//mins
+    ticks = dt.sec*50;				// ticks
+
+	// days
+
+    day = dt.day - 1;	// current month days
+
+    // previous months days down to january
+    if (dt.month > 1) {	// if previous month exists
+        dt.month--;
+        if (dt.month > 2 && adfIsLeap(dt.year))	// months after a leap february
+            jm[2-1] = 29;
+        while (dt.month > 0) {
+            day = day + jm[dt.month-1];
+            dt.month--;
+        }
+    }
+
+    // years days before current year down to 1978 
+    if (dt.year > 78) {
+        dt.year--;
+        while (dt.year >= 78) {
+            if (adfIsLeap(dt.year))
+                day = day+366;
+            else
+                day = day+365;
+            dt.year--;
+        }
+    }
 }

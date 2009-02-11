@@ -2,7 +2,9 @@
 //
 // VOLUME.CPP : ADF volume definition
 //
+// LIBADF : A C++ Amiga Disk File Libary
 // Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
+// Adapted from ADF Library, Copyright(c) 1997-2002 Laurent Clevy.
 //
 
 #include "common.h"
@@ -569,12 +571,12 @@ void Volume::createbitmap()
 
 	uint32_t i;
 	for (i = firstblock+2; i <= (lastblock-firstblock); i++) {
-		freeblock(i);
+		setBlockFree(i);
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Volume::freeblock(uint32_t blockno)
+void Volume::setBlockFree(uint32_t blockno)
 {
 	// total number of blocks in bitmap block
 	uint32_t blocksmap = BM_MAPSIZE * BM_BLOCKS_ENTRY;
@@ -584,5 +586,272 @@ void Volume::freeblock(uint32_t blockno)
 	uint32_t index = (blockmapno / BM_BLOCKS_ENTRY) % BM_MAPSIZE;
 
 	bmtbl[block]->map[index] |= bitmask[blockmapno % BM_BLOCKS_ENTRY];
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::setBlockUsed(uint32_t blockno)
+{
+	// total number of blocks in bitmap block
+	uint32_t blocksmap = BM_MAPSIZE * BM_BLOCKS_ENTRY;
+
+	uint32_t blockmapno = blockno - 2;	// first 2 blocks not in map
+	uint32_t block = blockmapno / blocksmap;
+	uint32_t index = (blockmapno / BM_BLOCKS_ENTRY) % BM_MAPSIZE;
+
+	bmtbl[block]->map[index] &= ~bitmask[blockmapno % BM_BLOCKS_ENTRY];
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool Volume::getFreeBlocks(uint32_t blockno, vector<uint32_t> &blocks)
+{
+	blocks.resize(blockno);
+
+	uint32_t block = rootblock;
+
+	bool full = false;
+
+	uint32_t i, j;
+	for (i = 0; i < blockno && !full; ) {
+		if (isBlockFree(block)) {
+			blocks[i++] = block;
+		}
+
+		if (block == lastblock) {
+			block = firstblock+2;
+		}
+
+		if (block+firstblock == lastblock) {
+			block = 2;
+		} else if (block == rootblock - 1) {
+			full = true;
+		} else {
+			block++;
+		}
+	}
+
+	if (!full) {
+		for (j = 0; j < blockno; j++) {
+			setBlockUsed(blocks[j]);
+		}
+	}
+
+	return i == blockno;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::createEmptyCache(entryblock_t *parent, uint32_t blockno)
+{
+	uint32_t ncache;
+
+	if (blockno == -1) {
+		if ((ncache = getFreeBlock()) == -1) {
+			throw ADFException("volume is full.");
+		}
+	} else {
+		ncache = blockno;
+	}
+
+	if (parent->extension == 0)
+		parent->extension = ncache;
+
+	dircacheblock_t dirc;
+	memset(&dirc, 0, sizeof(dircacheblock_t));
+
+	if (parent->sectype == ST_ROOT) {
+		dirc.parent = rootblock;
+	} else if (parent->sectype == ST_DIR) {
+		dirc.parent = parent->key;
+	} else {
+		ADFWarningDispatcher::dispatch("unknown sectype.");
+	}
+
+	writedircblock(ncache, &dirc);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::writerootblock(uint32_t blockno, rootblock_t *root)
+{
+	root->type = T_HEADER;
+    root->hkey = 0;
+    root->highseq = 0L;
+    root->tblsize = HT_SIZE;
+    root->firstdata = 0;
+    root->nextsamehash = 0;
+    root->parent = 0;
+    root->sectype = ST_ROOT;
+
+	root->checksum = adfchecksum(root, 20, BSIZE);
+
+#ifdef LITTLE_ENDIAN
+	root->type = swap_endian(root->type);
+	root->hkey = swap_endian(root->hkey);
+	root->highseq = swap_endian(root->highseq);
+	root->tblsize = swap_endian(root->tblsize);
+	root->firstdata = swap_endian(root->firstdata);
+	root->checksum = swap_endian(root->checksum);
+
+	uint32_t i;
+	for (i = 0; i < HT_SIZE; i++)
+		root->tbl[i] = swap_endian(root->tbl[i]);
+
+	root->bmflag = swap_endian(root->bmflag);
+	for (i = 0; i < BM_SIZE; i++)
+		root->bmpages[i] = swap_endian(root->bmpages[i]);
+
+	root->bmext = swap_endian(root->bmext);
+	root->cdays = swap_endian(root->cdays);
+	root->cmins = swap_endian(root->cmins);
+	root->cticks = swap_endian(root->cticks);
+	root->days = swap_endian(root->days);
+	root->mins = swap_endian(root->mins);
+	root->ticks = swap_endian(root->ticks);
+	root->codays = swap_endian(root->codays);
+	root->comins = swap_endian(root->comins);
+	root->coticks = swap_endian(root->coticks);
+	root->nextsamehash = swap_endian(root->nextsamehash);
+	root->parent = swap_endian(root->parent);
+	root->extension = swap_endian(root->extension);
+	root->sectype = swap_endian(root->sectype);
+#endif // LITTLE_ENDIAN
+
+	writeblock(blockno, root);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::writedircblock(uint32_t blockno, dircacheblock_t *dirc)
+{
+	dirc->type = T_DIRC;
+	dirc->key = blockno;
+	dirc->checksum = adfchecksum(dirc, 20, BSIZE);
+
+#ifdef LITTLE_ENDIAN
+	dirc->type = swap_endian(dirc->type);
+	dirc->key = swap_endian(dirc->key);
+	dirc->parent = swap_endian(dirc->parent);
+	dirc->nrecs = swap_endian(dirc->nrecs);
+	dirc->next = swap_endian(dirc->next);
+	dirc->checksum = swap_endian(dirc->checksum);
+#endif // LITTLE_ENDIAN
+
+	writeblock(blockno, dirc);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+uint32_t Volume::getFreeBlock() 
+{
+	vector<uint32_t> blocks;
+	if (!getFreeBlocks(1, blocks))
+		return -1;
+
+	return blocks[0];
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool Volume::writenewbitmap()
+{
+	vector<uint32_t> blocks;
+	if (!getFreeBlocks(bitmapsize, blocks)) {
+		return false;
+	}
+
+	rootblock_t root;
+	readrootblock(&root);
+
+	uint32_t size = min(bitmapsize, BM_SIZE);
+	uint32_t i, k;
+
+	for (i = 0; i < size; i++) {
+		root.bmpages[i] = bmblocks[i] = blocks[i];
+	}
+
+	uint32_t nblock, extblock;
+	nblock = size;
+
+	if (bitmapsize > BM_SIZE) {
+		extblock = (bitmapsize - BM_SIZE) / BM_MAPSIZE;
+		if ((bitmapsize - BM_SIZE) % BM_MAPSIZE)
+			extblock++;
+	
+		vector<uint32_t> eblocks;
+		if (!getFreeBlocks(extblock, eblocks)) 
+			return false;
+
+		k = 0;
+		root.bmext = eblocks[k];
+
+		bitmapextblock_t bmeb;
+		while (nblock < bitmapsize) {
+			i = 0;
+			while (i < BM_MAPSIZE && nblock < bitmapsize) {
+				bmeb.pages[i] = bmblocks[nblock] = blocks[i];
+				i++;
+				nblock++;
+			}
+
+			if (k + 1 < extblock) {
+                bmeb.next = eblocks[k+1];
+			} else {
+				bmeb.next = 0;
+			}
+
+			writebmextblock(eblocks[k++], &bmeb);
+		}
+	}
+
+	writerootblock(rootblock, &root);
+
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::writebmextblock(uint32_t blockno, bitmapextblock_t *block)
+{
+#ifdef LITTLE_ENDIAN
+	for (uint32_t i = 0; i < BM_MAPSIZE; i++) {
+		block->pages[i] = swap_endian(block->pages[i]);
+	}
+	block->next = swap_endian(block->next);
+#endif
+
+	writeblock(blockno, block);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::updatebitmap()
+{
+	rootblock_t root;
+	readrootblock(&root);
+
+	root.bmflag = BM_INVALID;
+	writerootblock(rootblock, &root);
+
+	uint32_t i;
+	for (i = 0; i < bitmapsize; i++) {
+		writebmblock(bmblocks[i], bmtbl[i]);
+    }
+
+	root.bmflag = BM_VALID;
+
+	ADFDateTime tm = adfGetCurrentTime();
+	adfTime2AmigaTime(tm, root.days, root.mins, root.ticks);
+
+	writerootblock(rootblock, &root);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::writebmblock(uint32_t blockno, bitmapblock_t *block)
+{
+	block->checksum = adfchecksum(block, 0, BSIZE);
+
+#ifdef LITTLE_ENDIAN
+	block->checksum = swap_endian(block->checksum);
+
+	uint32_t i;
+	for (i = 0; i < BM_MAPSIZE; i++) {
+		block->map[i] = swap_endian(block->map[i]);
+	}
+#endif
+
+	writeblock(blockno, block); 
 }
 

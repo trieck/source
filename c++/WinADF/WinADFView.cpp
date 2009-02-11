@@ -39,6 +39,8 @@ BEGIN_MESSAGE_MAP(WinADFView, CListView)
 	ON_UPDATE_COMMAND_UI(ID_ENTRY_OPEN, &WinADFView::OnUpdateEntryOpen)
 	ON_COMMAND(ID_ENTRY_OPEN, &WinADFView::OnEntryOpen)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, &WinADFView::OnNMDblclk)
+	ON_COMMAND(ID_ENTRY_EXPORT, &WinADFView::OnEntryExport)
+	ON_UPDATE_COMMAND_UI(ID_ENTRY_EXPORT, &WinADFView::OnUpdateEntryExport)
 END_MESSAGE_MAP()
 
 // WinADFView diagnostics
@@ -329,4 +331,15 @@ void WinADFView::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
 	OnEntryOpen();
 
 	*pResult = 0;
+}
+
+void WinADFView::OnEntryExport()
+{
+	// TODO: Add your command handler code here
+}
+
+void WinADFView::OnUpdateEntryExport(CCmdUI *pCmdUI)
+{
+	Entry *pEntry = GetSelectedEntry();
+	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);	
 }

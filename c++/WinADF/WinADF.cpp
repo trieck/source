@@ -270,3 +270,17 @@ CDocument *MDIGetActiveDoc()
 	return pChild->GetActiveDocument();
 }
 
+/////////////////////////////////////////////////////////////////////////////
+void PumpMessages()
+{
+	CWinThread *pThread = AfxGetApp();
+	MSG msg;
+    while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) { 
+        if (!pThread->PumpMessage()) {
+            break; 
+        } 
+    } 
+    LONG lIdle = 0;
+    while (pThread->OnIdle(lIdle++))
+        ;  
+}

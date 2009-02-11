@@ -7,11 +7,6 @@
 #include "DiskPropPage.h"
 #include "VolPropPage.h"
 
-struct PageDef {
-	CRuntimeClass* Class;
-	UINT id;
-};
-
 static PageDef pagedefs[] = {
 	{ RUNTIME_CLASS(DiskPropPage), IDD_DISK_PROPPAGE },
 	{ RUNTIME_CLASS(VolPropPage), IDD_VOL_PROPPAGE }

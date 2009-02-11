@@ -6,11 +6,6 @@
 #include "EntryPropertySheet.h"
 #include "EntryPropertyPage.h"
 
-struct PageDef {
-	CRuntimeClass* Class;
-	UINT id;
-};
-
 static PageDef pagedefs[] = {
 	{ RUNTIME_CLASS(EntryPropertyPage), IDD_ENTRY_PROPPAGE }
 };

@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "WinADF.h"
 #include "NewVolume.h"
-
+#include "WaitDlg.h"
 
 // NewVolumeDlg dialog
 
@@ -109,7 +109,18 @@ void NewVolumeDlg::OnOK()
 		return;
 	}
 
-	CDialog::OnOK();
+	EnableWindow(FALSE);
+	
+	WaitDlg *pDlg = WaitDlg::newInstance(this);
+	while (IsWindow(pDlg->GetSafeHwnd())) {
+		PumpMessages();
+		Sleep(20);
+	}
+
+	EnableWindow(TRUE);
+
+	
+//	CDialog::OnOK();
 }
 
 
@@ -144,3 +155,4 @@ void NewVolumeDlg::OnDirCache()
 		m_Intl.EnableWindow(TRUE);
 	}
 }
+
