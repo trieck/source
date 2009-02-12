@@ -133,6 +133,7 @@ BEGIN
     BEGIN
         MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "&Warnings\tCtrl+W",           ID_VIEW_WARNINGS
         MENUITEM "S&plit",                      ID_WINDOW_SPLIT
         MENUITEM SEPARATOR
         MENUITEM "Lar&ge Icons",                ID_VIEW_LARGEICON
@@ -186,6 +187,7 @@ BEGIN
     BEGIN
         MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "&Warnings\tCtrl+W",           ID_VIEW_WARNINGS
         MENUITEM "S&plit",                      ID_WINDOW_SPLIT
         MENUITEM SEPARATOR
         MENUITEM "S&mall Icons",                ID_VIEW_SMALLICON
@@ -464,7 +466,7 @@ END
 // BOOTBLOCK
 //
 
-IDR_BOOTBLOCK          BOOTBLOCK               "res\\stdboot3.bbk"
+IDR_BOOTBLOCK           BOOTBLOCK               "res\\stdboot3.bbk"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -613,6 +615,7 @@ BEGIN
     ID_FILE_PRINTPREVIEW    "Display full pages\nPrint Preview"
     ID_ENTRY_OPEN           "Open folder"
     ID_ENTRY_EXPORT         "Export file"
+    ID_VIEW_WARNINGS        "View warnings"
 END
 
 #endif    // English (U.S.) resources

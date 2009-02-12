@@ -7,6 +7,7 @@
 #endif
 
 #include "resource.h"       // main symbols
+#include "WarningFrame.h"
 
 // WinADFApp:
 // See WinADF.cpp for the implementation of this class
@@ -36,6 +37,12 @@ protected:
 public:
 	void ShowTextFileView(CDocument *pDoc);
 	void ShowBinaryFileView(CDocument *pDoc);
+private:
+	void CreateWarningWnd();
+	WarningFrame *m_pWarningFrame;
+public:
+	afx_msg void OnViewWarnings();
+	afx_msg void OnUpdateViewWarnings(CCmdUI *pCmdUI);
 };
 
 extern WinADFApp theApp;

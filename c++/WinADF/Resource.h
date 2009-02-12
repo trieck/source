@@ -20,7 +20,7 @@
 #define ID_VIEWASBINARY                 142
 #define IDD_NEW_VOLUME                  145
 #define IDD_WAIT                        146
-#define IDR_BOOTBLOCK	                149
+#define IDR_BOOTBLOCK                   149
 #define IDC_ENTRY_TAB                   1000
 #define IDC_CHK_READ                    1001
 #define IDC_CHK_WRITE                   1002
@@ -56,7 +56,6 @@
 #define IDC_CHK_DIRCACHE                1032
 #define IDC_CHK_INTL                    1033
 #define IDC_CHK_BOOT                    1034
-#define IDC_EDIT2                       1035
 #define IDC_BROWSE                      1036
 #define IDC_E_CUSTOM                    1037
 #define IDC_E_PATH                      1038
@@ -68,13 +67,15 @@
 #define ID_FILE_PRINTPREVIEW            32778
 #define ID_ENTRY_OPEN                   32779
 #define ID_ENTRY_EXPORT                 32780
+#define ID_VIEW_WARNINGWINDOW           32782
+#define ID_VIEW_WARNINGS                32783
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        150
-#define _APS_NEXT_COMMAND_VALUE         32782
+#define _APS_NEXT_COMMAND_VALUE         32784
 #define _APS_NEXT_CONTROL_VALUE         1043
 #define _APS_NEXT_SYMED_VALUE           106
 #endif

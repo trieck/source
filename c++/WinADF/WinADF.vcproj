@@ -275,6 +275,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\WarningFrame.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\WinADF.cpp"
 				>
 			</File>
@@ -366,6 +370,10 @@
 			</File>
 			<File
 				RelativePath=".\WaitDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WarningFrame.h"
 				>
 			</File>
 			<File

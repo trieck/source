@@ -27,13 +27,16 @@ BEGIN_MESSAGE_MAP(WinADFApp, CWinApp)
 	// Standard print setup command
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
 	ON_COMMAND(ID_FILE_OPEN, &WinADFApp::OnFileOpen)
+	ON_COMMAND(ID_VIEW_WARNINGS, &WinADFApp::OnViewWarnings)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_WARNINGS, &WinADFApp::OnUpdateViewWarnings)
 END_MESSAGE_MAP()
 
 
 // WinADFApp construction
 
 WinADFApp::WinADFApp()
- : m_pTextFileViewTemplate(NULL), m_pBinaryFileViewTemplate(NULL)
+ : m_pTextFileViewTemplate(NULL), m_pBinaryFileViewTemplate(NULL), 
+ m_pWarningFrame(NULL)
 {
 }
 
@@ -115,6 +118,8 @@ BOOL WinADFApp::InitInstance()
 	// The main window has been initialized, so show and update it
 	pMainFrame->ShowWindow(m_nCmdShow);
 	pMainFrame->UpdateWindow();
+
+	CreateWarningWnd();
 
 	return TRUE;
 }
@@ -213,6 +218,32 @@ void WinADFApp::ShowBinaryFileView(CDocument *pDoc)
 		ASSERT(pView->IsKindOf(RUNTIME_CLASS(BinaryFileView)));
 		m_pBinaryFileViewTemplate->InitialUpdateFrame(pFrame, pDoc);
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void WinADFApp::CreateWarningWnd()
+{
+	ASSERT(m_pWarningFrame == NULL);
+
+	CMDIFrameWnd *pParent = (CMDIFrameWnd*)AfxGetMainWnd();
+	ASSERT_VALID(pParent);
+	ASSERT(pParent->IsKindOf(RUNTIME_CLASS(CMDIFrameWnd)));
+
+	CRuntimeClass *pClass = RUNTIME_CLASS(WarningFrame);
+	m_pWarningFrame = (WarningFrame*)pClass->CreateObject();
+	if (m_pWarningFrame == NULL) {
+		TRACE0("Unable to create warning window.");
+		return;
+	}
+
+	if (!m_pWarningFrame->LoadFrame(IDR_MAINFRAME, WS_OVERLAPPEDWINDOW, 
+		NULL)) {
+		TRACE0("Unable to load warning frame.");
+		return;
+	}
+
+	m_pWarningFrame->ShowWindow(SW_HIDE);
+	m_pWarningFrame->UpdateWindow();
 }
 
 // Utility functions
@@ -320,4 +351,15 @@ BOOL LoadBootblock(bootblock_t *block)
 	FreeResource(hGlobal);
 
 	return TRUE;
+}
+
+void WinADFApp::OnViewWarnings()
+{
+	m_pWarningFrame->ShowWindow(SW_SHOW);
+}
+
+void WinADFApp::OnUpdateViewWarnings(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_pWarningFrame != NULL && 
+		!m_pWarningFrame->IsWindowVisible());
 }
