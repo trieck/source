@@ -431,6 +431,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\stdboot3.bbk"
+				>
+			</File>
+			<File
 				RelativePath=".\res\Toolbar.bmp"
 				>
 			</File>
@@ -452,10 +456,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\res\stdboot3.bbk"
-			>
-		</File>
 		<File
 			RelativePath=".\TODO.txt"
 			>

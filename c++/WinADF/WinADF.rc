@@ -96,9 +96,9 @@ BEGIN
     BUTTON      ID_FILE_SAVE
     SEPARATOR
     BUTTON      ID_ENTRY_EXPORT
+    BUTTON      ID_ENTRY_DELETE
     SEPARATOR
     BUTTON      ID_FILE_PRINT
-    SEPARATOR
     BUTTON      ID_FILE_DISKINFORMATION
     SEPARATOR
     BUTTON      ID_EDIT_CUT
@@ -209,6 +209,7 @@ BEGIN
         MENUITEM "Open file as &binary",        ID_VIEWASBINARY
         MENUITEM SEPARATOR
         MENUITEM "Export",                      ID_ENTRY_EXPORT
+        MENUITEM "Delete",                      ID_ENTRY_DELETE
         MENUITEM SEPARATOR
         MENUITEM "Properties",                  IDR_PROPERTIES
     END
@@ -614,8 +615,13 @@ BEGIN
     ID_FILE_DISKINFORMATION "View disk information\nDisk info"
     ID_FILE_PRINTPREVIEW    "Display full pages\nPrint Preview"
     ID_ENTRY_OPEN           "Open folder"
-    ID_ENTRY_EXPORT         "Export file"
+    ID_ENTRY_EXPORT         "Export file\nExport"
     ID_VIEW_WARNINGS        "View warnings"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_ENTRY_DELETE         "Delete entry\nDelete"
 END
 
 #endif    // English (U.S.) resources

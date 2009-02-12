@@ -41,6 +41,8 @@ BEGIN_MESSAGE_MAP(WinADFView, CListView)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, &WinADFView::OnNMDblclk)
 	ON_COMMAND(ID_ENTRY_EXPORT, &WinADFView::OnEntryExport)
 	ON_UPDATE_COMMAND_UI(ID_ENTRY_EXPORT, &WinADFView::OnUpdateEntryExport)
+	ON_COMMAND(ID_ENTRY_DELETE, &WinADFView::OnEntryDelete)
+	ON_UPDATE_COMMAND_UI(ID_ENTRY_DELETE, &WinADFView::OnUpdateEntryDelete)
 END_MESSAGE_MAP()
 
 // WinADFView diagnostics
@@ -235,7 +237,7 @@ void WinADFView::OnNMRClick(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-Entry *WinADFView::GetSelectedEntry()
+Entry *WinADFView::GetSelectedEntry(int *pItem)
 {
 	CListCtrl &list = GetListCtrl();	
 	POSITION pos = list.GetFirstSelectedItemPosition();
@@ -243,6 +245,9 @@ Entry *WinADFView::GetSelectedEntry()
 		return NULL;	// nothing selected
 	
 	int nItem = list.GetNextSelectedItem(pos);
+	if (pItem != NULL)
+		*pItem = nItem;
+
 	return (Entry*)list.GetItemData(nItem);
 }
 
@@ -340,6 +345,39 @@ void WinADFView::OnEntryExport()
 
 void WinADFView::OnUpdateEntryExport(CCmdUI *pCmdUI)
 {
+	Entry *pEntry = GetSelectedEntry();
+	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);	
+}
+
+void WinADFView::OnEntryDelete()
+{
+	int nitem;
+	Entry *pEntry = GetSelectedEntry(&nitem);
+	if (pEntry == NULL)
+		return;	// nothing selected
+
+	WinADFDoc *pDoc = GetDocument();
+	Volume *pVol = pDoc->GetVolume();
+	ASSERT(pVol != NULL);
+
+	try {
+		if (!pVol->deleteentry(pVol->getCurrentDir(), pEntry->name.c_str())) {
+			AfxMessageBox("Unable to delete entry.");
+			return;
+		}
+	} catch (const ADFException &e) {
+		AfxMessageBox(e.getDescription().c_str());
+		return;
+	}
+
+	CListCtrl &list = GetListCtrl();
+	list.DeleteItem(nitem);
+	
+}
+
+void WinADFView::OnUpdateEntryDelete(CCmdUI *pCmdUI)
+{
+	// TODO: can only delete files 
 	Entry *pEntry = GetSelectedEntry();
 	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);	
 }

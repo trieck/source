@@ -53,7 +53,7 @@ BOOL WinADFDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	
 	try {
 		CWaitCursor wait;
-		m_pDisk = Disk::open(lpszPathName, "rb");		
+		m_pDisk = Disk::open(lpszPathName, false);		
 		m_pVolume = m_pDisk->mount();
 	} catch (const ADFException &e) {
 		DeleteContents();   // remove failed contents
