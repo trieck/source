@@ -530,13 +530,13 @@ void Volume::writebootblock(bootblock_t *boot)
     boot->type[1] = 'O';
     boot->type[2] = 'S';
 
-	uint8_t buf[BOOTBLOCKSIZE];
-	memcpy(buf, boot, BOOTBLOCKSIZE*2);
-
 #ifdef LITTLE_ENDIAN
 	boot->checksum = swap_endian(boot->checksum);
 	boot->rootblock = swap_endian(boot->rootblock);
 #endif
+
+	uint8_t buf[BOOTBLOCKSIZE];
+	memcpy(buf, boot, BOOTBLOCKSIZE);
 
 	// calculate boot block checksum
 	if (boot->rootblock == 880 || boot->code[0] != 0) {
@@ -546,6 +546,11 @@ void Volume::writebootblock(bootblock_t *boot)
 
 	writeblock(0, buf);
 	writeblock(1, buf+BSIZE);
+
+#ifdef LITTLE_ENDIAN
+	boot->checksum = swap_endian(boot->checksum);
+	boot->rootblock = swap_endian(boot->rootblock);
+#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -680,8 +685,6 @@ void Volume::writerootblock(uint32_t blockno, rootblock_t *root)
     root->parent = 0;
     root->sectype = ST_ROOT;
 
-	root->checksum = adfchecksum(root, 20, BSIZE);
-
 #ifdef LITTLE_ENDIAN
 	root->type = swap_endian(root->type);
 	root->hkey = swap_endian(root->hkey);
@@ -714,7 +717,44 @@ void Volume::writerootblock(uint32_t blockno, rootblock_t *root)
 	root->sectype = swap_endian(root->sectype);
 #endif // LITTLE_ENDIAN
 
+	uint8_t buf[BSIZE];
+	memcpy(buf, root, BSIZE);
+
+	root->checksum = adfchecksum(buf, 20, BSIZE);
+	root->checksum = swap_endian(root->checksum);
+
 	writeblock(blockno, root);
+
+#ifdef LITTLE_ENDIAN
+	root->type = swap_endian(root->type);
+	root->hkey = swap_endian(root->hkey);
+	root->highseq = swap_endian(root->highseq);
+	root->tblsize = swap_endian(root->tblsize);
+	root->firstdata = swap_endian(root->firstdata);
+	root->checksum = swap_endian(root->checksum);
+
+	for (i = 0; i < HT_SIZE; i++)
+		root->tbl[i] = swap_endian(root->tbl[i]);
+
+	root->bmflag = swap_endian(root->bmflag);
+	for (i = 0; i < BM_SIZE; i++)
+		root->bmpages[i] = swap_endian(root->bmpages[i]);
+
+	root->bmext = swap_endian(root->bmext);
+	root->cdays = swap_endian(root->cdays);
+	root->cmins = swap_endian(root->cmins);
+	root->cticks = swap_endian(root->cticks);
+	root->days = swap_endian(root->days);
+	root->mins = swap_endian(root->mins);
+	root->ticks = swap_endian(root->ticks);
+	root->codays = swap_endian(root->codays);
+	root->comins = swap_endian(root->comins);
+	root->coticks = swap_endian(root->coticks);
+	root->nextsamehash = swap_endian(root->nextsamehash);
+	root->parent = swap_endian(root->parent);
+	root->extension = swap_endian(root->extension);
+	root->sectype = swap_endian(root->sectype);
+#endif // LITTLE_ENDIAN
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -722,7 +762,6 @@ void Volume::writedircblock(uint32_t blockno, dircacheblock_t *dirc)
 {
 	dirc->type = T_DIRC;
 	dirc->key = blockno;
-	dirc->checksum = adfchecksum(dirc, 20, BSIZE);
 
 #ifdef LITTLE_ENDIAN
 	dirc->type = swap_endian(dirc->type);
@@ -733,7 +772,23 @@ void Volume::writedircblock(uint32_t blockno, dircacheblock_t *dirc)
 	dirc->checksum = swap_endian(dirc->checksum);
 #endif // LITTLE_ENDIAN
 
+	uint8_t buf[BSIZE];
+	memcpy(buf, dirc, BSIZE);
+
+	dirc->checksum = adfchecksum(buf, 20, BSIZE);
+	dirc->checksum = swap_endian(dirc->checksum);
+
 	writeblock(blockno, dirc);
+
+#ifdef LITTLE_ENDIAN
+	dirc->type = swap_endian(dirc->type);
+	dirc->key = swap_endian(dirc->key);
+	dirc->parent = swap_endian(dirc->parent);
+	dirc->nrecs = swap_endian(dirc->nrecs);
+	dirc->next = swap_endian(dirc->next);
+	dirc->checksum = swap_endian(dirc->checksum);
+#endif // LITTLE_ENDIAN
+
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -814,6 +869,13 @@ void Volume::writebmextblock(uint32_t blockno, bitmapextblock_t *block)
 #endif
 
 	writeblock(blockno, block);
+
+#ifdef LITTLE_ENDIAN
+	for (uint32_t i = 0; i < BM_MAPSIZE; i++) {
+		block->pages[i] = swap_endian(block->pages[i]);
+	}
+	block->next = swap_endian(block->next);
+#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -841,8 +903,6 @@ void Volume::updatebitmap()
 /////////////////////////////////////////////////////////////////////////////
 void Volume::writebmblock(uint32_t blockno, bitmapblock_t *block)
 {
-	block->checksum = adfchecksum(block, 0, BSIZE);
-
 #ifdef LITTLE_ENDIAN
 	block->checksum = swap_endian(block->checksum);
 
@@ -851,7 +911,43 @@ void Volume::writebmblock(uint32_t blockno, bitmapblock_t *block)
 		block->map[i] = swap_endian(block->map[i]);
 	}
 #endif
+	uint8_t buf[BSIZE];
+	memcpy(buf, block, BSIZE);
+
+	block->checksum = adfchecksum(buf, 0, BSIZE);
+	block->checksum = swap_endian(block->checksum);
 
 	writeblock(blockno, block); 
+
+#ifdef LITTLE_ENDIAN
+	block->checksum = swap_endian(block->checksum);
+
+	for (i = 0; i < BM_MAPSIZE; i++) {
+		block->map[i] = swap_endian(block->map[i]);
+	}
+#endif
+
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// Install a bootblock on a floppy disk. Won't work on any other device. 
+// You must provide the 1024 bytes large bootblock. 
+// Doesn't modify the initial 'DOS' header and type. 
+// Recalculates the checksum. 
+void Volume::installbootblock(uint8_t *code)
+{
+	if (disk->type != DISKTYPE_FLOPDD && disk->type != DISKTYPE_FLOPHD) {
+        throw ADFException("disk not floppy.");
+	}
+
+	bootblock_t boot;
+	readbootblock(&boot);
+
+	boot.rootblock = 880;
+
+	uint32_t i;
+    for(i = 0; i < 1024-12; i++)	// bootcode
+        boot.code[i] = code[i+12];
+
+	writebootblock(&boot);
+}

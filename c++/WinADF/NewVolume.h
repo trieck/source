@@ -33,6 +33,8 @@ public:
 	afx_msg void OnPresetSize();
 	afx_msg void OnDirCache();
 public:
+	CString GetPath() const;
+protected:
 	CEdit m_label;
 	CButton m_DiskType;
 	CButton m_HighDensity;
@@ -47,5 +49,10 @@ public:
 	CButton m_dircache;
 	CButton m_boot;
 	CEdit m_path;
-protected:
+
+	CString m_strPath;
 };
+
+inline CString NewVolumeDlg::GetPath() const {
+	return m_strPath;
+}

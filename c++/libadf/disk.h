@@ -32,6 +32,9 @@ public:
 
 	Volume *createVolume(uint32_t start, uint32_t len, 
 		const char *name, uint32_t type);
+	Volume *createFloppy(const char *name, uint32_t type);
+	Volume *createHardfile(const char *name, uint32_t type);
+
 	Volume *mount();
 	void unmount();
 

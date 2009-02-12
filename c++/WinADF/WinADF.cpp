@@ -161,8 +161,15 @@ void WinADFApp::OnAppAbout()
 void WinADFApp::OnFileNew()
 {
 	NewVolumeDlg dlg;
-	if (IDOK == dlg.DoModal())
-		CWinApp::OnFileNew();
+	if (IDOK == dlg.DoModal()) {
+		CString path = dlg.GetPath();
+		OpenDocumentFile(path);
+	}
+}
+
+void WinADFApp::OnFileOpen()
+{
+	CWinApp::OnFileOpen();
 }
 
 // WinADFApp message handlers
@@ -283,4 +290,34 @@ void PumpMessages()
     LONG lIdle = 0;
     while (pThread->OnIdle(lIdle++))
         ;  
+}
+
+/////////////////////////////////////////////////////////////////////////////
+BOOL LoadBootblock(bootblock_t *block)
+{
+	HRSRC hResource = ::FindResource(AfxGetResourceHandle(), 
+		MAKEINTRESOURCE(IDR_BOOTBLOCK),
+        "BOOTBLOCK");
+	if (hResource == NULL)
+		return FALSE;
+
+	DWORD dwSize = SizeofResource(AfxGetResourceHandle(), hResource);
+
+	HGLOBAL hGlobal = ::LoadResource(AfxGetResourceHandle(), hResource);
+	if (hGlobal == NULL)
+		return FALSE;
+
+	LPVOID pResource = ::LockResource(hGlobal);
+	if (pResource == NULL) {
+		UnlockResource(hGlobal);
+		FreeResource(hGlobal);
+		return NULL;
+	}
+
+	memcpy(block, pResource, dwSize);
+
+	UnlockResource(hGlobal);
+	FreeResource(hGlobal);
+
+	return TRUE;
 }

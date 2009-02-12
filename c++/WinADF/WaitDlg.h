@@ -15,7 +15,10 @@ public:
 	enum { IDD = IDD_WAIT };
 
 	void SetCreateParams(uint32_t size, 
-		const CString &path, const CString &label, uint32_t flags);
+		const CString &path, 
+		const CString &label, 
+		uint32_t flags,
+		bool boot);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
@@ -33,12 +36,12 @@ public:
 	afx_msg void OnDestroy();
 private:
 	UINT m_nTimer;
-	bool m_bDone;
-	CWinThread *m_pThread;
-	static UINT CreateVolume(LPVOID);
+	HANDLE m_hThread;
+	static DWORD WINAPI CreateVolume(LPVOID pv);
 
 	enum { EVENT_ID = 0xFFFFFFFF };
 
 	uint32_t m_nSize, m_nFlags;
 	CString m_Path, m_Label;
+	bool m_Boot;
 };

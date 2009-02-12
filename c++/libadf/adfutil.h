@@ -37,8 +37,8 @@ ADFDateTime adfGetCurrentTime();
 void adfTime2AmigaTime(ADFDateTime dt, int32_t &day, int32_t &min, 
 	int32_t &ticks);
 int swap_endian(int d);
-uint32_t bootsum(void *block);
-uint32_t adfchecksum(void *block, uint32_t offset, uint32_t len);
+uint32_t bootsum(uint8_t *block);
+uint32_t adfchecksum(uint8_t *block, uint32_t offset, uint32_t len);
 void * xmalloc(uint32_t size);
 uint32_t adfhash(const char *k, bool intl);
 string adfToUpper(const char *str, bool intl);

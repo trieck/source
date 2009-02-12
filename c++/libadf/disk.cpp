@@ -163,17 +163,36 @@ Volume *Disk::mount()
 	pVol->disk = this;
 
 	// read boot block for volume
-	uint8_t buf[BOOTBLOCKSIZE];
-	bootblock_t *boot = (bootblock_t*)buf;
-	pVol->readbootblock(boot);
+	bootblock_t boot;
+	pVol->readbootblock(&boot);
 
 	// read root block for volume
-	rootblock_t *root = (rootblock_t*)buf;
-	pVol->readrootblock(root);
+	rootblock_t root;
+	pVol->readrootblock(&root);
 
 	// read bitmap for volume
-	pVol->readbitmap(root);
+	pVol->readbitmap(&root);
 
+	return pVol;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Volume *Disk::createFloppy(const char *name, uint32_t type)
+{
+	Volume *pVol = createVolume(0, FLOPPY_CYLINDERS, name, type);
+	pVol->blocksize = BSIZE;
+	pVol->mounted = true;
+	volumes.push_back(pVol);	
+	return pVol;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Volume *Disk::createHardfile(const char *name, uint32_t type)
+{
+	Volume *pVol = createVolume(0, cylinders, name, type);
+	pVol->blocksize = BSIZE;
+	pVol->mounted = true;
+	volumes.push_back(pVol);
 	return pVol;
 }
 
@@ -195,12 +214,10 @@ Volume *Disk::createVolume(uint32_t start, uint32_t len, const char *name,
 	uint32_t namelen = min(MAXNAMELEN, strlen(name));
 	pVol->name = string(name, namelen);
 
-	uint8_t buf[BOOTBLOCKSIZE];
-	memset(buf, 0, BOOTBLOCKSIZE);
-	bootblock_t *boot = (bootblock_t*)buf;
-
-	boot->type[3] = type;
-	pVol->writebootblock(boot);
+	bootblock_t boot;
+	memset(&boot, 0, BOOTBLOCKSIZE);
+	boot.type[3] = type;
+	pVol->writebootblock(&boot);
 
 	pVol->createbitmap();
 

@@ -25,6 +25,7 @@ public:
 // Implementation
 	afx_msg void OnAppAbout();
 	afx_msg void OnFileNew();
+	afx_msg void OnFileOpen();
 
 	DECLARE_MESSAGE_MAP()
 	virtual int DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt);
@@ -49,3 +50,4 @@ string comma(uint64_t i);
 CString LastError();
 CDocument *MDIGetActiveDoc();
 void PumpMessages();
+BOOL LoadBootblock(bootblock_t *block);

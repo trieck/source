@@ -61,6 +61,7 @@ public:
 	void writedircblock(uint32_t blockno, dircacheblock_t *dirc);
 	void writebmextblock(uint32_t blockno, bitmapextblock_t *block);
 	void writebmblock(uint32_t blockno, bitmapblock_t *block);
+	void installbootblock(uint8_t *code);
 
 	void createbitmap();
 	void setBlockFree(uint32_t blockno);

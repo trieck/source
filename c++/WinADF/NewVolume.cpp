@@ -51,8 +51,11 @@ END_MESSAGE_MAP()
 
 void NewVolumeDlg::OnBrowse()
 {	
-	static TCHAR BASED_CODE szFilter[] = _T("Amiga Disk Files (*.adf)|*.adf|")
-   _T("Hard Disk Files (*.hdf)|*.hdf|All Files (*.*)|*.*||");
+	static TCHAR BASED_CODE szFilter[] = 
+		_T("All Supported Types|*.adf;*.hdf|")
+		_T("Amiga Disk Files (*.adf)|*.adf|")
+		_T("Hard Disk Files (*.hdf)|*.hdf|")
+		_T("All Files (*.*)|*.*||");
 
 	CFileDialog dlg(FALSE, _T("*.adf"), NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
 		szFilter, this);
@@ -87,6 +90,7 @@ void NewVolumeDlg::OnTypeADF()
 	m_CustomSizeEdit.EnableWindow(FALSE);
 	m_HDFSizeSlider.EnableWindow(FALSE);
 	m_HighDensity.EnableWindow(TRUE);
+	m_boot.EnableWindow(TRUE);
 }
 
 void NewVolumeDlg::OnTypeHDF()
@@ -96,15 +100,16 @@ void NewVolumeDlg::OnTypeHDF()
 	m_CustomSizeEdit.EnableWindow(TRUE);
 	m_HDFSizeSlider.EnableWindow(TRUE);
 	m_HighDensity.EnableWindow(FALSE);
+	m_boot.SetCheck(BST_UNCHECKED);
+	m_boot.EnableWindow(FALSE);
 }
 
 void NewVolumeDlg::OnOK()
 {
-	CString path;
-	m_path.GetWindowText(path);
-	path.Trim();
+	m_path.GetWindowText(m_strPath);
+	m_strPath.Trim();
 
-	if (path.GetLength() == 0) {
+	if (m_strPath.GetLength() == 0) {
 		AfxMessageBox(IDS_NOPATH);
 		return;
 	}
@@ -120,7 +125,7 @@ void NewVolumeDlg::OnOK()
 	} else {	// hdf
 		type = GetCheckedRadioButton(IDC_RD_PRESET, IDC_RD_CUSTOM);
 		if (type == IDC_RD_PRESET) {
-			size = (1 << m_HDFSizeSlider.GetPos()) * 1024;
+			size = (2 << m_HDFSizeSlider.GetPos()) * 1024;
 		} else {
 			CString strSize;
 			m_CustomSizeEdit.GetWindowText(strSize);
@@ -133,10 +138,10 @@ void NewVolumeDlg::OnOK()
 		return;
 	}
 
+	
+	bool bootable = (m_boot.GetCheck() == BST_CHECKED);
+
 	uint32_t flags = 0;
-	if (m_boot.GetCheck() == BST_CHECKED) {
-		// TODO
-	}
 	if (m_dircache.GetCheck() == BST_CHECKED) {
 		flags |= FSTYPE_DIRCACHE;
 	}
@@ -148,13 +153,11 @@ void NewVolumeDlg::OnOK()
 	}
 
 	WaitDlg dlg(this);
-	dlg.SetCreateParams(size, path, label, flags);
-	dlg.DoModal();
-
+	dlg.SetCreateParams(size, m_strPath, label, flags, bootable);
 	
-//	CDialog::OnOK();
+	if (dlg.DoModal() == IDOK)
+		CDialog::OnOK();
 }
-
 
 void NewVolumeDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {

@@ -102,10 +102,10 @@
 /////////////////////////////////////////////////////////////////////////////
 // boot block structure
 struct bootblock_t {
-	char type[4];			/* 'D''O''S' + flags */
-	uint32_t checksum;		/* checksum */
-	uint32_t rootblock;		/* rootblock = 880 for DD and HD */
-	uint8_t code[1];		/* bootblock code */
+	char type[4];				/* 'D''O''S' + flags */
+	uint32_t checksum;			/* checksum */
+	uint32_t rootblock;			/* rootblock = 880 for DD and HD */
+	uint8_t code[500+BSIZE];	/* bootblock code */
 };
 
 /////////////////////////////////////////////////////////////////////////////
