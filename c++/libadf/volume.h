@@ -12,6 +12,7 @@
 
 #include "entry.h"
 #include "file.h"
+#include "fileblocks.h"
 
 class Disk;
 class Volume;
@@ -61,20 +62,28 @@ public:
 	void writedircblock(uint32_t blockno, dircacheblock_t *dirc);
 	void writebmextblock(uint32_t blockno, bitmapextblock_t *block);
 	void writebmblock(uint32_t blockno, bitmapblock_t *block);
+	void writeentry(uint32_t blockno, entryblock_t *e);
 	void installbootblock(uint8_t *code);
 
+	bool deleteentry(uint32_t blockno, const char *name);
+	void freefileblocks(fileheader_t *entry);
+	
 	void createbitmap();
 	void setBlockFree(uint32_t blockno);
 	void setBlockUsed(uint32_t blockno);
 	bool writenewbitmap();
 	void updatebitmap();
-	bool getFreeBlocks(uint32_t blockno, vector<uint32_t> &blocks);
+	bool getFreeBlocks(uint32_t blockno, blocklist &blocks);
 	uint32_t getFreeBlock(); 
 	void createEmptyCache(entryblock_t *parent, uint32_t blockno);
 	
+	FileBlocks getFileBlocks(fileheader_t *block);
+
 // Implementation
 private:
-	bool lookup(const char *name, entryblock_t *eblock);
+	uint32_t lookup(uint32_t blockno, const char *name, 
+		entryblock_t *eblock, uint32_t *pupblock);
+
 	void allocbitmap();
 	void freebitmap();
 	

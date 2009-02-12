@@ -30,7 +30,7 @@ uint32_t bitmask[BM_BLOCKS_ENTRY] = {
 Volume::Volume()
 : blocksize(0), bitmapsize(0), dblocksize(0), firstblock(0), lastblock(0), 
  rootblock(0), type(0), mounted(false), bmtbl(0), bmblocks(0), disk(0),
- currdir(0), readonly(false)
+ currdir(0), readonly(true)
 {
 }
 
@@ -432,7 +432,8 @@ EntryList Volume::readdir(uint32_t blockno, bool recurse)
 FilePtr Volume::openfile(const char *filename)
 {
 	entryblock_t entry;
-	if (!lookup(filename, &entry))
+	uint32_t blockno = lookup(currdir, filename, &entry, NULL);
+	if (blockno == -1)
 		throw ADFException("file not found.");
 
 	return Volume::openfile(entry);
@@ -451,9 +452,10 @@ FilePtr Volume::openfile(const Entry &e)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-bool Volume::lookup(const char *name, entryblock_t *pblock)
+uint32_t Volume::lookup(uint32_t nblock, const char *name, 
+	entryblock_t *pblock, uint32_t *pupblock)
 {
-	readentry(currdir, pblock);
+	readentry(nblock, pblock);
 
 	bool intl = isINTL(type) || isDIRCACHE(type);
 
@@ -462,20 +464,30 @@ bool Volume::lookup(const char *name, entryblock_t *pblock)
 
 	uint32_t blockno = pblock->tbl[hash];
 	if (blockno == 0)
-		return false;	// not found
+		return -1;	// not found
+
+	uint32_t ublockno = 0;
+	bool found = false;
 
 	do {
 		readentry(blockno, pblock);
 		ename = string(pblock->name, pblock->namelen);
 		ename = adfToUpper(ename.c_str(), intl);
 
-		if (uname == ename)
-			return true;
+		found = (uname == ename);
+		if (!found) {
+			ublockno = blockno;
+			blockno = pblock->nextsamehash;
+		}
+	} while (!found && blockno != 0);
 
-		blockno = pblock->nextsamehash;
-	} while (blockno != 0);
+	if (blockno == 0 && !found)
+		return -1;
 
-	return false;
+	if (pupblock != NULL)
+		*pupblock = ublockno;
+
+	return blockno;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -483,7 +495,8 @@ void Volume::changedir(const char *name)
 {
 	entryblock_t entry;
 	
-	if (!lookup(name, &entry))
+	uint32_t blockno;
+	if ((blockno = lookup(currdir, name, &entry, NULL)) == -1)
 		throw ADFException("can't find directory.");		
 
 	if (entry.sectype != ST_DIR)
@@ -607,7 +620,7 @@ void Volume::setBlockUsed(uint32_t blockno)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-bool Volume::getFreeBlocks(uint32_t blockno, vector<uint32_t> &blocks)
+bool Volume::getFreeBlocks(uint32_t blockno, blocklist &blocks)
 {
 	blocks.resize(blockno);
 
@@ -794,7 +807,7 @@ void Volume::writedircblock(uint32_t blockno, dircacheblock_t *dirc)
 /////////////////////////////////////////////////////////////////////////////
 uint32_t Volume::getFreeBlock() 
 {
-	vector<uint32_t> blocks;
+	blocklist blocks;
 	if (!getFreeBlocks(1, blocks))
 		return -1;
 
@@ -804,7 +817,7 @@ uint32_t Volume::getFreeBlock()
 /////////////////////////////////////////////////////////////////////////////
 bool Volume::writenewbitmap()
 {
-	vector<uint32_t> blocks;
+	blocklist blocks;
 	if (!getFreeBlocks(bitmapsize, blocks)) {
 		return false;
 	}
@@ -827,7 +840,7 @@ bool Volume::writenewbitmap()
 		if ((bitmapsize - BM_SIZE) % BM_MAPSIZE)
 			extblock++;
 	
-		vector<uint32_t> eblocks;
+		blocklist eblocks;
 		if (!getFreeBlocks(extblock, eblocks)) 
 			return false;
 
@@ -950,4 +963,195 @@ void Volume::installbootblock(uint8_t *code)
         boot.code[i] = code[i+12];
 
 	writebootblock(&boot);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool Volume::deleteentry(uint32_t blockno, const char *name)
+{
+	entryblock_t parent, entry;
+
+	readentry(blockno, &parent);
+
+	uint32_t nblock, ublockno;
+	if ((nblock = lookup(blockno, name, &entry, &ublockno)) == -1) {
+		ADFWarningDispatcher::dispatch("entry not found.");
+		return false;
+	}
+
+	// if it is a directory, is it empty ?
+    if (entry.sectype == ST_DIR) {
+		throw ADFException("directory delete not supported.");
+    }
+
+	if (ublockno == 0) {	// in parent hashtable
+		bool intl = isINTL(type) || isDIRCACHE(type);
+		uint32_t hash = adfhash(name, intl);
+		parent.tbl[hash] = entry.nextsamehash;
+		writeentry(blockno, &parent);
+	} else {				// linked list
+		entryblock_t previous;
+		readentry(ublockno, &previous);
+		previous.nextsamehash = entry.nextsamehash;
+		writeentry(ublockno, &previous);
+	}
+
+	if (entry.sectype == ST_FILE) {
+		freefileblocks((fileheader_t*)&entry);		
+	} else if (entry.sectype == ST_DIR) {
+		// TODO:
+		/*
+		adfSetBlockFree(vol, nSect);
+        // free dir cache block : the directory must be empty, so there's only one cache block
+        if (isDIRCACHE(vol->dosType))
+            adfSetBlockFree(vol, entry.extension);
+        if (adfEnv.useNotify)
+            (*adfEnv.notifyFct)(pSect,ST_DIR);
+			*/
+	} else {
+		throw ADFException("entry type not supported.");
+	}
+
+	if (isDIRCACHE(type)) {
+        // TODO adfDelFromCache(vol, &parent, entry.headerKey);
+	}
+
+    updatebitmap();
+
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::writeentry(uint32_t blockno, entryblock_t *e)
+{
+#ifdef LITTLE_ENDIAN
+	e->type = swap_endian(e->type);
+	e->key = swap_endian(e->key);
+	
+	uint32_t i;
+	for (i = 0; i < 2; i++) {
+		e->r1[i] = swap_endian(e->r1[i]);
+	}
+	
+	e->firstblock = swap_endian(e->firstblock);
+	e->checksum = swap_endian(e->checksum);
+	for (i = 0; i < HT_SIZE; i++) {
+		e->tbl[i] = swap_endian(e->tbl[i]);
+	}
+	
+	for (i = 0; i < 2; i++) {
+		e->r2[i] = swap_endian(e->r2[i]);
+	}
+
+	e->access = swap_endian(e->access);
+	e->bytesize = swap_endian(e->bytesize);
+	e->days = swap_endian(e->days);
+	e->mins = swap_endian(e->mins);
+	e->ticks = swap_endian(e->ticks);
+	e->r4 = swap_endian(e->r4);
+	e->realentry = swap_endian(e->realentry);
+	e->nextlink = swap_endian(e->nextlink);
+
+	for (i = 0; i < 5; i++) {
+		e->r5[i] = swap_endian(e->r5[i]);
+	}
+
+	e->nextsamehash = swap_endian(e->nextsamehash);
+	e->parent = swap_endian(e->parent);
+	e->extension = swap_endian(e->extension);
+	e->sectype = swap_endian(e->sectype);
+#endif // LITTLE_ENDIAN
+
+	uint8_t buf[BSIZE];
+	memcpy(buf, e, BSIZE);
+
+	e->checksum = adfchecksum(buf, 20, BSIZE);
+	e->checksum = swap_endian(e->checksum);
+
+	writeblock(blockno, e);
+
+#ifdef LITTLE_ENDIAN
+	e->type = swap_endian(e->type);
+	e->key = swap_endian(e->key);
+	
+	for (i = 0; i < 2; i++) {
+		e->r1[i] = swap_endian(e->r1[i]);
+	}
+	
+	e->firstblock = swap_endian(e->firstblock);
+	e->checksum = swap_endian(e->checksum);
+	for (i = 0; i < HT_SIZE; i++) {
+		e->tbl[i] = swap_endian(e->tbl[i]);
+	}
+	
+	for (i = 0; i < 2; i++) {
+		e->r2[i] = swap_endian(e->r2[i]);
+	}
+
+	e->access = swap_endian(e->access);
+	e->bytesize = swap_endian(e->bytesize);
+	e->days = swap_endian(e->days);
+	e->mins = swap_endian(e->mins);
+	e->ticks = swap_endian(e->ticks);
+	e->r4 = swap_endian(e->r4);
+	e->realentry = swap_endian(e->realentry);
+	e->nextlink = swap_endian(e->nextlink);
+
+	for (i = 0; i < 5; i++) {
+		e->r5[i] = swap_endian(e->r5[i]);
+	}
+
+	e->nextsamehash = swap_endian(e->nextsamehash);
+	e->parent = swap_endian(e->parent);
+	e->extension = swap_endian(e->extension);
+	e->sectype = swap_endian(e->sectype);
+#endif // LITTLE_ENDIAN
+}
+
+/////////////////////////////////////////////////////////////////////////////
+FileBlocks Volume::getFileBlocks(fileheader_t *entry)
+{
+	FileBlocks blocks;
+
+	blocks.setHeader(entry->key);
+
+	// in file header block
+	int32_t i;
+	for (i = 0; i < entry->nblocks; i++) {
+		blocks.addData(entry->datablocks[MAX_DATABLK-1-i]);
+	}
+
+	// in file extension blocks 
+	fileext_t extblock;
+	uint32_t blockno = entry->extension;
+	while (blockno != 0) {
+		blocks.addExten(blockno);
+		
+		readextblock(blockno, &extblock);
+		for (i = 0; i < extblock.highseq; i++) {
+			blocks.addData(extblock.blocks[MAX_DATABLK-1-i]);
+		}
+		blockno = extblock.extension;
+	}
+
+	return blocks;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::freefileblocks(fileheader_t *entry)
+{
+	FileBlocks blocks = getFileBlocks(entry);
+
+	block_iterator it = blocks.getDataBegin();
+	block_iterator end = blocks.getDataEnd();
+
+	for ( ; it != end; it++) {
+		setBlockFree(*it);
+	}
+
+	it = blocks.getExtenBegin();
+	end = blocks.getExtenEnd();
+
+	for ( ; it != end; it++) {
+		setBlockFree(*it);
+	}
 }

@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FileBlocks.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\volume.cpp"
 				>
 			</File>
@@ -244,6 +248,10 @@
 			</File>
 			<File
 				RelativePath=".\file.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FileBlocks.h"
 				>
 			</File>
 			<File

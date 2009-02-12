@@ -27,4 +27,7 @@ using std::cout;
 using std::cerr;
 using std::endl;
 
+typedef vector<uint32_t> blocklist;
+typedef blocklist::const_iterator block_iterator;
+
 #endif // __COMMON_H_INCLUDED

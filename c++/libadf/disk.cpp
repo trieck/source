@@ -11,14 +11,16 @@
 #include "adf.h"
 #include "adfexcept.h"
 #include "adfutil.h"
+#include "adfwarn.h"
 #include "disk.h"
+#include <errno.h>
 
 namespace { int32_t getDiskType(uint32_t size); }
 
 /////////////////////////////////////////////////////////////////////////////
 Disk::Disk()
  : type(0), cylinders(0), heads(0), sectors(0), size(0), fp(0), 
- readonly(false)
+ readonly(true)
 {
 }
 
@@ -55,6 +57,7 @@ DiskPtr Disk::create(const char *filename, uint32_t cylinders,
 	uint32_t heads, uint32_t sectors)
 {
 	DiskPtr pDisk = DiskPtr(new Disk());
+	pDisk->readonly = false;
 
 	if ((pDisk->fp = fopen(filename, "wb")) == NULL) {
 		throw ADFException();
@@ -88,7 +91,7 @@ DiskPtr Disk::create(const char *filename, uint32_t cylinders,
 }
 
 /////////////////////////////////////////////////////////////////////////////
-DiskPtr Disk::open(const char *filename, const char *mode)
+DiskPtr Disk::open(const char *filename, bool ro)
 {
 	DiskPtr pDisk = DiskPtr(new Disk());
 
@@ -102,10 +105,22 @@ DiskPtr Disk::open(const char *filename, const char *mode)
 		throw ADFException("unknown disk type.");
 	}
 	
-	if ((pDisk->fp = fopen(filename, mode)) == NULL) {
-		throw ADFException();
+	if (!ro) {
+		if ((pDisk->fp = fopen(filename, "rb+")) == NULL) {
+			if (errno == EACCES || errno==EROFS) {
+				if ((pDisk->fp = fopen(filename, "rb")) != NULL) {
+					ADFWarningDispatcher::dispatch("read-only mode forced.");
+				}
+			}
+		}
+	} else {
+		pDisk->fp = fopen(filename, "rb");
 	}
 
+	if (pDisk->fp == NULL)
+		throw ADFException();
+
+	pDisk->readonly = ro;
 	pDisk->filename = filename;
 	pDisk->size = buf.st_size;
 	pDisk->type = type;
@@ -160,6 +175,7 @@ Volume *Disk::mount()
     pVol->rootblock = (pVol->lastblock+1 - pVol->firstblock) / 2;
 	pVol->currdir = pVol->rootblock;
     pVol->blocksize = BSIZE;
+	pVol->readonly = readonly;
 	pVol->disk = this;
 
 	// read boot block for volume
@@ -221,8 +237,7 @@ Volume *Disk::createVolume(uint32_t start, uint32_t len, const char *name,
 
 	pVol->createbitmap();
 
-	vector<uint32_t> blocks;
-	blocks.resize(2);
+	blocklist blocks;
 	if (isDIRCACHE(type)) {
 		pVol->getFreeBlocks(2, blocks);
 	} else {
@@ -262,7 +277,9 @@ Volume *Disk::createVolume(uint32_t start, uint32_t len, const char *name,
 void Disk::writeblock(uint32_t blockno, void *block)
 {
 	if (fp == NULL) throw ADFException("disk not open.");
-	
+
+	if (readonly) throw ADFException("disk read only.");
+
 	uint32_t offset = BSIZE * blockno;
 
 	if (fseek(fp, offset, SEEK_SET) != 0)

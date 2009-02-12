@@ -27,7 +27,7 @@ public:
 // Interface
 	static DiskPtr create(const char *filename, 
 		uint32_t cylinders, uint32_t heads, uint32_t sectors);
-	static DiskPtr open(const char *filename, const char *mode);
+	static DiskPtr open(const char *filename, bool ro);
 	void close();
 
 	Volume *createVolume(uint32_t start, uint32_t len, 
