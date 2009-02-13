@@ -40,6 +40,17 @@ void adfTime2AmigaTime(ADFDateTime dt, int32_t &day, int32_t &min,
 int swap_endian(int d);
 uint32_t swap_long(void *p);
 uint16_t swap_short(void *p);
+
+void swapfileblock(fileheader_t *block);
+void swapofsblock(ofsblock_t *block);
+void swaprootblock(rootblock_t *block);
+void swapbmblock(bitmapblock_t *block);
+void swapentry(entryblock_t *block);
+void swapfileext(fileext_t *block);
+void swapdircblock(dircacheblock_t *block);
+void swapbmext(bitmapextblock_t *block);
+void swapdirblock(dirblock_t *block);
+
 uint32_t toLong(void *p);
 uint16_t toWord(void *p);
 string toString(void *p, uint32_t len);

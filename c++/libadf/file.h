@@ -17,12 +17,14 @@ class File
 {
 // Construction / Destruction
 public:
+	File(Volume *pVol, fileheader_t *pheader);
 	File(Volume *pVol, entryblock_t *pEntry);
 	File(Volume *pVol, const Entry &e);
 	~File();
 
 // Interface
 	Volume *getVolume() const;
+	Entry getEntry() const;
 	uint32_t read(uint32_t n, void *buf);
 	uint32_t getSize() const;
 	bool isEOF() const;

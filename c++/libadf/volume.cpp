@@ -98,12 +98,7 @@ void Volume::readdatablock(uint32_t blockno, void *block)
 		ofsblock_t *dblock = (ofsblock_t*)block;
 
 #ifdef LITTLE_ENDIAN
-		dblock->type = swap_endian(dblock->type);
-		dblock->key = swap_endian(dblock->key);
-		dblock->seqnum = swap_endian(dblock->seqnum);
-		dblock->size = swap_endian(dblock->size);
-		dblock->next = swap_endian(dblock->next);
-		dblock->checksum = swap_endian(dblock->checksum);
+		swapofsblock(dblock);
 #endif // LITTLE_ENDIAN
 
 		if (dblock->checksum != adfchecksum(buf, 20, sizeof(ofsblock_t))) {
@@ -167,35 +162,7 @@ void Volume::readrootblock(rootblock_t *root)
 	memcpy(root, buf, BSIZE);
 
 #ifdef LITTLE_ENDIAN
-	root->type = swap_endian(root->type);
-	root->hkey = swap_endian(root->hkey);
-	root->highseq = swap_endian(root->highseq);
-	root->tblsize = swap_endian(root->tblsize);
-	root->firstdata = swap_endian(root->firstdata);
-	root->checksum = swap_endian(root->checksum);
-
-	uint32_t i;
-	for (i = 0; i < HT_SIZE; i++)
-		root->tbl[i] = swap_endian(root->tbl[i]);
-
-	root->bmflag = swap_endian(root->bmflag);
-	for (i = 0; i < BM_SIZE; i++)
-		root->bmpages[i] = swap_endian(root->bmpages[i]);
-
-	root->bmext = swap_endian(root->bmext);
-	root->cdays = swap_endian(root->cdays);
-	root->cmins = swap_endian(root->cmins);
-	root->cticks = swap_endian(root->cticks);
-	root->days = swap_endian(root->days);
-	root->mins = swap_endian(root->mins);
-	root->ticks = swap_endian(root->ticks);
-	root->codays = swap_endian(root->codays);
-	root->comins = swap_endian(root->comins);
-	root->coticks = swap_endian(root->coticks);
-	root->nextsamehash = swap_endian(root->nextsamehash);
-	root->parent = swap_endian(root->parent);
-	root->extension = swap_endian(root->extension);
-	root->sectype = swap_endian(root->sectype);
+	swaprootblock(root);
 #endif // LITTLE_ENDIAN
 	
 	if (root->type != T_HEADER && root->sectype != ST_ROOT) {
@@ -262,10 +229,7 @@ void Volume::readbmblock(uint32_t blockno, bitmapblock_t *bm)
 	memcpy(bm, buf, BSIZE);
 
 #ifdef LITTLE_ENDIAN
-	bm->checksum = swap_endian(bm->checksum);
-	uint32_t i;
-	for (i = 0; i < BM_MAPSIZE; i++)
-		bm->map[i] = swap_endian(bm->map[i]);
+	swapbmblock(bm);
 #endif	// LITTLE_ENDIAN
 
 	if (bm->checksum != adfchecksum(buf, 0, BSIZE)) {
@@ -282,41 +246,7 @@ void Volume::readentry(uint32_t blockno, entryblock_t *e)
 	memcpy(e, buf, BSIZE);
 
 #ifdef LITTLE_ENDIAN
-	e->type = swap_endian(e->type);
-	e->key = swap_endian(e->key);
-	
-	uint32_t i;
-	for (i = 0; i < 2; i++) {
-		e->r1[i] = swap_endian(e->r1[i]);
-	}
-	
-	e->firstblock = swap_endian(e->firstblock);
-	e->checksum = swap_endian(e->checksum);
-	for (i = 0; i < HT_SIZE; i++) {
-		e->tbl[i] = swap_endian(e->tbl[i]);
-	}
-	
-	for (i = 0; i < 2; i++) {
-		e->r2[i] = swap_endian(e->r2[i]);
-	}
-
-	e->access = swap_endian(e->access);
-	e->bytesize = swap_endian(e->bytesize);
-	e->days = swap_endian(e->days);
-	e->mins = swap_endian(e->mins);
-	e->ticks = swap_endian(e->ticks);
-	e->r4 = swap_endian(e->r4);
-	e->realentry = swap_endian(e->realentry);
-	e->nextlink = swap_endian(e->nextlink);
-
-	for (i = 0; i < 5; i++) {
-		e->r5[i] = swap_endian(e->r5[i]);
-	}
-
-	e->nextsamehash = swap_endian(e->nextsamehash);
-	e->parent = swap_endian(e->parent);
-	e->extension = swap_endian(e->extension);
-	e->sectype = swap_endian(e->sectype);
+	swapentry(e);
 #endif // LITTLE_ENDIAN
 
 	if (e->checksum != adfchecksum(buf, 20, BSIZE)) {
@@ -341,17 +271,7 @@ void Volume::readextblock(uint32_t blockno, fileext_t *block)
 	memcpy(block, buf, sizeof(fileext_t));
 
 #ifdef LITTLE_ENDIAN
-	block->type = swap_endian(block->type);
-	block->key = swap_endian(block->key);
-	block->highseq = swap_endian(block->highseq);
-	block->checksum = swap_endian(block->checksum);
-
-	for (uint32_t i = 0; i < MAX_DATABLK; i++) 
-		block->blocks[i] = swap_endian(block->blocks[i]);
-
-	block->parent = swap_endian(block->parent);
-	block->extension = swap_endian(block->extension);
-	block->sectype = swap_endian(block->sectype);
+	swapfileext(block);
 #endif // LITTLE_ENDIAN
 
 	if (block->checksum != adfchecksum(buf, 20, BSIZE)) {
@@ -434,21 +354,29 @@ EntryList Volume::readdir(uint32_t blockno, bool recurse)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-FilePtr Volume::openfile(const char *filename)
+FilePtr Volume::openfile(const char *filename, const char *mode)
 {
-	entryblock_t entry;
-	uint32_t blockno = lookup(currdir, filename, &entry, NULL);
-	if (blockno == -1)
-		throw ADFException("file not found.");
+	bool write = strcmp(mode, "w") == 0;
+	if (!write && strcmp(mode, "r") != 0)
+		throw ADFException("unknown file mode.");
 
-	return Volume::openfile(entry);
+	if (!write) {	// file exists
+		entryblock_t entry;
+		uint32_t blockno = lookup(currdir, filename, &entry, NULL);
+		if (blockno == -1)
+			throw ADFException("file not found.");
+
+		return Volume::openfile(entry);
+	} 
+
+	fileheader_t header;
+	createFile(currdir, filename, &header);
+	return FilePtr(new File(this, &header));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 FilePtr Volume::openfile(const Entry &e)
 {
-	// TODO: open read only+exists now
-
 	// check access permissions
 	if (hasR(e.access)) 
 		throw ADFException("access denied.");
@@ -695,7 +623,7 @@ void Volume::createEmptyCache(entryblock_t *parent, uint32_t blockno)
 void Volume::writerootblock(uint32_t blockno, rootblock_t *root)
 {
 	root->type = T_HEADER;
-    root->hkey = 0;
+    root->key = 0;
     root->highseq = 0L;
     root->tblsize = HT_SIZE;
     root->firstdata = 0;
@@ -704,35 +632,7 @@ void Volume::writerootblock(uint32_t blockno, rootblock_t *root)
     root->sectype = ST_ROOT;
 
 #ifdef LITTLE_ENDIAN
-	root->type = swap_endian(root->type);
-	root->hkey = swap_endian(root->hkey);
-	root->highseq = swap_endian(root->highseq);
-	root->tblsize = swap_endian(root->tblsize);
-	root->firstdata = swap_endian(root->firstdata);
-	root->checksum = swap_endian(root->checksum);
-
-	uint32_t i;
-	for (i = 0; i < HT_SIZE; i++)
-		root->tbl[i] = swap_endian(root->tbl[i]);
-
-	root->bmflag = swap_endian(root->bmflag);
-	for (i = 0; i < BM_SIZE; i++)
-		root->bmpages[i] = swap_endian(root->bmpages[i]);
-
-	root->bmext = swap_endian(root->bmext);
-	root->cdays = swap_endian(root->cdays);
-	root->cmins = swap_endian(root->cmins);
-	root->cticks = swap_endian(root->cticks);
-	root->days = swap_endian(root->days);
-	root->mins = swap_endian(root->mins);
-	root->ticks = swap_endian(root->ticks);
-	root->codays = swap_endian(root->codays);
-	root->comins = swap_endian(root->comins);
-	root->coticks = swap_endian(root->coticks);
-	root->nextsamehash = swap_endian(root->nextsamehash);
-	root->parent = swap_endian(root->parent);
-	root->extension = swap_endian(root->extension);
-	root->sectype = swap_endian(root->sectype);
+	swaprootblock(root);
 #endif // LITTLE_ENDIAN
 
 	uint8_t buf[BSIZE];
@@ -744,34 +644,7 @@ void Volume::writerootblock(uint32_t blockno, rootblock_t *root)
 	writeblock(blockno, root);
 
 #ifdef LITTLE_ENDIAN
-	root->type = swap_endian(root->type);
-	root->hkey = swap_endian(root->hkey);
-	root->highseq = swap_endian(root->highseq);
-	root->tblsize = swap_endian(root->tblsize);
-	root->firstdata = swap_endian(root->firstdata);
-	root->checksum = swap_endian(root->checksum);
-
-	for (i = 0; i < HT_SIZE; i++)
-		root->tbl[i] = swap_endian(root->tbl[i]);
-
-	root->bmflag = swap_endian(root->bmflag);
-	for (i = 0; i < BM_SIZE; i++)
-		root->bmpages[i] = swap_endian(root->bmpages[i]);
-
-	root->bmext = swap_endian(root->bmext);
-	root->cdays = swap_endian(root->cdays);
-	root->cmins = swap_endian(root->cmins);
-	root->cticks = swap_endian(root->cticks);
-	root->days = swap_endian(root->days);
-	root->mins = swap_endian(root->mins);
-	root->ticks = swap_endian(root->ticks);
-	root->codays = swap_endian(root->codays);
-	root->comins = swap_endian(root->comins);
-	root->coticks = swap_endian(root->coticks);
-	root->nextsamehash = swap_endian(root->nextsamehash);
-	root->parent = swap_endian(root->parent);
-	root->extension = swap_endian(root->extension);
-	root->sectype = swap_endian(root->sectype);
+	swaprootblock(root);
 #endif // LITTLE_ENDIAN
 }
 
@@ -782,12 +655,7 @@ void Volume::writedircblock(uint32_t blockno, dircacheblock_t *dirc)
 	dirc->key = blockno;
 
 #ifdef LITTLE_ENDIAN
-	dirc->type = swap_endian(dirc->type);
-	dirc->key = swap_endian(dirc->key);
-	dirc->parent = swap_endian(dirc->parent);
-	dirc->nrecs = swap_endian(dirc->nrecs);
-	dirc->next = swap_endian(dirc->next);
-	dirc->checksum = swap_endian(dirc->checksum);
+	swapdircblock(dirc);
 #endif // LITTLE_ENDIAN
 
 	uint8_t buf[BSIZE];
@@ -799,14 +667,8 @@ void Volume::writedircblock(uint32_t blockno, dircacheblock_t *dirc)
 	writeblock(blockno, dirc);
 
 #ifdef LITTLE_ENDIAN
-	dirc->type = swap_endian(dirc->type);
-	dirc->key = swap_endian(dirc->key);
-	dirc->parent = swap_endian(dirc->parent);
-	dirc->nrecs = swap_endian(dirc->nrecs);
-	dirc->next = swap_endian(dirc->next);
-	dirc->checksum = swap_endian(dirc->checksum);
+	swapdircblock(dirc);
 #endif // LITTLE_ENDIAN
-
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -880,19 +742,13 @@ bool Volume::writenewbitmap()
 void Volume::writebmextblock(uint32_t blockno, bitmapextblock_t *block)
 {
 #ifdef LITTLE_ENDIAN
-	for (uint32_t i = 0; i < BM_MAPSIZE; i++) {
-		block->pages[i] = swap_endian(block->pages[i]);
-	}
-	block->next = swap_endian(block->next);
+	swapbmext(block);
 #endif
 
 	writeblock(blockno, block);
 
 #ifdef LITTLE_ENDIAN
-	for (uint32_t i = 0; i < BM_MAPSIZE; i++) {
-		block->pages[i] = swap_endian(block->pages[i]);
-	}
-	block->next = swap_endian(block->next);
+	swapbmext(block);
 #endif
 }
 
@@ -922,12 +778,7 @@ void Volume::updatebitmap()
 void Volume::writebmblock(uint32_t blockno, bitmapblock_t *block)
 {
 #ifdef LITTLE_ENDIAN
-	block->checksum = swap_endian(block->checksum);
-
-	uint32_t i;
-	for (i = 0; i < BM_MAPSIZE; i++) {
-		block->map[i] = swap_endian(block->map[i]);
-	}
+	swapbmblock(block);
 #endif
 	uint8_t buf[BSIZE];
 	memcpy(buf, block, BSIZE);
@@ -938,11 +789,7 @@ void Volume::writebmblock(uint32_t blockno, bitmapblock_t *block)
 	writeblock(blockno, block); 
 
 #ifdef LITTLE_ENDIAN
-	block->checksum = swap_endian(block->checksum);
-
-	for (i = 0; i < BM_MAPSIZE; i++) {
-		block->map[i] = swap_endian(block->map[i]);
-	}
+	swapbmblock(block);
 #endif
 
 }
@@ -1029,41 +876,7 @@ bool Volume::deleteentry(uint32_t blockno, const char *name)
 void Volume::writeentry(uint32_t blockno, entryblock_t *e)
 {
 #ifdef LITTLE_ENDIAN
-	e->type = swap_endian(e->type);
-	e->key = swap_endian(e->key);
-	
-	uint32_t i;
-	for (i = 0; i < 2; i++) {
-		e->r1[i] = swap_endian(e->r1[i]);
-	}
-	
-	e->firstblock = swap_endian(e->firstblock);
-	e->checksum = swap_endian(e->checksum);
-	for (i = 0; i < HT_SIZE; i++) {
-		e->tbl[i] = swap_endian(e->tbl[i]);
-	}
-	
-	for (i = 0; i < 2; i++) {
-		e->r2[i] = swap_endian(e->r2[i]);
-	}
-
-	e->access = swap_endian(e->access);
-	e->bytesize = swap_endian(e->bytesize);
-	e->days = swap_endian(e->days);
-	e->mins = swap_endian(e->mins);
-	e->ticks = swap_endian(e->ticks);
-	e->r4 = swap_endian(e->r4);
-	e->realentry = swap_endian(e->realentry);
-	e->nextlink = swap_endian(e->nextlink);
-
-	for (i = 0; i < 5; i++) {
-		e->r5[i] = swap_endian(e->r5[i]);
-	}
-
-	e->nextsamehash = swap_endian(e->nextsamehash);
-	e->parent = swap_endian(e->parent);
-	e->extension = swap_endian(e->extension);
-	e->sectype = swap_endian(e->sectype);
+	swapentry(e);
 #endif // LITTLE_ENDIAN
 
 	uint8_t buf[BSIZE];
@@ -1075,40 +888,7 @@ void Volume::writeentry(uint32_t blockno, entryblock_t *e)
 	writeblock(blockno, e);
 
 #ifdef LITTLE_ENDIAN
-	e->type = swap_endian(e->type);
-	e->key = swap_endian(e->key);
-	
-	for (i = 0; i < 2; i++) {
-		e->r1[i] = swap_endian(e->r1[i]);
-	}
-	
-	e->firstblock = swap_endian(e->firstblock);
-	e->checksum = swap_endian(e->checksum);
-	for (i = 0; i < HT_SIZE; i++) {
-		e->tbl[i] = swap_endian(e->tbl[i]);
-	}
-	
-	for (i = 0; i < 2; i++) {
-		e->r2[i] = swap_endian(e->r2[i]);
-	}
-
-	e->access = swap_endian(e->access);
-	e->bytesize = swap_endian(e->bytesize);
-	e->days = swap_endian(e->days);
-	e->mins = swap_endian(e->mins);
-	e->ticks = swap_endian(e->ticks);
-	e->r4 = swap_endian(e->r4);
-	e->realentry = swap_endian(e->realentry);
-	e->nextlink = swap_endian(e->nextlink);
-
-	for (i = 0; i < 5; i++) {
-		e->r5[i] = swap_endian(e->r5[i]);
-	}
-
-	e->nextsamehash = swap_endian(e->nextsamehash);
-	e->parent = swap_endian(e->parent);
-	e->extension = swap_endian(e->extension);
-	e->sectype = swap_endian(e->sectype);
+	swapentry(e);
 #endif // LITTLE_ENDIAN
 }
 
@@ -1228,12 +1008,7 @@ void Volume::readdircblock(uint32_t blockno, dircacheblock_t *dirc)
 	memcpy(dirc, buf, BSIZE);
 
 #ifdef LITTLE_ENDIAN
-	dirc->type = swap_endian(dirc->type);
-	dirc->key = swap_endian(dirc->key);
-	dirc->parent = swap_endian(dirc->parent);
-	dirc->nrecs = swap_endian(dirc->nrecs);
-	dirc->next = swap_endian(dirc->next);
-	dirc->checksum = swap_endian(dirc->checksum);
+	swapdircblock(dirc);
 #endif // LITTLE_ENDIAN
 
 	if (dirc->checksum != adfchecksum(buf, 20, BSIZE)) {
@@ -1248,6 +1023,151 @@ void Volume::readdircblock(uint32_t blockno, dircacheblock_t *dirc)
 		ADFWarningDispatcher::dispatch("bad dircache block.");
 	}
 }
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::createFile(uint32_t nparent, const char *name, fileheader_t *
+	header)
+{
+	entryblock_t parent;
+	readentry(nparent, &parent);
+
+	uint32_t blockno;
+	if ((blockno = createEntry(&parent, name, -1)) == -1)
+		throw ADFException("can't create entry.");
+
+	memset(header, 0, BSIZE);
+	header->namelen = min(MAXNAMELEN, strlen(name));
+	memcpy(header->filename, name, header->namelen);
+	header->key = blockno;
+
+	if (parent.sectype == ST_ROOT) {
+		header->parent = rootblock;
+	} else if (parent.sectype == ST_DIR) {
+		header->parent = parent.key;
+	} else {
+		ADFWarningDispatcher::dispatch("unknown sectype.");
+	}
+
+	adfTime2AmigaTime(adfGetCurrentTime(), header->days, header->mins,
+		header->ticks);
+
+	writefileblock(blockno, header);
+
+	if (isDIRCACHE(type)) {
+		// TODO: adfAddInCache(vol, &parent, (struct bEntryBlock *)fhdr);
+	}
+
+	updatebitmap();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::writedirblock(uint32_t blockno, dirblock_t* block)
+{
+	block->type = T_HEADER;
+	block->key = 0;
+	block->tblsize = 0;
+	block->sectype = ST_DIR;
+
+#ifdef LITTLE_ENDIAN
+	swapdirblock(block);
+#endif // LITTLE_ENDIAN
+
+	uint8_t buf[BSIZE];
+	memcpy(buf, block, BSIZE);
+
+	block->checksum = adfchecksum(buf, 20, sizeof(dirblock_t));
+	block->checksum = swap_endian(block->checksum);
+
+	writeblock(blockno, block);
+
+#ifdef LITTLE_ENDIAN
+	swapdirblock(block);
+#endif // LITTLE_ENDIAN
+}
+
+/////////////////////////////////////////////////////////////////////////////
+uint32_t Volume::createEntry(entryblock_t *dir, const char *name,
+	uint32_t blockno)
+{
+	bool intl = isINTL(type) || isDIRCACHE(type);
+	string uname = adfToUpper(name, intl);
+	uint32_t hash = adfhash(name, intl);
+
+    uint32_t nblock = dir->tbl[hash];
+	if (nblock == 0) {	// empty
+		if (blockno == -1)	{	// allocate new block
+			if ((blockno = getFreeBlock()) == -1) {
+				throw ADFException("can't allocate block.");
+			}
+		}		
+
+		dir->tbl[hash] = blockno;
+        if (dir->sectype == ST_ROOT) {	// root block
+			rootblock_t *root = (rootblock_t*)dir;
+			adfTime2AmigaTime(adfGetCurrentTime(), root->cdays, root->cmins, 
+				root->cticks);
+			writerootblock(rootblock, root);
+		} else {	// directory block
+			adfTime2AmigaTime(adfGetCurrentTime(), dir->days, dir->mins, dir->ticks);
+			writedirblock(dir->key, (dirblock_t*)dir);
+        }
+		return blockno;
+	} 
+
+	entryblock_t uentry;
+	string ename;
+
+	do {
+		readentry(nblock, &uentry);
+		ename = adfToUpper(uentry.name, intl);
+		if (ename == uname) {
+			throw ADFException("entry already exists.");
+		}
+		nblock = uentry.nextsamehash;
+	} while (nblock != 0);
+
+	if (blockno == -1) {
+		if ((blockno = getFreeBlock()) == -1) {
+			throw ADFException("can't allocate block.");
+		}
+	}
+
+	uentry.nextsamehash = blockno;
+	if (uentry.sectype == ST_DIR) {
+		writedirblock(uentry.key, (dirblock_t*)&uentry);
+	} else if (uentry.sectype == ST_FILE) {
+		writefileblock(uentry.key, (fileheader_t*)&uentry);
+	} else {
+		throw ADFException("unknown entry type.");
+	}
+
+	return blockno;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::writefileblock(uint32_t blockno, fileheader_t*block)
+{
+	block->type = T_HEADER;
+    block->datasize = 0;
+    block->sectype = ST_FILE;
+
+#ifdef LITTLE_ENDIAN
+	swapfileblock(block);
+#endif // LITTLE_ENDIAN
+
+	uint8_t buf[BSIZE];
+	memcpy(buf, block, BSIZE);
+
+	block->checksum = adfchecksum(buf, 20, sizeof(dirblock_t));
+	block->checksum = swap_endian(block->checksum);
+
+	writeblock(blockno, block);
+
+#ifdef LITTLE_ENDIAN
+	swapfileblock(block);
+#endif // LITTLE_ENDIAN
+}
+
 
 // helper functions
 namespace {	// anonymous

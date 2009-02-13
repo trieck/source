@@ -112,7 +112,7 @@ struct bootblock_t {
 // root block structure
 struct rootblock_t {
 	int32_t type;					/* primary block type = T_HEADER */
-	int32_t hkey;					/* UNUSED */
+	int32_t key;					/* UNUSED */
 	int32_t highseq;				/* UNUSED */
 	int32_t tblsize;				/* hash table size (= BSIZE/4 - 56), floppy disk = 0x48 */
 	int32_t firstdata;				/* UNUSED */

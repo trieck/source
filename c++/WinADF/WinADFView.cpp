@@ -43,6 +43,7 @@ BEGIN_MESSAGE_MAP(WinADFView, CListView)
 	ON_UPDATE_COMMAND_UI(ID_ENTRY_EXPORT, &WinADFView::OnUpdateEntryExport)
 	ON_COMMAND(ID_ENTRY_DELETE, &WinADFView::OnEntryDelete)
 	ON_UPDATE_COMMAND_UI(ID_ENTRY_DELETE, &WinADFView::OnUpdateEntryDelete)
+	ON_WM_DROPFILES()
 END_MESSAGE_MAP()
 
 // WinADFView diagnostics
@@ -83,6 +84,8 @@ void WinADFView::OnInitialUpdate()
 	
 	InsertHeaders();
 
+	DragAcceptFiles();
+
 	CListView::OnInitialUpdate();	
 }
 
@@ -119,37 +122,11 @@ void WinADFView::OnUpdate(CView* pSender, LPARAM lHint, CObject* /*pHint*/)
 	
 	CListCtrl &list = GetListCtrl();
 	list.DeleteAllItems();
-	
-	LVITEM item;
-	memset(&item, 0, sizeof(LVITEM));
-	item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
-	item.iSubItem = 0;
-
-	CTime time;
+		
 	EntryList::const_iterator it = entries.begin();
 	uint32_t i;
 	for (i = 0; it != entries.end(); it++, i++) {
-		const Entry &entry = *it;
-
-		item.iItem = i;		
-		item.iImage = entry.type == ST_DIR ? 0 : 1;
-		item.pszText = (LPSTR)entry.name.c_str();
-		item.cchTextMax = strlen(item.pszText);
-		item.lParam = (LPARAM)new Entry(entry);
-		list.InsertItem(&item);
-
-		list.SetItemText(i, 1, entry.comment.c_str());
-
-		if (entry.type != ST_DIR) {
-			CString size;
-			size.Format("%d", entry.size);
-			list.SetItemText(i, 2, size);
-		}
-
-		list.SetItemText(i, 3, adfaccess(entry.access).c_str());
-		time = CTime(entry.year, entry.month, entry.days, 
-			entry.hour, entry.mins, entry.secs);
-		list.SetItemText(i, 4, time.Format("%m/%d/%Y %H:%M:%S"));
+		InsertEntry(*it);
 	}
 }
 
@@ -380,4 +357,64 @@ void WinADFView::OnUpdateEntryDelete(CCmdUI *pCmdUI)
 	// TODO: can only delete files 
 	Entry *pEntry = GetSelectedEntry();
 	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);	
+}
+
+void WinADFView::OnDropFiles(HDROP hDropInfo)
+{
+	char filename[MAX_PATH+_MAX_FNAME+1];
+	
+	uint32_t nCount = DragQueryFile(hDropInfo, 0xFFFFFFFF, NULL, 0);
+	uint32_t n;
+
+	WinADFDoc *pDoc = GetDocument();
+	Volume *pVol = pDoc->GetVolume();
+	ASSERT(pVol != NULL);
+
+	FilePtr file;
+	Entry entry;
+	for (uint32_t i = 0; i < nCount; i++) {
+		n = DragQueryFile(hDropInfo, i, filename, MAX_PATH+_MAX_FNAME);
+		filename[n] = '\0';
+
+		try {
+			file = pVol->openfile(filename, "w");
+			entry = file->getEntry();
+			InsertEntry(entry);
+		} catch (const ADFException &e) {
+			AfxMessageBox(e.getDescription().c_str());
+		}
+	}
+}
+
+void WinADFView::InsertEntry(const Entry &entry)
+{
+	CListCtrl &list = GetListCtrl();
+	uint32_t nItems = list.GetItemCount();
+
+	LVITEM item;
+	memset(&item, 0, sizeof(LVITEM));
+	
+	item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+	item.iSubItem = 0;	
+	item.iItem = nItems;		
+	item.iImage = entry.type == ST_DIR ? 0 : 1;
+	item.pszText = (LPSTR)entry.name.c_str();
+	item.cchTextMax = strlen(item.pszText);
+	item.lParam = (LPARAM)new Entry(entry);
+	list.InsertItem(&item);
+
+	list.SetItemText(nItems, 1, entry.comment.c_str());
+
+	if (entry.type != ST_DIR) {
+		CString size;
+		size.Format("%d", entry.size);
+		list.SetItemText(nItems, 2, size);
+	}
+
+	list.SetItemText(nItems, 3, adfaccess(entry.access).c_str());
+	CTime time = CTime(entry.year, entry.month, entry.days, 
+		entry.hour, entry.mins, entry.secs);
+
+	list.SetItemText(nItems, 4, time.Format("%m/%d/%Y %H:%M:%S"));
+	
 }

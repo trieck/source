@@ -16,6 +16,15 @@
 #include "adfexcept.h"
 
 /////////////////////////////////////////////////////////////////////////////
+File::File(Volume *pVol, fileheader_t *pheader)
+ : volume(pVol), pos(0), blockpos(0), extentpos(0), nblock(0), data(&buffer[0])
+{
+	memcpy(&header, pheader, sizeof(fileheader_t));
+	memset(buffer, 0, BSIZE);
+	memset(&extent, 0, sizeof(fileext_t));
+}
+
+/////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, entryblock_t *pEntry)
  : volume(pVol), pos(0), blockpos(0), extentpos(0), nblock(0), data(&buffer[0])
 {
@@ -32,25 +41,7 @@ File::File(Volume *pVol, const Entry &e)
 	memset(&extent, 0, sizeof(fileext_t));
 	volume->readblock(e.blockno, &header);	
 #ifdef LITTLE_ENDIAN
-	header.type = swap_endian(header.type);
-	header.key = swap_endian(header.key);
-	header.nblocks = swap_endian(header.nblocks);
-	header.firstblock = swap_endian(header.firstblock);
-	header.checksum = swap_endian(header.checksum);
-
-	for (uint32_t i = 0; i < MAX_DATABLK; i++)
-		header.datablocks[i] = swap_endian(header.datablocks[i]);
-
-	header.access = swap_endian(header.access);
-	header.bytesize = swap_endian(header.bytesize);
-	header.days = swap_endian(header.days);
-	header.mins = swap_endian(header.mins);
-	header.ticks = swap_endian(header.ticks);
-	header.nextlink = swap_endian(header.nextlink);
-	header.nexthash = swap_endian(header.nexthash);
-	header.parent = swap_endian(header.parent);
-	header.extension = swap_endian(header.extension);
-	header.sectype = swap_endian(header.sectype);
+	swapfileblock(&header);
 #endif	
 }
 
@@ -135,4 +126,11 @@ void File::readnext()
 bool File::isEOF() const
 {
 	return pos == header.bytesize;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Entry File::getEntry() const
+{
+	entryblock_t *pentry = (entryblock_t*)&header;
+	return Entry(*pentry);
 }

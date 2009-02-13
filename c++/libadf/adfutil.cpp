@@ -269,3 +269,204 @@ void adfTime2AmigaTime(ADFDateTime dt, int32_t &day, int32_t &min,
         }
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////
+void swapfileblock(fileheader_t *block)
+{
+	block->type = swap_endian(block->type);
+	block->key = swap_endian(block->key);
+	block->nblocks = swap_endian(block->nblocks);
+	block->firstblock = swap_endian(block->firstblock);
+	block->checksum = swap_endian(block->checksum);
+
+	for (uint32_t i = 0; i < MAX_DATABLK; i++)
+		block->datablocks[i] = swap_endian(block->datablocks[i]);
+
+	block->access = swap_endian(block->access);
+	block->bytesize = swap_endian(block->bytesize);
+	block->days = swap_endian(block->days);
+	block->mins = swap_endian(block->mins);
+	block->ticks = swap_endian(block->ticks);
+	block->nextlink = swap_endian(block->nextlink);
+	block->nexthash = swap_endian(block->nexthash);
+	block->parent = swap_endian(block->parent);
+	block->extension = swap_endian(block->extension);
+	block->sectype = swap_endian(block->sectype);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void swapofsblock(ofsblock_t *block)
+{
+	block->type = swap_endian(block->type);
+	block->key = swap_endian(block->key);
+	block->seqnum = swap_endian(block->seqnum);
+	block->size = swap_endian(block->size);
+	block->next = swap_endian(block->next);
+	block->checksum = swap_endian(block->checksum);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void swaprootblock(rootblock_t *block)
+{
+	block->type = swap_endian(block->type);
+	block->key = swap_endian(block->key);
+	block->highseq = swap_endian(block->highseq);
+	block->tblsize = swap_endian(block->tblsize);
+	block->firstdata = swap_endian(block->firstdata);
+	block->checksum = swap_endian(block->checksum);
+
+	uint32_t i;
+	for (i = 0; i < HT_SIZE; i++)
+		block->tbl[i] = swap_endian(block->tbl[i]);
+
+	block->bmflag = swap_endian(block->bmflag);
+	for (i = 0; i < BM_SIZE; i++)
+		block->bmpages[i] = swap_endian(block->bmpages[i]);
+
+	block->bmext = swap_endian(block->bmext);
+	block->cdays = swap_endian(block->cdays);
+	block->cmins = swap_endian(block->cmins);
+	block->cticks = swap_endian(block->cticks);
+	block->days = swap_endian(block->days);
+	block->mins = swap_endian(block->mins);
+	block->ticks = swap_endian(block->ticks);
+	block->codays = swap_endian(block->codays);
+	block->comins = swap_endian(block->comins);
+	block->coticks = swap_endian(block->coticks);
+	block->nextsamehash = swap_endian(block->nextsamehash);
+	block->parent = swap_endian(block->parent);
+	block->extension = swap_endian(block->extension);
+	block->sectype = swap_endian(block->sectype);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void swapbmblock(bitmapblock_t *block)
+{
+	block->checksum = swap_endian(block->checksum);
+	uint32_t i;
+	for (i = 0; i < BM_MAPSIZE; i++)
+		block->map[i] = swap_endian(block->map[i]);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void swapentry(entryblock_t *block)
+{
+	block->type = swap_endian(block->type);
+	block->key = swap_endian(block->key);
+	
+	uint32_t i;
+	for (i = 0; i < 2; i++) {
+		block->r1[i] = swap_endian(block->r1[i]);
+	}
+	
+	block->firstblock = swap_endian(block->firstblock);
+	block->checksum = swap_endian(block->checksum);
+	for (i = 0; i < HT_SIZE; i++) {
+		block->tbl[i] = swap_endian(block->tbl[i]);
+	}
+	
+	for (i = 0; i < 2; i++) {
+		block->r2[i] = swap_endian(block->r2[i]);
+	}
+
+	block->access = swap_endian(block->access);
+	block->bytesize = swap_endian(block->bytesize);
+	block->days = swap_endian(block->days);
+	block->mins = swap_endian(block->mins);
+	block->ticks = swap_endian(block->ticks);
+	block->r4 = swap_endian(block->r4);
+	block->realentry = swap_endian(block->realentry);
+	block->nextlink = swap_endian(block->nextlink);
+
+	for (i = 0; i < 5; i++) {
+		block->r5[i] = swap_endian(block->r5[i]);
+	}
+
+	block->nextsamehash = swap_endian(block->nextsamehash);
+	block->parent = swap_endian(block->parent);
+	block->extension = swap_endian(block->extension);
+	block->sectype = swap_endian(block->sectype);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void swapfileext(fileext_t *block)
+{
+	block->type = swap_endian(block->type);
+	block->key = swap_endian(block->key);
+	block->highseq = swap_endian(block->highseq);
+	block->checksum = swap_endian(block->checksum);
+
+	for (uint32_t i = 0; i < MAX_DATABLK; i++) 
+		block->blocks[i] = swap_endian(block->blocks[i]);
+
+	block->parent = swap_endian(block->parent);
+	block->extension = swap_endian(block->extension);
+	block->sectype = swap_endian(block->sectype);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void swapdircblock(dircacheblock_t *block)
+{
+	block->type = swap_endian(block->type);
+	block->key = swap_endian(block->key);
+	block->parent = swap_endian(block->parent);
+	block->nrecs = swap_endian(block->nrecs);
+	block->next = swap_endian(block->next);
+	block->checksum = swap_endian(block->checksum);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void swapbmext(bitmapextblock_t *block)
+{
+	for (uint32_t i = 0; i < BM_MAPSIZE; i++) {
+		block->pages[i] = swap_endian(block->pages[i]);
+	}
+	block->next = swap_endian(block->next);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void swapdirblock(dirblock_t *block)
+{
+	block->type = swap_endian(block->type);
+	block->key = swap_endian(block->key);
+	block->highseq = swap_endian(block->highseq);
+	block->tblsize = swap_endian(block->tblsize);
+	block->r1 = swap_endian(block->r1);
+	block->checksum = swap_endian(block->checksum);
+
+	uint32_t i;
+	for (i = 0; i < HT_SIZE; i++) {
+		block->tbl[i] = swap_endian(block->tbl[i]);
+	}
+
+	for (i = 0; i < 2; i++) {
+		block->r2[i] = swap_endian(block->r2[i]);
+	}
+
+	block->access = swap_endian(block->access);
+
+	for (i = 0; i < 2; i++) {
+		block->r2[i] = swap_endian(block->r2[i]);
+	}
+
+	for (i = 0; i < 11; i++) {
+		block->r5[i] = swap_endian(block->r5[i]);
+	}
+
+	block->days = swap_endian(block->days);
+	block->mins = swap_endian(block->mins);
+	block->ticks = swap_endian(block->ticks);
+	
+	block->r6 = swap_endian(block->r6);
+	block->real = swap_endian(block->real);
+	block->nextlink = swap_endian(block->nextlink);
+
+	for (i = 0; i < 5; i++) {
+		block->r7[i] = swap_endian(block->r7[i]);
+	}
+
+	block->nextsamehash = swap_endian(block->nextsamehash);
+	block->parent = swap_endian(block->parent);
+	block->extension = swap_endian(block->extension);
+	block->sectype = swap_endian(block->sectype);
+}

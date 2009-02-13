@@ -26,6 +26,7 @@ protected:
 	void AddImages();
 	void InsertHeaders();
 	Entry *GetSelectedEntry(int *pos = NULL);
+	void InsertEntry(const Entry &entry);
 
 	CImageList m_ImageList;
 
@@ -55,6 +56,7 @@ public:
 	afx_msg void OnUpdateEntryExport(CCmdUI *pCmdUI);
 	afx_msg void OnEntryDelete();
 	afx_msg void OnUpdateEntryDelete(CCmdUI *pCmdUI);
+	afx_msg void OnDropFiles(HDROP hDropInfo);
 };
 
 #ifndef _DEBUG  //debug version in WinADFView.cpp

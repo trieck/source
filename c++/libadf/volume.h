@@ -52,8 +52,11 @@ public:
 
 	void setCurrentDir(uint32_t blockno);
 	EntryList readdir(uint32_t blockno, bool recurse);
-	FilePtr openfile(const char *filename);
+	FilePtr openfile(const char *filename, const char *mode);
 	FilePtr openfile(const Entry &e);
+	void createFile(uint32_t parent, const char *name, fileheader_t *
+		header);
+	uint32_t createEntry(entryblock_t *dir, const char *name, uint32_t blockno);
 	void changedir(Entry *pEntry);
 	void changedir(const char *name);
 
@@ -64,6 +67,8 @@ public:
 	void writebmextblock(uint32_t blockno, bitmapextblock_t *block);
 	void writebmblock(uint32_t blockno, bitmapblock_t *block);
 	void writeentry(uint32_t blockno, entryblock_t *e);
+	void writedirblock(uint32_t blockno, dirblock_t *block);
+	void writefileblock(uint32_t blockno, fileheader_t*block);
 	void installbootblock(uint8_t *code);
 
 	bool deleteentry(uint32_t blockno, const char *name);
