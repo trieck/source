@@ -1012,7 +1012,7 @@ bool Volume::deleteentry(uint32_t blockno, const char *name)
 	}
 
 	if (isDIRCACHE(type)) {
-        // TODO adfDelFromCache(vol, &parent, entry.headerKey);
+		delFromCache(&parent, entry.key);
 	}
 
     updatebitmap();
@@ -1155,3 +1155,57 @@ void Volume::freefileblocks(fileheader_t *entry)
 		setBlockFree(*it);
 	}
 }
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::delFromCache(entryblock_t *parent, uint32_t key)
+{
+	uint32_t blockno = parent->extension;
+
+	dircacheblock_t dirc;
+
+	bool found = false;
+	uint32_t offset, old;
+
+	do {
+		readdircblock(blockno, &dirc);
+
+		for (int32_t n = 0, offset = 0; n < dirc.nrecs && !found; n++) {
+			old = offset;
+            //adfGetCacheEntry(&dirc, &offset, &caEntry);
+			;
+		}
+
+	} while (0);
+
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::readdircblock(uint32_t blockno, dircacheblock_t *dirc)
+{
+	uint8_t buf[BSIZE];
+
+	readblock(blockno, buf);
+	memcpy(dirc, buf, BSIZE);
+
+#ifdef LITTLE_ENDIAN
+	dirc->type = swap_endian(dirc->type);
+	dirc->key = swap_endian(dirc->key);
+	dirc->parent = swap_endian(dirc->parent);
+	dirc->nrecs = swap_endian(dirc->nrecs);
+	dirc->next = swap_endian(dirc->next);
+	dirc->checksum = swap_endian(dirc->checksum);
+#endif // LITTLE_ENDIAN
+
+	if (dirc->checksum != adfchecksum(buf, 20, BSIZE)) {
+		ADFWarningDispatcher::dispatch("invalid checksum.");
+	}
+
+	if (dirc->type != T_DIRC) {
+		ADFWarningDispatcher::dispatch("bad dircache block.");
+	}
+
+	if (dirc->key != blockno) {
+		ADFWarningDispatcher::dispatch("bad dircache block.");
+	}
+}
+

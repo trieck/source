@@ -37,6 +37,7 @@ public:
 	void readdatablock(uint32_t blockno, void *block);
 	void readentry(uint32_t blockno, entryblock_t *e);
 	void readextblock(uint32_t blockno, fileext_t *block);
+	void readdircblock(uint32_t blockno, dircacheblock_t *block);
 	bool isValidBlock(uint32_t blockno);
 	bool isBlockFree(uint32_t blockno);
 
@@ -76,7 +77,7 @@ public:
 	bool getFreeBlocks(uint32_t blockno, blocklist &blocks);
 	uint32_t getFreeBlock(); 
 	void createEmptyCache(entryblock_t *parent, uint32_t blockno);
-	
+	void delFromCache(entryblock_t *parent, uint32_t blockno);
 	FileBlocks getFileBlocks(fileheader_t *block);
 
 // Implementation
