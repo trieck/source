@@ -169,6 +169,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CacheEntry.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\common.cpp"
 				>
 				<FileConfiguration
@@ -232,6 +236,10 @@
 			</File>
 			<File
 				RelativePath=".\adfwarn.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CacheEntry.h"
 				>
 			</File>
 			<File

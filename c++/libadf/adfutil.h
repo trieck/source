@@ -32,11 +32,17 @@ struct ADFDateTime {
 	int32_t sec;
 };
 
+/////////////////////////////////////////////////////////////////////////////
 ADFDate adfDays2Date(int32_t days);
 ADFDateTime adfGetCurrentTime();
 void adfTime2AmigaTime(ADFDateTime dt, int32_t &day, int32_t &min, 
 	int32_t &ticks);
 int swap_endian(int d);
+uint32_t swap_long(void *p);
+uint16_t swap_short(void *p);
+uint32_t toLong(void *p);
+uint16_t toWord(void *p);
+string toString(void *p, uint32_t len);
 uint32_t bootsum(uint8_t *block);
 uint32_t adfchecksum(uint8_t *block, uint32_t offset, uint32_t len);
 void * xmalloc(uint32_t size);

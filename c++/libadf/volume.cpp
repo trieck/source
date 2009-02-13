@@ -14,6 +14,7 @@
 #include "disk.h"
 #include "volume.h"
 #include "adfwarn.h"
+#include "CacheEntry.h"
 
 uint32_t bitmask[BM_BLOCKS_ENTRY] = { 
     0x1, 0x2, 0x4, 0x8,
@@ -25,6 +26,10 @@ uint32_t bitmask[BM_BLOCKS_ENTRY] = {
 	0x1000000, 0x2000000, 0x4000000, 0x8000000,
 	0x10000000, 0x20000000, 0x40000000, 0x80000000 
 };
+
+namespace { 
+	CacheEntry getCacheEntry(dircacheblock_t *block, int32_t *offset);
+}
 
 /////////////////////////////////////////////////////////////////////////////
 Volume::Volume()
@@ -1162,21 +1167,56 @@ void Volume::delFromCache(entryblock_t *parent, uint32_t key)
 	uint32_t blockno = parent->extension;
 
 	dircacheblock_t dirc;
+	CacheEntry entry;
 
 	bool found = false;
-	uint32_t offset, old;
+	int32_t offset, last, i;
+	int32_t nLen, prevblock = -1;
 
 	do {
+		offset = 0;
 		readdircblock(blockno, &dirc);
-
-		for (int32_t n = 0, offset = 0; n < dirc.nrecs && !found; n++) {
-			old = offset;
-            //adfGetCacheEntry(&dirc, &offset, &caEntry);
-			;
+		for (int32_t n = 0; n < dirc.nrecs && !found; n++) {
+			last = offset;
+			entry = getCacheEntry(&dirc, &offset);
+			found = (entry.header == key);
+			if (found) {
+				nLen = offset - last;
+				if (dirc.nrecs > 1 || prevblock == -1) {
+					if (n < dirc.nrecs - 1) { // not the last of the block
+						for (i = last; i < (OFS_DBSIZE-nLen); i++) {
+							dirc.records[i] = dirc.records[i+nLen];
+						}
+						for (i = OFS_DBSIZE-nLen; i < OFS_DBSIZE; i++) {
+							dirc.records[i] = 0;
+						}
+					} else {	// the last record of this cache block
+						for (i = last; i < offset; i++) {
+                            dirc.records[i] = 0;
+						}
+					}
+					dirc.nrecs--;
+					writedircblock(dirc.key, &dirc);
+				} else {
+					// dirc.nrecs == 1 or 0, prevblock != -1 :
+					// the only record in this dirc block and a previous
+					// dirc block exists
+					setBlockFree(dirc.key);
+					readdircblock(prevblock, &dirc);
+					dirc.next = 0;
+					writedircblock(prevblock, &dirc);
+					updatebitmap();
+				}
+			}
 		}
 
-	} while (0);
+		prevblock = blockno;
+		blockno = dirc.next;
+    } while (blockno != 0 && !found);
 
+	if (!found) {
+		ADFWarningDispatcher::dispatch("dirc entry not found.");
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1208,4 +1248,49 @@ void Volume::readdircblock(uint32_t blockno, dircacheblock_t *dirc)
 		ADFWarningDispatcher::dispatch("bad dircache block.");
 	}
 }
+
+// helper functions
+namespace {	// anonymous
+
+/////////////////////////////////////////////////////////////////////////////
+CacheEntry getCacheEntry(dircacheblock_t *dirc, int32_t *offset)
+{
+	CacheEntry entry;
+
+	int ptr = *offset;
+
+#ifdef LITTLE_ENDIAN
+	entry.header = swap_long(dirc->records+ptr);
+	entry.size = swap_long(dirc->records+ptr+4);
+	entry.protect = swap_long(dirc->records+ptr+8);
+	entry.days = swap_short(dirc->records+ptr+16);
+	entry.mins = swap_short(dirc->records+ptr+18);
+	entry.ticks = swap_short(dirc->records+ptr+20);
+#else
+	entry.header = toLong(dirc->records+ptr);
+	entry.size = toLong(dirc->records+ptr+4);
+	entry.protect = toLong(dirc->records+ptr+8);
+	entry.days = toShort(dirc->records+ptr+16);
+	entry.mins = toShort(dirc->records+ptr+18);
+	entry.ticks = toShort(dirc->records+ptr+20);
+#endif // LITTLE_ENDIAN
+
+	entry.type = (signed char) dirc->records[ptr+22];
+
+	uint8_t nLen = dirc->records[ptr+23];
+	entry.name = toString(dirc->records+ptr+24, nLen);
+
+	uint8_t cLen = dirc->records[ptr+24+nLen];
+	entry.comment = toString(dirc->records+ptr+24+nLen+1, cLen);
+
+	*offset = ptr+24+nLen+1+cLen;
+
+	// the starting offset of each record must be even (68000 constraint)
+    if ((*offset % 2) != 0)
+        *offset = (*offset) + 1;
+
+	return entry;
+}
+
+}	// anonymous
 

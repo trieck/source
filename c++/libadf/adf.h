@@ -102,10 +102,10 @@
 /////////////////////////////////////////////////////////////////////////////
 // boot block structure
 struct bootblock_t {
-	char type[4];				/* 'D''O''S' + flags */
-	uint32_t checksum;			/* checksum */
-	uint32_t rootblock;			/* rootblock = 880 for DD and HD */
-	uint8_t code[500+BSIZE];	/* bootblock code */
+	char type[4];					/* 'D''O''S' + flags */
+	uint32_t checksum;				/* checksum */
+	uint32_t rootblock;				/* rootblock = 880 for DD and HD */
+	uint8_t code[BOOTBLOCKSIZE-12];	/* bootblock code */
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -279,13 +279,13 @@ struct linkblock_t {
 /////////////////////////////////////////////////////////////////////////////
 // directory cache block structure
 struct dircacheblock_t {
-	int32_t type;				/* T_DIRC */
-	int32_t key;				/* self pointer */
-	int32_t parent;				/* parent directory */
-	int32_t nrecs;				/* number of directory entry records in this block */
-	int32_t next;				/* directory cache linked list */
-	uint32_t checksum;			/* checksum */
-	uint8_t records[1];			/* list of entries */
+	int32_t type;					/* T_DIRC */
+	int32_t key;					/* self pointer */
+	int32_t parent;					/* parent directory */
+	int32_t nrecs;					/* number of entry records in this block */
+	int32_t next;					/* directory cache linked list */
+	uint32_t checksum;				/* checksum */
+	uint8_t records[OFS_DBSIZE];	/* list of entries */
 };
 
 /////////////////////////////////////////////////////////////////////////////
