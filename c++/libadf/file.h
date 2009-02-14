@@ -26,6 +26,7 @@ public:
 	Volume *getVolume() const;
 	Entry getEntry() const;
 	uint32_t read(uint32_t n, void *buf);
+	uint32_t write(uint32_t n, const void *buf);
 	uint32_t getSize() const;
 	bool isEOF() const;
 

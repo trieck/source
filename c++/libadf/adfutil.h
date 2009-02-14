@@ -33,6 +33,8 @@ struct ADFDateTime {
 };
 
 /////////////////////////////////////////////////////////////////////////////
+uint32_t adfFileRealSize(uint32_t size, uint32_t blocksize, uint32_t *dataN, 
+	uint32_t *extN);
 ADFDate adfDays2Date(int32_t days);
 ADFDateTime adfGetCurrentTime();
 void adfTime2AmigaTime(ADFDateTime dt, int32_t &day, int32_t &min, 

@@ -27,6 +27,7 @@ protected:
 	void InsertHeaders();
 	Entry *GetSelectedEntry(int *pos = NULL);
 	void InsertEntry(const Entry &entry);
+	BOOL CopyFile(LPCSTR filename, Entry &entry);
 
 	CImageList m_ImageList;
 

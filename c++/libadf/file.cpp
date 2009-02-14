@@ -86,6 +86,71 @@ uint32_t File::read(uint32_t n, void *buf)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+uint32_t File::write(uint32_t n, const void *buf)
+{
+	if (n == 0)
+		return 0;
+
+	uint32_t blocksize = volume->getDataBlockSize();
+
+	uint8_t *pdata;
+	if (isOFS(volume->getType())) {
+		pdata = ((ofsblock_t*)data)->data;
+	} else {
+		pdata = data;
+	}
+
+	uint32_t written = 0;
+	while (written < n) {
+		if (pos == 0 || blockpos == blocksize) {
+			createnext();
+			blockpos = 0;
+		}
+	}
+
+	/*
+	long bytesWritten;
+    unsigned char *dataPtr, *bufPtr;
+    int size, blockSize;
+    struct bOFSDataBlock *dataB;
+
+    if (n==0) return (n);
+
+    blockSize = file->volume->datablockSize;
+    if (isOFS(file->volume->dosType)) {
+        dataB =(struct bOFSDataBlock *)file->currentData;
+        dataPtr = dataB->data;
+    }
+    else
+        dataPtr = file->currentData;
+
+    if (file->pos==0 || file->posInDataBlk==blockSize) {
+        if (adfCreateNextFileBlock(file)==-1)
+            (*adfEnv.wFct)("adfWritefile : no more free sector availbale");                        
+        file->posInDataBlk = 0;
+    }
+
+    bytesWritten = 0; bufPtr = buffer;
+    while( bytesWritten<n ) {
+        size = min(n-bytesWritten, blockSize-file->posInDataBlk);
+        memcpy(dataPtr+file->posInDataBlk, bufPtr, size);
+        bufPtr += size;
+        file->pos += size;
+        bytesWritten += size;
+        file->posInDataBlk += size;
+        if (file->posInDataBlk==blockSize && bytesWritten<n) {
+            if (adfCreateNextFileBlock(file)==-1)
+                (*adfEnv.wFct)("adfWritefile : no more free sector availbale");                        
+            file->posInDataBlk = 0;
+        }
+    }
+    return( bytesWritten );
+}
+*/
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 void File::readnext()
 {
 	ofsblock_t *block = (ofsblock_t*)data;

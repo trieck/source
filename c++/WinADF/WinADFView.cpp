@@ -8,6 +8,8 @@
 #include "adfutil.h"
 #include "EntryPropertySheet.h"
 #include "LeftView.h"
+#include "adfutil.h"
+#include <atlpath.h>
 
 // WinADFView
 
@@ -366,22 +368,20 @@ void WinADFView::OnDropFiles(HDROP hDropInfo)
 	uint32_t nCount = DragQueryFile(hDropInfo, 0xFFFFFFFF, NULL, 0);
 	uint32_t n;
 
-	WinADFDoc *pDoc = GetDocument();
-	Volume *pVol = pDoc->GetVolume();
-	ASSERT(pVol != NULL);
 
-	FilePtr file;
 	Entry entry;
 	for (uint32_t i = 0; i < nCount; i++) {
 		n = DragQueryFile(hDropInfo, i, filename, MAX_PATH+_MAX_FNAME);
 		filename[n] = '\0';
 
 		try {
-			file = pVol->openfile(filename, "w");
-			entry = file->getEntry();
-			InsertEntry(entry);
+			if (CopyFile(filename, entry))
+				InsertEntry(entry);
 		} catch (const ADFException &e) {
 			AfxMessageBox(e.getDescription().c_str());
+		} catch (CException *pException) {
+			pException->ReportError();
+			pException->Delete();
 		}
 	}
 }
@@ -417,4 +417,56 @@ void WinADFView::InsertEntry(const Entry &entry)
 
 	list.SetItemText(nItems, 4, time.Format("%m/%d/%Y %H:%M:%S"));
 	
+}
+
+BOOL WinADFView::CopyFile(LPCSTR filename, Entry &entry)
+{
+	WinADFDoc *pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+
+	Volume *pVol = pDoc->GetVolume();
+	ASSERT(pVol != NULL);
+
+	CFileStatus status;
+	CFile::GetStatus(filename, status);
+
+	if (status.m_attribute & CFile::directory) {
+		AfxMessageBox("Directory type not supported.");
+		return FALSE;
+	}
+
+	uint32_t filesize = (uint32_t)status.m_size;
+	uint32_t nblocks = adfFileRealSize(filesize, pVol->getDataBlockSize(), NULL, NULL);
+	uint32_t freeblocks = pVol->freeblocks();
+	if (nblocks > freeblocks) {
+		AfxMessageBox("Could not copy file. There is insufficient "
+			"free space on the destination volume.");
+		return FALSE;
+	}
+
+	CFileException except;
+	CFile file;
+	if (!file.Open(filename, CFile::modeRead |   
+		CFile::typeBinary | CFile::osSequentialScan, &except))
+		throw new CFileException(except.m_cause, except.m_lOsError, 
+			except.m_strFileName);
+
+	CPath path(filename);
+	path.StripPath();
+
+	CString name = path;
+	FilePtr pFile = pVol->openfile(name, "w");
+	
+	uint8_t buf[BSIZE];
+	uint32_t read, written;
+	
+	while ((read = file.Read(buf, BSIZE))) {
+		written = pFile->write(read, buf);
+	}
+
+	entry = pFile->getEntry();
+
+	file.Close();	
+
+	return FALSE;
 }

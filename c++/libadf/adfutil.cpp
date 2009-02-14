@@ -470,3 +470,34 @@ void swapdirblock(dirblock_t *block)
 	block->extension = swap_endian(block->extension);
 	block->sectype = swap_endian(block->sectype);
 }
+
+/////////////////////////////////////////////////////////////////////////////
+// Compute and return real number of block used by one file
+// Compute number of datablocks and file extension blocks
+ //
+uint32_t adfFileRealSize(uint32_t size, uint32_t blocksize, uint32_t *dataN, 
+	uint32_t *extN)
+{
+    uint32_t data, ext;
+
+	// number of data blocks 
+    data = size / blocksize;
+    if (size % blocksize)
+        data++;
+
+    // number of header extension blocks
+    ext = 0;
+    if (data > MAX_DATABLK) {
+        ext = (data-MAX_DATABLK) / MAX_DATABLK;
+        if ((data-MAX_DATABLK) % MAX_DATABLK)
+            ext++;
+    }
+
+    if (dataN)
+        *dataN = data;
+
+    if (extN)
+        *extN = ext;
+		
+    return ext+data+1;
+}
