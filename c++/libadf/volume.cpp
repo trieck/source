@@ -1145,7 +1145,7 @@ uint32_t Volume::createEntry(entryblock_t *dir, const char *name,
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Volume::writefileblock(uint32_t blockno, fileheader_t*block)
+void Volume::writefileblock(uint32_t blockno, fileheader_t *block)
 {
 	block->type = T_HEADER;
     block->datasize = 0;
@@ -1158,7 +1158,7 @@ void Volume::writefileblock(uint32_t blockno, fileheader_t*block)
 	uint8_t buf[BSIZE];
 	memcpy(buf, block, BSIZE);
 
-	block->checksum = adfchecksum(buf, 20, sizeof(dirblock_t));
+	block->checksum = adfchecksum(buf, 20, sizeof(fileheader_t));
 	block->checksum = swap_endian(block->checksum);
 
 	writeblock(blockno, block);
@@ -1168,6 +1168,30 @@ void Volume::writefileblock(uint32_t blockno, fileheader_t*block)
 #endif // LITTLE_ENDIAN
 }
 
+/////////////////////////////////////////////////////////////////////////////
+void Volume::writefileextblock(uint32_t blockno, fileext_t *block)
+{
+	block->type = T_LIST;
+    block->sectype = ST_FILE;
+    block->datasize = 0;
+    block->firstdata = 0;
+
+#ifdef LITTLE_ENDIAN
+	swapfileext(block);
+#endif // LITTLE_ENDIAN
+
+	uint8_t buf[BSIZE];
+	memcpy(buf, block, BSIZE);
+
+	block->checksum = adfchecksum(buf, 20, sizeof(fileext_t));
+	block->checksum = swap_endian(block->checksum);
+
+	writeblock(blockno, block);
+
+#ifdef LITTLE_ENDIAN
+	swapfileext(block);
+#endif // LITTLE_ENDIAN
+}
 
 // helper functions
 namespace {	// anonymous

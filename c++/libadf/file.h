@@ -33,6 +33,7 @@ public:
 // Implementation
 private:
 	void readnext();		// read next data block
+	void createnext();		// create next data block
 	Volume *volume;			// parent volume
 	fileheader_t header;	// file header
 	fileext_t extent;		// file extension block

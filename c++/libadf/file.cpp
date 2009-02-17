@@ -100,54 +100,24 @@ uint32_t File::write(uint32_t n, const void *buf)
 		pdata = data;
 	}
 
-	uint32_t written = 0;
+	uint8_t *pbuf = (uint8_t*)buf;
+	uint32_t written = 0, size;
+
 	while (written < n) {
 		if (pos == 0 || blockpos == blocksize) {
 			createnext();
 			blockpos = 0;
 		}
+
+		size = min(n - written, blocksize - blockpos);
+		memcpy(pdata + blockpos, pbuf, size);
+		pbuf += size;
+		pos += size;
+		written += size;
+		blockpos += size;
 	}
 
-	/*
-	long bytesWritten;
-    unsigned char *dataPtr, *bufPtr;
-    int size, blockSize;
-    struct bOFSDataBlock *dataB;
-
-    if (n==0) return (n);
-
-    blockSize = file->volume->datablockSize;
-    if (isOFS(file->volume->dosType)) {
-        dataB =(struct bOFSDataBlock *)file->currentData;
-        dataPtr = dataB->data;
-    }
-    else
-        dataPtr = file->currentData;
-
-    if (file->pos==0 || file->posInDataBlk==blockSize) {
-        if (adfCreateNextFileBlock(file)==-1)
-            (*adfEnv.wFct)("adfWritefile : no more free sector availbale");                        
-        file->posInDataBlk = 0;
-    }
-
-    bytesWritten = 0; bufPtr = buffer;
-    while( bytesWritten<n ) {
-        size = min(n-bytesWritten, blockSize-file->posInDataBlk);
-        memcpy(dataPtr+file->posInDataBlk, bufPtr, size);
-        bufPtr += size;
-        file->pos += size;
-        bytesWritten += size;
-        file->posInDataBlk += size;
-        if (file->posInDataBlk==blockSize && bytesWritten<n) {
-            if (adfCreateNextFileBlock(file)==-1)
-                (*adfEnv.wFct)("adfWritefile : no more free sector availbale");                        
-            file->posInDataBlk = 0;
-        }
-    }
-    return( bytesWritten );
-}
-*/
-	return 0;
+	return written;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -185,6 +155,105 @@ void File::readnext()
 	blockpos = 0;
 
 	nblock++;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void File::createnext()
+{
+	uint32_t blocksize = volume->getDataBlockSize();
+
+	ofsblock_t *block = (ofsblock_t*)data;
+
+	uint32_t blockno, extblock;
+
+	// the first data blocks pointers are inside the file header block
+	if (nblock < MAX_DATABLK) {
+		if ((blockno = volume->getFreeBlock()) == -1)
+			throw ADFException("can't allocate data block.");
+
+		if (nblock == 0)
+			header.firstblock = blockno;
+		header.datablocks[MAX_DATABLK-1-nblock] = blockno;
+		header.nblocks++;
+	} else {
+		// one more sector is needed for one file extension block
+		if ((nblock % MAX_DATABLK) == 0) {
+			if ((extblock = volume->getFreeBlock()) == -1)
+				throw ADFException("can't allocate extension block.");
+
+			// first extension block
+			if (nblock == MAX_DATABLK) {
+				header.extension = extentpos;
+			}
+
+			// not the first : save current one and link it in
+			if (nblock >= 2 * MAX_DATABLK) {
+				extent.extension = extblock;
+				volume->writefileextblock(extent.key, &extent);
+			}
+
+			// initializes a file extension block
+			uint32_t i;
+            for (i = 0; i < MAX_DATABLK; i++)
+                extent.blocks[i] = 0;
+
+            extent.key = extblock;
+            extent.parent = header.key;
+            extent.highseq = 0;
+            extent.extension = 0;
+			extentpos = 0;
+		}
+
+		if ((blockno = volume->getFreeBlock()) == -1)
+			throw ADFException("can't allocate extension block.");
+
+		extent.blocks[MAX_DATABLK-1-extentpos] = blockno;
+		extent.highseq++;
+		extentpos++;
+	}	
+
+	// build OFS header
+	if (isOFS(volume->getType()) {
+		// write previous data block and link it
+		if (pos >= blocksize) {
+			block->next = blockno;
+			volume->writedatablock(
+
+	/*
+
+    // builds OFS header
+    if (isOFS(file->volume->dosType)) {
+        // writes previous data block and link it
+        if (file->pos>=blockSize) {
+            data->nextData = nSect;
+            adfWriteDataBlock(file->volume, file->curDataPtr, file->currentData);
+
+
+        }
+        // initialize a new data block 
+        for(i=0; i<(int)blockSize; i++)
+            data->data[i]=0;
+        data->seqNum = file->nDataBlock+1;
+        data->dataSize = blockSize;
+        data->nextData = 0L;
+        data->headerKey = file->fileHdr->headerKey;
+    }
+    else
+        if (file->pos>=blockSize) {
+            adfWriteDataBlock(file->volume, file->curDataPtr, file->currentData);
+
+
+            memset(file->currentData,0,512);
+        }
+            
+
+    file->curDataPtr = nSect;
+    file->nDataBlock++;
+
+    return(nSect);
+}
+
+*/
 }
 
 /////////////////////////////////////////////////////////////////////////////

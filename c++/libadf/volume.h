@@ -68,7 +68,8 @@ public:
 	void writebmblock(uint32_t blockno, bitmapblock_t *block);
 	void writeentry(uint32_t blockno, entryblock_t *e);
 	void writedirblock(uint32_t blockno, dirblock_t *block);
-	void writefileblock(uint32_t blockno, fileheader_t*block);
+	void writefileblock(uint32_t blockno, fileheader_t *block);
+	void writefileextblock(uint32_t blockno, fileext_t *block);
 	void installbootblock(uint8_t *code);
 
 	bool deleteentry(uint32_t blockno, const char *name);
