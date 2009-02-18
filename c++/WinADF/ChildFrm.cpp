@@ -57,7 +57,6 @@ BOOL ChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContex
 
 BOOL ChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: Modify the Window class or styles here by modifying the CREATESTRUCT cs
 	if( !CMDIChildWnd::PreCreateWindow(cs) )
 		return FALSE;
 
@@ -94,7 +93,6 @@ void ChildFrame::OnUpdateViewStyles(CCmdUI* pCmdUI)
 	if (!pCmdUI)
 		return;
 
-	// TODO: customize or extend this code to handle choices on the View menu.
 	WinADFView* pView = GetRightPane(); 
 
 	// if the right-hand pane hasn't been created or isn't a view, disable commands in our range
@@ -148,7 +146,6 @@ void ChildFrame::OnUpdateViewStyles(CCmdUI* pCmdUI)
 
 void ChildFrame::OnViewStyle(UINT nCommandID)
 {
-	// TODO: customize or extend this code to handle choices on the View menu.
 	WinADFView* pView = GetRightPane();
 
 	// if the right-hand pane has been created and is a WinADFView, process the menu commands...

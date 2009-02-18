@@ -32,7 +32,6 @@ static UINT indicators[] =
 
 MainFrame::MainFrame()
 {
-	// TODO: add member initialization code here
 }
 
 MainFrame::~MainFrame()

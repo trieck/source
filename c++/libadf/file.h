@@ -30,6 +30,9 @@ public:
 	uint32_t getSize() const;
 	bool isEOF() const;
 
+	void flush();
+	void close();
+
 // Implementation
 private:
 	void readnext();		// read next data block
@@ -40,9 +43,13 @@ private:
 	uint32_t pos;			// read/write position in file
 	uint32_t blockpos;		// block pointer position
 	uint32_t extentpos;		// extent pointer position
-	uint32_t nblock;		// current data block number
+	uint32_t nblocks;		// number of data blocks occupied by the file
+	uint32_t currblock;		// current data block number
 	uint8_t *data;			// current data pointer
 	uint8_t buffer[BSIZE];	// data buffer
+	bool writemode;			// write mode
+
+	friend class Volume;
 };
 
 typedef auto_ptr<File> FilePtr;

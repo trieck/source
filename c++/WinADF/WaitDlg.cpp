@@ -140,7 +140,7 @@ DWORD WINAPI WaitDlg::CreateVolume(LPVOID pv)
 			pVol = disk->createHardfile(label, flags);
 		}
 
-		if (boot && pVol != NULL) {	// install boot block
+		if (boot && (pVol != NULL)) {	// install boot block
 			bootblock_t block;
 			if (LoadBootblock(&block)) {
 				pVol->installbootblock((uint8_t*)&block);

@@ -319,7 +319,6 @@ void WinADFView::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
 
 void WinADFView::OnEntryExport()
 {
-	// TODO: Add your command handler code here
 }
 
 void WinADFView::OnUpdateEntryExport(CCmdUI *pCmdUI)
@@ -356,7 +355,7 @@ void WinADFView::OnEntryDelete()
 
 void WinADFView::OnUpdateEntryDelete(CCmdUI *pCmdUI)
 {
-	// TODO: can only delete files 
+	// TODO: can only delete "files"
 	Entry *pEntry = GetSelectedEntry();
 	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);	
 }
@@ -412,7 +411,7 @@ void WinADFView::InsertEntry(const Entry &entry)
 	}
 
 	list.SetItemText(nItems, 3, adfaccess(entry.access).c_str());
-	CTime time = CTime(entry.year, entry.month, entry.days, 
+	CTime time = CTime(entry.year, entry.month, entry.days+1, 
 		entry.hour, entry.mins, entry.secs);
 
 	list.SetItemText(nItems, 4, time.Format("%m/%d/%Y %H:%M:%S"));
@@ -464,9 +463,10 @@ BOOL WinADFView::CopyFile(LPCSTR filename, Entry &entry)
 		written = pFile->write(read, buf);
 	}
 
-	entry = pFile->getEntry();
-
+	pFile->close();
 	file.Close();	
 
-	return FALSE;
+	entry = pFile->getEntry();	
+
+	return TRUE;
 }

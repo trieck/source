@@ -62,8 +62,6 @@ void TextView::DrawLine(CDC *pDC, uint32_t line)
 	rc.bottom = rc.top + m_szChar.cy;
 
 	pDC->DrawText(pline, m_nLineLen, rc, DT_EXPANDTABS|DT_EDITCONTROL);
-
-	//pDC->TextOut(0, line * m_szChar.cy, pline, m_nLineLen);
 }
 
 

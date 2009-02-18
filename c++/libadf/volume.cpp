@@ -371,7 +371,11 @@ FilePtr Volume::openfile(const char *filename, const char *mode)
 
 	fileheader_t header;
 	createFile(currdir, filename, &header);
-	return FilePtr(new File(this, &header));
+
+	File *pFile = new File(this, &header);
+	pFile->writemode = write;
+
+	return FilePtr(pFile);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1191,6 +1195,34 @@ void Volume::writefileextblock(uint32_t blockno, fileext_t *block)
 #ifdef LITTLE_ENDIAN
 	swapfileext(block);
 #endif // LITTLE_ENDIAN
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Volume::writedatablock(uint32_t blockno, void *block)
+{
+	if (isOFS(type)) {
+		ofsblock_t *data = (ofsblock_t*)block;
+		data->type = T_DATA;
+
+#ifdef LITTLE_ENDIAN
+	swapofsblock(data);
+#endif // LITTLE_ENDIAN
+
+	uint8_t buf[BSIZE];
+	memcpy(buf, data, BSIZE);
+
+	data->checksum = adfchecksum(buf, 20, BSIZE);
+	data->checksum = swap_endian(data->checksum);
+
+	writeblock(blockno, data);
+
+#ifdef LITTLE_ENDIAN
+	swapofsblock(data);
+#endif // LITTLE_ENDIAN
+
+	} else {
+		writeblock(blockno, block);
+	}
 }
 
 // helper functions

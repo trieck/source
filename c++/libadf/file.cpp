@@ -17,7 +17,8 @@
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, fileheader_t *pheader)
- : volume(pVol), pos(0), blockpos(0), extentpos(0), nblock(0), data(&buffer[0])
+ : volume(pVol), pos(0), blockpos(0), extentpos(0), nblocks(0), 
+ currblock(0), data(&buffer[0]), writemode(false)
 {
 	memcpy(&header, pheader, sizeof(fileheader_t));
 	memset(buffer, 0, BSIZE);
@@ -26,7 +27,8 @@ File::File(Volume *pVol, fileheader_t *pheader)
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, entryblock_t *pEntry)
- : volume(pVol), pos(0), blockpos(0), extentpos(0), nblock(0), data(&buffer[0])
+ : volume(pVol), pos(0), blockpos(0), extentpos(0), nblocks(0), currblock(0),
+ data(&buffer[0]), writemode(false)
 {
 	memcpy(&header, pEntry, sizeof(fileheader_t));
 	memset(buffer, 0, BSIZE);
@@ -35,7 +37,8 @@ File::File(Volume *pVol, entryblock_t *pEntry)
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, const Entry &e)
- : volume(pVol), pos(0), blockpos(0), nblock(0), data(&buffer[0])
+ : volume(pVol), pos(0), blockpos(0), nblocks(0), currblock(0),
+ data(&buffer[0]), writemode(false)
 {
 	memset(buffer, 0, BSIZE);
 	memset(&extent, 0, sizeof(fileext_t));
@@ -48,6 +51,47 @@ File::File(Volume *pVol, const Entry &e)
 /////////////////////////////////////////////////////////////////////////////
 File::~File()
 {
+	close();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void File::close()
+{
+	flush();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void File::flush()
+{
+	if (!writemode) return;
+
+	if (extent.key != 0) {
+		volume->writefileextblock(extent.key, &extent);
+	}
+
+	if (data != NULL) {
+		header.bytesize = pos;
+		if (isOFS(volume->getType())) {
+			ofsblock_t *block = (ofsblock_t*)data;
+			block->size = blockpos;
+		}
+
+		if (header.bytesize > 0) {
+			volume->writedatablock(currblock, data);
+		}
+	}
+
+	header.bytesize = pos;
+	adfTime2AmigaTime(adfGetCurrentTime(), header.days, header.mins, header.ticks);
+	volume->writefileblock(header.key, &header);
+
+	if (isDIRCACHE(volume->getType())) {
+		entryblock_t parent;
+		volume->readentry(header.parent, &parent);
+		//TODO: volume->updatecache(parent, (entryblock_t*)&header, false);
+	}
+
+	volume->updatebitmap();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -126,15 +170,15 @@ void File::readnext()
 	ofsblock_t *block = (ofsblock_t*)data;
 
 	uint32_t blockno;
-	if (nblock ==0) {
+	if (nblocks == 0) {
         blockno = header.firstblock;
     } else if (isOFS(volume->getType())) {
         blockno = block->next;
 	} else {	// FFS
-		if (nblock < MAX_DATABLK) {
-			blockno = header.datablocks[MAX_DATABLK-1-nblock];
+		if (nblocks < MAX_DATABLK) {
+			blockno = header.datablocks[MAX_DATABLK-1-nblocks];
 		} else {
-			if (nblock == MAX_DATABLK) {	// extension block
+			if (nblocks == MAX_DATABLK) {	// extension block
 				volume->readextblock(header.extension, &extent);
 				extentpos = 0;
 			} else if (extentpos == MAX_DATABLK) {
@@ -148,13 +192,13 @@ void File::readnext()
 
 	volume->readdatablock(blockno, data);
 
-	if (isOFS(volume->getType()) && block->seqnum != nblock+1) {
+	if (isOFS(volume->getType()) && block->seqnum != nblocks+1) {
 		ADFWarningDispatcher::dispatch("sequence number incorrect.");
 	}
 
 	blockpos = 0;
 
-	nblock++;
+	nblocks++;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -167,27 +211,27 @@ void File::createnext()
 	uint32_t blockno, extblock;
 
 	// the first data blocks pointers are inside the file header block
-	if (nblock < MAX_DATABLK) {
+	if (nblocks < MAX_DATABLK) {
 		if ((blockno = volume->getFreeBlock()) == -1)
 			throw ADFException("can't allocate data block.");
 
-		if (nblock == 0)
+		if (nblocks == 0)
 			header.firstblock = blockno;
-		header.datablocks[MAX_DATABLK-1-nblock] = blockno;
+		header.datablocks[MAX_DATABLK-1-nblocks] = blockno;
 		header.nblocks++;
 	} else {
 		// one more sector is needed for one file extension block
-		if ((nblock % MAX_DATABLK) == 0) {
+		if ((nblocks % MAX_DATABLK) == 0) {
 			if ((extblock = volume->getFreeBlock()) == -1)
 				throw ADFException("can't allocate extension block.");
 
 			// first extension block
-			if (nblock == MAX_DATABLK) {
+			if (nblocks == MAX_DATABLK) {
 				header.extension = extentpos;
 			}
 
 			// not the first : save current one and link it in
-			if (nblock >= 2 * MAX_DATABLK) {
+			if (nblocks >= 2 * MAX_DATABLK) {
 				extent.extension = extblock;
 				volume->writefileextblock(extent.key, &extent);
 			}
@@ -213,47 +257,29 @@ void File::createnext()
 	}	
 
 	// build OFS header
-	if (isOFS(volume->getType()) {
+	if (isOFS(volume->getType())) {
 		// write previous data block and link it
 		if (pos >= blocksize) {
 			block->next = blockno;
-			volume->writedatablock(
+			volume->writedatablock(currblock, block);
+		}
 
-	/*
+		// initialize a new data block 
+		memset(block->data, 0, blocksize);
 
-    // builds OFS header
-    if (isOFS(file->volume->dosType)) {
-        // writes previous data block and link it
-        if (file->pos>=blockSize) {
-            data->nextData = nSect;
-            adfWriteDataBlock(file->volume, file->curDataPtr, file->currentData);
-
-
+        block->seqnum = nblocks+1;
+        block->size = blocksize;
+        block->next = 0;
+        block->key = header.key;
+	} else {
+		if (pos >= blocksize) {
+			volume->writedatablock(currblock, block);
+			memset(block, 0, BSIZE);
         }
-        // initialize a new data block 
-        for(i=0; i<(int)blockSize; i++)
-            data->data[i]=0;
-        data->seqNum = file->nDataBlock+1;
-        data->dataSize = blockSize;
-        data->nextData = 0L;
-        data->headerKey = file->fileHdr->headerKey;
-    }
-    else
-        if (file->pos>=blockSize) {
-            adfWriteDataBlock(file->volume, file->curDataPtr, file->currentData);
+	}
 
-
-            memset(file->currentData,0,512);
-        }
-            
-
-    file->curDataPtr = nSect;
-    file->nDataBlock++;
-
-    return(nSect);
-}
-
-*/
+	currblock = blockno;
+	nblocks++;
 }
 
 /////////////////////////////////////////////////////////////////////////////

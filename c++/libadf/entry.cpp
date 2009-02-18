@@ -64,6 +64,7 @@ Entry& Entry::operator = (const Entry &e)
 Entry& Entry::operator = (const entryblock_t &block)
 {
 	type = block.sectype;
+	blockno = block.key;
 	parent = block.parent;
 	firstblock = block.firstblock;
 	name = string(block.name, block.namelen);
