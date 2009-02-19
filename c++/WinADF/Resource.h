@@ -13,6 +13,7 @@
 #define IDR_FILEVIEWTYPE                130
 #define IDS_NOPATH                      130
 #define IDS_BADSIZE                     131
+#define IDS_DELETEENTRY                 132
 #define IDR_DOCUMENT                    134
 #define IDR_OPEN                        136
 #define IDR_CLOSED                      137
@@ -21,6 +22,8 @@
 #define IDD_NEW_VOLUME                  145
 #define IDD_WAIT                        146
 #define IDR_BOOTBLOCK                   149
+#define IDC_CURSOR1                     150
+#define IDC_DRAG                        150
 #define IDC_ENTRY_TAB                   1000
 #define IDC_CHK_READ                    1001
 #define IDC_CHK_WRITE                   1002
@@ -76,7 +79,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        150
+#define _APS_NEXT_RESOURCE_VALUE        151
 #define _APS_NEXT_COMMAND_VALUE         32786
 #define _APS_NEXT_CONTROL_VALUE         1043
 #define _APS_NEXT_SYMED_VALUE           106

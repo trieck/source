@@ -15,7 +15,7 @@
 
 IMPLEMENT_DYNCREATE(WinADFView, CListView)
 
-WinADFView::WinADFView()
+WinADFView::WinADFView() : m_hCursor(NULL), m_hStdCursor(NULL)
 {
 
 }
@@ -46,6 +46,9 @@ BEGIN_MESSAGE_MAP(WinADFView, CListView)
 	ON_COMMAND(ID_ENTRY_DELETE, &WinADFView::OnEntryDelete)
 	ON_UPDATE_COMMAND_UI(ID_ENTRY_DELETE, &WinADFView::OnUpdateEntryDelete)
 	ON_WM_DROPFILES()
+	ON_NOTIFY_REFLECT(LVN_BEGINDRAG, &WinADFView::OnLvnBegindrag)
+	ON_WM_LBUTTONUP()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 // WinADFView diagnostics
@@ -85,6 +88,16 @@ void WinADFView::OnInitialUpdate()
 	);
 	
 	InsertHeaders();
+
+	m_hStdCursor = GetCursor();
+	m_hCursor = (HCURSOR)::LoadImage(AfxGetResourceHandle(),
+		MAKEINTRESOURCE(IDC_DRAG),
+		IMAGE_CURSOR,
+		16,
+		16,
+		LR_DEFAULTCOLOR);
+
+	ASSERT(m_hCursor != NULL);
 
 	DragAcceptFiles();
 
@@ -334,6 +347,10 @@ void WinADFView::OnEntryDelete()
 	if (pEntry == NULL)
 		return;	// nothing selected
 
+	int ret = AfxMessageBox(IDS_DELETEENTRY, MB_YESNO);
+	if (ret != IDYES)
+		return;
+
 	WinADFDoc *pDoc = GetDocument();
 	Volume *pVol = pDoc->GetVolume();
 	ASSERT(pVol != NULL);
@@ -349,8 +366,7 @@ void WinADFView::OnEntryDelete()
 	}
 
 	CListCtrl &list = GetListCtrl();
-	list.DeleteItem(nitem);
-	
+	list.DeleteItem(nitem);	
 }
 
 void WinADFView::OnUpdateEntryDelete(CCmdUI *pCmdUI)
@@ -366,7 +382,6 @@ void WinADFView::OnDropFiles(HDROP hDropInfo)
 	
 	uint32_t nCount = DragQueryFile(hDropInfo, 0xFFFFFFFF, NULL, 0);
 	uint32_t n;
-
 
 	Entry entry;
 	for (uint32_t i = 0; i < nCount; i++) {
@@ -469,4 +484,36 @@ BOOL WinADFView::CopyFile(LPCSTR filename, Entry &entry)
 	entry = pFile->getEntry();	
 
 	return TRUE;
+}
+
+void WinADFView::OnLvnBegindrag(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
+	
+	SetCapture();
+
+	SetCursor(m_hCursor);
+
+	*pResult = 0;
+}
+
+void WinADFView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	CWnd *pWnd = GetCapture();
+	if (pWnd != NULL && pWnd->m_hWnd == *this) {
+		ReleaseCapture();
+		SetCursor(m_hStdCursor);
+	}
+
+	CListView::OnLButtonUp(nFlags, point);
+}
+
+void WinADFView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	CWnd *pWnd = GetCapture();
+	if (pWnd != NULL && pWnd->m_hWnd == *this) {
+		;
+	}
+
+	CListView::OnMouseMove(nFlags, point);
 }

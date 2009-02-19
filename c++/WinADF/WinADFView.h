@@ -30,6 +30,7 @@ protected:
 	BOOL CopyFile(LPCSTR filename, Entry &entry);
 
 	CImageList m_ImageList;
+	HCURSOR m_hCursor, m_hStdCursor;
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -58,6 +59,9 @@ public:
 	afx_msg void OnEntryDelete();
 	afx_msg void OnUpdateEntryDelete(CCmdUI *pCmdUI);
 	afx_msg void OnDropFiles(HDROP hDropInfo);
+	afx_msg void OnLvnBegindrag(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  //debug version in WinADFView.cpp

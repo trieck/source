@@ -403,7 +403,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\cursor1.cur"
+				>
+			</File>
+			<File
 				RelativePath=".\res\doc.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\res\drag.cur"
 				>
 			</File>
 			<File

@@ -471,6 +471,13 @@ IDR_BOOTBLOCK           BOOTBLOCK               "res\\stdboot3.bbk"
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// Cursor
+//
+
+IDC_DRAG                CURSOR                  "res\\drag.cur"
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // String Table
 //
 
@@ -480,6 +487,7 @@ BEGIN
     IDR_WINADFTYPE          "\nWinADF\nWinADF\nWinADF Files (*.adf; *.hdf)\n.ADF;.HDF\nWinADF.Document\nWinADF.Document"
     IDS_NOPATH              "Please specify a path."
     IDS_BADSIZE             "The custom size you specified is invalid."
+    IDS_DELETEENTRY         "Are you sure you want to delete the selected item?"
     ID_VIEWASTEXT           "Open file as text"
     ID_VIEWASBINARY         "Open file as binary"
 END
