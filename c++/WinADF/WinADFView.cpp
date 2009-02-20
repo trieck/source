@@ -426,7 +426,7 @@ void WinADFView::InsertEntry(const Entry &entry)
 	}
 
 	list.SetItemText(nItems, 3, adfaccess(entry.access).c_str());
-	CTime time = CTime(entry.year, entry.month, entry.days+1, 
+	CTime time = CTime(entry.year, entry.month, entry.days/*+1*/, 
 		entry.hour, entry.mins, entry.secs);
 
 	list.SetItemText(nItems, 4, time.Format("%m/%d/%Y %H:%M:%S"));
