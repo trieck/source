@@ -9,6 +9,11 @@
 
 #define YY_ALWAYS_INTERACTIVE	(1)
 
+#ifdef _MSC_VER
+#define YY_NO_UNISTD_H
+#include <io.h>
+#endif /* _MSC_VER */
+
 extern "C" int yywrap (void) { return 1; }
 SymbolTable *table = SymbolTable::getInstance();
 %}

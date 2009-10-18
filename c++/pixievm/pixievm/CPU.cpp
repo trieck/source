@@ -156,7 +156,7 @@
 #define DO_ADC_MR8()									\
     do {												\
         byte rp = FETCH(REG_IP+1);						\
-        byte hi = HINIBBLE(rp);							\
+        byte hi = HINYBBLE(rp);							\
         byte lo = LOREG8(rp);							\
         word ad = EFFADDRESS(hi);						\
         byte m = FETCH(ad);								\
@@ -172,7 +172,7 @@
 #define DO_ADC_MR16()									\
     do {												\
         byte rp = FETCH(REG_IP+1);						\
-        byte hi = HINIBBLE(rp);							\
+        byte hi = HINYBBLE(rp);							\
         byte lo = LOREG16(rp);							\
         word ad = EFFADDRESS(hi);						\
         word m = FETCH_WORD(ad);						\
@@ -187,7 +187,7 @@
 
 #define DO_ADC_M8I8()                           \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP + 1));   \
+        byte r = LONYBBLE(FETCH(REG_IP + 1));   \
         byte imm8 = FETCH(REG_IP + 2);          \
         word ad = EFFADDRESS(r);                \
         byte m = FETCH(ad);                     \
@@ -202,7 +202,7 @@
 
 #define DO_ADC_M16I8()									\
     do {												\
-        byte r = LONIBBLE(FETCH(REG_IP + 1));			\
+        byte r = LONYBBLE(FETCH(REG_IP + 1));			\
         byte imm8 = FETCH(REG_IP + 2);					\
         word ad = EFFADDRESS(r);						\
         word m = FETCH_WORD(ad);						\
@@ -217,7 +217,7 @@
 
 #define DO_ADC_MI16()									\
     do {												\
-        byte r = LONIBBLE(FETCH(REG_IP + 1));			\
+        byte r = LONYBBLE(FETCH(REG_IP + 1));			\
         word imm16 = FETCH_WORD(REG_IP + 2);			\
         word ad = EFFADDRESS(r);						\
         word m = FETCH_WORD(ad);						\
@@ -304,7 +304,7 @@
     do {                                        \
         byte rp = FETCH(REG_IP+1);              \
         byte hi = HIREG8(rp);                   \
-        byte lo = LONIBBLE(rp);                 \
+        byte lo = LONYBBLE(rp);                 \
         word ad = EFFADDRESS(lo);               \
         byte m = FETCH(ad);                     \
         word w = m + R8VAL(hi) + GET_CARRY();   \
@@ -320,7 +320,7 @@
     do {												\
         byte rp = FETCH(REG_IP+1);						\
         byte hi = HIREG16(rp);							\
-        byte lo = LONIBBLE(rp);							\
+        byte lo = LONYBBLE(rp);							\
         word ad = EFFADDRESS(lo);						\
         word m = FETCH_WORD(ad);						\
         dword dw = m + R16VAL(hi) + GET_CARRY();		\
@@ -411,7 +411,7 @@
 #define DO_AND_MR8()                        \
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
-        byte hi = HINIBBLE(rp);             \
+        byte hi = HINYBBLE(rp);             \
         byte lo = LOREG8(rp);               \
         word ad = EFFADDRESS(hi);           \
         byte m = FETCH(ad);                 \
@@ -425,7 +425,7 @@
 #define DO_AND_MR16()                       \
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
-        byte hi = HINIBBLE(rp);             \
+        byte hi = HINYBBLE(rp);             \
         byte lo = LOREG16(rp);              \
         word ad = EFFADDRESS(hi);           \
         word m = FETCH_WORD(ad);            \
@@ -438,7 +438,7 @@
 
 #define DO_AND_M8I8()                           \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP + 1));   \
+        byte r = LONYBBLE(FETCH(REG_IP + 1));   \
         byte imm8 = FETCH(REG_IP + 2);          \
         word ad = EFFADDRESS(r);                \
         byte m = FETCH(ad);                     \
@@ -451,7 +451,7 @@
 
 #define DO_AND_M16I8()                          \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP + 1));   \
+        byte r = LONYBBLE(FETCH(REG_IP + 1));   \
         byte imm8 = FETCH(REG_IP + 2);          \
         word ad = EFFADDRESS(r);                \
         word m = FETCH(ad);                     \
@@ -464,7 +464,7 @@
 
 #define DO_AND_MI16()                           \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP + 1));   \
+        byte r = LONYBBLE(FETCH(REG_IP + 1));   \
         word imm16 = FETCH(REG_IP + 2);         \
         word ad = EFFADDRESS(r);                \
         word m = FETCH(ad);                     \
@@ -539,7 +539,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG8(rp);               \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         byte m = FETCH(ad);                 \
         byte res = m & R8VAL(hi);           \
@@ -553,7 +553,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG16(rp);              \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         word m = FETCH_WORD(ad);            \
         word res = m & R16VAL(hi);          \
@@ -633,7 +633,7 @@
 #define DO_BIT_MR8()                        \
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
-        byte hi = HINIBBLE(rp);             \
+        byte hi = HINYBBLE(rp);             \
         byte lo = LOREG8(rp);               \
         word ad = EFFADDRESS(hi);           \
         byte m = FETCH(ad);                 \
@@ -646,7 +646,7 @@
 #define DO_BIT_MR16()                       \
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
-        byte hi = HINIBBLE(rp);             \
+        byte hi = HINYBBLE(rp);             \
         byte lo = LOREG16(rp);              \
         word ad = EFFADDRESS(hi);           \
         word m = FETCH_WORD(ad);            \
@@ -658,7 +658,7 @@
 
 #define DO_BIT_M8I8()                       \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         byte imm8 = FETCH(REG_IP + 2);      \
         word ad = EFFADDRESS(r);            \
         byte m = FETCH(ad);                 \
@@ -670,7 +670,7 @@
 
 #define DO_BIT_M16I8()                      \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         byte imm8 = FETCH(REG_IP + 2);      \
         word ad = EFFADDRESS(r);            \
         word m = FETCH_WORD(ad);            \
@@ -682,7 +682,7 @@
 
 #define DO_BIT_MI16()                       \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word imm16 = FETCH_WORD(REG_IP+2);  \
         word ad = EFFADDRESS(r);            \
         word m = FETCH_WORD(ad);            \
@@ -751,7 +751,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG8(rp);               \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         byte m = FETCH(ad);                 \
         byte res = m & R8VAL(hi);           \
@@ -764,7 +764,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG16(rp);              \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         word m = FETCH_WORD(ad);            \
         word res = m & R16VAL(hi);          \
@@ -840,7 +840,7 @@
 
 #define DO_CALL_M16()                       \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word ad = EFFADDRESS(r);            \
         PUSH16(REG_IP + 2);                 \
         REG_IP = ad;                        \
@@ -908,7 +908,7 @@
 #define DO_CMP_MR8()                            \
     do {                                        \
         byte rp = FETCH(REG_IP+1);              \
-        byte hi = HINIBBLE(rp);                 \
+        byte hi = HINYBBLE(rp);                 \
         byte lo = LOREG8(rp);                   \
         word ad = EFFADDRESS(hi);               \
         byte m = FETCH(ad);                     \
@@ -921,7 +921,7 @@
 #define DO_CMP_MR16()                           \
     do {                                        \
         byte rp = FETCH(REG_IP+1);              \
-        byte hi = HINIBBLE(rp);                 \
+        byte hi = HINYBBLE(rp);                 \
         byte lo = LOREG16(rp);                  \
         word ad = EFFADDRESS(hi);               \
         word m = FETCH_WORD(ad);                \
@@ -933,7 +933,7 @@
 
 #define DO_CMP_M8I8()                           \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP+1));     \
+        byte r = LONYBBLE(FETCH(REG_IP+1));     \
         byte imm8 = FETCH(REG_IP + 2);          \
         word ad = EFFADDRESS(r);                \
         byte m = FETCH(ad);                     \
@@ -945,7 +945,7 @@
 
 #define DO_CMP_M16I8()                          \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP+1));     \
+        byte r = LONYBBLE(FETCH(REG_IP+1));     \
         byte imm8 = FETCH(REG_IP + 2);          \
         word ad = EFFADDRESS(r);                \
         word m = FETCH_WORD(ad);                \
@@ -957,7 +957,7 @@
 
 #define DO_CMP_MI16()                           \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP+1));     \
+        byte r = LONYBBLE(FETCH(REG_IP+1));     \
         word imm16 = FETCH_WORD(REG_IP + 2);    \
         word ad = EFFADDRESS(r);                \
         word m = FETCH_WORD(ad);                \
@@ -1026,7 +1026,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG8(rp);               \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         byte m = FETCH(ad);                 \
         word w = m - R8VAL(hi);             \
@@ -1039,7 +1039,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG16(rp);              \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         word m = FETCH_WORD(ad);            \
         dword dw = m - R16VAL(hi);          \
@@ -1100,7 +1100,7 @@
 
 #define DO_DEC_M8()                         \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word ad = EFFADDRESS(r);            \
         byte m = FETCH(ad) - 1;             \
         SET_NZ8(m);                         \
@@ -1110,7 +1110,7 @@
 
 #define DO_DEC_M16()                        \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word ad = EFFADDRESS(r);            \
         word m = FETCH_WORD(ad) - 1;        \
         SET_NZ16(m);                        \
@@ -1163,7 +1163,7 @@
 
 #define DO_INC_M8()                         \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word ad = EFFADDRESS(r);            \
         byte m = FETCH(ad) + 1;             \
         SET_NZ8(m);                         \
@@ -1173,7 +1173,7 @@
 
 #define DO_INC_M16()                        \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word ad = EFFADDRESS(r);            \
         word m = FETCH_WORD(ad) + 1;        \
         SET_NZ16(m);                        \
@@ -1269,7 +1269,7 @@
 
 #define DO_JMP_M16()                            \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP + 1));   \
+        byte r = LONYBBLE(FETCH(REG_IP + 1));   \
         word m = FETCH_WORD(EFFADDRESS(r));     \
         REG_IP = m;                             \
     } while (0)
@@ -1329,7 +1329,7 @@
 #define DO_MOV_MR8()                        \
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
-        byte hi = HINIBBLE(rp);             \
+        byte hi = HINYBBLE(rp);             \
         byte lo = LOREG8(rp);               \
         STORE(EFFADDRESS(hi), R8VAL(lo));   \
         REG_IP += 2;                        \
@@ -1338,7 +1338,7 @@
 #define DO_MOV_MR16()                           \
     do {                                        \
         byte rp = FETCH(REG_IP+1);              \
-        byte hi = HINIBBLE(rp);                 \
+        byte hi = HINYBBLE(rp);                 \
         byte lo = LOREG16(rp);                  \
         STORE_WORD(EFFADDRESS(hi), R16VAL(lo)); \
         REG_IP += 2;                            \
@@ -1346,7 +1346,7 @@
 
 #define DO_MOV_M8I8()                       \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         byte imm8 = FETCH(REG_IP + 2);      \
         STORE(EFFADDRESS(r), imm8);         \
         REG_IP += 3;                        \
@@ -1354,7 +1354,7 @@
 
 #define DO_MOV_M16I8()                      \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         byte imm8 = FETCH(REG_IP + 2);      \
         STORE_WORD(EFFADDRESS(r), imm8);    \
         REG_IP += 3;                        \
@@ -1362,7 +1362,7 @@
 
 #define DO_MOV_MI16()                       \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word imm16 = FETCH_WORD(REG_IP+2);  \
         STORE_WORD(EFFADDRESS(r), imm16);   \
         REG_IP += 4;                        \
@@ -1412,7 +1412,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG8(rp);               \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         R8VAL(hi) = FETCH(ad);              \
         REG_IP += 2;                        \
@@ -1422,7 +1422,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG16(rp);              \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         R16VAL(hi) = FETCH_WORD(ad);        \
         REG_IP += 2;                        \
@@ -1492,7 +1492,7 @@
 #define DO_OR_MR8()                         \
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
-        byte hi = HINIBBLE(rp);             \
+        byte hi = HINYBBLE(rp);             \
         byte lo = LOREG8(rp);               \
         word ad = EFFADDRESS(hi);           \
         byte m = FETCH(ad);                 \
@@ -1506,7 +1506,7 @@
 #define DO_OR_MR16()                        \
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
-        byte hi = HINIBBLE(rp);             \
+        byte hi = HINYBBLE(rp);             \
         byte lo = LOREG16(rp);              \
         word ad = EFFADDRESS(hi);           \
         word m = FETCH_WORD(ad);            \
@@ -1519,7 +1519,7 @@
 
 #define DO_OR_M8I8()                        \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         byte imm8 = FETCH(REG_IP + 2);      \
         word ad = EFFADDRESS(r);            \
         byte m = FETCH(ad);                 \
@@ -1532,7 +1532,7 @@
 
 #define DO_OR_M16I8()                       \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         byte imm8 = FETCH(REG_IP + 2);      \
         word ad = EFFADDRESS(r);            \
         word m = FETCH_WORD(ad);            \
@@ -1545,7 +1545,7 @@
 
 #define DO_OR_MI16()                        \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word imm16 = FETCH_WORD(REG_IP+2);  \
         word ad = EFFADDRESS(r);            \
         word m = FETCH_WORD(ad);            \
@@ -1620,7 +1620,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG8(rp);               \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         byte m = FETCH(ad);                 \
         byte res = m | R8VAL(hi);           \
@@ -1634,7 +1634,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG16(rp);              \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         word m = FETCH_WORD(ad);            \
         word res = m | R16VAL(hi);          \
@@ -1695,7 +1695,7 @@
 
 #define DO_POP_M8()                             \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP + 1));   \
+        byte r = LONYBBLE(FETCH(REG_IP + 1));   \
         word ad = EFFADDRESS(r);                \
         STORE(ad, POP8());                      \
         REG_IP += 2;                            \
@@ -1703,7 +1703,7 @@
 
 #define DO_POP_M16()                            \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP + 1));   \
+        byte r = LONYBBLE(FETCH(REG_IP + 1));   \
         word ad = EFFADDRESS(r);                \
         STORE_WORD(ad, POP16());                \
         REG_IP += 2;                            \
@@ -1756,7 +1756,7 @@
 
 #define DO_PUSH_M8()                            \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP + 1));   \
+        byte r = LONYBBLE(FETCH(REG_IP + 1));   \
         word ad = EFFADDRESS(r);                \
         PUSH8(FETCH(ad));                       \
         REG_IP += 2;                            \
@@ -1764,7 +1764,7 @@
 
 #define DO_PUSH_M16()                           \
     do {                                        \
-        byte r = LONIBBLE(FETCH(REG_IP + 1));   \
+        byte r = LONYBBLE(FETCH(REG_IP + 1));   \
         word ad = EFFADDRESS(r);                \
         PUSH16(FETCH_WORD(ad));                 \
         REG_IP += 2;                            \
@@ -1842,7 +1842,7 @@
 
 #define DO_ROL_M8()                                 \
     do {                                            \
-        byte r = LONIBBLE(FETCH(REG_IP+1));         \
+        byte r = LONYBBLE(FETCH(REG_IP+1));         \
         word ad = EFFADDRESS(r);                    \
         byte m = FETCH(ad);                         \
         word res = (m << 1) | GET_CARRY();          \
@@ -1854,7 +1854,7 @@
 
 #define DO_ROL_M16()                                \
     do {                                            \
-        byte r = LONIBBLE(FETCH(REG_IP+1));         \
+        byte r = LONYBBLE(FETCH(REG_IP+1));         \
         word ad = EFFADDRESS(r);                    \
         word m = FETCH_WORD(ad);                    \
         dword res = (m << 1) | GET_CARRY();         \
@@ -1908,7 +1908,7 @@
 
 #define DO_ROR_M8()                                 \
     do {                                            \
-        byte r = LONIBBLE(FETCH(REG_IP+1));         \
+        byte r = LONYBBLE(FETCH(REG_IP+1));         \
         word ad = EFFADDRESS(r);                    \
         byte m = FETCH(ad);                         \
         word res = (m >> 1) | (REG_FL << 7);        \
@@ -1920,7 +1920,7 @@
 
 #define DO_ROR_M16()                                \
     do {                                            \
-        byte r = LONIBBLE(FETCH(REG_IP+1));         \
+        byte r = LONYBBLE(FETCH(REG_IP+1));         \
         word ad = EFFADDRESS(r);                    \
         word m = FETCH_WORD(ad);                    \
         dword res = (m >> 1) | (REG_FL << 15);      \
@@ -1996,7 +1996,7 @@
 #define DO_SBB_MR8()                                        \
     do {                                                    \
         byte rp = FETCH(REG_IP+1);                          \
-        byte hi = HINIBBLE(rp);                             \
+        byte hi = HINYBBLE(rp);                             \
         byte lo = LOREG8(rp);                               \
         word ad = EFFADDRESS(hi);                           \
         byte m = FETCH(ad);                                 \
@@ -2012,7 +2012,7 @@
 #define DO_SBB_MR16()                                       \
     do {                                                    \
         byte rp = FETCH(REG_IP+1);                          \
-        byte hi = HINIBBLE(rp);                             \
+        byte hi = HINYBBLE(rp);                             \
         byte lo = LOREG16(rp);                              \
         word ad = EFFADDRESS(hi);                           \
         word m = FETCH_WORD(ad);                            \
@@ -2027,7 +2027,7 @@
 
 #define DO_SBB_M8I8()                                       \
     do {                                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1));                 \
+        byte r = LONYBBLE(FETCH(REG_IP+1));                 \
         byte imm8 = FETCH(REG_IP+1);                        \
         word ad = EFFADDRESS(r);                            \
         byte m = FETCH(ad);                                 \
@@ -2042,7 +2042,7 @@
 
 #define DO_SBB_M16I8()                                      \
     do {                                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1));                 \
+        byte r = LONYBBLE(FETCH(REG_IP+1));                 \
         byte imm8 = FETCH(REG_IP+1);                        \
         word ad = EFFADDRESS(r);                            \
         word m = FETCH_WORD(ad);                            \
@@ -2057,7 +2057,7 @@
 
 #define DO_SBB_MI16()                                       \
     do {                                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1));                 \
+        byte r = LONYBBLE(FETCH(REG_IP+1));                 \
         word imm16 = FETCH_WORD(REG_IP+1);                  \
         word ad = EFFADDRESS(r);                            \
         word m = FETCH_WORD(ad);                            \
@@ -2144,7 +2144,7 @@
     do {                                                    \
         byte rp = FETCH(REG_IP+1);                          \
         byte hi = HIREG8(rp);                               \
-        byte lo = LONIBBLE(rp);                             \
+        byte lo = LONYBBLE(rp);                             \
         word ad = EFFADDRESS(lo);                           \
         byte m = FETCH(ad);                                 \
         word w = R8VAL(hi) - m - (GET_CARRY() ? 0 : 1);     \
@@ -2160,7 +2160,7 @@
     do {														\
         byte rp = FETCH(REG_IP+1);								\
         byte hi = HIREG16(rp);									\
-        byte lo = LONIBBLE(rp);									\
+        byte lo = LONYBBLE(rp);									\
         word ad = EFFADDRESS(lo);								\
         word m = FETCH_WORD(ad);								\
         dword dw = R16VAL(hi) - m - (GET_CARRY() ? 0 : 1);		\
@@ -2245,7 +2245,7 @@
 
 #define DO_SHL_M8()                         \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word ad = EFFADDRESS(r);            \
         byte m = FETCH(ad);                 \
         SET_CARRY(m & 0x80);                \
@@ -2257,7 +2257,7 @@
 
 #define DO_SHL_M16()                        \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word ad = EFFADDRESS(r);            \
         word m = FETCH_WORD(ad);            \
         SET_CARRY(m & 0x8000);              \
@@ -2309,7 +2309,7 @@
 
 #define DO_SHR_M8()                         \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word ad = EFFADDRESS(r);            \
         byte m = FETCH(ad);                 \
         SET_CARRY(m & 0x01);                \
@@ -2321,7 +2321,7 @@
 
 #define DO_SHR_M16()                        \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word ad = EFFADDRESS(r);            \
         word m = FETCH_WORD(ad);            \
         SET_CARRY(m & 0x01);                \
@@ -2385,7 +2385,7 @@
 #define DO_XOR_MR8()                        \
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
-        byte hi = HINIBBLE(rp);             \
+        byte hi = HINYBBLE(rp);             \
         byte lo = LOREG8(rp);               \
         word ad = EFFADDRESS(hi);           \
         byte m = FETCH(ad);                 \
@@ -2398,7 +2398,7 @@
 #define DO_XOR_MR16()                       \
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
-        byte hi = HINIBBLE(rp);             \
+        byte hi = HINYBBLE(rp);             \
         byte lo = LOREG16(rp);              \
         word ad = EFFADDRESS(hi);           \
         word m = FETCH_WORD(ad);            \
@@ -2410,7 +2410,7 @@
 
 #define DO_XOR_M8I8()                       \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         byte imm8 = FETCH(REG_IP + 2);      \
         word ad = EFFADDRESS(r);            \
         byte m = FETCH(ad);                 \
@@ -2422,7 +2422,7 @@
 
 #define DO_XOR_M16I8()                      \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         byte imm8 = FETCH(REG_IP + 2);      \
         word ad = EFFADDRESS(r);            \
         word m = FETCH_WORD(ad);            \
@@ -2434,7 +2434,7 @@
 
 #define DO_XOR_MI16()                       \
     do {                                    \
-        byte r = LONIBBLE(FETCH(REG_IP+1)); \
+        byte r = LONYBBLE(FETCH(REG_IP+1)); \
         word imm16 = FETCH_WORD(REG_IP+2);  \
         word ad = EFFADDRESS(r);            \
         word m = FETCH_WORD(ad);            \
@@ -2503,7 +2503,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG8(rp);               \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         byte m = FETCH(ad);                 \
         R8VAL(hi) ^= m;                     \
@@ -2515,7 +2515,7 @@
     do {                                    \
         byte rp = FETCH(REG_IP+1);          \
         byte hi = HIREG16(rp);              \
-        byte lo = LONIBBLE(rp);             \
+        byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         word m = FETCH_WORD(ad);            \
         R16VAL(hi) ^= m;                    \

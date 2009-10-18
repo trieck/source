@@ -526,7 +526,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
 						BufferSecurityCheck="false"
 						UsePrecompiledHeader="0"
 						PrecompiledHeaderThrough="common.h"
@@ -539,7 +538,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
 						UsePrecompiledHeader="0"
 						PrecompiledHeaderThrough="common.h"
 						WarningLevel="0"

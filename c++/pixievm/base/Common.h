@@ -44,8 +44,8 @@ struct stringless : std::binary_function <string, string, bool> {
 #define HIBYTE(w)           ((w & 0xFF00) >> 8)
 #define LOBYTE(w)           (w & 0xFF)
 
-#define HINIBBLE(b)			((b & 0xF0) >> 4)
-#define LONIBBLE(b)			(b & 0x0F)
+#define HINYBBLE(b)			((b & 0xF0) >> 4)
+#define LONYBBLE(b)			(b & 0x0F)
 
 /////////////////////////////////////////////////////////////////////////////
 
