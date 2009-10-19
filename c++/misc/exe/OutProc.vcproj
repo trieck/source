@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="OutProc"
 	ProjectGUID="{52038D11-5C2A-4390-85F5-139D54910B86}"
+	RootNamespace="OutProc"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -106,6 +107,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Registering Component..."
+				CommandLine="$(TargetDir)\$(TargetFileName) /RegServer"
 			/>
 		</Configuration>
 		<Configuration
@@ -202,6 +205,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Registering Component..."
+				CommandLine="$(TargetDir)\$(TargetFileName) /RegServer"
 			/>
 		</Configuration>
 		<Configuration
@@ -297,6 +302,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Registering Component..."
+				CommandLine="$(TargetDir)\$(TargetFileName) /RegServer"
 			/>
 		</Configuration>
 		<Configuration
@@ -392,6 +399,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Registering Component..."
+				CommandLine="$(TargetDir)\$(TargetFileName) /RegServer"
 			/>
 		</Configuration>
 	</Configurations>

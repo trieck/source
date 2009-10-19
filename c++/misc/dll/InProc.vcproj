@@ -108,6 +108,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Registering Component..."
+				CommandLine="regsvr32 /s $(TargetDir)$(TargetFileName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -204,6 +206,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Registering Component..."
+				CommandLine="regsvr32 /s $(TargetDir)$(TargetFileName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -301,6 +305,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Registering Component..."
+				CommandLine="regsvr32 /s $(TargetDir)$(TargetFileName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -395,6 +401,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Registering Component..."
+				CommandLine="regsvr32 /s $(TargetDir)$(TargetFileName)"
 			/>
 		</Configuration>
 	</Configurations>

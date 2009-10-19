@@ -31,7 +31,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 				LPSTR lpCmdLine, INT nCmdShow)
 {
     MSG	msg;
-	
+		
 	// Controls whether UI is shown or not
 	BOOL bUI = TRUE;
 
@@ -101,17 +101,19 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		lpszToken = strtok(NULL, szTokens);
 #endif
 	}
-			
+
+	if (bExit) return 0;
+
 	CApp* pApp = new CApp(hInstance, nCmdShow);
-	if (!pApp) return (0);
+	if (!pApp) return -1;
 	
 	// Initialize application
 	if (!pApp->Init(_T("OutProcServer")))
-		return (0);
+		return -2;
 
 	// Create window
 	if (!pApp->Create(_T("Miscellaneous Server")))
-		return (0);
+		return -3;
 
 	g_hWnd = pApp->GetMainWnd();
 
@@ -121,36 +123,32 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		UpdateWindow(g_hWnd);
 	}
 	
-	if (!bExit)
+	LPCLASSFACTORY	pIClassFactory;
+	DWORD			dwCookie;
+
+	// Register the Class Factory
+	pIClassFactory = new CFactory();
+	if (!pIClassFactory)
+		return 0;
+
+	hr = ::CoRegisterClassObject(CLSID_Miscellaneous, pIClassFactory
+    	, CLSCTX_LOCAL_SERVER, REGCLS_MULTIPLEUSE, &dwCookie);
+    if (FAILED(hr))
+    	return 0;
+
+	// Enter the message loop	
+	while (GetMessage(&msg, NULL, 0, 0)) 
 	{
-		LPCLASSFACTORY	pIClassFactory;
-		HRESULT			hr;
-		DWORD			dwCookie;
-
-		// Register the Class Factory
-		pIClassFactory = new CFactory();
-		if (!pIClassFactory)
-			return 0;
-
-    	hr = ::CoRegisterClassObject(CLSID_Miscellaneous, pIClassFactory
-        	, CLSCTX_LOCAL_SERVER, REGCLS_MULTIPLEUSE, &dwCookie);
-	    if (FAILED(hr))
-        	return 0;
-	
-		// Enter the message loop	
-		while (GetMessage(&msg, NULL, 0, 0)) 
-		{
-			TranslateMessage(&msg);    
-			DispatchMessage(&msg);     
-		}
-
-		// Revoke the Class Factory
-		// and release the pointer
-		if (dwCookie)
-			CoRevokeClassObject(dwCookie);
-
-		pIClassFactory->Release();
+		TranslateMessage(&msg);    
+		DispatchMessage(&msg);     
 	}
+
+	// Revoke the Class Factory
+	// and release the pointer
+	if (dwCookie)
+		CoRevokeClassObject(dwCookie);
+
+	pIClassFactory->Release();
 
 	if (pApp) delete pApp;
 
