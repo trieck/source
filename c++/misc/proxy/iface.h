@@ -98,7 +98,7 @@ EXTERN_C const IID IID_IMiscellaneous;
         
         virtual HRESULT STDMETHODCALLTYPE GetDriveSpace( 
             /* [string][in] */ const BSTR bstrDrive,
-            /* [retval][out] */ long *pBytes) = 0;
+            /* [retval][out] */ PULARGE_INTEGER pBytes) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE EnumDrives( 
             /* [retval][out] */ BSTR *pbstrDrives) = 0;

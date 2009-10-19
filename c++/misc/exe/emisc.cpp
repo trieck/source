@@ -30,7 +30,7 @@ VOID ObjectDestroyed()
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 				LPSTR lpCmdLine, INT nCmdShow)
 {
-    MSG	msg;
+	MSG	msg;
 		
 	// Controls whether UI is shown or not
 	BOOL bUI = TRUE;

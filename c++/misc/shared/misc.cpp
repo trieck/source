@@ -262,11 +262,9 @@ HRESULT CMiscellaneous :: GetDateTime(BSTR* pbstrDateTime)
 //
 // GetDriveSpace() Function
 //
-HRESULT CMiscellaneous :: GetDriveSpace(const BSTR bstrDrive, LPLONG lpBytes)
+HRESULT CMiscellaneous :: GetDriveSpace(const BSTR bstrDrive, PULARGE_INTEGER lpBytes)
 {
-	DWORD	dwSecPerClust, dwBytesPerSec,
-			dwNumFreeClust, dwTotalNumClust;
-		
+	ULARGE_INTEGER free;		
 	if (!bstrDrive || !lpBytes)
 		return E_POINTER;
 
@@ -280,17 +278,14 @@ HRESULT CMiscellaneous :: GetDriveSpace(const BSTR bstrDrive, LPLONG lpBytes)
 	wcscpy(szDrive, bstrDrive);
 #endif // _UNICODE
 
-	BOOL fRtn = GetDiskFreeSpace(szDrive, &dwSecPerClust,
-					&dwBytesPerSec, &dwNumFreeClust,
-					&dwTotalNumClust);
-
+	BOOL fRtn = GetDiskFreeSpaceEx(szDrive, NULL, NULL, &free);
 	if (!fRtn)
 	{
 		GenerateError(_T("Error getting drive space."));
 		return E_FAIL;
 	}
 
-	*lpBytes = (dwNumFreeClust * dwSecPerClust * dwBytesPerSec);
+	*lpBytes = free;
 
 	return NOERROR;
 }

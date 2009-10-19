@@ -67,7 +67,7 @@ public:
 	virtual HRESULT __stdcall GetDate(BSTR*);
 	virtual HRESULT __stdcall GetTime(BSTR*);
 	virtual HRESULT __stdcall GetDateTime(BSTR*);
-	virtual HRESULT __stdcall GetDriveSpace(const BSTR, LPLONG);
+	virtual HRESULT __stdcall GetDriveSpace(const BSTR, PULARGE_INTEGER);
 	virtual HRESULT __stdcall EnumDrives(BSTR*);
 			
 	// Initialization
