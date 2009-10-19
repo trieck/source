@@ -3,8 +3,8 @@
 /* this ALWAYS GENERATED file contains the proxy stub code */
 
 
- /* File created by MIDL compiler version 6.00.0366 */
-/* at Thu Dec 21 13:04:47 2006
+ /* File created by MIDL compiler version 7.00.0499 */
+/* at Mon Oct 19 12:21:50 2009
  */
 /* Compiler settings for misc.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -23,9 +23,13 @@
 #if _MSC_VER >= 1200
 #pragma warning(push)
 #endif
-#pragma warning( disable: 4100 ) /* unreferenced arguments in x86 call */
-#pragma warning( disable: 4211 )  /* redefine extent to static */
+
+#pragma warning( disable: 4211 )  /* redefine extern to static */
 #pragma warning( disable: 4232 )  /* dllimport identity*/
+#pragma warning( disable: 4024 )  /* array to pointer mapping*/
+#pragma warning( disable: 4152 )  /* function/data pointer conversion in expression */
+#pragma warning( disable: 4100 ) /* unreferenced arguments in x86 call */
+
 #pragma optimize("", off ) 
 
 #define USE_STUBLESS_PROXY
@@ -47,28 +51,36 @@
 
 #define TYPE_FORMAT_STRING_SIZE   61                                
 #define PROC_FORMAT_STRING_SIZE   187                               
+#define EXPR_FORMAT_STRING_SIZE   1                                 
 #define TRANSMIT_AS_TABLE_SIZE    0            
 #define WIRE_MARSHAL_TABLE_SIZE   1            
 
-typedef struct _MIDL_TYPE_FORMAT_STRING
+typedef struct _misc_MIDL_TYPE_FORMAT_STRING
     {
     short          Pad;
     unsigned char  Format[ TYPE_FORMAT_STRING_SIZE ];
-    } MIDL_TYPE_FORMAT_STRING;
+    } misc_MIDL_TYPE_FORMAT_STRING;
 
-typedef struct _MIDL_PROC_FORMAT_STRING
+typedef struct _misc_MIDL_PROC_FORMAT_STRING
     {
     short          Pad;
     unsigned char  Format[ PROC_FORMAT_STRING_SIZE ];
-    } MIDL_PROC_FORMAT_STRING;
+    } misc_MIDL_PROC_FORMAT_STRING;
+
+typedef struct _misc_MIDL_EXPR_FORMAT_STRING
+    {
+    long          Pad;
+    unsigned char  Format[ EXPR_FORMAT_STRING_SIZE ];
+    } misc_MIDL_EXPR_FORMAT_STRING;
 
 
 static RPC_SYNTAX_IDENTIFIER  _RpcTransferSyntax = 
 {{0x8A885D04,0x1CEB,0x11C9,{0x9F,0xE8,0x08,0x00,0x2B,0x10,0x48,0x60}},{2,0}};
 
 
-extern const MIDL_TYPE_FORMAT_STRING __MIDL_TypeFormatString;
-extern const MIDL_PROC_FORMAT_STRING __MIDL_ProcFormatString;
+extern const misc_MIDL_TYPE_FORMAT_STRING misc__MIDL_TypeFormatString;
+extern const misc_MIDL_PROC_FORMAT_STRING misc__MIDL_ProcFormatString;
+extern const misc_MIDL_EXPR_FORMAT_STRING misc__MIDL_ExprFormatString;
 
 
 extern const MIDL_STUB_DESC Object_StubDesc;
@@ -88,11 +100,11 @@ extern const USER_MARSHAL_ROUTINE_QUADRUPLE UserMarshalRoutines[ WIRE_MARSHAL_TA
 #error You need a Windows 2000 or later to run this stub because it uses these features:
 #error   /robust command line switch.
 #error However, your C/C++ compilation flags indicate you intend to run this app on earlier systems.
-#error This app will die there with the RPC_X_WRONG_STUB_VERSION error.
+#error This app will fail with the RPC_X_WRONG_STUB_VERSION error.
 #endif
 
 
-static const MIDL_PROC_FORMAT_STRING __MIDL_ProcFormatString =
+static const misc_MIDL_PROC_FORMAT_STRING misc__MIDL_ProcFormatString =
     {
         0,
         {
@@ -140,7 +152,7 @@ static const MIDL_PROC_FORMAT_STRING __MIDL_ProcFormatString =
 			0x2,		/* 2 */
 /* 52 */	0x8,		/* 8 */
 			0x3,		/* Ext Flags:  new corr desc, clt corr check, */
-/* 54 */	NdrFcShort( 0x1 ),	/* 1 */
+/* 54 */	NdrFcShort( 0x4 ),	/* 4 */
 /* 56 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 58 */	NdrFcShort( 0x0 ),	/* 0 */
 
@@ -170,7 +182,7 @@ static const MIDL_PROC_FORMAT_STRING __MIDL_ProcFormatString =
 			0x2,		/* 2 */
 /* 88 */	0x8,		/* 8 */
 			0x3,		/* Ext Flags:  new corr desc, clt corr check, */
-/* 90 */	NdrFcShort( 0x1 ),	/* 1 */
+/* 90 */	NdrFcShort( 0x4 ),	/* 4 */
 /* 92 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 94 */	NdrFcShort( 0x0 ),	/* 0 */
 
@@ -258,7 +270,7 @@ static const MIDL_PROC_FORMAT_STRING __MIDL_ProcFormatString =
         }
     };
 
-static const MIDL_TYPE_FORMAT_STRING __MIDL_TypeFormatString =
+static const misc_MIDL_TYPE_FORMAT_STRING misc__MIDL_TypeFormatString =
     {
         0,
         {
@@ -354,7 +366,7 @@ static const unsigned short IMiscellaneous_FormatStringOffsetTable[] =
 static const MIDL_STUBLESS_PROXY_INFO IMiscellaneous_ProxyInfo =
     {
     &Object_StubDesc,
-    __MIDL_ProcFormatString.Format,
+    misc__MIDL_ProcFormatString.Format,
     &IMiscellaneous_FormatStringOffsetTable[-3],
     0,
     0,
@@ -366,7 +378,7 @@ static const MIDL_SERVER_INFO IMiscellaneous_ServerInfo =
     {
     &Object_StubDesc,
     0,
-    __MIDL_ProcFormatString.Format,
+    misc__MIDL_ProcFormatString.Format,
     &IMiscellaneous_FormatStringOffsetTable[-3],
     0,
     0,
@@ -423,18 +435,18 @@ static const MIDL_STUB_DESC Object_StubDesc =
     0,
     0,
     0,
-    __MIDL_TypeFormatString.Format,
+    misc__MIDL_TypeFormatString.Format,
     1, /* -error bounds_check flag */
     0x50002, /* Ndr library version */
     0,
-    0x600016e, /* MIDL Version 6.0.366 */
+    0x70001f3, /* MIDL Version 7.0.499 */
     0,
     UserMarshalRoutines,
     0,  /* notify & notify_flag routine table */
     0x1, /* MIDL flag */
     0, /* cs routines */
     0,   /* proxy/server info */
-    0   /* Reserved5 */
+    0
     };
 
 const CInterfaceProxyVtbl * _misc_ProxyVtblList[] = 

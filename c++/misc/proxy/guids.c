@@ -5,8 +5,8 @@
 /* link this file in with the server and any clients */
 
 
- /* File created by MIDL compiler version 6.00.0366 */
-/* at Wed Dec 20 10:38:34 2006
+ /* File created by MIDL compiler version 7.00.0499 */
+/* at Mon Oct 19 12:21:50 2009
  */
 /* Compiler settings for misc.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)

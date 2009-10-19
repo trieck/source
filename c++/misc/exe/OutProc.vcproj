@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="OutProc"
 	ProjectGUID="{52038D11-5C2A-4390-85F5-139D54910B86}"
-	SccProjectName="&quot;$/Source/c++/MISC/exe&quot;, ASCAAAAA"
-	SccLocalPath="."
-	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -84,6 +82,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/miscobj.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -103,9 +103,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -181,6 +178,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\ANSI/Release/miscobj.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -200,9 +199,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -277,6 +273,8 @@
 				GenerateManifest="false"
 				ProgramDatabaseFile=".\Release/miscobj.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -296,9 +294,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -373,6 +368,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\ANSI/debug/miscobj.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -394,9 +391,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -404,202 +398,218 @@
 	<References>
 	</References>
 	<Files>
-		<File
-			RelativePath="capp.h"
+		<Filter
+			Name="Header Files"
 			>
-		</File>
-		<File
-			RelativePath="emisc.cpp"
+			<File
+				RelativePath="capp.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shared\misc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shared\REGISTRY.H"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Source Files"
 			>
-			<FileConfiguration
-				Name="Debug|Win32"
+			<File
+				RelativePath="emisc.cpp"
 				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="0"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release ANSI|Win32"
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release ANSI|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug ANSI|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\proxy\guids.c"
 				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="2"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release ANSI|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug ANSI|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\shared\misc.cpp"
 				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="2"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Debug ANSI|Win32"
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release ANSI|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug ANSI|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\shared\REGISTRY.CPP"
 				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="0"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath="..\proxy\guids.c"
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release ANSI|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug ANSI|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+					/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
 			>
-			<FileConfiguration
-				Name="Debug|Win32"
+			<File
+				RelativePath="main.ico"
 				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="0"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions=""
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release ANSI|Win32"
+			</File>
+			<File
+				RelativePath="outproc.rc"
 				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="2"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions=""
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="2"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions=""
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Debug ANSI|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="0"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions=""
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath="main.ico"
+			</File>
+		</Filter>
+		<Filter
+			Name="Other Files"
 			>
-		</File>
-		<File
-			RelativePath="..\shared\misc.cpp"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="0"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release ANSI|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="2"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="2"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Debug ANSI|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="0"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath="..\shared\misc.h"
-			>
-		</File>
-		<File
-			RelativePath="outproc.rc"
-			>
-		</File>
-		<File
-			RelativePath="..\shared\REGISTRY.CPP"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="0"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release ANSI|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="2"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="2"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Debug ANSI|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="0"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath="..\shared\REGISTRY.H"
-			>
-		</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

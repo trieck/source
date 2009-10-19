@@ -3,8 +3,8 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 6.00.0366 */
-/* at Wed Dec 20 10:38:34 2006
+ /* File created by MIDL compiler version 7.00.0499 */
+/* at Mon Oct 19 12:21:50 2009
  */
 /* Compiler settings for misc.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -71,8 +71,6 @@ typedef struct Miscellaneous Miscellaneous;
 extern "C"{
 #endif 
 
-void * __RPC_USER MIDL_user_allocate(size_t);
-void __RPC_USER MIDL_user_free( void * ); 
 
 #ifndef __IMiscellaneous_INTERFACE_DEFINED__
 #define __IMiscellaneous_INTERFACE_DEFINED__
@@ -116,7 +114,8 @@ EXTERN_C const IID IID_IMiscellaneous;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IMiscellaneous * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ void **ppvObject);
+            /* [iid_is][out] */ 
+            __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IMiscellaneous * This);
@@ -138,7 +137,7 @@ EXTERN_C const IID IID_IMiscellaneous;
             IMiscellaneous * This,
             /* [in] */ REFIID riid,
             /* [size_is][in] */ LPOLESTR *rgszNames,
-            /* [in] */ UINT cNames,
+            /* [range][in] */ UINT cNames,
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
@@ -188,109 +187,48 @@ EXTERN_C const IID IID_IMiscellaneous;
 
 
 #define IMiscellaneous_QueryInterface(This,riid,ppvObject)	\
-    (This)->lpVtbl -> QueryInterface(This,riid,ppvObject)
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
 
 #define IMiscellaneous_AddRef(This)	\
-    (This)->lpVtbl -> AddRef(This)
+    ( (This)->lpVtbl -> AddRef(This) ) 
 
 #define IMiscellaneous_Release(This)	\
-    (This)->lpVtbl -> Release(This)
+    ( (This)->lpVtbl -> Release(This) ) 
 
 
 #define IMiscellaneous_GetTypeInfoCount(This,pctinfo)	\
-    (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo)
+    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
 
 #define IMiscellaneous_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
-    (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo)
+    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
 
 #define IMiscellaneous_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
-    (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)
+    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
 
 #define IMiscellaneous_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
-    (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)
+    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
 
 
 #define IMiscellaneous_GetDate(This,pbstrDate)	\
-    (This)->lpVtbl -> GetDate(This,pbstrDate)
+    ( (This)->lpVtbl -> GetDate(This,pbstrDate) ) 
 
 #define IMiscellaneous_GetTime(This,pbstrTime)	\
-    (This)->lpVtbl -> GetTime(This,pbstrTime)
+    ( (This)->lpVtbl -> GetTime(This,pbstrTime) ) 
 
 #define IMiscellaneous_GetDateTime(This,pbstrDateTime)	\
-    (This)->lpVtbl -> GetDateTime(This,pbstrDateTime)
+    ( (This)->lpVtbl -> GetDateTime(This,pbstrDateTime) ) 
 
 #define IMiscellaneous_GetDriveSpace(This,bstrDrive,pBytes)	\
-    (This)->lpVtbl -> GetDriveSpace(This,bstrDrive,pBytes)
+    ( (This)->lpVtbl -> GetDriveSpace(This,bstrDrive,pBytes) ) 
 
 #define IMiscellaneous_EnumDrives(This,pbstrDrives)	\
-    (This)->lpVtbl -> EnumDrives(This,pbstrDrives)
+    ( (This)->lpVtbl -> EnumDrives(This,pbstrDrives) ) 
 
 #endif /* COBJMACROS */
 
 
 #endif 	/* C style interface */
 
-
-
-HRESULT STDMETHODCALLTYPE IMiscellaneous_GetDate_Proxy( 
-    IMiscellaneous * This,
-    /* [retval][out] */ BSTR *pbstrDate);
-
-
-void __RPC_STUB IMiscellaneous_GetDate_Stub(
-    IRpcStubBuffer *This,
-    IRpcChannelBuffer *_pRpcChannelBuffer,
-    PRPC_MESSAGE _pRpcMessage,
-    DWORD *_pdwStubPhase);
-
-
-HRESULT STDMETHODCALLTYPE IMiscellaneous_GetTime_Proxy( 
-    IMiscellaneous * This,
-    /* [retval][out] */ BSTR *pbstrTime);
-
-
-void __RPC_STUB IMiscellaneous_GetTime_Stub(
-    IRpcStubBuffer *This,
-    IRpcChannelBuffer *_pRpcChannelBuffer,
-    PRPC_MESSAGE _pRpcMessage,
-    DWORD *_pdwStubPhase);
-
-
-HRESULT STDMETHODCALLTYPE IMiscellaneous_GetDateTime_Proxy( 
-    IMiscellaneous * This,
-    /* [retval][out] */ BSTR *pbstrDateTime);
-
-
-void __RPC_STUB IMiscellaneous_GetDateTime_Stub(
-    IRpcStubBuffer *This,
-    IRpcChannelBuffer *_pRpcChannelBuffer,
-    PRPC_MESSAGE _pRpcMessage,
-    DWORD *_pdwStubPhase);
-
-
-HRESULT STDMETHODCALLTYPE IMiscellaneous_GetDriveSpace_Proxy( 
-    IMiscellaneous * This,
-    /* [string][in] */ const BSTR bstrDrive,
-    /* [retval][out] */ long *pBytes);
-
-
-void __RPC_STUB IMiscellaneous_GetDriveSpace_Stub(
-    IRpcStubBuffer *This,
-    IRpcChannelBuffer *_pRpcChannelBuffer,
-    PRPC_MESSAGE _pRpcMessage,
-    DWORD *_pdwStubPhase);
-
-
-HRESULT STDMETHODCALLTYPE IMiscellaneous_EnumDrives_Proxy( 
-    IMiscellaneous * This,
-    /* [retval][out] */ BSTR *pbstrDrives);
-
-
-void __RPC_STUB IMiscellaneous_EnumDrives_Stub(
-    IRpcStubBuffer *This,
-    IRpcChannelBuffer *_pRpcChannelBuffer,
-    PRPC_MESSAGE _pRpcMessage,
-    DWORD *_pdwStubPhase);
 
 
 
