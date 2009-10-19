@@ -262,10 +262,10 @@ HRESULT CMiscellaneous :: GetDateTime(BSTR* pbstrDateTime)
 //
 // GetDriveSpace() Function
 //
-HRESULT CMiscellaneous :: GetDriveSpace(const BSTR bstrDrive, PULARGE_INTEGER lpBytes)
+HRESULT CMiscellaneous :: GetDriveSpace(const BSTR bstrDrive, __int64* pBytes)
 {
 	ULARGE_INTEGER free;		
-	if (!bstrDrive || !lpBytes)
+	if (!bstrDrive || !pBytes)
 		return E_POINTER;
 
 	// Get Disk Free Space for given drive
@@ -285,7 +285,7 @@ HRESULT CMiscellaneous :: GetDriveSpace(const BSTR bstrDrive, PULARGE_INTEGER lp
 		return E_FAIL;
 	}
 
-	*lpBytes = free;
+	*pBytes = free.QuadPart;
 
 	return NOERROR;
 }

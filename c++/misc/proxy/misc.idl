@@ -25,7 +25,7 @@ interface IMiscellaneous : IDispatch
 	HRESULT GetDate([out, retval]BSTR* pbstrDate);
 	HRESULT GetTime([out, retval]BSTR* pbstrTime);
 	HRESULT GetDateTime([out, retval]BSTR* pbstrDateTime);
-	HRESULT	GetDriveSpace([in, string]const BSTR bstrDrive, [out, retval]long* pBytes);
+	HRESULT	GetDriveSpace([in, string]const BSTR bstrDrive, [out, retval]__int64 *pBytes);
 	HRESULT EnumDrives([out, retval]BSTR* pbstrDrives);
 };
 

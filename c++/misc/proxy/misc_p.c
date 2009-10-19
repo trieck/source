@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0499 */
-/* at Mon Oct 19 12:21:50 2009
+/* at Mon Oct 19 13:27:46 2009
  */
 /* Compiler settings for misc.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -207,7 +207,7 @@ static const misc_MIDL_PROC_FORMAT_STRING misc__MIDL_ProcFormatString =
 /* 114 */	NdrFcShort( 0xa ),	/* 10 */
 /* 116 */	NdrFcShort( 0x10 ),	/* x86 Stack size/offset = 16 */
 /* 118 */	NdrFcShort( 0x0 ),	/* 0 */
-/* 120 */	NdrFcShort( 0x24 ),	/* 36 */
+/* 120 */	NdrFcShort( 0x2c ),	/* 44 */
 /* 122 */	0x46,		/* Oi2 Flags:  clt must size, has return, has ext, */
 			0x3,		/* 3 */
 /* 124 */	0x8,		/* 8 */
@@ -226,7 +226,7 @@ static const misc_MIDL_PROC_FORMAT_STRING misc__MIDL_ProcFormatString =
 
 /* 138 */	NdrFcShort( 0x2150 ),	/* Flags:  out, base type, simple ref, srv alloc size=8 */
 /* 140 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
-/* 142 */	0x8,		/* FC_LONG */
+/* 142 */	0xb,		/* FC_HYPER */
 			0x0,		/* 0 */
 
 	/* Return value */
@@ -317,7 +317,7 @@ static const misc_MIDL_TYPE_FORMAT_STRING misc__MIDL_TypeFormatString =
 /* 54 */	NdrFcShort( 0xfff4 ),	/* Offset= -12 (42) */
 /* 56 */	
 			0x11, 0xc,	/* FC_RP [alloced_on_stack] [simple_pointer] */
-/* 58 */	0x8,		/* FC_LONG */
+/* 58 */	0xb,		/* FC_HYPER */
 			0x5c,		/* FC_PAD */
 
 			0x0

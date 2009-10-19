@@ -741,7 +741,7 @@ BOOL CALLBACK DriveProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 			if (nSel != CB_ERR)
 			{
 				HRESULT hr;
-				ULARGE_INTEGER lBytes;
+				__int64 lBytes;
 			
 				assert(pApp->m_pIMisc);
 
@@ -760,8 +760,7 @@ BOOL CALLBACK DriveProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 				if (SUCCEEDED(hr))
 				{
 					TCHAR szMessage[50];
-					__int64 bytes = lBytes.QuadPart;
-					wsprintf(szMessage, _T("Drive %s %I64d bytes."), szTemp, bytes);
+					wsprintf(szMessage, _T("Drive %s %I64d bytes."), szTemp, lBytes);
 					pApp->Trace(szMessage);
 				}
 				else

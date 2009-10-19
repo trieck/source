@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0499 */
-/* at Mon Oct 19 12:21:50 2009
+/* at Mon Oct 19 13:27:46 2009
  */
 /* Compiler settings for misc.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -98,7 +98,7 @@ EXTERN_C const IID IID_IMiscellaneous;
         
         virtual HRESULT STDMETHODCALLTYPE GetDriveSpace( 
             /* [string][in] */ const BSTR bstrDrive,
-            /* [retval][out] */ PULARGE_INTEGER pBytes) = 0;
+            /* [retval][out] */ __int64 *pBytes) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE EnumDrives( 
             /* [retval][out] */ BSTR *pbstrDrives) = 0;
@@ -167,7 +167,7 @@ EXTERN_C const IID IID_IMiscellaneous;
         HRESULT ( STDMETHODCALLTYPE *GetDriveSpace )( 
             IMiscellaneous * This,
             /* [string][in] */ const BSTR bstrDrive,
-            /* [retval][out] */ long *pBytes);
+            /* [retval][out] */ __int64 *pBytes);
         
         HRESULT ( STDMETHODCALLTYPE *EnumDrives )( 
             IMiscellaneous * This,
