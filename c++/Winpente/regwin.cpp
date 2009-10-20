@@ -40,12 +40,11 @@ HWND DisplayWindow(HINSTANCE hInstance,
 	HWND hWnd;
 	NONCLIENTMETRICS NonClientMetrics;
 	RECT dw, rc;
-	
+		
 	/* Adjust Rectangle based on Non Client Metrics */
 	NonClientMetrics.cbSize = sizeof(NONCLIENTMETRICS);
-
 	SystemParametersInfo(SPI_GETNONCLIENTMETRICS, 0, &NonClientMetrics, 0);
-
+	
 	rc.left = 0;
 	rc.top = 0;
 	rc.right = ((BoxSize * 19)+1) + (HOFFSET * 2) +
