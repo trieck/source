@@ -8,6 +8,11 @@
 #include "temp.h"
 #include "strutil.h"
 
+#ifdef _MSC_VER
+#define YY_NO_UNISTD_H
+#include <io.h>
+#endif /* _MSC_VER */
+
 #define MAX_INCLUDE_DEPTH 10
 
 static YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH];
