@@ -1,32 +1,19 @@
-Microsoft Visual Studio Solution File, Format Version 8.00
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sokclient", "sokclient.vcproj", "{D4FACE30-9E07-4E7B-BDD7-0EE787B590D0}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 2
-		SccProjectName0 = \u0022$/Source/c++/TCP/sokclient\u0022,\u0020QBDAAAAA
-		SccLocalPath0 = .
-		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
-		CanCheckoutShared = false
-		SolutionUniqueID = {6FE89465-E827-4A96-B528-2123CC8E2511}
-		SccProjectUniqueName1 = sokclient.vcproj
-		SccLocalPath1 = .
-		CanCheckoutShared = false
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
 	EndGlobalSection
-	GlobalSection(SolutionConfiguration) = preSolution
-		Debug = Debug
-		Release = Release
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D4FACE30-9E07-4E7B-BDD7-0EE787B590D0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D4FACE30-9E07-4E7B-BDD7-0EE787B590D0}.Debug|Win32.Build.0 = Debug|Win32
+		{D4FACE30-9E07-4E7B-BDD7-0EE787B590D0}.Release|Win32.ActiveCfg = Release|Win32
+		{D4FACE30-9E07-4E7B-BDD7-0EE787B590D0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
-	GlobalSection(ProjectConfiguration) = postSolution
-		{D4FACE30-9E07-4E7B-BDD7-0EE787B590D0}.Debug.ActiveCfg = Debug|Win32
-		{D4FACE30-9E07-4E7B-BDD7-0EE787B590D0}.Debug.Build.0 = Debug|Win32
-		{D4FACE30-9E07-4E7B-BDD7-0EE787B590D0}.Release.ActiveCfg = Release|Win32
-		{D4FACE30-9E07-4E7B-BDD7-0EE787B590D0}.Release.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-	EndGlobalSection
-	GlobalSection(ExtensibilityAddIns) = postSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
