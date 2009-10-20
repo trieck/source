@@ -1,5 +1,5 @@
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C++ Express 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "busy", "busy.vcproj", "{310BD47B-FC1A-4CDB-9904-F211A8630FBA}"
 EndProject
 Global
@@ -15,16 +15,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 2
-		SccProjectName0 = \u0022$/Source/c++/busy\u0022,\u0020BWBAAAAA
-		SccLocalPath0 = .
-		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
-		CanCheckoutShared = false
-		SolutionUniqueID = {9562B354-A52F-4DFC-883F-60EF0060B3BC}
-		SccProjectUniqueName1 = busy.vcproj
-		SccLocalPath1 = .
-		CanCheckoutShared = false
 	EndGlobalSection
 EndGlobal

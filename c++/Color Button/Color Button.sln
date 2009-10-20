@@ -1,38 +1,25 @@
-Microsoft Visual Studio Solution File, Format Version 8.00
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Color Button", "Color Button.vcproj", "{4535F06C-54AA-43AE-8180-D13808B0C939}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 2
-		SccProjectName0 = \u0022$/Source/c++/Color\u0020Button\u0022,\u0020PXBAAAAA
-		SccLocalPath0 = .
-		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
-		CanCheckoutShared = false
-		SolutionUniqueID = {26FFBD16-0CA8-4741-B78F-E90F45FA38D9}
-		SccProjectUniqueName1 = Color\u0020Button.vcproj
-		SccLocalPath1 = .
-		CanCheckoutShared = false
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+		Unicode Debug|Win32 = Unicode Debug|Win32
+		Unicode Release|Win32 = Unicode Release|Win32
 	EndGlobalSection
-	GlobalSection(SolutionConfiguration) = preSolution
-		Debug = Debug
-		Release = Release
-		Unicode Debug = Unicode Debug
-		Unicode Release = Unicode Release
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4535F06C-54AA-43AE-8180-D13808B0C939}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4535F06C-54AA-43AE-8180-D13808B0C939}.Debug|Win32.Build.0 = Debug|Win32
+		{4535F06C-54AA-43AE-8180-D13808B0C939}.Release|Win32.ActiveCfg = Release|Win32
+		{4535F06C-54AA-43AE-8180-D13808B0C939}.Release|Win32.Build.0 = Release|Win32
+		{4535F06C-54AA-43AE-8180-D13808B0C939}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{4535F06C-54AA-43AE-8180-D13808B0C939}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
+		{4535F06C-54AA-43AE-8180-D13808B0C939}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{4535F06C-54AA-43AE-8180-D13808B0C939}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
 	EndGlobalSection
-	GlobalSection(ProjectConfiguration) = postSolution
-		{4535F06C-54AA-43AE-8180-D13808B0C939}.Debug.ActiveCfg = Debug|Win32
-		{4535F06C-54AA-43AE-8180-D13808B0C939}.Debug.Build.0 = Debug|Win32
-		{4535F06C-54AA-43AE-8180-D13808B0C939}.Release.ActiveCfg = Release|Win32
-		{4535F06C-54AA-43AE-8180-D13808B0C939}.Release.Build.0 = Release|Win32
-		{4535F06C-54AA-43AE-8180-D13808B0C939}.Unicode Debug.ActiveCfg = Unicode Debug|Win32
-		{4535F06C-54AA-43AE-8180-D13808B0C939}.Unicode Debug.Build.0 = Unicode Debug|Win32
-		{4535F06C-54AA-43AE-8180-D13808B0C939}.Unicode Release.ActiveCfg = Unicode Release|Win32
-		{4535F06C-54AA-43AE-8180-D13808B0C939}.Unicode Release.Build.0 = Unicode Release|Win32
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-	EndGlobalSection
-	GlobalSection(ExtensibilityAddIns) = postSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
