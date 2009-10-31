@@ -56,6 +56,26 @@ UInt32MapEnum Board::enumEntries()
 	return e;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+EntryVec Board::empty()
+{
+	EntryVec v;
+
+	uint32_t i, j;
+	
+	for (i = 0; i < BOARD_SIZE; i++) {
+		for (j = 0; j < BOARD_SIZE; j++) {
+			if (getEntry(i, j) == ET_EMPTY) {
+				POINT pt = { i, j };
+				Entry e(pt, ET_EMPTY);
+				v.push_back(e);
+			}
+		}
+	}
+	
+	return v;
+}
+
 namespace {	// anonymous
 
 /////////////////////////////////////////////////////////////////////////////

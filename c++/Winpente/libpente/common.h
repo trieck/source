@@ -16,7 +16,4 @@
 #include <windows.h>
 #endif // _MSC_VER
 
-class Entry;
-typedef std::vector<Entry> EntryVec;
-
 #endif // __COMMON_H__

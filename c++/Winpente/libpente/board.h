@@ -7,6 +7,7 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
 
+#include "entry.h"
 #include "enum.h"
 
 // size of board 
@@ -17,6 +18,7 @@ typedef std::map<uint32_t, uint32_t> UInt32Map;
 typedef std::pair<uint32_t, uint32_t> UInt32Pair;
 typedef UInt32Map::const_iterator UInt32MapConstIter;
 typedef Enumerator<UInt32Map> UInt32MapEnum;
+typedef std::vector<Entry> EntryVec;
 
 /////////////////////////////////////////////////////////////////////////////
 class Board
