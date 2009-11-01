@@ -23,7 +23,7 @@ public:
 	Vector & operator = (const Vector &rhs);
 
 	void clear();
-	POINT entry(uint32_t index);
+	POINT entry(uint32_t index) const;
 	void setEntry(uint32_t index, uint32_t m, uint32_t n);
 
 // Implementation

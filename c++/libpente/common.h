@@ -21,5 +21,7 @@
 #define ANON_END	}
 
 extern const POINT NIL_MOVE;
+extern bool isNilMove(const POINT &pt);
+extern bool isEqualPoint(const POINT &pt1, const POINT &pt2);
 
 #endif // __COMMON_H__

@@ -37,7 +37,7 @@ void Vector::clear()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-POINT Vector::entry(uint32_t index)
+POINT Vector::entry(uint32_t index) const
 {
 	return v[index % VSIZE];
 }
