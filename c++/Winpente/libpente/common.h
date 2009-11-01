@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <map>
 #include <vector>
+#include <memory>
 
 #ifdef _MSC_VER
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers

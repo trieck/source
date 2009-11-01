@@ -24,11 +24,15 @@ typedef std::vector<Entry> EntryVec;
 class Board
 {
 // Construction / Destruction
-public:
+private:
 	Board();
+public:
 	virtual ~Board();
 
 // Interface
+	typedef std::auto_ptr<Board> BoardPtr;
+	static BoardPtr instance();
+
 	uint32_t getEntry(uint32_t row, uint32_t col) const;
 	void setEntry(uint32_t row, uint32_t col, uint32_t type);
 	void remove(uint32_t row, uint32_t col);
@@ -38,6 +42,7 @@ public:
 
 // Implementation
 private:	
+	static BoardPtr This;
 	UInt32Map rep;
 };
 

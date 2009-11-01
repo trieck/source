@@ -214,6 +214,50 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\Machine.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="common.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="common.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Vector.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="common.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="common.h"
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -238,6 +282,14 @@
 			</File>
 			<File
 				RelativePath=".\libpente.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Machine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Vector.h"
 				>
 			</File>
 		</Filter>
