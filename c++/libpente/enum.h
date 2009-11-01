@@ -30,7 +30,12 @@ public:
 	}
 
 	typename T::const_reference next() {
-		return *current++;
+		T::const_reference c = *current;
+
+		if (current < end)
+			current++;
+
+		return c;
 	}
 
 	bool hasNext() const {

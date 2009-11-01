@@ -19,11 +19,21 @@ public:
 	~Machine();
 
 // Interface
+	POINT move();
 
 // Implementation
 private:
 	void generate();
-
+	float weightVector(const Vector &v) const;
+	float weightPoint(const POINT &pt) const;
+	bool center(const Vector &v) const;
+	POINT bestMove(const Vector &v) const;
+	POINT mustBlock() const;
+	POINT blockMove() const;
+	POINT randomMove() const;
+	Vector maxOpponentV() const;
+	uint32_t contiguity(const Vector &v) const;
+	
 	Board::BoardPtr board;
 	typedef std::vector<Vector> VecVec;
 	VecVec vectors;

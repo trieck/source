@@ -8,11 +8,9 @@
 #include "entry.h"
 #include "board.h"
 
-namespace {	// anonymous
-
+ANON_BEGIN
 uint32_t key(uint32_t row, uint32_t col);
-
-}
+ANON_END
 
 Board::BoardPtr Board::This;
 
@@ -98,7 +96,7 @@ EntryVec Board::empty()
 	return v;
 }
 
-namespace {	// anonymous
+ANON_BEGIN
 
 /////////////////////////////////////////////////////////////////////////////
 uint32_t key(uint32_t row, uint32_t col)
@@ -106,4 +104,5 @@ uint32_t key(uint32_t row, uint32_t col)
 	return (row % BOARD_SIZE) * BOARD_SIZE + (col % BOARD_SIZE);
 }
 
-}
+ANON_END
+

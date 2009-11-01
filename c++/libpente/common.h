@@ -17,4 +17,9 @@
 #include <windows.h>
 #endif // _MSC_VER
 
+#define ANON_BEGIN	namespace {
+#define ANON_END	}
+
+extern const POINT NIL_MOVE;
+
 #endif // __COMMON_H__
