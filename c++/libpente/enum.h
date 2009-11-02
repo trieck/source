@@ -12,8 +12,9 @@ template <typename T>
 class Enumerator
 {
 public:
-	Enumerator(typename T::const_iterator i1, typename T::const_iterator &i2) 
-		: current(i1), begin(i1), end(i2) {
+	Enumerator(const T &t) {		
+		current = begin = t.begin();
+		end = t.end();
 	}
 
 	Enumerator(const Enumerator &rhs) {

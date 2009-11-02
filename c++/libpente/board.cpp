@@ -72,7 +72,7 @@ void Board::clear()
 /////////////////////////////////////////////////////////////////////////////
 UInt32MapEnum Board::enumEntries()
 {
-	UInt32MapEnum e(rep.begin(), rep.end());
+	UInt32MapEnum e(rep);
 	return e;
 }
 

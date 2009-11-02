@@ -8,6 +8,7 @@
 #include "Machine.h"
 #include "Board.h"
 #include <float.h>
+#include <time.h>
 
 ANON_BEGIN
 const float MIN_WEIGHT = -FLT_MIN;
@@ -321,29 +322,94 @@ POINT Machine::mustBlock() const
 /////////////////////////////////////////////////////////////////////////////
 POINT Machine::blockMove() const
 {
-	POINT pt;
-
-	return pt;
+	/*
+	 * Attempt to block an opponent on a maximally feasible opponent vector
+	 */
+	const Vector *v;
+	uint32_t i, type;
+	POINT p;
+	
+	if ((v = maxOpponentV()) == NULL)
+		return NIL_MOVE;
+	
+	for (i = 0; i < VSIZE; i++) {
+		p = v->entry(i);
+		type = board->getEntry(p.x, p.y);
+		if (type == ET_EMPTY) return p;
+	}
+	
+	return NIL_MOVE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 POINT Machine::randomMove() const
 {
-	POINT pt;
+	EntryVec empty = board->empty();
+	uint32_t size, n;
 
-	return pt;
+	srand((uint32_t)time(NULL));
+
+	if ((size = empty.size()) > 0) {
+		n = (uint32_t)(double)rand() / (RAND_MAX + 1) * (size-1);
+		const Entry &entry = empty.at(n);
+		return entry.where();
+	}
+
+	return NIL_MOVE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-Vector Machine::maxOpponentV() const
+const Vector *Machine::maxOpponentV() const
 {
-	Vector v;
+	/* find an opponents maximally feasible vector */
+	uint32_t type, i;
+	POINT p;
+	const Vector *maxV = NULL;
+	float weight, maxWeight = MIN_WEIGHT;
 
-	return v;
+	VecVec::const_iterator it = vectors.begin();
+	for ( ; it != vectors.end(); it++) {
+		for (i = 0, weight = 0; i < VSIZE; i++) {
+			p = (*it).entry(i);
+			type = board->getEntry(p.x, p.y);
+			if (type == ET_PLAYER_ONE) { weight += PIECE_WEIGHT; }
+			if (type == ET_PLAYER_TWO) break;	// not feasible
+		}
+
+		if (weight > maxWeight) {
+			maxWeight = weight;
+			maxV = &*it;
+		}
+	}
+
+	return maxV;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 uint32_t Machine::contiguity(const Vector &v) const
 {
-	return 0;
+	uint32_t i, type, cont = 0, maxCont = 0;
+	POINT pt;
+	
+	for (i = 0; i < VSIZE; i++) {
+		pt = v.entry(i);
+		type = board->getEntry(pt.x, pt.y);
+		switch (type) {
+			case ET_PLAYER_TWO:
+				cont++;
+				break;
+			case ET_EMPTY:
+				if (cont > maxCont) {
+                    maxCont = cont;
+                }
+                cont = 0;
+				break;
+		}
+	}
+	
+	if (cont > maxCont) {
+		maxCont = cont;
+	}
+	
+	return maxCont;
 }

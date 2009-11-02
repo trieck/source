@@ -22,6 +22,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
+			BuildLogFile=""
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -84,6 +85,7 @@
 			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
+			BuildLogFile=""
 			>
 			<Tool
 				Name="VCPreBuildEventTool"

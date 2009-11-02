@@ -31,7 +31,7 @@ private:
 	POINT mustBlock() const;
 	POINT blockMove() const;
 	POINT randomMove() const;
-	Vector maxOpponentV() const;
+	const Vector *maxOpponentV() const;
 	uint32_t contiguity(const Vector &v) const;
 	
 	Board::BoardPtr board;
