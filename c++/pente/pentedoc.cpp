@@ -33,7 +33,7 @@ PenteDoc::PenteDoc()
 
 PenteDoc::~PenteDoc()
 {
-	Board *pBoard = game.getBoard();
+	PenteBoard *pBoard = game.getBoard();
 	ASSERT_VALID(pBoard);
 	AfxGetApp()->WriteProfileInt(_T("Settings"), _T("BoardColor"), 
 		pBoard->getBackgroundColor());

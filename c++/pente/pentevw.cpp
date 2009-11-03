@@ -123,7 +123,7 @@ void PenteView::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 /////////////////////////////////////////////////////////////////////////////
 void PenteView::OnLButtonDown(UINT nFlags, CPoint point) 
 {
-	Board *pBoard = GetDocument()->getGame()->getBoard();
+	PenteBoard *pBoard = GetDocument()->getGame()->getBoard();
 	ASSERT_VALID(pBoard);
 	if (pBoard->ptOnBoard(point)) {
 		CPoint square = pBoard->getSquare(point);
@@ -136,7 +136,7 @@ void PenteView::OnLButtonDown(UINT nFlags, CPoint point)
 void PenteView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
 	if (pHint != NULL) {
-		Board *pBoard = (Board*)pHint;
+		PenteBoard *pBoard = (PenteBoard*)pHint;
 		ASSERT_VALID(pBoard);
 		int x = LOWORD(lHint);
 		int y = HIWORD(lHint);

@@ -10,7 +10,8 @@
 #include "computer.h"
 #include "resource.h"
 
-WORD PenteGame::magicNumber = MAKEWORD(0x50, 0x54);	// 'PT'
+WORD PenteGame::magicNumber = MAKEWORD('P', 'T');
+
 /////////////////////////////////////////////////////////////////////////////
 PenteGame::PenteGame()
  : currentTurn(turnPlayerOne)
@@ -146,11 +147,11 @@ bool PenteGame::isCapture(const CPoint & op1, const CPoint & op2,
 		playerOne.get() : playerTwo.get();
 	Player *opponent = current == playerOne.get() ? 
 		playerTwo.get() : playerOne.get();
-	if (!Board::isValidPiece(op1.x, op1.y))
+	if (!PenteBoard::isValidPiece(op1.x, op1.y))
 		return false;
-	if (!Board::isValidPiece(op2.x, op2.y))
+	if (!PenteBoard::isValidPiece(op2.x, op2.y))
 		return false;
-	if (!Board::isValidPiece(end.x, end.y))
+	if (!PenteBoard::isValidPiece(end.x, end.y))
 		return false;
 	if (!opponent->findPiece(op1.x, op1.y))
 		return false;

@@ -4,10 +4,11 @@
 //
 #include "stdafx.h"
 #include "computer.h"
-#include "board.h"
+#include "PenteBoard.h"
 #include "resource.h"
 
 IMPLEMENT_DYNAMIC(Computer, PlayerTwo)
+
 /////////////////////////////////////////////////////////////////////////////
 Computer::Computer(Player *popponent)
  : opponent(popponent)
@@ -30,11 +31,11 @@ void Computer::randomPos(CPoint & pt)
 {
 	const int trys = 100;
 	int x, y;
-	CPoint extent = Board::getBoardSize();
+	CPoint extent = PenteBoard::getBoardSize();
 	for (int i = 0; i < trys; i++) {
 		x = rand() % extent.x;
 		y = rand() % extent.y;
-		ASSERT(Board::isValidPiece(x, y));
+		ASSERT(PenteBoard::isValidPiece(x, y));
 		if (!findPiece(x, y) && 
 			!opponent->findPiece(x, y)) {
 			pt = CPoint(x, y);

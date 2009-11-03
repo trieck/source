@@ -1,12 +1,13 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-//	BOARD.CPP : pente board
+//	PENTEBOARD.CPP : pente board
 //
 #include "stdafx.h"
-#include "board.h"
+#include "PenteBoard.h"
 #include "resource.h"
+
 /////////////////////////////////////////////////////////////////////////////
-Board::Board() 
+PenteBoard::PenteBoard() 
 {
 	CWinApp *pApp = AfxGetApp();
 	ASSERT_VALID(pApp);
@@ -18,11 +19,11 @@ Board::Board()
 	pen.CreatePen(PS_SOLID, 0, gridColor);
 }
 /////////////////////////////////////////////////////////////////////////////
-Board::~Board()
+PenteBoard::~PenteBoard()
 {
 }
 /////////////////////////////////////////////////////////////////////////////
-void Board::render(CDC *pDC, const CRect & rc)
+void PenteBoard::render(CDC *pDC, const CRect & rc)
 {
 	ASSERT_VALID(pDC);
 	CRect rcBoard;
@@ -53,7 +54,7 @@ void Board::render(CDC *pDC, const CRect & rc)
 	pDC->SelectObject(pOldPen);
 }
 /////////////////////////////////////////////////////////////////////////////
-CPoint Board::mapIndexToPoint(const CPoint & pt)
+CPoint PenteBoard::mapIndexToPoint(const CPoint & pt)
 {
 	CPoint ptDest(cxBorder, cyBorder);
 	ASSERT(pt.x <= cxSquares - 1);
@@ -63,7 +64,7 @@ CPoint Board::mapIndexToPoint(const CPoint & pt)
 	return ptDest;
 }
 /////////////////////////////////////////////////////////////////////////////
-bool Board::ptOnBoard(const CPoint & pt) const
+bool PenteBoard::ptOnBoard(const CPoint & pt) const
 {
 	CRect rc;
 	getDimensions(rc);
@@ -73,7 +74,7 @@ bool Board::ptOnBoard(const CPoint & pt) const
 	return false;
 }
 /////////////////////////////////////////////////////////////////////////////
-CPoint Board::getSquare(const CPoint & pt) const
+CPoint PenteBoard::getSquare(const CPoint & pt) const
 {
 	CPoint square(-1, -1); // special case for not found
 
@@ -84,7 +85,7 @@ CPoint Board::getSquare(const CPoint & pt) const
 	return square;
 }
 /////////////////////////////////////////////////////////////////////////////
-void Board::getSquareRect(int x, int y, CRect & rc) const
+void PenteBoard::getSquareRect(int x, int y, CRect & rc) const
 {
 	ASSERT(x <= cxSquares - 1);
 	ASSERT(y <= cySquares - 1);

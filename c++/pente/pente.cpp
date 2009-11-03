@@ -54,8 +54,8 @@ BOOL PenteApp::InitInstance()
 	
 	twoPlayerGame = GetProfileInt(_T("Settings"), 
 		_T("TwoPlayerGame"), 1) == 1 ? true : false;
-	// Register document templates
 
+	// Register document templates
 	CSingleDocTemplate* pDocTemplate;
 	pDocTemplate = new CSingleDocTemplate(
 		IDR_MAINFRAME,
@@ -63,14 +63,18 @@ BOOL PenteApp::InitInstance()
 		RUNTIME_CLASS(MainFrame),       // main SDI frame window
 		RUNTIME_CLASS(PenteView));
 	AddDocTemplate(pDocTemplate);
+
 	RegisterShellFileTypes(TRUE);
 	EnableShellOpen();
+
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
+
 	// Dispatch commands specified on the command line
 	if (!ProcessShellCommand(cmdInfo))
 		return FALSE;
+
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
 	m_pMainWnd->DragAcceptFiles();

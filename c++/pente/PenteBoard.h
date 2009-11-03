@@ -1,18 +1,18 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-//	BOARD.H	: pente board
+//	PENTEBOARD.H	: pente board
 //
 
-#ifndef __BOARD_H__
-#define __BOARD_H__
+#ifndef __PENTEBOARD_H__
+#define __PENTEBOARD_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Board : public CObject
+class PenteBoard : public CObject
 {
 // Construction / Destruction
 public:
-	Board();
-	~Board();
+	PenteBoard();
+	~PenteBoard();
 
 // Interface
 	void render(CDC *pDC, const CRect & rc);
@@ -50,60 +50,60 @@ private:
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
-inline CPoint Board::getBorderSizes() {
+inline CPoint PenteBoard::getBorderSizes() {
 	return CPoint(cxBorder, cyBorder);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline int Board::getSquareSize() {
+inline int PenteBoard::getSquareSize() {
 	return squareSize;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline CPoint Board::getBoardSize() {
+inline CPoint PenteBoard::getBoardSize() {
 	return CPoint(cxSquares, cySquares);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void Board::getDimensions(CRect & rc) {
+inline void PenteBoard::getDimensions(CRect & rc) {
 	rc.SetRectEmpty();
 	rc.right = squareSize * cxSquares;
 	rc.bottom = squareSize * cySquares;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void Board::getBoundingRect(CRect & rc) {
+inline void PenteBoard::getBoundingRect(CRect & rc) {
 	getDimensions(rc);
 	rc.right += cxBorder * 2;
 	rc.bottom += cyBorder * 2;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline COLORREF Board::getBackgroundColor() const {
+inline COLORREF PenteBoard::getBackgroundColor() const {
 	return bkgColor;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void Board::setBackgroundColor(COLORREF rgb) {
+inline void PenteBoard::setBackgroundColor(COLORREF rgb) {
 	bkgColor = rgb;
 	bkgBrush.DeleteObject();
 	bkgBrush.CreateSolidBrush(bkgColor);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline COLORREF Board::getGridColor() const {
+inline COLORREF PenteBoard::getGridColor() const {
 	return gridColor;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void Board::setGridColor(COLORREF rgb) {
+inline void PenteBoard::setGridColor(COLORREF rgb) {
 	gridColor = rgb;
 	pen.DeleteObject();
 	pen.CreatePen(PS_SOLID, 0, gridColor);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline bool Board::isValidPiece(int x, int y)
+inline bool PenteBoard::isValidPiece(int x, int y)
 {
 	if (x < 0 || y < 0)
 		return false;
@@ -116,4 +116,4 @@ inline bool Board::isValidPiece(int x, int y)
 }
 
 
-#endif // __BOARD_H__
+#endif // __PENTEBOARD_H__

@@ -4,7 +4,7 @@
 //
 #include "stdafx.h"
 #include "player.h"
-#include "board.h"
+#include "PenteBoard.h"
 
 IMPLEMENT_DYNAMIC(Player, CObject)
 /////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ void Player::renderPieces(CDC *pDC, const CRect & rc) const
 void Player::renderPiece(CDC *pDC, const Piece & piece) const
 {
 	ASSERT(hPiece != NULL);
-	CPoint pt = Board::mapIndexToPoint(piece.location);
+	CPoint pt = PenteBoard::mapIndexToPoint(piece.location);
 	
 	DrawIconEx(*pDC, pt.x, pt.y, hPiece, cxIcon, cyIcon, 0, NULL, DI_NORMAL);
 }

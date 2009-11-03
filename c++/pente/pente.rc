@@ -1,36 +1,44 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
+
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
 #include "afxres.h"
+
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
+
 /////////////////////////////////////////////////////////////////////////////
 // English (U.S.) resources
+
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
 #endif //_WIN32
+
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
 // TEXTINCLUDE
 //
-1 TEXTINCLUDE DISCARDABLE 
+
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
-2 TEXTINCLUDE DISCARDABLE 
+
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
-3 TEXTINCLUDE DISCARDABLE 
+
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -48,20 +56,25 @@ BEGIN
     "#endif\r\n"
     "\0"
 END
+
 #endif    // APSTUDIO_INVOKED
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
 //
-IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
-IDB_PLAYER1CAP          BITMAP  DISCARDABLE     "res\\player1c.bmp"
-IDB_PLAYER2CAP          BITMAP  DISCARDABLE     "res\\player2c.bmp"
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDB_PLAYER1CAP          BITMAP                  "res\\player1c.bmp"
+IDB_PLAYER2CAP          BITMAP                  "res\\player2c.bmp"
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar
 //
-IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 15
+
+IDR_MAINFRAME TOOLBAR  16, 15
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -70,11 +83,13 @@ BEGIN
     BUTTON      ID_APP_ABOUT
 END
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
 //
-IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+
+IDR_MAINFRAME MENU 
 BEGIN
     POPUP "&File"
     BEGIN
@@ -106,59 +121,60 @@ BEGIN
     END
 END
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Accelerator
 //
-IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+
+IDR_MAINFRAME ACCELERATORS 
 BEGIN
     "B",            IDM_BOARDBKGCOLOR,      VIRTKEY, CONTROL, NOINVERT
     "G",            IDM_GRIDCOLOR,          VIRTKEY, CONTROL, NOINVERT
-    "L",            IDM_SHOWLOG,            VIRTKEY, SHIFT, CONTROL, 
-                                                    NOINVERT
+    "L",            IDM_SHOWLOG,            VIRTKEY, SHIFT, CONTROL, NOINVERT
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
-    "O",            IDM_OPTIONS,            VIRTKEY, SHIFT, CONTROL, 
-                                                    NOINVERT
+    "O",            IDM_OPTIONS,            VIRTKEY, SHIFT, CONTROL, NOINVERT
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
     "T",            IDM_TABLECOLOR,         VIRTKEY, CONTROL, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
 END
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 161, 74
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 161, 74
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About Pente"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    LTEXT           "Pente version 1.0\nCopyright ©2000 Rieck Enterprises ",
-                    IDC_STATIC,21,26,119,21,SS_NOPREFIX
+    LTEXT           "Pente version 1.0\nCopyright ©2000-2009\nThomas A. Rieck",IDC_STATIC,21,26,119,29,SS_NOPREFIX
     DEFPUSHBUTTON   "OK",IDOK,127,7,27,14,WS_GROUP
     ICON            IDR_MAINFRAME,IDC_STATIC,7,7,21,20
 END
-IDD_OPTIONS DIALOG DISCARDABLE  0, 0, 221, 63
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+
+IDD_OPTIONS DIALOG  0, 0, 221, 63
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Options"
 FONT 8, "MS Sans Serif"
 BEGIN
     GROUPBOX        "Game",IDC_STATIC,7,7,157,49
-    CONTROL         "Two Player Game",IDC_PLAYERVSPLAYER,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,15,17,88,12
-    CONTROL         "Player -vs- Computer",IDC_PLAYERVSCOMPUTER,"Button",
-                    BS_AUTORADIOBUTTON,15,33,88,12
+    CONTROL         "Two Player Game",IDC_PLAYERVSPLAYER,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,17,88,12
+    CONTROL         "Player -vs- Computer",IDC_PLAYERVSCOMPUTER,"Button",BS_AUTORADIOBUTTON,15,33,88,12
     DEFPUSHBUTTON   "OK",IDOK,173,7,41,14,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,173,22,41,14
 END
 
-#ifndef _MAC
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
 //
+
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,0,0,1
  PRODUCTVERSION 1,0,0,1
@@ -176,18 +192,14 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "Comments", "\0"
-            VALUE "CompanyName", "Rieck Enterprises\0"
-            VALUE "FileDescription", "Pente\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "pente\0"
-            VALUE "LegalCopyright", "Copyright ©2000\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "pente.exe\0"
-            VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "Pente\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
-            VALUE "SpecialBuild", "\0"
+            VALUE "CompanyName", "Rieck Enterprises"
+            VALUE "FileDescription", "Pente"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "pente"
+            VALUE "LegalCopyright", "Copyright ©2000-2009"
+            VALUE "OriginalFilename", "pente.exe"
+            VALUE "ProductName", "Pente"
+            VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -195,22 +207,24 @@ BEGIN
         VALUE "Translation", 0x409, 1200
     END
 END
-#endif    // !_MAC
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // DESIGNINFO
 //
+
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO 
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 154
         TOPMARGIN, 7
-        BOTTOMMARGIN, 67
+        BOTTOMMARGIN, 66
     END
+
     IDD_OPTIONS, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -221,30 +235,36 @@ BEGIN
 END
 #endif    // APSTUDIO_INVOKED
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Icon
 //
+
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\idr_main.ico"
-IDI_REDPIECE            ICON    DISCARDABLE     "res\\redpiece.ico"
-IDI_GREENPIECE          ICON    DISCARDABLE     "res\\greenpie.ico"
-IDI_DOCUMENT            ICON    DISCARDABLE     "res\\document.ico"
+IDR_MAINFRAME           ICON                    "res\\idr_main.ico"
+IDI_REDPIECE            ICON                    "res\\redpiece.ico"
+IDI_GREENPIECE          ICON                    "res\\greenpie.ico"
+IDI_DOCUMENT            ICON                    "res\\document.ico"
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
-STRINGTABLE PRELOAD DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     IDR_MAINFRAME           "Pente\n\nPente\nPente Files (*.pte)\n.pte\nPente.Document\nPente Document"
 END
-STRINGTABLE PRELOAD DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     AFX_IDS_APP_TITLE       "Pente"
     AFX_IDS_IDLEMESSAGE     "Ready"
 END
-STRINGTABLE DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     ID_FILE_NEW             "Create a new document\nNew"
     ID_FILE_OPEN            "Open an existing document\nOpen"
@@ -252,26 +272,31 @@ BEGIN
     ID_FILE_SAVE            "Save the active document\nSave"
     ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
 END
-STRINGTABLE DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
 END
-STRINGTABLE DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
     ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
 END
-STRINGTABLE DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
 END
-STRINGTABLE DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
     ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
 END
-STRINGTABLE DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     AFX_IDS_SCSIZE          "Change the window size"
     AFX_IDS_SCMOVE          "Change the window position"
@@ -281,19 +306,22 @@ BEGIN
     AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
     AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
 END
-STRINGTABLE DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     AFX_IDS_SCRESTORE       "Restore the window to normal size"
     AFX_IDS_SCTASKLIST      "Activate Task List"
 END
-STRINGTABLE DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
     IDS_TURN                "Player %s's turn"
     IDS_CAPTURES            "Captures"
     IDS_INVALIDFILEFORMAT   "This file is not a valid Pente game file."
 END
-STRINGTABLE DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     IDM_OPTIONS             "Options\nOptions"
     IDM_BOARDBKGCOLOR       "Change Board Color\nBoard Color"
@@ -301,7 +329,8 @@ BEGIN
     IDM_TABLECOLOR          "Change Table Color\nTable Color"
     IDM_SHOWLOG             "Show Log"
 END
-STRINGTABLE DISCARDABLE 
+
+STRINGTABLE 
 BEGIN
     ID_FILE_MRU_FILE1       "Open this document"
     ID_FILE_MRU_FILE2       "Open this document"
@@ -320,8 +349,11 @@ BEGIN
     ID_FILE_MRU_FILE15      "Open this document"
     ID_FILE_MRU_FILE16      "Open this document"
 END
+
 #endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
+
+
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -332,6 +364,7 @@ END
 #define _AFX_NO_OLE_RESOURCES
 #define _AFX_NO_TRACKER_RESOURCES
 #define _AFX_NO_PROPERTY_RESOURCES
+
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
 LANGUAGE 9, 1
@@ -341,6 +374,7 @@ LANGUAGE 9, 1
 #include "afxres.rc"         // Standard components
 #include "afxprint.rc"       // printing/print preview resources
 #endif
+
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

@@ -3,7 +3,8 @@
 #include "stdafx.h"
 #include "pente.h"
 #include "MainFrm.h"
-#include "board.h"
+#include "PenteBoard.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -94,16 +95,20 @@ void MainFrame::adjustFrameByBoard()
 	ASSERT(::IsWindow(statusBar));
 	ASSERT(::IsWindow(toolBar));
 	RepositionBars(0, 0xffff, AFX_IDW_PANE_FIRST);
+
 	CRect rc;
-	Board::getBoundingRect(rc);
+	PenteBoard::getBoundingRect(rc);
+
 	// make room for the status bar
 	CRect rcStatus;
 	statusBar.GetWindowRect(rcStatus);
 	rcStatus.OffsetRect(-rcStatus.left, -rcStatus.top);
+
 	// make room for the toolbar
 	CRect rcToolbar;
 	toolBar.GetWindowRect(rcToolbar);
 	rcToolbar.OffsetRect(-rcToolbar.left, -rcToolbar.top);
+
 	// make adjustments for the docking bar
 	CDockBar *dockBar = toolBar.m_pDockBar;
 	if (dockBar != NULL && IsWindow(*dockBar)) {

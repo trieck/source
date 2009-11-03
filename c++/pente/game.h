@@ -5,12 +5,13 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
-#include "board.h"
+#include "PenteBoard.h"
 #include "player.h"
 
 typedef std::vector<CPoint> PointVec;
 // forward declarations
 class Computer;
+
 /////////////////////////////////////////////////////////////////////////////
 class PenteGame : public CObject
 {
@@ -24,7 +25,7 @@ public:
 	PenteGame();
 	virtual ~PenteGame();
 // Interface
-	Board *getBoard();
+	PenteBoard *getBoard();
 	const Player *getPlayerOne() const;
 	const Player *getPlayerTwo() const;
 	void clear();
@@ -34,6 +35,7 @@ public:
 	bool addPiece(int x, int y, PointVec &pts);
 	void Serialize(CArchive& ar);
 	static WORD getFileMagicNumber();
+
 // Implementation	
 protected:
 private:
@@ -49,7 +51,7 @@ private:
 	void addCapture(const CPoint & start, const CPoint & end, 
 		CaptureVec & captures) const;
 	void makePlayers();
-	Board board;
+	PenteBoard board;
 	PlayerPtr playerOne;
 	PlayerPtr playerTwo;
 	Turn currentTurn;
@@ -62,7 +64,7 @@ inline WORD PenteGame::getFileMagicNumber() {
 	return magicNumber;
 }
 /////////////////////////////////////////////////////////////////////////////
-inline Board * PenteGame::getBoard() {
+inline PenteBoard * PenteGame::getBoard() {
 	return &board;
 }
 /////////////////////////////////////////////////////////////////////////////
