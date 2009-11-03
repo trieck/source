@@ -25,13 +25,13 @@ Board::~Board()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-Board::BoardPtr Board::instance()
+Board *Board::instance()
 {
 	if (This.get() == NULL) {
 		This = BoardPtr(new Board());
 	}
 
-	return This;
+	return This.get();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -39,18 +39,21 @@ uint32_t Board::getEntry(uint32_t row, uint32_t col) const
 {
 	uint32_t k = key(row, col);
 
-	UInt32Map::const_iterator it = rep.find(k);
+	UInt32EntryMap::const_iterator it = rep.find(k);
 	if (it == rep.end())
 		return ET_EMPTY;
 
-	return (*it).second;
+	return (*it).second.getType();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Board::setEntry(uint32_t row, uint32_t col, uint32_t type)
 {
 	uint32_t k = key(row, col);
-	rep[k] = type;
+
+	POINT pt = { row, col };
+	
+	rep[k] = Entry(pt, type);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -58,7 +61,7 @@ void Board::remove(uint32_t row, uint32_t col)
 {
 	uint32_t k = key(row, col);
 
-	UInt32Map::iterator it = rep.find(k);
+	UInt32EntryMap::iterator it = rep.find(k);
 	if (it != rep.end())
 		rep.erase(it);
 }
@@ -70,9 +73,9 @@ void Board::clear()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-UInt32MapEnum Board::enumEntries()
+UInt32EntryMapEnum Board::enumEntries()
 {
-	UInt32MapEnum e(rep);
+	UInt32EntryMapEnum e(rep);
 	return e;
 }
 

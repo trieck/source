@@ -6,6 +6,8 @@
 #ifndef __PENTEBOARD_H__
 #define __PENTEBOARD_H__
 
+#include "libpente.h"
+
 /////////////////////////////////////////////////////////////////////////////
 class PenteBoard : public CObject
 {
@@ -15,6 +17,7 @@ public:
 	~PenteBoard();
 
 // Interface
+	void clear();
 	void render(CDC *pDC, const CRect & rc);
 	bool ptOnBoard(const CPoint & pt) const;
 	CPoint getSquare(const CPoint & pt) const;
@@ -23,30 +26,39 @@ public:
 	void setBackgroundColor(COLORREF rgb);
 	COLORREF getGridColor() const;
 	void setGridColor(COLORREF rgb);
+	uint32_t getPiece(int x, int y) const;
+
+	bool addPiece(int x, int y, uint32_t currentTurn);
 
 	static CPoint getBorderSizes();
 	static int getSquareSize();
 	static CPoint getBoardSize();
 	static void getDimensions(CRect & rc);
 	static void getBoundingRect(CRect & rc);
-	static CPoint mapIndexToPoint(const CPoint &);
-	static bool isValidPiece(int x, int y);
-
+	
 // Implementation
-protected:
 private:
-	enum { cxBorder = 20 };
-	enum { cyBorder = 20 };
-	enum { cxSquares = 19 };
-	enum { cySquares = 19 };
-	enum { squareSize = 21 };
+	void renderTable(CDC *pDC, const CRect & rc);
+	void renderBoard(CDC *pDC);
+	static CPoint mapIndexToPoint(const CPoint &);
+
+	enum { cxIcon = 16 };
+	enum { cyIcon = 16 };
+	enum { cxBorder = BOARD_SIZE+1 };
+	enum { cyBorder = BOARD_SIZE+1 };
+	enum { cxSquares = BOARD_SIZE };
+	enum { cySquares = BOARD_SIZE };
+	enum { squareSize = BOARD_SIZE+2 };
 	enum { cxOffset = 3 };
 	enum { cyOffset = 3 };
 
+	HICON hPlayerOne, hPlayerTwo;
 	CBrush bkgBrush;
 	CPen pen;
 	COLORREF bkgColor, gridColor;
+	Board *board;
 };
+
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
@@ -101,19 +113,5 @@ inline void PenteBoard::setGridColor(COLORREF rgb) {
 	pen.DeleteObject();
 	pen.CreatePen(PS_SOLID, 0, gridColor);
 }
-
-/////////////////////////////////////////////////////////////////////////////
-inline bool PenteBoard::isValidPiece(int x, int y)
-{
-	if (x < 0 || y < 0)
-		return false;
-
-	CPoint extent = getBoardSize();
-	if (x >= extent.x || y >= extent.y)
-		return false;
-
-	return true;
-}
-
 
 #endif // __PENTEBOARD_H__

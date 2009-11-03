@@ -9,22 +9,23 @@
 
 #include "player.h"
 #include "playrtwo.h"
+#include "libpente.h"
 
 /////////////////////////////////////////////////////////////////////////////
 class Computer : public PlayerTwo
 {
-// Construction / Destruction
+	// Construction / Destruction
 public:
 	Computer(Player *popponent);
 	~Computer();
-// Interface
+	// Interface
 	bool getMove(CPoint & pt);
-	
-// Implementation
+
+	// Implementation
 protected:
 private:
-	void randomPos(CPoint & pt);
 	Player *opponent;
+	Machine machine;
 	DECLARE_DYNAMIC(Computer)
 };
 /////////////////////////////////////////////////////////////////////////////

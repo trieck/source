@@ -33,7 +33,7 @@ public:
 	typename T::const_reference next() {
 		T::const_reference c = *current;
 
-		if (current < end)
+		if (current != end)
 			current++;
 
 		return c;

@@ -6,6 +6,7 @@
 #include "pentedoc.h"
 #include "pentevw.h"
 #include "optdlg.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -32,7 +33,7 @@ END_MESSAGE_MAP()
 // PenteApp construction
 
 PenteApp::PenteApp() 
- : logWnd(0), twoPlayerGame(true)
+: logWnd(0), twoPlayerGame(true)
 {
 }
 
@@ -51,7 +52,7 @@ BOOL PenteApp::InitInstance()
 	// Change the registry key under which our settings are stored.
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 	LoadStdProfileSettings();  // Load standard IhI file options (including MRU)
-	
+
 	twoPlayerGame = GetProfileInt(_T("Settings"), 
 		_T("TwoPlayerGame"), 1) == 1 ? true : false;
 
@@ -92,21 +93,21 @@ class AboutDlg : public CDialog
 {
 public:
 	AboutDlg();
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(AboutDlg)
 	enum { IDD = IDD_ABOUTBOX };
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(AboutDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	//{{AFX_MSG(AboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -174,7 +175,7 @@ void PenteApp::OnOptions()
 {
 	OptionDlg dlg;
 	dlg.m_TwoPlayerGame = twoPlayerGame ? 0 : 1;
-	
+
 	if (dlg.DoModal() == IDOK) {
 		twoPlayerGame = dlg.m_TwoPlayerGame == 0 ? true : false;
 		OnFileNew();

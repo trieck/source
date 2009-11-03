@@ -135,6 +135,7 @@ void MainFrame::adjustFrameByBoard()
 	SetWindowPos(NULL, 0, 0, rc.Width(), rc.Height(), 
 		SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void MainFrame::RecalcLayout(BOOL bNotify) 
 {
@@ -143,6 +144,7 @@ void MainFrame::RecalcLayout(BOOL bNotify)
 	
 	CFrameWnd::RecalcLayout(bNotify);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void MainFrame::onUpdateCaptures(CCmdUI *pCmdUI)
 {

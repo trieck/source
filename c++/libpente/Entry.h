@@ -21,10 +21,12 @@ class Entry
 // Construction / Destruction
 public:
 	Entry();
+	Entry(const Entry &rhs);
 	Entry(const POINT &aPoint, uint32_t ntype);
 	~Entry();
 
 // Interface
+	Entry & operator = (const Entry &rhs);
 	POINT where() const;
 	uint32_t getType() const;
 

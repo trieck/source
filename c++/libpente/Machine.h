@@ -34,7 +34,7 @@ private:
 	const Vector *maxOpponentV() const;
 	uint32_t contiguity(const Vector &v) const;
 	
-	Board::BoardPtr board;
+	Board *board;
 	typedef std::vector<Vector> VecVec;
 	VecVec vectors;
 };

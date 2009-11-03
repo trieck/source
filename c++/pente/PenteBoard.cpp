@@ -3,6 +3,7 @@
 //	PENTEBOARD.CPP : pente board
 //
 #include "stdafx.h"
+#include "Game.h"
 #include "PenteBoard.h"
 #include "resource.h"
 
@@ -11,37 +12,73 @@ PenteBoard::PenteBoard()
 {
 	CWinApp *pApp = AfxGetApp();
 	ASSERT_VALID(pApp);
+
 	bkgColor = pApp->GetProfileInt(_T("Settings"), _T("BoardColor"),
 		GetSysColor(COLOR_WINDOW));
 	gridColor = pApp->GetProfileInt(_T("Settings"), _T("GridColor"),
 		GetSysColor(COLOR_WINDOWTEXT));
 	bkgBrush.CreateSolidBrush(bkgColor);
 	pen.CreatePen(PS_SOLID, 0, gridColor);
+
+	hPlayerOne = (HICON)LoadImage(AfxGetResourceHandle(),
+		MAKEINTRESOURCE(IDI_GREENPIECE),
+		IMAGE_ICON,
+		0, 0, LR_SHARED);
+	ASSERT(hPlayerTwo != NULL);
+
+	hPlayerTwo = (HICON)LoadImage(AfxGetResourceHandle(),
+		MAKEINTRESOURCE(IDI_REDPIECE),
+		IMAGE_ICON,
+		0, 0, LR_SHARED);
+	ASSERT(hPlayerTwo != NULL);
+
+	board = Board::instance();	
 }
+
 /////////////////////////////////////////////////////////////////////////////
 PenteBoard::~PenteBoard()
 {
+	if (hPlayerOne != NULL)
+		DestroyIcon(hPlayerOne);
+
+	if (hPlayerTwo != NULL)
+		DestroyIcon(hPlayerTwo);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void PenteBoard::render(CDC *pDC, const CRect & rc)
+{
+	ASSERT_VALID(pDC);
+	renderTable(pDC, rc);
+	renderBoard(pDC);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void PenteBoard::renderTable(CDC *pDC, const CRect & rc)
 {
 	ASSERT_VALID(pDC);
 	CRect rcBoard;
 	rcBoard.CopyRect(&rc);
 	rcBoard.InflateRect(-cxBorder, -cyBorder);
+
 	CBrush *pOldBrush = (CBrush *)pDC->SelectObject(&bkgBrush);
 	CPen *pOldPen = (CPen *)pDC->SelectObject(&pen);
+
 	pDC->Rectangle(rcBoard);
+
 	int cx = rcBoard.Width() / cxSquares;
 	int cy = rcBoard.Height() / cySquares;
+
 	CPoint ptStart(rcBoard.left + cx, rcBoard.top);
 	pDC->MoveTo(ptStart);
+
 	// Draw vertical lines
 	while (ptStart.x < rcBoard.right) {
 		CPoint ptEnd = CPoint(ptStart.x, rcBoard.bottom - 1);
 		pDC->LineTo(ptEnd);
 		pDC->MoveTo(ptStart.x += cx, ptStart.y);
 	}
+
 	// Draw horizontal lines
 	ptStart = CPoint(rcBoard.left, rcBoard.top + cy);
 	pDC->MoveTo(ptStart);
@@ -50,9 +87,28 @@ void PenteBoard::render(CDC *pDC, const CRect & rc)
 		pDC->LineTo(ptEnd);
 		pDC->MoveTo(ptStart.x, ptStart.y += cy);
 	}
+
 	pDC->SelectObject(pOldBrush);
 	pDC->SelectObject(pOldPen);
 }
+
+/////////////////////////////////////////////////////////////////////////////
+void PenteBoard::renderBoard(CDC *pDC)
+{
+	CPoint pt;
+
+	UInt32EntryMapEnum e = board->enumEntries();
+	while (e.hasNext()) {
+		const Entry & entry = e.next().second;
+		pt = mapIndexToPoint(entry.where());
+
+		HICON &hIcon = entry.getType() == ET_PLAYER_ONE ?
+			hPlayerOne : hPlayerTwo;
+
+		DrawIconEx(*pDC, pt.x, pt.y, hIcon, cxIcon, cyIcon, 0, NULL, DI_NORMAL);
+	}
+}
+
 /////////////////////////////////////////////////////////////////////////////
 CPoint PenteBoard::mapIndexToPoint(const CPoint & pt)
 {
@@ -63,6 +119,7 @@ CPoint PenteBoard::mapIndexToPoint(const CPoint & pt)
 	ptDest.y += (pt.y * squareSize) + cyOffset;
 	return ptDest;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 bool PenteBoard::ptOnBoard(const CPoint & pt) const
 {
@@ -73,6 +130,7 @@ bool PenteBoard::ptOnBoard(const CPoint & pt) const
 		return true;
 	return false;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 CPoint PenteBoard::getSquare(const CPoint & pt) const
 {
@@ -84,15 +142,39 @@ CPoint PenteBoard::getSquare(const CPoint & pt) const
 	square.y = max(0, (pt.y / squareSize) - 1);
 	return square;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void PenteBoard::getSquareRect(int x, int y, CRect & rc) const
 {
 	ASSERT(x <= cxSquares - 1);
 	ASSERT(y <= cySquares - 1);
-	
+
 	rc.SetRectEmpty();
 	rc.left = cxBorder + (x * squareSize);
 	rc.top = cyBorder + (y * squareSize);
 	rc.right = rc.left + squareSize;
 	rc.bottom = rc.top + squareSize;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+uint32_t PenteBoard::getPiece(int x, int y) const
+{
+	return board->getEntry(x, y);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool PenteBoard::addPiece(int x, int y, uint32_t currentTurn)
+{
+	if (getPiece(x, y) != ET_EMPTY)
+		return false;
+
+	board->setEntry(x, y, currentTurn);
+
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void PenteBoard::clear()
+{
+	board->clear();
 }

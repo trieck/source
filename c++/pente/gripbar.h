@@ -11,24 +11,24 @@
 
 class GripperBar : public CToolBar
 {
-// Construction
+	// Construction
 public:
 	GripperBar();
-// Attributes
+	// Attributes
 public:
-// Operations
+	// Operations
 public:
 	BOOL CreateEx(CWnd* pParentWnd, DWORD dwCtrlStyle = TBSTYLE_FLAT, 
 		DWORD dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP, 
 		CRect rcBorders = CRect(0, 0, 0, 0), UINT nID = AFX_IDW_TOOLBAR);
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(GripperBar)
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual int Create(CWnd *parent, UINT style);
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 public:
 	virtual ~GripperBar();
 	// Generated message map functions

@@ -24,7 +24,7 @@ int getTextWidth(CWnd *pWnd, LPCTSTR str)
 }
 /////////////////////////////////////////////////////////////////////////////
 void DrawTransparentBitmap(CDC *pDC, CBitmap *pBitmap, short xStart,
- short yStart, COLORREF cTransparentColor)
+						   short yStart, COLORREF cTransparentColor)
 {
 	ASSERT_VALID(pDC);
 	ASSERT_VALID(pBitmap);
@@ -34,12 +34,12 @@ void DrawTransparentBitmap(CDC *pDC, CBitmap *pBitmap, short xStart,
 
 	BITMAP bm;
 	pBitmap->GetBitmap(&bm);
-	
+
 	POINT ptSize;
 	ptSize.x = bm.bmWidth;		// Get width of bitmap
 	ptSize.y = bm.bmHeight;     // Get height of bitmap
 	dcTemp.DPtoLP(&ptSize, 1);  // Convert from device
-								// to logical points
+	// to logical points
 
 	// Create some DCs to hold temporary data
 	CDC dcMem, dcBack, dcObject, dcSave;
@@ -69,16 +69,16 @@ void DrawTransparentBitmap(CDC *pDC, CBitmap *pBitmap, short xStart,
 	// Create the object mask for the bitmap by performing a BitBlt
 	// from the source bitmap to a monochrome bitmap.
 	dcObject.BitBlt(0, 0, ptSize.x, ptSize.y, &dcTemp, 0, 0,
-		  SRCCOPY);
+		SRCCOPY);
 	// Set the background color of the source DC back to the original
 	// color.
 	dcTemp.SetBkColor(cColor);
 	// Create the inverse of the object mask.
 	dcBack.BitBlt(0, 0, ptSize.x, ptSize.y, &dcObject, 0, 0,
-		  NOTSRCCOPY);
+		NOTSRCCOPY);
 	// Copy the background of the main DC to the destination.
 	dcMem.BitBlt(0, 0, ptSize.x, ptSize.y, pDC, xStart, yStart,
-		  SRCCOPY);
+		SRCCOPY);
 	// Mask out the places where the bitmap will be placed.
 	dcMem.BitBlt(0, 0, ptSize.x, ptSize.y, &dcObject, 0, 0, SRCAND);
 	// Mask out the transparent colored pixels on the bitmap.
@@ -87,7 +87,7 @@ void DrawTransparentBitmap(CDC *pDC, CBitmap *pBitmap, short xStart,
 	dcMem.BitBlt(0, 0, ptSize.x, ptSize.y, &dcTemp, 0, 0, SRCPAINT);
 	// Copy the destination to the screen.
 	pDC->BitBlt(xStart, yStart, ptSize.x, ptSize.y, &dcMem, 0, 0,
-		  SRCCOPY);
+		SRCCOPY);
 	// Place the original bitmap back into the bitmap sent here.
 	dcTemp.BitBlt(0, 0, ptSize.x, ptSize.y, &dcSave, 0, 0, SRCCOPY);
 	// Delete the memory bitmaps.
@@ -129,12 +129,12 @@ void pumpMessages()
 {
 	CWinThread *pThread = AfxGetApp();
 	MSG msg;
-    while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) { 
-        if (!pThread->PumpMessage()) {
-            break; 
-        } 
-    } 
-    LONG lIdle = 0;
-    while (pThread->OnIdle(lIdle++))
-        ;  
+	while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) { 
+		if (!pThread->PumpMessage()) {
+			break; 
+		} 
+	} 
+	LONG lIdle = 0;
+	while (pThread->OnIdle(lIdle++))
+		;  
 }

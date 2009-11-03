@@ -99,8 +99,8 @@ void PenteDoc::onUpdateTurn(CCmdUI *pCmdUI)
 {
 	CString str, strTurn;
 	ASSERT(pCmdUI != NULL);
-	PenteGame::Turn turn = game.getTurn();
-	str.Format(IDS_TURN, turn == PenteGame::turnPlayerOne ? 
+	uint32_t turn = game.getTurn();
+	str.Format(IDS_TURN, turn == ET_PLAYER_ONE ? 
 		_T("One") : _T("Two"));
 	pCmdUI->SetText(str);
 	CStatusBar* pBar = (CStatusBar*)pCmdUI->m_pOther;

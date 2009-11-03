@@ -13,7 +13,7 @@
 /////////////////////////////////////////////////////////////////////////////
 int getTextWidth(CWnd *pWnd, LPCTSTR str);
 void DrawTransparentBitmap(CDC *pDC, CBitmap *pBitmap, short xStart,
- short yStart, COLORREF cTransparentColor);
+						   short yStart, COLORREF cTransparentColor);
 void throwException(UINT nID);
 void pumpMessages();
 #ifdef _ENABLE_LOGGING

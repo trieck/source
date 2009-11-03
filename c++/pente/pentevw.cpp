@@ -41,7 +41,7 @@ PenteView::PenteView()
 PenteView::~PenteView()
 {
 	AfxGetApp()->WriteProfileInt(_T("Settings"), 
-			_T("TableColor"), bkgColor);
+		_T("TableColor"), bkgColor);
 }
 
 BOOL PenteView::PreCreateWindow(CREATESTRUCT& cs)
