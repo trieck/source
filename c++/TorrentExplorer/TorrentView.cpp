@@ -438,7 +438,7 @@ void TorrentView::AutoSwap(LPTORRENTOBJECT pitem)
 	}
 }
 
-void TorrentView::OnSettingChange(WPARAM wParam, LPARAM lParam)
+LRESULT TorrentView::OnSettingChange(WPARAM wParam, LPARAM lParam)
 {
 	TorrentExplorer *pApp = (TorrentExplorer*)AfxGetApp();
 	CTreeCtrl &tree = GetTreeCtrl();
@@ -453,4 +453,6 @@ void TorrentView::OnSettingChange(WPARAM wParam, LPARAM lParam)
 	}
 	
 	tree.RedrawWindow();
+
+	return 0;
 }

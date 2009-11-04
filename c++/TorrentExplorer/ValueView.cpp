@@ -128,7 +128,7 @@ void ValueView::InsertInt(LPINTEGER i, LONG lHint)
 	list.InsertItem(0, FormatInt(i, lHint));
 }
 
-void ValueView::OnSettingChange(WPARAM wParam, LPARAM lParam)
+LRESULT ValueView::OnSettingChange(WPARAM wParam, LPARAM lParam)
 {
 	TorrentExplorer *pApp = (TorrentExplorer*)AfxGetApp();
 	CListCtrl &list = GetListCtrl();
@@ -143,6 +143,8 @@ void ValueView::OnSettingChange(WPARAM wParam, LPARAM lParam)
 	}
 	
 	list.RedrawWindow();
+
+	return 0;
 }
 
 namespace {	// anonymous

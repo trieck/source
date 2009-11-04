@@ -51,7 +51,7 @@ protected:
 	//{{AFX_MSG(MainFrame)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
-	afx_msg void OnSettingChange(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnSettingChange(WPARAM wParam, LPARAM lParam);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

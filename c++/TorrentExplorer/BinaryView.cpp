@@ -443,7 +443,7 @@ void BinaryView::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)
 	CView::OnPrepareDC(pDC, pInfo);
 }
 
-void BinaryView::OnSettingChange(WPARAM wParam, LPARAM lParam) 
+LRESULT BinaryView::OnSettingChange(WPARAM wParam, LPARAM lParam) 
 {
 	TorrentExplorer *pApp = (TorrentExplorer*)AfxGetApp();
 
@@ -479,6 +479,8 @@ void BinaryView::OnSettingChange(WPARAM wParam, LPARAM lParam)
 	m_GridPen.CreatePen(PS_SOLID, 1, GridColor);	
 
 	RedrawWindow();
+
+	return 0;
 }
 
 void BinaryView::OnLButtonDown(UINT nFlags, CPoint point)

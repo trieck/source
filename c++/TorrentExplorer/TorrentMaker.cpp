@@ -178,7 +178,7 @@ void TorrentMaker::NotifyTotalPieces()
 {
 	// callback with the total number of pieces
 	if (m_pCallable) {
-		DWORD totalPieces = ceil(m_TotalLength / m_pieceSize);
+		DWORD totalPieces = (DWORD)(m_TotalLength / m_pieceSize);
 		m_pCallable->Call(totalPieces);
 	}
 }
@@ -191,7 +191,7 @@ void TorrentMaker::WritePieces()
 	HashFiles();
 	
 	CString buf;	
-	int nlength = m_pieces.GetLength();
+	int nlength = (int)m_pieces.GetLength();
 	m_pieces.Read(buf.GetBufferSetLength(nlength), nlength);
 
 	WriteString(buf);
@@ -473,7 +473,7 @@ void TorrentMaker::WriteList(LPLIST l)
 {
 	BeginList();
 
-	for (int i = 0; i < l->size(); i++) {
+	for (UINT i = 0; i < l->size(); i++) {
 		WriteObject(l->GetAt(i));
 	}	
 

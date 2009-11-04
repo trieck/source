@@ -194,9 +194,10 @@ void MainFrame::SwapViews()
 	m_wndSplitter.RecalcLayout();
 }
 
-void MainFrame::OnSettingChange(WPARAM wParam, LPARAM lParam)
+LRESULT MainFrame::OnSettingChange(WPARAM wParam, LPARAM lParam)
 {
 	SendMessageToDescendants(WM_SETTING_CHANGE, wParam, lParam, TRUE, TRUE);
+	return 0;
 }
 
 LPCSTR MainFrame::RegisterClass()

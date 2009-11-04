@@ -57,7 +57,7 @@ protected:
 	afx_msg void OnBinaryView();
 	afx_msg void OnUpdateDateView(CCmdUI* pCmdUI);
 	afx_msg void OnDateView();
-	afx_msg void OnSettingChange(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnSettingChange(WPARAM wParam, LPARAM lParam);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

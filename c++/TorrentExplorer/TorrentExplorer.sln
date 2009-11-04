@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TorrentExplorer", "TorrentExplorer.vcproj", "{069BD894-B0C7-453D-947B-CB9478AAF8CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{069BD894-B0C7-453D-947B-CB9478AAF8CB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{069BD894-B0C7-453D-947B-CB9478AAF8CB}.Debug|Win32.Build.0 = Debug|Win32
+		{069BD894-B0C7-453D-947B-CB9478AAF8CB}.Release|Win32.ActiveCfg = Release|Win32
+		{069BD894-B0C7-453D-947B-CB9478AAF8CB}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

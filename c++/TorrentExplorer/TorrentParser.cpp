@@ -160,7 +160,7 @@ LPINTEGER integer(CFile *fp)
 
 	int c;
 	while ((c = Peek(fp)) != 'e' && c != EOF) {
-		output += Getch(fp);
+		output += (TCHAR)Getch(fp);
 	}
 
 	Getch(fp);	// 'e'
@@ -190,7 +190,7 @@ LPSTRING string(CFile *fp)
 	CString slen;
 	
 	while ((c = Peek(fp)) != ':' && c != EOF) {
-		slen += Getch(fp);
+		slen += (TCHAR)Getch(fp);
 	}
 
 	int length = atoi(slen);
