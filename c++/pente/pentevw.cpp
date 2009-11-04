@@ -21,7 +21,6 @@ BEGIN_MESSAGE_MAP(PenteView, CView)
 	ON_WM_ERASEBKGND()
 	ON_WM_SETTINGCHANGE()
 	ON_WM_LBUTTONDOWN()
-	ON_COMMAND(IDM_TABLECOLOR, OnTableColor)
 	//}}AFX_MSG_MAP
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
@@ -40,8 +39,6 @@ PenteView::PenteView()
 
 PenteView::~PenteView()
 {
-	AfxGetApp()->WriteProfileInt(_T("Settings"), 
-		_T("TableColor"), bkgColor);
 }
 
 BOOL PenteView::PreCreateWindow(CREATESTRUCT& cs)
@@ -57,11 +54,15 @@ void PenteView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	PenteGame *pGame = pDoc->getGame();
 	ASSERT_VALID(pGame);
+
 	CRect rc;
 	GetClientRect(rc);
+	//pDC->GetClipBox(rc);
+
 	// render the game
 	pGame->render(pDC, rc);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 // PenteView printing
 
@@ -123,11 +124,17 @@ void PenteView::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 /////////////////////////////////////////////////////////////////////////////
 void PenteView::OnLButtonDown(UINT nFlags, CPoint point) 
 {
-	PenteBoard *pBoard = GetDocument()->getGame()->getBoard();
+	PenteDoc *pDoc = GetDocument();
+	
+	PenteGame *pGame = pDoc->getGame();
+	ASSERT_VALID(pGame);
+	PenteBoard *pBoard = pGame->getBoard();
 	ASSERT_VALID(pBoard);
+
 	if (pBoard->ptOnBoard(point)) {
 		CPoint square = pBoard->getSquare(point);
-		GetDocument()->addPiece(square);
+		pDoc->addPiece(square);
+		pDoc->move(square);
 	}
 	
 	CView::OnLButtonDown(nFlags, point);
@@ -143,24 +150,14 @@ void PenteView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		CRect rc;
 		pBoard->getSquareRect(x, y, rc);
 		InvalidateRect(rc);
-	} else CView::OnUpdate(pSender, lHint, pHint);
+	} else {
+		CView::OnUpdate(pSender, lHint, pHint);
+	}
+
 	// update the status bar
 	PenteBar &bar = ((MainFrame*)GetParentFrame())->getPenteBar();
 	bar.SendMessage(WM_IDLEUPDATECMDUI);
 	bar.RedrawWindow();   
 }
 
-/////////////////////////////////////////////////////////////////////////////
-void PenteView::OnTableColor() 
-{
-	CColorDialog dlg;
-	
-	dlg.m_cc.Flags |= CC_RGBINIT;
-	dlg.m_cc.rgbResult = bkgColor;
-	if (dlg.DoModal() == IDOK) {
-		bkgColor = dlg.m_cc.rgbResult;
-		bkgBrush.DeleteObject();
-		bkgBrush.CreateSolidBrush(bkgColor);
-		Invalidate();
-	}	
-}
+

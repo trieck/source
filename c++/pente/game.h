@@ -28,7 +28,8 @@ public:
 	void render(CDC *pDC, const CRect & rc);
 	uint32_t getTurn() const;
 	bool findPiece(int x, int y) const;
-	bool addPiece(int x, int y, PointVec &pts);
+	bool addPiece(int x, int y);
+	bool move(CPoint &pt);
 	void Serialize(CArchive& ar);
 	static WORD getFileMagicNumber();
 

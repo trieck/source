@@ -20,7 +20,6 @@ BEGIN_MESSAGE_MAP(PenteApp, CWinApp)
 	//{{AFX_MSG_MAP(PenteApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
 	ON_COMMAND(ID_FILE_NEW, OnFileNew)
-	ON_COMMAND(IDM_SHOWLOG, OnShowlog)
 	ON_COMMAND(IDM_OPTIONS, OnOptions)
 	//}}AFX_MSG_MAP
 	// Standard file based document commands
@@ -29,17 +28,19 @@ BEGIN_MESSAGE_MAP(PenteApp, CWinApp)
 	// Standard print setup command
 	ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
+
 /////////////////////////////////////////////////////////////////////////////
 // PenteApp construction
 
 PenteApp::PenteApp() 
-: logWnd(0), twoPlayerGame(true)
+: twoPlayerGame(true)
 {
 }
 
 PenteApp::~PenteApp()
 {
 }
+
 /////////////////////////////////////////////////////////////////////////////
 // The one and only PenteApp object
 
@@ -79,9 +80,6 @@ BOOL PenteApp::InitInstance()
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
 	m_pMainWnd->DragAcceptFiles();
-#ifdef _ENABLE_LOGGING
-	createLogWnd();
-#endif // _ENABLE_LOGGING
 
 	return TRUE;
 }
@@ -130,12 +128,14 @@ BEGIN_MESSAGE_MAP(AboutDlg, CDialog)
 		// No message handlers
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 // App command to run the dialog
 void PenteApp::OnAppAbout()
 {
 	AboutDlg aboutDlg;
 	aboutDlg.DoModal();
 }
+
 /////////////////////////////////////////////////////////////////////////////
 // PenteApp message handlers
 
@@ -151,25 +151,7 @@ void PenteApp::OnFileNew()
 {
 	CWinApp::OnFileNew();
 }
-/////////////////////////////////////////////////////////////////////////////
-void PenteApp::OnShowlog() 
-{
-#ifdef _ENABLE_LOGGING
-	ASSERT_VALID(logWnd);
-	logWnd->ShowWindow(SW_SHOW);
-#endif // _ENABLE_LOGGING
-}
-/////////////////////////////////////////////////////////////////////////////
-void PenteApp::createLogWnd()
-{
-	ASSERT(logWnd == NULL);
-	logWnd = new LogWnd;
-	if (!logWnd->Create(NULL, _T("Pente Log"), MFS_THICKFRAME | 
-		WS_OVERLAPPEDWINDOW, CRect(0, 0, 250, 500), m_pMainWnd, 0))
-		return;
-	logWnd->ShowWindow(SW_SHOW);
-	logWnd->UpdateWindow();
-}
+
 /////////////////////////////////////////////////////////////////////////////
 void PenteApp::OnOptions() 
 {

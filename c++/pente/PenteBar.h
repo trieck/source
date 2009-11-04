@@ -38,6 +38,7 @@ private:
 	virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
 	CBitmap bmPlayerOne, bmPlayerTwo;
 	CImageList imageList;
+public:
 };
 /////////////////////////////////////////////////////////////////////////////
 //{{AFX_INSERT_LOCATION}}

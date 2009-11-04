@@ -9,6 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#pragma warning (disable : 4996)	// deprecated POXIS names
+
 #define WINVER 0x0501
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 
@@ -25,6 +27,16 @@
 #else
 #include <..\src\afximpl.h>
 #endif
+
+#include <stdint.h>
+
+typedef const unsigned char* LPCBYTE;
+
+struct StringPtrLess {
+	bool operator()(LPCSTR left, LPCSTR right) {
+		return strcmp(left, right) < 0;
+	}
+};
 
 #include <vector>
 #include <memory>

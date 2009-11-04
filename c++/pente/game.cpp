@@ -47,29 +47,32 @@ void PenteGame::changeTurns()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-bool PenteGame::addPiece(int x, int y, PointVec &pts)
+bool PenteGame::addPiece(int x, int y)
 {
 	// ensure the piece is not already taken
 	if (!board.addPiece(x, y, currentTurn))
 		return false;
 
-	pts.push_back(CPoint(x, y));
-
-	Player *player = currentTurn == ET_PLAYER_ONE ?
-		playerOne.get() : playerTwo.get();
-	
 	changeTurns();
 
-	player = currentTurn == ET_PLAYER_ONE ? 
-		playerOne.get() : playerTwo.get();
-	if (player->IsKindOf(RUNTIME_CLASS(Computer))) {
-		Computer *comp = (Computer *)player;
-		CPoint pt;
-		if (!comp->getMove(pt))
-			return false;
-		pts.push_back(pt);
-		changeTurns();
-	}
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool PenteGame::move(CPoint &pt)
+{
+	if (currentTurn != ET_PLAYER_TWO)
+		return false;	
+
+	Player *player = playerTwo.get();
+	if (!player->IsKindOf(RUNTIME_CLASS(Computer)))
+		return false;
+
+	Computer *comp = (Computer *)player;
+	if (!comp->getMove(pt))
+		return false;
+		
+	changeTurns();
 
 	return true;
 }

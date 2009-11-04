@@ -104,11 +104,8 @@ BEGIN
     END
     POPUP "&Tools"
     BEGIN
-        MENUITEM "&Board Color\tCtrl+B",        IDM_BOARDBKGCOLOR
-        MENUITEM "&Grid Color\tCtrl+G",         IDM_GRIDCOLOR
-        MENUITEM "&Table Color\tCtrl+T",        IDM_TABLECOLOR
-        MENUITEM SEPARATOR
         MENUITEM "&Options\tCtrl+Shift+O",      IDM_OPTIONS
+        MENUITEM "&Colors\tCrtl+Shift+C",       ID_TOOLS_COLORS
     END
     POPUP "&View"
     BEGIN
@@ -131,7 +128,6 @@ IDR_MAINFRAME ACCELERATORS
 BEGIN
     "B",            IDM_BOARDBKGCOLOR,      VIRTKEY, CONTROL, NOINVERT
     "G",            IDM_GRIDCOLOR,          VIRTKEY, CONTROL, NOINVERT
-    "L",            IDM_SHOWLOG,            VIRTKEY, SHIFT, CONTROL, NOINVERT
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
     "O",            IDM_OPTIONS,            VIRTKEY, SHIFT, CONTROL, NOINVERT
@@ -157,16 +153,34 @@ BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,7,7,21,20
 END
 
-IDD_OPTIONS DIALOG  0, 0, 221, 63
+IDD_OPTIONS DIALOGEX 0, 0, 221, 63
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Options"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Game",IDC_STATIC,7,7,157,49
     CONTROL         "Two Player Game",IDC_PLAYERVSPLAYER,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,17,88,12
     CONTROL         "Player -vs- Computer",IDC_PLAYERVSCOMPUTER,"Button",BS_AUTORADIOBUTTON,15,33,88,12
     DEFPUSHBUTTON   "OK",IDOK,173,7,41,14,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,173,22,41,14
+END
+
+IDD_COLOR_CHOOSER DIALOG  0, 0, 120, 67
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP
+FONT 8, "MS Shell Dlg"
+BEGIN
+END
+
+IDD_COLORS DIALOG  0, 0, 287, 87
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Colors"
+FONT 8, "Tahoma"
+BEGIN
+    CONTROL         "Table Color",IDC_TABLE_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,7,7,87,21
+    CONTROL         "Board Color",IDC_BOARD_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,99,7,87,21
+    CONTROL         "Grid Color",IDC_GRID_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,191,7,87,21
+    DEFPUSHBUTTON   "OK",IDOK,92,61,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,144,61,50,14
 END
 
 
@@ -232,6 +246,12 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 56
     END
+
+    IDD_COLOR_CHOOSER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        TOPMARGIN, 7
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -247,6 +267,13 @@ IDR_MAINFRAME           ICON                    "res\\idr_main.ico"
 IDI_REDPIECE            ICON                    "res\\redpiece.ico"
 IDI_GREENPIECE          ICON                    "res\\greenpie.ico"
 IDI_DOCUMENT            ICON                    "res\\document.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// PALETTE
+//
+
+IDR_DEF_PALETTE         PALETTE                 "res\\default.pal"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -327,7 +354,6 @@ BEGIN
     IDM_BOARDBKGCOLOR       "Change Board Color\nBoard Color"
     IDM_GRIDCOLOR           "Change Grid Color\nGrid Color"
     IDM_TABLECOLOR          "Change Table Color\nTable Color"
-    IDM_SHOWLOG             "Show Log"
 END
 
 STRINGTABLE 

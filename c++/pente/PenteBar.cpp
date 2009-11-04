@@ -67,6 +67,7 @@ BEGIN_MESSAGE_MAP(PenteBar, CStatusBar)
 	ON_WM_CREATE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 /////////////////////////////////////////////////////////////////////////////
 // PenteBar message handlers
 

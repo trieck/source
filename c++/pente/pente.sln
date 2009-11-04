@@ -10,27 +10,17 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
-		DebugLogging|Win32 = DebugLogging|Win32
 		Release|Win32 = Release|Win32
-		ReleaseLogging|Win32 = ReleaseLogging|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2D6E7937-4E6F-496B-8843-3692D0846AF4}.Debug|Win32.ActiveCfg = Debug|Win32
 		{2D6E7937-4E6F-496B-8843-3692D0846AF4}.Debug|Win32.Build.0 = Debug|Win32
-		{2D6E7937-4E6F-496B-8843-3692D0846AF4}.DebugLogging|Win32.ActiveCfg = DebugLogging|Win32
-		{2D6E7937-4E6F-496B-8843-3692D0846AF4}.DebugLogging|Win32.Build.0 = DebugLogging|Win32
 		{2D6E7937-4E6F-496B-8843-3692D0846AF4}.Release|Win32.ActiveCfg = Release|Win32
 		{2D6E7937-4E6F-496B-8843-3692D0846AF4}.Release|Win32.Build.0 = Release|Win32
-		{2D6E7937-4E6F-496B-8843-3692D0846AF4}.ReleaseLogging|Win32.ActiveCfg = ReleaseLogging|Win32
-		{2D6E7937-4E6F-496B-8843-3692D0846AF4}.ReleaseLogging|Win32.Build.0 = ReleaseLogging|Win32
 		{BA2B31F3-2A32-4432-9511-ED9D72134702}.Debug|Win32.ActiveCfg = Debug|Win32
 		{BA2B31F3-2A32-4432-9511-ED9D72134702}.Debug|Win32.Build.0 = Debug|Win32
-		{BA2B31F3-2A32-4432-9511-ED9D72134702}.DebugLogging|Win32.ActiveCfg = Debug|Win32
-		{BA2B31F3-2A32-4432-9511-ED9D72134702}.DebugLogging|Win32.Build.0 = Debug|Win32
 		{BA2B31F3-2A32-4432-9511-ED9D72134702}.Release|Win32.ActiveCfg = Release|Win32
 		{BA2B31F3-2A32-4432-9511-ED9D72134702}.Release|Win32.Build.0 = Release|Win32
-		{BA2B31F3-2A32-4432-9511-ED9D72134702}.ReleaseLogging|Win32.ActiveCfg = Release|Win32
-		{BA2B31F3-2A32-4432-9511-ED9D72134702}.ReleaseLogging|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

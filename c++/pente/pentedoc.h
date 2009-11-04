@@ -18,6 +18,8 @@ protected: // create from serialization only
 // Attributes
 public:
 	bool addPiece(const CPoint & square);
+	bool move(CPoint & square);
+
 // Operations
 public:
 	PenteGame *getGame();
@@ -43,8 +45,6 @@ protected:
 // Generated message map functions
 protected:
 	//{{AFX_MSG(PenteDoc)
-	afx_msg void OnBoardbkgcolor();
-	afx_msg void OnGridColor();
 	afx_msg void OnUpdateFileSave(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateOptions(CCmdUI* pCmdUI);
 	//}}AFX_MSG
@@ -52,11 +52,15 @@ protected:
 private:
 	void onUpdateTurn(CCmdUI *pCmdUI);
 	PenteGame game;
+public:
+	afx_msg void OnToolsColors();
 };
+
 /////////////////////////////////////////////////////////////////////////////
 inline PenteGame* PenteDoc::getGame() {
 	return &game;
 }
+
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 #endif // !defined(AFX_PENTEDOC_H__84460EDC_8E6D_11D4_9013_00010275679A__INCLUDED_)

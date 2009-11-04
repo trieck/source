@@ -413,6 +413,22 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
+				RelativePath=".\ColorButton.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ColorChooserDlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ColorChooserWnd.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ColorsDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath="computer.cpp"
 				>
 				<FileConfiguration
@@ -581,48 +597,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="LogWnd.cpp"
-				>
-				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="MainFrm.cpp"
 				>
 				<FileConfiguration
@@ -705,6 +679,10 @@
 						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Palette256.cpp"
+				>
 			</File>
 			<File
 				RelativePath="pente.cpp"
@@ -1093,52 +1071,30 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="timer.cpp"
+				RelativePath=".\StringTokenizer.cpp"
 				>
-				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl"
 			>
+			<File
+				RelativePath=".\ColorButton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ColorChooserDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ColorChooserWnd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ColorsDlg.h"
+				>
+			</File>
 			<File
 				RelativePath="computer.h"
 				>
@@ -1156,15 +1112,15 @@
 				>
 			</File>
 			<File
-				RelativePath="LogWnd.h"
-				>
-			</File>
-			<File
 				RelativePath="MainFrm.h"
 				>
 			</File>
 			<File
 				RelativePath="optdlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Palette256.h"
 				>
 			</File>
 			<File
@@ -1208,7 +1164,7 @@
 				>
 			</File>
 			<File
-				RelativePath="timer.h"
+				RelativePath=".\StringTokenizer.h"
 				>
 			</File>
 		</Filter>
@@ -1216,6 +1172,10 @@
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 			>
+			<File
+				RelativePath=".\res\default.pal"
+				>
+			</File>
 			<File
 				RelativePath="res\document.ico"
 				>
@@ -1251,5 +1211,9 @@
 		</Filter>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="pente.rc"
+		/>
 	</Globals>
 </VisualStudioProject>

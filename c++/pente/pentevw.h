@@ -47,13 +47,13 @@ protected:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnTableColor();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
 	CBrush bkgBrush;
 	COLORREF bkgColor;
 };
+
 #ifndef _DEBUG  // debug version in pentevw.cpp
 inline PenteDoc* PenteView::GetDocument()
    { return (PenteDoc*)m_pDocument; }
