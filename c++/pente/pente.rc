@@ -126,15 +126,13 @@ END
 
 IDR_MAINFRAME ACCELERATORS 
 BEGIN
-    "B",            IDM_BOARDBKGCOLOR,      VIRTKEY, CONTROL, NOINVERT
-    "G",            IDM_GRIDCOLOR,          VIRTKEY, CONTROL, NOINVERT
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
-    "O",            IDM_OPTIONS,            VIRTKEY, SHIFT, CONTROL, NOINVERT
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
-    "T",            IDM_TABLECOLOR,         VIRTKEY, CONTROL, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    "O",            IDM_OPTIONS,            VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "C",            ID_TOOLS_COLORS,        VIRTKEY, SHIFT, CONTROL, NOINVERT
 END
 
 

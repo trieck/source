@@ -155,6 +155,19 @@ void PenteDoc::OnToolsColors()
 {
 	CColorsDlg dlg;
 	if (IDOK == dlg.DoModal()) {
+		COLORREF rgb1 = dlg.m_BoardColor.GetFillColor();
+		COLORREF rgb2 = game.getBoard()->getBackgroundColor();
+		if (rgb1 != rgb2) {
+			game.getBoard()->setBackgroundColor(rgb1);
+		}
+
+		rgb1 = dlg.m_GridColor.GetFillColor();
+		rgb2 = game.getBoard()->getGridColor();
+
+		if (rgb1 != rgb2) {
+			game.getBoard()->setGridColor(rgb1);
+		}
+
 		UpdateAllViews(NULL);
 	}
 }

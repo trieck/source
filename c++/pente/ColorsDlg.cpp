@@ -107,34 +107,10 @@ void CColorsDlg::OnBnClickedOk()
 	}
 
 	if (m_ModFlags) {
-		; // pApp->m_pMainWnd->SendMessage(WM_SETTING_CHANGE);
+		pApp->m_pMainWnd->SendMessage(WM_APPSETTING_CHANGE);
 	}
 
 	m_ModFlags = 0;
-
-	/*
-		TorrentExplorer *pApp = (TorrentExplorer*)AfxGetApp();
-	if (m_ModFlags & BKGND_COLOR) {
-		pApp->PutSetting("ui_bkgnd_color", m_BkgndColor.GetFillColor());
-	}
-	if (m_ModFlags & TEXT_COLOR) {
-		pApp->PutSetting("ui_text_color", m_TextColor.GetFillColor());
-	}
-	if (m_ModFlags & GRID_COLOR) {
-		pApp->PutSetting("ui_grid_color", m_GridColor.GetFillColor());
-	}
-	if (m_ModFlags & HILIGHT_COLOR) {
-		pApp->PutSetting("ui_hilight_color", m_HilightColor.GetFillColor());
-	}
-	if (m_ModFlags & HILIGHT_BORDER_COLOR) {
-		pApp->PutSetting("ui_hilight_border_color", m_HilightBorderColor.GetFillColor());
-	}
-
-	if (m_ModFlags)
-		pApp->m_pMainWnd->SendMessage(WM_SETTING_CHANGE);
-
-	m_ModFlags = 0;
-	*/
 
 	OnOK();
 }

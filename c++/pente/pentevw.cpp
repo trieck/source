@@ -21,6 +21,7 @@ BEGIN_MESSAGE_MAP(PenteView, CView)
 	ON_WM_ERASEBKGND()
 	ON_WM_SETTINGCHANGE()
 	ON_WM_LBUTTONDOWN()
+	ON_MESSAGE(WM_APPSETTING_CHANGE, OnAppSettingChange)
 	//}}AFX_MSG_MAP
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
@@ -32,9 +33,7 @@ END_MESSAGE_MAP()
 
 PenteView::PenteView()
 {
-	bkgColor = AfxGetApp()->GetProfileInt(_T("Settings"), _T("TableColor"),
-		GetSysColor(COLOR_APPWORKSPACE));
-	bkgBrush.CreateSolidBrush(bkgColor);
+
 }
 
 PenteView::~PenteView()
@@ -45,6 +44,7 @@ BOOL PenteView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	return CView::PreCreateWindow(cs);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 // PenteView drawing
 
@@ -114,6 +114,9 @@ BOOL PenteView::OnEraseBkgnd(CDC* pDC)
 
 void PenteView::OnInitialUpdate() 
 {
+	bkgColor = AfxGetApp()->GetProfileInt(_T("Settings"), _T("TableColor"),
+		GetSysColor(COLOR_APPWORKSPACE));
+	bkgBrush.CreateSolidBrush(bkgColor);
 	CView::OnInitialUpdate();
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -121,6 +124,7 @@ void PenteView::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
 	CView::OnSettingChange(uFlags, lpszSection);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void PenteView::OnLButtonDown(UINT nFlags, CPoint point) 
 {
@@ -160,4 +164,13 @@ void PenteView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	bar.RedrawWindow();   
 }
 
+LRESULT PenteView::OnAppSettingChange(WPARAM wParam, LPARAM lParam)
+{
+	bkgColor = AfxGetApp()->GetProfileInt(_T("Settings"), _T("TableColor"),
+		GetSysColor(COLOR_APPWORKSPACE));
+	bkgBrush.DeleteObject();
+	bkgBrush.CreateSolidBrush(bkgColor);
+
+	return 0;
+}
 

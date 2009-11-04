@@ -20,11 +20,11 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
-private:
+public:
 	ColorButton	m_TableColor;		
 	ColorButton	m_BoardColor;
 	ColorButton	m_GridColor;
-
+private:
 	enum {
 		TABLE_COLOR = 1 << 0,
 		BOARD_COLOR = 1 << 1,

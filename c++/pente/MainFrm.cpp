@@ -20,9 +20,11 @@ BEGIN_MESSAGE_MAP(MainFrame, CFrameWnd)
 	//{{AFX_MSG_MAP(MainFrame)
 	ON_WM_CREATE()
 	ON_WM_SETTINGCHANGE()
+	ON_MESSAGE(WM_APPSETTING_CHANGE, OnAppSettingChange)
 	ON_UPDATE_COMMAND_UI(IDS_CAPTURES, onUpdateCaptures)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 /////////////////////////////////////////////////////////////////////////////
 // MainFrame construction/destruction
 
@@ -148,4 +150,11 @@ void MainFrame::RecalcLayout(BOOL bNotify)
 /////////////////////////////////////////////////////////////////////////////
 void MainFrame::onUpdateCaptures(CCmdUI *pCmdUI)
 {
+}
+
+/////////////////////////////////////////////////////////////////////////////
+LRESULT MainFrame::OnAppSettingChange(WPARAM wParam, LPARAM lParam)
+{
+	SendMessageToDescendants(WM_APPSETTING_CHANGE, wParam, lParam);
+	return 0;
 }

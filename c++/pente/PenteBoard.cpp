@@ -178,3 +178,4 @@ void PenteBoard::clear()
 {
 	board->clear();
 }
+

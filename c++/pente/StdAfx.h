@@ -42,6 +42,8 @@ struct StringPtrLess {
 #include <memory>
 #include "globals.h"
 
+#define WM_APPSETTING_CHANGE	(WM_APP + 1)
+
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 #endif // !defined(AFX_STDAFX_H__84460ED8_8E6D_11D4_9013_00010275679A__INCLUDED_)

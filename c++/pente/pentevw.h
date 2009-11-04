@@ -46,6 +46,7 @@ protected:
 	//{{AFX_MSG(PenteView)
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
+	afx_msg LRESULT OnAppSettingChange(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
