@@ -17,6 +17,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#define WINVER 0x0501
 #define WIN32_LEAN_AND_MEAN
 
 #include <afx.h>
@@ -29,7 +30,12 @@
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 #include <afxpriv.h>
-#include <afximpl.h>
+
+#if _MSC_VER >= 1500
+#include <..\atlmfc\src\mfc\afximpl.h>
+#else
+#include <..\src\afximpl.h>
+#endif
 
 #include <string>
 #include <iostream>
