@@ -90,13 +90,20 @@ void PenteGame::Serialize(CArchive& ar)
 {	
 	WORD num;
 	
+	PenteApp *pApp = (PenteApp*)AfxGetApp();
+	uint8_t twoPlayer;
+
 	if (ar.IsStoring()) {
-		ar << magicNumber;
+		twoPlayer = pApp->isTwoPlayerGame() ? 1 : 0;
+		ar << magicNumber;		
+		ar << twoPlayer;
 		ar << (BYTE)currentTurn;
 	} else {
 		ar >> num;
+		ar >> twoPlayer;
 		ar.Read(&currentTurn, sizeof(BYTE));
-		makePlayers();
+		pApp->setTwoPlayerGame(twoPlayer ? true : false);
+		makePlayers();		
 	}
 
 	// captures

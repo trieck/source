@@ -165,6 +165,7 @@ BOOL PenteDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		E->Delete();
 		return FALSE;
 	}
+
 	if (number != PenteGame::getFileMagicNumber()) {
 		AfxMessageBox(IDS_INVALIDFILEFORMAT, MB_ICONINFORMATION | MB_OK);
 		return FALSE;
