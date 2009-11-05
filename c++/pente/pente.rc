@@ -264,7 +264,7 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\idr_main.ico"
-IDI_PIECE               ICON                    "res\\greenpie.ico"
+IDI_PIECE               ICON                    "res\\piece.ico"
 IDI_DOCUMENT            ICON                    "res\\document.ico"
 
 /////////////////////////////////////////////////////////////////////////////
