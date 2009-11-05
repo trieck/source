@@ -16,6 +16,8 @@ public:
 	typedef std::auto_ptr<Palette256> Palette256Ptr;
 	static Palette256 *instance();
 
+	BOOL CreatePalette(CPalette &pal);
+
 private:
 	void load();
 

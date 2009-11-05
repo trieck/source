@@ -82,3 +82,28 @@ Palette256 *Palette256::instance()
 
 	return This.get();
 }
+
+/////////////////////////////////////////////////////////////////////////////
+BOOL Palette256::CreatePalette(CPalette &pal)
+{
+	pal.DeleteObject();
+
+	LPLOGPALETTE pPal = (LPLOGPALETTE)GlobalAlloc(GPTR, sizeof(LOGPALETTE) 
+		+ (sizeof(PALETTEENTRY) * 256));
+
+	pPal->palVersion = 0x300;
+	pPal->palNumEntries = 256;
+
+	for (uint32_t i = 0; i < 256; i++) {
+		pPal->palPalEntry[i].peRed = m_pPalette[i].rgbtRed;
+		pPal->palPalEntry[i].peGreen = m_pPalette[i].rgbtGreen;
+		pPal->palPalEntry[i].peBlue = m_pPalette[i].rgbtBlue;
+	}
+
+	if (!pal.CreatePalette(pPal))
+		return FALSE;
+
+	GlobalFree(pPal);
+
+	return TRUE;
+}

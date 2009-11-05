@@ -68,6 +68,7 @@ private:
 	CPen pen;
 	COLORREF bkgColor, gridColor;
 	Board *board;
+	CPalette palette;
 };
 
 /////////////////////////////////////////////////////////////////////////////

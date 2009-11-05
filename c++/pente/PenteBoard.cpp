@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "PenteBoard.h"
 #include "resource.h"
+#include "Palette256.h"
 
 /////////////////////////////////////////////////////////////////////////////
 PenteBoard::PenteBoard() 
@@ -27,6 +28,9 @@ PenteBoard::PenteBoard()
 
 	playerOneIcon.setColor(playerOneColor);
 	playerTwoIcon.setColor(playerTwoColor);
+
+	Palette256 *pPalette = Palette256::instance();
+	pPalette->CreatePalette(palette);
 
 	board = Board::instance();	
 }
@@ -89,6 +93,9 @@ void PenteBoard::renderBoard(CDC *pDC)
 	CPoint pt;
 	HICON hIcon;
 
+	pDC->SelectPalette(&palette, TRUE);
+	UINT entries = pDC->RealizePalette();
+
 	UInt32EntryMapEnum e = board->enumEntries();
 	while (e.hasNext()) {
 		const Entry & entry = e.next().second;
@@ -97,7 +104,8 @@ void PenteBoard::renderBoard(CDC *pDC)
 		hIcon = entry.getType() == ET_PLAYER_ONE ?
 			playerOneIcon : playerTwoIcon;
 
-		DrawIconEx(*pDC, pt.x, pt.y, hIcon, cxIcon, cyIcon, 0, NULL, DI_NORMAL);
+		DrawIconEx(*pDC, pt.x, pt.y, hIcon, cxIcon, cyIcon, 0, NULL, 
+			DI_NORMAL | DI_COMPAT);
 	}
 }
 
