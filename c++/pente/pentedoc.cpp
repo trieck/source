@@ -72,12 +72,40 @@ bool PenteDoc::addPiece(const CPoint & square)
 {
 	if (!game.addPiece(square.x, square.y))
 		return false;
-	
-	SetModifiedFlag();
 
+	SetModifiedFlag();
 	UpdateAllViews(NULL, MAKELONG(square.x, square.y), game.getBoard());
 
+	checkWinner();
+
 	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool PenteDoc::checkWinner()
+{
+	uint32_t winner;
+	const Vector *vector;
+	
+	CWinApp *pApp = AfxGetApp();
+	if ((vector = game.winner(winner)) != NULL) {
+		CString message = (winner == ET_PLAYER_ONE) ?
+			_T("Player One Wins!") : _T("Player Two Wins!");
+		message += _T("\nPlay Again?");
+
+		int nRtn = AfxMessageBox(message, 
+			MB_YESNO | MB_ICONQUESTION);
+		if (nRtn == IDNO) {
+			pApp->GetMainWnd()->PostMessage(WM_CLOSE);
+		} else {
+			SaveModified();
+			OnNewDocument();
+			UpdateAllViews(NULL);
+		}
+		return true;
+	}
+
+	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -87,8 +115,9 @@ bool PenteDoc::move(CPoint & square)
 		return false;
 
 	SetModifiedFlag();
-
 	UpdateAllViews(NULL, MAKELONG(square.x, square.y), game.getBoard());
+
+	checkWinner();
 
 	return true;
 }

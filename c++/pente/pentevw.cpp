@@ -136,8 +136,10 @@ void PenteView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	if (pBoard->ptOnBoard(point)) {
 		CPoint square = pBoard->getSquare(point);
-		pDoc->addPiece(square);
-		pDoc->move(square);
+		if (pDoc->addPiece(square)) {
+			CWaitCursor cursor;
+			pDoc->move(square);
+		}
 	}
 	
 	CView::OnLButtonDown(nFlags, point);

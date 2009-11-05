@@ -17,6 +17,7 @@ Board::BoardPtr Board::This;
 /////////////////////////////////////////////////////////////////////////////
 Board::Board()
 {
+	generate();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -32,6 +33,56 @@ Board *Board::instance()
 	}
 
 	return This.get();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Board::generate()
+{
+	uint32_t i, j, m, n;
+	Vector v;
+
+	// generate all initially feasible vectors 
+
+	for (i = 0; i < BOARD_ENTRIES; i++) {
+		m = i / BOARD_SIZE;
+		n = i % BOARD_SIZE;
+		
+		// check for horizontal vector
+		if (VSIZE + n <= BOARD_SIZE) {
+			v.clear();
+			for (j = 0; j < VSIZE; j++) {
+				v.setEntry(j, m, n+j);
+			}
+			vectors.push_back(v);
+		}
+
+		// check for vertical vector
+		if (VSIZE + m <= BOARD_SIZE) {
+			v.clear();
+			for (j = 0; j < VSIZE; j++) {
+				v.setEntry(j, m+j, n);
+			}
+			vectors.push_back(v);
+		}
+
+		// check for a "diagonal down" vector
+		if (VSIZE + m <= BOARD_SIZE && VSIZE + n <= BOARD_SIZE) {
+			v.clear();
+			for (j = 0; j < VSIZE; j++) {
+				v.setEntry(j, m+j, n+j);
+			}
+			vectors.push_back(v);
+		}
+
+		// check for a "diagonal up" vector
+		if (m >= VSIZE - 1 && VSIZE + n <= BOARD_SIZE) {
+			v.clear();
+			for (j = 0; j < VSIZE; j++) {
+				v.setEntry(j, m-j, n+j);
+			}
+			vectors.push_back(v);
+		}
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -97,6 +148,35 @@ EntryVec Board::empty()
 	}
 	
 	return v;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+const Vector* Board::winner(uint32_t &nplayer) const
+{
+	uint32_t i, type, onecount, twocount;
+	POINT pt;
+
+	VecVec::const_iterator it = vectors.begin();
+	for ( ; it != vectors.end(); it++) {
+		for (i = 0, onecount = 0, twocount = 0; i < VSIZE; i++) {
+			pt = (*it).entry(i);
+			type = getEntry(pt.x, pt.y);
+			if (type == ET_PLAYER_ONE) { onecount++; }
+			if (type == ET_PLAYER_TWO) { twocount++; }
+		}
+
+		if (onecount == VSIZE) {
+			nplayer = ET_PLAYER_ONE;
+			return &*it;
+		}
+		
+		if (twocount == VSIZE) {
+			nplayer = ET_PLAYER_TWO;
+			return &*it;
+		}
+	}
+
+	return NULL;
 }
 
 ANON_BEGIN

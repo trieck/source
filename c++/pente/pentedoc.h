@@ -50,6 +50,8 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
+	bool checkWinner();
+
 	void onUpdateTurn(CCmdUI *pCmdUI);
 	PenteGame game;
 public:

@@ -172,3 +172,8 @@ void PenteBoard::clear()
 	board->clear();
 }
 
+/////////////////////////////////////////////////////////////////////////////
+const Vector *PenteBoard::winner(uint32_t &nplayer) const
+{
+	return board->winner(nplayer);
+}

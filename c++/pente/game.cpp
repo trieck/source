@@ -52,7 +52,7 @@ bool PenteGame::addPiece(int x, int y)
 	// ensure the piece is not already taken
 	if (!board.addPiece(x, y, currentTurn))
 		return false;
-
+	
 	changeTurns();
 
 	return true;
@@ -110,4 +110,10 @@ void PenteGame::makePlayers()
 	if (pApp->isTwoPlayerGame())
 		playerTwo = PlayerPtr(new PlayerTwo());
 	else playerTwo = PlayerPtr(new Computer(playerOne.get()));
+}
+
+/////////////////////////////////////////////////////////////////////////////
+const Vector *PenteGame::winner(uint32_t &nplayer) const 
+{
+	return board.winner(nplayer);
 }

@@ -9,6 +9,7 @@
 
 #include "entry.h"
 #include "enum.h"
+#include "vector.h"
 
 // size of board 
 #define BOARD_SIZE		(19)
@@ -19,6 +20,8 @@ typedef std::pair<uint32_t, Entry> UInt32EntryPair;
 typedef UInt32EntryMap::const_iterator UInt32EntryMapConstIter;
 typedef Enumerator<UInt32EntryMap> UInt32EntryMapEnum;
 typedef std::vector<Entry> EntryVec;
+
+typedef std::vector<Vector> VecVec;
 
 /////////////////////////////////////////////////////////////////////////////
 class Board
@@ -39,11 +42,21 @@ public:
 	void clear();
 	UInt32EntryMapEnum enumEntries();
 	EntryVec empty();
+	const VecVec &getVectors() const;
+	const Vector* winner(uint32_t &nplayer) const;
 
 // Implementation
 private:	
+	void generate();
+
 	static BoardPtr This;
 	UInt32EntryMap rep;
+	VecVec vectors;
 };
+
+/////////////////////////////////////////////////////////////////////////////
+inline const VecVec &Board::getVectors() const {
+	return vectors;
+}
 
 #endif /* __BOARD_H__ */
