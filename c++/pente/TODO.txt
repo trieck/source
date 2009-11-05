@@ -1,2 +1,2 @@
-* Fix modify bug
-* implement Saving / Loading
+* Implement Captures
+* GetClientRect

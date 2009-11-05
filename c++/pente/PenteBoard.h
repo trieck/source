@@ -56,15 +56,15 @@ private:
 	void renderBoard(CDC *pDC);
 	static CPoint mapIndexToPoint(const CPoint &);
 
-	enum { cxIcon = 16 };
-	enum { cyIcon = 16 };
-	enum { cxBorder = BOARD_SIZE+1 };
-	enum { cyBorder = BOARD_SIZE+1 };
+	enum { cxIcon = 18 };
+	enum { cyIcon = 18 };
+	enum { cxBorder = 20 };
+	enum { cyBorder = 20 };
 	enum { cxSquares = BOARD_SIZE };
 	enum { cySquares = BOARD_SIZE };
-	enum { squareSize = BOARD_SIZE+2 };
-	enum { cxOffset = 3 };
-	enum { cyOffset = 3 };
+	enum { squareSize = 21 };
+	enum { cxOffset = 2 };
+	enum { cyOffset = 2 };
 	
 	PieceIcon playerOneIcon, playerTwoIcon;
 

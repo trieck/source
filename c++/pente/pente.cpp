@@ -66,8 +66,15 @@ BOOL PenteApp::InitInstance()
 		RUNTIME_CLASS(PenteView));
 	AddDocTemplate(pDocTemplate);
 
+	HKEY HKCU;
+	long res_reg = RegOpenCurrentUser(KEY_SET_VALUE , &HKCU);
+	if (res_reg == ERROR_SUCCESS)
+		res_reg = RegOverridePredefKey(HKEY_CLASSES_ROOT, HKCU);
+
 	RegisterShellFileTypes(TRUE);
 	EnableShellOpen();
+
+	RegCloseKey(HKCU);
 
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;
