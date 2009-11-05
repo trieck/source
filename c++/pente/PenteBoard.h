@@ -14,6 +14,7 @@ class PenteBoard : public CObject
 {
 // Construction / Destruction
 public:
+	DECLARE_SERIAL(PenteBoard);
 	PenteBoard();
 	~PenteBoard();
 
@@ -28,6 +29,7 @@ public:
 	COLORREF getGridColor() const;
 	void setGridColor(COLORREF rgb);
 	uint32_t getPiece(int x, int y) const;
+	void Serialize(CArchive& ar);
 
 	void setPlayerOneColor(COLORREF rgb);
 	COLORREF getPlayerOneColor() const;

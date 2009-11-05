@@ -89,6 +89,7 @@ bool PenteDoc::checkWinner()
 	
 	CWinApp *pApp = AfxGetApp();
 	if ((vector = game.winner(winner)) != NULL) {
+		SetModifiedFlag(FALSE);
 		CString message = (winner == ET_PLAYER_ONE) ?
 			_T("Player One Wins!") : _T("Player Two Wins!");
 		message += _T("\nPlay Again?");
@@ -98,7 +99,6 @@ bool PenteDoc::checkWinner()
 		if (nRtn == IDNO) {
 			pApp->GetMainWnd()->PostMessage(WM_CLOSE);
 		} else {
-			SaveModified();
 			OnNewDocument();
 			UpdateAllViews(NULL);
 		}
@@ -214,3 +214,4 @@ void PenteDoc::OnToolsColors()
 		UpdateAllViews(NULL);
 	}
 }
+

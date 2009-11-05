@@ -12,6 +12,8 @@
 
 WORD PenteGame::magicNumber = MAKEWORD('P', 'T');
 
+IMPLEMENT_SERIAL(PenteGame, CObject, VERSIONABLE_SCHEMA | 1)
+
 /////////////////////////////////////////////////////////////////////////////
 PenteGame::PenteGame()
  : currentTurn(ET_PLAYER_ONE)
@@ -96,8 +98,12 @@ void PenteGame::Serialize(CArchive& ar)
 		ar.Read(&currentTurn, sizeof(BYTE));
 		makePlayers();
 	}
-	playerOne->Serialize(ar);
+
+	// captures
+	playerOne->Serialize(ar);	
 	playerTwo->Serialize(ar);
+
+	board.Serialize(ar);
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -44,6 +44,7 @@ public:
 	EntryVec empty();
 	const VecVec &getVectors() const;
 	const Vector* winner(uint32_t &nplayer) const;
+	uint32_t size() const { return rep.size(); }
 
 // Implementation
 private:	

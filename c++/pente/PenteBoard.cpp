@@ -7,6 +7,8 @@
 #include "PenteBoard.h"
 #include "resource.h"
 
+IMPLEMENT_SERIAL(PenteBoard, CObject, VERSIONABLE_SCHEMA | 1)
+
 /////////////////////////////////////////////////////////////////////////////
 PenteBoard::PenteBoard() 
 {
@@ -176,4 +178,30 @@ void PenteBoard::clear()
 const Vector *PenteBoard::winner(uint32_t &nplayer) const
 {
 	return board->winner(nplayer);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void PenteBoard::Serialize(CArchive& ar)
+{
+	if (ar.IsStoring()) {
+		ar << board->size();
+		UInt32EntryMapEnum e = board->enumEntries();
+		while (e.hasNext()) {
+			const Entry & entry = e.next().second;
+			ar << entry.where();
+			ar << entry.getType();
+		}		
+	} else {
+		board->clear();
+		
+		POINT pt;
+		uint32_t size, type;
+
+		ar >> size;
+		for (uint32_t i = 0; i < size; i++) {
+			ar >> pt;
+			ar >> type;
+			board->setEntry(pt.x, pt.y, type);
+		}
+	}
 }
