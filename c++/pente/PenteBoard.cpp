@@ -20,17 +20,13 @@ PenteBoard::PenteBoard()
 	bkgBrush.CreateSolidBrush(bkgColor);
 	pen.CreatePen(PS_SOLID, 0, gridColor);
 
-	hPlayerOne = (HICON)LoadImage(AfxGetResourceHandle(),
-		MAKEINTRESOURCE(IDI_GREENPIECE),
-		IMAGE_ICON,
-		0, 0, LR_SHARED);
-	ASSERT(hPlayerTwo != NULL);
+	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"), 
+		_T("playerOneColor"), DEFAULT_PLAYER_ONE_COLOR);
+	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"), 
+		_T("playerTwoColor"), DEFAULT_PLAYER_TWO_COLOR);
 
-	hPlayerTwo = (HICON)LoadImage(AfxGetResourceHandle(),
-		MAKEINTRESOURCE(IDI_REDPIECE),
-		IMAGE_ICON,
-		0, 0, LR_SHARED);
-	ASSERT(hPlayerTwo != NULL);
+	playerOneIcon.setColor(playerOneColor);
+	playerTwoIcon.setColor(playerTwoColor);
 
 	board = Board::instance();	
 }
@@ -38,11 +34,6 @@ PenteBoard::PenteBoard()
 /////////////////////////////////////////////////////////////////////////////
 PenteBoard::~PenteBoard()
 {
-	if (hPlayerOne != NULL)
-		DestroyIcon(hPlayerOne);
-
-	if (hPlayerTwo != NULL)
-		DestroyIcon(hPlayerTwo);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -96,14 +87,15 @@ void PenteBoard::renderTable(CDC *pDC, const CRect & rc)
 void PenteBoard::renderBoard(CDC *pDC)
 {
 	CPoint pt;
+	HICON hIcon;
 
 	UInt32EntryMapEnum e = board->enumEntries();
 	while (e.hasNext()) {
 		const Entry & entry = e.next().second;
 		pt = mapIndexToPoint(entry.where());
 
-		HICON &hIcon = entry.getType() == ET_PLAYER_ONE ?
-			hPlayerOne : hPlayerTwo;
+		hIcon = entry.getType() == ET_PLAYER_ONE ?
+			playerOneIcon : playerTwoIcon;
 
 		DrawIconEx(*pDC, pt.x, pt.y, hIcon, cxIcon, cyIcon, 0, NULL, DI_NORMAL);
 	}

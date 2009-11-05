@@ -169,16 +169,18 @@ FONT 8, "MS Shell Dlg"
 BEGIN
 END
 
-IDD_COLORS DIALOG  0, 0, 287, 87
+IDD_COLORS DIALOGEX 0, 0, 287, 87
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Colors"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    CONTROL         "Table Color",IDC_TABLE_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,7,7,87,21
-    CONTROL         "Board Color",IDC_BOARD_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,99,7,87,21
+    CONTROL         "Table Color",IDC_TABLE_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,9,7,87,21
+    CONTROL         "Board Color",IDC_BOARD_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,100,7,87,21
     CONTROL         "Grid Color",IDC_GRID_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,191,7,87,21
     DEFPUSHBUTTON   "OK",IDOK,92,61,50,14,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,144,61,50,14
+    CONTROL         "Player One Color",IDC_PLAYER_ONE_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,9,34,87,21
+    CONTROL         "Player Two Color",IDC_PLAYER_TWO_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,100,34,87,21
 END
 
 
@@ -262,8 +264,7 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\idr_main.ico"
-IDI_REDPIECE            ICON                    "res\\redpiece.ico"
-IDI_GREENPIECE          ICON                    "res\\greenpie.ico"
+IDI_PIECE               ICON                    "res\\greenpie.ico"
 IDI_DOCUMENT            ICON                    "res\\document.ico"
 
 /////////////////////////////////////////////////////////////////////////////

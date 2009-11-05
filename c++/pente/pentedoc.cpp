@@ -168,6 +168,20 @@ void PenteDoc::OnToolsColors()
 			game.getBoard()->setGridColor(rgb1);
 		}
 
+		rgb1 = dlg.m_PlayerOneColor.GetFillColor();
+		rgb2 = game.getBoard()->getPlayerOneColor();
+
+		if (rgb1 != rgb2) {
+			game.getBoard()->setPlayerOneColor(rgb1);
+		}
+
+		rgb1 = dlg.m_PlayerTwoColor.GetFillColor();
+		rgb2 = game.getBoard()->getPlayerTwoColor();
+
+		if (rgb1 != rgb2) {
+			game.getBoard()->setPlayerTwoColor(rgb1);
+		}
+
 		UpdateAllViews(NULL);
 	}
 }

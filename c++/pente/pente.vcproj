@@ -899,6 +899,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\PieceIcon.cpp"
+				>
+			</File>
+			<File
 				RelativePath="player.cpp"
 				>
 				<FileConfiguration
@@ -1144,6 +1148,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PieceIcon.h"
+				>
+			</File>
+			<File
 				RelativePath="player.h"
 				>
 			</File>
@@ -1181,10 +1189,6 @@
 				>
 			</File>
 			<File
-				RelativePath="res\greenpie.ico"
-				>
-			</File>
-			<File
 				RelativePath="res\idr_main.ico"
 				>
 			</File>
@@ -1193,15 +1197,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\piece.ico"
+				>
+			</File>
+			<File
 				RelativePath="res\player1c.bmp"
 				>
 			</File>
 			<File
 				RelativePath="res\player2c.bmp"
-				>
-			</File>
-			<File
-				RelativePath="res\redpiece.ico"
 				>
 			</File>
 			<File

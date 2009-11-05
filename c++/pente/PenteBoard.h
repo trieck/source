@@ -7,6 +7,7 @@
 #define __PENTEBOARD_H__
 
 #include "libpente.h"
+#include "PieceIcon.h"
 
 /////////////////////////////////////////////////////////////////////////////
 class PenteBoard : public CObject
@@ -28,6 +29,12 @@ public:
 	void setGridColor(COLORREF rgb);
 	uint32_t getPiece(int x, int y) const;
 
+	void setPlayerOneColor(COLORREF rgb);
+	COLORREF getPlayerOneColor() const;
+
+	void setPlayerTwoColor(COLORREF rgb);
+	COLORREF getPlayerTwoColor() const;
+
 	bool addPiece(int x, int y, uint32_t currentTurn);
 
 	static CPoint getBorderSizes();
@@ -36,6 +43,9 @@ public:
 	static void getDimensions(CRect & rc);
 	static void getBoundingRect(CRect & rc);
 	
+	enum { DEFAULT_PLAYER_ONE_COLOR = 0x8000 };
+	enum { DEFAULT_PLAYER_TWO_COLOR = 0x800000 };
+
 // Implementation
 private:
 	void renderTable(CDC *pDC, const CRect & rc);
@@ -51,8 +61,9 @@ private:
 	enum { squareSize = BOARD_SIZE+2 };
 	enum { cxOffset = 3 };
 	enum { cyOffset = 3 };
+	
+	PieceIcon playerOneIcon, playerTwoIcon;
 
-	HICON hPlayerOne, hPlayerTwo;
 	CBrush bkgBrush;
 	CPen pen;
 	COLORREF bkgColor, gridColor;
@@ -112,6 +123,26 @@ inline void PenteBoard::setGridColor(COLORREF rgb) {
 	gridColor = rgb;
 	pen.DeleteObject();
 	pen.CreatePen(PS_SOLID, 0, gridColor);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline void PenteBoard::setPlayerOneColor(COLORREF rgb) {
+	playerOneIcon.setColor(rgb);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline void PenteBoard::setPlayerTwoColor(COLORREF rgb) {
+	playerTwoIcon.setColor(rgb);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline COLORREF PenteBoard::getPlayerOneColor() const {
+	return playerOneIcon.getColor();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline COLORREF PenteBoard::getPlayerTwoColor() const {
+	return playerTwoIcon.getColor();
 }
 
 #endif // __PENTEBOARD_H__

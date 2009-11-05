@@ -33,7 +33,9 @@ END_MESSAGE_MAP()
 
 PenteView::PenteView()
 {
-
+	bkgColor = AfxGetApp()->GetProfileInt(_T("Settings"), _T("TableColor"),
+		GetSysColor(COLOR_APPWORKSPACE));
+	bkgBrush.CreateSolidBrush(bkgColor);
 }
 
 PenteView::~PenteView()
@@ -114,9 +116,6 @@ BOOL PenteView::OnEraseBkgnd(CDC* pDC)
 
 void PenteView::OnInitialUpdate() 
 {
-	bkgColor = AfxGetApp()->GetProfileInt(_T("Settings"), _T("TableColor"),
-		GetSysColor(COLOR_APPWORKSPACE));
-	bkgBrush.CreateSolidBrush(bkgColor);
 	CView::OnInitialUpdate();
 }
 /////////////////////////////////////////////////////////////////////////////

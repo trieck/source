@@ -5,6 +5,7 @@
 #include "pente.h"
 #include "ColorsDlg.h"
 #include "ColorChooserDlg.h"
+#include "PenteBoard.h"
 
 // CColorsDlg dialog
 
@@ -27,6 +28,8 @@ void CColorsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TABLE_COLOR, m_TableColor);
 	DDX_Control(pDX, IDC_BOARD_COLOR, m_BoardColor);
 	DDX_Control(pDX, IDC_GRID_COLOR, m_GridColor);
+	DDX_Control(pDX, IDC_PLAYER_ONE_COLOR, m_PlayerOneColor);
+	DDX_Control(pDX, IDC_PLAYER_TWO_COLOR, m_PlayerTwoColor);
 }
 
 
@@ -34,6 +37,8 @@ BEGIN_MESSAGE_MAP(CColorsDlg, CDialog)
 	ON_BN_CLICKED(IDC_TABLE_COLOR, OnTableColor)
 	ON_BN_CLICKED(IDC_BOARD_COLOR, OnBoardColor)
 	ON_BN_CLICKED(IDC_GRID_COLOR, OnGridColor)
+	ON_BN_CLICKED(IDC_PLAYER_ONE_COLOR, OnPlayerOneColor)
+	ON_BN_CLICKED(IDC_PLAYER_TWO_COLOR, OnPlayerTwoColor)
 	ON_BN_CLICKED(IDOK, &CColorsDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
@@ -64,6 +69,24 @@ void CColorsDlg::OnGridColor()
 	}
 }
 
+void CColorsDlg::OnPlayerOneColor() 
+{
+	CColorChooserDlg dlg(&m_PlayerOneColor);
+	if (dlg.DoModal() == IDOK) {
+		m_PlayerOneColor.SetFillColor(dlg.GetSelectedColor());
+		m_ModFlags |= PLAYER_ONE_COLOR;
+	}
+}
+
+void CColorsDlg::OnPlayerTwoColor() 
+{
+	CColorChooserDlg dlg(&m_PlayerTwoColor);
+	if (dlg.DoModal() == IDOK) {
+		m_PlayerTwoColor.SetFillColor(dlg.GetSelectedColor());
+		m_ModFlags |= PLAYER_TWO_COLOR;
+	}
+}
+
 
 // CColorsDlg message handlers
 
@@ -83,6 +106,15 @@ BOOL CColorsDlg::OnInitDialog()
 	COLORREF gridColor = pApp->GetProfileInt(_T("Settings"), _T("GridColor"),
 		GetSysColor(COLOR_WINDOWTEXT));
 	m_GridColor.SetFillColor(gridColor);
+
+	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"), 
+		_T("PlayerOneColor"), PenteBoard::DEFAULT_PLAYER_ONE_COLOR);
+	m_PlayerOneColor.SetFillColor(playerOneColor);
+
+	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"), 
+		_T("PlayerTwoColor"),
+		PenteBoard::DEFAULT_PLAYER_TWO_COLOR);
+	m_PlayerTwoColor.SetFillColor(playerTwoColor);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
@@ -104,6 +136,16 @@ void CColorsDlg::OnBnClickedOk()
 	if (m_ModFlags & GRID_COLOR) {
 		pApp->WriteProfileInt(_T("Settings"), _T("GridColor"), 
 			m_GridColor.GetFillColor());
+	}
+
+	if (m_ModFlags & PLAYER_ONE_COLOR) {
+		pApp->WriteProfileInt(_T("Settings"), _T("PlayerOneColor"), 
+			m_PlayerOneColor.GetFillColor());
+	}
+
+	if (m_ModFlags & PLAYER_TWO_COLOR) {
+		pApp->WriteProfileInt(_T("Settings"), _T("PlayerTwoColor"), 
+			m_PlayerTwoColor.GetFillColor());
 	}
 
 	if (m_ModFlags) {

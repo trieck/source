@@ -8,10 +8,12 @@
 #define IDC_TABLE_COLOR                 105
 #define IDC_BOARD_COLOR                 106
 #define IDC_GRID_COLOR                  107
+#define IDC_PLAYER_ONE_COLOR            108
+#define IDC_PLAYER_ONE_COLOR2           109
+#define IDC_PLAYER_TWO_COLOR            109
 #define IDR_MAINFRAME                   128
 #define IDI_DOCUMENT                    130
-#define IDI_REDPIECE                    131
-#define IDI_GREENPIECE                  132
+#define IDI_PIECE                       132
 #define IDB_PLAYER1CAP                  134
 #define IDB_PLAYER2CAP                  135
 #define IDD_OPTIONS                     138
