@@ -14,7 +14,7 @@ public:
 	void setColor(COLORREF c);
 
 private:
-	enum { DEFAULT_COLOR = 0x8000 };
+	enum { DEFAULT_COLOR = RGB(0x00, 0x80, 0x00) };
 
 	void load(void);
 	void recreateIcon();

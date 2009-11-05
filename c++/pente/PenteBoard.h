@@ -43,8 +43,8 @@ public:
 	static void getDimensions(CRect & rc);
 	static void getBoundingRect(CRect & rc);
 	
-	enum { DEFAULT_PLAYER_ONE_COLOR = 0x8000 };
-	enum { DEFAULT_PLAYER_TWO_COLOR = 0x800000 };
+	enum { DEFAULT_PLAYER_ONE_COLOR = 0x00008000 };
+	enum { DEFAULT_PLAYER_TWO_COLOR = 0x00000080 };
 
 // Implementation
 private:
@@ -68,7 +68,6 @@ private:
 	CPen pen;
 	COLORREF bkgColor, gridColor;
 	Board *board;
-	CPalette palette;
 };
 
 /////////////////////////////////////////////////////////////////////////////

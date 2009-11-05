@@ -85,10 +85,17 @@ void PieceIcon::setColor(COLORREF nColor)
 
 	bmColor.GetBitmapBits(dwBmpSize, bits);
 
-	for (uint32_t i = 0; i < dwBmpSize; i += sizeof(DWORD)) {
-		DWORD & dwColor = *(LPDWORD)(&bits[i]);
+	for (uint32_t i = 0; i < dwBmpSize; i++) {
+		BYTE &b = bits[i++];
+		BYTE &g = bits[i++];
+		BYTE &r = bits[i++];
+		BYTE z = bits[i];
+
+		COLORREF dwColor = RGB(r, g, b);
 		if (dwColor == color) {
-			dwColor = nColor;
+			r = GetRValue(nColor);
+			g = GetGValue(nColor);
+			b = GetBValue(nColor);
 		}
 	}
 
