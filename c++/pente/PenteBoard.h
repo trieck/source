@@ -53,7 +53,10 @@ public:
 // Implementation
 private:
 	void renderTable(CDC *pDC, const CRect & rc);
-	void renderBoard(CDC *pDC);
+	void renderBoard(CDC *pDC, const CRect & rc);
+	void CreateBitmap();
+	void PaintBitmap();
+
 	static CPoint mapIndexToPoint(const CPoint &);
 
 	enum { cxIcon = 18 };
@@ -72,6 +75,10 @@ private:
 	CPen pen;
 	COLORREF bkgColor, gridColor;
 	Board *board;
+	
+	CRgn m_Region;
+	CDC m_MemDC;
+	CBitmap m_Bitmap;
 };
 
 /////////////////////////////////////////////////////////////////////////////

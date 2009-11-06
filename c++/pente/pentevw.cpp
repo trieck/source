@@ -58,8 +58,7 @@ void PenteView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pGame);
 
 	CRect rc;
-	GetClientRect(rc);
-	//pDC->GetClipBox(rc);
+	pDC->GetClipBox(rc);
 
 	// render the game
 	pGame->render(pDC, rc);
