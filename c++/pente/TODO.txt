@@ -1,0 +1,2 @@
+* Implement Captures
+* GetClientRect
