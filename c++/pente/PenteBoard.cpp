@@ -254,3 +254,9 @@ void PenteBoard::PaintBitmap()
 	m_MemDC.SelectObject(pOldPen);
 	m_MemDC.SelectObject(pOldBitmap);	
 }
+
+/////////////////////////////////////////////////////////////////////////////
+void PenteBoard::getCaptures(const CPoint &pt, CaptureVec &captures)
+{
+	board->getCaptures(pt.x, pt.y, captures);
+}

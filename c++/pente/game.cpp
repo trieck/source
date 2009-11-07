@@ -43,25 +43,25 @@ void PenteGame::render(CDC *pDC, const CRect & rc)
 /////////////////////////////////////////////////////////////////////////////
 void PenteGame::changeTurns()
 {
-	if (currentTurn == ET_PLAYER_ONE)
-		currentTurn = ET_PLAYER_TWO;
-	else currentTurn = ET_PLAYER_ONE;
+	currentTurn = ~currentTurn & (ET_PLAYER_TWO+1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-bool PenteGame::addPiece(int x, int y)
+bool PenteGame::addPiece(int x, int y, CaptureVec &captures)
 {
 	// ensure the piece is not already taken
 	if (!board.addPiece(x, y, currentTurn))
 		return false;
 	
+	getCaptures(CPoint(x, y), captures);
+
 	changeTurns();
 
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-bool PenteGame::move(CPoint &pt)
+bool PenteGame::move(CPoint &pt, CaptureVec &captures)
 {
 	if (currentTurn != ET_PLAYER_TWO)
 		return false;	
@@ -73,7 +73,9 @@ bool PenteGame::move(CPoint &pt)
 	Computer *comp = (Computer *)player;
 	if (!comp->getMove(pt))
 		return false;
-		
+	
+	getCaptures(pt, captures);
+
 	changeTurns();
 
 	return true;
@@ -129,4 +131,22 @@ void PenteGame::makePlayers()
 const Vector *PenteGame::winner(uint32_t &nplayer) const 
 {
 	return board.winner(nplayer);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void PenteGame::getCaptures(const CPoint &pt, CaptureVec &captures)
+{
+	board.getCaptures(pt, captures);
+
+	Player *player = getCurrentPlayer();
+
+	player->addCaptures(captures.size());
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Player *PenteGame::getCurrentPlayer() const
+{
+	Player *player = currentTurn == ET_PLAYER_ONE ?
+		playerOne.get() : playerTwo.get();
+	return player;
 }

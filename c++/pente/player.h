@@ -19,17 +19,16 @@ public:
 	
 	unsigned getCaptures() const;
 	bool addCapture();
+	bool addCaptures(uint8_t ncaptures);
+
 	void Serialize(CArchive & ar);
 	bool isWinner() const;
-	
-	static int getMaxCaptures();
+
+	enum { MAX_CAPTURES = 5 };
 
 // Implementation
-protected:
-
 private:
-	enum { maxcaptures = 5 };
-	BYTE captures;
+	uint8_t captures;
 	DECLARE_DYNAMIC(Player)
 };
 
@@ -38,7 +37,7 @@ typedef std::auto_ptr<Player> PlayerPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 inline bool Player::isWinner() const {
-	return captures == maxcaptures;
+	return captures == MAX_CAPTURES;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -48,15 +47,20 @@ inline unsigned Player::getCaptures() const {
 
 /////////////////////////////////////////////////////////////////////////////
 inline bool Player::addCapture() {
-	if (captures == maxcaptures)
+	if (captures == MAX_CAPTURES)
 		return false;
 	++captures;
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline int Player::getMaxCaptures() {
-	return maxcaptures;
+inline bool Player::addCaptures(uint8_t ncaptures) {
+	if (captures == MAX_CAPTURES)
+		return false;
+	
+	captures = (captures + ncaptures) % (MAX_CAPTURES+1);
+
+	return true;
 }
 
 #endif // __PLAYER_H__

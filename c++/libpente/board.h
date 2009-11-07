@@ -10,6 +10,7 @@
 #include "entry.h"
 #include "enum.h"
 #include "vector.h"
+#include "capture.h"
 
 // size of board 
 #define BOARD_SIZE		(19)
@@ -45,6 +46,7 @@ public:
 	const VecVec &getVectors() const;
 	const Vector* winner(uint32_t &nplayer) const;
 	uint32_t size() const { return rep.size(); }
+	void getCaptures(uint32_t row, uint32_t col, CaptureVec &captures);
 
 // Implementation
 private:	

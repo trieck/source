@@ -27,4 +27,6 @@ private:
 	POINT pts[2];
 };
 
+typedef std::vector<Capture> CaptureVec;
+
 #endif // __CAPTURE_H__

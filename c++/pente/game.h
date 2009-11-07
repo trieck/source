@@ -29,17 +29,19 @@ public:
 	void render(CDC *pDC, const CRect & rc);
 	uint32_t getTurn() const;
 	bool findPiece(int x, int y) const;
-	bool addPiece(int x, int y);
-	bool move(CPoint &pt);
+	bool addPiece(int x, int y, CaptureVec &captures);
+	bool move(CPoint &pt, CaptureVec &captures);
 	void Serialize(CArchive& ar);
 	static WORD getFileMagicNumber();
 	const Vector *winner(uint32_t &nplayer) const;
 
 // Implementation	
-protected:
 private:
+	void getCaptures(const CPoint &pt, CaptureVec &captures);
 	void changeTurns();
 	void makePlayers();
+	Player *getCurrentPlayer() const;
+
 	PenteBoard board;
 	PlayerPtr playerOne;
 	PlayerPtr playerTwo;

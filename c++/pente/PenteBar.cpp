@@ -92,7 +92,7 @@ int PenteBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	int width, captureWidth;
 	CRect rc;
 	GetWindowRect(rc);
-	captureWidth = (Player::getMaxCaptures() * bm.bmWidth) * 2;
+	captureWidth = (Player::MAX_CAPTURES * bm.bmWidth) * 2;
 	GetPaneInfo(0, id, style, width);
 	SetPaneInfo(0, id, style & ~SBPS_NOBORDERS, rc.Width() / 3);
 	GetPaneInfo(1, id, style, width);

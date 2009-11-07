@@ -40,6 +40,7 @@ public:
 	bool addPiece(int x, int y, uint32_t currentTurn);
 
 	const Vector *winner(uint32_t &nplayer) const;
+	void getCaptures(const CPoint &pt, CaptureVec &captures);
 
 	static CPoint getBorderSizes();
 	static int getSquareSize();

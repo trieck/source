@@ -5,6 +5,7 @@
 //
 
 #include "common.h"
+
 #include "entry.h"
 #include "board.h"
 
@@ -177,6 +178,17 @@ const Vector* Board::winner(uint32_t &nplayer) const
 	}
 
 	return NULL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Board::getCaptures(uint32_t row, uint32_t col, CaptureVec &captures)
+{
+	uint32_t player = getEntry(row, col);
+	if (player == ET_EMPTY)
+		return;	// not taken
+
+	uint32_t opponent = ~player & (ET_PLAYER_TWO+1);
+
 }
 
 ANON_BEGIN

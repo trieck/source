@@ -12,5 +12,6 @@
 #include "Vector.h"
 #include "Board.h"
 #include "Machine.h"
+#include "Capture.h"
 
 #endif	// __LIBPENTE_H__

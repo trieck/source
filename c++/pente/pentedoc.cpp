@@ -70,12 +70,23 @@ void PenteDoc::Dump(CDumpContext& dc) const
 
 bool PenteDoc::addPiece(const CPoint & square)
 {
-	if (!game.addPiece(square.x, square.y))
+	CaptureVec captures;
+	if (!game.addPiece(square.x, square.y, captures))
 		return false;
 
 	SetModifiedFlag();
 	UpdateAllViews(NULL, MAKELONG(square.x, square.y), game.getBoard());
 
+	CaptureVec::const_iterator it = captures.begin();
+	for ( ; it != captures.end(); it++) {
+		const Capture &capture = *it;
+		const POINT &pt1 = capture.getPoint1();
+		const POINT &pt2 = capture.getPoint2();
+
+		UpdateAllViews(NULL, MAKELONG(pt1.x, pt1.y), game.getBoard());
+		UpdateAllViews(NULL, MAKELONG(pt2.x, pt2.y), game.getBoard());
+	}
+	
 	checkWinner();
 
 	return true;
@@ -111,11 +122,22 @@ bool PenteDoc::checkWinner()
 /////////////////////////////////////////////////////////////////////////////
 bool PenteDoc::move(CPoint & square)
 {
-	if (!game.move(square))
+	CaptureVec captures;
+	if (!game.move(square, captures))
 		return false;
 
 	SetModifiedFlag();
 	UpdateAllViews(NULL, MAKELONG(square.x, square.y), game.getBoard());
+
+	CaptureVec::const_iterator it = captures.begin();
+	for ( ; it != captures.end(); it++) {
+		const Capture &capture = *it;
+		const POINT &pt1 = capture.getPoint1();
+		const POINT &pt2 = capture.getPoint2();
+
+		UpdateAllViews(NULL, MAKELONG(pt1.x, pt1.y), game.getBoard());
+		UpdateAllViews(NULL, MAKELONG(pt2.x, pt2.y), game.getBoard());
+	}
 
 	checkWinner();
 
