@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ColorButton.h"
+#include "afxwin.h"
 
 // CColorsDlg dialog
 
@@ -45,4 +46,6 @@ public:
 	afx_msg void OnPlayerOneColor();
 	afx_msg void OnPlayerTwoColor();
 	afx_msg void OnBnClickedOk();
+	CButton m_Default;
+	afx_msg void OnBnClickedDefault();
 };

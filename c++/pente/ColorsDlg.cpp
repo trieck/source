@@ -30,6 +30,7 @@ void CColorsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_GRID_COLOR, m_GridColor);
 	DDX_Control(pDX, IDC_PLAYER_ONE_COLOR, m_PlayerOneColor);
 	DDX_Control(pDX, IDC_PLAYER_TWO_COLOR, m_PlayerTwoColor);
+	DDX_Control(pDX, IDDEFAULT, m_Default);
 }
 
 
@@ -40,6 +41,7 @@ BEGIN_MESSAGE_MAP(CColorsDlg, CDialog)
 	ON_BN_CLICKED(IDC_PLAYER_ONE_COLOR, OnPlayerOneColor)
 	ON_BN_CLICKED(IDC_PLAYER_TWO_COLOR, OnPlayerTwoColor)
 	ON_BN_CLICKED(IDOK, &CColorsDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDDEFAULT, &CColorsDlg::OnBnClickedDefault)
 END_MESSAGE_MAP()
 
 void CColorsDlg::OnTableColor() 
@@ -155,4 +157,16 @@ void CColorsDlg::OnBnClickedOk()
 	m_ModFlags = 0;
 
 	OnOK();
+}
+
+void CColorsDlg::OnBnClickedDefault()
+{
+	m_TableColor.SetFillColor(PenteBoard::DEFAULT_TABLE_COLOR);
+	m_BoardColor.SetFillColor(PenteBoard::DEFAULT_BOARD_COLOR);
+	m_GridColor.SetFillColor(PenteBoard::DEFAULT_GRID_COLOR);
+	m_PlayerOneColor.SetFillColor(PenteBoard::DEFAULT_PLAYER_ONE_COLOR);
+	m_PlayerTwoColor.SetFillColor(PenteBoard::DEFAULT_PLAYER_TWO_COLOR);
+	
+	m_ModFlags |= TABLE_COLOR | BOARD_COLOR | GRID_COLOR | 
+		PLAYER_ONE_COLOR | PLAYER_TWO_COLOR;
 }

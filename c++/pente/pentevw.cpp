@@ -34,7 +34,7 @@ END_MESSAGE_MAP()
 PenteView::PenteView()
 {
 	bkgColor = AfxGetApp()->GetProfileInt(_T("Settings"), _T("TableColor"),
-		GetSysColor(COLOR_APPWORKSPACE));
+		PenteBoard::DEFAULT_TABLE_COLOR);
 	bkgBrush.CreateSolidBrush(bkgColor);
 }
 

@@ -16,6 +16,7 @@ protected: // create from serialization only
 // Attributes
 public:
 	PenteDoc* GetDocument();
+
 // Operations
 public:
 // Overrides

@@ -2,6 +2,8 @@
 // Microsoft Visual C++ generated include file.
 // Used by pente.rc
 //
+#define IDOK2                           3
+#define IDDEFAULT                       3
 #define IDD_ABOUTBOX                    100
 #define IDR_LISTVIEW                    103
 #define IDC_COLOR_CHOOSER               104

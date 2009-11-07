@@ -47,6 +47,9 @@ public:
 	static void getDimensions(CRect & rc);
 	static void getBoundingRect(CRect & rc);
 	
+	enum { DEFAULT_TABLE_COLOR		= 0x00003250 };
+	enum { DEFAULT_BOARD_COLOR		= 0x00D4F0FF };
+	enum { DEFAULT_GRID_COLOR		= 0xC0C0C0 };
 	enum { DEFAULT_PLAYER_ONE_COLOR = 0x00008000 };
 	enum { DEFAULT_PLAYER_TWO_COLOR = 0x00000080 };
 

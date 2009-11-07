@@ -16,9 +16,9 @@ PenteBoard::PenteBoard()
 	ASSERT_VALID(pApp);
 
 	bkgColor = pApp->GetProfileInt(_T("Settings"), _T("BoardColor"),
-		GetSysColor(COLOR_WINDOW));
+		DEFAULT_BOARD_COLOR);
 	gridColor = pApp->GetProfileInt(_T("Settings"), _T("GridColor"),
-		GetSysColor(COLOR_WINDOWTEXT));
+		DEFAULT_GRID_COLOR);
 	bkgBrush.CreateSolidBrush(bkgColor);
 	pen.CreatePen(PS_SOLID, 0, gridColor);
 
