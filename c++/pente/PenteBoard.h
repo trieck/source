@@ -122,6 +122,7 @@ inline void PenteBoard::setBackgroundColor(COLORREF rgb) {
 	bkgColor = rgb;
 	bkgBrush.DeleteObject();
 	bkgBrush.CreateSolidBrush(bkgColor);
+	PaintBitmap();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -134,6 +135,7 @@ inline void PenteBoard::setGridColor(COLORREF rgb) {
 	gridColor = rgb;
 	pen.DeleteObject();
 	pen.CreatePen(PS_SOLID, 0, gridColor);
+	PaintBitmap();
 }
 
 /////////////////////////////////////////////////////////////////////////////

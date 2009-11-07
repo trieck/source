@@ -54,10 +54,11 @@ void PenteBoard::renderTable(CDC *pDC, const CRect & rc)
 	CBitmap *pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);	
 
 	CRect aRect(rc);
-	aRect.OffsetRect(cxBorder, cyBorder);
-	pDC->BitBlt(aRect.left, aRect.top, 
-		aRect.Width(), aRect.Height(), &m_MemDC, 
-		rc.left, rc.top, SRCCOPY
+	aRect.OffsetRect(-cxBorder, -cyBorder);
+
+	pDC->BitBlt(rc.left, rc.top, 
+		rc.Width(), rc.Height(), &m_MemDC, 
+		aRect.left, aRect.top, SRCCOPY
 	);
 
 	m_MemDC.SelectObject(pOldBitmap);
