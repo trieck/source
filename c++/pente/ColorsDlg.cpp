@@ -98,15 +98,15 @@ BOOL CColorsDlg::OnInitDialog()
 
 	CWinApp *pApp = AfxGetApp();
 	COLORREF tableColor = pApp->GetProfileInt(_T("Settings"), _T("TableColor"),
-		GetSysColor(COLOR_APPWORKSPACE));
+		PenteBoard::DEFAULT_TABLE_COLOR);
 	m_TableColor.SetFillColor(tableColor);
 
 	COLORREF boardColor = pApp->GetProfileInt(_T("Settings"), _T("BoardColor"),
-		GetSysColor(COLOR_WINDOW));
+		PenteBoard::DEFAULT_BOARD_COLOR);
 	m_BoardColor.SetFillColor(boardColor);
 
 	COLORREF gridColor = pApp->GetProfileInt(_T("Settings"), _T("GridColor"),
-		GetSysColor(COLOR_WINDOWTEXT));
+		PenteBoard::DEFAULT_GRID_COLOR);
 	m_GridColor.SetFillColor(gridColor);
 
 	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"), 
