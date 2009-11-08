@@ -1,4 +1,5 @@
 * Implement Machine capture, avoid move to capture
-* Implement preference property pages
+* Transparent Bitmap
+
 
 

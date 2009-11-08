@@ -7,7 +7,7 @@
 #define __PENTEBOARD_H__
 
 #include "libpente.h"
-#include "PieceIcon.h"
+#include "PieceBitmap.h"
 
 /////////////////////////////////////////////////////////////////////////////
 class PenteBoard : public CObject
@@ -42,6 +42,8 @@ public:
 	const Vector *winner(uint32_t &nplayer) const;
 	void getCaptures(const CPoint &pt, CaptureVec &captures);
 
+	bool isEmpty() const;
+
 	static CPoint getBorderSizes();
 	static int getSquareSize();
 	static CPoint getBoardSize();
@@ -73,7 +75,7 @@ private:
 	enum { cxOffset = 2 };
 	enum { cyOffset = 2 };
 	
-	PieceIcon playerOneIcon, playerTwoIcon;
+	PieceBitmap bmPlayerOne, bmPlayerTwo;
 
 	CBrush bkgBrush;
 	CPen pen;
@@ -144,22 +146,22 @@ inline void PenteBoard::setGridColor(COLORREF rgb) {
 
 /////////////////////////////////////////////////////////////////////////////
 inline void PenteBoard::setPlayerOneColor(COLORREF rgb) {
-	playerOneIcon.setColor(rgb);
+	bmPlayerOne.setColor(rgb);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 inline void PenteBoard::setPlayerTwoColor(COLORREF rgb) {
-	playerTwoIcon.setColor(rgb);
+	bmPlayerTwo.setColor(rgb);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 inline COLORREF PenteBoard::getPlayerOneColor() const {
-	return playerOneIcon.getColor();
+	return bmPlayerOne.getColor();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 inline COLORREF PenteBoard::getPlayerTwoColor() const {
-	return playerTwoIcon.getColor();
+	return bmPlayerTwo.getColor();
 }
 
 #endif // __PENTEBOARD_H__

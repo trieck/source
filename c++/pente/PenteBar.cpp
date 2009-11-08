@@ -10,8 +10,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#define TRANSPARENT_COLOR RGB(0xC0, 0xC0, 0xC0)	// light gray
-
 static UINT indicators[] = {
 	ID_SEPARATOR,
 	IDS_CAPTURES,

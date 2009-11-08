@@ -43,8 +43,10 @@ struct StringPtrLess {
 #include <memory>
 #include "globals.h"
 #include <afxdlgs.h>
+#include <afx.h>
 
 #define WM_APPSETTING_CHANGE	(WM_APP + 1)
+#define TRANSPARENT_COLOR RGB(0xC0, 0xC0, 0xC0)	
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

@@ -47,7 +47,7 @@ public:
 	const Vector* winner(uint32_t &nplayer) const;
 	uint32_t size() const { return rep.size(); }
 	void getCaptures(uint32_t x, uint32_t y, CaptureVec &captures);
-
+	
 // Implementation
 private:	
 	void generate();

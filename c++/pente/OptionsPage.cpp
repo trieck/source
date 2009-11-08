@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "pente.h"
 #include "OptionsPage.h"
-
+#include "PenteDoc.h"
 
 // OptionsPage dialog
 
@@ -39,9 +39,11 @@ BOOL OptionsPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 
-	CDocument *pDoc = GetParentFrame()->GetActiveDocument();
-	GetDlgItem(IDC_PLAYERVSPLAYER)->EnableWindow(!pDoc->IsModified());
-	GetDlgItem(IDC_PLAYERVSCOMPUTER)->EnableWindow(!pDoc->IsModified());
+	PenteDoc *pDoc = (PenteDoc*)GetParentFrame()->GetActiveDocument();
+	PenteBoard *pBoard = pDoc->getGame()->getBoard();
+
+	GetDlgItem(IDC_PLAYERVSPLAYER)->EnableWindow(pBoard->isEmpty());
+	GetDlgItem(IDC_PLAYERVSCOMPUTER)->EnableWindow(pBoard->isEmpty());
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
@@ -69,10 +71,10 @@ void OptionsPage::OnPlayerVsComputer()
 
 BOOL OptionsPage::OnApply()
 {
-	int twoPlayerGame = m_TwoPlayerGame;
-	UpdateData();
-	if (twoPlayerGame != m_TwoPlayerGame) {
-		UpdateData();
+	PenteDoc *pDoc = (PenteDoc*)GetParentFrame()->GetActiveDocument();
+	PenteBoard *pBoard = pDoc->getGame()->getBoard();
+
+	if (pBoard->isEmpty()) {
 		PenteApp *pApp = (PenteApp*)AfxGetApp();
 		pApp->setTwoPlayerGame(m_TwoPlayerGame == 0);
 		pApp->OnFileNew();

@@ -68,6 +68,7 @@ END
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 IDB_PLAYER1CAP          BITMAP                  "res\\player1c.bmp"
 IDB_PLAYER2CAP          BITMAP                  "res\\player2c.bmp"
+IDB_PIECE               BITMAP                  "res\\piece.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -261,7 +262,6 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\idr_main.ico"
-IDI_PIECE               ICON                    "res\\piece.ico"
 IDI_DOCUMENT            ICON                    "res\\document.ico"
 
 /////////////////////////////////////////////////////////////////////////////

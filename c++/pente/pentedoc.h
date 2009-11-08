@@ -23,6 +23,7 @@ public:
 // Operations
 public:
 	PenteGame *getGame();
+
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(PenteDoc)

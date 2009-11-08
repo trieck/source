@@ -27,8 +27,8 @@ PenteBoard::PenteBoard()
 	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"), 
 		_T("playerTwoColor"), DEFAULT_PLAYER_TWO_COLOR);
 
-	playerOneIcon.setColor(playerOneColor);
-	playerTwoIcon.setColor(playerTwoColor);
+	bmPlayerOne.setColor(playerOneColor);
+	bmPlayerTwo.setColor(playerTwoColor);
 
 	board = Board::instance();	
 
@@ -69,8 +69,7 @@ void PenteBoard::renderBoard(CDC *pDC, const CRect & rc)
 {
 	CPoint pt;
 	CRect rcPiece;
-	HICON hIcon;
-
+	
 	UInt32EntryMapEnum e = board->enumEntries();
 	while (e.hasNext()) {
 		const Entry & entry = e.next().second;
@@ -83,11 +82,10 @@ void PenteBoard::renderBoard(CDC *pDC, const CRect & rc)
 		if (!pDC->RectVisible(rcPiece))
 			continue;
 
-		hIcon = entry.getType() == ET_PLAYER_ONE ?
-			playerOneIcon : playerTwoIcon;
-		
-		DrawIconEx(*pDC, pt.x, pt.y, hIcon, cxIcon, cyIcon, 0, NULL, 
-			DI_NORMAL | DI_COMPAT);
+		PieceBitmap &piece = entry.getType() == ET_PLAYER_ONE ?
+			bmPlayerOne : bmPlayerTwo;
+
+		piece.Draw(pDC, pt.x, pt.y);
 	}
 }
 
@@ -259,4 +257,10 @@ void PenteBoard::PaintBitmap()
 void PenteBoard::getCaptures(const CPoint &pt, CaptureVec &captures)
 {
 	board->getCaptures(pt.x, pt.y, captures);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool PenteBoard::isEmpty() const
+{
+	return board->size() == 0;
 }

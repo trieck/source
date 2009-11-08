@@ -17,103 +17,6 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="DebugLogging|Win32"
-			OutputDirectory=".\DebugLog"
-			IntermediateDirectory=".\DebugLog"
-			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
-			UseOfMFC="1"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
-			BuildLogFile=""
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\DebugLog/pente.tlb"
-				HeaderFileName=""
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="..\libpente"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\DebugLog/pente.pch"
-				AssemblerListingLocation=".\DebugLog/"
-				ObjectFile=".\DebugLog/"
-				ProgramDataBaseFileName=".\DebugLog/"
-				WarningLevel="3"
-				SuppressStartupBanner="true"
-				DebugInformationFormat="4"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="libpente.lib"
-				OutputFile="bin\pente.exe"
-				LinkIncremental="0"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="$(OutDir)"
-				GenerateManifest="false"
-				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\DebugLog/pente.pdb"
-				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\Release"
 			IntermediateDirectory=".\Release"
@@ -176,6 +79,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalOptions="/LTCG"
 				AdditionalDependencies="libpente.lib"
 				OutputFile="bin\pente.exe"
 				LinkIncremental="0"
@@ -183,103 +87,6 @@
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateManifest="false"
 				ProgramDatabaseFile=".\Release/pente.pdb"
-				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="ReleaseLogging|Win32"
-			OutputDirectory=".\ReleaseLogging"
-			IntermediateDirectory=".\ReleaseLogging"
-			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
-			UseOfMFC="1"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
-			BuildLogFile=""
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\ReleaseLogging/pente.tlb"
-				HeaderFileName=""
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="2"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\libpente"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-				StringPooling="true"
-				RuntimeLibrary="0"
-				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\ReleaseLogging/pente.pch"
-				AssemblerListingLocation=".\ReleaseLogging/"
-				ObjectFile=".\ReleaseLogging/"
-				ProgramDataBaseFileName=".\ReleaseLogging/"
-				WarningLevel="3"
-				SuppressStartupBanner="true"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="libpente.lib"
-				OutputFile="bin\pente.exe"
-				LinkIncremental="0"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="$(OutDir)"
-				GenerateManifest="false"
-				ProgramDatabaseFile=".\ReleaseLogging/pente.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -432,26 +239,7 @@
 				RelativePath="computer.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -474,26 +262,7 @@
 				RelativePath="game.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -509,6 +278,15 @@
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -516,26 +294,7 @@
 				RelativePath="globals.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -551,6 +310,25 @@
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -558,26 +336,7 @@
 				RelativePath="gripbar.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -593,6 +352,25 @@
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -600,26 +378,7 @@
 				RelativePath="MainFrm.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -635,6 +394,25 @@
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -650,26 +428,7 @@
 				RelativePath="pente.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -685,6 +444,25 @@
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -696,26 +474,7 @@
 				RelativePath="PenteBar.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -731,6 +490,25 @@
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -738,26 +516,7 @@
 				RelativePath=".\PenteBoard.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -773,6 +532,25 @@
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -780,26 +558,7 @@
 				RelativePath="pentedoc.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -815,6 +574,25 @@
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -822,26 +600,7 @@
 				RelativePath="pentevw.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -859,35 +618,35 @@
 						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\PieceIcon.cpp"
+				RelativePath=".\PieceBitmap.cpp"
 				>
 			</File>
 			<File
 				RelativePath="player.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -903,6 +662,25 @@
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -910,26 +688,7 @@
 				RelativePath="playrone.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -945,6 +704,25 @@
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -952,26 +730,7 @@
 				RelativePath="playrtwo.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -987,6 +746,25 @@
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -998,28 +776,7 @@
 				RelativePath="StdAfx.cpp"
 				>
 				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -1039,9 +796,34 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="DebugLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseLogging|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						PreprocessorDefinitions=""
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\StringTokenizer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TransparentBitmap.cpp"
 				>
 			</File>
 		</Filter>
@@ -1114,7 +896,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\PieceIcon.h"
+				RelativePath=".\PieceBitmap.h"
 				>
 			</File>
 			<File
@@ -1149,6 +931,10 @@
 				RelativePath=".\targetver.h"
 				>
 			</File>
+			<File
+				RelativePath=".\TransparentBitmap.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -1171,7 +957,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\res\piece.ico"
+				RelativePath=".\res\piece.bmp"
 				>
 			</File>
 			<File
