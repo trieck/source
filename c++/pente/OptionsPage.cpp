@@ -69,12 +69,13 @@ void OptionsPage::OnPlayerVsComputer()
 
 BOOL OptionsPage::OnApply()
 {
-	UpdateData();
-
-	PenteApp *pApp = (PenteApp*)AfxGetApp();
-	pApp->setTwoPlayerGame(m_TwoPlayerGame == 0);
-
-	pApp->OnFileNew();
+	CDocument *pDoc = GetParentFrame()->GetActiveDocument();
+	if (!pDoc->IsModified()) {
+		UpdateData();
+		PenteApp *pApp = (PenteApp*)AfxGetApp();
+		pApp->setTwoPlayerGame(m_TwoPlayerGame == 0);
+		pApp->OnFileNew();
+	}
 
 	return CPropertyPage::OnApply();
 }
