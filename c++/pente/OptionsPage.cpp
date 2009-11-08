@@ -69,8 +69,9 @@ void OptionsPage::OnPlayerVsComputer()
 
 BOOL OptionsPage::OnApply()
 {
-	CDocument *pDoc = GetParentFrame()->GetActiveDocument();
-	if (!pDoc->IsModified()) {
+	int twoPlayerGame = m_TwoPlayerGame;
+	UpdateData();
+	if (twoPlayerGame != m_TwoPlayerGame) {
 		UpdateData();
 		PenteApp *pApp = (PenteApp*)AfxGetApp();
 		pApp->setTwoPlayerGame(m_TwoPlayerGame == 0);
