@@ -98,8 +98,18 @@ bool PenteDoc::checkWinner()
 	uint32_t winner;
 	const Vector *vector;
 	
-	CWinApp *pApp = AfxGetApp();
-	if ((vector = game.winner(winner)) != NULL) {
+	uint32_t playerOneCaptures = game.getPlayerOne()->getCaptures();
+	uint32_t playerTwoCaptures = game.getPlayerTwo()->getCaptures();
+
+	if ((vector = game.winner(winner)) != NULL ||
+		playerOneCaptures == Player::MAX_CAPTURES ||
+		playerTwoCaptures == Player::MAX_CAPTURES) {
+
+		if (vector == NULL && playerOneCaptures == Player::MAX_CAPTURES)
+			winner = ET_PLAYER_ONE;
+		if (vector == NULL && playerTwoCaptures == Player::MAX_CAPTURES)
+			winner = ET_PLAYER_TWO;
+
 		SetModifiedFlag(FALSE);
 		CString message = (winner == ET_PLAYER_ONE) ?
 			_T("Player One Wins!") : _T("Player Two Wins!");
@@ -108,7 +118,7 @@ bool PenteDoc::checkWinner()
 		int nRtn = AfxMessageBox(message, 
 			MB_YESNO | MB_ICONQUESTION);
 		if (nRtn == IDNO) {
-			pApp->GetMainWnd()->PostMessage(WM_CLOSE);
+			AfxGetApp()->GetMainWnd()->PostMessage(WM_CLOSE);
 		} else {
 			OnNewDocument();
 			UpdateAllViews(NULL);
