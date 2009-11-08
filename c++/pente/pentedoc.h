@@ -55,7 +55,7 @@ private:
 	void onUpdateTurn(CCmdUI *pCmdUI);
 	PenteGame game;
 public:
-	afx_msg void OnToolsColors();
+	afx_msg void OnToolsSettings();
 };
 
 /////////////////////////////////////////////////////////////////////////////

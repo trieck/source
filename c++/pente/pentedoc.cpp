@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "pente.h"
 #include "pentedoc.h"
-#include "ColorsDlg.h"
+#include "SettingsSheet.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -19,11 +19,11 @@ IMPLEMENT_DYNCREATE(PenteDoc, CDocument)
 BEGIN_MESSAGE_MAP(PenteDoc, CDocument)
 	//{{AFX_MSG_MAP(PenteDoc)
 	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnUpdateFileSave)
-	ON_UPDATE_COMMAND_UI(IDM_OPTIONS, OnUpdateOptions)
 	//}}AFX_MSG_MAP
 	ON_UPDATE_COMMAND_UI(IDS_TURN, onUpdateTurn)
-	ON_COMMAND(ID_TOOLS_COLORS, &PenteDoc::OnToolsColors)
+	ON_COMMAND(ID_TOOLS_SETTINGS, &PenteDoc::OnToolsSettings)
 END_MESSAGE_MAP()
+
 /////////////////////////////////////////////////////////////////////////////
 // PenteDoc construction/destruction
 
@@ -118,7 +118,7 @@ bool PenteDoc::checkWinner()
 		int nRtn = AfxMessageBox(message, 
 			MB_YESNO | MB_ICONQUESTION);
 		if (nRtn == IDNO) {
-			AfxGetApp()->GetMainWnd()->PostMessage(WM_CLOSE);
+			AfxGetMainWnd()->PostMessage(WM_CLOSE);
 		} else {
 			OnNewDocument();
 			UpdateAllViews(NULL);
@@ -213,38 +213,8 @@ void PenteDoc::OnUpdateOptions(CCmdUI* pCmdUI)
 	pCmdUI->Enable(!IsModified());
 }
 
-void PenteDoc::OnToolsColors()
+void PenteDoc::OnToolsSettings()
 {
-	CColorsDlg dlg;
-	if (IDOK == dlg.DoModal()) {
-		COLORREF rgb1 = dlg.m_BoardColor.GetFillColor();
-		COLORREF rgb2 = game.getBoard()->getBackgroundColor();
-		if (rgb1 != rgb2) {
-			game.getBoard()->setBackgroundColor(rgb1);
-		}
-
-		rgb1 = dlg.m_GridColor.GetFillColor();
-		rgb2 = game.getBoard()->getGridColor();
-
-		if (rgb1 != rgb2) {
-			game.getBoard()->setGridColor(rgb1);
-		}
-
-		rgb1 = dlg.m_PlayerOneColor.GetFillColor();
-		rgb2 = game.getBoard()->getPlayerOneColor();
-
-		if (rgb1 != rgb2) {
-			game.getBoard()->setPlayerOneColor(rgb1);
-		}
-
-		rgb1 = dlg.m_PlayerTwoColor.GetFillColor();
-		rgb2 = game.getBoard()->getPlayerTwoColor();
-
-		if (rgb1 != rgb2) {
-			game.getBoard()->setPlayerTwoColor(rgb1);
-		}
-
-		UpdateAllViews(NULL);
-	}
+	SettingsSheet sheet(IDS_SETTINGS, AfxGetMainWnd());
+	sheet.DoModal();
 }
-

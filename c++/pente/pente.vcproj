@@ -425,7 +425,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ColorsDlg.cpp"
+				RelativePath=".\ColorsPage.cpp"
 				>
 			</File>
 			<File
@@ -639,46 +639,8 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="optdlg.cpp"
+				RelativePath=".\OptionsPage.cpp"
 				>
-				<FileConfiguration
-					Name="DebugLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseLogging|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Palette256.cpp"
@@ -1029,6 +991,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\SettingsSheet.cpp"
+				>
+			</File>
+			<File
 				RelativePath="StdAfx.cpp"
 				>
 				<FileConfiguration
@@ -1096,7 +1062,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ColorsDlg.h"
+				RelativePath=".\ColorsPage.h"
 				>
 			</File>
 			<File
@@ -1120,7 +1086,7 @@
 				>
 			</File>
 			<File
-				RelativePath="optdlg.h"
+				RelativePath=".\OptionsPage.h"
 				>
 			</File>
 			<File
@@ -1168,11 +1134,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SettingsSheet.h"
+				>
+			</File>
+			<File
 				RelativePath="StdAfx.h"
 				>
 			</File>
 			<File
 				RelativePath=".\StringTokenizer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\targetver.h"
 				>
 			</File>
 		</Filter>

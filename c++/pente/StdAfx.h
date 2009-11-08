@@ -11,8 +11,9 @@
 
 #pragma warning (disable : 4996)	// deprecated POXIS names
 
-#define WINVER 0x0501
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
+
+#include "targetver.h"
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
@@ -41,6 +42,7 @@ struct StringPtrLess {
 #include <vector>
 #include <memory>
 #include "globals.h"
+#include <afxdlgs.h>
 
 #define WM_APPSETTING_CHANGE	(WM_APP + 1)
 

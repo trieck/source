@@ -5,7 +5,6 @@
 #include "MainFrm.h"
 #include "pentedoc.h"
 #include "pentevw.h"
-#include "optdlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -20,7 +19,6 @@ BEGIN_MESSAGE_MAP(PenteApp, CWinApp)
 	//{{AFX_MSG_MAP(PenteApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
 	ON_COMMAND(ID_FILE_NEW, OnFileNew)
-	ON_COMMAND(IDM_OPTIONS, OnOptions)
 	//}}AFX_MSG_MAP
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
@@ -159,14 +157,3 @@ void PenteApp::OnFileNew()
 	CWinApp::OnFileNew();
 }
 
-/////////////////////////////////////////////////////////////////////////////
-void PenteApp::OnOptions() 
-{
-	OptionDlg dlg;
-	dlg.m_TwoPlayerGame = twoPlayerGame ? 0 : 1;
-
-	if (dlg.DoModal() == IDOK) {
-		twoPlayerGame = dlg.m_TwoPlayerGame == 0 ? true : false;
-		OnFileNew();
-	}
-}

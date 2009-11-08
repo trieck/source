@@ -37,11 +37,9 @@ public:
 	//{{AFX_MSG(PenteApp)
 	afx_msg void OnAppAbout();
 	afx_msg void OnFileNew();
-	afx_msg void OnOptions();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
-	void createLogWnd();
 	bool twoPlayerGame;
 };
 

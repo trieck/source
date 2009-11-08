@@ -74,11 +74,13 @@ IDB_PLAYER2CAP          BITMAP                  "res\\player2c.bmp"
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR  16, 15
+IDR_MAINFRAME TOOLBAR  20, 20
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
     BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_TOOLS_SETTINGS
     SEPARATOR
     BUTTON      ID_APP_ABOUT
 END
@@ -104,8 +106,7 @@ BEGIN
     END
     POPUP "&Tools"
     BEGIN
-        MENUITEM "&Options\tCtrl+Shift+O",      IDM_OPTIONS
-        MENUITEM "&Colors\tCrtl+Shift+C",       ID_TOOLS_COLORS
+        MENUITEM "Settings\tCtrl+Shift+S",      ID_TOOLS_SETTINGS
     END
     POPUP "&View"
     BEGIN
@@ -131,8 +132,7 @@ BEGIN
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
-    "O",            IDM_OPTIONS,            VIRTKEY, SHIFT, CONTROL, NOINVERT
-    "C",            ID_TOOLS_COLORS,        VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "S",            ID_TOOLS_SETTINGS,      VIRTKEY, SHIFT, CONTROL, NOINVERT
 END
 
 
@@ -151,25 +151,13 @@ BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,7,7,20,20
 END
 
-IDD_OPTIONS DIALOGEX 0, 0, 221, 63
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Options"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    GROUPBOX        "Game",IDC_STATIC,7,7,157,49
-    CONTROL         "Two Player Game",IDC_PLAYERVSPLAYER,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,17,88,12
-    CONTROL         "Player -vs- Computer",IDC_PLAYERVSCOMPUTER,"Button",BS_AUTORADIOBUTTON,15,33,88,12
-    DEFPUSHBUTTON   "OK",IDOK,173,7,41,14,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,173,22,41,14
-END
-
 IDD_COLOR_CHOOSER DIALOG  0, 0, 120, 67
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP
 FONT 8, "MS Shell Dlg"
 BEGIN
 END
 
-IDD_COLORS DIALOGEX 0, 0, 287, 87
+IDD_COLORS_PAGE DIALOGEX 0, 0, 287, 87
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Colors"
 FONT 8, "Tahoma", 0, 0, 0x0
@@ -180,8 +168,16 @@ BEGIN
     CONTROL         "Player One Color",IDC_PLAYER_ONE_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,9,34,87,21
     CONTROL         "Player Two Color",IDC_PLAYER_TWO_COLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,100,34,87,21
     DEFPUSHBUTTON   "Default",IDDEFAULT,9,60,50,14,WS_GROUP
-    DEFPUSHBUTTON   "OK",IDOK,92,61,50,14,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,144,61,50,14
+END
+
+IDD_OPTIONS_PAGE DIALOGEX 0, 0, 221, 63
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Options"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    GROUPBOX        "Game",IDC_STATIC,7,7,157,49
+    CONTROL         "Two Player Game",IDC_PLAYERVSPLAYER,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,17,88,12
+    CONTROL         "Player -vs- Computer",IDC_PLAYERVSCOMPUTER,"Button",BS_AUTORADIOBUTTON,15,33,88,12
 END
 
 
@@ -240,18 +236,18 @@ BEGIN
         BOTTOMMARGIN, 66
     END
 
-    IDD_OPTIONS, DIALOG
+    IDD_COLOR_CHOOSER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        TOPMARGIN, 7
+    END
+
+    IDD_OPTIONS_PAGE, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 214
         TOPMARGIN, 7
         BOTTOMMARGIN, 56
-    END
-
-    IDD_COLOR_CHOOSER, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        TOPMARGIN, 7
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -283,6 +279,7 @@ IDR_DEF_PALETTE         PALETTE                 "res\\default.pal"
 STRINGTABLE 
 BEGIN
     IDR_MAINFRAME           "Pente\n\nPente\nPente Files (*.pte)\n.pte\nPente.Document\nPente Document"
+    IDS_SETTINGS            "Settings"
 END
 
 STRINGTABLE 
@@ -350,10 +347,10 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDM_OPTIONS             "Options\nOptions"
     IDM_BOARDBKGCOLOR       "Change Board Color\nBoard Color"
     IDM_GRIDCOLOR           "Change Grid Color\nGrid Color"
     IDM_TABLECOLOR          "Change Table Color\nTable Color"
+    ID_TOOLS_SETTINGS       "Settings\nSettings"
 END
 
 STRINGTABLE 
