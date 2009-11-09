@@ -9,95 +9,103 @@
 // TransparentBitmap
 
 TransparentBitmap::TransparentBitmap(COLORREF transparent)
- : m_Transparent(transparent)
+ : m_Transparent(transparent), m_pOldBitmapAnd(NULL), m_pOldBitmapXor(NULL),
+ m_pOldBitmapMem(NULL)
 {
 }
 
 TransparentBitmap::~TransparentBitmap()
 {
+	Cleanup();
 }
-
 
 // TransparentBitmap member functions
 
-void TransparentBitmap::Draw(CDC *pDC, int x, int y)
+void TransparentBitmap::Repaint()
 {
-	CDC dcTemp;
-	dcTemp.CreateCompatibleDC(pDC);
-	dcTemp.SelectObject(this);     
+	Cleanup();
 
 	BITMAP bm;
-	GetBitmap(&bm);
+    GetObject(sizeof(BITMAP), &bm);
 
-    CPoint ptSize;
-    ptSize.x = bm.bmWidth;               
-    ptSize.y = bm.bmHeight;              
+    CPoint size(bm.bmWidth, bm.bmHeight);
+    CPoint org(0, 0);
 
-    dcTemp.DPtoLP(&ptSize, 1);           
+	CDC dc;
+	dc.Attach(GetDC(NULL));
 
-    // Create some DCs to hold temporary data
-	CDC dcMem, dcBack, dcObject, dcSave;
-	dcBack.CreateCompatibleDC(pDC);
-    dcObject.CreateCompatibleDC(pDC);
-    dcMem.CreateCompatibleDC(pDC);
-    dcSave.CreateCompatibleDC(pDC);
+    CDC dcImage;
+    dcImage.CreateCompatibleDC(&dc);
+    CBitmap *pOldBitmapImage = dcImage.SelectObject(this);
+    dcImage.SetMapMode(dc.GetMapMode());
 
-	CBitmap bmAndBack, bmAndObject, bmAndMem, bmSave;
-	bmAndBack.CreateBitmap(ptSize.x, ptSize.y, 1, 1, NULL);
-    bmAndObject.CreateBitmap(ptSize.x, ptSize.y, 1, 1, NULL);
-    bmAndMem.CreateCompatibleBitmap(pDC, ptSize.x, ptSize.y);
-    bmSave.CreateCompatibleBitmap(pDC, ptSize.x, ptSize.y);
 
-    // Each DC must select a bitmap object to store pixel data.
-    CBitmap* pbmBackOld   = dcBack.SelectObject(&bmAndBack);
-    CBitmap* pbmObjectOld = dcObject.SelectObject(&bmAndObject);
-    CBitmap* pbmMemOld    = dcMem.SelectObject(&bmAndMem);
-    CBitmap* pbmSaveOld   = dcSave.SelectObject(&bmSave);
+    m_AndDC.CreateCompatibleDC(&dc);
+    m_AndDC.SetMapMode(dc.GetMapMode());
 
-    // Set proper mapping mode.
-    dcTemp.SetMapMode(pDC->GetMapMode());
+    CBitmap bitmapAnd;
+    bitmapAnd.CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL);
 
-    // Save the bitmap sent here, because it will be overwritten.
-    dcSave.BitBlt(0, 0, ptSize.x, ptSize.y, &dcTemp, 0, 0, SRCCOPY);
+    m_pOldBitmapAnd = m_AndDC.SelectObject(&bitmapAnd);
 
-    // Set the background color of the source DC to the color
-    // contained in the parts of the bitmap that should be transparent
+    dcImage.SetBkColor(m_Transparent);
 
-    COLORREF cColor = dcTemp.SetBkColor(m_Transparent);
+	m_AndDC.BitBlt(org.x, org.y, size.x, size.y, &dcImage, org.x, org.y, SRCCOPY);
 
-    // Create the object mask for the bitmap by performing a BitBlt
-    // from the source bitmap to a monochrome bitmap.
-    dcObject.BitBlt(0, 0, ptSize.x, ptSize.y, &dcTemp, 0, 0, SRCCOPY);
+    m_XorDC.CreateCompatibleDC(&dc);
+    m_XorDC.SetMapMode(dc.GetMapMode());
 
-    // Set the background color of the source DC back to the original
-    // color.
-    dcTemp.SetBkColor(cColor);
+    CBitmap bitmapXor;
+	bitmapXor.CreateCompatibleBitmap(&dcImage, bm.bmWidth, bm.bmHeight);
 
-    // Create the inverse of the object mask.
-    dcBack.BitBlt(0, 0, ptSize.x, ptSize.y, &dcObject, 0, 0, NOTSRCCOPY);
+    m_pOldBitmapXor = m_XorDC.SelectObject(&bitmapXor);
 
-    // Copy the background of the main DC to the destination.
-    dcMem.BitBlt(0, 0, ptSize.x, ptSize.y, pDC, x, y, SRCCOPY);
+	m_XorDC.BitBlt(org.x, org.y, size.x, size.y, &dcImage, org.x, org.y, SRCCOPY);
+	m_XorDC.BitBlt(org.x, org.y, size.x, size.y, &m_AndDC, org.x, org.y, 0x220326);
 
-    // Mask out the places where the bitmap will be placed.
-    dcMem.BitBlt(0, 0, ptSize.x, ptSize.y, &dcObject, 0, 0, SRCAND);
+    m_MemDC.CreateCompatibleDC(&dc);
+    m_MemDC.SetMapMode(dc.GetMapMode());
 
-    // Mask out the transparent colored pixels on the bitmap.
-    dcTemp.BitBlt(0, 0, ptSize.x, ptSize.y, &dcBack, 0, 0, SRCAND);
+    CBitmap bitmapMem;
+    bitmapMem.CreateCompatibleBitmap(&dcImage, bm.bmWidth, bm.bmHeight);
 
-    // XOR the bitmap with the background on the destination DC.
-    dcMem.BitBlt(0, 0, ptSize.x, ptSize.y, &dcTemp, 0, 0, SRCPAINT);
+    m_pOldBitmapMem = m_MemDC.SelectObject(&bitmapMem);
 
-    // Copy the destination to the screen.
-    pDC->BitBlt(x, y, ptSize.x, ptSize.y, &dcMem, 0, 0, SRCCOPY);
-
-    // Place the original bitmap back into the bitmap sent here.
-    dcTemp.BitBlt(0, 0, ptSize.x, ptSize.y, &dcSave, 0, 0, SRCCOPY);
-
-    // Reset the memory bitmaps.
-    dcBack.SelectObject(pbmBackOld);
-    dcObject.SelectObject(pbmObjectOld);
-    dcMem.SelectObject(pbmMemOld);
-    dcSave.SelectObject(pbmSaveOld);
+    dcImage.SelectObject(pOldBitmapImage);
 }
 
+void TransparentBitmap::Draw(CDC *pDC, int x, int y)
+{
+    BITMAP bm;
+    GetObject(sizeof(BITMAP), &bm);
+
+    CPoint size(bm.bmWidth, bm.bmHeight);
+    CPoint org(0, 0);
+
+    m_MemDC.BitBlt(org.x, org.y, size.x, size.y, pDC, x, y, SRCCOPY);
+    m_MemDC.BitBlt(org.x, org.y, size.x, size.y, &m_AndDC, org.x, org.y, SRCAND);
+    m_MemDC.BitBlt(org.x, org.y, size.x, size.y, &m_XorDC, org.x, org.y, SRCINVERT);
+
+    pDC->BitBlt(x, y, size.x, size.y, &m_MemDC, org.x, org.y, SRCCOPY);
+}
+
+void TransparentBitmap::Cleanup()
+{
+	if (m_pOldBitmapXor != NULL) {
+		m_XorDC.SelectObject(m_pOldBitmapXor);
+		m_pOldBitmapXor = NULL;
+	}
+	m_XorDC.DeleteDC();
+
+	if (m_pOldBitmapAnd != NULL) {
+        m_AndDC.SelectObject(m_pOldBitmapAnd);
+		m_pOldBitmapAnd = NULL;
+	}
+	m_AndDC.DeleteDC();
+
+	if (m_pOldBitmapMem != NULL) {
+		m_MemDC.SelectObject(m_pOldBitmapMem);
+		m_pOldBitmapMem = NULL;
+	}
+	m_MemDC.DeleteDC();
+}

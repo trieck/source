@@ -8,9 +8,11 @@
 
 // PieceBitmap
 
-PieceBitmap::PieceBitmap() : TransparentBitmap(TRANSPARENT_COLOR), m_Color(DEFAULT_COLOR)
+PieceBitmap::PieceBitmap() : TransparentBitmap(TRANSPARENT_COLOR), 
+	m_Color(DEFAULT_COLOR)
 {
 	LoadBitmap(IDB_PIECE);
+	Repaint();
 }
 
 PieceBitmap::~PieceBitmap()
@@ -53,6 +55,8 @@ void PieceBitmap::setColor(COLORREF nColor)
 		AfxThrowResourceException();
 
 	delete [] bits;
+
+	Repaint();
 
 	m_Color = nColor;
 }
