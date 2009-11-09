@@ -1,5 +1,4 @@
 * Implement Machine capture, avoid move to capture
-* Transparent Bitmap
 
 
 
