@@ -15,8 +15,7 @@
 #define IDR_MAINFRAME                   128
 #define IDS_SETTINGS                    129
 #define IDI_DOCUMENT                    130
-#define IDB_PLAYER1CAP                  134
-#define IDB_PLAYER2CAP                  135
+#define IDB_CAPTURE                     134
 #define IDR_DEF_PALETTE                 140
 #define IDD_COLOR_CHOOSER               141
 #define IDD_COLORS_PAGE                 143
