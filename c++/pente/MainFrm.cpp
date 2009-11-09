@@ -40,16 +40,19 @@ int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
+
 	if (!toolBar.Create(this, WS_CHILD | WS_VISIBLE | CBRS_TOP
 		| CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) || 
 		!toolBar.LoadToolBar(IDR_MAINFRAME)) {
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
 	}
+
 	if (!statusBar.Create(this)) {
 		TRACE0("Failed to create status bar\n");
 		return -1;      // fail to create
 	}
+
 	toolBar.EnableDocking(CBRS_ALIGN_ANY);
 	EnableDocking(CBRS_ALIGN_ANY);
 	DockControlBar(&toolBar);
@@ -66,6 +69,7 @@ BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
 		return FALSE;
 	return TRUE;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 // MainFrame diagnostics
 
@@ -89,6 +93,7 @@ void MainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 	CFrameWnd::OnSettingChange(uFlags, lpszSection);
 	RecalcLayout();
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void MainFrame::adjustFrameByBoard()
 {
@@ -122,6 +127,7 @@ void MainFrame::adjustFrameByBoard()
 		else if (toolBar.m_dwStyle & CBRS_ORIENT_VERT)
 			rcToolbar.right -= abs(rcDockbar.Width() - rcToolbar.Width());
 	}
+
 	if (statusBar.IsWindowVisible())
 		rc.bottom += rcStatus.Height();
 	if (!toolBar.IsFloating() && toolBar.IsWindowVisible()) {
@@ -130,6 +136,7 @@ void MainFrame::adjustFrameByBoard()
 		else if (toolBar.m_dwStyle & CBRS_ORIENT_VERT)
 			rc.right += rcToolbar.Width();
 	}
+
 	DWORD style = GetStyle();
 	DWORD dwExStyle = GetExStyle() | WS_EX_CLIENTEDGE;
 	AdjustWindowRectEx(&rc, style, TRUE, dwExStyle);

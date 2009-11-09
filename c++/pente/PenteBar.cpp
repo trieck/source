@@ -80,6 +80,15 @@ int PenteBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	SetIndicators(indicators, sizeof(indicators) / sizeof(UINT));
 	GetParentFrame()->RepositionBars(0, 0xffff, AFX_IDW_PANE_FIRST);
 
+	CWinApp *pApp = AfxGetApp();
+	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"), 
+		_T("playerOneColor"), PenteBoard::DEFAULT_PLAYER_ONE_COLOR);
+	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"), 
+		_T("playerTwoColor"), PenteBoard::DEFAULT_PLAYER_TWO_COLOR);
+
+	bmPlayerOne.setColor(playerOneColor);
+	bmPlayerTwo.setColor(playerTwoColor);
+
 	BITMAP bm;
 	bmPlayerOne.GetBitmap(&bm);
 	
@@ -101,11 +110,14 @@ int PenteBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 /////////////////////////////////////////////////////////////////////////////
 LRESULT PenteBar::OnAppSettingChange(WPARAM wParam, LPARAM lParam)
 {
-	PenteDoc *pDoc = (PenteDoc*)GetParentFrame()->GetActiveDocument();
-	PenteBoard *pBoard = pDoc->getGame()->getBoard();
+	CWinApp *pApp = AfxGetApp();
+	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"), 
+		_T("playerOneColor"), PenteBoard::DEFAULT_PLAYER_ONE_COLOR);
+	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"), 
+		_T("playerTwoColor"), PenteBoard::DEFAULT_PLAYER_TWO_COLOR);
 
-	bmPlayerOne.setColor(pBoard->getPlayerOneColor());
-	bmPlayerTwo.setColor(pBoard->getPlayerTwoColor());
+	bmPlayerOne.setColor(playerOneColor);
+	bmPlayerTwo.setColor(playerTwoColor);
 
 	return 0;
 }

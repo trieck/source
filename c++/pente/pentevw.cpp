@@ -28,6 +28,7 @@ BEGIN_MESSAGE_MAP(PenteView, CView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
 END_MESSAGE_MAP()
+
 /////////////////////////////////////////////////////////////////////////////
 // PenteView construction/destruction
 
@@ -80,6 +81,7 @@ void PenteView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 void PenteView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 }
+
 /////////////////////////////////////////////////////////////////////////////
 // PenteView diagnostics
 
@@ -117,6 +119,7 @@ void PenteView::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void PenteView::OnSettingChange(UINT uFlags, LPCTSTR lpszSection) 
 {
@@ -143,6 +146,7 @@ void PenteView::OnLButtonDown(UINT nFlags, CPoint point)
 	
 	CView::OnLButtonDown(nFlags, point);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void PenteView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
