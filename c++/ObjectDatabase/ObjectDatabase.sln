@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ObjectDatabase", "ObjectDatabase.vcproj", "{5F2B4946-0CD5-491A-99FD-B8BDA09E17B4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F4BD7AEA-EDC3-496B-9BCF-2BF776574BE4} = {F4BD7AEA-EDC3-496B-9BCF-2BF776574BE4}
@@ -19,21 +19,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bencode", "..\bencode\benco
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 5
-		SccProjectUniqueName0 = ..\\JupiterLib\\JupiterLib.vcproj
-		SccProjectName0 = \u0022$/source/c++/JupiterLib\u0022,\u0020YCFAAAAA
-		SccLocalPath0 = ..\\JupiterLib
-		SccProjectUniqueName1 = ..\\bencode\\bencode.vcproj
-		SccProjectName1 = \u0022$/source/c++/Bencode\u0022,\u0020GCFAAAAA
-		SccLocalPath1 = ..\\bencode
-		SccLocalPath2 = .
-		SccProjectUniqueName3 = ObjectDatabase.vcproj
-		SccLocalPath3 = .
-		SccProjectUniqueName4 = ..\\Socket\\Socket.vcproj
-		SccProjectName4 = \u0022$/source/c++/Socket\u0022,\u0020UIFAAAAA
-		SccLocalPath4 = ..\\Socket
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32

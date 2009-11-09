@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="JupiterLib"
 	ProjectGUID="{628D204A-0A7A-4F2A-A887-9FC32A22F9B4}"
 	RootNamespace="JupiterLib"
@@ -9,6 +9,7 @@
 	SccLocalPath="."
 	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
