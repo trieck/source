@@ -10,7 +10,12 @@ import java.util.Vector;
 
 
 public class ODBTableModel extends AbstractTableModel implements ChangeListener, ActionListener {
-    private static final String[] HEADERS = new String[]{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static final String[] HEADERS = new String[]{
         "ID", "Value", "Type", "Create Date", "Last Accessed"
     };
 
@@ -35,11 +40,13 @@ public class ODBTableModel extends AbstractTableModel implements ChangeListener,
         return data.size();
     }
 
-    public String getColumnName(int column) {
+    @Override
+	public String getColumnName(int column) {
         return HEADERS[column];
     }
 
-    public boolean isCellEditable(int row, int col) {
+    @Override
+	public boolean isCellEditable(int row, int col) {
         return false;
     }
 
@@ -64,7 +71,8 @@ public class ODBTableModel extends AbstractTableModel implements ChangeListener,
         return null;
     }
 
-    public void setValueAt(Object value, int row, int col) {
+    @Override
+	public void setValueAt(Object value, int row, int col) {
     }
 
     public void stateChanged(ChangeEvent event) {

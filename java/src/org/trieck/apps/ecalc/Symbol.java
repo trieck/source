@@ -25,13 +25,10 @@ public class Symbol {
     private int keyword;        // keyword
     private Instruction instr;  // instruction
     private Instruction defn;   // function / procedure
-    private String str;         // string value
-
     public Symbol() {
         type = ST_UNDEF;
         keyword = KW_UNKNOWN;
         instr = defn = null;
-        str = "";
     }
 
     public int getType() {

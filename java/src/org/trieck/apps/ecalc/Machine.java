@@ -5,15 +5,13 @@ import java.util.Stack;
 public class Machine {
 
     private static Machine instance;    // Singleton instance
-    private Stack machinestack;         // Machine stack
-    private Stack framestack;           // Frame stack
-
+    private Stack<Datum> machinestack;         // Machine stack
     /**
      * Private ctor
      */
     private Machine() {
-        machinestack = new Stack();
-        framestack = new Stack();
+        machinestack = new Stack<Datum>();
+        new Stack<Object>();
     }
 
     /**
@@ -60,8 +58,8 @@ public class Machine {
      */
     public final Instruction plus = new Instruction() {
         public void execute() throws MachineException {
-            Datum d1 = (Datum) machinestack.pop();
-            Datum d2 = (Datum) machinestack.pop();
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
             Datum d3 = new Datum();
             d3.value = d1.value + d2.value;
@@ -75,8 +73,8 @@ public class Machine {
      */
     public final Instruction minus = new Instruction() {
         public void execute() throws MachineException {
-            Datum d1 = (Datum) machinestack.pop();
-            Datum d2 = (Datum) machinestack.pop();
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
             Datum d3 = new Datum();
             d3.value = d2.value - d1.value;
@@ -90,7 +88,7 @@ public class Machine {
      */
     public final Instruction unaryminus = new Instruction() {
         public void execute() throws MachineException {
-            Datum d = (Datum) machinestack.pop();
+            Datum d = machinestack.pop();
             d.value = -d.value;
             machinestack.push(d);
         }
@@ -101,8 +99,8 @@ public class Machine {
      */
     public final Instruction mult = new Instruction() {
         public void execute() throws MachineException {
-            Datum d1 = (Datum) machinestack.pop();
-            Datum d2 = (Datum) machinestack.pop();
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
             Datum d3 = new Datum();
             d3.value = d1.value * d2.value;
@@ -116,8 +114,8 @@ public class Machine {
      */
     public final Instruction divide = new Instruction() {
         public void execute() throws MachineException {
-            Datum d1 = (Datum) machinestack.pop();
-            Datum d2 = (Datum) machinestack.pop();
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
             if (d1.value == 0)
                 throw new MachineException(MachineException.ME_DIV_BY_ZERO);
@@ -134,8 +132,8 @@ public class Machine {
      */
     public final Instruction mod = new Instruction() {
         public void execute() throws MachineException {
-            Datum d1 = (Datum) machinestack.pop();
-            Datum d2 = (Datum) machinestack.pop();
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
             if (d1.value == 0)
                 throw new MachineException(MachineException.ME_DIV_BY_ZERO);
@@ -152,8 +150,8 @@ public class Machine {
      */
     public final Instruction pow = new Instruction() {
         public void execute() throws MachineException {
-            Datum d1 = (Datum) machinestack.pop();
-            Datum d2 = (Datum) machinestack.pop();
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
             Datum d3 = new Datum();
             d3.value = Math.pow(d2.value, d1.value);
@@ -167,8 +165,8 @@ public class Machine {
      */
     public final Instruction assign = new Instruction() {
         public void execute() throws MachineException {
-            Datum d1 = (Datum) machinestack.pop();
-            Datum d2 = (Datum) machinestack.pop();
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
             if (d2.symbol == null)
                 throw new MachineException(MachineException.ME_ASSIGNLITERAL);

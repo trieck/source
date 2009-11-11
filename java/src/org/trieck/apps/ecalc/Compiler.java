@@ -256,18 +256,14 @@ public class Compiler {
      */
     private void constant()
             throws CompilerException {
-        double c;
-
         if (tok.type != Lexer.TT_NUM)
             throw new CompilerException(CompilerException.CE_NAN);
 
         try {
-            c = Double.parseDouble(tok.value);
         } catch (NumberFormatException e) {
             throw new CompilerException(CompilerException.CE_NAN);
         }
 
-        Symbol symbol = Symbols.install(tok.value, Symbol.ST_NUM, c);
         program.code(null /*machine.constpush*/);
         program.code(null /*symbol*/);
     }
@@ -326,7 +322,6 @@ public class Compiler {
             throws CompilerException {
 
         tok = lexer.gettok();   // '('
-        int nargs = arglist();
         tok = lexer.gettok();   // ')'
         program.code(null /*machine.call*/);
         program.code(null /*symbol*/);

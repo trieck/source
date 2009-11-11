@@ -36,15 +36,9 @@ public class Opcodes {
     private static final int AM_R16_M16 = 1 << 11;
     private static final int AM_R16_IMM16 = 1 << 12;
 
-    /* Each register takes up one nybble */
-    private static final int REG_ENCODING_SIZE = 1 << 3;
-
     /* Addressing modes */
     private static final int MODES[] = {AM_IMPLIED, AM_R8, AM_M8, AM_IMM8, AM_R16, AM_M16, AM_IMM16,
         AM_R8_R8, AM_R8_IMM8, AM_R16_R16, AM_M16_R16, AM_R16_M16, AM_R16_IMM16};
-
-    /* Addressing mode increments for opcodes */
-    private static final int MODE_INC[] = { 1, 1, 1, 1, 1, 1, 1, 1, REG_ENCODING_SIZE, 1, 1, 1, REG_ENCODING_SIZE };
 
     /* Many instructions support this general form */
     private static final int AM_GENERAL = AM_R8_R8 | AM_R8_IMM8 | AM_R16_R16 | AM_M16_R16 | AM_R16_M16 | AM_R16_IMM16;
@@ -147,8 +141,6 @@ public class Opcodes {
      *                  0xC0 0x01
      */
     public static void main(String[] args) {
-        int opcode = 0x00;
-
         for (int i = 0; i < INSTR.length; i++) {
             for (int j = 0; j < MODES.length; j++) {
                 int mode = (Integer)INSTR[i][1];

@@ -26,6 +26,7 @@ public class BEString extends BEObject implements Comparable<BEString> {
         this(str.getBytes());
 	}
 	
+	@Override
 	public String toString() {		
 		CharBuffer cb = null;
 		

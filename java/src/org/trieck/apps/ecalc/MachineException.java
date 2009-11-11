@@ -1,7 +1,11 @@
 package org.trieck.apps.ecalc;
 
 public class MachineException extends Exception {
-    public static final int ME_DIV_BY_ZERO = 0;     // division by zero
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static final int ME_DIV_BY_ZERO = 0;     // division by zero
     public static final int ME_ASSIGNLITERAL = 1;   // assignment to a literal
     public static final int ME_NONVARASSIGN = 2;    // non-variable assignment
 

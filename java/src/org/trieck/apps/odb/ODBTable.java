@@ -7,7 +7,11 @@ import java.awt.event.ActionListener;
 
 public class ODBTable extends JTable implements ActionListener {
 
-    private static final int CX = 600, CY = 300;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final int CX = 600, CY = 300;
     private static final Dimension TABLE_DIMS = new Dimension(CX, CY);
     private static final int TRUNCATION_POINT = 50;
 

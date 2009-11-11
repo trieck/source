@@ -16,7 +16,7 @@ public class MakeArray {
             System.out.println("private static final byte[] IMAGE = {");
 
             for (int i = 0, c = 0; ((c = is.read()) != -1); i++) {
-                String x = "(byte)0x" + Integer.toString((int) c & 0xff, 16);
+                String x = "(byte)0x" + Integer.toString(c & 0xff, 16);
                 if (i > 0) System.out.print(", ");
                 if ((i % 8) == 0) System.out.println("");
                 System.out.print(x);

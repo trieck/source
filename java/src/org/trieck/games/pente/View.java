@@ -8,7 +8,11 @@ import java.awt.image.BufferedImage;
 
 public class View extends JComponent implements MouseListener {
 
-    private static final int CX_POLYGONS = Board.SIZE;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final int CX_POLYGONS = Board.SIZE;
     private static final int CY_POLYGONS = Board.SIZE;
     public static final int BORDER_CX = 3;
     public static final int BORDER_CY = 3;
@@ -90,7 +94,8 @@ public class View extends JComponent implements MouseListener {
         gbi.drawPolygon(HEXAGON);
     }
 
-    protected void paintComponent(Graphics g) {
+    @Override
+	protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         if (isOpaque()) { // paint background
             g2d.setColor(getBackground());

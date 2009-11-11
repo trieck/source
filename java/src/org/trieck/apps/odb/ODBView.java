@@ -7,10 +7,15 @@ import java.awt.event.ComponentEvent;
 
 public class ODBView extends JScrollPane {
 
-    private ODBTable table = new ODBTable();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private ODBTable table = new ODBTable();
 
     private static class WindowResizeManager extends ComponentAdapter {
-        public void componentResized(ComponentEvent event) {
+        @Override
+		public void componentResized(ComponentEvent event) {
             ODBView theView = (ODBView) event.getComponent();
             if (theView.table != null) {
                 Dimension dim = theView.getSize();

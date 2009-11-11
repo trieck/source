@@ -3,7 +3,6 @@ package org.trieck.pixievm.assembler;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PushbackReader;
-import java.io.Reader;
 
 public class Lexer {
 

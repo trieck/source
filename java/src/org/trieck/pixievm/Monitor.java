@@ -3,14 +3,10 @@ package org.trieck.pixievm;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.MessageFormat;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class Monitor {
-
-    private Memory memory = Memory.getInstance();
-    private CPU cpu = CPU.getInstance();
 
     private BufferedReader in = new BufferedReader(
             new InputStreamReader(System.in));
@@ -68,25 +64,6 @@ public class Monitor {
             */
         }
     };
-
-    private static final char[] HEXISH =
-            {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-
-    private static String toHex(byte b) {
-        StringBuffer output = new StringBuffer();
-        output.append(HEXISH[(b & 0xF0) >> 4]);
-        output.append(HEXISH[b & 0x0F]);
-        return output.toString();
-    }
-
-    private static String toHex(short s) {
-        StringBuffer output = new StringBuffer();
-        output.append(HEXISH[(s & 0xF000) >> 12]);
-        output.append(HEXISH[(s & 0x0F00) >> 8]);
-        output.append(HEXISH[(s & 0x00F0) >> 4]);
-        output.append(HEXISH[s & 0x000F]);
-        return output.toString();
-    }
 
     /**
      * Public ctor

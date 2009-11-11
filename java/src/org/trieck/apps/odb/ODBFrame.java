@@ -9,7 +9,11 @@ import java.awt.event.WindowEvent;
 
 public class ODBFrame extends JFrame {
 
-    private static final ODBManager theApp = ODBManager.getInstance();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final ODBManager theApp = ODBManager.getInstance();
     private static final String TITLE = "Object Database Manager";
 
     private ODBView theView = null;
@@ -20,13 +24,15 @@ public class ODBFrame extends JFrame {
     }
 
     private static class WindowCloseManager extends WindowAdapter {
-        public void windowClosing(WindowEvent e) {
+        @Override
+		public void windowClosing(WindowEvent e) {
             theApp.exit(0);
         }
     }
 
     private static class WindowResizeManager extends ComponentAdapter {
-        public void componentResized(ComponentEvent event) {
+        @Override
+		public void componentResized(ComponentEvent event) {
             ODBFrame theFrame = (ODBFrame) event.getComponent();
             if (theFrame.theView != null) {
                 Dimension dim = theFrame.getSize();

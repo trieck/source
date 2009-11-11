@@ -5,7 +5,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Frame extends JFrame {
-    private static final String TITLE = "Pente";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final String TITLE = "Pente";
     private static final String MENU_FILE = "File";
     private static final String ITEM_NEW = "New Game";
     private static final String ITEM_EXIT = "Exit";
@@ -18,13 +22,15 @@ public class Frame extends JFrame {
     }
 
     private static class WindowCloseManager extends WindowAdapter {
-        public void windowClosing(WindowEvent e) {
+        @Override
+		public void windowClosing(WindowEvent e) {
             System.exit(0);
         }
     }
 
     private static class WindowResizeManager extends ComponentAdapter {
-        public void componentResized(ComponentEvent event) {
+        @Override
+		public void componentResized(ComponentEvent event) {
             Frame theFrame = (Frame) event.getComponent();
             if (theFrame.theView != null) {
                 Dimension dim = theFrame.getSize();

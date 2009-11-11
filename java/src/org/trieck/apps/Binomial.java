@@ -38,7 +38,8 @@ public class Binomial {
     /**
      * String representation
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer output = new StringBuffer();
         output.append("(x + a)^" + N + " = ");
         for (int k = 0; k <= N; k++) {

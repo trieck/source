@@ -10,7 +10,11 @@ import java.awt.event.KeyEvent;
 
 public class GraphFrame extends JFrame {
 
-    private static final String title = "Graph";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final String title = "Graph";
     private static final String MENU_FILE = "File";
     private static final String MENU_OPTIONS = "Options";
     private static final String ITEM_EXIT = "Exit";

@@ -2,7 +2,6 @@ package org.trieck.testing;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 public class MapTest {
 
@@ -55,7 +54,7 @@ public class MapTest {
 
         long end = System.currentTimeMillis();
 
-        float time = (float)(end - start) / 1000.0f;
+        float time = (end - start) / 1000.0f;
 
         System.out.println("   inserted " + n + " items.");        
         System.out.println("   elapsed time " + time + " seconds.");

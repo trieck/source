@@ -144,23 +144,8 @@ public class WestScript {
         return "";
     }
 
-    // get westscript
-    private String getWscript() {
-        return "";
-    }
-
     // get function token
     private String getFunction() {
-        return "";
-    }
-
-    // get the arglist
-    private String getArgs() {
-        return "";
-    }
-
-    // get constant
-    private String getConst() {
         return "";
     }
 

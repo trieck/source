@@ -31,7 +31,5 @@ public class KMP {
             System.err.println("usage: KMP string");
             System.exit(-1);
         }
-
-        KMP kmp = new KMP(args[0]);
     }
 }

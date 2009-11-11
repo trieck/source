@@ -5,6 +5,11 @@ import java.awt.*;
 
 public class StatusPanel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final Font STATUS_FONT = new Font("Arial", Font.TRUETYPE_FONT, 18);
 
 	private static final int GRIPPER_OFFSET_X = 4;
@@ -50,6 +55,7 @@ public class StatusPanel extends JPanel {
 	 * Paint component
 	 * @param g graphics context
 	 */
+	@Override
 	protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
         super.paintComponent(g2d);

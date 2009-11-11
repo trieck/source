@@ -7,6 +7,10 @@ import java.awt.*;
 
 public class StatusFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String title = "Test App";
 	private static final Dimension dimensions = new Dimension(400, 200);
 

@@ -10,7 +10,11 @@ import java.util.Iterator;
 
 public class GraphView extends JComponent implements MouseListener {
 
-    private static final int CX_POLYGONS = 19;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final int CX_POLYGONS = 19;
     private static final int CY_POLYGONS = 19;
     public static final int BORDER_CX = 3;
     public static final int BORDER_CY = 3;
@@ -55,7 +59,8 @@ public class GraphView extends JComponent implements MouseListener {
             color = c;
         }
 
-        public boolean equals(Object o) {
+        @Override
+		public boolean equals(Object o) {
             if (this == o) return true;
             if (!(o instanceof Fill)) return false;
 
@@ -67,7 +72,8 @@ public class GraphView extends JComponent implements MouseListener {
             return true;
         }
 
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             int result;
             result = (pt != null ? pt.hashCode() : 0);
             result = 29 * result + color;
@@ -75,12 +81,12 @@ public class GraphView extends JComponent implements MouseListener {
         }
     }
 
-    private java.util.Set filled;                           // set of filled polygons
+    private java.util.Set<Fill> filled;                           // set of filled polygons
     private BufferedImage[] buff;                           // image buffers
     private int current;                                    // current color
 
     public GraphView() {
-        filled = new HashSet();
+        filled = new HashSet<Fill>();
         init();
     }
 
@@ -122,7 +128,8 @@ public class GraphView extends JComponent implements MouseListener {
         gbi.drawPolygon(HEXAGON);
     }
 
-    protected void paintComponent(Graphics g) {
+    @Override
+	protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         if (isOpaque()) { // paint background
             g2d.setColor(getBackground());
@@ -227,9 +234,9 @@ public class GraphView extends JComponent implements MouseListener {
      * @return fill instance if filled otherwise null
      */
     Fill getFill(Point pt) {
-        Iterator it = filled.iterator();
+        Iterator<Fill> it = filled.iterator();
         while (it.hasNext()) {
-            Fill f = (Fill) it.next();
+            Fill f = it.next();
             if (f.pt.equals(pt))
                 return f;
         }

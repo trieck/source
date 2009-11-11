@@ -1,7 +1,11 @@
 package org.trieck.apps.ecalc;
 
 public class CompilerException extends Exception {
-    public static final int CE_NAN = 0; // not a number
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static final int CE_NAN = 0; // not a number
 
     /**
      * Public ctor

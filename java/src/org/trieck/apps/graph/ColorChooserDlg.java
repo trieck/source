@@ -8,9 +8,11 @@ import java.awt.*;
 public class ColorChooserDlg extends JDialog
         implements ChangeListener {
 
-    private JColorChooser tcc;
-
-    public ColorChooserDlg(Frame owner) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public ColorChooserDlg(Frame owner) {
         super(owner, "Color Chooser", true);
 
         JPanel content = new JPanel(new BorderLayout());
@@ -29,7 +31,6 @@ public class ColorChooserDlg extends JDialog
     }
 
     public void stateChanged(ChangeEvent e) {
-        Color newColor = tcc.getColor();
     }
 
     public void showModal() {

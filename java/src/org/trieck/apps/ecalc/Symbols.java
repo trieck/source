@@ -6,13 +6,13 @@ import java.util.Map;
 public class Symbols {
 
     private static Symbols instance; // Singleton
-    Map symbols;
+    Map<String, Symbol> symbols;
 
     /**
      * Private ctor
      */
     private Symbols() {
-        symbols = new HashMap();
+        symbols = new HashMap<String, Symbol>();
         init();
     }
 
@@ -34,7 +34,7 @@ public class Symbols {
      * @return the symbol if found or null
      */
     public static Symbol lookup(String key) {
-        Symbol symbol = (Symbol) instance.symbols.get(key);
+        Symbol symbol = instance.symbols.get(key);
         return symbol;
     }
 
@@ -46,7 +46,7 @@ public class Symbols {
      * @param defn the function definition
      */
     public static Symbol install(String name, int type, Instruction defn) {
-        Symbol symbol = (Symbol) instance.symbols.get(name);
+        Symbol symbol = instance.symbols.get(name);
         if (symbol == null)
             symbol = new Symbol();
 
@@ -66,7 +66,7 @@ public class Symbols {
      * @value the numeric value
      */
     public static Symbol install(String name, int type, double value) {
-        Symbol symbol = (Symbol) instance.symbols.get(name);
+        Symbol symbol = instance.symbols.get(name);
         if (symbol == null)
             symbol = new Symbol();
 
@@ -85,7 +85,7 @@ public class Symbols {
      * @param i    the instruction
      */
     private Symbol install(String name, Instruction i) {
-        Symbol symbol = (Symbol) symbols.get(name);
+        Symbol symbol = symbols.get(name);
         if (symbol == null)
             symbol = new Symbol();
 

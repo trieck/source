@@ -213,20 +213,20 @@ public class Parser {
         /**
          * the input symbol alphabet
          */
-        private static final Set SIGMA;
+        private static final Set<Character> SIGMA;
 
         static {
             final char[] A = {'a', 'b'};
-            SIGMA = new TreeSet();
+            SIGMA = new TreeSet<Character>();
             for (int i = 0; i < A.length; i++)
                 SIGMA.add(new Character(A[i]));
         }
 
         protected int a[][];        /* adjacency matrix */
-        private TreeSet accept;        /* set of accepting states */
+        private TreeSet<Integer> accept;        /* set of accepting states */
         protected int state;        /* current state during construction */
 
-        public static Iterator getAlphabet() {
+        public static Iterator<Character> getAlphabet() {
             return SIGMA.iterator();
         }
 
@@ -237,7 +237,7 @@ public class Parser {
          * @return true if character is in alphabet otherwise false
          */
         private static boolean isInputSymbol(char c) {
-            Iterator it = getAlphabet();
+            Iterator<?> it = getAlphabet();
             while (it.hasNext()) {
                 Character C = (Character) it.next();
                 if (C.charValue() == c)
@@ -272,7 +272,7 @@ public class Parser {
          */
         public NFA() {
             a = new int[MAXV][MAXV];
-            accept = new TreeSet();
+            accept = new TreeSet<Integer>();
             initmatrix();
         }
 
@@ -289,17 +289,18 @@ public class Parser {
         /**
          * append an NFA
          */
-        protected void append(NFA rhs) {
+        @SuppressWarnings("unchecked")
+		protected void append(NFA rhs) {
             if (accept.size() > 0) {
                 int N, Q, R;
-                TreeSet tmp = (TreeSet) accept.clone();
+                TreeSet<Integer> tmp = (TreeSet<Integer>) accept.clone();
                 accept.clear();
 
-                Iterator it = tmp.iterator();
+                Iterator<Integer> it = tmp.iterator();
                 while (it.hasNext()) {
-                    Q = ((Integer) it.next()).intValue();
+                    Q = (it.next()).intValue();
                     for (R = 0; R <= rhs.state; R++) {
-                        if (R > 0 && Q == ((Integer) tmp.first()).intValue()) {
+                        if (R > 0 && Q == (tmp.first()).intValue()) {
                             N = ++state;
                         } else N = Q;
 
@@ -323,7 +324,7 @@ public class Parser {
 
             } else {    /* no accepting states is an empty NFA */
                 System.arraycopy(rhs.a, 0, a, 0, rhs.a.length);
-                accept = (TreeSet) rhs.accept.clone();
+                accept = (TreeSet<Integer>) rhs.accept.clone();
                 state = rhs.state;
             }
         }
@@ -371,7 +372,7 @@ public class Parser {
         public ClosureNFA(NFA left) {
             super();
             int i, j;
-            TreeSet A = new TreeSet();
+            TreeSet<Integer> A = new TreeSet<Integer>();
 
             a[0][++state] = EPSILON;
 
@@ -392,9 +393,9 @@ public class Parser {
 
             addAcceptingState(++state);
 
-            Iterator it = A.iterator();
+            Iterator<Integer> it = A.iterator();
             while (it.hasNext()) {
-                int astate = ((Integer) it.next()).intValue();
+                int astate = (it.next()).intValue();
                 a[astate][state] = EPSILON;
             }
 
@@ -409,7 +410,7 @@ public class Parser {
         public UnionNFA(NFA left, NFA right) {
             super();
             int i, j;
-            TreeSet A = new TreeSet();
+            TreeSet<Integer> A = new TreeSet<Integer>();
 
             a[0][++state] = EPSILON;
 
@@ -445,9 +446,9 @@ public class Parser {
 
             addAcceptingState(++state);
 
-            Iterator it = A.iterator();
+            Iterator<Integer> it = A.iterator();
             while (it.hasNext()) {
-                int astate = ((Integer) it.next()).intValue();
+                int astate = (it.next()).intValue();
                 a[astate][state] = EPSILON;
             }
         }
@@ -467,24 +468,26 @@ public class Parser {
     /**
      * Deterministic Finite Automata
      */
-    private class DFA implements Machine {
+    public class DFA implements Machine {
 
         private NFA nfa;
 
-        private class DFAState {
+        public class DFAState {
             private boolean marked;
-            private Set states; /* subset of NFA states */
+            private Set<Integer> states; /* subset of NFA states */
 
             private DFAState() {
                 marked = false;
-                states = new TreeSet();
+                states = new TreeSet<Integer>();
             }
 
-            public int hashCode() {
+            @Override
+			public int hashCode() {
                 return 17 * (states.hashCode() + (marked ? 1 : 0));
             }
 
-            public boolean equals(Object o) {
+            @Override
+			public boolean equals(Object o) {
                 if (this == o)
                     return true;
 
@@ -495,11 +498,11 @@ public class Parser {
             }
         }
 
-        private Set Dstates;
+        private Set<DFAState> Dstates;
 
         public DFA(NFA nfa) {    /* subset construction */
             this.nfa = nfa;
-            Dstates = new TreeSet();
+            Dstates = new TreeSet<DFAState>();
             construct();
         }
 
@@ -516,7 +519,7 @@ public class Parser {
 
             for (; T != null; T = getUnmarkedState()) {
                 T.marked = true;    /* mark the state */
-                Iterator it = NFA.getAlphabet();
+                Iterator<?> it = NFA.getAlphabet();
                 while (it.hasNext()) {
                     char a = ((Character) it.next()).charValue();
                     DFAState U = closure(move(T, a));
@@ -534,9 +537,9 @@ public class Parser {
          * @return unmarked state or null if none
          */
         private DFAState getUnmarkedState() {
-            Iterator it = Dstates.iterator();
+            Iterator<DFAState> it = Dstates.iterator();
             while (it.hasNext()) {
-                DFAState T = (DFAState) it.next();
+                DFAState T = it.next();
                 if (!T.marked)
                     return T;
             }
@@ -560,12 +563,12 @@ public class Parser {
          */
         private DFAState closure(DFAState T) {
             DFAState ds = new DFAState();
-            Stack st = new Stack();
+            Stack<Integer> st = new Stack<Integer>();
 
             st.addAll(T.states);
 
             while (!st.isEmpty()) {
-                int t = ((Integer) st.pop()).intValue();
+                int t = (st.pop()).intValue();
                 for (int u = 0; u < nfa.states(); u++) {
                     if (nfa.isEdge(t, u, EPSILON)) {
                         Integer U = new Integer(u);
@@ -587,7 +590,7 @@ public class Parser {
         private DFAState move(DFAState T, char a) {
             DFAState ds = new DFAState();
 
-            Iterator it = T.states.iterator();
+            Iterator<?> it = T.states.iterator();
             while (it.hasNext()) {
                 int s = ((Integer) it.next()).intValue();
                 for (int i = 0; i < nfa.states(); i++) {
