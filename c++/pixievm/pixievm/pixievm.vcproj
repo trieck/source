@@ -48,7 +48,7 @@
 				InlineFunctionExpansion="1"
 				FavorSizeOrSpeed="2"
 				AdditionalIncludeDirectories="..\base"
-				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;YY_NO_UNISTD_H"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -140,7 +140,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\base"
-				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;YY_NO_UNISTD_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -688,7 +688,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Fast Lexical Analyzer from $(InputPath)..."
-						CommandLine="flex -oScanner.cpp $(InputPath)&#x0D;&#x0A;"
+						CommandLine="flex -oScanner.cpp $(InputPath)&#x0D;&#x0A; "
 						Outputs="Scanner.cpp"
 					/>
 				</FileConfiguration>
@@ -698,7 +698,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Fast Lexical Analyzer from $(InputPath)..."
-						CommandLine="flex -oScanner.cpp $(InputPath)&#x0D;&#x0A;"
+						CommandLine="flex -oScanner.cpp $(InputPath)&#x0D;&#x0A; "
 						Outputs="Scanner.cpp"
 					/>
 				</FileConfiguration>
