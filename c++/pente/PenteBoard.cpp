@@ -76,8 +76,8 @@ void PenteBoard::renderBoard(CDC *pDC, const CRect & rc)
 		pt = mapIndexToPoint(entry.where());
 		rcPiece.left = pt.x;
 		rcPiece.top = pt.y;
-		rcPiece.right = rcPiece.left + cxIcon;
-		rcPiece.bottom = rcPiece.top + cyIcon;
+		rcPiece.right = rcPiece.left + cxPiece;
+		rcPiece.bottom = rcPiece.top + cyPiece;
 
 		if (!pDC->RectVisible(rcPiece))
 			continue;
@@ -92,11 +92,14 @@ void PenteBoard::renderBoard(CDC *pDC, const CRect & rc)
 /////////////////////////////////////////////////////////////////////////////
 CPoint PenteBoard::mapIndexToPoint(const CPoint & pt)
 {
-	CPoint ptDest(cxBorder, cyBorder);
-	ASSERT(pt.x <= cxSquares - 1);
-	ASSERT(pt.y <= cySquares - 1);
-	ptDest.x += (pt.x * squareSize) + cxOffset;
-	ptDest.y += (pt.y * squareSize) + cyOffset;
+	CPoint aPoint;
+	aPoint.x = min(max(0, pt.x), cxSquares);
+	aPoint.y = min(max(0, pt.y), cySquares);
+
+	CPoint ptDest;
+	ptDest.x = (cxBorder - (cxPiece / 2)) + (aPoint.x * squareSize);
+	ptDest.y = (cyBorder - (cyPiece / 2)) + (aPoint.y * squareSize);
+
 	return ptDest;
 }
 
@@ -105,6 +108,7 @@ bool PenteBoard::ptOnBoard(const CPoint & pt) const
 {
 	CRect rc;
 	getDimensions(rc);
+	rc.InflateRect(cxPiece / 2, cyPiece / 2);
 	rc.OffsetRect(cxBorder, cyBorder);
 	if (rc.PtInRect(pt))
 		return true;
@@ -114,24 +118,27 @@ bool PenteBoard::ptOnBoard(const CPoint & pt) const
 /////////////////////////////////////////////////////////////////////////////
 CPoint PenteBoard::getSquare(const CPoint & pt) const
 {
-	CPoint square(-1, -1); // special case for not found
+	CPoint square;
+	
+	CPoint aPoint(pt);
+	aPoint.x -= (cxBorder - (cxPiece / 2));
+	aPoint.y -= (cyBorder - (cyPiece / 2));
 
-	if (!ptOnBoard(pt))
-		return square;	
-	square.x = max(0, (pt.x / squareSize) - 1);
-	square.y = max(0, (pt.y / squareSize) - 1);
+	square.x = min(max(0, (aPoint.x / squareSize)), cxSquares);
+	square.y = min(max(0, (aPoint.y / squareSize)), cySquares);
+
 	return square;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void PenteBoard::getSquareRect(int x, int y, CRect & rc) const
 {
-	ASSERT(x <= cxSquares - 1);
-	ASSERT(y <= cySquares - 1);
+	x = min(max(0, x), cxSquares);
+	y = min(max(0, y), cySquares);
 
 	rc.SetRectEmpty();
-	rc.left = cxBorder + (x * squareSize);
-	rc.top = cyBorder + (y * squareSize);
+	rc.left = (cxBorder - (cxPiece / 2)) + (x * squareSize);
+	rc.top = (cyBorder - (cyPiece / 2)) + (y * squareSize);
 	rc.right = rc.left + squareSize;
 	rc.bottom = rc.top + squareSize;
 }
