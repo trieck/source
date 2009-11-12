@@ -3,8 +3,8 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="Queens"
-	ProjectGUID="{E6CFB3CA-CAF7-47F4-96A8-571E12E77062}"
-	RootNamespace="fourqueens"
+	ProjectGUID="{AE035B24-88A0-4010-BD50-68F75105D03A}"
+	RootNamespace="Queens"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -62,7 +62,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
-				GenerateManifest="true"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -117,7 +116,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="common.h"
@@ -136,7 +135,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="1"
-				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -183,7 +181,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="common.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -192,49 +189,16 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="common.h"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\main.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PrecompiledHeaderThrough="common.h"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PrecompiledHeaderThrough="common.h"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Queens.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PrecompiledHeaderThrough="common.h"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PrecompiledHeaderThrough="common.h"
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -247,15 +211,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\MultiwayTree.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Queens.h"
-				>
-			</File>
-			<File
-				RelativePath=".\targetver.h"
 				>
 			</File>
 		</Filter>
