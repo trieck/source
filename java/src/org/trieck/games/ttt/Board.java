@@ -151,8 +151,17 @@ public class Board implements Cloneable {
 	public String toString() {
 		StringBuffer output = new StringBuffer();
 		
+		StringBuffer line = new StringBuffer();
+		for (int i = 0; i < Board.BOARD_SIZE * 2 - 1; i++) {
+			line.append('-');
+		}
+		
 		for (int i = 0; i < Board.BOARD_SIZE; i++) {
-			if (i > 0) output.append("\n-----\n");
+			if (i > 0) {
+				output.append('\n');
+				output.append(line);
+				output.append('\n');
+			}
 			for (int j = 0; j < Board.BOARD_SIZE; j++) {
 				if (rep[i][j] == COLOR_EMPTY) {
 					output.append(" ");
