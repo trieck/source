@@ -13,9 +13,9 @@ public class Test {
 		M.put("c", "d");
 		M.put("e", "f");
 
-		Iterator<?> it = M.entrySet().iterator();
+		Iterator<Map.Entry<String, String>> it = M.entrySet().iterator();
 		while (it.hasNext()) {
-			Map.Entry e = (Map.Entry)it.next();
+			Map.Entry<String, String> e = it.next();
 			System.out.println((String)e.getKey() + '-' + (String)e.getValue());
 		}
 	}
