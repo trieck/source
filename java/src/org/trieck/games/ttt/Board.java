@@ -7,12 +7,23 @@ public class Board implements Cloneable {
 	public static final int COLOR_CROSS = 1;
 	public static final int COLOR_NOUGHT = -1;	
 	
+	private static final int MIN_ADVANTAGE = 1;
+	private static final int MAX_ADVANTAGE = 3;
+	
 	private static final Vectors VECTORS = Vectors.instance();
 	
 	private int rep[][];
 	
 	public Board() {
 		rep = new int[BOARD_SIZE][BOARD_SIZE];
+	}
+	
+	public void clear() {
+		for (int i = 0; i < Board.BOARD_SIZE; i++) {
+			for (int j = 0; j < Board.BOARD_SIZE; j++) {
+				rep[i][j] = COLOR_EMPTY;
+			}
+		}		
 	}
 	
 	@Override
@@ -65,7 +76,7 @@ public class Board implements Cloneable {
 	}
 	
 	private int rankV(int[] v, int color) {
-		int rank = 0, row, col;
+		int row, col;
 		int noughts = 0, crosses = 0;
 		
 		for (int i = 0; i < v.length; i++) {
@@ -82,16 +93,16 @@ public class Board implements Cloneable {
 		if (noughts > 0 && crosses > 0)
 			return 0;	// infeasible
 		
-		int advantage = 1;
+		int advantage = MIN_ADVANTAGE;
 		if (noughts == 0) {
 			if (color == COLOR_CROSS)
-				advantage = 3;
+				advantage = MAX_ADVANTAGE;	// player advantage
 			return (int)Math.pow(10, crosses) * advantage;
 		}
 		
 		if (crosses == 0) {
 			if (color == COLOR_NOUGHT)
-				advantage = 3;
+				advantage = MAX_ADVANTAGE;	// player advantage
 			return -(int)Math.pow(10, noughts) * advantage;
 		}
 		

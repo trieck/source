@@ -11,14 +11,19 @@ public class TicTacToe {
 	public void play() {	
 		Machine playerOne = new Machine(Board.COLOR_CROSS);
 		Machine playerTwo = new Machine(Board.COLOR_NOUGHT);
-		
+				
 		while (board.available() > 0) {
 			if (!playerOne.move(board)) {
 				return;
 			}
+			
+			try { Thread.sleep(4000); } catch (InterruptedException e) { ; }
+			
 			if (!playerTwo.move(board)) {
 				return;
 			}
+			
+			try { Thread.sleep(4000); } catch (InterruptedException e) { ; }
 		}
 	}
 	
