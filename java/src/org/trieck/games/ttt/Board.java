@@ -1,38 +1,44 @@
 package org.trieck.games.ttt;
 
-public class Board implements Cloneable {
+import java.util.*;
+
+public class Board implements Cloneable, Iterable<Board> {
 
 	public static final int BOARD_SIZE = 3;
 	public static final int COLOR_EMPTY = 0;
 	public static final int COLOR_CROSS = 1;
 	public static final int COLOR_NOUGHT = -1;	
 	
-	private static final int MIN_ADVANTAGE = 1;
-	private static final int MAX_ADVANTAGE = 3;
+//	private static final int MIN_ADVANTAGE = 1;
+//	private static final int MAX_ADVANTAGE = BOARD_SIZE;
 	
 	private static final Vectors VECTORS = Vectors.instance();
 	
-	private int rep[][];
+	private int rep[][];			// board representation
+	private int node_rep;			// representation of node in game tree
+	private List<Board> children;	// child nodes
 	
 	public Board() {
+		node_rep = -1;	
 		rep = new int[BOARD_SIZE][BOARD_SIZE];
+		children = new ArrayList<Board>();
 	}
 	
-	public void clear() {
-		for (int i = 0; i < Board.BOARD_SIZE; i++) {
-			for (int j = 0; j < Board.BOARD_SIZE; j++) {
-				rep[i][j] = COLOR_EMPTY;
-			}
-		}		
+	public int getNodeRep() {
+		return node_rep;
 	}
 	
 	@Override
 	public Object clone() {
 		Board board = new Board();
+		
+		board.node_rep = node_rep; 
 				
 		for (int i = 0; i < rep.length; i++) {
 			System.arraycopy(rep[i], 0, board.rep[i],0, rep[i].length);
 		}
+				
+		board.children = new ArrayList<Board>(children);
 		
 		return board;
 	}
@@ -65,17 +71,17 @@ public class Board implements Cloneable {
 		return count;
 	}
 	
-	public int rank(int color) {
+	public int rank() {
 		int rank = 0;
 		
-		for (int[] v : VECTORS) {
-			rank += rankV(v, color);
+		for (Integer[] v : VECTORS) {
+			rank += rankV(v);
 		}
 		
 		return rank;
 	}
 	
-	private int rankV(int[] v, int color) {
+	private int rankV(Integer[] v) {
 		int row, col;
 		int noughts = 0, crosses = 0;
 		
@@ -93,26 +99,17 @@ public class Board implements Cloneable {
 		if (noughts > 0 && crosses > 0)
 			return 0;	// infeasible
 		
-		int advantage = MIN_ADVANTAGE;
-		if (noughts == 0) {
-			if (color == COLOR_CROSS)
-				advantage = MAX_ADVANTAGE;	// player advantage
-			return (int)Math.pow(10, crosses) * advantage;
-		}
+		int factor = noughts == 0 ? 1 : -1;
 		
-		if (crosses == 0) {
-			if (color == COLOR_NOUGHT)
-				advantage = MAX_ADVANTAGE;	// player advantage
-			return -(int)Math.pow(10, noughts) * advantage;
-		}
+		int n = Math.max(noughts, crosses);
 		
-		return 0;
+		return factor * (int)Math.pow(10, n);
 	}
 	
 	public int winner() {
 		int winner = COLOR_EMPTY;
 		
-		for (int[] v : VECTORS) {
+		for (Integer[] v : VECTORS) {
 			if ((winner = winnerV(v)) != COLOR_EMPTY)
 				return winner;
 		}
@@ -120,7 +117,7 @@ public class Board implements Cloneable {
 		return COLOR_EMPTY;
 	}
 	
-	private int winnerV(int[] v) {
+	private int winnerV(Integer[] v) {
 		int row, col;
 		int noughts = 0, crosses = 0;
 		
@@ -178,4 +175,35 @@ public class Board implements Cloneable {
 		return output.toString();
 	}
 	
+	public Iterator<Board> iterator() {
+		return children.iterator();
+	}
+	
+	public void makeTree() {
+		children.clear();		
+		Board.addNode(this, 1, COLOR_CROSS);						
+	}
+	
+	private static void addNode(Board parent, int depth, int color) {
+		if (depth > Machine.MAX_DEPTH)
+			return;
+		
+		for (int i = 0; i < Board.BOARD_SIZE; i++) {
+			for (int j = 0; j < Board.BOARD_SIZE; j++) {
+				if (parent.rep[i][j] != COLOR_EMPTY)
+					continue;
+				
+				Board next = (Board)parent.clone();
+				next.children = new ArrayList<Board>();
+				next.rep[i][j] = color;
+				next.node_rep = i * BOARD_SIZE + j;
+				parent.children.add(next);
+				
+				if (next.winner() != COLOR_EMPTY)
+					continue;	// winner
+				
+				addNode(next, depth + 1, -color);
+			}
+		}		
+	}
 }

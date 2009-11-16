@@ -2,35 +2,69 @@ package org.trieck.games.ttt;
 
 import java.util.*;
 
-public class Vectors implements Iterable<int[]> {
-	
-	private static final int[][] VECTORS = {
-		{ 0, 1, 2 },
-		{ 3, 4, 5 },
-		{ 6, 7, 8 },
-		{ 0, 3, 6 },
-		{ 1, 4, 7 },
-		{ 2, 5, 8 },
-		{ 0, 4, 8 },
-		{ 2, 4, 6 }
-	};
-	
-	private static final List<int[]> VLIST = Arrays.asList(VECTORS);
+public class Vectors implements Iterable<Integer[]> {
+
+	private List<Integer[]> vlist;
 	
 	private static Vectors instance = null;
 	
 	private Vectors() {		
+		vlist = new ArrayList<Integer[]>();
+		generate();
 	}
 	
-	public static Vectors instance() {
+	void generate() {
+		
+		List<Integer> v = new ArrayList<Integer>(); 
+		Integer[] a = new Integer[Board.BOARD_SIZE];
+		
+		for (int i = 0; i < Board.BOARD_SIZE; i++) {
+			v.clear();
+			for (int j = 0; j < Board.BOARD_SIZE; j++) {
+				v.add(i*Board.BOARD_SIZE+j);
+			}
+			
+			v.toArray(a);
+			vlist.add(a.clone());				
+		}
+		
+		for (int i = 0; i < Board.BOARD_SIZE; i++) {
+			v.clear();
+			for (int j = 0; j < Board.BOARD_SIZE; j++) {
+				v.add(j*Board.BOARD_SIZE+i);
+			}
+			
+			v.toArray(a);
+			vlist.add(a.clone());			
+		}
+		
+		v.clear();
+		for (int i = 0; i < Board.BOARD_SIZE; i++) {
+			v.add(i * Board.BOARD_SIZE + i);
+		}
+		
+		v.toArray(a);
+		vlist.add(a.clone());
+		
+		v.clear();
+		for (int i = 0; i < Board.BOARD_SIZE; i++) {
+			v.add(i * Board.BOARD_SIZE + (Board.BOARD_SIZE-i-1));
+		}
+		
+		v.toArray(a);
+		vlist.add(a.clone());		
+	}
+	
+	
+	public static synchronized Vectors instance() {
 		if (instance == null)
 			instance = new Vectors();
 		
 		return instance;
 	}
 	
-	public Iterator<int[]> iterator() {
-		return VLIST.iterator();
+	public Iterator<Integer[]> iterator() {
+		return vlist.iterator();
 	}	
 	
 }

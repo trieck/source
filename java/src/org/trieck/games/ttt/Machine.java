@@ -1,27 +1,25 @@
 package org.trieck.games.ttt;
 
-import java.util.*;
-
 public class Machine {
 	private static final int MAX_RANK = Integer.MAX_VALUE;
-	private static final int MAX_DEPTH = 4;
+	public static final int MAX_DEPTH = 4;
 	
 	int color;
-	
+				
 	private class Move {
 		public Move() {
-			this(0, 0);
+			this(-1,-1, 0);
 		}
 		
-		public Move(int x, int y) {
-			this.x = x; this.y = y;
-			rank = 0;
+		public Move(int x, int y, int rank) {
+			this.x = x;
+			this.y = y;
+			this.rank = rank;
 		}
 		
-		int x, y;
-		int rank;
+		int x, y, rank;
 	}
-			
+	
 	public Machine(int color) {
 		this.color = color;
 	}
@@ -30,65 +28,58 @@ public class Machine {
 		if (board.available() == 0)
 			return false;
 		
-		Move move = getMove(board, color, 1, -MAX_RANK, MAX_RANK);
-		board.setPiece(move.x, move.y, color);
+		board.makeTree();
 		
-		System.out.println(board);
-		System.out.println();
+		Move move;
+		if ((move = minimax(board, MAX_DEPTH, Board.COLOR_CROSS)) == null)
+			return false;
+		
+		board.setPiece(move.x, move.y, color);
 		
 		return true;
 	}
 	
-	private Move getMove(Board board, int color, int depth, int alpha, int beta) {
-		Move move = new Move(-1,-1), bestMove = new Move(-1, -1);
-		
-		if (depth == MAX_DEPTH || board.available() == 0) {
-			move.rank = board.rank(color);
-			return move;			
+	private Move minimax(Board board, int depth, int color) {
+		if (depth == 0 || board.available() == 0) {
+			Move m = new Move();
+			m.x = board.getNodeRep() / Board.BOARD_SIZE;
+			m.y = board.getNodeRep() % Board.BOARD_SIZE;
+			m.rank = board.rank();
+			return m;
 		}
 
-		Random random = new Random();
-		int rowStart = random.nextInt(Board.BOARD_SIZE);
-		int colStart = random.nextInt(Board.BOARD_SIZE);
-		int row, col;
+		Board best = null; 
+		Move m = null;
 		
-		// check all valid moves
-		for (int i = 0; i < Board.BOARD_SIZE; i++) {
-			for (int j = 0; j < Board.BOARD_SIZE; j++) {
-				row = (rowStart + i) % 8;
-				col = (colStart + j) % 8;
-				
-				if (board.getPiece(row, col) != Board.COLOR_EMPTY)
-					continue;
+		int alpha = -color * Integer.MAX_VALUE;
+		
+		for (Board child : board) {
+			m = minimax(child, depth-1, -color);
 			
-				move.x = row; move.y = col;
-				Board nextBoard = (Board)board.clone();
-				nextBoard.setPiece(move.x, move.y, color);
-				
-				Move nextMove = getMove(nextBoard, -color, depth + 1, alpha, beta);
-				
-				if (color == Board.COLOR_CROSS) {
-					if (alpha < nextMove.rank) {
-						bestMove.x = move.x; bestMove.y = move.y;
-						bestMove.rank = alpha = nextMove.rank;
-						if (alpha >= beta) {
-							break;
-						}
-                  }
-				} else {
-					if (beta > nextMove.rank) {
-						bestMove.x = move.x; bestMove.y = move.y;
-						bestMove.rank = beta = nextMove.rank;
-						if (alpha >= beta) {
-							break;							
-	                    }
-					}
-				}				
-			
+			if (color == Board.COLOR_CROSS) {
+				if (m.rank > alpha) {
+					alpha = m.rank;
+					best = child;
+				}
+			} else {
+				if (m.rank < alpha) {
+					alpha = m.rank;
+					best = child;
+				}
 			}
 		}
 		
-		return bestMove;
-	}	
-	
+			
+		m = new Move();
+		m.rank = alpha;
+			
+		if (best != null) {
+			m.x = best.getNodeRep() / Board.BOARD_SIZE;
+			m.y = best.getNodeRep() % Board.BOARD_SIZE;
+		}
+		
+		return m;
+	}
 }
+
+	

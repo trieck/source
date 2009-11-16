@@ -17,13 +17,15 @@ public class TicTacToe {
 				return;
 			}
 			
-			try { Thread.sleep(4000); } catch (InterruptedException e) { ; }
+			System.out.println(board);
+			System.out.println();
 			
 			if (!playerTwo.move(board)) {
 				return;
 			}
 			
-			try { Thread.sleep(4000); } catch (InterruptedException e) { ; }
+			System.out.println(board);
+			System.out.println();
 		}
 	}
 	
