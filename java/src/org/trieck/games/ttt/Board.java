@@ -9,9 +9,6 @@ public class Board implements Cloneable, Iterable<Board> {
 	public static final int COLOR_CROSS = 1;
 	public static final int COLOR_NOUGHT = -1;	
 	
-//	private static final int MIN_ADVANTAGE = 1;
-//	private static final int MAX_ADVANTAGE = BOARD_SIZE;
-	
 	private static final Vectors VECTORS = Vectors.instance();
 	
 	private int rep[][];			// board representation
@@ -179,9 +176,9 @@ public class Board implements Cloneable, Iterable<Board> {
 		return children.iterator();
 	}
 	
-	public void makeTree() {
+	public void makeTree(int color) {
 		children.clear();		
-		Board.addNode(this, 1, COLOR_CROSS);						
+		Board.addNode(this, 1, color);						
 	}
 	
 	private static void addNode(Board parent, int depth, int color) {
