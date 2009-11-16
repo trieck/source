@@ -19,46 +19,48 @@ public class Machine {
 		board.makeTree(color);
 		
 		Point pt = new Point();
-		minimax(board, MAX_DEPTH, color, pt);
+		alphabeta(board, MAX_DEPTH, color, -MAX_RANK, MAX_RANK, pt);
 		
 		board.setPiece(pt.x, pt.y, color);
 		
 		return true;
 	}
 	
-	private int minimax(Board board, int depth, int color, Point pt) {
+	private int alphabeta(Board board, int depth, int color, int alpha, int beta, Point pt) {
 		if (depth == 0 || board.available() == 0) {
 			pt.x = board.getNodeRep() / Board.BOARD_SIZE;
 			pt.y = board.getNodeRep() % Board.BOARD_SIZE;
 			return board.rank();
 		}
 
-		Board best = null; 
-				
-		int alpha = -color * MAX_RANK;
+		Board best = board;
 		
-		int a;
+		int ab;
 		for (Board child : board) {
-			a = minimax(child, depth-1, -color, pt);
+			ab = alphabeta(child, depth-1, -color, -beta, -alpha, pt);
 			if (color == Board.COLOR_CROSS) {
-				if (a > alpha) {
-					alpha = a;
+				if (ab > alpha) {
+					alpha = ab;
 					best = child;
 				}
+				
+				if (alpha >= beta) 
+					break;	// alpha-beta cutoff
 			} else {
-				if (a < alpha) {
-					alpha = a;
+				if (ab < beta) {
+					beta = ab;
 					best = child;
 				}
+				
+				if (beta <= alpha) 
+					break;	// alpha-beta cutoff
 			}
 		}
 					
-		if (best != null) {
-			pt.x = best.getNodeRep() / Board.BOARD_SIZE;
-			pt.y = best.getNodeRep() % Board.BOARD_SIZE;
-		}
+		pt.x = best.getNodeRep() / Board.BOARD_SIZE;
+		pt.y = best.getNodeRep() % Board.BOARD_SIZE;
 		
-		return alpha;
+		return (color == Board.COLOR_CROSS) ? alpha : beta;
 	}
 }
 

@@ -185,15 +185,23 @@ public class Board implements Cloneable, Iterable<Board> {
 		if (depth > Machine.MAX_DEPTH)
 			return;
 		
-		for (int i = 0; i < Board.BOARD_SIZE; i++) {
-			for (int j = 0; j < Board.BOARD_SIZE; j++) {
-				if (parent.rep[i][j] != COLOR_EMPTY)
+		Random random = new Random();
+		int rowStart = random.nextInt(BOARD_SIZE);
+		int colStart = random.nextInt(BOARD_SIZE);
+		
+		int row, col;
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			for (int j = 0; j < BOARD_SIZE; j++) {
+				row = (rowStart + i) % BOARD_SIZE;
+				col = (colStart + j) % BOARD_SIZE;
+				
+				if (parent.rep[row][col] != COLOR_EMPTY)
 					continue;
 				
 				Board next = (Board)parent.clone();
 				next.children = new ArrayList<Board>();
-				next.rep[i][j] = color;
-				next.node_rep = i * BOARD_SIZE + j;
+				next.rep[row][col] = color;
+				next.node_rep = row * BOARD_SIZE + col;
 				parent.children.add(next);
 				
 				if (next.winner() != COLOR_EMPTY)
