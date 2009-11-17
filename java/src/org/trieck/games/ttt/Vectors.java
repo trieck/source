@@ -52,7 +52,7 @@ public class Vectors implements Iterable<Integer[]> {
 		}
 		
 		v.toArray(a);
-		vlist.add(a.clone());		
+		vlist.add(a.clone());
 	}
 	
 	

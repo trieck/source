@@ -10,7 +10,7 @@ public class Board implements Cloneable, Iterable<Board> {
 	public static final int COLOR_NOUGHT = -1;	
 	
 	private static final Vectors VECTORS = Vectors.instance();
-	
+		
 	private int rep[][];			// board representation
 	private int node_rep;			// representation of node in game tree
 	private List<Board> children;	// child nodes
@@ -80,7 +80,7 @@ public class Board implements Cloneable, Iterable<Board> {
 	
 	private int rankV(Integer[] v) {
 		int row, col;
-		int noughts = 0, crosses = 0;
+		int crosses = 0, noughts = 0;
 		
 		for (int i = 0; i < v.length; i++) {
 			row = v[i] / BOARD_SIZE;
@@ -93,14 +93,13 @@ public class Board implements Cloneable, Iterable<Board> {
 				crosses++;
 		}
 		
-		if (noughts > 0 && crosses > 0)
-			return 0;	// infeasible
-		
-		int factor = noughts == 0 ? 1 : -1;
-		
-		int n = Math.max(noughts, crosses);
-		
-		return factor * (int)Math.pow(10, n);
+	    if (noughts == 0) {
+	        return (int)Math.pow(10, crosses);
+	    } else if (crosses == 0) {	        
+	        return -(int)Math.pow(10, noughts);
+	    }
+	    
+	    return 0;
 	}
 	
 	public int winner() {
