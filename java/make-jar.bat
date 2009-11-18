@@ -1,2 +1,7 @@
 @echo off
-jar cvfm pente.jar manifest.mf -C classes org/trieck/games/pente/
+
+set TARGET=%1
+set CPATH=%2
+
+jar cvfm %TARGET% manifest.mf -C classes %CPATH%
+
