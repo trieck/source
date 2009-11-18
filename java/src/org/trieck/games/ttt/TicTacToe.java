@@ -1,6 +1,7 @@
 package org.trieck.games.ttt;
 
 import java.awt.Point;
+import javax.swing.JOptionPane;
 
 public class TicTacToe {
 	
@@ -37,12 +38,61 @@ public class TicTacToe {
 	}
 	
 	public Point getMachineTurn() {
-		if (theBoard.available() == 0)
+		if (checkWinner())
 			return null;
 		
-		return theMachine.move(theBoard);		
+        Point pt;
+        if ((pt = theMachine.move(theBoard)) == null) {
+        	stalemate();
+        }
+        
+        checkWinner();
+        
+        return pt;
 	}
 	
+	 public void stalemate() {
+		Object[] options = {"Yes", "No"};
+		int n = JOptionPane.showOptionDialog(theFrame,
+		    "Stalemate!\r\n"
+		    + "Play again?",
+		    "Stalemate",
+		    JOptionPane.YES_NO_OPTION,
+		    JOptionPane.QUESTION_MESSAGE,
+		    null,
+		    options,
+		    options[1]);
+		if (n == 0) {
+		    newGame();
+		} else {
+		    System.exit(0);
+		}
+	 }
+	 
+	 boolean checkWinner() {
+		 int color;
+		 if ((color = theBoard.winner()) != Board.COLOR_EMPTY) {
+			 Object[] options = {"Yes", "No"};
+             int n = JOptionPane.showOptionDialog(theFrame,
+                 (color == Board.COLOR_NOUGHT ? "You" : "I") + " Win!\r\n"
+                 + "Play again?",
+                 "Winner",
+                 JOptionPane.YES_NO_OPTION,
+                 JOptionPane.QUESTION_MESSAGE,
+                 null,
+                 options,
+                 options[1]);
+             if (n == 0) {
+                 newGame();
+             } else {
+                 System.exit(0);
+             }
+             return true;
+		 } 
+		 
+		 return false;
+	 }
+	 
 	public static void main(String[] args) {
 		TicTacToe game = TicTacToe.getInstance();
 		game.play();
