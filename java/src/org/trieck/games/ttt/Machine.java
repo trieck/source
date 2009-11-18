@@ -12,9 +12,9 @@ public class Machine {
 		this.color = color;
 	}
 	
-	public boolean move(Board board) {
+	public Point move(Board board) {
 		if (board.available() == 0)
-			return false;
+			return null;
 		
 		board.makeTree(color);
 		
@@ -23,7 +23,7 @@ public class Machine {
 		
 		board.setPiece(pt.x, pt.y, color);
 		
-		return true;
+		return pt;
 	}
 	
 	private int alphabeta(Board board, int depth, int color, int alpha, int beta, Point pt) {

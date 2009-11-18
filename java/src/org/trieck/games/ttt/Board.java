@@ -52,6 +52,14 @@ public class Board implements Cloneable, Iterable<Board> {
 		return rep[x][y];
 	}	
 	
+	public void clear() {
+		for (int i = 0; i < Board.BOARD_SIZE; i++) {
+			for (int j = 0; j < Board.BOARD_SIZE; j++) {
+				rep[i][j] = COLOR_EMPTY;
+			}
+		}
+	}
+	
 	public int available() {
 		int count = 0;
 		
