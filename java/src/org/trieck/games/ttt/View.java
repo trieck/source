@@ -9,16 +9,12 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-
-import org.trieck.ui.CursorController;
 
 public class View extends JComponent implements MouseListener {
 
@@ -30,19 +26,19 @@ public class View extends JComponent implements MouseListener {
 	private static final int CELL_CY_SEG = CELL_CY / 3;
 	private static final int CX_POLYGONS = Board.BOARD_SIZE;
 	private static final int CY_POLYGONS = Board.BOARD_SIZE;
-	
+
 	private static final int[] XPOINTS = { CELL_CX_SEG, CELL_CX_SEG * 2,
-		CELL_CX, CELL_CX, CELL_CX_SEG * 2, CELL_CX_SEG, 0, 0 };
+			CELL_CX, CELL_CX, CELL_CX_SEG * 2, CELL_CX_SEG, 0, 0 };
 	private static final int[] YPOINTS = { 0, 0, CELL_CY_SEG, CELL_CY_SEG * 2,
-		CELL_CY, CELL_CY, CELL_CY_SEG * 2, CELL_CY_SEG };
+			CELL_CY, CELL_CY, CELL_CY_SEG * 2, CELL_CY_SEG };
 
 	private static final Polygon HEXAGON = new Polygon(XPOINTS, YPOINTS,
 			XPOINTS.length);
 	private static final Color[] PALETTE = { new Color(0x00, 0x64, 0x00),
 			new Color(0x8B, 0x00, 0x00) };
 
-	private static final long serialVersionUID = 1L;	
-	
+	private static final long serialVersionUID = 1L;
+
 	private BufferedImage[] buff; // image buffers
 	private final TicTacToe theGame = TicTacToe.getInstance();
 
@@ -115,11 +111,11 @@ public class View extends JComponent implements MouseListener {
 				board.setPiece(px, py, Board.COLOR_NOUGHT);
 				Rectangle rc = p.getBounds();
 				paintImmediately(rc);
-				
+
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				pt = theGame.getMachineTurn();
 				setCursor(Cursor.getDefaultCursor());
-				
+
 				if (pt != null) {
 					p = polygonFromPoint(new Point(BORDER_CX + pt.x * CELL_CX,
 							BORDER_CY + pt.y * CELL_CY));
