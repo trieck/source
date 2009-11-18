@@ -1,7 +1,12 @@
-@echo off
+rem @echo off
 
 set TARGET=%1
-set CPATH=%2
+set MAINCLASS=%2
+set CPATH=%3
+set MANIFEST=Manifest.mf
 
-jar cvfm %TARGET% manifest.mf -C classes %CPATH%
+echo Manifest-Version: 1.0 > %MANIFEST%
+echo Main-class: %MAINCLASS% >> %MANIFEST%
+
+jar cvfm %TARGET% %MANIFEST% -C classes %CPATH%
 
