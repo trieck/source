@@ -104,10 +104,10 @@ public class Board implements Cloneable, Iterable<Board> {
 		return node_rep;
 	}
 
-	public int getPiece(int x, int y) {
-		x = x % BOARD_SIZE;
-		y = y % BOARD_SIZE;
-		return rep[x][y];
+	public int getPiece(int row, int col) {
+		row = row % BOARD_SIZE;
+		col = col % BOARD_SIZE;
+		return rep[row][col];
 	}
 
 	public Iterator<Board> iterator() {
@@ -155,10 +155,10 @@ public class Board implements Cloneable, Iterable<Board> {
 		return 0;
 	}
 
-	public void setPiece(int x, int y, int color) {
-		x = x % BOARD_SIZE;
-		y = y % BOARD_SIZE;
-		rep[x][y] = color;
+	public void setPiece(int row, int col, int color) {
+		row = row % BOARD_SIZE;
+		col = col % BOARD_SIZE;
+		rep[row][col] = color;
 	}
 
 	@Override

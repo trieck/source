@@ -1,22 +1,19 @@
 package org.trieck.games.ttt;
 
-import java.awt.Point;
-
 public class Machine {
 	public static final int MAX_DEPTH = 4;
 	private static final int MAX_RANK = Integer.MAX_VALUE;
-
-	int color;
+	private final int color;
 
 	public Machine(int color) {
 		this.color = color;
 	}
 
 	private int alphabeta(Board board, int depth, int color, int alpha,
-			int beta, Point pt) {
+			int beta, Move move) {
 		if (depth == 0 || board.available() == 0) {
-			pt.x = board.getNodeRep() / Board.BOARD_SIZE;
-			pt.y = board.getNodeRep() % Board.BOARD_SIZE;
+			move.row = board.getNodeRep() / Board.BOARD_SIZE;
+			move.col = board.getNodeRep() % Board.BOARD_SIZE;
 			return board.rank();
 		}
 
@@ -24,7 +21,7 @@ public class Machine {
 
 		int ab;
 		for (final Board child : board) {
-			ab = alphabeta(child, depth - 1, -color, -beta, -alpha, pt);
+			ab = alphabeta(child, depth - 1, -color, -beta, -alpha, move);
 			if (color == Board.COLOR_CROSS) {
 				if (ab > alpha) {
 					alpha = ab;
@@ -46,24 +43,24 @@ public class Machine {
 			}
 		}
 
-		pt.x = best.getNodeRep() / Board.BOARD_SIZE;
-		pt.y = best.getNodeRep() % Board.BOARD_SIZE;
+		move.row = best.getNodeRep() / Board.BOARD_SIZE;
+		move.col = best.getNodeRep() % Board.BOARD_SIZE;
 
 		return (color == Board.COLOR_CROSS) ? alpha : beta;
 	}
 
-	public Point move(Board board) {
+	public Move move(Board board) {
 		if (board.available() == 0) {
 			return null;
 		}
 
 		board.makeTree(color);
 
-		final Point pt = new Point();
-		alphabeta(board, MAX_DEPTH, color, -MAX_RANK, MAX_RANK, pt);
+		final Move move = new Move();
+		alphabeta(board, MAX_DEPTH, color, -MAX_RANK, MAX_RANK, move);
 
-		board.setPiece(pt.x, pt.y, color);
+		board.setPiece(move.row, move.col, color);
 
-		return pt;
+		return move;
 	}
 }

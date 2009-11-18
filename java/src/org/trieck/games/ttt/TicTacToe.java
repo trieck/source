@@ -1,7 +1,5 @@
 package org.trieck.games.ttt;
 
-import java.awt.Point;
-
 import javax.swing.JOptionPane;
 
 public class TicTacToe {
@@ -58,19 +56,19 @@ public class TicTacToe {
 		return theBoard;
 	}
 
-	public Point getMachineTurn() {
+	public Move getMachineTurn() {
 		if (checkWinner()) {
 			return null;
 		}
 
-		Point pt;
-		if ((pt = theMachine.move(theBoard)) == null) {
+		Move move;
+		if ((move = theMachine.move(theBoard)) == null) {
 			stalemate();
 		}
 
 		checkWinner();
 
-		return pt;
+		return move;
 	}
 
 	public void newGame() {

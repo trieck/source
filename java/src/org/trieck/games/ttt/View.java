@@ -92,7 +92,7 @@ public class View extends JComponent implements MouseListener {
 			return;
 		}
 
-		Point pt = e.getPoint();
+		final Point pt = e.getPoint();
 		final Insets insets = getInsets();
 		final int width = getWidth() - insets.left - insets.right;
 		final int height = getHeight() - insets.top - insets.bottom;
@@ -106,19 +106,19 @@ public class View extends JComponent implements MouseListener {
 		Polygon p = polygonFromPoint(new Point(BORDER_CX + px * CELL_CX,
 				BORDER_CY + py * CELL_CY));
 		if (p.contains(pt) && px < cx && py < cy) {
-			final int color = board.getPiece(px, py);
+			final int color = board.getPiece(py, px);
 			if (color == Board.COLOR_EMPTY) {
-				board.setPiece(px, py, Board.COLOR_NOUGHT);
+				board.setPiece(py, px, Board.COLOR_NOUGHT);
 				Rectangle rc = p.getBounds();
 				paintImmediately(rc);
 
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-				pt = theGame.getMachineTurn();
+				final Move move = theGame.getMachineTurn();
 				setCursor(Cursor.getDefaultCursor());
 
-				if (pt != null) {
-					p = polygonFromPoint(new Point(BORDER_CX + pt.x * CELL_CX,
-							BORDER_CY + pt.y * CELL_CY));
+				if (move != null) {
+					p = polygonFromPoint(new Point(BORDER_CX + move.col
+							* CELL_CX, BORDER_CY + move.row * CELL_CY));
 					rc = p.getBounds();
 					repaint(rc);
 				}
@@ -156,7 +156,7 @@ public class View extends JComponent implements MouseListener {
 		for (int i = bx; i < cx; i++) {
 			for (int j = by; j < cy; j++) {
 				BufferedImage image = null;
-				color = board.getPiece(i, j);
+				color = board.getPiece(j, i);
 				switch (color) {
 				case Board.COLOR_EMPTY:
 					image = buff[0];
