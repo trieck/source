@@ -1,11 +1,16 @@
 package org.trieck.bencode;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
 
 public class BEDecoder {
 
 	/* input stream */
-	private PushbackInputStream is;
+	private final PushbackInputStream is;
 
 	/**
 	 * Construct a decoder from an input stream
@@ -24,7 +29,7 @@ public class BEDecoder {
 	 * @throws IOException
 	 */
 	public static BEObject decode(InputStream s) throws IOException {
-		BEDecoder decoder = new BEDecoder(s);
+		final BEDecoder decoder = new BEDecoder(s);
 		return decoder.loadObject();
 	}
 
@@ -35,7 +40,7 @@ public class BEDecoder {
 	 * @return decoded object
 	 */
 	private BEObject loadObject() throws IOException {
-		int t = getTok();
+		final int t = getTok();
 
 		switch (t) {
 		case BEObject.BET_DICT:
@@ -48,7 +53,7 @@ public class BEDecoder {
 			return loadString();
 		}
 
-		throw new IOException("unexpected token: \"" + (char)t + "\"");
+		throw new IOException("unexpected token: \"" + (char) t + "\"");
 	}
 
 	/**
@@ -58,7 +63,7 @@ public class BEDecoder {
 	 * @throws IOException
 	 */
 	private BEInteger loadInteger() throws IOException {
-		StringBuffer buf = new StringBuffer();
+		final StringBuffer buf = new StringBuffer();
 
 		int c;
 		while ((c = is.read()) != 'e' && c != -1) {
@@ -75,15 +80,15 @@ public class BEDecoder {
 	 * @throws IOException
 	 */
 	private BEString loadString() throws IOException {
-		StringBuffer blen = new StringBuffer();
+		final StringBuffer blen = new StringBuffer();
 
 		int c;
 		while ((c = is.read()) != ':' && c != -1) {
 			blen.append((char) c);
 		}
 
-		int nlen = Integer.parseInt(blen.toString());
-		byte[] buf = new byte[nlen];
+		final int nlen = Integer.parseInt(blen.toString());
+		final byte[] buf = new byte[nlen];
 
 		is.read(buf);
 
@@ -98,7 +103,7 @@ public class BEDecoder {
 	 */
 	private BEDictionary loadDictionary() throws IOException {
 
-		BEDictionary d = new BEDictionary();
+		final BEDictionary d = new BEDictionary();
 		BEString k;
 		BEObject v;
 
@@ -121,7 +126,7 @@ public class BEDecoder {
 	 * @throws IOException
 	 */
 	private BEList loadList() throws IOException {
-		BEList l = new BEList();
+		final BEList l = new BEList();
 
 		int c;
 		while ((c = peek()) != 'e' && c != -1) {
@@ -140,7 +145,7 @@ public class BEDecoder {
 	 * @throws IOException
 	 */
 	private int getTok() throws IOException {
-		int c = is.read();
+		final int c = is.read();
 
 		switch (c) {
 		case 'd':
@@ -166,7 +171,7 @@ public class BEDecoder {
 	 * @throws IOException
 	 */
 	private int peek() throws IOException {
-		int c = is.read();
+		final int c = is.read();
 		is.unread(c);
 		return c;
 	}
@@ -184,16 +189,16 @@ public class BEDecoder {
 		}
 
 		try {
-			FileInputStream is = new FileInputStream(args[0]);
-			BEObject o = BEDecoder.decode(is);
+			final FileInputStream is = new FileInputStream(args[0]);
+			final BEObject o = BEDecoder.decode(is);
 
-			FileOutputStream os = new FileOutputStream("d:/tmp/out.benc");
+			final FileOutputStream os = new FileOutputStream("d:/tmp/out.benc");
 			BEEncoder.encode(o, os);
 
-		} catch (FileNotFoundException e) {
+		} catch (final FileNotFoundException e) {
 			System.err.println(e);
 			System.exit(-1);
-		} catch (IOException ioe) {
+		} catch (final IOException ioe) {
 			System.err.println(ioe);
 			System.exit(-2);
 		}

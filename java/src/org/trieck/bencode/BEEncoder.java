@@ -1,6 +1,7 @@
 package org.trieck.bencode;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class BEEncoder {
 
 	private static final byte END_OBJECT = 'e';
 
-	private OutputStream os;
+	private final OutputStream os;
 
 	private BEEncoder(OutputStream os) {
 		this.os = os;
@@ -22,7 +23,7 @@ public class BEEncoder {
 
 	public static void encode(BEObject o, OutputStream os) throws IOException {
 
-		BEEncoder encoder = new BEEncoder(os);
+		final BEEncoder encoder = new BEEncoder(os);
 		encoder.encodeObject(o);
 	}
 
@@ -60,11 +61,11 @@ public class BEEncoder {
 
 		beginDictionary();
 
-		Iterator<Map.Entry<BEString, BEObject>> it = d.getIterator();
+		final Iterator<Map.Entry<BEString, BEObject>> it = d.getIterator();
 		while (it.hasNext()) {
-			Map.Entry<BEString, BEObject> entry = it.next();
-			BEString key = entry.getKey();
-			BEObject val = entry.getValue();
+			final Map.Entry<BEString, BEObject> entry = it.next();
+			final BEString key = entry.getKey();
+			final BEObject val = entry.getValue();
 
 			encodeString(key);
 			encodeObject(val);
@@ -105,7 +106,7 @@ public class BEEncoder {
 	}
 
 	private void writeRawInt(long l) throws IOException {
-		String s = new String("" + l);
+		final String s = new String("" + l);
 		writeBytes(s.getBytes());
 	}
 

@@ -1,54 +1,58 @@
 package org.trieck.apps.ecalc;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class ECalc {
 
-    private Machine machine;
+	private final Machine machine;
 
-    public ECalc() {
-        machine = Machine.getInstance();
-    }
+	public ECalc() {
+		machine = Machine.getInstance();
+	}
 
-    public void run(String file) throws IOException {
-        FileInputStream fis;
+	public void run(String file) throws IOException {
+		FileInputStream fis;
 
-        try {
-            fis = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new IOException(e.toString());
-        }
+		try {
+			fis = new FileInputStream(file);
+		} catch (final FileNotFoundException e) {
+			throw new IOException(e.toString());
+		}
 
-        run(fis);
-    }
+		run(fis);
+	}
 
-    public void run(InputStream is) throws IOException {
+	public void run(InputStream is) throws IOException {
 
-        BufferedReader reader =
-                new BufferedReader(
-                        new InputStreamReader(is));
+		final BufferedReader reader = new BufferedReader(new InputStreamReader(
+				is));
 
-        String line;
-        while ((line = reader.readLine()) != null) {
-            machine.run(line);
-        }
+		String line;
+		while ((line = reader.readLine()) != null) {
+			machine.run(line);
+		}
 
-        is.close();
-    }
+		is.close();
+	}
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        ECalc calculator = new ECalc();
+		final ECalc calculator = new ECalc();
 
-        try {
-            if (args.length > 0) {
-                calculator.run(args[0]);
-            } else {
-                calculator.run(System.in);
-            }
-        } catch (IOException e) {
-            System.err.println(e);
-        }
+		try {
+			if (args.length > 0) {
+				calculator.run(args[0]);
+			} else {
+				calculator.run(System.in);
+			}
+		} catch (final IOException e) {
+			System.err.println(e);
+		}
 
-    }
+	}
 }

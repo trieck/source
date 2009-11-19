@@ -5,16 +5,16 @@ import java.util.TreeMap;
 
 public class Inverter {
 
-    private Map<String, Locality> table = new TreeMap<String, Locality>();
+	private final Map<String, Locality> table = new TreeMap<String, Locality>();
 
-    public Inverter() {
-    }
+	public Inverter() {
+	}
 
-    public Locality get(String term) {
-        return table.get(term);
-    }
+	public Locality get(String term) {
+		return table.get(term);
+	}
 
-    public void put(String term, Locality locality) {
-        table.put(term, locality);
-    }
+	public void put(String term, Locality locality) {
+		table.put(term, locality);
+	}
 }

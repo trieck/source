@@ -5,61 +5,66 @@ import java.util.List;
 
 public class Locality {
 
-    private List<Location> locations = new ArrayList<Location>();
+	private final List<Location> locations = new ArrayList<Location>();
 
-    public Locality() {
-    }
+	public Locality() {
+	}
 
-    public void add(Location l) {
-        locations.add(l);
-    }
+	public void add(Location l) {
+		locations.add(l);
+	}
 
-    public List<Location> getLocations() {
-        return locations;
-    }
+	public List<Location> getLocations() {
+		return locations;
+	}
 
-    public Location get(int index) {
-        return locations.get(index);
-    }
+	public Location get(int index) {
+		return locations.get(index);
+	}
 
-    public int getWord(int index) {
-        return get(index).getWord();
-    }
+	public int getWord(int index) {
+		return get(index).getWord();
+	}
 
-    public int getOffset(int index) {
-        return get(index).getOffset();
-    }
+	public int getOffset(int index) {
+		return get(index).getOffset();
+	}
 
-    public int size() {
-        return locations.size();
-    }
+	public int size() {
+		return locations.size();
+	}
 
-    public Locality adjacent(Locality rhs) {
-        Locality output = new Locality(), lhs = this;
-        if (rhs == null) return output;
+	public Locality adjacent(Locality rhs) {
+		final Locality output = new Locality();
+		Locality lhs = this;
+		if (rhs == null) {
+			return output;
+		}
 
-        if (lhs.getWord(0) > rhs.getWord(0)) {
-            Locality t = lhs;
-            lhs = rhs;
-            rhs = t;
-        }
+		if (lhs.getWord(0) > rhs.getWord(0)) {
+			final Locality t = lhs;
+			lhs = rhs;
+			rhs = t;
+		}
 
-        for (int i = 0; i < lhs.size(); i++) {
-            int l = lhs.getWord(i);
-            for (int j = 0; j < rhs.size(); j++) {
-                int r = rhs.getWord(j);
-                if (r - l > 1) break;
-                if (isAdjacent(l, r)) {
-                    output.add(new Location(Math.max(l, r),
-                            Math.min(lhs.getOffset(i), rhs.getOffset(j))));
-                }
-            }
-        }
+		for (int i = 0; i < lhs.size(); i++) {
+			final int l = lhs.getWord(i);
+			for (int j = 0; j < rhs.size(); j++) {
+				final int r = rhs.getWord(j);
+				if (r - l > 1) {
+					break;
+				}
+				if (isAdjacent(l, r)) {
+					output.add(new Location(Math.max(l, r), Math.min(lhs
+							.getOffset(i), rhs.getOffset(j))));
+				}
+			}
+		}
 
-        return output;
-    }
+		return output;
+	}
 
-    private static boolean isAdjacent(int l, int r) {
-        return Math.abs(l - r) == 1;
-    }
+	private static boolean isAdjacent(int l, int r) {
+		return Math.abs(l - r) == 1;
+	}
 }

@@ -1,22 +1,22 @@
 package org.trieck.apps;
 
-import java.util.TreeMap;
-import java.util.Map;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Test {
 
 	public static void main(String[] args) {
 
-		Map<String, String> M = new TreeMap<String, String>();
+		final Map<String, String> M = new TreeMap<String, String>();
 		M.put("a", "b");
 		M.put("c", "d");
 		M.put("e", "f");
 
-		Iterator<Map.Entry<String, String>> it = M.entrySet().iterator();
+		final Iterator<Map.Entry<String, String>> it = M.entrySet().iterator();
 		while (it.hasNext()) {
-			Map.Entry<String, String> e = it.next();
-			System.out.println((String)e.getKey() + '-' + (String)e.getValue());
+			final Map.Entry<String, String> e = it.next();
+			System.out.println(e.getKey() + '-' + e.getValue());
 		}
 	}
 }

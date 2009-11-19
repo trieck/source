@@ -1,9 +1,13 @@
 package org.trieck.apps;
 
-import org.trieck.ui.StatusPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import org.trieck.ui.StatusPanel;
 
 public class StatusFrame extends JFrame {
 
@@ -33,15 +37,15 @@ public class StatusFrame extends JFrame {
 	 * Initialize components
 	 */
 	private void initComponents() {
-		JPanel content = new JPanel(new BorderLayout());
+		final JPanel content = new JPanel(new BorderLayout());
 		content.setPreferredSize(dimensions);
 		setContentPane(content);
 
-		JPanel innerPane = new JPanel();
+		final JPanel innerPane = new JPanel();
 		innerPane.setBorder(BorderFactory.createLoweredBevelBorder());
 		content.add(innerPane, BorderLayout.CENTER);
 
-		StatusPanel status = new StatusPanel();
+		final StatusPanel status = new StatusPanel();
 		content.add(status, BorderLayout.SOUTH);
 		pack();
 	}

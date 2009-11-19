@@ -54,135 +54,138 @@ import java.io.OutputStream;
 
 public class WestScript {
 
-    private String script;
-    private int index;
+	private String script;
+	private int index;
 
-    public WestScript() {
-        script = new String();
-        index = 0;
-    }
+	public WestScript() {
+		script = new String();
+		index = 0;
+	}
 
-    public WestScript(String str) {
-        this();
-        script = str;
-    }
+	public WestScript(String str) {
+		this();
+		script = str;
+	}
 
-    public WestScript(String format, String str1, String str2, String str3) {
-        this();
-        String[] args = {str1, str2, str3};
-        StringBuffer output = new StringBuffer();
+	public WestScript(String format, String str1, String str2, String str3) {
+		this();
+		final String[] args = { str1, str2, str3 };
+		final StringBuffer output = new StringBuffer();
 
-        for (int i = 0, j = 0; i < format.length(); i++) {
-            switch (format.charAt(i)) {
-                case '%':
-                    i++;    // '%'
-                    i++;    // 's'
-                    output.append(args[j++]);
-                    break;
-                default:
-                    output.append(format.charAt(i));
-                    break;
-            }
-        }
+		for (int i = 0, j = 0; i < format.length(); i++) {
+			switch (format.charAt(i)) {
+			case '%':
+				i++; // '%'
+				i++; // 's'
+				output.append(args[j++]);
+				break;
+			default:
+				output.append(format.charAt(i));
+				break;
+			}
+		}
 
-        script = output.toString();
-    }
+		script = output.toString();
+	}
 
-    /* one step evaluation */
-    public WestScript function(OutputStream s) {
-        String token = lookahead();
+	/* one step evaluation */
+	public WestScript function(OutputStream s) {
+		String token = lookahead();
 
-        // escaped function / variable
-        if (token.length() > 1 && token.charAt(1) == '$') {
-            if (lookahead(2).equals("(")) {
-                index++;
-                // escaped function
-                stream(s, getFunction());
-            } else {
-                // escaped variable
-                token = getTok();
-                // stream(s, htmlencode(symbol[token.Mid(2)]); FIXME!
-            }
-            return new WestScript();
-        }
+		// escaped function / variable
+		if (token.length() > 1 && token.charAt(1) == '$') {
+			if (lookahead(2).equals("(")) {
+				index++;
+				// escaped function
+				stream(s, getFunction());
+			} else {
+				// escaped variable
+				token = getTok();
+				// stream(s, htmlencode(symbol[token.Mid(2)]); FIXME!
+			}
+			return new WestScript();
+		}
 
-        return new WestScript();
-    }
+		return new WestScript();
+	}
 
-    /* evaluates current function */
-    public String getValue() {
-        return "";
-    }
+	/* evaluates current function */
+	public String getValue() {
+		return "";
+	}
 
-    /* get expression token */
-    public String getTok() {
-        return "";
-    }
+	/* get expression token */
+	public String getTok() {
+		return "";
+	}
 
-    /* get unevaluated expr */
-    public String getExpr() {
-        return "";
-    }
+	/* get unevaluated expr */
+	public String getExpr() {
+		return "";
+	}
 
-    /* get variable name */
-    public String getVar() {
-        return "";
-    }
+	/* get variable name */
+	public String getVar() {
+		return "";
+	}
 
-    /* lookahead 1 token */
-    public String lookahead() {
-        return "";
-    }
+	/* lookahead 1 token */
+	public String lookahead() {
+		return "";
+	}
 
-    /* lookahead n tokens */
-    public String lookahead(int n) {
-        return "";
-    }
+	/* lookahead n tokens */
+	public String lookahead(int n) {
+		return "";
+	}
 
-    // read in newline char
-    public String getNewline() {
-        return "";
-    }
+	// read in newline char
+	public String getNewline() {
+		return "";
+	}
 
-    // get function token
-    private String getFunction() {
-        return "";
-    }
+	// get function token
+	private String getFunction() {
+		return "";
+	}
 
-    // get pure html text
-    private String getHtml() {
-        return "";
-    }
+	// get pure html text
+	private String getHtml() {
+		return "";
+	}
 
-    private OutputStream eval(OutputStream s) {
-        if (lookahead().equals("'"))
-            getTok();
+	private OutputStream eval(OutputStream s) {
+		if (lookahead().equals("'")) {
+			getTok();
+		}
 
-        while (index < script.length()) {
-            stream(s, getHtml());
+		while (index < script.length()) {
+			stream(s, getHtml());
 
-            if (script.charAt(index) == '$')
-                stream(s, function(s));
-            else if (script.charAt(index) == '\'')
-                break;
-        }
+			if (script.charAt(index) == '$') {
+				stream(s, function(s));
+			} else if (script.charAt(index) == '\'') {
+				break;
+			}
+		}
 
-        if (lookahead().equals("'"))
-            getTok();
+		if (lookahead().equals("'")) {
+			getTok();
+		}
 
-        return s;
-    }
+		return s;
+	}
 
-    private static void stream(OutputStream s, String str) {
-        try {
-            s.write(str.getBytes());
-        } catch (IOException e) {
-            ;
-        }
-    }
+	private static void stream(OutputStream s, String str) {
+		try {
+			s.write(str.getBytes());
+		} catch (final IOException e) {
+			;
+		}
+	}
 
-    private static void stream(OutputStream s, WestScript ws) {
-        ws.eval(s);
-    }
+	private static void stream(OutputStream s, WestScript ws) {
+		ws.eval(s);
+	}
 
 }
