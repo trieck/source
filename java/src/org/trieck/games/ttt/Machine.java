@@ -1,12 +1,22 @@
 package org.trieck.games.ttt;
 
 public class Machine {
-	public static final int MAX_DEPTH = 4;
+	public static final int DEFAULT_DEPTH = 4;
 	private static final int MAX_RANK = Integer.MAX_VALUE;
 	private final int color;
-
+	private int theDepth;
+	
 	public Machine(int color) {
+		theDepth = DEFAULT_DEPTH;
 		this.color = color;
+	}
+	
+	public int getDepth() {
+		return theDepth;
+	}
+	
+	public void setDepth(int depth) {
+		theDepth = depth;
 	}
 
 	private int alphabeta(Board board, int depth, int color, int alpha,
@@ -54,10 +64,10 @@ public class Machine {
 			return null;
 		}
 
-		board.makeTree(color);
+		board.makeTree(theDepth, color);
 
 		final Move move = new Move();
-		alphabeta(board, MAX_DEPTH, color, -MAX_RANK, MAX_RANK, move);
+		alphabeta(board, theDepth, color, -MAX_RANK, MAX_RANK, move);
 
 		board.setPiece(move.row, move.col, color);
 

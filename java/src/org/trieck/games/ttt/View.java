@@ -37,7 +37,8 @@ public class View extends JComponent implements MouseListener {
 	private static final Color[] PALETTE = { new Color(0x00, 0x80, 0x00),
 			new Color(0x80, 0x00, 0x00) };
 
-	private static final Color BKGND_COLOR = new Color(0xC0, 0xC0, 0xC0);
+	private static final Color BKGND_COLOR = new Color(0xFF, 0xFF, 0xC0);
+	private static final Color GRID_COLOR = new Color(0xC0, 0xC0, 0xC0);
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,7 +56,7 @@ public class View extends JComponent implements MouseListener {
 		buff[0] = new BufferedImage(CELL_CX + 1, CELL_CY + 1,
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D gbi = buff[0].createGraphics();
-		gbi.setColor(Color.BLACK);
+		gbi.setColor(GRID_COLOR);
 		gbi.drawPolygon(HEXAGON);
 
 		// filled image color 1
@@ -64,7 +65,7 @@ public class View extends JComponent implements MouseListener {
 		gbi = buff[1].createGraphics();
 		gbi.setColor(PALETTE[0]);
 		gbi.fillPolygon(HEXAGON);
-		gbi.setColor(Color.BLACK);
+		gbi.setColor(GRID_COLOR);
 		gbi.drawPolygon(HEXAGON);
 
 		// filled image color 2
@@ -73,7 +74,7 @@ public class View extends JComponent implements MouseListener {
 		gbi = buff[2].createGraphics();
 		gbi.setColor(PALETTE[1]);
 		gbi.fillPolygon(HEXAGON);
-		gbi.setColor(Color.BLACK);
+		gbi.setColor(GRID_COLOR);
 		gbi.drawPolygon(HEXAGON);
 	}
 

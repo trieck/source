@@ -15,7 +15,7 @@ public class Board implements Cloneable, Iterable<Board> {
 	private static final Vectors VECTORS = Vectors.instance();
 
 	private static void addNode(Board parent, int depth, int color) {
-		if (depth > Machine.MAX_DEPTH) {
+		if (depth == 0) {
 			return;
 		}
 
@@ -43,7 +43,7 @@ public class Board implements Cloneable, Iterable<Board> {
 					continue; // winner
 				}
 
-				addNode(next, depth + 1, -color);
+				addNode(next, depth-1, -color);
 			}
 		}
 	}
@@ -114,9 +114,9 @@ public class Board implements Cloneable, Iterable<Board> {
 		return children.iterator();
 	}
 
-	public void makeTree(int color) {
+	public void makeTree(int depth, int color) {
 		children.clear();
-		Board.addNode(this, 1, color);
+		Board.addNode(this, depth, color);
 	}
 
 	public int rank() {
