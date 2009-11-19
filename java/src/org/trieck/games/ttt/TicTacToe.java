@@ -32,7 +32,19 @@ public class TicTacToe {
 		theFrame.setVisible(false);
 	}
 
-	boolean checkWinner() {
+	private boolean checkGameOver() {
+		if (checkWinner()) {
+			return true;
+		}
+
+		if (checkDraw()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean checkWinner() {
 		int color;
 		if ((color = theBoard.winner()) != Board.COLOR_EMPTY) {
 			final Object[] options = { "Yes", "No" };
@@ -57,16 +69,15 @@ public class TicTacToe {
 	}
 
 	public Move getMachineTurn() {
-		if (checkWinner()) {
+		if (checkGameOver()) {
 			return null;
 		}
 
-		Move move;
-		if ((move = theMachine.move(theBoard)) == null) {
-			stalemate();
-		}
+		final Move move = theMachine.move(theBoard);
 
-		checkWinner();
+		if (checkGameOver()) {
+			return null;
+		}
 
 		return move;
 	}
@@ -80,16 +91,22 @@ public class TicTacToe {
 		theFrame.setVisible(true);
 	}
 
-	public void stalemate() {
-		final Object[] options = { "Yes", "No" };
-		final int n = JOptionPane.showOptionDialog(theFrame, "Stalemate!\r\n"
-				+ "Play again?", "Stalemate", JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-		if (n == 0) {
-			newGame();
-		} else {
-			System.exit(0);
+	public boolean checkDraw() {
+		if (theBoard.isDraw()) {
+			final Object[] options = { "Yes", "No" };
+			final int n = JOptionPane.showOptionDialog(theFrame, "Draw!\r\n"
+					+ "Play again?", "Draw", JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+			if (n == 0) {
+				newGame();
+			} else {
+				System.exit(0);
+			}
+
+			return true;
 		}
+
+		return false;
 	}
 
 }

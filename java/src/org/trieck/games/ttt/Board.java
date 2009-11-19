@@ -193,6 +193,18 @@ public class Board implements Cloneable, Iterable<Board> {
 		return output.toString();
 	}
 
+	public boolean isDraw() {
+
+		int ndraws = 0;
+		for (final Integer[] v : VECTORS) {
+			if (drawV(v)) {
+				ndraws++;
+			}
+		}
+
+		return ndraws == VECTORS.size();
+	}
+
 	public int winner() {
 		int winner = COLOR_EMPTY;
 
@@ -222,10 +234,6 @@ public class Board implements Cloneable, Iterable<Board> {
 			}
 		}
 
-		if (noughts > 0 && crosses > 0) {
-			return 0; // infeasible
-		}
-
 		if (crosses == BOARD_SIZE) {
 			return COLOR_CROSS;
 		}
@@ -235,5 +243,25 @@ public class Board implements Cloneable, Iterable<Board> {
 		}
 
 		return COLOR_EMPTY;
+	}
+
+	private boolean drawV(Integer[] v) {
+		int row, col;
+		int noughts = 0, crosses = 0;
+
+		for (final Integer element : v) {
+			row = element / BOARD_SIZE;
+			col = element % BOARD_SIZE;
+
+			if (rep[row][col] == COLOR_NOUGHT) {
+				noughts++;
+			}
+
+			if (rep[row][col] == COLOR_CROSS) {
+				crosses++;
+			}
+		}
+
+		return (crosses > 0 && noughts > 0);
 	}
 }

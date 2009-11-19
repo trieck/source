@@ -20,9 +20,9 @@ public class View extends JComponent implements MouseListener {
 
 	public static final int BORDER_CX = 3;
 	public static final int BORDER_CY = 3;
-	public static final int CELL_CX = 513 / Board.BOARD_SIZE;
+	public static final int CELL_CX = 120;
 	private static final int CELL_CX_SEG = CELL_CX / 3;
-	public static final int CELL_CY = 513 / Board.BOARD_SIZE;
+	public static final int CELL_CY = 120;
 	private static final int CELL_CY_SEG = CELL_CY / 3;
 	private static final int CX_POLYGONS = Board.BOARD_SIZE;
 	private static final int CY_POLYGONS = Board.BOARD_SIZE;
@@ -34,8 +34,10 @@ public class View extends JComponent implements MouseListener {
 
 	private static final Polygon HEXAGON = new Polygon(XPOINTS, YPOINTS,
 			XPOINTS.length);
-	private static final Color[] PALETTE = { new Color(0x00, 0x64, 0x00),
-			new Color(0x8B, 0x00, 0x00) };
+	private static final Color[] PALETTE = { new Color(0x00, 0x80, 0x00),
+			new Color(0x80, 0x00, 0x00) };
+
+	private static final Color BKGND_COLOR = new Color(0xC0, 0xC0, 0xC0);
 
 	private static final long serialVersionUID = 1L;
 
@@ -79,14 +81,14 @@ public class View extends JComponent implements MouseListener {
 		createBuffers();
 		setOpaque(true);
 		setBorder(BorderFactory.createLoweredBevelBorder());
-		setBackground(new Color(0xFF, 0xEF, 0xD5));
+		setBackground(BKGND_COLOR);
 		setPreferredSize(new Dimension(CELL_CX * CX_POLYGONS + BORDER_CX * 2,
 				CELL_CY * CY_POLYGONS + BORDER_CY * 2));
 		addMouseListener(this);
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mousePressed(MouseEvent e) {
 		final Board board = theGame.getBoard();
 		if (board.available() == 0) {
 			return;
@@ -135,7 +137,7 @@ public class View extends JComponent implements MouseListener {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {
 	}
 
 	@Override

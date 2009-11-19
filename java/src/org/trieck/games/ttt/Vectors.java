@@ -23,6 +23,10 @@ public class Vectors implements Iterable<Integer[]> {
 		generate();
 	}
 
+	public int size() {
+		return vlist.size();
+	}
+
 	void generate() {
 
 		final List<Integer> v = new ArrayList<Integer>();

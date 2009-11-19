@@ -141,7 +141,7 @@ public class View extends JComponent implements MouseListener {
 		return new Polygon(xpts, ypts, xpts.length);
 	}
 
-	public void mouseClicked(MouseEvent e) {
+	public void mousePressed(MouseEvent e) {
 		Point pt = e.getPoint();
 		final Insets insets = getInsets();
 		final int width = getWidth() - insets.left - insets.right;
@@ -172,7 +172,7 @@ public class View extends JComponent implements MouseListener {
 		}
 	}
 
-	public void mousePressed(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {
 	}
 
 	public void mouseReleased(MouseEvent e) {
