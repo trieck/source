@@ -99,7 +99,7 @@
   </component>
   <component name="DebuggerManager">
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/trieck/bencode/BEString.java" line="59">
+      <breakpoint url="file://$PROJECT_DIR$/src/org/tomrieck/bencode/BEString.java" line="59">
         <option name="ENABLED" value="true" />
         <option name="SUSPEND_VM" value="true" />
         <option name="LOG_ENABLED" value="false" />
@@ -151,8 +151,8 @@
     <option name="myCurrentFavoritesList" value="java" />
   </component>
   <component name="FileEditorManager" split-orientation="horizontal" split-proportion="0.5">
-    <first-group selected-file="file://$PROJECT_DIR$/src/org/trieck/testing/MapTest.java">
-      <entry file="file://$PROJECT_DIR$/src/org/trieck/testing/MapTest.java" pinned="false">
+    <first-group selected-file="file://$PROJECT_DIR$/src/org/tomrieck/testing/MapTest.java">
+      <entry file="file://$PROJECT_DIR$/src/org/tomrieck/testing/MapTest.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
           <state line="36" column="35" selection-start="754" selection-end="754" vertical-scroll-proportion="0.3022508">
             <folding>
@@ -236,8 +236,8 @@
     <expanded_node url="" module="java" type="module" />
     <expanded_node url="file://$PROJECT_DIR$" module="java" type="directory" />
     <expanded_node url="file://$PROJECT_DIR$/src/org" module="java" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/src/org/trieck/testing" module="java" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/src/org/trieck" module="java" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/src/org/tomrieck/testing" module="java" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/src/org/tomrieck" module="java" type="directory" />
   </component>
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
@@ -488,42 +488,42 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/bencode/BEDecoder.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/bencode/BEDecoder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="27" selection-start="445" selection-end="445" vertical-scroll-proportion="0.33293697">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/apps/odb/ODBManager.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/ODBManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="13" selection-start="65" selection-end="65" vertical-scroll-proportion="0.066587396">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/bencode/BEDictionary.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/bencode/BEDictionary.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="47" column="44" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.7824019">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/apps/odb/Protocol.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/Protocol.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="40" column="82" selection-start="1505" selection-end="1505" vertical-scroll-proportion="0.9876543">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/apps/odb/RowData.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/RowData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="45" selection-start="170" selection-end="170" vertical-scroll-proportion="0.24691358">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/apps/odb/ODBTableModel.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/ODBTableModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="89" column="34" selection-start="2312" selection-end="2312" vertical-scroll-proportion="1.393298">
           <folding>
@@ -532,14 +532,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/bencode/BEString.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/bencode/BEString.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="28" column="0" selection-start="637" selection-end="637" vertical-scroll-proportion="0.319224">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/lib/TCipher.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/lib/TCipher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="13" selection-start="38" selection-end="38" vertical-scroll-proportion="0.03422983">
           <folding />
@@ -567,7 +567,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/apps/odb/ODBClient.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/ODBClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="90" column="60" selection-start="2618" selection-end="2618" vertical-scroll-proportion="0.35230026">
           <folding>
@@ -576,14 +576,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/apps/odb/ODBTable.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/ODBTable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="79" selection-start="678" selection-end="678" vertical-scroll-proportion="0.33293697">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/apps/odb/ClientThread.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/ClientThread.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="13" selection-start="258" selection-end="258" vertical-scroll-proportion="-0.24911033">
           <folding>
@@ -592,7 +592,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/trieck/testing/MapTest.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/testing/MapTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="35" selection-start="754" selection-end="754" vertical-scroll-proportion="0.3022508">
           <folding>
