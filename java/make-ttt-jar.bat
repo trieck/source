@@ -1,3 +1,3 @@
 @echo off
-make-jar ttt.jar org.tomrieck.games.ttt.TicTacToe org/trieck/games/ttt/
+make-jar ttt.jar org.tomrieck.games.ttt.TicTacToe org/tomrieck/games/ttt/
 
