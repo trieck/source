@@ -37,8 +37,8 @@ public class View extends JComponent implements MouseListener {
 	private static final Color[] PALETTE = { new Color(0x00, 0x80, 0x00),
 			new Color(0x80, 0x00, 0x00) };
 
-	private static final Color BKGND_COLOR = new Color(0xFF, 0xFF, 0xC0);
-	private static final Color GRID_COLOR = new Color(0xC0, 0xC0, 0xC0);
+	private static final Color BKGND_COLOR = Color.LIGHT_GRAY;
+	private static final Color GRID_COLOR = Color.GRAY;
 
 	private static final long serialVersionUID = 1L;
 
