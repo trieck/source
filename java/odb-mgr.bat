@@ -1,4 +1,4 @@
 @echo off
-start javaw -cp classes org.trieck.apps.odb.ODBManager
+start javaw -cp classes org.tomrieck.apps.odb.ODBManager
 
 

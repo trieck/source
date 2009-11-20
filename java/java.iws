@@ -272,9 +272,9 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="org.trieck.pixievm.Assembler" />
-      <recent name="org.trieck.parser" />
-      <recent name="org.trieck.apps" />
+      <recent name="org.tomrieck.pixievm.Assembler" />
+      <recent name="org.tomrieck.parser" />
+      <recent name="org.tomrieck.apps" />
     </key>
   </component>
   <component name="RestoreUpdateTree" />
@@ -319,7 +319,7 @@
       <option name="VM_PARAMETERS" />
     </configuration>
     <configuration selected="true" default="false" name="Unnamed" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="org.trieck.testing.MapTest" />
+      <option name="MAIN_CLASS_NAME" value="org.tomrieck.testing.MapTest" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />

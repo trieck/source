@@ -1,2 +1,2 @@
 @echo off
-java -cp classes org.trieck.pixievm.Machine 
+java -cp classes org.tomrieck.pixievm.Machine 

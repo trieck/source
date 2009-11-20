@@ -1,2 +1,2 @@
 @echo off
-java -cp classes org.trieck.pixievm.assembler.Assembler %1
+java -cp classes org.tomrieck.pixievm.assembler.Assembler %1
