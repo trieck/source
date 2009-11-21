@@ -11,9 +11,8 @@
 #include "GripBar.h"
 #include "penteBar.h"
 
-class MainFrame : public CFrameWnd
-{
-	
+class MainFrame : public CFrameWnd {
+
 protected: // create from serialization only
 	MainFrame();
 	DECLARE_DYNCREATE(MainFrame)
@@ -25,7 +24,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(MainFrame)
-	public:
+public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void RecalcLayout(BOOL bNotify = TRUE);
 	//}}AFX_VIRTUAL
@@ -55,7 +54,8 @@ private:
 };
 /////////////////////////////////////////////////////////////////////////////
 
-inline PenteBar & MainFrame::getPenteBar() {
+inline PenteBar & MainFrame::getPenteBar()
+{
 	return statusBar;
 }
 //{{AFX_INSERT_LOCATION}}

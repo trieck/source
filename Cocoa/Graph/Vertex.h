@@ -8,7 +8,8 @@
 
 #import <AppKit/AppKit.h>
 
-@interface Vertex : NSObject {
+@interface Vertex :
+NSObject {
 	BOOL selected;			// is selected?
 	int x, y;				// coordinates
 	NSBezierPath *path;		// path
@@ -16,22 +17,31 @@
 	NSMutableArray *edges;	// array of edges
 }
 
-- (id)initWithCoords:(int)cx andCoord:(int)cy;
+- (id)initWithCoords:
+(int)cx andCoord:
+(int)cy;
 - (int)x;
 - (int)y;
 - (void)makeVertex;
 - (void)draw;
-- (void)setColor:(NSColor*)c;
+- (void)setColor:
+(NSColor*)c;
 - (void)select;
 - (BOOL)selected;
-- (void)setEdge:(Vertex*)v;
-- (BOOL)isEdge:(Vertex*)v;
-- (BOOL)removeEdge:(Vertex*)v;
+- (void)setEdge:
+(Vertex*)v;
+- (BOOL)isEdge:
+(Vertex*)v;
+- (BOOL)removeEdge:
+(Vertex*)v;
 - (NSEnumerator*)enumEdges;
 
 + (int)cx;
 + (int)cy;
-+ (NSRect)inflateRect:(NSRect) rect dx:(float)dx dy:(float)dy;
++ (NSRect)inflateRect:
+(NSRect) rect dx:
+(float)dx dy:
+(float)dy;
 
 @end
 

@@ -27,8 +27,9 @@ Matrix & Matrix::operator = (const Matrix &rhs)
 {
 	if (this != &rhs) {
 		delete []A;
-		M = rhs.M; N = rhs.N;
-		memcpy(A, rhs.A, sizeof(float) * M * N);		
+		M = rhs.M;
+		N = rhs.N;
+		memcpy(A, rhs.A, sizeof(float) * M * N);
 	}
 
 	return *this;
@@ -38,7 +39,7 @@ void Matrix::setElement(int i, int j, float f)
 {
 	if (i >= M || j >= N)
 		throw NoSuchElementException();
-	
+
 	A[i*j] = f;
 }
 

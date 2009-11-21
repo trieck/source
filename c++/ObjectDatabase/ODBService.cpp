@@ -34,10 +34,10 @@ BOOL ODBService::OnInit()
 		return FALSE;
 
 	if (!conn.listen(LISTEN_PORT, SOMAXCONN)) {
-		EventLog::logerr("ODBService::Init() listen error : %s", 
-			lasterror().c_str());
+		EventLog::logerr("ODBService::Init() listen error : %s",
+		                 lasterror().c_str());
 		return FALSE;
-    }	
+	}
 
 	return TRUE;
 }
@@ -67,8 +67,8 @@ DWORD ODBService::Execute(LPVOID pdata)
 			continue;
 
 		remote.release();	// ownership in another thread
-		pool.QueueRequest(&remote);		
-    }
+		pool.QueueRequest(&remote);
+	}
 
 	return 0;
 }

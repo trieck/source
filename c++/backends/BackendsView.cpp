@@ -18,7 +18,7 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(BackendsView, CFormView)
 
 BackendsView::BackendsView()
-	: CFormView(BackendsView::IDD)
+		: CFormView(BackendsView::IDD)
 {
 	//{{AFX_DATA_INIT(BackendsView)
 	m_osversion = _T("");
@@ -71,15 +71,15 @@ void BackendsView::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // BackendsView message handlers
 
-void BackendsView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
+void BackendsView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
-	Config *pconfig = (Config *)lHint;	
+	Config *pconfig = (Config *)lHint;
 	if (pconfig == NULL)
 		return;
 
 	m_FileCache.Format(_T("%d%%"), pconfig->fileCache);
-	m_CompilerVersion.Format(_T("Microsoft Visual Studio 6.0 Service Pack %d"), 
-		pconfig->servicePack);
+	m_CompilerVersion.Format(_T("Microsoft Visual Studio 6.0 Service Pack %d"),
+	                         pconfig->servicePack);
 	m_osversion =  pconfig->osversion;
 	m_reposCount.Format(_T("%d"), pconfig->reposCount);
 	m_rawCount.Format(_T("%d"), pconfig->rawCount);
@@ -92,13 +92,13 @@ void BackendsView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		m_ProductList.InsertItem(i, product);
 	}
 
-	UpdateData(FALSE);	
+	UpdateData(FALSE);
 }
 
-void BackendsView::OnInitialUpdate() 
+void BackendsView::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
-	
+
 	DWORD dwStyle = ListView_GetExtendedListViewStyle(m_ProductList);
 	dwStyle |= LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES;
 
@@ -127,10 +127,10 @@ void BackendsView::InsertHeaders()
 		lvc.cchTextMax = MAX_PATH;
 
 		m_ProductList.InsertColumn(i, &lvc);
-	}	
+	}
 }
 
-int BackendsView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int BackendsView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFormView::OnCreate(lpCreateStruct) == -1)
 		return -1;

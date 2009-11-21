@@ -51,6 +51,7 @@ POINT Vector::entry(uint32_t index) const
 void Vector::setEntry(uint32_t index, uint32_t x, uint32_t y)
 {
 	POINT pt;
-	pt.x = x; pt.y = y;
+	pt.x = x;
+	pt.y = y;
 	v[index % VSIZE] = pt;
 }

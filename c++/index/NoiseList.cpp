@@ -25,7 +25,7 @@ NoiseList::~NoiseList()
 /////////////////////////////////////////////////////////////////////////////
 void NoiseList::close()
 {
-	stream.Release();	
+	stream.Release();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -38,11 +38,11 @@ bool NoiseList::isnoise(const string &term)	const
 /////////////////////////////////////////////////////////////////////////////
 void NoiseList::load()
 {
-	stream.Attach(FileStream::Create("noise.txt", GENERIC_READ, 
-		FILE_SHARE_READ, OPEN_EXISTING, FILE_ATTRIBUTE_READONLY));
+	stream.Attach(FileStream::Create("noise.txt", GENERIC_READ,
+	                                 FILE_SHARE_READ, OPEN_EXISTING, FILE_ATTRIBUTE_READONLY));
 	if (stream == NULL)
 		throw Exception(lasterror());	// can't open
-	
+
 	LexerPtr lexer(new Lexer(stream));
 
 	Token tok;

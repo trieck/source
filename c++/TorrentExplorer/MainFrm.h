@@ -9,9 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class MainFrame : public CFrameWnd
-{
-	
+class MainFrame : public CFrameWnd {
+
 protected: // create from serialization only
 	MainFrame();
 	DECLARE_DYNCREATE(MainFrame)
@@ -25,9 +24,9 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(MainFrame)
-	public:
+public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	protected:
+protected:
 	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 	//}}AFX_VIRTUAL
 

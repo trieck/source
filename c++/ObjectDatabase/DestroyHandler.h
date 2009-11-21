@@ -9,8 +9,7 @@
 #define __DESTROYHANDLER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class DestroyHandler : public IHandler
-{
+class DestroyHandler : public IHandler {
 // Construction / Destruction
 public:
 	DestroyHandler();

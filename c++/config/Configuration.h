@@ -3,7 +3,7 @@
 // CONFIGURATION.H : Configuration class
 //
 // This class is meant to be a replacement for GetPrivateProfileString, etc.
-// which do not exist on a Unix system.  This class implements only the 
+// which do not exist on a Unix system.  This class implements only the
 // most basic functionality.
 //
 // Copyright (c) 2004, Thomas A. Rieck

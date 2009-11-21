@@ -11,8 +11,7 @@
 
 #include "Dictionary.h"
 
-class TorrentSettings  
-{
+class TorrentSettings {
 public:
 	TorrentSettings();
 	virtual ~TorrentSettings();

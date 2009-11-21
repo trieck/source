@@ -1,6 +1,6 @@
 /*---------------------------------------
-	Module Name	:	PenteApp.cpp	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	PenteApp.cpp
+	Author		:	Thomas A. Rieck
 	Purpose		:	Pente Application
 					Module
 	Date		:	08/21/1997
@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "PenteApp.h"
-#include "MainFrame.h"     
+#include "MainFrame.h"
 #include "PenteDoc.h"
 #include "PenteView.h"
 #include "ScoresDlg.h"
@@ -23,13 +23,13 @@ LPCTSTR CPenteApp::m_lpszRegPath = _T("SOFTWARE\\Rieck Enterprises\\WinPente\\v2
 IMPLEMENT_DYNCREATE(CPenteApp, CWinApp)
 
 BEGIN_MESSAGE_MAP(CPenteApp, CWinApp)
-   ON_COMMAND(IDM_ABOUT, OnAbout)
-   ON_COMMAND(ID_HELP, OnHelp)
-   ON_COMMAND(IDM_SCORES, OnViewScores)
-   ON_COMMAND(IDM_SETTINGS, OnSettings)
-   ON_COMMAND(ID_FILE_NEW, CPenteApp::OnFileNew)
-   ON_COMMAND(ID_FILE_OPEN, CPenteApp::OnFileOpen)
-   ON_COMMAND(ID_FILE_EXIT, OnExit)
+	ON_COMMAND(IDM_ABOUT, OnAbout)
+	ON_COMMAND(ID_HELP, OnHelp)
+	ON_COMMAND(IDM_SCORES, OnViewScores)
+	ON_COMMAND(IDM_SETTINGS, OnSettings)
+	ON_COMMAND(ID_FILE_NEW, CPenteApp::OnFileNew)
+	ON_COMMAND(ID_FILE_OPEN, CPenteApp::OnFileOpen)
+	ON_COMMAND(ID_FILE_EXIT, OnExit)
 END_MESSAGE_MAP()
 
 ///////////////////////////////////////////////////////////////////
@@ -58,14 +58,13 @@ VOID CPenteApp::OnFileOpen()
 
 	CPenteDoc* pDoc = (CPenteDoc*)pFrame->GetActiveDocument();
 	ASSERT_VALID(pDoc);
-	
+
 	if (!DoPromptFileName(newName, AFX_IDS_OPENFILE,
-	  OFN_HIDEREADONLY | OFN_FILEMUSTEXIST, TRUE, NULL))
+	                      OFN_HIDEREADONLY | OFN_FILEMUSTEXIST, TRUE, NULL))
 		return; // open cancelled
 
-	// Check for a valid document 
-	if (!pDoc->IsValidDocument(newName))
-	{
+	// Check for a valid document
+	if (!pDoc->IsValidDocument(newName)) {
 		AfxMessageBox(IDS_INVALIDGAME);
 		return;
 	}
@@ -76,7 +75,7 @@ VOID CPenteApp::OnFileOpen()
 VOID CPenteApp::OnAbout()
 {
 	CDialog dlg(IDD_ABOUT, m_pMainWnd);
-	
+
 	dlg.DoModal();
 }
 
@@ -85,7 +84,7 @@ VOID CPenteApp::OnViewScores()
 	BeginWaitCursor();
 
 	CScoresDlg dlg(m_pMainWnd);
-	
+
 	dlg.DoModal();
 
 	EndWaitCursor();
@@ -99,29 +98,29 @@ BOOL CPenteApp::PlayWave(LPTSTR szWaveName, UINT nFlags)
 	BOOL		fRtn;
 
 	hWaveRes = FindResource(hInstance, szWaveName, _T("WAVE"));
- 
-    hGlobMem = LoadResource(hInstance, hWaveRes);
-      
+
+	hGlobMem = LoadResource(hInstance, hWaveRes);
+
 	fRtn = PlaySound((LPTSTR)LockResource(hGlobMem), hInstance, nFlags);
- 
+
 	UnlockResource(hGlobMem);
 
-    FreeResource(hGlobMem);  
+	FreeResource(hGlobMem);
 
 	return fRtn;
 }
 
 VOID CPenteApp::OnHelp()
 {
-	::WinHelp(m_pMainWnd->GetSafeHwnd(), 
-			m_pszHelpFilePath,
-			HELP_CONTENTS, 0);
+	::WinHelp(m_pMainWnd->GetSafeHwnd(),
+	          m_pszHelpFilePath,
+	          HELP_CONTENTS, 0);
 }
 
 int CPenteApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt)
 {
 	MSGBOXPARAMS	mbp;
-	
+
 	mbp.cbSize				= sizeof(MSGBOXPARAMS);
 	mbp.hwndOwner			= GetMainWnd()->GetSafeHwnd();
 	mbp.hInstance			= AfxGetResourceHandle();
@@ -155,14 +154,13 @@ BOOL CPenteApp::IsValidResolution()
 
 	fRtn = (cx >= MINIMUM_HORZRES || cy >= MINIMUM_VERTRES);
 
-	if (!fRtn)
-	{
+	if (!fRtn) {
 		cs.Format(IDS_BADRES, MINIMUM_HORZRES, MINIMUM_VERTRES);
 		AfxMessageBox(cs);
 	}
 
 	ReleaseDC(NULL, hDC);
-	
+
 	return fRtn;
 }
 
@@ -179,7 +177,7 @@ VOID CPenteApp::DoFinish()
 
 	pDoc = (CPenteDoc*)((CMainFrame*)m_pMainWnd)->GetActiveDocument();
 	ASSERT_VALID(pDoc);
-	
+
 	CString strPlayerOne = pDoc->GetPlayerOne();
 	CString strPlayerTwo = pDoc->GetPlayerTwo();
 
@@ -191,37 +189,25 @@ VOID CPenteApp::DoFinish()
 
 	// Add the Score to the registry
 	AddScore(strPlayerOne, strPlayerTwo, nWinner == PLAYER_ONE_TURN ? 0 : 1, strDateTime);
-	
+
 	// Show the winner and prompt for new game
-	if (pDoc->GetPlayMode() == PLAYER_VS_PLAYER)
-	{
-		if (nWinner == PLAYER_ONE_TURN)
-		{
+	if (pDoc->GetPlayMode() == PLAYER_VS_PLAYER) {
+		if (nWinner == PLAYER_ONE_TURN) {
 			strMessage.Format(IDS_WINNER, strPlayerOne);
-		}
-		else
-		{
+		} else {
 			strMessage.Format(IDS_WINNER, strPlayerTwo);
 		}
-	}
-	else
-	{
-		if (nWinner == PLAYER_ONE_TURN)
-		{
+	} else {
+		if (nWinner == PLAYER_ONE_TURN) {
 			strMessage.LoadString(IDS_HUMANWIN);
-		}
-		else
-		{
+		} else {
 			strMessage.LoadString(IDS_COMPUTERWIN);
 		}
 	}
 
-	if (AfxMessageBox(strMessage, MB_USERICON | MB_YESNO) == IDYES)
-	{
+	if (AfxMessageBox(strMessage, MB_USERICON | MB_YESNO) == IDYES) {
 		pDoc->OnNewDocument();
-	}
-	else 
-	{
+	} else {
 		OnExit();
 	}
 }
@@ -237,11 +223,10 @@ VOID CPenteApp::OnExit()
 	pDoc = (CPenteDoc*)pFrame->GetActiveDocument();
 	ASSERT_VALID(pDoc);
 
-	if (pDoc->CanCloseFrame((CFrameWnd*)this))
-	{
+	if (pDoc->CanCloseFrame((CFrameWnd*)this)) {
 		GetMainWnd()->DestroyWindow();
 	}
-} 
+}
 
 BOOL CPenteApp::GetRegistryInformation(LPCTSTR lpszKeyName, LPCTSTR lpszValueName, PPBYTE ppData, UINT nType)
 {
@@ -254,33 +239,27 @@ BOOL CPenteApp::GetRegistryInformation(LPCTSTR lpszKeyName, LPCTSTR lpszValueNam
 	CString strRegKey (m_lpszRegPath);
 	strRegKey += lpszKeyName;
 
-	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, strRegKey, 0, KEY_READ, &hKey) == ERROR_SUCCESS)
-	{
+	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, strRegKey, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
 		DWORD dwType;
 		DWORD dwSize;
-		
+
 		// Get size of needed buffer
-		if (RegQueryValueEx(hKey, lpszValueName, NULL, NULL, NULL, &dwSize) == ERROR_SUCCESS)
-		{
+		if (RegQueryValueEx(hKey, lpszValueName, NULL, NULL, NULL, &dwSize) == ERROR_SUCCESS) {
 			*ppData = new BYTE[dwSize];
-			if (!ppData)
-			{
+			if (!ppData) {
 				RegCloseKey(hKey);
 				return fRtn;
 			}
 
-			if (RegQueryValueEx(hKey, lpszValueName, NULL, &dwType, *ppData, &dwSize) == ERROR_SUCCESS)
-			{
-				if (dwType == nType)
-				{
+			if (RegQueryValueEx(hKey, lpszValueName, NULL, &dwType, *ppData, &dwSize) == ERROR_SUCCESS) {
+				if (dwType == nType) {
 					fRtn = TRUE;
 				}
 			}
 		}
 	}
 
-	if (hKey)
-	{
+	if (hKey) {
 		RegCloseKey(hKey);
 	}
 
@@ -295,11 +274,9 @@ BOOL CPenteApp::UpdateRegistryInformation(LPCTSTR lpszKeyName, LPCTSTR lpszValue
 	CString strRegKey (m_lpszRegPath);
 	strRegKey += lpszKeyName;
 
-	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, strRegKey, 0, KEY_WRITE, &hKey) == ERROR_SUCCESS)
-	{
+	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, strRegKey, 0, KEY_WRITE, &hKey) == ERROR_SUCCESS) {
 		DWORD dwSize;
-		switch (nType)
-		{
+		switch (nType) {
 		case REG_SZ:
 			dwSize = lstrlen((LPTSTR)pData);
 			break;
@@ -316,14 +293,12 @@ BOOL CPenteApp::UpdateRegistryInformation(LPCTSTR lpszKeyName, LPCTSTR lpszValue
 			return fRtn;
 		}
 
-		if (RegSetValueEx(hKey, lpszValueName, 0, nType, (LPBYTE)pData, dwSize) == ERROR_SUCCESS)
-		{
+		if (RegSetValueEx(hKey, lpszValueName, 0, nType, (LPBYTE)pData, dwSize) == ERROR_SUCCESS) {
 			fRtn = TRUE;
 		}
 	}
 
-	if (hKey)
-	{
+	if (hKey) {
 		RegCloseKey(hKey);
 	}
 
@@ -338,8 +313,8 @@ VOID CPenteApp::AddScore(const CString & strPlayerOne, const CString & strPlayer
 	ASSERT(!strPlayerTwo.IsEmpty());
 	ASSERT(!strDateTime.IsEmpty());
 
-	strNewScore.Format(_T("%s\t%s\t%s\t%s\t"), strPlayerOne, strPlayerTwo, 
-		nWinner == 0 ? strPlayerOne : strPlayerTwo, strDateTime);
+	strNewScore.Format(_T("%s\t%s\t%s\t%s\t"), strPlayerOne, strPlayerTwo,
+	                   nWinner == 0 ? strPlayerOne : strPlayerTwo, strDateTime);
 
 	CScores scores;
 
@@ -367,8 +342,7 @@ BOOL CPenteApp::InitInstance()
 {
 	// Load the resource dll
 	m_hDllInst = ::LoadLibrary(_T("wpres32.dll"));
-	if (!m_hDllInst)
-	{
+	if (!m_hDllInst) {
 		return FALSE;
 	}
 
@@ -376,41 +350,38 @@ BOOL CPenteApp::InitInstance()
 	AfxSetResourceHandle(m_hDllInst);
 
 	// Ensure valid screen resolution
-	if (!IsValidResolution())
-	{
+	if (!IsValidResolution()) {
 		return FALSE;
 	}
-	
+
 	// Set debug options
 	LPDWORD	lpdwValue;
-	if (GetRegistryInformation(_T("option"), _T("EnableDebug"), (PPBYTE)&lpdwValue, REG_DWORD))
-	{
+	if (GetRegistryInformation(_T("option"), _T("EnableDebug"), (PPBYTE)&lpdwValue, REG_DWORD)) {
 		m_fEnableDebug = (*lpdwValue == 1);
 		delete lpdwValue;
 	}
 
- 	// Register the application's document template
+	// Register the application's document template
 	CSingleDocTemplate* pDocTemplate;
-	
-   	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CPenteDoc),
-		RUNTIME_CLASS(CMainFrame),      // main SDI frame window
-		RUNTIME_CLASS(CPenteView));
+
+	pDocTemplate = new CSingleDocTemplate(
+	    IDR_MAINFRAME,
+	    RUNTIME_CLASS(CPenteDoc),
+	    RUNTIME_CLASS(CMainFrame),      // main SDI frame window
+	    RUNTIME_CLASS(CPenteView));
 
 	AddDocTemplate(pDocTemplate);
-                           
+
 	// Parse command line (this is required by doc/view)
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
 
 	// Dispatch commands specified on the command line
-	if (!ProcessShellCommand(cmdInfo))
-	{
+	if (!ProcessShellCommand(cmdInfo)) {
 		return FALSE;
 	}
 
-	// Enable file manager drag/drop and DDE Execute open   
+	// Enable file manager drag/drop and DDE Execute open
 	RegisterShellFileTypes();
 	EnableShellOpen();
 

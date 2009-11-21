@@ -48,11 +48,8 @@ BOOL WindumpDoc::OnNewDocument()
 
 void WindumpDoc::Serialize(CArchive& ar)
 {
-	if (ar.IsStoring())
-	{
-	}
-	else
-	{
+	if (ar.IsStoring()) {
+	} else {
 	}
 }
 

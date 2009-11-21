@@ -43,8 +43,8 @@ BOOL FetchApp::InitInstance()
 	// create and load the frame with its resources
 
 	pFrame->LoadFrame(IDR_MAINFRAME,
-		WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, NULL,
-		NULL);
+	                  WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, NULL,
+	                  NULL);
 
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;
@@ -66,8 +66,7 @@ BOOL FetchApp::InitInstance()
 /////////////////////////////////////////////////////////////////////////////
 // AboutDlg dialog used for App About
 
-class AboutDlg : public CDialog
-{
+class AboutDlg : public CDialog {
 public:
 	AboutDlg();
 
@@ -78,14 +77,14 @@ public:
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(AboutDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
 	//{{AFX_MSG(AboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -105,7 +104,7 @@ void AboutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(AboutDlg, CDialog)
 	//{{AFX_MSG_MAP(AboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

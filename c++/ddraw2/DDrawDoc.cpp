@@ -48,11 +48,8 @@ BOOL DDrawDoc::OnNewDocument()
 
 void DDrawDoc::Serialize(CArchive& ar)
 {
-	if (ar.IsStoring())
-	{
-	}
-	else
-	{
+	if (ar.IsStoring()) {
+	} else {
 	}
 }
 

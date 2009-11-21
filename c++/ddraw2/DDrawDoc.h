@@ -10,8 +10,7 @@
 #endif // _MSC_VER > 1000
 
 
-class DDrawDoc : public CDocument
-{
+class DDrawDoc : public CDocument {
 protected: // create from serialization only
 	DDrawDoc();
 	DECLARE_DYNCREATE(DDrawDoc)
@@ -25,7 +24,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(DDrawDoc)
-	public:
+public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 	//}}AFX_VIRTUAL

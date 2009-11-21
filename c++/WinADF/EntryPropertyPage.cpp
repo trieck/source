@@ -35,7 +35,7 @@ void EntryPropertyPage::Dump(CDumpContext& dc) const
 #endif // _DEBUG
 
 EntryPropertyPage::EntryPropertyPage()
-	: CPropertyPage(EntryPropertyPage::IDD)
+		: CPropertyPage(EntryPropertyPage::IDD)
 {
 
 }
@@ -79,7 +79,7 @@ BOOL EntryPropertyPage::OnInitDialog()
 
 	uint32_t nbits = sizeof(access) / (sizeof(uint32_t) * 3);
 	uint32_t state;
-	
+
 	CButton *pButton;
 	for (uint32_t i = 0; i < nbits; i++) {
 		state = pEntry->access & access[i][0];

@@ -61,16 +61,14 @@ void Machine::init()
 //
 // execute
 //
-void Machine::execute(const Instr * p) 
+void Machine::execute(const Instr * p)
 {
 	try {
 		for (pc = p; *pc != STOP && !returning; )
 			(this->*(*pc++))();
-	}
-	catch (const Warning & w) {
+	} catch (const Warning & w) {
 		cerr << w << endl;
-	}
-	catch (const Error & e) {
+	} catch (const Error & e) {
 		cerr << e << endl;
 		exit(1);
 	}
@@ -79,7 +77,7 @@ void Machine::execute(const Instr * p)
 //
 // plus
 //
-void Machine::plus() 
+void Machine::plus()
 {
 	Datum d1 = machinestack.pop();
 	Datum d2 = machinestack.pop();
@@ -93,7 +91,7 @@ void Machine::plus()
 //
 // minus
 //
-void Machine::minus() 
+void Machine::minus()
 {
 	Datum d1 = machinestack.pop();
 	Datum d2 = machinestack.pop();
@@ -107,7 +105,7 @@ void Machine::minus()
 //
 // unaryminus
 //
-void Machine::unaryminus() 
+void Machine::unaryminus()
 {
 	Datum d = machinestack.pop();
 
@@ -119,7 +117,7 @@ void Machine::unaryminus()
 //
 // mult
 //
-void Machine::mult() 
+void Machine::mult()
 {
 	Datum d1 = machinestack.pop();
 	Datum d2 = machinestack.pop();
@@ -133,11 +131,11 @@ void Machine::mult()
 //
 // divide
 //
-void Machine::divide() 
+void Machine::divide()
 {
 	Datum d1 = machinestack.pop();
 	Datum d2 = machinestack.pop();
-	
+
 	if (d1.value == 0)
 		throw Warning(W_DIVIDEBYZERO);
 
@@ -150,11 +148,11 @@ void Machine::divide()
 //
 // mod
 //
-void Machine::mod() 
+void Machine::mod()
 {
 	Datum d1 = machinestack.pop();
 	Datum d2 = machinestack.pop();
-	
+
 	if (d1.value == 0)
 		throw Warning(W_DIVIDEBYZERO);
 
@@ -167,7 +165,7 @@ void Machine::mod()
 //
 // assign
 //
-void Machine::assign() 
+void Machine::assign()
 {
 	Datum d1 = machinestack.pop();
 	Datum d2 = machinestack.pop();
@@ -187,7 +185,7 @@ void Machine::assign()
 //
 // varpush
 //
-void Machine::varpush() 
+void Machine::varpush()
 {
 	Datum d;
 	d.symbol = *(Symbol **)pc++;
@@ -197,7 +195,7 @@ void Machine::varpush()
 //
 // constpush
 //
-void Machine::constpush() 
+void Machine::constpush()
 {
 	Datum d;
 	d.value = (*(Symbol**)pc++)->value;
@@ -208,7 +206,7 @@ void Machine::constpush()
 // strpush
 //
 void Machine::strpush()
-{	
+{
 	Datum d;
 	d.symbol = *(Symbol **)pc++;
 	machinestack.push(d);
@@ -217,7 +215,7 @@ void Machine::strpush()
 //
 // eval
 //
-void Machine::eval() 
+void Machine::eval()
 {
 	Datum d = machinestack.pop();
 	if (d.symbol == NULL)
@@ -233,7 +231,7 @@ void Machine::eval()
 //
 // printf
 //
-void Machine::printf() 
+void Machine::printf()
 {
 	int nargs = *(int *)pc++;
 
@@ -263,23 +261,21 @@ void Machine::printf()
 			default:
 				break;
 			}
-		}
-		else if (format[0] == '\\') {
+		} else if (format[0] == '\\') {
 			cout << unescape(format[1]);
 			format++;
-		}
-		else cout << format[0];
+		} else cout << format[0];
 	}
 
 	// pop the arguments from the stack
-	for(int i = 0; i < nargs; i++)
+	for (int i = 0; i < nargs; i++)
 		machinestack.pop();
 }
 
 //
 // pow
 //
-void Machine::pow() 
+void Machine::pow()
 {
 	Datum d1 = machinestack.pop();
 	Datum d2 = machinestack.pop();
@@ -293,7 +289,7 @@ void Machine::pow()
 //
 // log
 //
-void Machine::log() 
+void Machine::log()
 {
 	Datum d1 = machinestack.pop();
 
@@ -306,7 +302,7 @@ void Machine::log()
 //
 // log10
 //
-void Machine::log10() 
+void Machine::log10()
 {
 	Datum d1 = machinestack.pop();
 
@@ -319,7 +315,7 @@ void Machine::log10()
 //
 // fmod
 //
-void Machine::fmod() 
+void Machine::fmod()
 {
 	Datum d1 = machinestack.pop();
 	Datum d2 = machinestack.pop();
@@ -333,7 +329,7 @@ void Machine::fmod()
 //
 // sin
 //
-void Machine::sin() 
+void Machine::sin()
 {
 	Datum d1 = machinestack.pop();
 
@@ -346,7 +342,7 @@ void Machine::sin()
 //
 // asin
 //
-void Machine::asin() 
+void Machine::asin()
 {
 	Datum d1 = machinestack.pop();
 
@@ -359,7 +355,7 @@ void Machine::asin()
 //
 // sinh
 //
-void Machine::sinh() 
+void Machine::sinh()
 {
 	Datum d1 = machinestack.pop();
 
@@ -373,7 +369,7 @@ void Machine::sinh()
 //
 // cos
 //
-void Machine::cos() 
+void Machine::cos()
 {
 	Datum d1 = machinestack.pop();
 
@@ -386,7 +382,7 @@ void Machine::cos()
 //
 // acos
 //
-void Machine::acos() 
+void Machine::acos()
 {
 	Datum d1 = machinestack.pop();
 
@@ -399,7 +395,7 @@ void Machine::acos()
 //
 // cosh
 //
-void Machine::cosh() 
+void Machine::cosh()
 {
 	Datum d1 = machinestack.pop();
 
@@ -412,7 +408,7 @@ void Machine::cosh()
 //
 // tan
 //
-void Machine::tan() 
+void Machine::tan()
 {
 	Datum d1 = machinestack.pop();
 
@@ -425,7 +421,7 @@ void Machine::tan()
 //
 // atan
 //
-void Machine::atan() 
+void Machine::atan()
 {
 	Datum d1 = machinestack.pop();
 
@@ -438,7 +434,7 @@ void Machine::atan()
 //
 // tanh
 //
-void Machine::tanh() 
+void Machine::tanh()
 {
 	Datum d1 = machinestack.pop();
 
@@ -451,7 +447,7 @@ void Machine::tanh()
 //
 // sqrt
 //
-void Machine::sqrt() 
+void Machine::sqrt()
 {
 	Datum d1 = machinestack.pop();
 
@@ -464,7 +460,7 @@ void Machine::sqrt()
 //
 // iint
 //
-void Machine::iint () 
+void Machine::iint ()
 {
 	Datum d1 = machinestack.pop();
 
@@ -686,7 +682,7 @@ void Machine::ne()
 void Machine::not()
 {
 	Datum d1 = machinestack.pop();
-	
+
 	Datum d2;
 	d2.value = double(!d1.value);
 
@@ -719,7 +715,7 @@ void Machine::bitand()
 // logand
 //
 void Machine::logand()
-{	
+{
 	Datum d1 = machinestack.pop();
 	Datum d2 = machinestack.pop();
 
@@ -763,7 +759,7 @@ void Machine::logor()
 void Machine::call()	// call a function
 {
 	const Symbol * sp = *(Symbol **)pc;
-	
+
 	Frame frame;
 	frame.sp = sp;
 	frame.nargs = *(int *)(pc + 1);
@@ -773,7 +769,7 @@ void Machine::call()	// call a function
 	framestack.push(frame);
 
 	execute(sp->defn);
-	
+
 	returning = false;
 }
 

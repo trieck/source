@@ -9,18 +9,17 @@
 #define __SMTP_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class SmtpMail
-{
+class SmtpMail {
 public:
 // Construction / Destruction
 	SmtpMail(const char *phost);
 	~SmtpMail();
 
 // Interface
-	bool send(const char *sender, 
-		const char *recip, 
-		const char *subject,
-		const char *body);
+	bool send(const char *sender,
+	          const char *recip,
+	          const char *subject,
+	          const char *body);
 
 // Implementation
 private:
@@ -31,10 +30,10 @@ private:
 	int recv_raw(char *buffer, size_t size) const;
 	bool begin_mail(const char *sender) const;
 	bool set_recipient(const char *recip) const;
-	bool send_data(const char *sender, const char *recip, 
-		const char *subject, const char *body) const;
-	bool send_header(const char *sender, const char *recip, 
-		const char *subject) const;
+	bool send_data(const char *sender, const char *recip,
+	               const char *subject, const char *body) const;
+	bool send_header(const char *sender, const char *recip,
+	                 const char *subject) const;
 
 	void close();
 	int getResponse() const;

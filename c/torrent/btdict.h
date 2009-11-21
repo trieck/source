@@ -1,7 +1,7 @@
 /*
  * BTDICT.H
  *
- * Red-Black tree for use 
+ * Red-Black tree for use
  * with bencoded dictionaries
  *
  * Copyright (c) 2006, Thomas A. Rieck

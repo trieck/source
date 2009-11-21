@@ -1,6 +1,6 @@
 /*
  * 	MEM.C
- * 
+ *
  * 	C64 Memory Management Module
  *
  *	Neptune64 Commodore 64 Emulator
@@ -8,7 +8,7 @@
  *
  *	This module is based largely on the
  * 	c64mem.h, c64mem.c modules in VICE, the Versatile Commodore Emulator
- * 	Written by: 
+ * 	Written by:
  *
  *  Ettore Perazzoli <ettore@comm2000.it>
  *  Andreas Boose <boose@linux.rz.fh-hannover.de>
@@ -29,7 +29,7 @@
  *  02111-1307  USA.
  *
  */
- 
+
 #include "common.h"
 #include "mem.h"
 #include "video.h"
@@ -49,13 +49,13 @@ static byte chargen_rom[CHARGEN_ROM_SIZE];
 extern const char *kernal_name;
 extern const char *basic_name;
 extern const char *chargen_name;
-/* 
+/*
  * current memory configuration
- *   
+ *
  * -----------------------------------------
  * | GAME | EXROM | CHAREN | HIRAM | LORAM |
  * -----------------------------------------
- * 
+ *
  */
 static word mem_config;
 static struct {
@@ -96,21 +96,21 @@ static void config_changed(void);
  */
 byte basic_read(word addr)
 {
-    return basic_rom[addr & 0x1fff];
+	return basic_rom[addr & 0x1fff];
 }
-/* 
+/*
  * read from kernal ROM
  */
 byte kernal_read(word addr)
 {
-    return kernal_rom[addr & 0x1fff];
+	return kernal_rom[addr & 0x1fff];
 }
 /*
  * read from chargen ROM
  */
 byte chargen_read(word addr)
 {
-    return chargen_rom[addr & 0xfff];
+	return chargen_rom[addr & 0xfff];
 }
 /*
  * fetch a byte from memory
@@ -130,7 +130,7 @@ void store_byte(word address, byte b)
 	/* FIXME: implement this */
 	(*write_func_ptr[address >> 8])(address, b);
 }
-/* 
+/*
  * initialize memory
  */
 void mem_init(void)
@@ -146,32 +146,32 @@ void mem_init(void)
 #define OPENFLAGS O_RDONLY
 #endif
 /*
- * generalized routine for loading a 
+ * generalized routine for loading a
  * ROM image into memory
  */
 void load_rom(const char *filename, byte *pb, word size)
 {
 	struct stat st;
 	int fd, n;
-	
+
 	fd = open(filename, OPENFLAGS);
 	if (-1 == fd)
 		error("unable to open ROM image \"%s\".\n", filename);
-		
+
 	fstat(fd, &st);
 	if (size != st.st_size) {
 		close(fd);
 		error("ROM image \"%s\" is wrong size; expected %d bytes, "
-		"found %d bytes.\n", filename, size, st.st_size);
+		      "found %d bytes.\n", filename, size, st.st_size);
 	}
-	
+
 	n = read(fd, pb, size);
 	if (size != n) {
 		close(fd);
 		error("error reading ROM image \"%s\"; expected %d bytes, "
-		"read %d bytes.\n", filename, size, n);
+		      "read %d bytes.\n", filename, size, n);
 	}
-	
+
 	close(fd);
 }
 /*
@@ -201,27 +201,31 @@ void load_chargen(void)
 void initialize_memory(void)
 {
 	int i, j;
-	
+
 	/* IO is enabled at memory configs 5, 6, 7 and Ultimax */
-    int io_config[CONFIGURATIONS] = { 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1,
-    	1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1 };
-                          
+	int io_config[CONFIGURATIONS] = { 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1,
+	                                  1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1
+	                                };
+
 	/* ROML is enabled at memory configs 11, 15, 27, 31 and Ultimax */
-    int roml_config[CONFIGURATIONS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
-        1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1 };
-    
+	int roml_config[CONFIGURATIONS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
+	                                    1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1
+	                                  };
+
 	/* ROMH is enabled at memory configs 10, 11, 14, 15, 26, 27, 30, 31
-       and Ultimax.  */
-    int romh_config[CONFIGURATIONS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1 };
-                            
-    /* ROMH is mapped to $A000-$BFFF at memory configs 10, 11, 14, 15, 26,
-       27, 30, 31.  If Ultimax is enabled it is mapped to $E000-$FFFF.  */
-    int romh_mapping[CONFIGURATIONS] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0xe0, 0xe0, 0xe0, 0xe0, 0xe0, 0xe0, 0xe0,
-        0x00, 0xa0, 0xa0, 0x00, 0x00, 0xa0, 0xa0 };
-    
+	   and Ultimax.  */
+	int romh_config[CONFIGURATIONS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	                                    1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1
+	                                  };
+
+	/* ROMH is mapped to $A000-$BFFF at memory configs 10, 11, 14, 15, 26,
+	   27, 30, 31.  If Ultimax is enabled it is mapped to $E000-$FFFF.  */
+	int romh_mapping[CONFIGURATIONS] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	                                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	                                     0xe0, 0xe0, 0xe0, 0xe0, 0xe0, 0xe0, 0xe0,
+	                                     0x00, 0xa0, 0xa0, 0x00, 0x00, 0xa0, 0xa0
+	                                   };
+
 	for (i = 0; i < CONFIGURATIONS; i++) {
 		mem_write_tab[i][0] = store_zero;
 		mem_read_tab[i][0] = read_zero;
@@ -230,114 +234,114 @@ void initialize_memory(void)
 			mem_write_tab[i][j] = ram_store;
 		}
 	}
-	
+
 	/* BASIC ROM is banked in at $A000-$BFFF in memory configs 3, 7, 11, 15 */
-    for (i = 0xa0; i <= 0xbf; i++) {
-        mem_read_tab[3][i] = basic_read;
-        mem_read_tab[7][i] = basic_read;
-        mem_read_tab[11][i] = basic_read;
-        mem_read_tab[15][i] = basic_read;        
-    }
-    
-    /* 
-     * chargen ROM is banked in at $D000-$DFFF in memory configs 1, 2, 3, 9, 10, 
-     * 11, 25, 26, 27)
-     */
-    for (i = 0xd0; i <= 0xdf; i++) {
-        mem_read_tab[1][i] = chargen_read;
-        mem_read_tab[2][i] = chargen_read;
-        mem_read_tab[3][i] = chargen_read;
-        mem_read_tab[9][i] = chargen_read;
-        mem_read_tab[10][i] = chargen_read;
-        mem_read_tab[11][i] = chargen_read;
-        mem_read_tab[25][i] = chargen_read;
-        mem_read_tab[26][i] = chargen_read;
-        mem_read_tab[27][i] = chargen_read;
-    }
-    
-    /* I/O is banked in at $D000-$DFFF in memory configs 5, 6, 7 */
-    for (j = 0; j < CONFIGURATIONS; j++) {
-        if (io_config[j]) {
-            for (i = 0xd0; i <= 0xd3; i++) {
-                mem_read_tab[j][i] = vic_read;
-                mem_write_tab[j][i] = vic_store;
-            }
-            for (i = 0xd4; i <= 0xd5; i++) {
-                mem_read_tab[j][i] = sid_read;
-                mem_write_tab[j][i] = sid_store;
-            }
-            for (i = 0xd6; i <= 0xd7; i++) {
-                mem_read_tab[j][i] = sid_read;
-                mem_write_tab[j][i] = sid_store;
-            }
-            for (i = 0xd8; i <= 0xdb; i++) {
-                mem_read_tab[j][i] = colorram_read;
-                mem_write_tab[j][i] = colorram_store;
-            }
-            mem_read_tab[j][0xdc] = cia1_read;
-            mem_write_tab[j][0xdc] = cia1_store;
-            mem_read_tab[j][0xdd] = cia2_read;
-            mem_write_tab[j][0xdd] = cia2_store;
-            mem_read_tab[j][0xde] = io1_read;
-            mem_write_tab[j][0xde] = io1_store;
-            mem_read_tab[j][0xdf] = io2_read;
-            mem_write_tab[j][0xdf] = io2_store;
-        }
-    }
-    
-    /* Kernal ROM is banked in at $E000-$FFFF in memory configs 2, 3, 6, 7, 10,
-       11, 14, 15, 26, 27, 30, 31 */
-    for (i = 0xe0; i <= 0xff; i++) {
-        mem_read_tab[2][i] = kernal_read;
-        mem_read_tab[3][i] = kernal_read;
-        mem_read_tab[6][i] = kernal_read;
-        mem_read_tab[7][i] = kernal_read;
-        mem_read_tab[10][i] = kernal_read;
-        mem_read_tab[11][i] = kernal_read;
-        mem_read_tab[14][i] = kernal_read;
-        mem_read_tab[15][i] = kernal_read;
-        mem_read_tab[26][i] = kernal_read;
-        mem_read_tab[27][i] = kernal_read;
-        mem_read_tab[30][i] = kernal_read;
-        mem_read_tab[31][i] = kernal_read;
-    }
-    
-    /* Setup ROML at $8000-$9FFF */
-    for (j = 0; j < CONFIGURATIONS; j++) {
-        if (roml_config[j]) {
-            for (i = 0x80; i <= 0x9f; i++) {
-                mem_read_tab[j][i] = read_roml;
-            }
-        }
-    }
-    
-	for (j = 16; j < 24; j++) {
-	    for (i = 0x80; i <= 0x9f; i++) {
-	    	mem_write_tab[j][j] = store_roml;
-	    }
-	    
-	    for (i = 0xa0; i <= 0xbf; i++) {
-	        mem_read_tab[j][i] = read_ultimax_a000_bfff;
-	        mem_write_tab[j][i] = store_ultimax_a000_bfff;
-	    }
+	for (i = 0xa0; i <= 0xbf; i++) {
+		mem_read_tab[3][i] = basic_read;
+		mem_read_tab[7][i] = basic_read;
+		mem_read_tab[11][i] = basic_read;
+		mem_read_tab[15][i] = basic_read;
 	}
-    
+
+	/*
+	 * chargen ROM is banked in at $D000-$DFFF in memory configs 1, 2, 3, 9, 10,
+	 * 11, 25, 26, 27)
+	 */
+	for (i = 0xd0; i <= 0xdf; i++) {
+		mem_read_tab[1][i] = chargen_read;
+		mem_read_tab[2][i] = chargen_read;
+		mem_read_tab[3][i] = chargen_read;
+		mem_read_tab[9][i] = chargen_read;
+		mem_read_tab[10][i] = chargen_read;
+		mem_read_tab[11][i] = chargen_read;
+		mem_read_tab[25][i] = chargen_read;
+		mem_read_tab[26][i] = chargen_read;
+		mem_read_tab[27][i] = chargen_read;
+	}
+
+	/* I/O is banked in at $D000-$DFFF in memory configs 5, 6, 7 */
+	for (j = 0; j < CONFIGURATIONS; j++) {
+		if (io_config[j]) {
+			for (i = 0xd0; i <= 0xd3; i++) {
+				mem_read_tab[j][i] = vic_read;
+				mem_write_tab[j][i] = vic_store;
+			}
+			for (i = 0xd4; i <= 0xd5; i++) {
+				mem_read_tab[j][i] = sid_read;
+				mem_write_tab[j][i] = sid_store;
+			}
+			for (i = 0xd6; i <= 0xd7; i++) {
+				mem_read_tab[j][i] = sid_read;
+				mem_write_tab[j][i] = sid_store;
+			}
+			for (i = 0xd8; i <= 0xdb; i++) {
+				mem_read_tab[j][i] = colorram_read;
+				mem_write_tab[j][i] = colorram_store;
+			}
+			mem_read_tab[j][0xdc] = cia1_read;
+			mem_write_tab[j][0xdc] = cia1_store;
+			mem_read_tab[j][0xdd] = cia2_read;
+			mem_write_tab[j][0xdd] = cia2_store;
+			mem_read_tab[j][0xde] = io1_read;
+			mem_write_tab[j][0xde] = io1_store;
+			mem_read_tab[j][0xdf] = io2_read;
+			mem_write_tab[j][0xdf] = io2_store;
+		}
+	}
+
+	/* Kernal ROM is banked in at $E000-$FFFF in memory configs 2, 3, 6, 7, 10,
+	   11, 14, 15, 26, 27, 30, 31 */
+	for (i = 0xe0; i <= 0xff; i++) {
+		mem_read_tab[2][i] = kernal_read;
+		mem_read_tab[3][i] = kernal_read;
+		mem_read_tab[6][i] = kernal_read;
+		mem_read_tab[7][i] = kernal_read;
+		mem_read_tab[10][i] = kernal_read;
+		mem_read_tab[11][i] = kernal_read;
+		mem_read_tab[14][i] = kernal_read;
+		mem_read_tab[15][i] = kernal_read;
+		mem_read_tab[26][i] = kernal_read;
+		mem_read_tab[27][i] = kernal_read;
+		mem_read_tab[30][i] = kernal_read;
+		mem_read_tab[31][i] = kernal_read;
+	}
+
+	/* Setup ROML at $8000-$9FFF */
+	for (j = 0; j < CONFIGURATIONS; j++) {
+		if (roml_config[j]) {
+			for (i = 0x80; i <= 0x9f; i++) {
+				mem_read_tab[j][i] = read_roml;
+			}
+		}
+	}
+
+	for (j = 16; j < 24; j++) {
+		for (i = 0x80; i <= 0x9f; i++) {
+			mem_write_tab[j][j] = store_roml;
+		}
+
+		for (i = 0xa0; i <= 0xbf; i++) {
+			mem_read_tab[j][i] = read_ultimax_a000_bfff;
+			mem_write_tab[j][i] = store_ultimax_a000_bfff;
+		}
+	}
+
 	/* Setup ROMH at $A000-$BFFF and $E000-$FFFF */
 	for (j = 0; j < CONFIGURATIONS; j++) {
-	    if (romh_config[j]) {
-	        for (i = romh_mapping[j]; i <= (romh_mapping[j] + 0x1f); i++) {
-	            mem_read_tab[j][i] = read_romh;         
-	        }
-	    }
+		if (romh_config[j]) {
+			for (i = romh_mapping[j]; i <= (romh_mapping[j] + 0x1f); i++) {
+				mem_read_tab[j][i] = read_romh;
+			}
+		}
 	}
-   
-	read_func_ptr = mem_read_tab[7]; 
+
+	read_func_ptr = mem_read_tab[7];
 	write_func_ptr = mem_write_tab[7];
-    pport.data = 0x37;
-    pport.dir = 0x2f;
-    export.exrom = 0;
-    export.game = 0;
-    
+	pport.data = 0x37;
+	pport.dir = 0x2f;
+	export.exrom = 0;
+	export.game = 0;
+
 	config_changed();
 }
 /*
@@ -345,7 +349,7 @@ void initialize_memory(void)
  */
 byte read_zero(word addr)
 {
-    return ram[addr & 0xff];
+	return ram[addr & 0xff];
 }
 /*
  * write memory to zero page
@@ -353,7 +357,7 @@ byte read_zero(word addr)
 void store_zero(word addr, byte value)
 {
 	addr &= 0xff;
-	
+
 	switch (addr) {
 	case 0:
 		if (pport.dir != value) {
@@ -418,9 +422,9 @@ void io2_store(word addr, byte value)
 void config_changed(void)
 {
 	mem_config = (((~pport.dir | pport.data) & 0x7) | (export.exrom << 3)
-		| (export.game << 4));
-    pport.data_out = (pport.data_out & ~pport.dir)
-    	| (pport.data & pport.dir);
-    ram[1] = ((pport.data | ~pport.dir) & (pport.data_out | 0x17));
-    ram[0] = pport.dir;
+	              | (export.game << 4));
+	pport.data_out = (pport.data_out & ~pport.dir)
+	                 | (pport.data & pport.dir);
+	ram[1] = ((pport.data | ~pport.dir) & (pport.data_out | 0x17));
+	ram[0] = pport.dir;
 }

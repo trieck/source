@@ -11,28 +11,28 @@
 /////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
-	PROCESS_INFORMATION pi; 
-	STARTUPINFO si; 
- 
-	ZeroMemory(&pi, sizeof(PROCESS_INFORMATION));
-    ZeroMemory(&si, sizeof(STARTUPINFO));
+	PROCESS_INFORMATION pi;
+	STARTUPINFO si;
 
-	si.cb = sizeof(STARTUPINFO); 
+	ZeroMemory(&pi, sizeof(PROCESS_INFORMATION));
+	ZeroMemory(&si, sizeof(STARTUPINFO));
+
+	si.cb = sizeof(STARTUPINFO);
 	si.dwFlags = STARTF_USESTDHANDLES;
 	si.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
 	si.hStdOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 	si.hStdError = GetStdHandle(STD_ERROR_HANDLE);
 
-	BOOL retcode = CreateProcess(NULL,				
-      "java.exe com.knowx.kxtrieck.JDBLib",			
-      NULL,         
-      NULL,         
-      TRUE,         
-      0,            
-      NULL,         
-      NULL,         
-      &si,			
-      &pi);			
+	BOOL retcode = CreateProcess(NULL,
+	                             "java.exe com.knowx.kxtrieck.JDBLib",
+	                             NULL,
+	                             NULL,
+	                             TRUE,
+	                             0,
+	                             NULL,
+	                             NULL,
+	                             &si,
+	                             &pi);
 
 	if (!retcode)
 		return 1;	// failed to spawn
@@ -41,6 +41,6 @@ int main(int argc, char *argv[])
 
 	CloseHandle(pi.hThread);
 	CloseHandle(pi.hProcess);
-	
+
 	return 0;
 }

@@ -9,8 +9,7 @@
 #define __SERVICE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Service
-{
+class Service {
 // Construction
 public:
 	Service();
@@ -48,7 +47,8 @@ private:
 };
 /////////////////////////////////////////////////////////////////////////////
 
-inline DWORD Service::GetExitCode() const {
+inline DWORD Service::GetExitCode() const
+{
 	return m_Status.dwWin32ExitCode;
 }
 

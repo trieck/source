@@ -18,12 +18,12 @@ BOOL CRegWizApp::InitInstance()
 	ASSERT_VALID (m_pWizard);
 
 	this->CreateWizard();
-	
+
 	m_pMainWnd = m_pWizard;
 
 	// Display the Wizard
-    m_pWizard->DoModal();
-	
+	m_pWizard->DoModal();
+
 	return(FALSE);
 }
 
@@ -46,7 +46,7 @@ void CRegWizApp::CreateWizard()
 	// Construct the property pages
 	m_pStartPage = new CStartPage;
 	ASSERT_VALID(m_pStartPage);
-    m_pStartPage->Construct(IDD_STARTPAGE, 0);
+	m_pStartPage->Construct(IDD_STARTPAGE, 0);
 
 	m_pPageTwo = new CPageTwo;
 	ASSERT_VALID(m_pPageTwo);
@@ -55,12 +55,12 @@ void CRegWizApp::CreateWizard()
 	m_pPageThree = new CPageThree;
 	ASSERT_VALID(m_pPageThree);
 	m_pPageThree->Construct(IDD_PAGETHREE, 0);
-	
+
 	// Add the property pages to the property sheet
-    m_pWizard->AddPage(m_pStartPage);
+	m_pWizard->AddPage(m_pStartPage);
 	m_pWizard->AddPage(m_pPageTwo);
 	m_pWizard->AddPage(m_pPageThree);
 
-    // Make the property sheet a wizard
-	m_pWizard->SetWizardMode(); 
+	// Make the property sheet a wizard
+	m_pWizard->SetWizardMode();
 }

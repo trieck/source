@@ -53,10 +53,10 @@ BOOL Emu6502App::InitInstance()
 	// Register document templates
 	CSingleDocTemplate* pDocTemplate;
 	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(Emu6502Doc),
-		RUNTIME_CLASS(MainFrame),       // main SDI frame window
-		RUNTIME_CLASS(Emu6502View));
+	    IDR_MAINFRAME,
+	    RUNTIME_CLASS(Emu6502Doc),
+	    RUNTIME_CLASS(MainFrame),       // main SDI frame window
+	    RUNTIME_CLASS(Emu6502View));
 	AddDocTemplate(pDocTemplate);
 
 	// Parse command line for standard shell commands, DDE, file open
@@ -76,8 +76,7 @@ BOOL Emu6502App::InitInstance()
 /////////////////////////////////////////////////////////////////////////////
 // AboutDlg dialog used for App About
 
-class AboutDlg : public CDialog
-{
+class AboutDlg : public CDialog {
 public:
 	AboutDlg();
 
@@ -92,14 +91,14 @@ public:
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(AboutDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
 	//{{AFX_MSG(AboutDlg)
-	virtual BOOL OnInitDialog();	
+	virtual BOOL OnInitDialog();
 	afx_msg void OnSysColorChange();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
@@ -183,8 +182,8 @@ CString ByteToHex(BYTE b)
 {
 	BYTE lo, hi;
 
-    lo = b & 0xf;
-    hi = (b & 0xf0) >> 4;
+	lo = b & 0xf;
+	hi = (b & 0xf0) >> 4;
 
 	CString output;
 	output.Format(_T("%c%c"), hexish[hi], hexish[lo]);
@@ -192,17 +191,17 @@ CString ByteToHex(BYTE b)
 	return output;
 }
 
-BOOL AboutDlg::OnInitDialog() 
+BOOL AboutDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
 	UpdateCtrlColor();
-		
+
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void AboutDlg::OnSysColorChange() 
+void AboutDlg::OnSysColorChange()
 {
 	CDialog::OnSysColorChange();
 	UpdateCtrlColor();

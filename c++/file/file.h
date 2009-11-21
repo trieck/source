@@ -7,32 +7,31 @@
 #define __FILE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class File
-{
+class File {
 public:
-enum openMode {
-	unknown = 0,
-	readOnly,
-	readWrite,
-	create
-};
-enum Console {
-	StdIn = 0,
-	StdOut,
-	StdErr
-};
-enum Type {
-	unknownType = 0,
-	diskType,
-	charType,
-	pipeType
-};
-enum moveMethod {
-	begin = 0,
-	current,
-	end
-};
-typedef auto_ptr<File> FilePtr;
+	enum openMode {
+		unknown = 0,
+		readOnly,
+		readWrite,
+		create
+	};
+	enum Console {
+		StdIn = 0,
+		StdOut,
+		StdErr
+	};
+	enum Type {
+		unknownType = 0,
+		diskType,
+		charType,
+		pipeType
+	};
+	enum moveMethod {
+		begin = 0,
+		current,
+		end
+	};
+	typedef auto_ptr<File> FilePtr;
 
 // Construction / Destruction
 	File(LPCTSTR filename, openMode M);
@@ -46,7 +45,7 @@ public:
 	static tstring getTempFileName();
 	static bool remove(LPCTSTR filename);
 	static FilePtr getConsole(File::Console c);
-	
+
 	void close();
 	bool isOpen() const;
 	DWORD read(LPVOID pbuff, DWORD size);
@@ -69,10 +68,12 @@ private:
 };
 /////////////////////////////////////////////////////////////////////////////
 
-inline bool File::isOpen() const {
+inline bool File::isOpen() const
+{
 	return hFile != NULL;
 }
-inline File::operator HANDLE () const{
+inline File::operator HANDLE () const
+{
 	return hFile;
 }
 

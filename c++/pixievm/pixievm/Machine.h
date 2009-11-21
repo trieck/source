@@ -9,12 +9,11 @@
 #define __MACHINE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Machine
-{
+class Machine {
 // Construction / Destruction
 public:
 	Machine();
-	~Machine(){}
+	~Machine() {}
 
 // Interface
 	void init();

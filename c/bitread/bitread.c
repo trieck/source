@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/stat.h> 
+#include <sys/stat.h>
 #include <sys/types.h>
 
 int main(int argc, char *argv[])
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	if (st.st_size % 8 != 0) {
 		fprintf(stderr, "file %s is not valid size.\n", argv[1]);
 	}
-	
+
 	while (fread(buff, sizeof(buff), 1, fp)) {
 		int j, k;
 		unsigned char c;

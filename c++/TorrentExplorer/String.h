@@ -11,8 +11,7 @@
 
 #include "TorrentObject.h"
 
-class String : public TorrentObject  
-{
+class String : public TorrentObject {
 public:
 	String();
 	String(const String &s);
@@ -25,9 +24,13 @@ public:
 	operator LPCSTR() const;
 	operator const CString&() const;
 
-	virtual int GetElementType() const { return ET_STRING; }
-	
-	int GetLength() const { return data.GetLength(); }
+	virtual int GetElementType() const {
+		return ET_STRING;
+	}
+
+	int GetLength() const {
+		return data.GetLength();
+	}
 
 	char CharAt(int n) const;
 private:

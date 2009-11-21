@@ -70,7 +70,7 @@ void write_byte(byte b)
 	putmem(1, b);
 }
 
-/* 
+/*
  * write assembled program to file
  */
 void write_code(void)

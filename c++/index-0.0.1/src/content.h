@@ -14,12 +14,11 @@
 #include "noise.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class Content
-{
+class Content {
 // Construction
 public:
-    Content();
-    ~Content();
+	Content();
+	~Content();
 
 // Interface
 public:
@@ -28,8 +27,8 @@ public:
 
 // Implementation
 private:
-	void parse();	
-	Lex lexer;					// lexical analyzer	
+	void parse();
+	Lex lexer;					// lexical analyzer
 	Inverter block;				// inverted term list in memory
 	NoiseList noise;			// noise word list
 	Files files;				// list of files indexed

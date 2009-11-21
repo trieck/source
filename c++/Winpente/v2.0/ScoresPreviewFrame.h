@@ -12,11 +12,10 @@
 /////////////////////////////////////////////////////////////////////////////
 // CScoresPreviewFrame frame
 
-class CScoresPreviewFrame : public CFrameWnd
-{
+class CScoresPreviewFrame : public CFrameWnd {
 	DECLARE_DYNCREATE(CScoresPreviewFrame)
 public:
-	CScoresPreviewFrame();         
+	CScoresPreviewFrame();
 	virtual ~CScoresPreviewFrame();
 
 // Attributes
@@ -25,12 +24,14 @@ public:
 // Operations
 public:
 	CStatusBar * GetStatusBar();
-	inline CDC* GetPrinterDC() { return m_pPrinterDC; }
+	inline CDC* GetPrinterDC() {
+		return m_pPrinterDC;
+	}
 
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CScoresPreviewFrame)
-	protected:
+protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL
 

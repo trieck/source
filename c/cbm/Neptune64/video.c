@@ -26,7 +26,7 @@
 #include "mem.h"
 #define REGISTERS 	0x2f
 static byte memory[REGISTERS];
-/* initialize video */ 
+/* initialize video */
 void vic_init(void)
 {
 	memset(memory, 0, sizeof(memory));
@@ -37,13 +37,13 @@ void vic_init(void)
 byte vic_read(word address)
 {
 	address &= 0x3f;
-	
+
 	if (address == 0x1e || address == 0x1f)
 		return (memory[address] = 0);
-		
+
 	if (address >= 0x2f && address <= 0x3f)
 		return 0xff;
-	
+
 	return memory[address];
 }
 /*

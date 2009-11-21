@@ -15,10 +15,10 @@ class Exception {
 public:
 	Exception(const char *fmt, ...) {
 		char buffer[BUFF_SIZE];
-		va_list arglist;	
-   		va_start(arglist, fmt);
-   		vsprintf(buffer, fmt, arglist);
-   		va_end(arglist);
+		va_list arglist;
+		va_start(arglist, fmt);
+		vsprintf(buffer, fmt, arglist);
+		va_end(arglist);
 		desc = buffer;
 	}
 
@@ -35,7 +35,9 @@ public:
 		}
 		return *this;
 	}
-	string getDescription() const { return desc; }
+	string getDescription() const {
+		return desc;
+	}
 
 // Implementation
 private:

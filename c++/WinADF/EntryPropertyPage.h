@@ -4,8 +4,7 @@
 
 // EntryPropertyPage dialog
 
-class EntryPropertyPage : public CPropertyPage
-{
+class EntryPropertyPage : public CPropertyPage {
 	DECLARE_DYNCREATE(EntryPropertyPage)
 
 public:

@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //
 // CONN.H : TCP/IP connection class
-// 
+//
 // Copyright (c) 2003 KnowX.com, All Rights Reserved
 //
 
@@ -11,8 +11,7 @@
 #include <winsock2.h>
 
 /////////////////////////////////////////////////////////////////////////////
-class Connection
-{
+class Connection {
 public:
 // Construction / Destruction
 	Connection();
@@ -25,19 +24,26 @@ public:
 
 // Interface
 public:
-	
+
 	bool connect(const char *host, int port);
 	bool send(const char *str) const;
 	int receive(char *buffer, size_t size) const;
-    bool bind();
-    bool listen(int port, int backlog = 100);
+	bool bind();
+	bool listen(int port, int backlog = 100);
 	int pendingBytes() const;
 	bool setBlockingMode(bool block) const;
 	int select(bool read, bool write, bool error, timeval *timeout);
-    Connection accept() const;
-	SOCKET release() { own = false; return m_socket; }
-	SOCKET getSock() const { return m_socket; }
-	bool valid() const { return m_socket != INVALID_SOCKET; }
+	Connection accept() const;
+	SOCKET release() {
+		own = false;
+		return m_socket;
+	}
+	SOCKET getSock() const {
+		return m_socket;
+	}
+	bool valid() const {
+		return m_socket != INVALID_SOCKET;
+	}
 
 // Implementation
 private:

@@ -9,8 +9,7 @@
 #define __DECODE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class BEDecoder 
-{
+class BEDecoder {
 // Construction / Destruction
 private:
 	BEDecoder(IPeekableStream *pStream);

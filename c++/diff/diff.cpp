@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-//	DIFF.CPP 
+//	DIFF.CPP
 //
 
 #pragma warning(disable:4786)
@@ -43,13 +43,14 @@ int _tmain(int argc, TCHAR *argv[])
 		return 1;
 	}
 
-	argc--; argv++;
+	argc--;
+	argv++;
 
 	if (!isspec(argv[0]) || !isspec(argv[1])) {
 		std::cerr << usage << std::endl;
 		return 1;
 	}
-	
+
 	diff(argv[0], argv[1]);
 
 	return 0;
@@ -85,7 +86,7 @@ tstring dirname(LPCTSTR files)
 
 /////////////////////////////////////////////////////////////////////////////
 tstring specname(LPCTSTR files)
-{	
+{
 	size_t len = _tcslen(files);
 
 	for (int i = len - 1; i >= 0; i--)
@@ -108,8 +109,8 @@ void diff(LPCTSTR files1, LPCTSTR files2)
 	tstring spec1 = specname(files1);
 	tstring spec2 = specname(files2);
 
-	std::cout << std::endl << _T('[') << dir1.c_str() << _T(']') << _T('\t') 
-		<< _T('[') << dir2.c_str() << _T(']') << std::endl;
+	std::cout << std::endl << _T('[') << dir1.c_str() << _T(']') << _T('\t')
+	          << _T('[') << dir2.c_str() << _T(']') << std::endl;
 
 	compare(files1, files2);
 
@@ -124,16 +125,16 @@ void diff(LPCTSTR files1, LPCTSTR files2)
 	for ( ; it != subdirs1.end(); it++) {
 		stringvec::const_iterator I = std::find(subdirs2.begin(), subdirs2.end(), *it);
 		if (I == subdirs2.end()) {
-			std::cout << _T('[') << *it << _T(']') << _T('\t') 
-				<< _T("not found") << std::endl;
+			std::cout << _T('[') << *it << _T(']') << _T('\t')
+			          << _T("not found") << std::endl;
 			continue;
 		}
 
 		std::ostrstream path1, path2;
 		path1 << dir1 << _T('\\') << *it
-			<< _T('\\') << spec1 << std::ends;
+		<< _T('\\') << spec1 << std::ends;
 		path2 << dir2 << _T('\\') << *it
-			<< _T('\\') << spec1 << std::ends;
+		<< _T('\\') << spec1 << std::ends;
 		diff(path1.str(), path2.str());
 	}
 
@@ -141,8 +142,8 @@ void diff(LPCTSTR files1, LPCTSTR files2)
 	for (it = subdirs2.begin(); it != subdirs2.end(); it++) {
 		stringvec::const_iterator I = std::find(subdirs1.begin(), subdirs1.end(), *it);
 		if (I == subdirs1.end()) {
-			std::cout << _T("not found") << _T('\t') << _T('[') << *it << _T(']') 
-				<< std::endl;
+			std::cout << _T("not found") << _T('\t') << _T('[') << *it << _T(']')
+			          << std::endl;
 		}
 	}
 }
@@ -189,11 +190,11 @@ void compare(LPCTSTR files1, LPCTSTR files2)
 	// compare against first spec
 	for ( ; it != v1.end(); it++) {
 		std::cout << (*it).c_str() << _T('\t');
-		
+
 		stringvec::const_iterator I = std::find(v2.begin(), v2.end(), *it);
 		if (I == v2.end()) {
 			std::cout << _T("not found");
-		}else {
+		} else {
 			std::cout << (*it).c_str();
 			tstring path1 = dirname(files1) + _T('\\') + *it;
 			tstring path2 = dirname(files2) + _T('\\') + *it;

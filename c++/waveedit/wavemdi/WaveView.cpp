@@ -6,16 +6,17 @@
 // Date			:	11/23/1997		//
 //////////////////////////////////////
 
-#include "WaveView.h" 
+#include "WaveView.h"
 #include "MainFrame.h"
 
 // Initialize static data
 LPCTSTR	CWaveView::m_lpszHeaders[] = {_T("File Name"),
-								_T("Size in Bytes"),
-								_T("Format"),
-								_T("Mono / Stereo"),
-								_T("Bytes / Second"),
-								_T("Bits / Sample")};
+                                      _T("Size in Bytes"),
+                                      _T("Format"),
+                                      _T("Mono / Stereo"),
+                                      _T("Bytes / Second"),
+                                      _T("Bits / Sample")
+                                     };
 
 IMPLEMENT_DYNCREATE(CWaveView, CListView)
 
@@ -50,9 +51,8 @@ INT	CWaveView :: OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Set Column information
 	LV_COLUMN	lvc;
-		
-	for (UINT i = 0; i < 6; i++)
-	{
+
+	for (UINT i = 0; i < 6; i++) {
 		lvc.mask		= LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
 		lvc.fmt			= LVCFMT_CENTER;
 		lvc.cx			= 100;
@@ -61,7 +61,7 @@ INT	CWaveView :: OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 		GetListCtrl().InsertColumn(i, &lvc);
 	}
-	
+
 	return 0;
 }
 

@@ -4,12 +4,12 @@
 int main(int argc, char *argv[])
 {
 	int c, d, e, f, intag = 0, incomment = 0;
-	
+
 	while ((c = getchar()) != EOF) {
 		switch (c) {
 		case '<':
 			if (!incomment)
-				intag = 1;			
+				intag = 1;
 
 			d = getchar();	// check for html comment
 			e = getchar();
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 		default:
 			if (!intag && !incomment)
 				putchar(c);
-		}		
+		}
 	}
 
 	return 0;

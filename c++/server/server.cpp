@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 HttpServer::HttpServer(int lport)
- : port(lport)
+		: port(lport)
 {
 }
 
@@ -54,17 +54,17 @@ bool HttpServer::service(Connection *request)
 	}
 
 	pbuff[n] = '\0';
-	
+
 	cout << pbuff << endl;
 
 	delete [] pbuff;
 
-static char response [] = 
-	"HTTP/1.0 302 Moved Temporarily\n"
-	"Location: http://www.java.sun.com\n"
-	"Date: Sun, 21 Apr 1996 02:20:42 GMT\n"
-	"Server: Tom Rieck's Web Server/1.0\n"
-	"Content-Length: 0\n\n";
+	static char response [] =
+	    "HTTP/1.0 302 Moved Temporarily\n"
+	    "Location: http://www.java.sun.com\n"
+	    "Date: Sun, 21 Apr 1996 02:20:42 GMT\n"
+	    "Server: Tom Rieck's Web Server/1.0\n"
+	    "Content-Length: 0\n\n";
 
 	// send response
 	return request->send(response);

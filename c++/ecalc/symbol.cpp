@@ -33,8 +33,8 @@ SymbolTable::~SymbolTable()
 //
 // install
 //
-const Symbol * SymbolTable::install(const char* name, 
-	SymbolType type, double value)
+const Symbol * SymbolTable::install(const char* name,
+                                    SymbolType type, double value)
 {
 	Symbol * sp = const_cast<Symbol *>(lookup(name));
 	if (sp == NULL)
@@ -42,15 +42,15 @@ const Symbol * SymbolTable::install(const char* name,
 
 	sp->type = type;
 	sp->value = value;
-	
+
 	return (*this)[name] = sp;
 }
 
 //
 // install
 //
-const Symbol * SymbolTable::install(const char* name, 
-	SymbolType type, Instr * defn)
+const Symbol * SymbolTable::install(const char* name,
+                                    SymbolType type, Instr * defn)
 {
 	Symbol * sp = const_cast<Symbol *>(lookup(name));
 	if (sp == NULL)
@@ -58,7 +58,7 @@ const Symbol * SymbolTable::install(const char* name,
 
 	sp->type = type;
 	sp->defn = defn;
-	
+
 	return (*this)[name] = sp;
 }
 
@@ -74,7 +74,7 @@ const Symbol * SymbolTable::install(const char* name, Instr i)
 
 	sp->type = bltin;
 	sp->instruction = i;
-	
+
 	return (*this)[name] = sp;
 }
 

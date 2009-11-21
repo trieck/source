@@ -47,7 +47,8 @@ struct StringPtrLess {
 
 /////////////////////////////////////////////////////////////////////////////
 // Callable interface
-DECLARE_INTERFACE(ICallable) {
+DECLARE_INTERFACE(ICallable)
+{
 public:
 	virtual void Call(DWORD param) PURE;
 };

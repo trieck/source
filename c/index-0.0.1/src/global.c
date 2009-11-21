@@ -11,7 +11,7 @@ extern int vsnprintf(char *, size_t n, char const *, va_list);
 
 /*
  * The delta table generates primes just less than a power of two.  A prime
- * number is calculated by subtracting its delta value from its 
+ * number is calculated by subtracting its delta value from its
  * corresponding power of two.
  */
 
@@ -28,7 +28,7 @@ static uint8_t delta[] = {
 };
 
 /*
- * error routine 
+ * error routine
  */
 void error(const char *fmt, ...)
 {
@@ -45,7 +45,7 @@ void error(const char *fmt, ...)
 }
 
 /*
- * 64-bit Fowler/Noll/Vo double-hash function 
+ * 64-bit Fowler/Noll/Vo double-hash function
  */
 uint64_t doublehash(const void *key, uint32_t len)
 {

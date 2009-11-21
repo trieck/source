@@ -9,8 +9,7 @@
 #define __CHARGE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Charge 
-{
+class Charge {
 	// Construction / Destruction
 private:
 	Charge();

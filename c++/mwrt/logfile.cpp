@@ -11,7 +11,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 LogFile::LogFile()
- : hFile(INVALID_HANDLE_VALUE)
+		: hFile(INVALID_HANDLE_VALUE)
 {
 }
 
@@ -30,7 +30,7 @@ bool LogFile::open(LPCTSTR filename)
 	close();
 
 	hFile = CreateFile(filename, flags, FILE_SHARE_READ|FILE_SHARE_WRITE,
-		NULL, disp, attr, NULL);
+	                   NULL, disp, attr, NULL);
 
 	return hFile != INVALID_HANDLE_VALUE;
 }
@@ -55,9 +55,9 @@ bool LogFile::log(LPCTSTR fmt, ...)
 	va_end(argList);
 
 	CTime tm = CTime::GetCurrentTime();
-	entry.Format(_T("%s\t%s\r\n"), 
-		tm.Format(_T("%m/%d/%Y %H:%M:%S")),
-		message);
+	entry.Format(_T("%s\t%s\r\n"),
+	             tm.Format(_T("%m/%d/%Y %H:%M:%S")),
+	             message);
 
 	DWORD toWrite = entry.GetLength() * sizeof(TCHAR), written[1];
 	WriteFile(hFile, entry, toWrite, written, NULL);

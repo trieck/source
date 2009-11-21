@@ -1,6 +1,6 @@
 /*---------------------------------------
-	Module Name	:	PiecePage.cpp	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	PiecePage.cpp
+	Author		:	Thomas A. Rieck
 	Purpose		:	Pieces Preference
 					Property Page
 					implementation
@@ -15,7 +15,7 @@
 IMPLEMENT_DYNCREATE(CPiecePage, CPropertyPage)
 
 BEGIN_MESSAGE_MAP(CPiecePage, CPropertyPage)
-    ON_WM_PAINT()
+	ON_WM_PAINT()
 	ON_WM_LBUTTONDOWN()
 	ON_COMMAND(IDC_PLAYERONEPIECE, OnPlayerOnePiece1)
 	ON_COMMAND(IDC_PLAYERONEPIECE2, OnPlayerOnePiece2)
@@ -31,18 +31,21 @@ END_MESSAGE_MAP()
 
 // Initialize static data members
 UINT CPiecePage::nRes[] = {IDI_REDBALL, IDI_GREENBALL, IDI_LTBLUEBALL,
-								IDI_PURPLEBALL, IDI_BLUEBALL};
-UINT CPiecePage::PlayerOneCtrls[] = {IDC_PLAYERONEPIECE, IDC_PLAYERONEPIECE2, IDC_PLAYERONEPIECE3, 
-									IDC_PLAYERONEPIECE4, IDC_PLAYERONEPIECE5};
-UINT CPiecePage::PlayerTwoCtrls[] = {IDC_PLAYERTWOPIECE, IDC_PLAYERTWOPIECE2, IDC_PLAYERTWOPIECE3, 
-									IDC_PLAYERTWOPIECE4, IDC_PLAYERTWOPIECE5};
+                           IDI_PURPLEBALL, IDI_BLUEBALL
+                          };
+UINT CPiecePage::PlayerOneCtrls[] = {IDC_PLAYERONEPIECE, IDC_PLAYERONEPIECE2, IDC_PLAYERONEPIECE3,
+                                     IDC_PLAYERONEPIECE4, IDC_PLAYERONEPIECE5
+                                    };
+UINT CPiecePage::PlayerTwoCtrls[] = {IDC_PLAYERTWOPIECE, IDC_PLAYERTWOPIECE2, IDC_PLAYERTWOPIECE3,
+                                     IDC_PLAYERTWOPIECE4, IDC_PLAYERTWOPIECE5
+                                    };
 
 CPiecePage::CPiecePage() : CPropertyPage(CPiecePage::IDD)
 {
 	m_pDoc				= NULL;
 	m_pCurrentPlayerOne = NULL;
 	m_pCurrentPlayerTwo	= NULL;
-	
+
 	m_pPlayerOnePieces	= NULL;
 	m_pPlayerTwoPieces	= NULL;
 }
@@ -51,7 +54,7 @@ BOOL CPiecePage::OnInitDialog()
 {
 	CMainFrame* pFrame;
 	INT			i;
-	
+
 	pFrame = (CMainFrame*)AfxGetApp()->GetMainWnd();
 	ASSERT_VALID(pFrame);
 
@@ -67,13 +70,12 @@ BOOL CPiecePage::OnInitDialog()
 
 	// Build array for pieces
 	// and frame current selections
-	for (i = 0; i < 5; i++)
-	{
+	for (i = 0; i < 5; i++) {
 		m_pPlayerOnePieces[i].pWnd = GetDlgItem((IDC_PLAYERONEPIECE)+i);
 		ASSERT_VALID(m_pPlayerOnePieces[i].pWnd);
-		
+
 		m_pPlayerOnePieces[i].nResource = CPiecePage::nRes[i];
-	
+
 		m_pPlayerTwoPieces[i].pWnd = GetDlgItem((IDC_PLAYERTWOPIECE)+i);
 		ASSERT_VALID(m_pPlayerTwoPieces[i].pWnd);
 
@@ -95,16 +97,14 @@ VOID CPiecePage::OnOK()
 	if (!m_pCurrentPlayerOne && !m_pCurrentPlayerTwo)
 		return;
 
-	if (m_pCurrentPlayerOne)
-	{
+	if (m_pCurrentPlayerOne) {
 		nRes = GetPieceOneResFromWnd(m_pCurrentPlayerOne);
 		ASSERT(nRes);
 
 		m_pDoc->SetPlayerOneRes(nRes);
 	}
 
-	if (m_pCurrentPlayerTwo)
-	{
+	if (m_pCurrentPlayerTwo) {
 		nRes = GetPieceTwoResFromWnd(m_pCurrentPlayerTwo);
 		ASSERT(nRes);
 
@@ -116,8 +116,7 @@ INT CPiecePage::GetPieceOneResFromWnd(CWnd* pWnd)
 {
 	ASSERT_VALID (pWnd);
 
-	for (int i = 0; i < 5; i++)
-	{
+	for (int i = 0; i < 5; i++) {
 		if (m_pPlayerOnePieces[i].pWnd == pWnd)
 			return m_pPlayerOnePieces[i].nResource;
 	}
@@ -129,8 +128,7 @@ INT CPiecePage::GetPieceTwoResFromWnd(CWnd* pWnd)
 {
 	ASSERT_VALID (pWnd);
 
-	for (int i = 0; i < 5; i++)
-	{
+	for (int i = 0; i < 5; i++) {
 		if (m_pPlayerTwoPieces[i].pWnd == pWnd)
 			return m_pPlayerTwoPieces[i].nResource;
 	}
@@ -146,7 +144,7 @@ BOOL CPiecePage::OnApply()
 VOID CPiecePage::OnPaint()
 {
 	CPropertyPage::OnPaint();
-	
+
 	if (m_pCurrentPlayerOne)
 		FramePlayerPiece(m_pCurrentPlayerOne, FRAME_COLOR);
 
@@ -167,7 +165,7 @@ VOID CPiecePage::FramePlayerPiece(CWnd* pWnd, COLORREF lColor)
 
 	pBrush = new CBrush(lColor);
 	ASSERT_VALID(pBrush);
-	
+
 	dc.FrameRect(&rc, pBrush);
 
 	delete pBrush;
@@ -306,28 +304,20 @@ VOID CPiecePage::RedrawPieces()
 {
 	UINT n, nCount = sizeof(PlayerOneCtrls) / sizeof(UINT);
 
-	for (n = 0; n < nCount; n++)
-	{
+	for (n = 0; n < nCount; n++) {
 		CWnd * pWnd = GetDlgItem(PlayerOneCtrls[n]);
-		if (pWnd == m_pCurrentPlayerOne)
-		{
+		if (pWnd == m_pCurrentPlayerOne) {
 			FramePlayerPiece(pWnd, FRAME_COLOR);
-		}
-		else
-		{
+		} else {
 			FramePlayerPiece(pWnd, ::GetSysColor(COLOR_BTNFACE));
 		}
 	}
 
-	for (n = 0; n < nCount; n++)
-	{
+	for (n = 0; n < nCount; n++) {
 		CWnd * pWnd = GetDlgItem(PlayerTwoCtrls[n]);
-		if (pWnd == m_pCurrentPlayerTwo)
-		{
+		if (pWnd == m_pCurrentPlayerTwo) {
 			FramePlayerPiece(pWnd, FRAME_COLOR);
-		}
-		else
-		{
+		} else {
 			FramePlayerPiece(pWnd, ::GetSysColor(COLOR_BTNFACE));
 		}
 	}

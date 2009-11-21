@@ -9,8 +9,7 @@
 #define __MIDIBUFF_H__
 
 ///////////////////////////////////////////////////////////////////////
-class MidiBuffer
-{
+class MidiBuffer {
 public:
 	// Construction / Destruction
 	MidiBuffer();
@@ -18,15 +17,17 @@ public:
 
 	// Interface
 	void Transform (BYTE note1, BYTE note2);
-	operator MIDIHDR* () { return &m_header; }
-	
+	operator MIDIHDR* () {
+		return &m_header;
+	}
+
 	// Implementation
 protected:
 	void Alloc();
 	void Free();
 
 private:
-    MIDIHDR m_header;
+	MIDIHDR m_header;
 };
 
 ///////////////////////////////////////////////////////////////////////

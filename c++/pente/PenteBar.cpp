@@ -29,13 +29,13 @@ PenteBar::~PenteBar()
 void PenteBar::DrawItem(LPDRAWITEMSTRUCT dis)
 {
 	ASSERT(dis != NULL);
-	
+
 	PenteDoc *doc = (PenteDoc*)GetParentFrame()->GetActiveDocument();
 	ASSERT_VALID(doc);
 
 	const Player *playerOne = doc->getGame()->getPlayerOne();
 	const Player *playerTwo = doc->getGame()->getPlayerTwo();
-	
+
 	ASSERT_VALID(playerOne);
 	ASSERT_VALID(playerTwo);
 
@@ -43,11 +43,11 @@ void PenteBar::DrawItem(LPDRAWITEMSTRUCT dis)
 	dc.Attach(dis->hDC);
 	BITMAP bm;
 	bmPlayerOne.GetBitmap(&bm);
-	
+
 	CRect rc(dis->rcItem);
 	int cy = rc.top + ((rc.Height() - bm.bmHeight) / 2);
 	int offset = rc.left;
-	
+
 	unsigned i;
 	for (i = 0; i < playerOne->getCaptures(); i++) {
 		bmPlayerOne.Draw(&dc, offset, cy);
@@ -76,28 +76,28 @@ int PenteBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CStatusBar::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
+
 	SetIndicators(indicators, sizeof(indicators) / sizeof(UINT));
 	GetParentFrame()->RepositionBars(0, 0xffff, AFX_IDW_PANE_FIRST);
 
 	CWinApp *pApp = AfxGetApp();
-	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"), 
-		_T("playerOneColor"), PenteBoard::DEFAULT_PLAYER_ONE_COLOR);
-	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"), 
-		_T("playerTwoColor"), PenteBoard::DEFAULT_PLAYER_TWO_COLOR);
+	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"),
+	                          _T("playerOneColor"), PenteBoard::DEFAULT_PLAYER_ONE_COLOR);
+	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"),
+	                          _T("playerTwoColor"), PenteBoard::DEFAULT_PLAYER_TWO_COLOR);
 
 	bmPlayerOne.setColor(playerOneColor);
 	bmPlayerTwo.setColor(playerTwoColor);
 
 	BITMAP bm;
 	bmPlayerOne.GetBitmap(&bm);
-	
+
 	unsigned id, style;
 	int width, captureWidth;
-	
+
 	CRect rc;
 	GetWindowRect(rc);
-	
+
 	captureWidth = (Player::MAX_CAPTURES * bm.bmWidth) * 2;
 	GetPaneInfo(0, id, style, width);
 	SetPaneInfo(0, id, style & ~SBPS_NOBORDERS, rc.Width() / 3);
@@ -111,10 +111,10 @@ int PenteBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 LRESULT PenteBar::OnAppSettingChange(WPARAM wParam, LPARAM lParam)
 {
 	CWinApp *pApp = AfxGetApp();
-	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"), 
-		_T("playerOneColor"), PenteBoard::DEFAULT_PLAYER_ONE_COLOR);
-	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"), 
-		_T("playerTwoColor"), PenteBoard::DEFAULT_PLAYER_TWO_COLOR);
+	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"),
+	                          _T("playerOneColor"), PenteBoard::DEFAULT_PLAYER_ONE_COLOR);
+	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"),
+	                          _T("playerTwoColor"), PenteBoard::DEFAULT_PLAYER_TWO_COLOR);
 
 	bmPlayerOne.setColor(playerOneColor);
 	bmPlayerTwo.setColor(playerTwoColor);

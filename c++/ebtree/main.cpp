@@ -20,7 +20,7 @@
 #define MAXLEN (5000000)
 
 /////////////////////////////////////////////////////////////////////////////
-UINT randomInt(UINT lo, UINT hi) 
+UINT randomInt(UINT lo, UINT hi)
 {
 	double r = double(rand()) / RAND_MAX;
 	return lo + UINT(r * (hi - lo));
@@ -42,7 +42,7 @@ char randomAlpha()
 string randomKey()
 {
 	string output;
-	
+
 	int nlen = randomInt(256, 256);
 	output.resize(nlen);
 
@@ -57,7 +57,7 @@ string randomKey()
 string randomVal(int min, int max)
 {
 	string output;
-	
+
 	UINT nlen = randomInt(min, max);
 	nlen = min(nlen, MAXLEN);
 	output.resize(nlen);
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 	}
 
 	tree.writeStats(cout);
-	tree.close();		  	
+	tree.close();
 
 	cout << "   elapsed time " << timer << endl;
 

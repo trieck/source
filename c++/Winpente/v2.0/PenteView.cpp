@@ -1,6 +1,6 @@
 /*---------------------------------------
-	Module Name	:	PenteView.cpp	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	PenteView.cpp
+	Author		:	Thomas A. Rieck
 	Purpose		:	Pente View
 					Module
 	Date		:	08/21/1997
@@ -41,14 +41,14 @@ CPenteView::~CPenteView()
 VOID CPenteView::SetBackgroundBitmap(INT nResID)
 {
 	ASSERT(nResID);
-	
+
 	DELETEGDIOBJECT(m_hBitmap);
 	DELETEGDIOBJECT(m_hPalette);
-	
+
 	m_nBackground = nResID;
 
 	m_hBitmap = m_pCustomBitmap->LoadResourceBitmap(m_nBackground, &m_hPalette);
-	
+
 	ASSERT(m_hBitmap);
 	ASSERT(m_hPalette);
 }
@@ -68,37 +68,33 @@ void CPenteView::OnDraw(CDC* pDC)
 {
 	CPenteDoc*	pDoc;
 	CRect		rc;
-		
+
 	pDoc = (CPenteDoc*)GetDocument();
 	ASSERT_VALID(pDoc);
 
 	GetClientRect(&rc);
 
-	if (pDC->RectVisible(&rc))
-	{
+	if (pDC->RectVisible(&rc)) {
 		// Paint the background
-		if (!pDoc->m_fUseBackColor)
-		{
-			if (m_hBitmap && m_hPalette)
-			{
+		if (!pDoc->m_fUseBackColor) {
+			if (m_hBitmap && m_hPalette) {
 				HPALETTE hOldPalette;
 
 				hOldPalette = ::SelectPalette(pDC->GetSafeHdc(), m_hPalette, FALSE);
 				::RealizePalette(pDC->GetSafeHdc());
-				
+
 				::SelectPalette(pDC->GetSafeHdc(), hOldPalette, TRUE);
 				::RealizePalette(pDC->GetSafeHdc());
 
 				m_pCustomBitmap->PaintDCByHBitmap(pDC, m_hBitmap, TRUE);
 			}
-		}
-		else
+		} else
 			m_pCustomBitmap->PaintDCByColor(pDC, pDoc->GetBackColor());
-	
+
 		// Draw the grid
 		DrawGrid(pDoc, pDC);
 
-		// We are done drawing the grid 
+		// We are done drawing the grid
 		// and background.  Now tell the
 		// document to render it's data
 		pDoc->RenderData(pDC);
@@ -136,7 +132,7 @@ void CPenteView::DrawGrid (CPenteDoc* pDoc, CDC* pDC)
 	CRect			rc;
 	CPen			aPen, *pPenOld;
 	int				i, nSavedDC;
-	
+
 	nSavedDC = pDC->SaveDC();
 
 	// Set the mapping mode
@@ -145,7 +141,7 @@ void CPenteView::DrawGrid (CPenteDoc* pDoc, CDC* pDC)
 	// Set the window and viewport extents
 	pDC->SetWindowExt(1, 1);
 	pDC->SetViewportExt(21, 21);
-	
+
 	aPen.CreatePen(PS_SOLID, 0, pDoc->GetGridColor());
 	pPenOld = pDC->SelectObject(&aPen);
 
@@ -161,7 +157,7 @@ void CPenteView::DrawGrid (CPenteDoc* pDoc, CDC* pDC)
 	pDC->LineTo(0, rc.Height());
 	pDC->LineTo(0,0);
 
-	int cx, cx1; 
+	int cx, cx1;
 	int	cy, cy1;
 
 	cx	= rc.left;
@@ -169,14 +165,12 @@ void CPenteView::DrawGrid (CPenteDoc* pDoc, CDC* pDC)
 	cy	= rc.top;
 	cy1 = rc.bottom;
 
-	for (i = cx; i < cx1; i++)
-	{
+	for (i = cx; i < cx1; i++) {
 		pDC->MoveTo(i, 0);
 		pDC->LineTo(i, cy1);
 	}
 
-	for (i = cy; i < cy1; i++)
-	{
+	for (i = cy; i < cy1; i++) {
 		pDC->MoveTo(0, i);
 		pDC->LineTo(cx1, i);
 	}
@@ -198,13 +192,13 @@ INT	CPenteView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Load the initial palette and bitmap
 	SetBackgroundBitmap(m_nBackground);
-	
+
 	return CView::OnCreate(lpCreateStruct);
 }
 
 void CPenteView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	CPenteApp*	pApp; 
+	CPenteApp*	pApp;
 	CPenteDoc*	pDoc;
 
 	CClientDC	dc(this);
@@ -219,26 +213,24 @@ void CPenteView::OnLButtonDown(UINT nFlags, CPoint point)
 	ASSERT_VALID(pDoc);
 
 	nSavedDC = dc.SaveDC();
-	
+
 	dc.SetViewportOrg(SQUARE_WIDTH, SQUARE_HEIGHT);
-	
+
 	dc.DPtoLP(&point);
 
 	pDoc->GetBoard(&rc);
 
-	if (rc.PtInRect(point))
-	{
+	if (rc.PtInRect(point)) {
 		CPoint newPoint;
 
-		if (!pDoc->WhichSquare(point, &newPoint))
-		{
+		if (!pDoc->WhichSquare(point, &newPoint)) {
 			dc.RestoreDC(nSavedDC);
 			return;
 		}
 
 		// Mark the current piece
 		pDoc->MarkPiece(newPoint);
-		
+
 		int i = newPoint.x;
 		int j = newPoint.y;
 
@@ -248,25 +240,21 @@ void CPenteView::OnLButtonDown(UINT nFlags, CPoint point)
 		pDoc->GetSquareDims(pt, &rcSquare);
 
 		dc.LPtoDP(&rcSquare);
-		
+
 		// Check whether we
 		// have captured a pair of pieces
-		if (nCount = pDoc->CheckCapture(&pt))
-		{
+		if (nCount = pDoc->CheckCapture(&pt)) {
 			// We have a capture
 			pApp->PlayWave(MAKEINTRESOURCE(IDR_BLIP), SND_ASYNC | SND_MEMORY);
 			pDoc->UpdateAllViews(NULL);
-		}
-		else
-		{
+		} else {
 			// Play 'piece' sound
 			pApp->PlayWave(MAKEINTRESOURCE(IDR_PIECE), SND_ASYNC | SND_MEMORY);
 			InvalidateRect(&rcSquare, FALSE);
 		}
-		
-		// Check for a winner 
-		if (!pDoc->CheckWinByCapture() && !pDoc->CheckFiveInARow(pt))
-		{
+
+		// Check for a winner
+		if (!pDoc->CheckWinByCapture() && !pDoc->CheckFiveInARow(pt)) {
 			// Display new player turn
 			pDoc->ChangeTurns();
 			pDoc->SetModifiedFlag();
@@ -274,19 +262,17 @@ void CPenteView::OnLButtonDown(UINT nFlags, CPoint point)
 			// Check play mode and current turn
 			// and allow computer to move
 			if (pDoc->GetPlayMode() == PLAYER_VS_COMPUTER &&
-				pDoc->GetCurrentTurn() == PLAYER_TWO_TURN)
+			        pDoc->GetCurrentTurn() == PLAYER_TWO_TURN)
 				pDoc->ComputerMove();
-		}
-		else
-		{	
+		} else {
 			// Someone has won the game!
 
 			// Ensure our status window is updated
 			m_pMainFrame->GetStatusBar()->OnUpdateCmdUI(m_pMainFrame, FALSE);
-			
+
 			// We don't want to save a finished game
 			pDoc->SetModifiedFlag(FALSE);
-			
+
 			pApp->DoFinish();
 		}
 	}
@@ -294,8 +280,7 @@ void CPenteView::OnLButtonDown(UINT nFlags, CPoint point)
 }
 
 
-			
 
-			
-		
-	
+
+
+

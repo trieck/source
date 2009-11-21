@@ -13,8 +13,8 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 namespace {
-	const int MAX_SERVERLIST_SIZE = 4096;
-	CString getProfilePath();
+const int MAX_SERVERLIST_SIZE = 4096;
+CString getProfilePath();
 
 } // anonymous
 
@@ -46,8 +46,8 @@ BOOL BackendsDoc::OnNewDocument()
 
 	TCHAR servers[MAX_SERVERLIST_SIZE] = { 0 };
 
-	GetPrivateProfileString(_T("machines"), NULL, _T(""), 
-		servers, sizeof(servers) - 1, getProfilePath());
+	GetPrivateProfileString(_T("machines"), NULL, _T(""),
+	                        servers, sizeof(servers) - 1, getProfilePath());
 
 	LPCTSTR server = servers;
 	for (int i = 0; *server; i++) {
@@ -63,11 +63,8 @@ BOOL BackendsDoc::OnNewDocument()
 
 void BackendsDoc::Serialize(CArchive& ar)
 {
-	if (ar.IsStoring())
-	{
-	}
-	else
-	{
+	if (ar.IsStoring()) {
+	} else {
 	}
 }
 
@@ -89,7 +86,7 @@ void BackendsDoc::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // BackendsDoc commands
 
-void BackendsDoc::DeleteContents() 
+void BackendsDoc::DeleteContents()
 {
 	machines.clear();
 	CDocument::DeleteContents();
@@ -108,9 +105,9 @@ CString getProfilePath()
 	int nPosition = ininame.ReverseFind(_T('.'));
 	ininame = ininame.Left(nPosition) + _T(".ini");
 
-    if (_taccess(ininame, 0) != -1)
-        return ininame;
-    
+	if (_taccess(ininame, 0) != -1)
+		return ininame;
+
 	nPosition = ininame.ReverseFind('\\');
 	ininame.Right(ininame.GetLength() - nPosition);
 

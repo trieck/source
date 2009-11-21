@@ -66,7 +66,7 @@ int BinaryFileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (HexView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	m_Font.CreatePointFont(90, _T("Courier New"));	
+	m_Font.CreatePointFont(90, _T("Courier New"));
 
 	WinADFDoc *pDoc = GetDocument();
 	ASSERT_VALID(pDoc);

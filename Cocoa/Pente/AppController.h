@@ -4,12 +4,14 @@
 #import "Entry.h"
 #import "Machine.h"
 
-@interface AppController : NSObject {
-    IBOutlet View *view;
+@interface AppController :
+NSObject {
+	IBOutlet View *view;
 	Board *board;
 	Machine *machine;
 }
-- (IBAction)newGame:(id)sender;
+- (IBAction)newGame:
+(id)sender;
 
 - (Point)move;
 

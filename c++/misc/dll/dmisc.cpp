@@ -21,16 +21,15 @@ HRESULT __stdcall CFactory :: QueryInterface(REFIID iid, PPVOID ppv)
 
 	if ((iid == IID_IUnknown) || (iid == IID_IClassFactory))
 		pI = static_cast<LPCLASSFACTORY>(this);
-	else
-	{
+	else {
 		*ppv = NULL;
 		return E_NOINTERFACE;
 	}
-	
+
 	pI->AddRef();
 
 	*ppv = pI;
-	
+
 	return S_OK;
 }
 
@@ -41,8 +40,7 @@ ULONG CFactory :: AddRef()
 
 ULONG CFactory :: Release()
 {
-	if (InterlockedDecrement(&m_cRef) == 0)
-	{
+	if (InterlockedDecrement(&m_cRef) == 0) {
 		delete this;
 		return 0;
 	}
@@ -53,7 +51,7 @@ ULONG CFactory :: Release()
 // IClassFactory implementation
 //
 HRESULT __stdcall CFactory :: CreateInstance(LPUNKNOWN pUnknownOuter,
-									REFIID iid, PPVOID ppv)
+        REFIID iid, PPVOID ppv)
 {
 	HRESULT hr = E_FAIL;
 
@@ -68,17 +66,16 @@ HRESULT __stdcall CFactory :: CreateInstance(LPUNKNOWN pUnknownOuter,
 
 	// Initialize the component
 	hr = pMisc->Init(g_hModule);
-	if (FAILED(hr))
-	{
+	if (FAILED(hr)) {
 		pMisc->Release();
 		return hr;
 	}
 
 	// Get the requested interface
 	hr = pMisc->QueryInterface(iid, ppv);
-	
+
 	pMisc->Release();
-	
+
 	return hr;
 }
 
@@ -111,8 +108,8 @@ STDAPI DllCanUnloadNow()
 // GetClassFactory
 //
 STDAPI DllGetClassObject(REFCLSID clsid,
-						REFIID iid,
-						PPVOID ppv)
+                         REFIID iid,
+                         PPVOID ppv)
 {
 	// Can we create this component
 	if (clsid != CLSID_Miscellaneous)
@@ -136,18 +133,18 @@ STDAPI DllGetClassObject(REFCLSID clsid,
 STDAPI DllRegisterServer()
 {
 	return RegisterServer(g_hModule,
-					CLSID_Miscellaneous,
-					g_szFriendlyName,
-					g_szVerIndProgID,
-					g_szProgID,
-					LIBID_MiscLib);
+	                      CLSID_Miscellaneous,
+	                      g_szFriendlyName,
+	                      g_szVerIndProgID,
+	                      g_szProgID,
+	                      LIBID_MiscLib);
 }
 
 STDAPI DllUnregisterServer()
 {
 	return UnregisterServer(CLSID_Miscellaneous,
-					g_szVerIndProgID,
-					g_szProgID);
+	                        g_szVerIndProgID,
+	                        g_szProgID);
 }
 
 //////////////////////////////////////////
@@ -155,8 +152,8 @@ STDAPI DllUnregisterServer()
 // DLL module information
 //
 BOOL APIENTRY DllMain(HINSTANCE hModule,
-					DWORD dwReason,
-					LPVOID lpReserved)
+                      DWORD dwReason,
+                      LPVOID lpReserved)
 {
 	if (dwReason == DLL_PROCESS_ATTACH)
 		g_hModule = hModule;

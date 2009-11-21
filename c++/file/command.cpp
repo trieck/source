@@ -10,7 +10,7 @@
 #include "command.h"
 
 CommandLine::CommandLine()
- : m_size(__argc)
+		: m_size(__argc)
 {
 }
 

@@ -11,8 +11,8 @@ void main(void)
 	int i;
 
 	i = encode(2, 18, 17, 11);
-	
-	decode(i, buf);	
+
+	decode(i, buf);
 	printf("%s\n", buf);
 }
 

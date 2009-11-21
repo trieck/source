@@ -9,8 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class TorrentMaker  
-{
+class TorrentMaker {
 public:
 	TorrentMaker(ICallable *pCallable = NULL, CFile *pFile = NULL);
 	virtual ~TorrentMaker();
@@ -20,16 +19,20 @@ public:
 	void Make(LPDICTIONARY d);
 
 	// Parameterized make
-	void Make(const CString &files, 
-		const CStringVec &trackers, 
-		const CString &comment,
-		DWORD pieceSize, 
-		BOOL m_Private);
+	void Make(const CString &files,
+	          const CStringVec &trackers,
+	          const CString &comment,
+	          DWORD pieceSize,
+	          BOOL m_Private);
 
 	void DoCancel();
-	BOOL DidCancel() const { return m_Cancel; }
+	BOOL DidCancel() const {
+		return m_Cancel;
+	}
 
-	CFile *GetFile() { return &m_file; }
+	CFile *GetFile() {
+		return &m_file;
+	}
 
 private:
 	void BeginDictionary();

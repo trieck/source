@@ -11,12 +11,12 @@ BEGIN_MESSAGE_MAP(CPrefDlg, CDialog)
 	ON_COMMAND(IDOK, OnOK)
 END_MESSAGE_MAP()
 
-CPrefDlg :: CPrefDlg(CWnd* pParentWnd) : 
-	CDialog(CPrefDlg::IDD, pParentWnd)
+CPrefDlg :: CPrefDlg(CWnd* pParentWnd) :
+		CDialog(CPrefDlg::IDD, pParentWnd)
 {
-		m_pApp		= NULL;
-		m_pCheck	= NULL;
-		m_pLogPath	= NULL;
+	m_pApp		= NULL;
+	m_pCheck	= NULL;
+	m_pLogPath	= NULL;
 }
 
 CPrefDlg :: ~CPrefDlg()
@@ -38,15 +38,14 @@ BOOL CPrefDlg :: OnInitDialog()
 	ASSERT_VALID(m_pLogPath);
 
 	// check for logging
-	if (m_pApp->IsLogging() )
-	{
+	if (m_pApp->IsLogging() ) {
 		CString szLogPath;
 
 		// set button check
 		m_pCheck->SetCheck(1);
 
 		m_pApp->GetLoggingPath(szLogPath);
-		
+
 		// enable logging path and set it
 		m_pLogPath->EnableWindow(TRUE);
 		m_pLogPath->SetWindowText(szLogPath);
@@ -54,7 +53,7 @@ BOOL CPrefDlg :: OnInitDialog()
 
 	// center the dialog
 	this->CenterWindow();
-	
+
 	return (CDialog :: OnInitDialog());
 }
 
@@ -71,15 +70,13 @@ void CPrefDlg :: OnOK()
 {
 	CString szLogPath;
 
-	if (m_pLogPath->IsWindowEnabled() )
-	{
+	if (m_pLogPath->IsWindowEnabled() ) {
 		m_pLogPath->GetWindowText(szLogPath);
 
 		szLogPath.TrimLeft();
 		szLogPath.TrimRight();
 
-		if (szLogPath.IsEmpty())
-		{
+		if (szLogPath.IsEmpty()) {
 			CString szTemp;
 			szTemp.LoadString(IDS_EMPTYSTRING);
 			MessageBox(szTemp, NULL, MB_ICONINFORMATION);
@@ -88,8 +85,7 @@ void CPrefDlg :: OnOK()
 		}
 		m_pApp->SetLogging(TRUE);
 		m_pApp->SetLoggingPath(szLogPath);
-	}
-	else
+	} else
 		m_pApp->SetLogging(FALSE);
 
 	CDialog :: OnOK();

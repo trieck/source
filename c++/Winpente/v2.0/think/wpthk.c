@@ -11,8 +11,8 @@
 HINSTANCE g_hModule = NULL;
 
 BOOL APIENTRY DllMain(HANDLE hModule,
-					DWORD dwReason,
-					LPVOID lpReserved)
+                      DWORD dwReason,
+                      LPVOID lpReserved)
 {
 	if (dwReason == DLL_PROCESS_ATTACH)
 		g_hModule = hModule;

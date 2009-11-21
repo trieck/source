@@ -1,6 +1,6 @@
 /*---------------------------------------
-	Module Name	:	ColorPage.cpp	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	ColorPage.cpp
+	Author		:	Thomas A. Rieck
 	Purpose		:	Color Preference
 					Property Page
 					implementation
@@ -15,7 +15,7 @@
 IMPLEMENT_DYNCREATE(CColorPage, CPropertyPage)
 
 BEGIN_MESSAGE_MAP(CColorPage, CPropertyPage)
-    ON_WM_PAINT()
+	ON_WM_PAINT()
 	ON_WM_CREATE()
 	ON_COMMAND(IDC_BACKCOLOR, OnBackColor)
 	ON_COMMAND(IDC_GRIDCOLOR, OnGridColor)
@@ -34,7 +34,7 @@ CColorPage::CColorPage() : CPropertyPage(CColorPage::IDD)
 BOOL CColorPage::OnInitDialog()
 {
 	CMainFrame* pFrame;
-	
+
 	pFrame = (CMainFrame*)AfxGetApp()->GetMainWnd();
 	ASSERT_VALID(pFrame);
 
@@ -51,7 +51,7 @@ BOOL CColorPage::OnInitDialog()
 		CheckDlgButton(IDC_USEBKGND, TRUE);
 	else
 		CheckDlgButton(IDC_USETHEME, TRUE);
-	
+
 	return CPropertyPage::OnInitDialog();
 }
 
@@ -66,7 +66,7 @@ VOID CColorPage::OnOK()
 
 	if (m_pDoc->m_fUseBackColor)
 		m_pDoc->SetBackColor(m_lBackColor);
-	
+
 	m_pDoc->SetGridColor(m_lGridColor);
 	m_pDoc->UpdateAllViews(NULL);
 }
@@ -78,10 +78,10 @@ VOID CColorPage::OnPaint()
 	CPaintDC	dc(this);
 	CPaintDC	dcBack(&BackColor());
 	CPaintDC	dcGrid(&GridColor());
-		
+
 	rcBack.CopyRect(&(dcBack.m_ps.rcPaint));
 	rcGrid.CopyRect(&(dcGrid.m_ps.rcPaint));
-	
+
 	dcBack.FillSolidRect(&rcBack, m_lBackColor);
 	dcGrid.FillSolidRect(&rcGrid, m_lGridColor);
 
@@ -110,8 +110,7 @@ VOID CColorPage::OnBackColor()
 {
 	CColorDialog dlgColor (m_lBackColor, CC_RGBINIT, this);
 
-	if (IDOK == dlgColor.DoModal())
-	{
+	if (IDOK == dlgColor.DoModal()) {
 		m_lBackColor = dlgColor.GetColor();
 		BackColor().InvalidateRect(NULL, TRUE);
 
@@ -124,8 +123,7 @@ VOID CColorPage::OnGridColor()
 {
 	CColorDialog dlgColor (m_lGridColor, CC_RGBINIT, this);
 
-	if (IDOK == dlgColor.DoModal())
-	{
+	if (IDOK == dlgColor.DoModal()) {
 		m_lGridColor = dlgColor.GetColor();
 		GridColor().InvalidateRect(NULL, TRUE);
 

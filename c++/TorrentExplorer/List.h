@@ -11,16 +11,17 @@
 
 #include "TorrentObject.h"
 
-class List : public TorrentObject  
-{
+class List : public TorrentObject {
 public:
 	List();
 	virtual ~List();
 
-	void append(LPTORRENTOBJECT t);	
+	void append(LPTORRENTOBJECT t);
 	UINT size() const;
 	LPTORRENTOBJECT GetAt(UINT n) const;
-	virtual int GetElementType() const { return ET_LIST; }
+	virtual int GetElementType() const {
+		return ET_LIST;
+	}
 
 private:
 	CList<LPTORRENTOBJECT, LPTORRENTOBJECT> list;

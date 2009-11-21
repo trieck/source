@@ -15,7 +15,7 @@ LONG ODBManager::m_cCount = 0;
 
 /////////////////////////////////////////////////////////////////////////////
 ODBManager::ODBManager()
- : m_cRef(0)
+		: m_cRef(0)
 {
 	m_pData = new ODBMgrData(this);
 	InterlockedIncrement(&m_cCount);
@@ -33,18 +33,18 @@ STDMETHODIMP ODBManager::QueryInterface(REFIID riid, LPVOID *ppv)
 {
 	*ppv = NULL;
 
-    if (riid == IID_IUnknown)
-        *ppv = this;
-    
+	if (riid == IID_IUnknown)
+		*ppv = this;
+
 	if (riid == IID_IComponentData)
 		*ppv = m_pData;
 
-    if (*ppv) {
-        ((LPUNKNOWN)*ppv)->AddRef();
-        return S_OK;
-    }
+	if (*ppv) {
+		((LPUNKNOWN)*ppv)->AddRef();
+		return S_OK;
+	}
 
-    return E_NOINTERFACE;
+	return E_NOINTERFACE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -11,8 +11,7 @@
 #define VSIZE	(5)
 
 /////////////////////////////////////////////////////////////////////////////
-class Vector
-{
+class Vector {
 // Construction / Destruction
 public:
 	Vector();

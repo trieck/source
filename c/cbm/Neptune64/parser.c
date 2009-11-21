@@ -1,6 +1,6 @@
 /*
  * 	PARSER.C
- * 
+ *
  * 	Parser routines
  *
  *	Neptune64 Commodore 64 Emulator
@@ -26,7 +26,7 @@
 /*
  * get the next token from the input string
  */
-Token gettok(const char **ppin) 
+Token gettok(const char **ppin)
 {
 	Token tok;
 	const char* pin = *ppin;
@@ -63,7 +63,7 @@ Token gettok(const char **ppin)
 			(*ppin)++; /* eat white */
 			break;
 		default:
-			if (isxdigit(*pin)) { 
+			if (isxdigit(*pin)) {
 				while (isxdigit(*pin))
 					pin++;
 				tok.type = NUM;

@@ -9,8 +9,7 @@
 #define __CREATEHANDLER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class CreateHandler : public IHandler
-{
+class CreateHandler : public IHandler {
 // Construction / Destruction
 public:
 	CreateHandler();

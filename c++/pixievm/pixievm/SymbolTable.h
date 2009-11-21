@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 // SYMBOLTABLE.H : Symbol table
 //
 // Copyright(c) 2006, Thomas A. Rieck, All Rights Reserved
@@ -21,7 +21,7 @@
 typedef struct Symbol {
 	int type;				/* symbol type */
 	int sub;				/* sub-type */
-	string name;			/* symbol name */	
+	string name;			/* symbol name */
 	union {
 		const Instr *instr;	/* instruction */
 		word val16;			/* word value */
@@ -42,8 +42,8 @@ public:
 
 // Interface
 	static SymbolTable *getInstance();
-	LPSYMBOL installw(const string &s, int type, int sub, word w); 
-	LPSYMBOL installb(const string &s, int type, int sub, byte b); 
+	LPSYMBOL installw(const string &s, int type, int sub, word w);
+	LPSYMBOL installb(const string &s, int type, int sub, byte b);
 	LPSYMBOL lookup(const string &s) const;
 	void flushtmp();
 

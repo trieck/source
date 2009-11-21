@@ -9,7 +9,7 @@
 #define __FRAME_H__
 
 typedef struct {
-	const Symbol *sp;	// symbol table entry 
+	const Symbol *sp;	// symbol table entry
 	const Instr *retpc;	// where to resume after return
 	Datum * argn;		// n-th argument on the stack
 	int nargs;			// number of arguments
@@ -18,8 +18,7 @@ typedef struct {
 #define NFRAME 1024
 
 /////////////////////////////////////////////////////////////////////////////
-class FrameStack
-{
+class FrameStack {
 public:
 // Construction / Destruction
 	FrameStack();

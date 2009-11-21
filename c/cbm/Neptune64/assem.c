@@ -57,11 +57,11 @@ void assem_init(void)
 {
 	atexit(cleanup);
 	symbols = symalloc();
-	if (NULL == symbols) 
+	if (NULL == symbols)
 		error("could not allocate symbol table.\n");
 	syminit(symbols);
 }
-/* 
+/*
  * assemble input
  */
 void assemble(const char **ppinput)
@@ -83,8 +83,8 @@ void assemble(const char **ppinput)
 		assemc = address;
 		assemmode = 1;
 		return;
-	} 
- 
+	}
+
 	sym = lookup(symbols, tok.value);
 	if (NULL == sym) {
 		warning("unrecognized opcode [%s].\n", tok.value);
@@ -108,7 +108,7 @@ void assemble_inmode(const char **ppinput)
 		return;	/* clean exit from assembly mode */
 	if (UNDEF == tok.type) {
 		warning(usage);
-		return;						
+		return;
 	}
 	sym = lookup(symbols, tok.value);
 	if (NULL == sym) {
@@ -130,12 +130,12 @@ int op(const word addr, const instr *i)
 	warning("invalid addressing mode.\n");
 	return 0;
 }
-/* 
- * does the input match the specified mode 
+/*
+ * does the input match the specified mode
  */
 int ismode(addrmode mode)
 {
-	switch(mode) {
+	switch (mode) {
 	case acc:
 		return isacc();
 	case imm:
@@ -199,13 +199,13 @@ int iszpg(void)
 	if (tok.type != NUM)
 		return 0;
 	sscanf(tok.value, "%hx", &operand);
-	
+
 	tok = gettok(&psave);
 	if (tok.value[0] != '\0')
 		return 0;
 	return ISZADDR(operand);
 }
-/* 
+/*
  * does the current input match the zero page, x addressing mode
  */
 int iszpx(void)
@@ -217,7 +217,7 @@ int iszpx(void)
 	if (tok.type != NUM)
 		return 0;
 	sscanf(tok.value, "%hx", &operand);
-	
+
 	tok = gettok(&psave);
 	if (tok.type != COMMA)
 		return 0;
@@ -238,7 +238,7 @@ int iszpy(void)
 	if (tok.type != NUM)
 		return 0;
 	sscanf(tok.value, "%hx", &operand);
-	
+
 	tok = gettok(&psave);
 	if (tok.type != COMMA)
 		return 0;
@@ -248,7 +248,7 @@ int iszpy(void)
 	return ISZADDR(operand);
 }
 /*
- * does the current input match the absolute addressing mode 
+ * does the current input match the absolute addressing mode
  */
 int isabs(void)
 {
@@ -259,7 +259,7 @@ int isabs(void)
 	if (tok.type != NUM)
 		return 0;
 	sscanf(tok.value, "%hx", &operand);
-	if (ISZADDR(operand)) 
+	if (ISZADDR(operand))
 		return 0;
 	tok = gettok(&psave);
 	return tok.value[0] == '\0';
@@ -276,9 +276,9 @@ int isabx(void)
 	if (tok.type != NUM)
 		return 0;
 	sscanf(tok.value, "%hx", &operand);
-	if (ISZADDR(operand)) 
+	if (ISZADDR(operand))
 		return 0;
-		
+
 	tok = gettok(&psave);
 	if (tok.type != COMMA)
 		return 0;
@@ -291,7 +291,7 @@ int isabx(void)
  * does the current input match the absolute, y addressing mode
  */
 int isaby(void)
-{	
+{
 	word operand;
 	const char *psave = *ppin;
 	Token tok;
@@ -299,9 +299,9 @@ int isaby(void)
 	if (tok.type != NUM)
 		return 0;
 	sscanf(tok.value, "%hx", &operand);
-	if (ISZADDR(operand)) 
+	if (ISZADDR(operand))
 		return 0;
-		
+
 	tok = gettok(&psave);
 	if (tok.type != COMMA)
 		return 0;
@@ -310,7 +310,7 @@ int isaby(void)
 		return 0;
 	return 1;
 }
-/* 
+/*
  * does the current input match the indirect addressing mode
  */
 int isind(void)
@@ -322,17 +322,17 @@ int isind(void)
 	if (tok.type != LPAREN)
 		return 0;
 	tok = gettok(&psave);
-	if (tok.type != NUM) 
+	if (tok.type != NUM)
 		return 0;
 	sscanf(tok.value, "%hx", &operand);
-	if (ISZADDR(operand)) 
+	if (ISZADDR(operand))
 		return 0;
 	tok = gettok(&psave);
 	if (tok.type != RPAREN)
 		return 0;
 	return 1;
 }
-/* 
+/*
  * does the current input match the indirect, x addressing mode
  */
 int isidx(void)
@@ -340,16 +340,16 @@ int isidx(void)
 	Token tok;
 	word operand;
 	const char *psave = *ppin;
-	
+
 	tok = gettok(&psave);
 	if (tok.type != LPAREN)
 		return 0;
-	
+
 	tok = gettok(&psave);
 	if (tok.type != NUM)
 		return 0;
 	sscanf(tok.value, "%hx", &operand);
-	
+
 	tok = gettok(&psave);
 	if (tok.type != COMMA)
 		return 0;
@@ -372,7 +372,7 @@ int isidy(void)
 	tok = gettok(&psave);
 	if (tok.type != LPAREN)
 		return 0;
-	
+
 	tok = gettok(&psave);
 	if (tok.type != NUM)
 		return 0;
@@ -386,7 +386,7 @@ int isidy(void)
 	tok = gettok(&psave);
 	if (tok.value[0] != 'y' && tok.value[0] != 'Y')
 		return 0;
-	
+
 	return ISZADDR(operand);
 }
 /*
@@ -397,7 +397,7 @@ int isimp(void)
 	Token tok = lookahead();
 	return tok.value[0] == '\0';
 }
-/* 
+/*
  * does the current input match the relative addressing mode
  */
 int isrel(void)
@@ -409,7 +409,7 @@ int isrel(void)
 	if (tok.type != NUM)
 		return 0;
 	sscanf(tok.value, "%hx", &operand);
-	if (ISZADDR(operand)) 
+	if (ISZADDR(operand))
 		return 0;
 	return 1;
 }

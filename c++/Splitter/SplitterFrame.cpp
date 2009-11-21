@@ -30,7 +30,7 @@ BOOL CMainFrame :: PreCreateWindow(CREATESTRUCT& cs)
 }
 
 INT CMainFrame :: OnCreate(LPCREATESTRUCT lpCreateStruct)
-{	
+{
 	m_pWndStatus = new CStatusBar();
 	ASSERT_VALID(m_pWndStatus);
 
@@ -43,11 +43,11 @@ BOOL CMainFrame :: OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 {
 	m_wndSplitter.CreateStatic(this, 1, 2);
 
-	m_wndSplitter.CreateView(0, 0, 
-		RUNTIME_CLASS(CRootView), CSize(200,100), pContext);
+	m_wndSplitter.CreateView(0, 0,
+	                         RUNTIME_CLASS(CRootView), CSize(200,100), pContext);
 
-	m_wndSplitter.CreateView(0, 1, 
-		RUNTIME_CLASS(CSplitterView), CSize(100,100), pContext);
+	m_wndSplitter.CreateView(0, 1,
+	                         RUNTIME_CLASS(CSplitterView), CSize(100,100), pContext);
 
 	return TRUE;
 }

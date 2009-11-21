@@ -13,16 +13,15 @@
 
 ///////////////////////////////////////////////////////////////////
 // The CSplitterView view class
-class CSplitterView : public CListView
-{
+class CSplitterView : public CListView {
 protected:
 	CSplitterView();
 	DECLARE_DYNCREATE(CSplitterView)
 
 // Attributes
 public:
-   CSplitterDoc* GetDocument();
-   
+	CSplitterDoc* GetDocument();
+
 // Overrides
 public:
 	virtual void OnInitialUpdate();
@@ -38,13 +37,13 @@ protected:
 	static LPCTSTR szHeaders[4];
 
 	DECLARE_MESSAGE_MAP()
-};       
+};
 
 inline CSplitterDoc* CSplitterView::GetDocument()
-{ 
-   return (CSplitterDoc*)m_pDocument; 
+{
+	return (CSplitterDoc*)m_pDocument;
 }
 
 ///////////////////////////////////////////////////////////////////
-  
+
 #endif	// __SPLITTERVIEW_H__

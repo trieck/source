@@ -29,7 +29,7 @@ END_MESSAGE_MAP()
 // DDrawApp construction
 
 DDrawApp::DDrawApp()
- : pddraw(NULL)
+		: pddraw(NULL)
 {
 }
 
@@ -54,10 +54,10 @@ BOOL DDrawApp::InitInstance()
 
 	CSingleDocTemplate* pDocTemplate;
 	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(DDrawDoc),
-		RUNTIME_CLASS(MainFrame),       // main SDI frame window
-		RUNTIME_CLASS(DDrawView));
+	    IDR_MAINFRAME,
+	    RUNTIME_CLASS(DDrawDoc),
+	    RUNTIME_CLASS(MainFrame),       // main SDI frame window
+	    RUNTIME_CLASS(DDrawView));
 	AddDocTemplate(pDocTemplate);
 
 	// Parse command line for standard shell commands, DDE, file open
@@ -84,9 +84,9 @@ BOOL DDrawApp::InitInstance()
 BOOL DDrawApp::CreateDirectDraw()
 {
 	HRESULT hr;
-	
+
 	// create direct draw object
-	hr = DirectDrawCreate(NULL, &pddraw, NULL); 
+	hr = DirectDrawCreate(NULL, &pddraw, NULL);
 	if (hr != DD_OK) {
 		TRACE0("unable to create DirectDraw object.\n");
 		return FALSE;
@@ -95,7 +95,7 @@ BOOL DDrawApp::CreateDirectDraw()
 	return TRUE;
 }
 
-int DDrawApp::ExitInstance() 
+int DDrawApp::ExitInstance()
 {
 	if (NULL != pddraw) {
 		ULONG result = pddraw->Release();

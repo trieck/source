@@ -9,8 +9,7 @@
 #define __LOGFILE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class LogFile
-{
+class LogFile {
 // Construction / Destruction
 public:
 	LogFile();
@@ -21,7 +20,7 @@ public:
 	bool log(LPCTSTR fmt, ...);
 	void close();
 
-private:	
+private:
 	HANDLE hFile;
 };
 /////////////////////////////////////////////////////////////////////////////

@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "Vertex.h"
 
-@interface Edge : NSObject {
+@interface Edge :
+NSObject {
 	Vertex *v, *w;
 }
 
-- (id)initWithVertex:(Vertex*)v toVertex:(Vertex*)w;
+- (id)initWithVertex:
+(Vertex*)v toVertex:
+(Vertex*)w;
 
 @end

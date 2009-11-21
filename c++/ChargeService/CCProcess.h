@@ -9,8 +9,7 @@
 #define __CCPROCESS_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class CCProcess
-{
+class CCProcess {
 public:
 	CCProcess();
 	~CCProcess();

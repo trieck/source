@@ -30,6 +30,6 @@ typedef label *LabelTable;
 /***************************************************************************/
 void labelfree(LabelTable);
 label *labelinsert(LabelTable * table, const char *name, const byte * mem,
-				   int isrel);
+                   int isrel);
 /***************************************************************************/
 #endif							/* __LABEL_H__ */

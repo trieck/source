@@ -23,22 +23,22 @@ int main()
 
 	/* es:bp points to 8x8 font */
 	F8x8Ptr = MK_FP(reg.r_es, reg.r_bp);
-	
+
 	fp = fopen("charrom.dat", "w");
 	if (fp == NULL) {
 		fprintf(stderr, "could not open file for writing.\n");
 		exit(1);
 	}
-	
+
 	for (i = 0; i < 256; i++) {
 		j = i << 3;
 		for (k = 0; k < 8; k++) {
 			fputc(F8x8Ptr[j++], fp);
-		}		
+		}
 	}
-	
-	
+
+
 	fclose(fp);
-	
-    return 0;
-} 
+
+	return 0;
+}

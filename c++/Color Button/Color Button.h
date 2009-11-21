@@ -1,7 +1,7 @@
 // Color Button.h : main header file for COLOR BUTTON.DLL
 
 #if !defined( __AFXCTL_H__ )
-	#error include 'afxctl.h' before including this file
+#error include 'afxctl.h' before including this file
 #endif
 
 #include "resource.h"       // main symbols
@@ -9,8 +9,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CColorButtonApp : See Color Button.cpp for implementation.
 
-class CColorButtonApp : public COleControlModule
-{
+class CColorButtonApp : public COleControlModule {
 public:
 	BOOL InitInstance();
 	int ExitInstance();

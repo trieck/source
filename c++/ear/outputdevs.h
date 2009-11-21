@@ -11,17 +11,16 @@
 #include "mididevs.h"
 
 ///////////////////////////////////////////////////////////////////////
-class OutputDevices : public MidiDevices
-{
+class OutputDevices : public MidiDevices {
 public:
 	// Construction / Destruction
-    OutputDevices();
-    virtual ~OutputDevices();
+	OutputDevices();
+	virtual ~OutputDevices();
 
 	// Interface
-    UINT Count() const;
-    MidiDevice * GetDevice(UINT) const;
-    MidiDevice * GetStream(UINT) const;
+	UINT Count() const;
+	MidiDevice * GetDevice(UINT) const;
+	MidiDevice * GetStream(UINT) const;
 
 protected:
 	// Implementation

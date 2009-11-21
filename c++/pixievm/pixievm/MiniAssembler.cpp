@@ -37,12 +37,12 @@ void MiniAssembler::prompt()
 
 /////////////////////////////////////////////////////////////////////////////
 void MiniAssembler::assemble(word *start)
-{	
+{
 	if (start) {		/* start address supplied */
 		address = *start;
 	} else if (!init) {	/* not entered */
-		address = CPU::getInstance()->getIP(); 
-		init = true; 
+		address = CPU::getInstance()->getIP();
+		init = true;
 	}
 
 	for (;;) {

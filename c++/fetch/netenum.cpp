@@ -20,14 +20,14 @@ NetResourceEnum::NetResourceEnum(LPNETRESOURCE res)
 	m_hEnum = NULL;
 	m_pres = NULL;
 	m_buffers = 0UL;
-	
+
 	memcpy((LPNETRESOURCE)this, res, sizeof(NETRESOURCE));
-	
+
 	// is this a container resource
 	if ((res->dwUsage & RESOURCEUSAGE_CONTAINER) != 0) {
 		m_hEnum = OpenResource(res);
 		if (m_hEnum == NULL)
-			throw NetError();	
+			throw NetError();
 		FillBuffers();
 	}
 }
@@ -58,13 +58,13 @@ NetResourceEnum::~NetResourceEnum()
 void NetResourceEnum::InitializeRes()
 {
 	dwScope = 0UL;
-    dwType = 0UL;
-    dwDisplayType = 0UL;
-    dwUsage = 0UL;
-    lpLocalName = NULL;
-    lpRemoteName = NULL;
-    lpComment = NULL;
-    lpProvider = NULL;
+	dwType = 0UL;
+	dwDisplayType = 0UL;
+	dwUsage = 0UL;
+	lpLocalName = NULL;
+	lpRemoteName = NULL;
+	lpComment = NULL;
+	lpProvider = NULL;
 }
 
 void NetResourceEnum::FillBuffers()
@@ -78,22 +78,22 @@ void NetResourceEnum::FillBuffers()
 
 	for (;;) {
 		m_buffers = ALLENTRIES;
-		
+
 		if (m_pres) GlobalFree(m_pres);
 		m_pres = (LPNETRESOURCE)GlobalAlloc(GPTR, buffersize);
-		if (m_pres == NULL)	{ // allocation error 
+		if (m_pres == NULL)	{ // allocation error
 			m_buffers = 0UL;
 			break;
 		}
-		
-		rtn = ::WNetEnumResource(
-			m_hEnum,		// handle to enumeration
-			&m_buffers,		// pointer to entries to list
-			m_pres,			// pointer to buffer for results
-			&buffersize		// pointer to buffer size variable
-		);
 
-  		if (rtn == NO_ERROR || rtn == ERROR_NO_MORE_ITEMS)
+		rtn = ::WNetEnumResource(
+		          m_hEnum,		// handle to enumeration
+		          &m_buffers,		// pointer to entries to list
+		          m_pres,			// pointer to buffer for results
+		          &buffersize		// pointer to buffer size variable
+		      );
+
+		if (rtn == NO_ERROR || rtn == ERROR_NO_MORE_ITEMS)
 			break;
 	}
 }
@@ -121,13 +121,13 @@ HANDLE OpenResource(LPNETRESOURCE res)
 	HANDLE hEnum = NULL;
 
 	DWORD rtn = ::WNetOpenEnum(
-		RESOURCE_GLOBALNET,	// scope of enumeration
-		RESOURCETYPE_DISK,	// resource types to list
-		0,					// resource usage to list
-		res,				// pointer to resource structure
-		&hEnum				// pointer to enumeration handle buffer
-		);
- 	
+	                RESOURCE_GLOBALNET,	// scope of enumeration
+	                RESOURCETYPE_DISK,	// resource types to list
+	                0,					// resource usage to list
+	                res,				// pointer to resource structure
+	                &hEnum				// pointer to enumeration handle buffer
+	            );
+
 	return hEnum;
 }
 

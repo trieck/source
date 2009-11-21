@@ -1,24 +1,24 @@
 /*
- * GFF.C 
- * 
- * The Generic File Format (GFF) is an all-purpose generic format used to 
- * store data in BioWare games. It is designed to make it easy to add or 
- * remove fields and data structures while still maintaining backward and 
+ * GFF.C
+ *
+ * The Generic File Format (GFF) is an all-purpose generic format used to
+ * store data in BioWare games. It is designed to make it easy to add or
+ * remove fields and data structures while still maintaining backward and
  * forward compatibility in reading old or new versions of a file format.
  *
  * The following file types within a module are all in GFF:
  *
  *	Module info file (ifo)
- *	Area-related files: area file (are), game object instances and dynamic 
+ *	Area-related files: area file (are), game object instances and dynamic
  *		area properties (git), game instance comments (gic)
- *	Object Blueprints: creature (utc), door (utd), encounter (ute), 
- *		item (uti), placeable (utp), sound (uts), store (utm), 
- *		trigger (utt), waypoint (utw) 
+ *	Object Blueprints: creature (utc), door (utd), encounter (ute),
+ *		item (uti), placeable (utp), sound (uts), store (utm),
+ *		trigger (utt), waypoint (utw)
  *	Conversation files (dlg)
  *	Journal file (jrl)
  *	Faction file (fac)
  *	Palette file (itp)
- *	Plot Wizard files: plot instance/plot manager file (ptm), 
+ *	Plot Wizard files: plot instance/plot manager file (ptm),
  *		plot wizard blueprint (ptt)
  *
  * The following files created by the game are also GFF:
@@ -106,7 +106,7 @@ void open(const char *file)
 	if (!fread(&header, sizeof(GffHeader), 1, fp)) {
 		error("unable to read header.\n");
 	}
-	
+
 	/* validate version */
 	if (strncmp(header.FileVersion, GFF_VERSION, sizeof(header.FileVersion)) != 0)
 		error("expected version %.4s not found.", GFF_VERSION);
@@ -118,9 +118,9 @@ void error(const char *fmt, ...)
 	char buf[BUFSIZE];
 
 	va_list arglist;
-    va_start(arglist, fmt);
- 
-    vsprintf(buf, fmt, arglist);
+	va_start(arglist, fmt);
+
+	vsprintf(buf, fmt, arglist);
 
 	va_end (arglist);
 
@@ -216,8 +216,8 @@ CExoLocString getlocstr (void)
 		error("unable to read CExoLocString String Count.\n");
 	}
 
-	str.SubStrs = (CExoLocSubString *)malloc(str.StrCount * 
-		sizeof(CExoLocSubString));
+	str.SubStrs = (CExoLocSubString *)malloc(str.StrCount *
+	              sizeof(CExoLocSubString));
 
 	/* read substrings */
 	for (i = 0; i < str.StrCount; i++) {
@@ -234,8 +234,8 @@ CExoLocString getlocstr (void)
 			error("unable to allocate memory for string data.\n");
 		}
 
-		if (str.SubStrs[i].StrLength && 
-			!fread(str.SubStrs[i].Str, str.SubStrs[i].StrLength, 1, fp)) {
+		if (str.SubStrs[i].StrLength &&
+		        !fread(str.SubStrs[i].Str, str.SubStrs[i].StrLength, 1, fp)) {
 			error("unable to read CExoLocSubString data.\n");
 		}
 	}
@@ -296,9 +296,9 @@ void print_exolocstr(void)
 				putchar(str.SubStrs[i].Str[j]);
 			}
 
-			freesubstr(str.SubStrs[i]);		
+			freesubstr(str.SubStrs[i]);
 			putchar('\n');
-		}	
+		}
 	}
 }
 
@@ -336,7 +336,7 @@ void print_field(Field *field)
 		break;
 	case DWORD:
 		printf("%ud\n", field->DataOrDataOffset);
-		break;	
+		break;
 	case INT:
 		printf("%d\n", field->DataOrDataOffset);
 		break;
@@ -365,7 +365,7 @@ void print_fields(Struct *s)
 {
 	printf("\nFIELDS\n______\n\n");
 
-    if (s->FieldCount == 1) {	/* index into field array */
+	if (s->FieldCount == 1) {	/* index into field array */
 		;	/* FIXME */
 	} else if (s->FieldCount > 1) { /* offset into field indices array */
 		int offset = header.FieldIndicesOffset + s->DataOrDataOffset;
@@ -377,7 +377,7 @@ void print_fields(Struct *s)
 		}
 
 		for (i = 0; i < s->FieldCount; i++) {
-			unsigned index, offset;		
+			unsigned index, offset;
 			Field field;
 
 			/* read next field index */
@@ -397,12 +397,12 @@ void print_fields(Struct *s)
 			if (!fread(&field, sizeof(Field), 1, fp)) {
 				error("unable to read field.\n");
 			}
-			
+
 			if (i > 0) printf("\n");
-			
+
 			printf("Field #%d\nType: %s\nLabel Index: %d\nDataOrDataOffset: %d\n",
-				i+1, GetFieldType(field.FieldType), 
-				field.LabelIndex, field.DataOrDataOffset);
+			       i+1, GetFieldType(field.FieldType),
+			       field.LabelIndex, field.DataOrDataOffset);
 
 			print_field(&field);
 
@@ -416,7 +416,7 @@ void print_struct(Struct *s)
 {
 	fppush();
 	printf("Type: %d\nDataOrDataOffset: %d\nField Count: %d\n",
-			s->Type, s->DataOrDataOffset, s->FieldCount);
+	       s->Type, s->DataOrDataOffset, s->FieldCount);
 	print_fields(s);
 	fppop();
 }
@@ -428,18 +428,18 @@ void print_list(Field *field)
 	int offset;
 	Struct s;
 
-	/* a List is a list of Structs whose members are indices into 
-	 * the Struct array. Unlike most of the complex Field data types, 
+	/* a List is a list of Structs whose members are indices into
+	 * the Struct array. Unlike most of the complex Field data types,
 	 * a List Field's data is located not in the Field Data Block,
-	 * but in the List Indices Array.  The starting address of a List 
-	 * is specified in its Field's DataOrDataOffset value as a byte offset 
+	 * but in the List Indices Array.  The starting address of a List
+	 * is specified in its Field's DataOrDataOffset value as a byte offset
 	 * element.
 	 */
 	offset = header.ListIndicesOffset + field->DataOrDataOffset;
 	if (fseek(fp, offset, SEEK_SET) != 0) {
 		error("unable to seek into list data.\n");
 	}
-	
+
 	if (!fread(&size, sizeof(unsigned int), 1, fp)) {
 		error("unable to read list size.\n");
 	}
@@ -461,7 +461,7 @@ void print_list(Field *field)
 		if (!fread(&s, sizeof(Struct), 1, fp)) {
 			error("unable to read struct.\n");
 		}
-		
+
 		printf("\nStruct #%d\n", i+1);
 		print_struct(&s);
 
@@ -477,8 +477,8 @@ void print_cstruct(Field *field)
 
 	/* Unlike most of the complex Field data types, a Struct Field's data
 	 * is located not in the Field Data Block, but in the Struct Array.
-	 * Normally, a Field's DataOrDataOffset value would be a byte offset 
-	 * into the Field Data Block, but for a Struct, it is an index into 
+	 * Normally, a Field's DataOrDataOffset value would be a byte offset
+	 * into the Field Data Block, but for a Struct, it is an index into
 	 * the Struct Array
 	 */
 	offset = header.StructOffset + field->DataOrDataOffset * sizeof(Struct);
@@ -506,7 +506,7 @@ void print_cfield(Field *field)
 		}
 	}
 
-	switch (field->FieldType) {		
+	switch (field->FieldType) {
 	case DWORD64:
 		if (!fread(&t, sizeof(T_DWORD64), 1, fp)) {
 			error("unable to read field data.\n");
@@ -540,7 +540,7 @@ void print_cfield(Field *field)
 	case STRUCT:
 		print_cstruct(field);
 		break;
-	case LIST:		
+	case LIST:
 		print_list(field);
 		break;
 	default:
@@ -571,7 +571,7 @@ void print_structs(void)
 	/* ensure valid top-level struct */
 	if (s.Type != GFF_TOPLEVEL_STRUCTID) {
 		error("top level struct expected type 0x%.8x.\n",
-			GFF_TOPLEVEL_STRUCTID);
+		      GFF_TOPLEVEL_STRUCTID);
 	}
 
 	printf("\nSTRUCTS\n_______\n\n");

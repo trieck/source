@@ -10,8 +10,7 @@
 #define __RANDSTREAM_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class RandomFileStream : public IStream
-{
+class RandomFileStream : public IStream {
 // Construction / Destruction
 private:
 	RandomFileStream();
@@ -20,45 +19,45 @@ public:
 
 // Interface
 	static RandomFileStream *Create(LPCSTR lpFileName,
-		DWORD dwDesiredAccess,
-		DWORD dwShareMode,
-		DWORD dwCreationDisposition,
-		DWORD dwFlagsAndAttributes);
+	                                DWORD dwDesiredAccess,
+	                                DWORD dwShareMode,
+	                                DWORD dwCreationDisposition,
+	                                DWORD dwFlagsAndAttributes);
 
 	// inherited methods
 	STDMETHODIMP_(ULONG) AddRef(void);
-    STDMETHODIMP_(ULONG) Release(void);
-    STDMETHODIMP QueryInterface(REFIID riid, LPVOID *ppv);
-    
-    STDMETHODIMP Read(void *pv, ULONG cb,
-            ULONG *pcbRead);
+	STDMETHODIMP_(ULONG) Release(void);
+	STDMETHODIMP QueryInterface(REFIID riid, LPVOID *ppv);
+
+	STDMETHODIMP Read(void *pv, ULONG cb,
+	                  ULONG *pcbRead);
 
 	STDMETHODIMP Write(const void *pv, ULONG cb,
-            ULONG *pcbWritten);
+	                   ULONG *pcbWritten);
 
 	STDMETHODIMP Seek(LARGE_INTEGER dlibMove,
-            DWORD dwOrigin,
-            ULARGE_INTEGER *plibNewPosition);
-        
+	                  DWORD dwOrigin,
+	                  ULARGE_INTEGER *plibNewPosition);
+
 	STDMETHODIMP SetSize(ULARGE_INTEGER libNewSize);
-        
+
 	STDMETHODIMP CopyTo(IStream *pstm,
-            ULARGE_INTEGER cb,
-            ULARGE_INTEGER *pcbRead,
-            ULARGE_INTEGER *pcbWritten);
-        
+	                    ULARGE_INTEGER cb,
+	                    ULARGE_INTEGER *pcbRead,
+	                    ULARGE_INTEGER *pcbWritten);
+
 	STDMETHODIMP Commit(DWORD grfCommitFlags);
-        
+
 	STDMETHODIMP Revert();
-        
+
 	STDMETHODIMP LockRegion(ULARGE_INTEGER libOffset,
-            ULARGE_INTEGER cb, DWORD dwLockType);
-        
+	                        ULARGE_INTEGER cb, DWORD dwLockType);
+
 	STDMETHODIMP UnlockRegion(ULARGE_INTEGER libOffset,
-            ULARGE_INTEGER cb, DWORD dwLockType);
-        
+	                          ULARGE_INTEGER cb, DWORD dwLockType);
+
 	STDMETHODIMP Stat(STATSTG *pstatstg, DWORD grfStatFlag);
-        
+
 	STDMETHODIMP Clone(IStream **ppstm);
 
 	// New methods
@@ -67,8 +66,8 @@ public:
 // Implementation
 private:
 	BOOL Open(LPCSTR lpFileName, DWORD dwDesiredAccess,
-		DWORD dwShareMode, DWORD dwCreationDisposition, 
-		DWORD dwFlagsAndAttributes);
+	          DWORD dwShareMode, DWORD dwCreationDisposition,
+	          DWORD dwFlagsAndAttributes);
 
 	void Close();
 

@@ -1,6 +1,6 @@
 /*---------------------------------------
-	Module Name	:	PenteApp.h	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	PenteApp.h
+	Author		:	Thomas A. Rieck
 	Purpose		:	Pente Application
 					declarations
 	Date		:	08/21/1997
@@ -16,8 +16,7 @@
 ///////////////////////////////////////////////////////////////////
 // The CPenteApp application class
 
-class CPenteApp : public CWinApp
-{
+class CPenteApp : public CWinApp {
 protected:
 	HINSTANCE			m_hDllInst;
 	BOOL				m_fInitialized;
@@ -31,7 +30,9 @@ public:
 
 	static	BOOL	GetRegistryInformation(LPCTSTR, LPCTSTR, PPBYTE, UINT);
 	static	BOOL	UpdateRegistryInformation(LPCTSTR, LPCTSTR, LPBYTE, UINT, UINT nBytes = 0);
-	static  CString	GetRegPath() { return m_lpszRegPath; }
+	static  CString	GetRegPath() {
+		return m_lpszRegPath;
+	}
 
 	BOOL	PlayWave(LPTSTR, UINT);
 	VOID	DoFinish();

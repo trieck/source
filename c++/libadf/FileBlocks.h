@@ -11,8 +11,7 @@
 #define __FILEBLOCKS_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class FileBlocks
-{
+class FileBlocks {
 // Construction / destruction
 public:
 	FileBlocks();
@@ -35,7 +34,7 @@ public:
 	block_iterator getExtenEnd() const;
 	block_iterator getDataBegin() const;
 	block_iterator getDataEnd() const;
-	
+
 // Implementation
 private:
 	uint32_t header;	// header block #
@@ -44,22 +43,26 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline uint32_t FileBlocks::getHeader() const {
+inline uint32_t FileBlocks::getHeader() const
+{
 	return header;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void FileBlocks::setHeader(uint32_t header) {
+inline void FileBlocks::setHeader(uint32_t header)
+{
 	this->header = header;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline uint32_t FileBlocks::getExtenCount() const {
+inline uint32_t FileBlocks::getExtenCount() const
+{
 	return extens.size();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline uint32_t FileBlocks::getDataCount() const {
+inline uint32_t FileBlocks::getDataCount() const
+{
 	return data.size();
 }
 

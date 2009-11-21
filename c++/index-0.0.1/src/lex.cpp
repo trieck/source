@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Lex::Lex()
- : fp(NULL)
+		: fp(NULL)
 {
 }
 
@@ -50,9 +50,9 @@ const char *Lex::gettok(void)
 					error("lexical buffer overflow.");
 				c = fgetc(fp);
 			}
-			
+
 			buf[b] = '\0';
-			
+
 			return buf;
 		} else if (c == EOF) {
 			return NULL;

@@ -51,12 +51,12 @@ BOOL EarApp::InitInstance()
 		return FALSE;
 	EarDlg dlg;
 	m_pMainWnd = &dlg;
-	
+
 	dlg.DoModal();
-	
+
 	return FALSE;
 }
-int EarApp::ExitInstance() 
+int EarApp::ExitInstance()
 {
 	if (m_pStream != NULL && m_pStream->IsOpen()) {
 		m_pStream->Stop();
@@ -69,28 +69,28 @@ int EarApp::ExitInstance()
 //
 BOOL EarApp::InitializeStream()
 {
-    ASSERT(m_pStream == NULL);
-    // Set the output stream to the midi mapper
-    m_pStream = (MidiStream *)OutputDevices().GetStream(-1);
-    if (m_pStream == NULL) {
-        AfxMessageBox(IDS_COULDNOTOPENMIDIMAPPER);
-        return FALSE;
-    }
-    m_pStream->RegisterHook(StreamProc);
-    // Open the output device
-    MMRESULT result = m_pStream->Open();
-    if (result != MMSYSERR_NOERROR) {
-        AfxMessageBox(OutputDevice::GetErrorText(result));
-        return FALSE;
-    }
+	ASSERT(m_pStream == NULL);
+	// Set the output stream to the midi mapper
+	m_pStream = (MidiStream *)OutputDevices().GetStream(-1);
+	if (m_pStream == NULL) {
+		AfxMessageBox(IDS_COULDNOTOPENMIDIMAPPER);
+		return FALSE;
+	}
+	m_pStream->RegisterHook(StreamProc);
+	// Open the output device
+	MMRESULT result = m_pStream->Open();
+	if (result != MMSYSERR_NOERROR) {
+		AfxMessageBox(OutputDevice::GetErrorText(result));
+		return FALSE;
+	}
 	// Set the time division
-    MIDIPROPTIMEDIV prop;
-    prop.cbStruct = sizeof(MIDIPROPTIMEDIV);
-    prop.dwTimeDiv = DEFAULT_PPQN;
-    if (m_pStream->Property((LPBYTE)&prop, MIDIPROP_SET | MIDIPROP_TIMEDIV) != MMSYSERR_NOERROR) {
-        AfxMessageBox(IDS_COULDNOTSETTIMEDIVISION);
-        return FALSE;
-    }
+	MIDIPROPTIMEDIV prop;
+	prop.cbStruct = sizeof(MIDIPROPTIMEDIV);
+	prop.dwTimeDiv = DEFAULT_PPQN;
+	if (m_pStream->Property((LPBYTE)&prop, MIDIPROP_SET | MIDIPROP_TIMEDIV) != MMSYSERR_NOERROR) {
+		AfxMessageBox(IDS_COULDNOTSETTIMEDIVISION);
+		return FALSE;
+	}
 	// Set the default instrument
 	return SetInstrument(m_instrument);
 }
@@ -106,7 +106,7 @@ BOOL EarApp::Play(MidiBuffer *pbuff)
 	result = m_pStream->Restart();
 	if (result != MMSYSERR_NOERROR)
 		return FALSE;
-    return TRUE;
+	return TRUE;
 }
 BOOL EarApp::Stop()
 {
@@ -114,18 +114,18 @@ BOOL EarApp::Stop()
 		return FALSE;
 	return m_pStream->Stop() == MMSYSERR_NOERROR;
 }
-void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance, 
- DWORD dwParam1, DWORD dwParam2)
+void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance,
+                DWORD dwParam1, DWORD dwParam2)
 {
-    if (uMsg != MOM_DONE)
-        return;
-    // Unprepare the midi header
-    ::midiOutUnprepareHeader(
-        (HMIDIOUT)hMidiStream, 
-        (LPMIDIHDR)dwParam1, 
-        sizeof(MIDIHDR));
+	if (uMsg != MOM_DONE)
+		return;
+	// Unprepare the midi header
+	::midiOutUnprepareHeader(
+	    (HMIDIOUT)hMidiStream,
+	    (LPMIDIHDR)dwParam1,
+	    sizeof(MIDIHDR));
 }
-int EarApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt) 
+int EarApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt)
 {
 	return CWinApp::DoMessageBox(lpszPrompt, nType, nIDPrompt);
 }
@@ -133,11 +133,11 @@ int EarApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt)
 BOOL EarApp::SetInstrument(BYTE b)
 {
 	ASSERT(m_pStream != NULL);
-    ASSERT(m_pStream->IsOpen());
-    MidiMessage msg;
-    msg.SetStatus(PROGRAM_CHANGE(defaultChannel));
-    msg.SetData(b);
-    if (m_pStream->ShortMessage(msg) == MMSYSERR_NOERROR) {
+	ASSERT(m_pStream->IsOpen());
+	MidiMessage msg;
+	msg.SetStatus(PROGRAM_CHANGE(defaultChannel));
+	msg.SetData(b);
+	if (m_pStream->ShortMessage(msg) == MMSYSERR_NOERROR) {
 		m_instrument = b;
 		return TRUE;
 	}

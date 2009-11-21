@@ -10,8 +10,7 @@
 #endif // _MSC_VER > 1000
 
 
-class DDrawView : public CView
-{
+class DDrawView : public CView {
 protected: // create from serialization only
 	DDrawView();
 	DECLARE_DYNCREATE(DDrawView)
@@ -26,7 +25,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(DDrawView)
-	public:
+public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void OnInitialUpdate();
@@ -56,7 +55,9 @@ private:
 
 #ifndef _DEBUG  // debug version in DDrawView.cpp
 inline DDrawDoc* DDrawView::GetDocument()
-   { return (DDrawDoc*)m_pDocument; }
+{
+	return (DDrawDoc*)m_pDocument;
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

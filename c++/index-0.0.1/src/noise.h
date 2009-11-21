@@ -9,8 +9,7 @@
 #define __NOISELIST_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class NoiseList
-{
+class NoiseList {
 // Construction / Destruction
 public:
 	NoiseList();

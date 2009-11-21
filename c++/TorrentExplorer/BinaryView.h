@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // BinaryView view
 
-class BinaryView : public CView
-{
+class BinaryView : public CView {
 protected:
 	BinaryView();           // protected constructor used by dynamic creation
 	DECLARE_DYNCREATE(BinaryView)
@@ -24,9 +23,9 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(BinaryView)
-	public:
+public:
 	virtual void OnPrepareDC(CDC* pDC, CPrintInfo* pInfo = NULL);
-	protected:
+protected:
 	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
 	virtual void OnInitialUpdate();     // first time after construct
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);

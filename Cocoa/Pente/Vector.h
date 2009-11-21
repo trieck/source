@@ -10,11 +10,16 @@
 
 #define VSIZE	(5)
 
-@interface Vector : NSObject {
+@interface Vector :
+NSObject {
 	Point v[VSIZE];
 }
 
-- (Point)entry:(uint32_t)index;
-- (void)setEntry:(uint32_t)index :(uint32_t)m :(uint32_t)n;
+- (Point)entry:
+(uint32_t)index;
+- (void)setEntry:
+(uint32_t)index :
+(uint32_t)m :
+(uint32_t)n;
 
 @end

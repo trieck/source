@@ -3,7 +3,7 @@
 // CONFIGURATION.CPP : Configuration class
 //
 // This class is meant to be a replacement for GetPrivateProfileString, etc.
-// which do not exist on a Unix system.  This class implements only the 
+// which do not exist on a Unix system.  This class implements only the
 // most basic functionality.
 //
 // Copyright (c) 2004, Thomas A. Rieck
@@ -14,17 +14,17 @@
 #include "Configuration.h"
 
 namespace {
-	string GetValue(FILE *fp);
-	bool FindApp(const char *app, FILE *fp);
-	bool FindKey(const char *key, FILE *fp);
-	string trim(const string &str);
-	string trim_left(const string &str);
-	string trim_right(const string &str);
+string GetValue(FILE *fp);
+bool FindApp(const char *app, FILE *fp);
+bool FindKey(const char *key, FILE *fp);
+string trim(const string &str);
+string trim_left(const string &str);
+string trim_right(const string &str);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Configuration::Configuration(const char *pfile)
- : filename(pfile)
+		: filename(pfile)
 {
 	// check read permission
 	if (_access(pfile, 04) == -1)
@@ -37,8 +37,8 @@ Configuration::~Configuration()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string Configuration::GetValue(const char *app, const char *key, 
-	const char *def)
+string Configuration::GetValue(const char *app, const char *key,
+                               const char *def)
 {
 	string output;
 
@@ -65,8 +65,8 @@ string Configuration::GetValue(const char *app, const char *key,
 
 /////////////////////////////////////////////////////////////////////////////
 // for Regression testing
-string Configuration::GetValueEx(const char *app, const char *key, 
-	const char *def)
+string Configuration::GetValueEx(const char *app, const char *key,
+                                 const char *def)
 {
 	char buf[256] = { 0 };
 	GetPrivateProfileString(app, key, def, buf, sizeof(buf), filename.c_str());
@@ -87,7 +87,7 @@ bool FindApp(const char *app, FILE *fp)
 		case '[':
 			capp = "";
 			break;
-		case ']':	
+		case ']':
 			if (stricmp(trim(capp).c_str(), app) == 0)
 				return true;
 			break;

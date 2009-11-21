@@ -20,7 +20,7 @@
         }                           \
         delete p;                   \
         p = NULL;                   \
-    }              
+    }
 
 ///////////////////////////////////////////////////////////////////////
 // shortEvent structure
@@ -29,9 +29,9 @@
 // MIDIEVENT structure
 //
 typedef struct {
-    DWORD delta;    // time in MIDI ticks between previous and current event
-    DWORD id;       // reserved; must be 0
-    DWORD event;    // event code, parameters, length
+	DWORD delta;    // time in MIDI ticks between previous and current event
+	DWORD id;       // reserved; must be 0
+	DWORD event;    // event code, parameters, length
 } shortEvent, *PSHORTEVENT;
 
 #define NOTEOFF(n)			0x80 | n

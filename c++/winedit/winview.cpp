@@ -38,7 +38,7 @@ WinEditView::~WinEditView()
 BOOL WinEditView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	BOOL bPreCreated = CEditView::PreCreateWindow(cs);
-	
+
 	cs.style |= WS_HSCROLL | WS_VSCROLL;
 
 	return bPreCreated;
@@ -77,7 +77,7 @@ WinEditDoc* WinEditView::GetDocument() // non-debug version is inline
 /////////////////////////////////////////////////////////////////////////////
 // WinEditView message handlers
 
-int WinEditView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int WinEditView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CEditView::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -91,23 +91,23 @@ int WinEditView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lf.lfItalic = GetProfileInt("font", "Italic");
 	lf.lfWeight = GetProfileInt("font", "Bold") == 1 ? FW_BOLD : FW_NORMAL;
 	lf.lfCharSet = DEFAULT_CHARSET;
-	lf.lfHeight = -MulDiv(GetProfileInt("font", "PointSize"), 
-		dc.GetDeviceCaps(LOGPIXELSY), 72);
+	lf.lfHeight = -MulDiv(GetProfileInt("font", "PointSize"),
+	                      dc.GetDeviceCaps(LOGPIXELSY), 72);
 
 	if (!m_font.CreateFontIndirect(&lf))
 		return -1;
-			
+
 	SetFont(&m_font);
 
 	return 0;
 }
 
-void WinEditView::OnInitialUpdate() 
+void WinEditView::OnInitialUpdate()
 {
 	CEditView::OnInitialUpdate();
 }
 
-void WinEditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
+void WinEditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
 }
 

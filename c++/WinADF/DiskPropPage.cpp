@@ -23,7 +23,7 @@ void DiskPropPage::Dump(CDumpContext& dc) const
 #endif // _DEBUG
 
 DiskPropPage::DiskPropPage()
-	: CPropertyPage(DiskPropPage::IDD)
+		: CPropertyPage(DiskPropPage::IDD)
 {
 }
 

@@ -1,7 +1,7 @@
 /*---------------------------------------
 
 	Module	:	DWAVELIB.CPP
-	Purpose	:	External Wave Library 
+	Purpose	:	External Wave Library
 				Implementations
 	Date	:	11/22/1997
 
@@ -32,11 +32,11 @@ HRESULT __stdcall CFactory :: QueryInterface(REFIID iid, PPVOID ppv)
 		pI = static_cast<LPCLASSFACTORY>(this);
 	else
 		return E_NOINTERFACE;
-		
+
 	pI->AddRef();
 
 	*ppv = pI;
-	
+
 	return S_OK;
 }
 
@@ -51,7 +51,7 @@ ULONG CFactory :: Release()
 
 	if (lRtn == 0)
 		delete this;
-	
+
 	return lRtn;
 }
 
@@ -59,7 +59,7 @@ ULONG CFactory :: Release()
 // IClassFactory implementation
 //
 HRESULT __stdcall CFactory :: CreateInstance(LPUNKNOWN pUnknownOuter,
-									REFIID iid, PPVOID ppv)
+        REFIID iid, PPVOID ppv)
 {
 	HRESULT hr = E_FAIL;
 
@@ -74,9 +74,9 @@ HRESULT __stdcall CFactory :: CreateInstance(LPUNKNOWN pUnknownOuter,
 
 	// Get the requested interface
 	hr = pWaveLib->QueryInterface(iid, ppv);
-	
+
 	pWaveLib->Release();
-	
+
 	return hr;
 }
 
@@ -109,8 +109,8 @@ STDAPI DllCanUnloadNow()
 // GetClassFactory
 //
 STDAPI DllGetClassObject(REFCLSID clsid,
-						REFIID iid,
-						PPVOID ppv)
+                         REFIID iid,
+                         PPVOID ppv)
 {
 	// Can we create this component
 	if (clsid != CLSID_WaveLib)
@@ -134,18 +134,18 @@ STDAPI DllGetClassObject(REFCLSID clsid,
 STDAPI DllRegisterServer()
 {
 	return RegisterServer(g_hModule,
-					CLSID_WaveLib,
-					g_szFriendlyName,
-					g_szVerIndProgID,
-					g_szProgID,
-					CLSID_NULL);
+	                      CLSID_WaveLib,
+	                      g_szFriendlyName,
+	                      g_szVerIndProgID,
+	                      g_szProgID,
+	                      CLSID_NULL);
 }
 
 STDAPI DllUnregisterServer()
 {
 	return UnregisterServer(CLSID_WaveLib,
-					g_szVerIndProgID,
-					g_szProgID);
+	                        g_szVerIndProgID,
+	                        g_szProgID);
 }
 
 //////////////////////////////////////////
@@ -153,8 +153,8 @@ STDAPI DllUnregisterServer()
 // DLL module information
 //
 BOOL APIENTRY DllMain(HINSTANCE hModule,
-					DWORD dwReason,
-					LPVOID lpReserved)
+                      DWORD dwReason,
+                      LPVOID lpReserved)
 {
 	if (dwReason == DLL_PROCESS_ATTACH)
 		g_hModule = hModule;

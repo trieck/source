@@ -44,7 +44,7 @@ ObjectDatabase* ObjectDatabase::instance()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-int ObjectDatabase::Run(int argc, char **argv) 
+int ObjectDatabase::Run(int argc, char **argv)
 {
 	if (!pservice->Execute(argc, argv))
 		return -1;
@@ -57,6 +57,6 @@ int ObjectDatabase::Run(int argc, char **argv)
 int main(int argc, char **argv)
 {
 	ObjectDatabase *odb = ObjectDatabase::instance();
-	return odb->Run(argc, argv);	
+	return odb->Run(argc, argv);
 }
 

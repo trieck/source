@@ -6,7 +6,7 @@
 ///////////////////////////////////////
 
 #include "SplitterFrame.h"
-#include "SplitterView.h" 
+#include "SplitterView.h"
 
 IMPLEMENT_DYNCREATE(CSplitterView, CListView)
 
@@ -16,7 +16,8 @@ END_MESSAGE_MAP()
 
 // Initialize static data members
 LPCTSTR CSplitterView :: szHeaders[4] = {_T("Player One"), _T("Player Two"), _T("Winner"),
-									_T("Date Time")};
+                                        _T("Date Time")
+                                        };
 
 ///////////////////////////////////////////////////////////////////
 // CSplitterView construction/destruction
@@ -43,9 +44,9 @@ void CSplitterView::OnInitialUpdate()
 INT	CSplitterView :: OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	INT nRtn, i;
-	
+
 	nRtn = CListView :: OnCreate(lpCreateStruct);
-	
+
 	// Set List View Backcolor
 	GetListCtrl().SetBkColor(::GetSysColor(COLOR_WINDOW));
 

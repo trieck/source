@@ -9,8 +9,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // GripperBar window
 
-class GripperBar : public CToolBar
-{
+class GripperBar : public CToolBar {
 // Construction
 public:
 	GripperBar();
@@ -18,9 +17,9 @@ public:
 public:
 // Operations
 public:
-	BOOL CreateEx(CWnd* pParentWnd, DWORD dwCtrlStyle = TBSTYLE_FLAT, 
-		DWORD dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP, 
-		CRect rcBorders = CRect(0, 0, 0, 0), UINT nID = AFX_IDW_TOOLBAR);
+	BOOL CreateEx(CWnd* pParentWnd, DWORD dwCtrlStyle = TBSTYLE_FLAT,
+	              DWORD dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP,
+	              CRect rcBorders = CRect(0, 0, 0, 0), UINT nID = AFX_IDW_TOOLBAR);
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(GripperBar)

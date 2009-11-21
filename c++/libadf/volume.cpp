@@ -16,26 +16,26 @@
 #include "adfwarn.h"
 #include "CacheEntry.h"
 
-uint32_t bitmask[BM_BLOCKS_ENTRY] = { 
-    0x1, 0x2, 0x4, 0x8,
+uint32_t bitmask[BM_BLOCKS_ENTRY] = {
+	0x1, 0x2, 0x4, 0x8,
 	0x10, 0x20, 0x40, 0x80,
-    0x100, 0x200, 0x400, 0x800,
+	0x100, 0x200, 0x400, 0x800,
 	0x1000, 0x2000, 0x4000, 0x8000,
 	0x10000, 0x20000, 0x40000, 0x80000,
 	0x100000, 0x200000, 0x400000, 0x800000,
 	0x1000000, 0x2000000, 0x4000000, 0x8000000,
-	0x10000000, 0x20000000, 0x40000000, 0x80000000 
+	0x10000000, 0x20000000, 0x40000000, 0x80000000
 };
 
-namespace { 
-	CacheEntry getCacheEntry(dircacheblock_t *block, int32_t *offset);
+namespace {
+CacheEntry getCacheEntry(dircacheblock_t *block, int32_t *offset);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Volume::Volume()
-: blocksize(0), bitmapsize(0), dblocksize(0), firstblock(0), lastblock(0), 
- rootblock(0), type(0), mounted(false), bmtbl(0), bmblocks(0), disk(0),
- currdir(0), readonly(true)
+		: blocksize(0), bitmapsize(0), dblocksize(0), firstblock(0), lastblock(0),
+		rootblock(0), type(0), mounted(false), bmtbl(0), bmblocks(0), disk(0),
+		currdir(0), readonly(true)
 {
 }
 
@@ -49,7 +49,7 @@ Volume::~Volume()
 void Volume::unmount()
 {
 	freebitmap();
-    mounted = false;
+	mounted = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -67,7 +67,7 @@ void Volume::freebitmap()
 	bitmapsize = 0;
 
 	if (bmblocks != NULL) {
-        free(bmblocks);
+		free(bmblocks);
 		bmblocks = NULL;
 	}
 }
@@ -76,9 +76,9 @@ void Volume::freebitmap()
 void Volume::readblock(uint32_t blockno, void *block)
 {
 	if (!mounted) throw ADFException("volume not mounted.");
-	
+
 	// translate logical sector to physical sector
-    blockno = blockno + firstblock;
+	blockno = blockno + firstblock;
 
 	if (!isValidBlock(blockno))
 		throw ADFException("sector out of range.");
@@ -90,7 +90,7 @@ void Volume::readblock(uint32_t blockno, void *block)
 void Volume::readdatablock(uint32_t blockno, void *block)
 {
 	uint8_t buf[BSIZE];
-    
+
 	readblock(blockno, buf);
 	memcpy(block, buf, BSIZE);
 
@@ -164,10 +164,10 @@ void Volume::readrootblock(rootblock_t *root)
 #ifdef LITTLE_ENDIAN
 	swaprootblock(root);
 #endif // LITTLE_ENDIAN
-	
+
 	if (root->type != T_HEADER && root->sectype != ST_ROOT) {
 		ADFWarningDispatcher::dispatch("bad root block type.");
-    }
+	}
 
 	if (root->checksum != adfchecksum(buf, 20, BSIZE)) {
 		ADFWarningDispatcher::dispatch("bad checksum.");
@@ -191,8 +191,8 @@ void Volume::allocbitmap()
 	// bitmap size in blocks
 	uint32_t mapsize = nblocks / blocksmap;
 
-    if (nblocks % blocksmap != 0)
-        mapsize++;	
+	if (nblocks % blocksmap != 0)
+		mapsize++;
 
 	bitmapsize = mapsize;
 	bmtbl = (bitmapblock_t**) xmalloc(sizeof(bitmapblock_t*) * mapsize);
@@ -200,7 +200,7 @@ void Volume::allocbitmap()
 
 	uint32_t i;
 	for (i = 0; i < mapsize; i++) {
-        bmtbl[i] = (bitmapblock_t*)xmalloc(sizeof(bitmapblock_t));
+		bmtbl[i] = (bitmapblock_t*)xmalloc(sizeof(bitmapblock_t));
 	}
 }
 
@@ -309,8 +309,8 @@ bool Volume::isBlockFree(uint32_t blockno)
 	uint32_t block = blockmapno / blocksmap;
 	uint32_t index = (blockmapno / BM_BLOCKS_ENTRY) % BM_MAPSIZE;
 
-	return (bmtbl[block]->map[index] & 
-		bitmask[blockmapno % BM_BLOCKS_ENTRY]) != 0;
+	return (bmtbl[block]->map[index] &
+	        bitmask[blockmapno % BM_BLOCKS_ENTRY]) != 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -326,14 +326,14 @@ EntryList Volume::readdir(uint32_t blockno, bool recurse)
 
 	uint32_t next;
 	int32_t *hashtable = parent.tbl;
-    for (uint32_t i = 0; i < HT_SIZE; i++) {
+	for (uint32_t i = 0; i < HT_SIZE; i++) {
 		if (hashtable[i] != 0) {
 			readentry(hashtable[i], &entryblk);
 
 			entry = entryblk;
 			entry.blockno = hashtable[i];
 			entries.push_back(entry);
-			
+
 			// TODO: if (recurs && entry->type==ST_DIR)
 
 			next = entryblk.nextsamehash;
@@ -342,14 +342,14 @@ EntryList Volume::readdir(uint32_t blockno, bool recurse)
 				entry = entryblk;
 				entry.blockno = next;
 				entries.push_back(entry);
-				
+
 				// TODO: if (recurs && entry->type==ST_DIR)
 
 				next = entryblk.nextsamehash;
 			}
 		}
 	}
-	
+
 	return entries;
 }
 
@@ -367,7 +367,7 @@ FilePtr Volume::openfile(const char *filename, const char *mode)
 			throw ADFException("file not found.");
 
 		return Volume::openfile(entry);
-	} 
+	}
 
 	fileheader_t header;
 	createFile(currdir, filename, &header);
@@ -382,15 +382,15 @@ FilePtr Volume::openfile(const char *filename, const char *mode)
 FilePtr Volume::openfile(const Entry &e)
 {
 	// check access permissions
-	if (hasR(e.access)) 
+	if (hasR(e.access))
 		throw ADFException("access denied.");
 
 	return FilePtr(new File(this, e));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-uint32_t Volume::lookup(uint32_t nblock, const char *name, 
-	entryblock_t *pblock, uint32_t *pupblock)
+uint32_t Volume::lookup(uint32_t nblock, const char *name,
+                        entryblock_t *pblock, uint32_t *pupblock)
 {
 	readentry(nblock, pblock);
 
@@ -431,10 +431,10 @@ uint32_t Volume::lookup(uint32_t nblock, const char *name,
 void Volume::changedir(const char *name)
 {
 	entryblock_t entry;
-	
+
 	uint32_t blockno;
 	if ((blockno = lookup(currdir, name, &entry, NULL)) == -1)
-		throw ADFException("can't find directory.");		
+		throw ADFException("can't find directory.");
 
 	if (entry.sectype != ST_DIR)
 		throw ADFException("entry not directory.");
@@ -452,7 +452,7 @@ void Volume::changedir(Entry *pEntry)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-uint32_t Volume::freeblocks() 
+uint32_t Volume::freeblocks()
 {
 	uint32_t nblocks = 0;
 
@@ -460,14 +460,14 @@ uint32_t Volume::freeblocks()
 		if (isBlockFree(i))
 			nblocks++;
 	}
-	
+
 	return nblocks;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Volume::setCurrentDir(uint32_t blockno)
 {
-	if (!isValidBlock(blockno)) 
+	if (!isValidBlock(blockno))
 		throw ADFException("sector out of range.");
 
 	currdir = blockno;
@@ -477,8 +477,8 @@ void Volume::setCurrentDir(uint32_t blockno)
 void Volume::writebootblock(bootblock_t *boot)
 {
 	boot->type[0] = 'D';
-    boot->type[1] = 'O';
-    boot->type[2] = 'S';
+	boot->type[1] = 'O';
+	boot->type[2] = 'S';
 
 #ifdef LITTLE_ENDIAN
 	boot->checksum = swap_endian(boot->checksum);
@@ -507,11 +507,11 @@ void Volume::writebootblock(bootblock_t *boot)
 void Volume::writeblock(uint32_t blockno, void *block)
 {
 	if (!mounted) throw ADFException("volume not mounted.");
-	
+
 	if (readonly) throw ADFException("can't write block, read only volume.");
 
 	// translate logical sector to physical sector
-    blockno = blockno + firstblock;
+	blockno = blockno + firstblock;
 
 	if (!isValidBlock(blockno))
 		throw ADFException("sector out of range.");
@@ -627,13 +627,13 @@ void Volume::createEmptyCache(entryblock_t *parent, uint32_t blockno)
 void Volume::writerootblock(uint32_t blockno, rootblock_t *root)
 {
 	root->type = T_HEADER;
-    root->key = 0;
-    root->highseq = 0L;
-    root->tblsize = HT_SIZE;
-    root->firstdata = 0;
-    root->nextsamehash = 0;
-    root->parent = 0;
-    root->sectype = ST_ROOT;
+	root->key = 0;
+	root->highseq = 0L;
+	root->tblsize = HT_SIZE;
+	root->firstdata = 0;
+	root->nextsamehash = 0;
+	root->parent = 0;
+	root->sectype = ST_ROOT;
 
 #ifdef LITTLE_ENDIAN
 	swaprootblock(root);
@@ -676,7 +676,7 @@ void Volume::writedircblock(uint32_t blockno, dircacheblock_t *dirc)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-uint32_t Volume::getFreeBlock() 
+uint32_t Volume::getFreeBlock()
 {
 	blocklist blocks;
 	if (!getFreeBlocks(1, blocks))
@@ -710,9 +710,9 @@ bool Volume::writenewbitmap()
 		extblock = (bitmapsize - BM_SIZE) / BM_MAPSIZE;
 		if ((bitmapsize - BM_SIZE) % BM_MAPSIZE)
 			extblock++;
-	
+
 		blocklist eblocks;
-		if (!getFreeBlocks(extblock, eblocks)) 
+		if (!getFreeBlocks(extblock, eblocks))
 			return false;
 
 		k = 0;
@@ -728,7 +728,7 @@ bool Volume::writenewbitmap()
 			}
 
 			if (k + 1 < extblock) {
-                bmeb.next = eblocks[k+1];
+				bmeb.next = eblocks[k+1];
 			} else {
 				bmeb.next = 0;
 			}
@@ -768,7 +768,7 @@ void Volume::updatebitmap()
 	uint32_t i;
 	for (i = 0; i < bitmapsize; i++) {
 		writebmblock(bmblocks[i], bmtbl[i]);
-    }
+	}
 
 	root.bmflag = BM_VALID;
 
@@ -790,7 +790,7 @@ void Volume::writebmblock(uint32_t blockno, bitmapblock_t *block)
 	block->checksum = adfchecksum(buf, 0, BSIZE);
 	block->checksum = swap_endian(block->checksum);
 
-	writeblock(blockno, block); 
+	writeblock(blockno, block);
 
 #ifdef LITTLE_ENDIAN
 	swapbmblock(block);
@@ -799,14 +799,14 @@ void Volume::writebmblock(uint32_t blockno, bitmapblock_t *block)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Install a bootblock on a floppy disk. Won't work on any other device. 
-// You must provide the 1024 bytes large bootblock. 
-// Doesn't modify the initial 'DOS' header and type. 
-// Recalculates the checksum. 
+// Install a bootblock on a floppy disk. Won't work on any other device.
+// You must provide the 1024 bytes large bootblock.
+// Doesn't modify the initial 'DOS' header and type.
+// Recalculates the checksum.
 void Volume::installbootblock(uint8_t *code)
 {
 	if (disk->type != DISKTYPE_FLOPDD && disk->type != DISKTYPE_FLOPHD) {
-        throw ADFException("disk not floppy.");
+		throw ADFException("disk not floppy.");
 	}
 
 	bootblock_t boot;
@@ -815,8 +815,8 @@ void Volume::installbootblock(uint8_t *code)
 	boot.rootblock = 880;
 
 	uint32_t i;
-    for(i = 0; i < 1024-12; i++)	// bootcode
-        boot.code[i] = code[i+12];
+	for (i = 0; i < 1024-12; i++)	// bootcode
+		boot.code[i] = code[i+12];
 
 	writebootblock(&boot);
 }
@@ -835,9 +835,9 @@ bool Volume::deleteentry(uint32_t blockno, const char *name)
 	}
 
 	// if it is a directory, is it empty ?
-    if (entry.sectype == ST_DIR) {
+	if (entry.sectype == ST_DIR) {
 		throw ADFException("directory delete not supported.");
-    }
+	}
 
 	if (ublockno == 0) {	// in parent hashtable
 		bool intl = isINTL(type) || isDIRCACHE(type);
@@ -852,16 +852,16 @@ bool Volume::deleteentry(uint32_t blockno, const char *name)
 	}
 
 	if (entry.sectype == ST_FILE) {
-		freefileblocks((fileheader_t*)&entry);		
+		freefileblocks((fileheader_t*)&entry);
 	} else if (entry.sectype == ST_DIR) {
 		// TODO:
 		/*
 		adfSetBlockFree(vol, nSect);
-        // free dir cache block : the directory must be empty, so there's only one cache block
-        if (isDIRCACHE(vol->dosType))
-            adfSetBlockFree(vol, entry.extension);
-        if (adfEnv.useNotify)
-            (*adfEnv.notifyFct)(pSect,ST_DIR);
+		// free dir cache block : the directory must be empty, so there's only one cache block
+		if (isDIRCACHE(vol->dosType))
+		    adfSetBlockFree(vol, entry.extension);
+		if (adfEnv.useNotify)
+		    (*adfEnv.notifyFct)(pSect,ST_DIR);
 			*/
 	} else {
 		throw ADFException("entry type not supported.");
@@ -871,7 +871,7 @@ bool Volume::deleteentry(uint32_t blockno, const char *name)
 		delFromCache(&parent, entry.key);
 	}
 
-    updatebitmap();
+	updatebitmap();
 
 	return true;
 }
@@ -909,12 +909,12 @@ FileBlocks Volume::getFileBlocks(fileheader_t *entry)
 		blocks.addData(entry->datablocks[MAX_DATABLK-1-i]);
 	}
 
-	// in file extension blocks 
+	// in file extension blocks
 	fileext_t extblock;
 	uint32_t blockno = entry->extension;
 	while (blockno != 0) {
 		blocks.addExten(blockno);
-		
+
 		readextblock(blockno, &extblock);
 		for (i = 0; i < extblock.highseq; i++) {
 			blocks.addData(extblock.blocks[MAX_DATABLK-1-i]);
@@ -976,7 +976,7 @@ void Volume::delFromCache(entryblock_t *parent, uint32_t key)
 						}
 					} else {	// the last record of this cache block
 						for (i = last; i < offset; i++) {
-                            dirc.records[i] = 0;
+							dirc.records[i] = 0;
 						}
 					}
 					dirc.nrecs--;
@@ -996,7 +996,7 @@ void Volume::delFromCache(entryblock_t *parent, uint32_t key)
 
 		prevblock = blockno;
 		blockno = dirc.next;
-    } while (blockno != 0 && !found);
+	} while (blockno != 0 && !found);
 
 	if (!found) {
 		ADFWarningDispatcher::dispatch("dirc entry not found.");
@@ -1030,7 +1030,7 @@ void Volume::readdircblock(uint32_t blockno, dircacheblock_t *dirc)
 
 /////////////////////////////////////////////////////////////////////////////
 void Volume::createFile(uint32_t nparent, const char *name, fileheader_t *
-	header)
+                        header)
 {
 	entryblock_t parent;
 	readentry(nparent, &parent);
@@ -1053,7 +1053,7 @@ void Volume::createFile(uint32_t nparent, const char *name, fileheader_t *
 	}
 
 	adfTime2AmigaTime(adfGetCurrentTime(), header->days, header->mins,
-		header->ticks);
+	                  header->ticks);
 
 	writefileblock(blockno, header);
 
@@ -1091,32 +1091,32 @@ void Volume::writedirblock(uint32_t blockno, dirblock_t* block)
 
 /////////////////////////////////////////////////////////////////////////////
 uint32_t Volume::createEntry(entryblock_t *dir, const char *name,
-	uint32_t blockno)
+                             uint32_t blockno)
 {
 	bool intl = isINTL(type) || isDIRCACHE(type);
 	string uname = adfToUpper(name, intl);
 	uint32_t hash = adfhash(name, intl);
 
-    uint32_t nblock = dir->tbl[hash];
+	uint32_t nblock = dir->tbl[hash];
 	if (nblock == 0) {	// empty
 		if (blockno == -1)	{	// allocate new block
 			if ((blockno = getFreeBlock()) == -1) {
 				throw ADFException("can't allocate block.");
 			}
-		}		
+		}
 
 		dir->tbl[hash] = blockno;
-        if (dir->sectype == ST_ROOT) {	// root block
+		if (dir->sectype == ST_ROOT) {	// root block
 			rootblock_t *root = (rootblock_t*)dir;
-			adfTime2AmigaTime(adfGetCurrentTime(), root->cdays, root->cmins, 
-				root->cticks);
+			adfTime2AmigaTime(adfGetCurrentTime(), root->cdays, root->cmins,
+			                  root->cticks);
 			writerootblock(rootblock, root);
 		} else {	// directory block
 			adfTime2AmigaTime(adfGetCurrentTime(), dir->days, dir->mins, dir->ticks);
 			writedirblock(dir->key, (dirblock_t*)dir);
-        }
+		}
 		return blockno;
-	} 
+	}
 
 	entryblock_t uentry;
 	string ename;
@@ -1152,8 +1152,8 @@ uint32_t Volume::createEntry(entryblock_t *dir, const char *name,
 void Volume::writefileblock(uint32_t blockno, fileheader_t *block)
 {
 	block->type = T_HEADER;
-    block->datasize = 0;
-    block->sectype = ST_FILE;
+	block->datasize = 0;
+	block->sectype = ST_FILE;
 
 #ifdef LITTLE_ENDIAN
 	swapfileblock(block);
@@ -1176,9 +1176,9 @@ void Volume::writefileblock(uint32_t blockno, fileheader_t *block)
 void Volume::writefileextblock(uint32_t blockno, fileext_t *block)
 {
 	block->type = T_LIST;
-    block->sectype = ST_FILE;
-    block->datasize = 0;
-    block->firstdata = 0;
+	block->sectype = ST_FILE;
+	block->datasize = 0;
+	block->firstdata = 0;
 
 #ifdef LITTLE_ENDIAN
 	swapfileext(block);
@@ -1205,19 +1205,19 @@ void Volume::writedatablock(uint32_t blockno, void *block)
 		data->type = T_DATA;
 
 #ifdef LITTLE_ENDIAN
-	swapofsblock(data);
+		swapofsblock(data);
 #endif // LITTLE_ENDIAN
 
-	uint8_t buf[BSIZE];
-	memcpy(buf, data, BSIZE);
+		uint8_t buf[BSIZE];
+		memcpy(buf, data, BSIZE);
 
-	data->checksum = adfchecksum(buf, 20, BSIZE);
-	data->checksum = swap_endian(data->checksum);
+		data->checksum = adfchecksum(buf, 20, BSIZE);
+		data->checksum = swap_endian(data->checksum);
 
-	writeblock(blockno, data);
+		writeblock(blockno, data);
 
 #ifdef LITTLE_ENDIAN
-	swapofsblock(data);
+		swapofsblock(data);
 #endif // LITTLE_ENDIAN
 
 	} else {
@@ -1262,8 +1262,8 @@ CacheEntry getCacheEntry(dircacheblock_t *dirc, int32_t *offset)
 	*offset = ptr+24+nLen+1+cLen;
 
 	// the starting offset of each record must be even (68000 constraint)
-    if ((*offset % 2) != 0)
-        *offset = (*offset) + 1;
+	if ((*offset % 2) != 0)
+		*offset = (*offset) + 1;
 
 	return entry;
 }

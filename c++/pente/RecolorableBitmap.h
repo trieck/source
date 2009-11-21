@@ -4,8 +4,7 @@
 
 // RecolorableBitmap command target
 
-class RecolorableBitmap : public TransparentBitmap
-{
+class RecolorableBitmap : public TransparentBitmap {
 public:
 	RecolorableBitmap(COLORREF nSourceColor);
 	virtual ~RecolorableBitmap();

@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CScores window
 
-class CScores : public CObject
-{
+class CScores : public CObject {
 // Construction
 public:
 	CScores();
@@ -45,7 +44,7 @@ protected:
 	CStringArray *	m_pScoresArray;
 
 	//{{AFX_MSG(CScores)
-		// NOTE - the ClassWizard will add and remove member functions here.
+	// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 };
 

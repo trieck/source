@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 // WALKER.H : B-tree walker
 //
 // Copyright (c) 2006 Thomas. A. Rieck, All Rights Reserved
@@ -9,8 +9,7 @@
 #define __WALKER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Walker : public IItemWalker
-{
+class Walker : public IItemWalker {
 // Construction / Destruction
 public:
 	Walker();

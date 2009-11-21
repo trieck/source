@@ -12,8 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // StackFrame frame
 
-class StackFrame : public CMiniFrameWnd
-{
+class StackFrame : public CMiniFrameWnd {
 	DECLARE_DYNCREATE(StackFrame)
 protected:
 	StackFrame();           // protected constructor used by dynamic creation
@@ -27,7 +26,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(StackFrame)
-	protected:
+protected:
 	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL

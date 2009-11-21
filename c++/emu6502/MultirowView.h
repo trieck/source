@@ -2,8 +2,7 @@
 
 #include "BigScrollView.h"
 
-class MultirowView : public BigScrollView
-{
+class MultirowView : public BigScrollView {
 	DECLARE_DYNCREATE(MultirowView)
 protected:
 	MultirowView();	// protected constructor used by dynamic creation
@@ -18,7 +17,9 @@ public:
 
 protected:
 	DECLARE_MESSAGE_MAP()
-	void SetNumLines(int lines) { m_nLines = lines; }
+	void SetNumLines(int lines) {
+		m_nLines = lines;
+	}
 private:
 	void InvalidateHighlightRect(BOOL clear = FALSE);
 

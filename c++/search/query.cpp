@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 // QUERY.CPP : Query class
 //
 // Copyright (c) 2006 Thomas A. Rieck, All Rights Reserved
@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Query::Query(BTree &t)
- : btree(t), m_pStream(NULL)
+		: btree(t), m_pStream(NULL)
 {
 }
 
@@ -32,15 +32,15 @@ DocVector Query::query(IPeekableStream *pStream)
 /////////////////////////////////////////////////////////////////////////////
 DocVector Query::expr()
 {
-	DocVector output; 
+	DocVector output;
 	string t;
 
 	for (int i = 0; lookahead() != EOF; i++) {
 		t = term();
 		if (output.size() > 0)
 			output = conj(output, lookup(t), i);
-		else 
-			output = lookup(t);			
+		else
+			output = lookup(t);
 
 		if (output.size() == 0)
 			break;
@@ -62,7 +62,7 @@ DocVector Query::lookup(const string &term)
 			throw Exception("document vector size mismatch!");
 		UINT docs = nlen / sizeof(UINT64);
 		PUINT64 pdocs = reinterpret_cast<PUINT64>(pVal->data);
-		for (UINT i = 0; i < docs; i++) {			
+		for (UINT i = 0; i < docs; i++) {
 			output.push_back(*pdocs++);
 		}
 	}
@@ -71,8 +71,8 @@ DocVector Query::lookup(const string &term)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-DocVector Query::conj(const DocVector &left, const DocVector &right, 
-	int distance) const
+DocVector Query::conj(const DocVector &left, const DocVector &right,
+                      int distance) const
 {
 	DocVector output;
 
@@ -89,7 +89,8 @@ DocVector Query::conj(const DocVector &left, const DocVector &right,
 
 		if (lword == rword - distance) {	// conjunction
 			output.push_back(*lit);
-			lit++; rit++;
+			lit++;
+			rit++;
 		} else if (lword > rword) {
 			rit++;
 		} else if (rword > lword) {
@@ -106,7 +107,7 @@ string Query::term()
 	string t;
 
 	int c;
-	while ((c = getc()) != EOF) {		
+	while ((c = getc()) != EOF) {
 		if (isalnum(c)) {
 			t += (char)towlower(c);
 		} else if (c == '_' || c == '\'' || c == '-') {

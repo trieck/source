@@ -13,8 +13,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // SettingsSheet
 
-class SettingsSheet : public CPropertySheet
-{
+class SettingsSheet : public CPropertySheet {
 	DECLARE_DYNAMIC(SettingsSheet)
 
 // Construction
@@ -42,7 +41,7 @@ public:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(SettingsSheet)
-		// NOTE - the ClassWizard will add and remove member functions here.
+	// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

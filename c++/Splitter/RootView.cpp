@@ -7,7 +7,7 @@
 
 #include "SplitterFrame.h"
 #include "RootView.h"
-#include "resource.h" 
+#include "resource.h"
 
 IMPLEMENT_DYNCREATE(CRootView, CListView)
 
@@ -42,10 +42,10 @@ void CRootView::OnInitialUpdate()
 
 INT	CRootView :: OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-    INT nRtn;
-	
+	INT nRtn;
+
 	nRtn = CListView :: OnCreate(lpCreateStruct);
-	
+
 	// Set List View Backcolor
 	GetListCtrl().SetBkColor(::GetSysColor(COLOR_APPWORKSPACE));
 

@@ -15,9 +15,13 @@ using std::endl;
 
 #include "exception.h"
 
-struct _coinit{
-	_coinit() { CoInitialize(NULL); }
-	~_coinit() { CoUninitialize(); }
+struct _coinit {
+	_coinit() {
+		CoInitialize(NULL);
+	}
+	~_coinit() {
+		CoUninitialize();
+	}
 } coinit;
 
 
@@ -30,7 +34,7 @@ int _tmain(int argc, TCHAR *argv[])
 {
 	try {
 		IXMLDOMDocumentPtr doc;
-				
+
 		// Create an instance of the DOMDocument
 		HRESULT hr = doc.CreateInstance(__uuidof(DOMDocument));
 		if (FAILED(hr))
@@ -39,8 +43,8 @@ int _tmain(int argc, TCHAR *argv[])
 		_variant_t vtDoc("d:\\source\\xml\\test.xml");
 
 		// Create a processing instruction
-		IXMLDOMProcessingInstructionPtr pi = 
-			doc->createProcessingInstruction("xml", "version=\"1.0\"");
+		IXMLDOMProcessingInstructionPtr pi =
+		    doc->createProcessingInstruction("xml", "version=\"1.0\"");
 
 		doc->appendChild(pi);
 

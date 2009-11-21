@@ -40,8 +40,8 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // TorrentExplorer construction
 
-TorrentExplorer::TorrentExplorer() 
- : m_pSettings(NULL), m_pPalette(NULL), m_hMutex(INVALID_HANDLE_VALUE)
+TorrentExplorer::TorrentExplorer()
+		: m_pSettings(NULL), m_pPalette(NULL), m_hMutex(INVALID_HANDLE_VALUE)
 {
 }
 
@@ -66,17 +66,17 @@ BOOL TorrentExplorer::InitInstance()
 		return FALSE;
 
 	SetRegistryKey("Rieck Enterprises");
-	LoadStdProfileSettings();  
+	LoadStdProfileSettings();
 
 	m_pSettings = new TorrentSettings();
 
 	// Register document templates
 	CSingleDocTemplate* pDocTemplate;
 	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(TorrentDoc),
-		RUNTIME_CLASS(MainFrame),       // main SDI frame window
-		RUNTIME_CLASS(TorrentView));
+	    IDR_MAINFRAME,
+	    RUNTIME_CLASS(TorrentDoc),
+	    RUNTIME_CLASS(MainFrame),       // main SDI frame window
+	    RUNTIME_CLASS(TorrentView));
 	AddDocTemplate(pDocTemplate);
 
 	// Enable DDE Execute open
@@ -104,8 +104,7 @@ BOOL TorrentExplorer::InitInstance()
 /////////////////////////////////////////////////////////////////////////////
 // AboutDlg dialog used for App About
 
-class AboutDlg : public CDialog
-{
+class AboutDlg : public CDialog {
 public:
 	AboutDlg();
 
@@ -116,14 +115,14 @@ public:
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(AboutDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
 	//{{AFX_MSG(AboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -143,7 +142,7 @@ void AboutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(AboutDlg, CDialog)
 	//{{AFX_MSG_MAP(AboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -165,14 +164,14 @@ void PumpMessages()
 {
 	CWinThread *pThread = AfxGetApp();
 	MSG msg;
-    while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) { 
-        if (!pThread->PumpMessage()) {
-            break; 
-        } 
-    } 
-    LONG lIdle = 0;
-    while (pThread->OnIdle(lIdle++))
-        ;  
+	while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
+		if (!pThread->PumpMessage()) {
+			break;
+		}
+	}
+	LONG lIdle = 0;
+	while (pThread->OnIdle(lIdle++))
+		;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -211,7 +210,7 @@ CDialog *GetTopmostDlgParent(CWnd *pWnd)
 	return pDlg;
 }
 
-int TorrentExplorer::ExitInstance() 
+int TorrentExplorer::ExitInstance()
 {
 	if (m_pSettings) {
 		delete m_pSettings;
@@ -230,7 +229,7 @@ int TorrentExplorer::ExitInstance()
 	return CWinApp::ExitInstance();
 }
 
-void TorrentExplorer::OnSettings() 
+void TorrentExplorer::OnSettings()
 {
 	SettingsSheet sheet(IDS_SETTINGS, m_pMainWnd);
 	if (sheet.DoModal() == IDOK) {
@@ -264,7 +263,7 @@ BOOL TorrentExplorer::GetBOOLSetting(LPCSTR key)
 {
 	if (m_pSettings) {
 		LPTORRENTOBJECT o = m_pSettings->GetValue(key);
-		if (o == NULL || o->GetElementType() != ET_INTEGER) 
+		if (o == NULL || o->GetElementType() != ET_INTEGER)
 			return FALSE;
 		return *(LPINTEGER)o;
 	}
@@ -276,7 +275,7 @@ __int64 TorrentExplorer::GetIntSetting(LPCSTR key)
 {
 	if (m_pSettings) {
 		LPTORRENTOBJECT o = m_pSettings->GetValue(key);
-		if (o == NULL || o->GetElementType() != ET_INTEGER) 
+		if (o == NULL || o->GetElementType() != ET_INTEGER)
 			return FALSE;
 		return *(LPINTEGER)o;
 	}
@@ -286,17 +285,17 @@ __int64 TorrentExplorer::GetIntSetting(LPCSTR key)
 
 BOOL TorrentExplorer::LoadPalette()
 {
-	HRSRC hResource = ::FindResource(AfxGetResourceHandle(), 
-		MAKEINTRESOURCE(IDR_DEF_PALETTE),
-        "PALETTE");
+	HRSRC hResource = ::FindResource(AfxGetResourceHandle(),
+	                                 MAKEINTRESOURCE(IDR_DEF_PALETTE),
+	                                 "PALETTE");
 	if (hResource == NULL)
 		return FALSE;
 
-    HGLOBAL hGlobal = ::LoadResource(AfxGetResourceHandle(), hResource);
+	HGLOBAL hGlobal = ::LoadResource(AfxGetResourceHandle(), hResource);
 	if (hGlobal == NULL)
 		return FALSE;
 
-    LPCSTR pResource = (LPCSTR)::LockResource(hGlobal);
+	LPCSTR pResource = (LPCSTR)::LockResource(hGlobal);
 	if (pResource == NULL) {
 		UnlockResource(hGlobal);
 		FreeResource(hGlobal);
@@ -310,15 +309,15 @@ BOOL TorrentExplorer::LoadPalette()
 	COLORREF color;
 
 	m_pPalette = new RGBTRIPLE[NUM_PALETTE_COLORS];
-	for (int i = 0; i < NUM_PALETTE_COLORS 
-		&& (tok = tokenizer.next()) != ""; i++) {
+	for (int i = 0; i < NUM_PALETTE_COLORS
+	        && (tok = tokenizer.next()) != ""; i++) {
 		sscanf(tok, "%d %d %d", &red, &green, &blue);
 		color = RGB(red, green, blue);
 		m_pPalette[i].rgbtRed = (BYTE)red;
 		m_pPalette[i].rgbtGreen = (BYTE)green;
 		m_pPalette[i].rgbtBlue = (BYTE)blue;
 		m_ColorMap[color] = i;
-    }
+	}
 
 	UnlockResource(hGlobal);
 	FreeResource(hGlobal);

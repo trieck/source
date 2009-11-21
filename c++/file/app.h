@@ -9,14 +9,13 @@
 #include "winthrd.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class Application : public WinThread
-{
+class Application : public WinThread {
 public:
 // Construction / Destruction
 	Application();
 	virtual ~Application();
 
-// Interface 
+// Interface
 	virtual bool initInstance();
 	virtual bool run();
 	virtual int exitInstance();
@@ -32,10 +31,12 @@ private:
 };
 /////////////////////////////////////////////////////////////////////////////
 
-inline const LPCTSTR Application::getName() const {
+inline const LPCTSTR Application::getName() const
+{
 	return name;
 }
-inline HMODULE Application::getInstance() const {
+inline HMODULE Application::getInstance() const
+{
 	return instance;
 }
 Application *getApp();

@@ -17,7 +17,7 @@ static PageDef pagedefs[] = {
 IMPLEMENT_DYNAMIC(DiskPropSheet, CPropertySheet)
 
 DiskPropSheet::DiskPropSheet(CWnd* pParentWnd)
- : CPropertySheet(_T("Disk Image Information"), pParentWnd, 0), m_pPages(0), m_nPages(0)
+		: CPropertySheet(_T("Disk Image Information"), pParentWnd, 0), m_pPages(0), m_nPages(0)
 {
 }
 
@@ -39,7 +39,7 @@ void DiskPropSheet::BuildPropPageArray()
 	m_pPages = new CPropertyPage*[m_nPages];
 
 	for (uint32_t i = 0; i < m_nPages; i++) {
-		m_pPages[i] = (CPropertyPage*)pagedefs[i].Class->CreateObject();		
+		m_pPages[i] = (CPropertyPage*)pagedefs[i].Class->CreateObject();
 		ASSERT_VALID(m_pPages[i]);
 		m_pPages[i]->Construct(pagedefs[i].id, 0);
 		AddPage(m_pPages[i]);

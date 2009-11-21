@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 // DATABASE.CPP : Encapsulates an ADO database connection
 //
 // Copyright(c) 2008 Thomas A. Rieck, All Rights Reserved
@@ -22,10 +22,10 @@ Database::~Database()
 /////////////////////////////////////////////////////////////////////////////
 void Database::open(LPCTSTR uid, LPCTSTR pwd, LPCTSTR connStr) throw()
 {
-	close();  
+	close();
 
 	m_Conn.CreateInstance(__uuidof(ADODB::Connection));
-	m_Conn->Open(connStr, uid, pwd, NULL);	
+	m_Conn->Open(connStr, uid, pwd, NULL);
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -55,7 +55,7 @@ void FileBlocks::addData(uint32_t blockno)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-block_iterator FileBlocks::getExtenBegin() const 
+block_iterator FileBlocks::getExtenBegin() const
 {
 	return extens.begin();
 }

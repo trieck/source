@@ -14,7 +14,7 @@ END_MESSAGE_MAP()
 IMPLEMENT_DYNCREATE(HexView, BigScrollView)
 
 HexView::HexView(void)
- : m_pBuffer(0), m_pLine(0), m_nBufferLen(0)
+		: m_pBuffer(0), m_pLine(0), m_nBufferLen(0)
 {
 }
 
@@ -42,8 +42,8 @@ void HexView::Render(CDC* pDC)
 	pDC->GetClipBox(rc);
 
 	uint32_t nstart = rc.top / m_szChar.cy;
-	uint32_t nend = min(m_nLinesTotal - 1, 
-		(rc.bottom + m_szChar.cy - 1) / m_szChar.cy);
+	uint32_t nend = min(m_nLinesTotal - 1,
+	                    (rc.bottom + m_szChar.cy - 1) / m_szChar.cy);
 
 	for (uint32_t n = nstart; n <= nend; n++) {
 		DrawGridLine(pDC, n, rc.right);
@@ -53,7 +53,7 @@ void HexView::Render(CDC* pDC)
 
 void HexView::DrawGridLine(CDC *pDC, uint32_t line, uint32_t cx)
 {
-	ASSERT_VALID(pDC);	
+	ASSERT_VALID(pDC);
 
 	CPen * pOldPen = pDC->SelectObject(&m_GridPen);
 
@@ -84,7 +84,7 @@ uint32_t HexView::FormatLine(uint32_t line, uint8_t *pdata, uint32_t size)
 	for (uint32_t j = 0; j < size; j++) {
 		if (j > 0)
 			pline++[0] = ' ';
-		
+
 		sprintf(pline, "%0.2x", pdata[j]);
 		pline += 2;
 	}
@@ -120,7 +120,7 @@ int HexView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ((m_pLine = new char[LBUFFSIZE + 1]) == NULL)
 		return -1;
 
-	m_GridPen.CreatePen(PS_SOLID, 1, COLOR_SILVER);	
+	m_GridPen.CreatePen(PS_SOLID, 1, COLOR_SILVER);
 
 	return 0;
 }
@@ -142,7 +142,7 @@ void HexView::SetSizes()
 		m_nDocWidth = m_nBufferLen ? LBUFFSIZE * m_szChar.cx : 0;
 		m_nDocHeight = m_nLinesTotal * m_szChar.cy;
 	} else {
-		m_nLinesTotal = m_nDocHeight = m_nDocWidth = 0;		
+		m_nLinesTotal = m_nDocHeight = m_nDocWidth = 0;
 	}
 
 	m_ScrollPos = CPoint(0, 0);

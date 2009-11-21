@@ -13,17 +13,17 @@ static const UINT uniqueID = 0UL;
 const _int64 File::seekFailure = -1;
 
 File::File(LPCTSTR name, File::openMode M)
- : hFile(NULL),
- filename(name),
- mode(M)
+		: hFile(NULL),
+		filename(name),
+		mode(M)
 {
 	open();
 }
 
 File::File(HANDLE hfile)
- : hFile(hfile),
- filename(_T("")),
- mode(unknown)
+		: hFile(hfile),
+		filename(_T("")),
+		mode(unknown)
 {
 }
 
@@ -43,21 +43,21 @@ bool File::open()
 	if (mode == readOnly) {
 		access |= GENERIC_READ;
 		createdisp |= OPEN_EXISTING;
-	}else if (mode == readWrite) {
+	} else if (mode == readWrite) {
 		access |= GENERIC_READ | GENERIC_WRITE;
 		createdisp |= OPEN_EXISTING;
-	}else if (mode == create) {
+	} else if (mode == create) {
 		access |= GENERIC_WRITE;
 		createdisp |= CREATE_NEW;
 	}
 
-	HANDLE H = CreateFile(filename.c_str(), 
-		access,		/* access mode */
-		0,			/* no sharing */
-		NULL,		/* no security */
-		createdisp,	/* creation disposition */
-		flags,		/* flags and attributes */
-		NULL);		/* template file */
+	HANDLE H = CreateFile(filename.c_str(),
+	                      access,		/* access mode */
+	                      0,			/* no sharing */
+	                      NULL,		/* no security */
+	                      createdisp,	/* creation disposition */
+	                      flags,		/* flags and attributes */
+	                      NULL);		/* template file */
 
 	if (H == INVALID_HANDLE_VALUE)
 		return false;
@@ -94,7 +94,7 @@ bool File::readLine(LPTSTR line, DWORD maxsize)
 	for (int i = 0; i < maxsize; i++) {
 		if (!ReadFile(*this, pline, 1, &read, NULL))
 			return false;
-		
+
 		if (read == 0) {
 			if (pline > line)
 				break;
@@ -123,7 +123,7 @@ tstring File::gulp()
 
 	TCHAR *pbuff = new TCHAR[size() + 1];
 	if (0 == pbuff)
-		return _T(""); 
+		return _T("");
 
 	if (!read(pbuff, size()))
 		return _T("");
@@ -147,13 +147,13 @@ DWORD File::write(LPCTSTR str)
 
 	for (DWORD j = 0, x = 0; j < len; j += x) {
 		x = min(len - j, blocksize);
-		
-		WriteFile(*this, 
-			str + j, 
-			x,
-			&x,
-			NULL);
-		
+
+		WriteFile(*this,
+		          str + j,
+		          x,
+		          &x,
+		          NULL);
+
 		if (0 == x)
 			break;
 
@@ -179,7 +179,7 @@ File::Type File::getType() const
 
 	DWORD type = GetFileType(*this);
 
-	switch(type) {
+	switch (type) {
 	case FILE_TYPE_DISK:
 		return diskType;
 	case FILE_TYPE_CHAR:
@@ -239,10 +239,10 @@ _int64 File::seek(_int64 pos, File::moveMethod m)
 
 	LPLONG phigh = li.HighPart == 0 ? NULL : &li.HighPart;
 
-	li.LowPart = SetFilePointer(*this, 
-		li.LowPart, 
-		phigh, 
-		method);
+	li.LowPart = SetFilePointer(*this,
+	                            li.LowPart,
+	                            phigh,
+	                            method);
 
 	if (li.LowPart == INVALID_FILE_SIZE) {
 		if (phigh == NULL)
@@ -250,7 +250,7 @@ _int64 File::seek(_int64 pos, File::moveMethod m)
 		else if (GetLastError() != NO_ERROR)
 			return seekFailure;	// error
 	}
-	
+
 	return li.QuadPart;
 }
 

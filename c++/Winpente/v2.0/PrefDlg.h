@@ -1,6 +1,6 @@
 /*---------------------------------------
-	Module Name	:	PrefDlg.h	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	PrefDlg.h
+	Author		:	Thomas A. Rieck
 	Purpose		:	Preferences Dialog
 					declarations
 	Date		:	08/24/1997
@@ -14,14 +14,13 @@
 #include "BkgndPage.h"
 #include "ResDll\resource.h"
 
-class CPrefDlg : public CPropertySheet
-{
+class CPrefDlg : public CPropertySheet {
 	friend CBkgndPage;
 
 	// Construction / Destruction
 public:
-	CPrefDlg(UINT nIDCaption, CWnd* pParentWnd = NULL, 
-			UINT iSelectPage = 0);
+	CPrefDlg(UINT nIDCaption, CWnd* pParentWnd = NULL,
+	         UINT iSelectPage = 0);
 	virtual ~CPrefDlg();
 	VOID	Init();
 protected:
@@ -32,7 +31,7 @@ protected:
 	CPiecePage* m_pPiecePage;
 	CBkgndPage* m_pBkgndPage;
 	HBITMAP		m_hBitmaps[6];		// Used for Background page
-	HPALETTE	m_hPalettes[6];		
+	HPALETTE	m_hPalettes[6];
 };
 
 #endif // __PREF_DLG_H

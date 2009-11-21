@@ -39,9 +39,9 @@ CStringVec SplitPath(LPCSTR path);
 
 
 //////////////////////////////////////////////////////////////////////
-TorrentMaker::TorrentMaker(ICallable *pCallable, CFile *pFile) 
- : m_hFile(INVALID_HANDLE_VALUE), m_currentFile(-1),
- m_pCallable(pCallable), m_TotalLength(0), m_Cancel(FALSE)
+TorrentMaker::TorrentMaker(ICallable *pCallable, CFile *pFile)
+		: m_hFile(INVALID_HANDLE_VALUE), m_currentFile(-1),
+		m_pCallable(pCallable), m_TotalLength(0), m_Cancel(FALSE)
 {
 	// use memory based file if not supplied for writing
 	m_pFile = pFile == NULL ? &m_file : pFile;
@@ -54,7 +54,7 @@ TorrentMaker::~TorrentMaker()
 }
 
 //////////////////////////////////////////////////////////////////////
-void TorrentMaker::CloseCurrentFile() 
+void TorrentMaker::CloseCurrentFile()
 {
 	if (m_hFile != INVALID_HANDLE_VALUE) {
 		CloseHandle(m_hFile);
@@ -66,29 +66,29 @@ void TorrentMaker::CloseCurrentFile()
 void TorrentMaker::Make(LPDICTIONARY d)
 {
 	m_pFile->SeekToBegin();		// rewind for writing
-	WriteDict(d);	
+	WriteDict(d);
 }
 
 //////////////////////////////////////////////////////////////////////
-void TorrentMaker::Make(const CString &files, 
-	const CStringVec &trackers, const CString &comment,
-	DWORD pieceSize, BOOL priv)
+void TorrentMaker::Make(const CString &files,
+                        const CStringVec &trackers, const CString &comment,
+                        DWORD pieceSize, BOOL priv)
 {
 	m_Files = files;
 	m_pieceSize = pieceSize;
 	m_Private = priv;
 	m_FileList.erase(m_FileList.begin(), m_FileList.end());
-	
+
 	CloseCurrentFile();
 
 	// Rewind for writing
-	m_pFile->SeekToBegin();	
-	
+	m_pFile->SeekToBegin();
+
 	BeginDictionary();					// begin dictionary
-	
+
 	WriteTrackers(trackers);
-	
-	if (comment.GetLength()) WritePair("comment", comment);		
+
+	if (comment.GetLength()) WritePair("comment", comment);
 	WritePair("created by", "Torrent Explorer/1000");
 	WritePair("creation date", CTime::GetCurrentTime());
 	WritePair("encoding", "UTF-8");
@@ -98,7 +98,7 @@ void TorrentMaker::Make(const CString &files,
 	EndObject();						// end dictionary
 
 	// Rewind for reading
-	m_pFile->SeekToBegin();	
+	m_pFile->SeekToBegin();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -161,8 +161,8 @@ void TorrentMaker::WriteInfo()
 	WriteString("info");
 
 	BeginDictionary();
-	
-	WriteFiles();		
+
+	WriteFiles();
 	NotifyTotalPieces();
 
 	WritePair("piece length", m_pieceSize);
@@ -189,8 +189,8 @@ void TorrentMaker::WritePieces()
 	WriteString("pieces");
 
 	HashFiles();
-	
-	CString buf;	
+
+	CString buf;
 	int nlength = (int)m_pieces.GetLength();
 	m_pieces.Read(buf.GetBufferSetLength(nlength), nlength);
 
@@ -221,9 +221,9 @@ BOOL TorrentMaker::GetNextPiece(LPSTR piece)
 	CString s;
 
 	LPSTR buf = s.GetBuffer(m_pieceSize);
-	
+
 	DWORD read = Read(buf, m_pieceSize);
-	
+
 	s.ReleaseBuffer(read);
 
 	if (read == 0)
@@ -231,7 +231,7 @@ BOOL TorrentMaker::GetNextPiece(LPSTR piece)
 
 	SHA1 sha1(s);
 	memcpy(piece, (LPCSTR)sha1, SHA1_DIGEST_SIZE);
-	
+
 	return TRUE;
 }
 
@@ -259,7 +259,7 @@ DWORD TorrentMaker::Read(LPSTR pbuf, int nlen)
 		} else if (read != chunk_size) {	// whole chunk not read
 			chunk_size = chunk_size - read;
 			pbuf += read;
-		}		
+		}
 		total += read;
 	}
 
@@ -271,20 +271,20 @@ BOOL TorrentMaker::OpenNextFile()
 {
 	CloseCurrentFile();
 
-	if (m_currentFile == m_FileList.size() - 1) 
+	if (m_currentFile == m_FileList.size() - 1)
 		return FALSE;	// no more files
 
 	CString filename = m_FileList[++m_currentFile];
 
-	m_hFile = CreateFile(filename, 
-		GENERIC_READ,
-		0,           
-		NULL,        
-		OPEN_EXISTING,
-		FILE_ATTRIBUTE_NORMAL,        
-		NULL);                        
+	m_hFile = CreateFile(filename,
+	                     GENERIC_READ,
+	                     0,
+	                     NULL,
+	                     OPEN_EXISTING,
+	                     FILE_ATTRIBUTE_NORMAL,
+	                     NULL);
 	if (m_hFile == INVALID_HANDLE_VALUE) {
-		ThrowUserException(IDS_CANTOPENFILE, filename);		
+		ThrowUserException(IDS_CANTOPENFILE, filename);
 	}
 
 	return TRUE;
@@ -306,7 +306,7 @@ void TorrentMaker::WriteFiles()
 		WritePair("name", filename(m_Files));
 		m_TotalLength = GetFileLength(m_Files);
 		WritePair("length", m_TotalLength);
-	}		
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -328,7 +328,7 @@ __int64 TorrentMaker::GetFileLength(LPCSTR filename)
 	struct _stati64 buf;
 	if (_stati64(filename, &buf) == -1)
 		return 0;
-	
+
 	return buf.st_size;
 }
 
@@ -350,7 +350,7 @@ void TorrentMaker::WriteFile(LPCSTR filename)
 	for ( ; it != path.end(); it++) {
 		WriteString(*it);
 	}
-	EndObject();	
+	EndObject();
 
 	EndObject();
 }
@@ -376,7 +376,8 @@ void TorrentMaker::Recurse(const CString &path)
 {
 	CFileFind finder;
 
-	CString pattern(path), fpath; pattern += "\\*";
+	CString pattern(path), fpath;
+	pattern += "\\*";
 
 	BOOL found = finder.FindFile(pattern);
 	while (found) {
@@ -391,9 +392,9 @@ void TorrentMaker::Recurse(const CString &path)
 			fpath = finder.GetFilePath();
 			AddFile(fpath);
 		}
-   }
+	}
 
-   finder.Close();
+	finder.Close();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -465,7 +466,7 @@ void TorrentMaker::WriteDict(LPDICTIONARY d)
 		WritePair(*it, v);
 	}
 
-	EndObject();						// end dictionary	
+	EndObject();						// end dictionary
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -475,7 +476,7 @@ void TorrentMaker::WriteList(LPLIST l)
 
 	for (UINT i = 0; i < l->size(); i++) {
 		WriteObject(l->GetAt(i));
-	}	
+	}
 
 	EndObject();
 }
@@ -525,7 +526,7 @@ namespace {	// anonymous
 CString basename(LPCSTR path)
 {
 	char file[_MAX_FNAME] = { 0 };
-    _splitpath(path, NULL, NULL, file, NULL);
+	_splitpath(path, NULL, NULL, file, NULL);
 	return file;
 }
 
@@ -536,8 +537,8 @@ CString filename(LPCSTR path)
 	char ext[_MAX_EXT] = { 0 };
 	char output[_MAX_FNAME + _MAX_EXT + 1];
 
-    _splitpath(path, NULL, NULL, file, ext);
-	
+	_splitpath(path, NULL, NULL, file, ext);
+
 	sprintf(output, "%s%s", file, ext);
 
 	return output;

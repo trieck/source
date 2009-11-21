@@ -1,6 +1,6 @@
 /*
  *	ASSEM.H
- *	
+ *
  *	code assembly
  *
  *	Neptune64 Commodore 64 Emulator

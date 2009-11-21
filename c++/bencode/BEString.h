@@ -9,8 +9,7 @@
 #define __BESTRING_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class String : public BEObject
-{
+class String : public BEObject {
 private:
 	// Construction / Destruction
 	String(LPBYTE data, INT len);
@@ -21,14 +20,20 @@ public:
 // Interface
 	String &operator = (const String &rhs);
 
-	virtual ObjectType GetType() const { return BET_STRING; }
+	virtual ObjectType GetType() const {
+		return BET_STRING;
+	}
 	virtual LPBEOBJECT Copy() const;
 
-	INT GetLength() const { return nlen; }
-	LPBYTE GetData() const { return data; }
+	INT GetLength() const {
+		return nlen;
+	}
+	LPBYTE GetData() const {
+		return data;
+	}
 	BYTE GetAt(int i) const;
 
-	operator string() const;	
+	operator string() const;
 
 // Implementation
 private:

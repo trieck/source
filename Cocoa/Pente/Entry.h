@@ -15,14 +15,19 @@ enum {
 	ET_PLAYER_TWO
 };
 
-@interface Entry : NSObject {
+@interface Entry :
+NSObject {
 	Point pt;
 	uint32 type;
 }
 
-- (id)initWithCoords :(uint32_t)x :(uint32_t)y :(uint32_t)type;
+- (id)initWithCoords :
+(uint32_t)x :
+(uint32_t)y :
+(uint32_t)type;
 - (Point) where;
 - (uint32_t) type;
-- (void) setType :(uint32_t)type;
+- (void) setType :
+(uint32_t)type;
 
 @end

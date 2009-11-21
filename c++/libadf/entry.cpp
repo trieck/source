@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Entry::Entry() : access(0), blockno(0), days(0), hour(0), mins(0), month(0),
- parent(0), real(0), secs(0), size(0), type(0), year(0), firstblock(0)
+		parent(0), real(0), secs(0), size(0), type(0), year(0), firstblock(0)
 {
 }
 
@@ -26,13 +26,13 @@ Entry::~Entry()
 
 /////////////////////////////////////////////////////////////////////////////
 Entry::Entry(const Entry &e)
-{ 
+{
 	*this = e;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Entry::Entry(const entryblock_t &block)
-{ 
+{
 	*this = block;
 }
 
@@ -50,10 +50,10 @@ Entry& Entry::operator = (const Entry &e)
 		size = e.size;
 		access = e.access;
 		year = e.year;
-		month = e.month;		
+		month = e.month;
 		days = e.days;
 		hour = e.hour;
-		mins = e.mins;		
+		mins = e.mins;
 		secs = e.secs;
 	}
 
@@ -82,26 +82,26 @@ Entry& Entry::operator = (const entryblock_t &block)
 	comment.clear();
 	real = 0;
 
-	switch(block.sectype) {
-    case ST_ROOT:
-        break;
-    case ST_DIR:
-        access = block.access;
+	switch (block.sectype) {
+	case ST_ROOT:
+		break;
+	case ST_DIR:
+		access = block.access;
 		comment = string(block.comment, block.commlen);
-        break;
-    case ST_FILE:
+		break;
+	case ST_FILE:
 		access = block.access;
 		size = block.bytesize;
 		comment = string(block.comment, block.commlen);
-        break;
-    case ST_LFILE:
-    case ST_LDIR:
+		break;
+	case ST_LFILE:
+	case ST_LDIR:
 		real = block.realentry;
-    case ST_LSOFT:
-        break;
-    default:
+	case ST_LSOFT:
+		break;
+	default:
 		ADFWarningDispatcher::dispatch("unknown entry type.");
-    }
+	}
 
 	return *this;
 }

@@ -10,13 +10,13 @@
 #include "resource.h"
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-				LPSTR lpCmdLine, INT nCmdShow)
+                   LPSTR lpCmdLine, INT nCmdShow)
 {
-    MSG msg;
-	
+	MSG msg;
+
 	PAPP pApp = new CApp(hInstance, nCmdShow);
 	if (!pApp) return (0);
-	
+
 	// Initialize application
 	if (!pApp->Init(_T("PubClass")))
 		return (0);
@@ -26,22 +26,20 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		return (0);
 
 	// Create child window
-	pApp->CreateChild(MAKEINTRESOURCE(IDD_COMPONENT), 
-			(DLGPROC)DlgProc);
-					
-    while (GetMessage(&msg, NULL, 0, 0)) 
-	{
-		if (!pApp->GetChildWnd() || 
-			!IsDialogMessage(pApp->GetChildWnd(), &msg))
-		{
-			TranslateMessage(&msg);    
-			DispatchMessage(&msg);     
+	pApp->CreateChild(MAKEINTRESOURCE(IDD_COMPONENT),
+	                  (DLGPROC)DlgProc);
+
+	while (GetMessage(&msg, NULL, 0, 0)) {
+		if (!pApp->GetChildWnd() ||
+		        !IsDialogMessage(pApp->GetChildWnd(), &msg)) {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
 		}
 	}
-	
+
 	if (pApp) delete pApp;
 
-    return (msg.wParam); 
+	return (msg.wParam);
 }
 
 CApp :: CApp(HINSTANCE hInstance, INT nCmdShow)
@@ -77,23 +75,23 @@ BOOL CApp :: Init(LPCTSTR lpszClassName)
 		m_bInitialized = TRUE;
 
 	// Create main window class
-	wndclass.style			= CS_NOCLOSE;                    
-    wndclass.lpfnWndProc	= (WNDPROC)MainWndProc;       
+	wndclass.style			= CS_NOCLOSE;
+	wndclass.lpfnWndProc	= (WNDPROC)MainWndProc;
 	wndclass.cbClsExtra		= 0;
-    wndclass.cbWndExtra		= 0;
-    wndclass.hIcon			= LoadIcon(m_hInst, MAKEINTRESOURCE(IDI_MAIN));
-    wndclass.hInstance		= m_hInst;
-    wndclass.hCursor		= LoadCursor(NULL, IDC_ARROW);
-    wndclass.hbrBackground	= NULL;
-    wndclass.lpszMenuName	= NULL;
-    wndclass.lpszClassName	= m_szClassName; 
+	wndclass.cbWndExtra		= 0;
+	wndclass.hIcon			= LoadIcon(m_hInst, MAKEINTRESOURCE(IDI_MAIN));
+	wndclass.hInstance		= m_hInst;
+	wndclass.hCursor		= LoadCursor(NULL, IDC_ARROW);
+	wndclass.hbrBackground	= NULL;
+	wndclass.lpszMenuName	= NULL;
+	wndclass.lpszClassName	= m_szClassName;
 
-    if (!RegisterClass(&wndclass))
+	if (!RegisterClass(&wndclass))
 		return (FALSE);
 
 	// Create Client Class
-	wndclass.style			= 0;  
-	wndclass.lpfnWndProc	= (WNDPROC)ClientProc;       
+	wndclass.style			= 0;
+	wndclass.lpfnWndProc	= (WNDPROC)ClientProc;
 	wndclass.cbClsExtra		= 0;
 	wndclass.cbWndExtra		= 0;
 	wndclass.hIcon			= 0;
@@ -107,9 +105,9 @@ BOOL CApp :: Init(LPCTSTR lpszClassName)
 		return (FALSE);
 
 	if (!(m_pIAdviseSink = new CAdviseSink(this)))
-        return FALSE;
+		return FALSE;
 
-    m_pIAdviseSink->AddRef();
+	m_pIAdviseSink->AddRef();
 
 	return (TRUE);
 }
@@ -117,57 +115,57 @@ BOOL CApp :: Init(LPCTSTR lpszClassName)
 BOOL CApp :: Create(LPCTSTR lpszCaption)
 {
 	m_hWndFrame = CreateWindowEx(
-			0L,							
-			m_szClassName,                  
-			lpszCaption,   
-			WS_OVERLAPPEDWINDOW,            // Window style.                      
-			CW_USEDEFAULT,                  // Default horizontal position.       
-			CW_USEDEFAULT,                  // Default vertical position.         
-			CW_USEDEFAULT,                  // Default width.                     
-			CW_USEDEFAULT,                  // Default height.                    
-			NULL,                           // Overlapped windows have no parent. 
-			NULL,                           // Use the window class menu.         
-			m_hInst,						// This instance owns this window.    
-			this							// Object back pointer
-			);
-    
-    if (!m_hWndFrame)
-        return (FALSE);
+	                  0L,
+	                  m_szClassName,
+	                  lpszCaption,
+	                  WS_OVERLAPPEDWINDOW,            // Window style.
+	                  CW_USEDEFAULT,                  // Default horizontal position.
+	                  CW_USEDEFAULT,                  // Default vertical position.
+	                  CW_USEDEFAULT,                  // Default width.
+	                  CW_USEDEFAULT,                  // Default height.
+	                  NULL,                           // Overlapped windows have no parent.
+	                  NULL,                           // Use the window class menu.
+	                  m_hInst,						// This instance owns this window.
+	                  this							// Object back pointer
+	              );
+
+	if (!m_hWndFrame)
+		return (FALSE);
 
 	// Create client window
-	m_hWndClient = 	CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, 
-				_T("ClientClass"),
-				NULL, 
-				WS_VISIBLE | WS_CHILD | WS_CLIPSIBLINGS, 
-				CW_USEDEFAULT, CW_USEDEFAULT,
-				CW_USEDEFAULT, CW_USEDEFAULT, 
-				m_hWndFrame, NULL,m_hInst,
-				this);
+	m_hWndClient = 	CreateWindowEx(WS_EX_OVERLAPPEDWINDOW,
+	                               _T("ClientClass"),
+	                               NULL,
+	                               WS_VISIBLE | WS_CHILD | WS_CLIPSIBLINGS,
+	                               CW_USEDEFAULT, CW_USEDEFAULT,
+	                               CW_USEDEFAULT, CW_USEDEFAULT,
+	                               m_hWndFrame, NULL,m_hInst,
+	                               this);
 
 	if (!m_hWndClient)
 		return (FALSE);
-	
+
 	// Create Status Bar
 	InitCommonControls();
 	m_hWndStatus = CreateStatusWindow(WS_VISIBLE | WS_CHILD | WS_CLIPSIBLINGS,
-						NULL, m_hWndFrame, IDC_STATUS);
+	                                  NULL, m_hWndFrame, IDC_STATUS);
 
 	if (!m_hWndStatus)
 		return (FALSE);
 
-    ShowWindow(m_hWndFrame, m_nCmdShow);  
-    UpdateWindow(m_hWndFrame);          
+	ShowWindow(m_hWndFrame, m_nCmdShow);
+	UpdateWindow(m_hWndFrame);
 
-    return (TRUE);
-}     
+	return (TRUE);
+}
 
 VOID CApp :: CreateChild(LPCTSTR szDialogName, DLGPROC lpDlgProc)
 {
-	m_hWndChild = CreateDialogParam(m_hInst, 
-					szDialogName, 
-					m_hWndFrame, 
-					lpDlgProc, 
-					(LPARAM)this);
+	m_hWndChild = CreateDialogParam(m_hInst,
+	                                szDialogName,
+	                                m_hWndFrame,
+	                                lpDlgProc,
+	                                (LPARAM)this);
 }
 
 HWND CApp :: GetMainWnd()
@@ -193,21 +191,21 @@ HWND CApp :: GetStatusBar()
 VOID CApp :: Paint(LPPAINTSTRUCT lpPS)
 {
 	HBRUSH	hBrush, hBrushOld;
-	
+
 	SetViewportExtEx(lpPS->hdc, lpPS->rcPaint.right - lpPS->rcPaint.left,
-								lpPS->rcPaint.bottom - lpPS->rcPaint.top, NULL);
+	                 lpPS->rcPaint.bottom - lpPS->rcPaint.top, NULL);
 
 	hBrush		= (HBRUSH)GetSysColorBrush(COLOR_WINDOW);
-	
+
 	hBrushOld	= (HBRUSH)SelectObject(lpPS->hdc, hBrush);
 
-	PatBlt(lpPS->hdc, lpPS->rcPaint.left, 
-				lpPS->rcPaint.top, 
-				lpPS->rcPaint.right - lpPS->rcPaint.left, 
-				lpPS->rcPaint.bottom - lpPS->rcPaint.top,
-				PATCOPY);
-	
-    SelectObject(lpPS->hdc, hBrushOld);
+	PatBlt(lpPS->hdc, lpPS->rcPaint.left,
+	       lpPS->rcPaint.top,
+	       lpPS->rcPaint.right - lpPS->rcPaint.left,
+	       lpPS->rcPaint.bottom - lpPS->rcPaint.top,
+	       PATCOPY);
+
+	SelectObject(lpPS->hdc, hBrushOld);
 	DeleteObject(hBrush);
 
 	if (m_pIUnknown)
@@ -232,9 +230,9 @@ BOOL CApp :: SaveObject(LPCTSTR lpszFileName)
 #else
 	wcscpy(szName, lpszFileName);
 #endif
-	
+
 	hr = StgCreateDocfile(szName, STGM_DIRECT | STGM_WRITE
-			| STGM_CREATE | STGM_DIRECT | STGM_SHARE_EXCLUSIVE, 0, &pIStorage);
+	                      | STGM_CREATE | STGM_DIRECT | STGM_SHARE_EXCLUSIVE, 0, &pIStorage);
 
 	if (FAILED(hr))
 		return (FALSE);
@@ -255,9 +253,9 @@ BOOL CApp :: SaveObject(LPCTSTR lpszFileName)
 	// Write the data to storage
 	lRet = WriteToStorage(pIStorage);
 	pIStorage->Release();
-		
+
 	if (!lRet) return (FALSE);
-	
+
 	return (TRUE);
 }
 
@@ -267,13 +265,13 @@ BOOL CApp :: LoadObject(LPCTSTR lpszFileName)
 	LPSTORAGE	pIStorage;
 	LONG		lRet;
 	OLECHAR		szFileName[_MAX_PATH];
-	
+
 	if (!lpszFileName)
 		return (FALSE);
 
 #ifndef UNICODE
 	CHAR szTemp[_MAX_PATH];
-	
+
 	strcpy(szTemp, lpszFileName);
 
 	MultiByteToWideChar(CP_ACP, 0, szTemp, -1, szFileName, _MAX_PATH);
@@ -285,9 +283,9 @@ BOOL CApp :: LoadObject(LPCTSTR lpszFileName)
 		return (FALSE);
 
 	hr = StgOpenStorage(szFileName, NULL,
-			STGM_DIRECT | STGM_READ | STGM_SHARE_EXCLUSIVE,
-			NULL, 0, &pIStorage);
-	
+	                    STGM_DIRECT | STGM_READ | STGM_SHARE_EXCLUSIVE,
+	                    NULL, 0, &pIStorage);
+
 	if (FAILED(hr))
 		return (FALSE);
 
@@ -306,14 +304,14 @@ BOOL CApp :: ReadFromStorage(LPSTORAGE pIStorage)
 	LPPERSISTSTREAM		pIPersistStream;
 	LPSTREAM			pIStream;
 	OLECHAR				szStream[20];
-	
+
 	if (!pIStorage || !m_pIDataObject)
 		return (FALSE);
 
 	// Open the stream
 #ifndef UNICODE
 	CHAR szTemp[20];
-	
+
 	strcpy(szTemp, SZSTREAM);
 
 	MultiByteToWideChar(CP_ACP, 0, szTemp, -1, szStream, 20);
@@ -322,27 +320,26 @@ BOOL CApp :: ReadFromStorage(LPSTORAGE pIStorage)
 #endif
 
 	hr = pIStorage->OpenStream(szStream, 0, STGM_DIRECT | STGM_READ
-			| STGM_SHARE_EXCLUSIVE, 0, &pIStream);
+	                           | STGM_SHARE_EXCLUSIVE, 0, &pIStream);
 
 	if (FAILED(hr))
 		return (FALSE);
 
 	// Does the object support IPersistStream?
-	hr = m_pIUnknown->QueryInterface(IID_IPersistStream, 
-					(PPVOID)&pIPersistStream);
+	hr = m_pIUnknown->QueryInterface(IID_IPersistStream,
+	                                 (PPVOID)&pIPersistStream);
 
-	if (FAILED(hr))
-	{
+	if (FAILED(hr)) {
 		pIStream->Release();
 		return (FALSE);
 	}
 
 	// Load the data
 	hr = pIPersistStream->Load(pIStream);
-	
+
 	pIStream->Release();
 	pIPersistStream->Release();
-	
+
 	if (FAILED(hr))
 		return (FALSE);
 
@@ -361,36 +358,35 @@ BOOL CApp :: WriteToStorage (LPSTORAGE pIStorage)
 
 #ifndef UNICODE
 	CHAR szTemp[20];
-	
+
 	strcpy(szTemp, SZSTREAM);
 
 	MultiByteToWideChar(CP_ACP, 0, szTemp, -1, szStream, 20);
 #else
 	wcscpy(szStream, SZSTREAM);
-#endif	
+#endif
 
 	hr = pIStorage->CreateStream(szStream, STGM_DIRECT | STGM_CREATE
-			| STGM_WRITE | STGM_SHARE_EXCLUSIVE, 0, 0, &pIStream);
+	                             | STGM_WRITE | STGM_SHARE_EXCLUSIVE, 0, 0, &pIStream);
 
 	if (FAILED(hr))
 		return (FALSE);
 
 	// Does the object support IPersistStream?
-	hr = m_pIUnknown->QueryInterface(IID_IPersistStream, 
-					(PPVOID)&pIPersistStream);
+	hr = m_pIUnknown->QueryInterface(IID_IPersistStream,
+	                                 (PPVOID)&pIPersistStream);
 
-	if (FAILED(hr))
-	{
+	if (FAILED(hr)) {
 		pIStream->Release();
 		return (FALSE);
 	}
 
 	// Save the data
 	hr = pIPersistStream->Save(pIStream, TRUE);
-	
+
 	pIStream->Release();
 	pIPersistStream->Release();
-	
+
 	if (FAILED(hr))
 		return (FALSE);
 
@@ -407,7 +403,7 @@ VOID CApp :: Message (UINT wResName)
 {
 	DWORD	dwByteSize = 256;
 	LPTSTR	pData;
-	
+
 	pData = (LPTSTR)CoTaskMemAlloc(dwByteSize);
 	if (!pData)
 		return;
@@ -426,17 +422,16 @@ VOID CApp :: UpdateControls()
 	COLORREF	lColor;
 	BYTE		rValue;
 
-	if (m_pIUnknown)
-	{
+	if (m_pIUnknown) {
 		hr = m_pIUnknown->QueryInterface(IID_IDrawObject,
-				(PPVOID)&pObj);
+		                                 (PPVOID)&pObj);
 
 		if (FAILED(hr))
 			return;
-				
+
 		pObj->GetColor(&lColor);
 		pObj->Release();
-			
+
 		rValue = GetRValue(lColor);
 
 		SendDlgItemMessage(m_hWndChild, IDC_COLORSLIDE, TBM_SETPOS, TRUE, rValue);
@@ -451,13 +446,13 @@ BOOL CApp :: Clip()
 	LPDATAOBJECT	pIDataObject;
 	FORMATETC		fe;
 	STGMEDIUM		stm;
-	
+
 	if (!m_pIUnknown || !m_pIDataObject)
 		return FALSE;
-	
-	hr = CoCreateInstance(CLSID_DrawObject, 
-			NULL, CLSCTX_INPROC_SERVER,
-			IID_IDrawObject, (PPVOID)&pObj);
+
+	hr = CoCreateInstance(CLSID_DrawObject,
+	                      NULL, CLSCTX_INPROC_SERVER,
+	                      IID_IDrawObject, (PPVOID)&pObj);
 
 	if (FAILED(hr))
 		return FALSE;
@@ -467,11 +462,10 @@ BOOL CApp :: Clip()
 	fe.ptd		= NULL;
 	fe.tymed	= TYMED_MFPICT;
 	fe.lindex	= -1;
-	
+
 	hr = m_pIDataObject->GetData(&fe, &stm);
-	
-	if (FAILED(hr))
-	{
+
+	if (FAILED(hr)) {
 		pObj->Release();
 		return FALSE;
 	}
@@ -488,7 +482,7 @@ BOOL CApp :: Clip()
 
 	return (SUCCEEDED(hr));
 }
-	
+
 CApp :: ~CApp()
 {
 	if (IsWindow(m_hWndChild))	DestroyWindow(m_hWndChild);
@@ -502,10 +496,10 @@ CApp :: ~CApp()
 	ReleaseInterface(m_pIDataObject);
 
 	while (m_cRef-- > 0)
-        m_pIUnknown->Release();
+		m_pIUnknown->Release();
 
-    m_pIUnknown = NULL;
-		
+	m_pIUnknown = NULL;
+
 	OleFlushClipboard();
 
 	if (m_bInitialized)
@@ -513,26 +507,25 @@ CApp :: ~CApp()
 }
 
 
-LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,             
-				WPARAM wParam, LPARAM lParam)
+LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,
+                             WPARAM wParam, LPARAM lParam)
 {
 	static PAPP pApp;
-	
-	switch (message) 
-	{
+
+	switch (message) {
 	case WM_CREATE:
 		pApp = (PAPP)((LPCREATESTRUCT)lParam)->lpCreateParams;
 		break;
 	case WM_SIZE:
 		RECT 	rc, rcStatus;
 		INT 	xClient, yClient, yStatus;
-		
+
 		GetClientRect(hWnd, &rc);
 		GetWindowRect(pApp->m_hWndStatus, &rcStatus);
-		
+
 		xClient = (rc.right - rc.left);
 		yClient = (rc.bottom - rc.top);
-		
+
 		yStatus = (rcStatus.bottom - rcStatus.top);
 
 		SendMessage(pApp->m_hWndStatus, WM_SIZE, wParam, lParam);
@@ -548,29 +541,28 @@ LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,
 		break;
 	}
 	return (0);
-} 
+}
 
-LRESULT APIENTRY ClientProc(HWND hWnd, UINT message,             
-				WPARAM wParam, LPARAM lParam)
+LRESULT APIENTRY ClientProc(HWND hWnd, UINT message,
+                            WPARAM wParam, LPARAM lParam)
 {
 	static	PAPP		pApp;
-			PAINTSTRUCT	ps;
-			HDC			hDC;
-			INT			cxClient, cyClient;
-			PDRAWOBJECT pObj;
-			HRESULT		hr;
-			RECT		rc;
+	PAINTSTRUCT	ps;
+	HDC			hDC;
+	INT			cxClient, cyClient;
+	PDRAWOBJECT pObj;
+	HRESULT		hr;
+	RECT		rc;
 
-	switch (message) 
-	{
+	switch (message) {
 	case WM_CREATE:
 		pApp = (PAPP)((LPCREATESTRUCT)lParam)->lpCreateParams;
 
 		hDC = GetDC(hWnd);
-		
+
 		SetMapMode(hDC, MM_ANISOTROPIC);
 		SetWindowExtEx(hDC, 1024, 1024, NULL);
-		
+
 		ReleaseDC(hWnd, hDC);
 		break;
 	case WM_SIZE:
@@ -583,8 +575,8 @@ LRESULT APIENTRY ClientProc(HWND hWnd, UINT message,
 		SetRect(&rc, 0, 0, cxClient, cyClient);
 
 		hr = pApp->m_pIUnknown->QueryInterface(
-					IID_IDrawObject, 
-					(PPVOID)&pObj);
+		         IID_IDrawObject,
+		         (PPVOID)&pObj);
 
 		if (FAILED(hr))
 			break;
@@ -606,10 +598,10 @@ LRESULT APIENTRY ClientProc(HWND hWnd, UINT message,
 		break;
 	}
 	return (0);
-} 
+}
 
-BOOL CALLBACK DlgProc(HWND hDlg, UINT msg,             
-				WPARAM wParam, LPARAM lParam)
+BOOL CALLBACK DlgProc(HWND hDlg, UINT msg,
+                      WPARAM wParam, LPARAM lParam)
 {
 	static PAPP pApp;
 	static HWND	hWndColor, hWndTrack;
@@ -617,28 +609,25 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT msg,
 	HRESULT		hr;
 	DWORD		dwClsCtx;
 
-	switch (msg)
-	{
+	switch (msg) {
 	case WM_HSCROLL:
 		PDRAWOBJECT		pObj;
 		INT				nValue;
-				
-		if ((HWND)lParam == hWndTrack)
-		{
+
+		if ((HWND)lParam == hWndTrack) {
 			nValue = SendMessage(hWndTrack, TBM_GETPOS, 0, 0);
 
 			// Redraw dialog color
 			RedrawWindow(hDlg, &rcColor, NULL, RDW_ERASE | RDW_INVALIDATE | RDW_ERASENOW);
 
 			// Set object color and redraw it
-			if (pApp->m_pIUnknown)
-			{
+			if (pApp->m_pIUnknown) {
 				hr = pApp->m_pIUnknown->QueryInterface(IID_IDrawObject,
-						(PPVOID)&pObj);
+				                                       (PPVOID)&pObj);
 
 				if (FAILED(hr))
 					break;
-				
+
 				pObj->SetColor(RGB(nValue, 0, nValue));
 				pObj->Release();
 			}
@@ -663,39 +652,35 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT msg,
 		SendMessage(hWndTrack, TBM_SETRANGE, TRUE, MAKELONG(0, 255));
 		return (TRUE);
 	case WM_COMMAND:
-		switch (LOWORD(wParam))
-		{
+		switch (LOWORD(wParam)) {
 		case IDC_CREATE:
-			if (pApp->m_pIUnknown)
-            {
+			if (pApp->m_pIUnknown) {
 				if (pApp->m_dwConn)
 					pApp->m_pIDataObject->DUnadvise(pApp->m_dwConn);
 
 				while (pApp->m_cRef--)
 					pApp->m_pIUnknown->Release();
-				
+
 				CoFreeUnusedLibraries();
 				pApp->m_pIUnknown = NULL;
 			}
 			pApp->m_cRef = 0;
 
 			dwClsCtx = (pApp->m_bExe) ? CLSCTX_LOCAL_SERVER
-                        : CLSCTX_INPROC_SERVER;
+			           : CLSCTX_INPROC_SERVER;
 
 			// Create an instance of the object
 			hr  = CoCreateInstance(CLSID_DrawObject, NULL,
-						dwClsCtx, IID_IUnknown, (PPVOID)&pApp->m_pIUnknown);
+			                       dwClsCtx, IID_IUnknown, (PPVOID)&pApp->m_pIUnknown);
 
-            if (SUCCEEDED(hr))
-            {
+			if (SUCCEEDED(hr)) {
 				pApp->m_cRef = 1;
 
 				// Attempt to cache an IDataObject pointer
 				hr = pApp->m_pIUnknown->QueryInterface(IID_IDataObject,
-							(PPVOID)&pApp->m_pIDataObject);
+				                                       (PPVOID)&pApp->m_pIDataObject);
 
-				if (FAILED(hr))
-				{
+				if (FAILED(hr)) {
 					pApp->Message(IDS_CREATEFAILED);
 					break;
 				}
@@ -704,42 +689,38 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT msg,
 				SetDefFormatEtc(fe, CF_METAFILEPICT, TYMED_MFPICT);
 
 				// Create an advisory connection
-				pApp->m_pIDataObject->DAdvise(&fe, ADVF_NODATA, 
-						pApp->m_pIAdviseSink, &pApp->m_dwConn);
+				pApp->m_pIDataObject->DAdvise(&fe, ADVF_NODATA,
+				                              pApp->m_pIAdviseSink, &pApp->m_dwConn);
 
 				pApp->Message(IDS_CREATESUCCEED);
-			}
-			else
+			} else
 				pApp->Message(IDS_CREATEFAILED);
 			break;
 		case IDC_DRAW:
 			PDRAWOBJECT pDrawObj;
-									
-			if (!pApp->m_pIUnknown)
-			{
+
+			if (!pApp->m_pIUnknown) {
 				pApp->Message(IDS_NOOBJECT);
 				break;
 			}
 
 			// Do you support IDrawObject?
 			hr = pApp->m_pIUnknown->QueryInterface(IID_IDrawObject,
-					(PPVOID)&pDrawObj);
-			
-			if (FAILED(hr))
-			{
+			                                       (PPVOID)&pDrawObj);
+
+			if (FAILED(hr)) {
 				pApp->Message(IDS_INOSUPPORT);
 				break;
 			}
-			
+
 			hr = pDrawObj->Randomize();
-						
+
 			pDrawObj->Release();
 
 			InvalidateRect(pApp->m_hWndClient, 0, TRUE);
 			break;
 		case IDC_COPY:
-			if (!pApp->m_pIUnknown)
-			{
+			if (!pApp->m_pIUnknown) {
 				pApp->Message(IDS_NOOBJECT);
 				break;
 			}
@@ -750,41 +731,38 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT msg,
 				pApp->Message(IDS_COPYSUCCEED);
 			break;
 		case IDC_LOAD:
-			if (!pApp->m_pIUnknown)
-			{
+			if (!pApp->m_pIUnknown) {
 				pApp->Message(IDS_NOOBJECT);
 				break;
 			}
 
-			if (!pApp->LoadObject(SZFILE))
-			{
+			if (!pApp->LoadObject(SZFILE)) {
 				pApp->Message(IDS_NOLOAD);
 				break;
 			}
-			
+
 			pApp->Message(IDS_LOAD);
 			InvalidateRect(pApp->m_hWndClient, 0, TRUE);
 			break;
 		case IDC_SAVE:
-			if (!pApp->m_pIUnknown)
-			{
+			if (!pApp->m_pIUnknown) {
 				pApp->Message(IDS_NOOBJECT);
 				break;
 			}
-			
+
 			if (!pApp->SaveObject(SZFILE))
 				pApp->Message(IDS_NOSAVE);
 			else
 				pApp->Message(IDS_SAVE);
-							
+
 			break;
 		case IDCANCEL:
 		case IDC_EXIT:
 			PostMessage(pApp->m_hWndFrame, WM_CLOSE, 0, 0);
 			break;
 		}
-		default:
-			break;
+	default:
+		break;
 	case WM_PAINT:
 		HDC			hDCColor;
 		HBRUSH		hBrush, hBrushOld;
@@ -795,18 +773,18 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT msg,
 
 		// get trackbar value
 		iValue = (INT)SendMessage(hWndTrack, TBM_GETPOS, 0, 0);
-		
+
 		hBrush = CreateSolidBrush(RGB(iValue, 0, iValue));
 
 		hDCColor = GetDC(hWndColor);
 
 		hBrushOld = (HBRUSH)SelectObject(hDCColor, hBrush);
 
-		PatBlt(hDCColor, rcColor.left, 
-					rcColor.top, 
-					rcColor.right, 
-					rcColor.bottom, PATCOPY);
-				
+		PatBlt(hDCColor, rcColor.left,
+		       rcColor.top,
+		       rcColor.right,
+		       rcColor.bottom, PATCOPY);
+
 		SelectObject(hDCColor, hBrushOld);
 		DeleteObject(hBrush);
 

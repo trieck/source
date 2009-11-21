@@ -33,8 +33,8 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // TorrentDoc construction/destruction
 
-TorrentDoc::TorrentDoc() 
- : m_pTorrent(NULL)
+TorrentDoc::TorrentDoc()
+		: m_pTorrent(NULL)
 {
 }
 
@@ -57,14 +57,14 @@ void TorrentDoc::Serialize(CArchive& ar)
 {
 	try {
 		if (ar.IsLoading()) {
-			m_pTorrent = TorrentParser::Parse(ar);		
+			m_pTorrent = TorrentParser::Parse(ar);
 		} else {
 			TorrentWriter::Write(m_pTorrent, ar);
 		}
 	} catch (CException *pException) {
 		pException->ReportError();
 		pException->Delete();
-	} 
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -85,16 +85,16 @@ void TorrentDoc::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // TorrentDoc commands
 
-void TorrentDoc::DeleteContents() 
+void TorrentDoc::DeleteContents()
 {
 	if (m_pTorrent != NULL) {
 		delete m_pTorrent;
 		m_pTorrent = NULL;
-	}	
+	}
 	CDocument::DeleteContents();
 }
 
-void TorrentDoc::OnFileNew() 
+void TorrentDoc::OnFileNew()
 {
 	TorrentDlg dlg;
 	if (dlg.DoModal() == IDOK) {
@@ -106,13 +106,13 @@ void TorrentDoc::OnFileNew()
 	}
 }
 
-void TorrentDoc::OnUpdateFileSave(CCmdUI* pCmdUI) 
+void TorrentDoc::OnUpdateFileSave(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(IsModified());
 }
 
-void TorrentDoc::OnUpdateFileSaveAs(CCmdUI* pCmdUI) 
+void TorrentDoc::OnUpdateFileSaveAs(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(IsModified());	
+	pCmdUI->Enable(IsModified());
 }
 

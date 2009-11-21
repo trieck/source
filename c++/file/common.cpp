@@ -7,8 +7,8 @@
 
 // default implementations
 static int NeptuneMain(int argc, TCHAR *argv[]);
-static int NeptuneWinMain(HINSTANCE hInstance, 
- HINSTANCE hPrevInstance, TCHAR *commandLine, int show);
+static int NeptuneWinMain(HINSTANCE hInstance,
+                          HINSTANCE hPrevInstance, TCHAR *commandLine, int show);
 
 /////////////////////////////////////////////////////////////////////////////
 int _tmain(int argc, TCHAR *argv[])
@@ -18,7 +18,7 @@ int _tmain(int argc, TCHAR *argv[])
 
 /////////////////////////////////////////////////////////////////////////////
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-	TCHAR *commandLine, int show)
+                       TCHAR *commandLine, int show)
 {
 	return NeptuneWinMain(hInstance, hPrevInstance, commandLine, show);
 }
@@ -29,8 +29,8 @@ bool loadString(UINT id, tstring & str)
 	if (0 == module)
 		return false;
 
-	HRSRC resource = FindResource(module, 
-		MAKEINTRESOURCE((id >> 4) + 1), RT_STRING);
+	HRSRC resource = FindResource(module,
+	                              MAKEINTRESOURCE((id >> 4) + 1), RT_STRING);
 	if (0 == resource) {
 		ASSERT(0);	// resource not found
 		return false;
@@ -73,8 +73,8 @@ int NeptuneMain(int argc, TCHAR *argv[])
 }
 
 /////////////////////////////////////////////////////////////////////////////
-int NeptuneWinMain(HINSTANCE hInstance, 
- HINSTANCE hPrevInstance, TCHAR *commandLine, int show)
+int NeptuneWinMain(HINSTANCE hInstance,
+                   HINSTANCE hPrevInstance, TCHAR *commandLine, int show)
 {
 	Application *pApp = getApp();
 	ASSERT(pApp != NULL);

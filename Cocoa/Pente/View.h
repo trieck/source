@@ -13,7 +13,8 @@
 
 @class AppController;
 
-@interface View : NSView {
+@interface View :
+NSView {
 	NSBezierPath *grid;				// grid bezier path
 	NSBezierPath *polygon;
 	Board *board;					// board
@@ -23,7 +24,10 @@
 	Vector *winner;
 }
 
-- (void) redrawSquare:(uint32_t)x :(uint32_t)y;
-- (void) setWinner:(Vector*)winner;
+- (void) redrawSquare:
+(uint32_t)x :
+(uint32_t)y;
+- (void) setWinner:
+(Vector*)winner;
 
 @end

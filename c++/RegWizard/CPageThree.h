@@ -7,8 +7,7 @@
 #include "resource.h"
 
 // CPropertyPage derived class
-class CPageThree : public CPropertyPage
-{
+class CPageThree : public CPropertyPage {
 	DECLARE_DYNCREATE(CPageThree);
 
 public:
@@ -23,7 +22,7 @@ protected:
 	afx_msg void OnPaint();
 private:
 	enum {IDD = IDD_PAGETHREE};
-		
+
 	DECLARE_MESSAGE_MAP();
 };
 

@@ -1,120 +1,121 @@
-///////////////////////////////////////////////////////////////////////
-//
-//	MIDIOUT.CPP
-//
-//	Copyright © 1999 Rieck Enterprises
-//
+///////////////////////////////////////////////////////////////////////
+//
+//	MIDIOUT.CPP
+//
+//	Copyright © 1999 Rieck Enterprises
+//
 
-#include "stdafx.h"
-#include "MidiOut.h"
+#include "stdafx.h"
+#include "MidiOut.h"
 
-//
-// Constructor
-//
-MidiOutput :: MidiOutput(LPMIDIOUTCAPS pmidicaps, UINT id)
- : OutputDevice(pmidicaps, id)
-{
-}
+//
+// Constructor
+//
+MidiOutput :: MidiOutput(LPMIDIOUTCAPS pmidicaps, UINT id)
+		: OutputDevice(pmidicaps, id)
+{
+}
 
-//
-// Destructor
-//
-MidiOutput :: ~MidiOutput()
-{
-    Close();
-}
+//
+// Destructor
+//
+MidiOutput :: ~MidiOutput()
+{
+	Close();
+}
 
-//
-// Open
-//
-MMRESULT MidiOutput :: Open()
-{
-    Close();
+//
+// Open
+//
+MMRESULT MidiOutput :: Open()
+{
+	Close();
 
-    return ::midiOutOpen(
-        (HMIDIOUT*)&m_handle, 
-        m_id, 
-        (DWORD)MidiOutput::MidiOutProc,          
-        (DWORD)this,  
-        CALLBACK_FUNCTION);
-}
- 
-//
-// Close
-//
-MMRESULT MidiOutput :: Close()
-{
-    MMRESULT result = MMSYSERR_INVALHANDLE;
+	return ::midiOutOpen(
+	           (HMIDIOUT*)&m_handle,
+	           m_id,
+	           (DWORD)MidiOutput::MidiOutProc,
+	           (DWORD)this,
+	           CALLBACK_FUNCTION);
+}
 
-    if (m_handle != NULL) {
-        result = ::midiOutClose(*this);
-        m_handle = NULL;
-    }
+//
+// Close
+//
+MMRESULT MidiOutput :: Close()
+{
+	MMRESULT result = MMSYSERR_INVALHANDLE;
 
-    return result;
-}
+	if (m_handle != NULL) {
+		result = ::midiOutClose(*this);
+		m_handle = NULL;
+	}
 
-//
-// MidiOutProc
-//
-void CALLBACK MidiOutput :: MidiOutProc(
-    HMIDIOUT hMidiOut, 
-    UINT wMsg, 
-    DWORD dwInstance, 
-    DWORD dwParam1,   
-    DWORD /*dwParam2*/) 
-{
-    OutputDevice * This = (OutputDevice *)dwInstance;
-    ASSERT(This != NULL);
+	return result;
+}
 
-    switch (wMsg) {
-    case MOM_DONE:
-        // Unprepare the midi header
-        ::midiOutUnprepareHeader(hMidiOut, (LPMIDIHDR)dwParam1, sizeof(MIDIHDR));
-        break;
-    default:
-        break;
-    }
-}
+//
+// MidiOutProc
+//
+void CALLBACK MidiOutput :: MidiOutProc(
+    HMIDIOUT hMidiOut,
+    UINT wMsg,
+    DWORD dwInstance,
+    DWORD dwParam1,
+    DWORD /*dwParam2*/)
+{
+	OutputDevice * This = (OutputDevice *)dwInstance;
+	ASSERT(This != NULL);
 
-//
-// ShortMessage
-// 
-MMRESULT MidiOutput :: ShortMessage(const MidiMessage & message)
-{
-    ASSERT(*this != NULL);
+	switch (wMsg) {
+	case MOM_DONE:
+		// Unprepare the midi header
+		::midiOutUnprepareHeader(hMidiOut, (LPMIDIHDR)dwParam1, sizeof(MIDIHDR));
+		break;
+	default:
+		break;
+	}
+}
 
-    return ::midiOutShortMsg(*this, message);
-}
+//
+// ShortMessage
+//
+MMRESULT MidiOutput :: ShortMessage(const MidiMessage & message)
+{
+	ASSERT(*this != NULL);
 
-//
-// LongMessage
-// 
-MMRESULT MidiOutput :: LongMessage(LPSTR pdata, UINT cbSize)
-{
-    // BUGBUG -- not implemented
+	return ::midiOutShortMsg(*this, message);
+}
 
-    return MMSYSERR_NOERROR;
-}
+//
+// LongMessage
+//
+MMRESULT MidiOutput :: LongMessage(LPSTR pdata, UINT cbSize)
+{
+	// BUGBUG -- not implemented
 
-//
-// GetVolume
-//
-MMRESULT MidiOutput :: GetVolume (LPDWORD pVolume)
-{
-    ASSERT(*this != NULL);
-    ASSERT(pVolume != NULL); 
-    
-    return ::midiOutGetVolume(*this, pVolume);
-}
+	return MMSYSERR_NOERROR;
+}
 
-//
-// SetVolume
-//
-MMRESULT MidiOutput :: SetVolume(DWORD volume)
-{
-    ASSERT(*this != NULL);
+//
+// GetVolume
+//
+MMRESULT MidiOutput :: GetVolume (LPDWORD pVolume)
+{
+	ASSERT(*this != NULL);
+	ASSERT(pVolume != NULL);
 
-    return ::midiOutSetVolume(*this, volume);
-}
+	return ::midiOutGetVolume(*this, pVolume);
+}
 
+//
+// SetVolume
+//
+MMRESULT MidiOutput :: SetVolume(DWORD volume)
+{
+	ASSERT(*this != NULL);
+
+	return ::midiOutSetVolume(*this, volume);
+}
+
+

@@ -11,7 +11,7 @@
 #include "adfhandle.h"
 
 HandlerRegistrarPtr HandlerRegistrar::instance(
-	HandlerRegistrar::getInstance());
+    HandlerRegistrar::getInstance());
 
 /////////////////////////////////////////////////////////////////////////////
 HandlerRegistrar::HandlerRegistrar()

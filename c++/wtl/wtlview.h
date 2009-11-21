@@ -9,13 +9,11 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
-class CWtlView : public CWindowImpl<CWtlView, CTreeViewCtrl>
-{
+class CWtlView : public CWindowImpl<CWtlView, CTreeViewCtrl> {
 public:
 	DECLARE_WND_SUPERCLASS(NULL, CTreeViewCtrl::GetWndClassName())
 
-	BOOL PreTranslateMessage(MSG* pMsg)
-	{
+	BOOL PreTranslateMessage(MSG* pMsg) {
 		pMsg;
 		return FALSE;
 	}

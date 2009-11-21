@@ -4,8 +4,7 @@
 
 #pragma once
 
-class MainFrame : public CMDIFrameWnd
-{
+class MainFrame : public CMDIFrameWnd {
 	DECLARE_DYNAMIC(MainFrame)
 public:
 	MainFrame();

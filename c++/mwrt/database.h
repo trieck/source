@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 // DATABASE.H : Encapsulates an ADO database connection
 //
 // Copyright(c) 2008 Thomas A. Rieck, All Rights Reserved
@@ -17,8 +17,7 @@ typedef ADODB::FieldsPtr FieldsPtr;
 typedef ADODB::FieldPtr FieldPtr;
 
 /////////////////////////////////////////////////////////////////////////////
-class Database
-{
+class Database {
 // Construction / Destruction
 public:
 	Database();
@@ -26,7 +25,7 @@ public:
 
 // Interface
 	void open(LPCTSTR uid, LPCTSTR pwd, LPCTSTR connStr) throw();
-	void open(LPCTSTR provider, LPCTSTR path) throw();	
+	void open(LPCTSTR provider, LPCTSTR path) throw();
 	void close() throw();
 	RecPtr execute(LPCTSTR command) throw();
 

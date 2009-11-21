@@ -11,8 +11,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CSettingsDlg
 
-class CSettingsDlg : public CPropertySheet
-{
+class CSettingsDlg : public CPropertySheet {
 	DECLARE_DYNAMIC(CSettingsDlg)
 
 // Construction
@@ -40,7 +39,7 @@ public:
 protected:
 	VOID BuildPages();
 	//{{AFX_MSG(CSettingsDlg)
-		// NOTE - the ClassWizard will add and remove member functions here.
+	// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 
 	CMiscPage * m_pMiscPage;

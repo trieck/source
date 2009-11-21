@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Lexer::Lexer(IPeekableStream *pstream)
- : stream(pstream), pos(0), offset(0)
+		: stream(pstream), pos(0), offset(0)
 {
 	// pointer copied so AddRef
 	stream->AddRef();
@@ -19,7 +19,7 @@ Lexer::Lexer(IPeekableStream *pstream)
 /////////////////////////////////////////////////////////////////////////////
 Lexer::~Lexer()
 {
-	stream->Release();	
+	stream->Release();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -28,10 +28,11 @@ Token Lexer::gettok()
 	Token tok;
 
 	int c;
-	for ( ; (c = getc()) != EOF; offset++) {		
+	for ( ; (c = getc()) != EOF; offset++) {
 		if (isalnum(c)) {
 			if (tok.val.length() == 0) {
-				tok.pos = pos++; tok.offset = offset;
+				tok.pos = pos++;
+				tok.offset = offset;
 			}
 			tok.val += (char)tolower(c);
 		} else if (c == '_' || c == '\'' || c == '-') {

@@ -1,6 +1,6 @@
 /*
  * INVERTER.H
- * 
+ *
  * Inverted list of term locations in memory
  * Copyright (c) 2008 Thomas A. Rieck
  */

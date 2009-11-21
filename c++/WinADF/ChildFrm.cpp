@@ -35,8 +35,7 @@ ChildFrame::~ChildFrame()
 
 BOOL ChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContext)
 {
-	if (!m_wndStatusBar.Create(this))
-	{
+	if (!m_wndStatusBar.Create(this)) {
 		TRACE0("Failed to create status bar\n");
 		return -1;      // fail to create
 	}
@@ -46,8 +45,7 @@ BOOL ChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContex
 		return FALSE;
 
 	if (!m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(LeftView), CSize(100, 100), pContext) ||
-		!m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(WinADFView), CSize(100, 100), pContext))
-	{
+	        !m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(WinADFView), CSize(100, 100), pContext)) {
 		m_wndSplitter.DestroyWindow();
 		return FALSE;
 	}
@@ -57,7 +55,7 @@ BOOL ChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContex
 
 BOOL ChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	if( !CMDIChildWnd::PreCreateWindow(cs) )
+	if ( !CMDIChildWnd::PreCreateWindow(cs) )
 		return FALSE;
 
 	return TRUE;
@@ -93,31 +91,26 @@ void ChildFrame::OnUpdateViewStyles(CCmdUI* pCmdUI)
 	if (!pCmdUI)
 		return;
 
-	WinADFView* pView = GetRightPane(); 
+	WinADFView* pView = GetRightPane();
 
 	// if the right-hand pane hasn't been created or isn't a view, disable commands in our range
 	if (pView == NULL)
 		pCmdUI->Enable(FALSE);
-	else
-	{
+	else {
 		DWORD dwStyle = pView->GetStyle() & LVS_TYPEMASK;
 		// if the command is ID_VIEW_LINEUP, only enable command
 		// when we're in LVS_ICON or LVS_SMALLICON mode
-		if (pCmdUI->m_nID == ID_VIEW_LINEUP)
-		{
+		if (pCmdUI->m_nID == ID_VIEW_LINEUP) {
 			if (dwStyle == LVS_ICON || dwStyle == LVS_SMALLICON)
 				pCmdUI->Enable();
 			else
 				pCmdUI->Enable(FALSE);
-		}
-		else
-		{
+		} else {
 			// otherwise, use dots to reflect the style of the view
 			pCmdUI->Enable();
 			BOOL bChecked = FALSE;
 
-			switch (pCmdUI->m_nID)
-			{
+			switch (pCmdUI->m_nID) {
 			case ID_VIEW_DETAILS:
 				bChecked = (dwStyle == LVS_REPORT);
 				break;
@@ -149,19 +142,16 @@ void ChildFrame::OnViewStyle(UINT nCommandID)
 	WinADFView* pView = GetRightPane();
 
 	// if the right-hand pane has been created and is a WinADFView, process the menu commands...
-	if (pView != NULL)
-	{
+	if (pView != NULL) {
 		int nStyle = -1;
 
-		switch (nCommandID)
-		{
-		case ID_VIEW_LINEUP:
-			{
-				// ask the list control to snap to grid
-				CListCtrl& refListCtrl = pView->GetListCtrl();
-				refListCtrl.Arrange(LVA_SNAPTOGRID);
-			}
-			break;
+		switch (nCommandID) {
+		case ID_VIEW_LINEUP: {
+			// ask the list control to snap to grid
+			CListCtrl& refListCtrl = pView->GetListCtrl();
+			refListCtrl.Arrange(LVA_SNAPTOGRID);
+		}
+		break;
 
 		// other commands change the style on the list control
 		case ID_VIEW_DETAILS:

@@ -17,7 +17,7 @@ int _tmain(int argc, TCHAR *argv[])
 
 	try {
 		server.run();
-	}catch(const Exception &E) {
+	} catch (const Exception &E) {
 		cerr << E.getDescription() << endl;
 		return 1;
 	}

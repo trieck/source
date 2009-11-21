@@ -1,5 +1,5 @@
 /*
- *	CODE.C	
+ *	CODE.C
  *	code generation
  *
  *	Neptune64 Commodore 64 Emulator
@@ -41,16 +41,16 @@ static void idxcode(byte);
 static void idycode(byte);
 static void indcode(byte);
 extern const char **ppin;	/* pointer to current input */
-static word pmem;	
+static word pmem;
 void putmem(int ncount, ...)
 {
 	va_list arglist;
-   	va_start(arglist, ncount);
+	va_start(arglist, ncount);
 	while (ncount--) {
 		byte c = va_arg(arglist, char);
 		store_byte(pmem++, c);
 	}
-   
+
 	va_end (arglist);
 }
 /*
@@ -59,7 +59,7 @@ void putmem(int ncount, ...)
 word code(word start, addrmode mode, byte opcode)
 {
 	pmem = start;
-	switch(mode) {
+	switch (mode) {
 	case acc:
 		acccode(opcode);
 		break;
@@ -109,7 +109,7 @@ void acccode(byte opcode)
 {
 	putmem(1, opcode);
 }
-/* 
+/*
  * immediate addressing mode
  */
 void immcode(byte opcode)
@@ -121,7 +121,7 @@ void immcode(byte opcode)
 	sscanf(token.value, "%hx", &operand);
 	putmem(2, opcode, operand);
 }
-/* 
+/*
  * zero page addressing mode
  */
 void zpgcode(byte opcode)
@@ -145,7 +145,7 @@ void zpxcode(byte opcode)
 	token = gettok(ppin);	/* 'x' */
 	putmem(2, opcode, operand);
 }
-/* 
+/*
  * zero page, y addressing mode
  */
 void zpycode(byte opcode)
@@ -167,7 +167,7 @@ void abscode(byte opcode)
 	Token token;
 	token = gettok(ppin);
 	sscanf(token.value, "%hx", &operand);
-	
+
 	putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 /*
@@ -184,7 +184,7 @@ void abxcode(byte opcode)
 	putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 /*
- * absolute, y addressing mode 
+ * absolute, y addressing mode
  */
 void abycode(byte opcode)
 {
@@ -209,15 +209,15 @@ void indcode(byte opcode)
 	token = gettok(ppin);	/* ')' */
 	putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
-/* 
+/*
  * implied addressing mode
  */
 void impcode(byte opcode)
 {
 	putmem(1, opcode);
 }
-/* 
- * relative addressing mode 
+/*
+ * relative addressing mode
  */
 void relcode(byte opcode)
 {
@@ -225,7 +225,7 @@ void relcode(byte opcode)
 	Token token;
 	token = gettok(ppin);
 	sscanf(token.value, "%hx", &operand);
-		
+
 	putmem(2, opcode, operand - (pmem + 2));
 }
 /*
@@ -235,9 +235,9 @@ void idxcode(byte opcode)
 {
 	word operand;
 	Token token;
-	
+
 	token = gettok(ppin);	/* '(' */
-	
+
 	token = gettok(ppin);
 	sscanf(token.value, "%hx", &operand);
 	token = gettok(ppin);	/* ',' */
@@ -252,14 +252,14 @@ void idycode(byte opcode)
 {
 	word operand;
 	Token token;
-	
+
 	token = gettok(ppin);	/* '(' */
-	
+
 	token = gettok(ppin);
 	sscanf(token.value, "%hx", &operand);
 	token = gettok(ppin);	/* ')' */
 	token = gettok(ppin);	/* ',' */
 	token = gettok(ppin);	/* 'y' */
-	
+
 	putmem(2, opcode, operand);
 }

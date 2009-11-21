@@ -43,7 +43,7 @@ LPBEOBJECT Integer::Copy() const
 
 /////////////////////////////////////////////////////////////////////////////
 // Global helper functions
-LPINTEGER MakeInteger(INT64 val) 
+LPINTEGER MakeInteger(INT64 val)
 {
 	return new Integer(val);
 }

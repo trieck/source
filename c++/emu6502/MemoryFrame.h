@@ -3,8 +3,7 @@
 
 // MemoryFrame frame
 
-class MemoryFrame : public CMiniFrameWnd
-{
+class MemoryFrame : public CMiniFrameWnd {
 	DECLARE_DYNCREATE(MemoryFrame)
 protected:
 	MemoryFrame();           // protected constructor used by dynamic creation

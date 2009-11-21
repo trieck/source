@@ -12,8 +12,8 @@
 
 /////////////////////////////////////////////////////////////////////////////
 ODBMgrData::ODBMgrData(LPUNKNOWN pUnknown)
- : m_cRef(0), m_pUnknown(pUnknown), m_pConsoleNameSpace(NULL), 
- m_pConsole(NULL)
+		: m_cRef(0), m_pUnknown(pUnknown), m_pConsoleNameSpace(NULL),
+		m_pConsole(NULL)
 {
 }
 
@@ -27,15 +27,15 @@ STDMETHODIMP ODBMgrData::QueryInterface(REFIID riid, LPVOID *ppv)
 {
 	*ppv = NULL;
 
-    if (riid == IID_IUnknown || riid == IID_IComponentData)
-        *ppv = this;
-    
-    if (*ppv) {
-        ((LPUNKNOWN)*ppv)->AddRef();
-        return S_OK;
-    }
+	if (riid == IID_IUnknown || riid == IID_IComponentData)
+		*ppv = this;
 
-    return E_NOINTERFACE;
+	if (*ppv) {
+		((LPUNKNOWN)*ppv)->AddRef();
+		return S_OK;
+	}
+
+	return E_NOINTERFACE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -59,12 +59,12 @@ STDMETHODIMP ODBMgrData::Initialize(LPUNKNOWN pUnknown)
 		return E_POINTER;
 
 	HRESULT hr = pUnknown->QueryInterface(IID_IConsoleNameSpace,
-		(LPVOID*)&m_pConsoleNameSpace);
+	                                      (LPVOID*)&m_pConsoleNameSpace);
 	if (FAILED(hr))
 		return hr;
 
-	hr = pUnknown->QueryInterface(IID_IConsole, 
-		(LPVOID*)&m_pConsole);
+	hr = pUnknown->QueryInterface(IID_IConsole,
+	                              (LPVOID*)&m_pConsole);
 	if (FAILED(hr))
 		return hr;
 
@@ -82,8 +82,8 @@ STDMETHODIMP ODBMgrData::CreateComponent(LPCOMPONENT *ppComponent)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-STDMETHODIMP ODBMgrData::Notify(LPDATAOBJECT lpDataObject, 
- MMC_NOTIFY_TYPE event, LPARAM arg, LPARAM param)
+STDMETHODIMP ODBMgrData::Notify(LPDATAOBJECT lpDataObject,
+                                MMC_NOTIFY_TYPE event, LPARAM arg, LPARAM param)
 {
 	return E_NOTIMPL;
 }
@@ -105,8 +105,8 @@ STDMETHODIMP ODBMgrData::Destroy(void)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-STDMETHODIMP ODBMgrData::QueryDataObject(MMC_COOKIE cookie, 
- DATA_OBJECT_TYPES type, LPDATAOBJECT *ppDataObject)
+STDMETHODIMP ODBMgrData::QueryDataObject(MMC_COOKIE cookie,
+        DATA_OBJECT_TYPES type, LPDATAOBJECT *ppDataObject)
 {
 	switch (type) {
 	case CCT_SCOPE:
@@ -130,8 +130,8 @@ STDMETHODIMP ODBMgrData::GetDisplayInfo(SCOPEDATAITEM *pScopeDataItem)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-STDMETHODIMP ODBMgrData::CompareObjects(LPDATAOBJECT lpDataObjectA, 
- LPDATAOBJECT lpDataObjectB)
+STDMETHODIMP ODBMgrData::CompareObjects(LPDATAOBJECT lpDataObjectA,
+                                        LPDATAOBJECT lpDataObjectB)
 {
 	return E_NOTIMPL;
 }

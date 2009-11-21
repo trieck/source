@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 //	BSTRSTREAM.H : BSTR peekable stream
 //
 //	Copyright (c) 2006 Thomas A. Rieck, All Rights Reserved
@@ -9,8 +9,7 @@
 #define __BSTRSTREAM_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class BstrStream : public IPeekableStream
-{
+class BstrStream : public IPeekableStream {
 // Construction / Destruction
 private:
 	BstrStream();
@@ -19,22 +18,24 @@ public:
 
 // Interface
 	virtual STDMETHODIMP QueryInterface(REFIID riid,
-        void **ppvObject);
-            
+	                                    void **ppvObject);
+
 	virtual ULONG STDMETHODCALLTYPE AddRef(void);
-            
+
 	virtual ULONG STDMETHODCALLTYPE Release(void);
-    	
+
 	virtual STDMETHODIMP Read(void *pv, ULONG cb,
-        ULONG *pcbRead);
-        
+	                          ULONG *pcbRead);
+
 	virtual STDMETHODIMP Write(const void *pv, ULONG cb,
-        ULONG *pcbWritten);
+	                           ULONG *pcbWritten);
 
 	virtual STDMETHODIMP Peek(void *pv, ULONG cb,
-		ULONG *pcbRead);
+	                          ULONG *pcbRead);
 
-	void Reset() { m_Pos = 0; }
+	void Reset() {
+		m_Pos = 0;
+	}
 
 	static BstrStream *newInstance();
 	HRESULT Write(LPCSTR pstr);
@@ -47,7 +48,9 @@ private:
 	void alloc();
 	bool resize(ULONG cb);
 	void free();
-	ULONG avail() const { return m_Size - m_Pos; }
+	ULONG avail() const {
+		return m_Size - m_Pos;
+	}
 
 	LPBYTE m_Buf;	// Buffer
 	LONG m_cRef;	// Reference count

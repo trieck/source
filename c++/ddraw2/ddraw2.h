@@ -9,7 +9,7 @@
 #endif // _MSC_VER > 1000
 
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+#error include 'stdafx.h' before including this file for PCH
 #endif
 
 #include "resource.h"       // main symbols
@@ -19,20 +19,21 @@
 // See ddraw2.cpp for the implementation of this class
 //
 
-class DDrawApp : public CWinApp
-{
+class DDrawApp : public CWinApp {
 public:
 	DDrawApp();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(DDrawApp)
-	public:
+public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
 	//}}AFX_VIRTUAL
 
-	LPDIRECTDRAW GetDirectDraw() const { return pddraw; }
+	LPDIRECTDRAW GetDirectDraw() const {
+		return pddraw;
+	}
 
 // Implementation
 	//{{AFX_MSG(DDrawApp)

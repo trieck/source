@@ -4,7 +4,7 @@
 //////////////////
 
 #include <windows.h>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <string.h>
 #include "resource.h"
 #include <sql.h>		// ODBC Core Functions
@@ -17,43 +17,43 @@ typedef VOID (*MYPROC)(void);	// Typedef for Open, Close Engine
 ///////////////////////
 // WinMain prototype //
 ///////////////////////
-                           
+
 int PASCAL WinMain (HANDLE hInstance, HANDLE hPrevInstance,
                     LPSTR lpCmdLine,  int nCmdShow);
 //////////////////////////
 // WindowProc prototype //
 //////////////////////////
-                    
+
 long pascal WindowProc(HWND hWnd, UINT message,
-					  	WPARAM wParam, LPARAM lParam); 
-					  	
+                       WPARAM wParam, LPARAM lParam);
+
 ////////////////////////
 // AboutBox prototype //
 ////////////////////////
 
 BOOL About (HWND hDlg,   unsigned message,
-                       WORD wParam, LONG lParam);						
+            WORD wParam, LONG lParam);
 ////////////////////////////
 // ViewProc Prototype	  //
 ////////////////////////////
 
 BOOL ViewProc (HWND hDlg, unsigned message,
-						WORD wParam, LONG lParam);
+               WORD wParam, LONG lParam);
 
-///////////////////////////////////						  	                      
-// DisplayCategoryInfo Prototype //                      
+///////////////////////////////////
+// DisplayCategoryInfo Prototype //
 ///////////////////////////////////
 
 void DisplayCategoryInfo();
 
-///////////////////////////////////						  	                      
-// DisplayCustomerInfo prototype //                      
+///////////////////////////////////
+// DisplayCustomerInfo prototype //
 ///////////////////////////////////
 
 void DisplayCustomerInfo();
 
-///////////////////////////////////						  	                      
-// DisplayEmployeeInfo prototype //                      
+///////////////////////////////////
+// DisplayEmployeeInfo prototype //
 ///////////////////////////////////
 
 void DisplayEmployeeInfo();
@@ -93,7 +93,7 @@ void DisplaySupplierInfo();
 ///////////////////////////
 
 void GetErrorMsg (LPSTR Cause);
-                      
+
 ////////////////////////////
 // UncheckMenus Prototype //
 ////////////////////////////

@@ -837,7 +837,7 @@
         PUSH16(REG_IP + 2);                 \
         REG_IP = ad;                        \
     } while (0)                             \
-
+ 
 #define DO_CALL_M16()                       \
     do {                                    \
         byte r = LONYBBLE(FETCH(REG_IP+1)); \
@@ -845,7 +845,7 @@
         PUSH16(REG_IP + 2);                 \
         REG_IP = ad;                        \
     } while (0)                             \
-
+ 
 #define DO_CALL_A16()                       \
     do {                                    \
         word ad = FETCH_WORD(REG_IP + 1);   \
@@ -853,14 +853,14 @@
         PUSH16(REG_IP + 2);                 \
         REG_IP = m;                         \
     } while (0)                             \
-
+ 
 #define DO_CALL_I16()                       \
     do {                                    \
         word I16 = FETCH_WORD(REG_IP+1);    \
         PUSH16(REG_IP + 3);                 \
         REG_IP = I16;                       \
     } while (0)                             \
-
+ 
 #define DO_CLC()                            \
     do {                                    \
         SET_CARRY(0);                       \
@@ -1069,7 +1069,7 @@
         SET_NZ16(dw);                       \
         REG_IP += 4;                        \
     } while (0)
-    
+
 #define DO_CMP_RI16()                           \
     do {                                        \
         byte r = LOREG16(FETCH(REG_IP + 1));    \
@@ -1732,13 +1732,13 @@
         REG_B = POP16();                        \
         REG_A = POP16();                        \
         REG_IP++;                               \
-    } while (0)             
+    } while (0)
 
 #define DO_POPF()                               \
     do {                                        \
         REG_FL = POP16();                       \
         REG_IP++;                               \
-    } while (0)             
+    } while (0)
 
 #define DO_PUSH_R8()                            \
     do {                                        \
@@ -2550,7 +2550,7 @@
         R16VAL(r) ^= I16;                   \
         SET_NZ16(R16VAL(r));                \
         REG_IP += 4;                        \
-    } while (0)                         
+    } while (0)
 
 /////////////////////////////////////////////////////////////////////////////
 CPUPtr CPU::instance(CPU::getInstance());
@@ -2658,13 +2658,13 @@ void CPU::run()
 	for (;;) {
 
 		pending_interrupt = g_interrupt.getPending();
-        if (pending_interrupt != IK_NONE) {
+		if (pending_interrupt != IK_NONE) {
 			DO_INTERRUPT();
 		}
 
 		b = FETCH(REG_IP);
 		switch (b) {
-		#include "FetchEx.cpp"
+#include "FetchEx.cpp"
 		};
 	}
 }

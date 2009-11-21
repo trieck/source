@@ -18,7 +18,9 @@ public:
 	virtual ~Exception() {}
 
 // Interface
-	string GetDescription() const { return desc; }
+	string GetDescription() const {
+		return desc;
+	}
 
 // Implementation
 private:

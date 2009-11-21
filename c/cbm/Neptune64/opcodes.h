@@ -27,7 +27,7 @@
 #define __OPCODES_H__
 #define INSTRUCTIONS 256
 typedef void (*pinstr)(void);
-/* 
+/*
  * instruction structure
  */
 typedef struct {

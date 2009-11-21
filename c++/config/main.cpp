@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
 	try {
 		Configuration c = Configuration("d:\\temp\\win.ini");
-		
+
 		string v = c.GetValue("Settings", "Left Delims");
 		cout << "\"" << v << "\"" << endl;
 

@@ -1,6 +1,6 @@
 /*---------------------------------------
 	Module Name	:	PenteView.h
-	Author		:	Thomas A. Rieck 
+	Author		:	Thomas A. Rieck
 	Purpose		:	Pente View
 					declarations
 	Date		:	08/21/1997
@@ -18,8 +18,7 @@
 
 // forward declarations
 
-class CPenteView : public CView
-{
+class CPenteView : public CView {
 protected:
 	CPenteView();
 	DECLARE_DYNCREATE(CPenteView)
@@ -28,10 +27,12 @@ protected:
 public:
 	CPenteDoc* GetDocument();
 
-	inline	INT		GetBackgroundRes(){return m_nBackground;}
+	inline	INT		GetBackgroundRes() {
+		return m_nBackground;
+	}
 	VOID			SetBackgroundBitmap(INT);
 protected:
-	VOID 			DrawGrid(CPenteDoc*, CDC*);   
+	VOID 			DrawGrid(CPenteDoc*, CDC*);
 // Overrides
 public:
 	virtual void OnPrepareDC(CDC* pDC, CPrintInfo* pInfo = NULL);
@@ -55,13 +56,13 @@ protected:
 	afx_msg BOOL	OnQueryNewPalette();
 	afx_msg VOID	OnPaletteChanged(CWnd* pFocusWnd);
 	DECLARE_MESSAGE_MAP()
-};       
+};
 
 inline CPenteDoc* CPenteView::GetDocument()
-{ 
-   return (CPenteDoc*)m_pDocument; 
+{
+	return (CPenteDoc*)m_pDocument;
 }
 
 ///////////////////////////////////////////////////////////////////
-  
+
 #endif	// __PENTEVIEW_H__

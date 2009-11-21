@@ -12,8 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // ColorsPage dialog
 
-class ColorsPage : public CPropertyPage
-{
+class ColorsPage : public CPropertyPage {
 	DECLARE_DYNCREATE(ColorsPage)
 
 // Construction
@@ -35,10 +34,10 @@ public:
 // Overrides
 	// ClassWizard generate virtual function overrides
 	//{{AFX_VIRTUAL(ColorsPage)
-	public:
+public:
 	virtual void OnOK();
 	virtual BOOL OnApply();
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 

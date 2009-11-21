@@ -7,16 +7,15 @@
 // CDigitCtrlMgr
 
 CDigitCtrlMgr :: CDigitCtrlMgr(CDialog* pParent, const UINT CtrlIDs[], const RECT rcs[], UINT nCount)
-				: m_pParent(pParent), m_nCount(nCount)
-{	
+		: m_pParent(pParent), m_nCount(nCount)
+{
 	ASSERT_VALID(m_pParent);
 
 	m_pArray = new CObArray();
 	ASSERT_VALID(m_pArray);
 
 	// Allocate and create controls
-	for (UINT i = 0; i < m_nCount; i ++)
-	{
+	for (UINT i = 0; i < m_nCount; i ++) {
 		CDigitCtrl* pCtrl= new CDigitCtrl();
 		ASSERT_VALID(pCtrl);
 
@@ -33,17 +32,15 @@ CDigitCtrlMgr :: ~CDigitCtrlMgr()
 {
 	CDigitCtrl* pCtrl;
 
-	if (m_pArray)	
-	{
-		while ((pCtrl = (CDigitCtrl*)m_pArray->GetAt(0)))
-		{
+	if (m_pArray) {
+		while ((pCtrl = (CDigitCtrl*)m_pArray->GetAt(0))) {
 			m_pArray->RemoveAt(0);
 			delete pCtrl;
 
 			if (m_pArray->GetUpperBound() < 0)
 				break;
 		}
-		
+
 		delete m_pArray;
 	}
 }
@@ -62,10 +59,10 @@ BOOL CDigitCtrlMgr :: Advance(UINT nCtrl)
 	CDigitCtrl* pCtrl = (CDigitCtrl*)m_pArray->GetAt(nCtrl);
 	ASSERT_VALID(pCtrl);
 
-	if (pCtrl->GetCurrentDigit() == 9 
-		&& nCtrl < m_nCount - 1)
+	if (pCtrl->GetCurrentDigit() == 9
+	        && nCtrl < m_nCount - 1)
 		Advance(nCtrl + 1);
-	
+
 	pCtrl->SetNextDigit();
 	pCtrl->Invalidate();
 
@@ -79,11 +76,9 @@ BOOL CDigitCtrlMgr :: SetValue(CString& strValue)
 	if (strValue.GetLength() != (INT)m_nCount)
 		return FALSE;
 
-	for (UINT i = 0; i < m_nCount; i++)
-	{
+	for (UINT i = 0; i < m_nCount; i++) {
 		CString strTemp = strValue.Mid(i, 1);
-		if (strTemp != _T(""))
-		{
+		if (strTemp != _T("")) {
 			int nValue = atoi(strTemp);
 
 			pCtrl = (CDigitCtrl*)m_pArray->GetAt(m_nCount - (i+1));
@@ -91,8 +86,7 @@ BOOL CDigitCtrlMgr :: SetValue(CString& strValue)
 
 			pCtrl->SetValue(nValue);
 			pCtrl->Invalidate();
-		}
-		else
+		} else
 			return FALSE;
 	}
 

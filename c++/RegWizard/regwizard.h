@@ -11,8 +11,7 @@
 #include "cpagethree.h"
 
 // CWinApp derived class
-class CRegWizApp : public CWinApp
-{
+class CRegWizApp : public CWinApp {
 public:
 	virtual BOOL InitInstance();
 	CRegWizApp(LPCTSTR lpszAppName = NULL);

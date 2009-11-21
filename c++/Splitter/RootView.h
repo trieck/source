@@ -13,16 +13,15 @@
 
 ///////////////////////////////////////////////////////////////////
 // The CRootView view class
-class CRootView : public CListView
-{
+class CRootView : public CListView {
 protected:
 	CRootView();
 	DECLARE_DYNCREATE(CRootView)
 
 // Attributes
 public:
-   CSplitterDoc* GetDocument();
-   
+	CSplitterDoc* GetDocument();
+
 // Overrides
 public:
 	virtual void OnInitialUpdate();
@@ -40,13 +39,13 @@ protected:
 	static LPCTSTR szHeaders[1];
 
 	DECLARE_MESSAGE_MAP()
-};       
+};
 
 inline CSplitterDoc* CRootView::GetDocument()
-{ 
-   return (CSplitterDoc*)m_pDocument; 
+{
+	return (CSplitterDoc*)m_pDocument;
 }
 
 ///////////////////////////////////////////////////////////////////
-  
+
 #endif	// __ROOTVIEW_H__

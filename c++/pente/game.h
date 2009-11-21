@@ -12,8 +12,7 @@
 typedef std::vector<CPoint> PointVec;
 
 /////////////////////////////////////////////////////////////////////////////
-class PenteGame : public CObject
-{
+class PenteGame : public CObject {
 public:
 	DECLARE_SERIAL(PenteGame);
 
@@ -35,7 +34,7 @@ public:
 	static WORD getFileMagicNumber();
 	const Vector *winner(uint32_t &nplayer) const;
 
-// Implementation	
+// Implementation
 private:
 	void getCaptures(const CPoint &pt, CaptureVec &captures);
 	void changeTurns();
@@ -50,27 +49,32 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline WORD PenteGame::getFileMagicNumber() {
+inline WORD PenteGame::getFileMagicNumber()
+{
 	return magicNumber;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline PenteBoard * PenteGame::getBoard() {
+inline PenteBoard * PenteGame::getBoard()
+{
 	return &board;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline const Player *PenteGame::getPlayerOne() const {
+inline const Player *PenteGame::getPlayerOne() const
+{
 	return playerOne.get();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline const Player *PenteGame::getPlayerTwo() const {
+inline const Player *PenteGame::getPlayerTwo() const
+{
 	return playerTwo.get();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline uint32_t PenteGame::getTurn() const {
+inline uint32_t PenteGame::getTurn() const
+{
 	return currentTurn;
 }
 

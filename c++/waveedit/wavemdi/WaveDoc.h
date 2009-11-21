@@ -18,10 +18,9 @@
 // Forward declarations
 class CPlayDlg;
 
-class CWaveDoc : public CDocument
-{
+class CWaveDoc : public CDocument {
 	friend CPlayDlg;
-protected: 
+protected:
 	VOID Initialize();
 	virtual void DeleteContents();
 	BOOL GetCurrentPosition(LPDWORD, LPDWORD);
@@ -39,8 +38,12 @@ public:
 	virtual ~CWaveDoc();
 
 	VOID	SetBuffer(LPDIRECTSOUNDBUFFER);
-	inline	VOID	SetRate(DWORD dwBytesPerSec){ m_dwBytesPerSec = dwBytesPerSec; }
-	inline	DWORD	GetRate() { return m_dwBytesPerSec; }
+	inline	VOID	SetRate(DWORD dwBytesPerSec) {
+		m_dwBytesPerSec = dwBytesPerSec;
+	}
+	inline	DWORD	GetRate() {
+		return m_dwBytesPerSec;
+	}
 	// Overrides
 	virtual BOOL OnNewDocument();
 private:

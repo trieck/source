@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 ODBMgrComponent::ODBMgrComponent(LPUNKNOWN pUnknown)
- : m_cRef(0), m_pUnknown(pUnknown)
+		: m_cRef(0), m_pUnknown(pUnknown)
 {
 }
 
@@ -24,15 +24,15 @@ STDMETHODIMP ODBMgrComponent::QueryInterface(REFIID riid, LPVOID *ppv)
 {
 	*ppv = NULL;
 
-    if (riid == IID_IUnknown || riid == IID_IComponent)
-        *ppv = this;
-    
-    if (*ppv) {
-        ((LPUNKNOWN)*ppv)->AddRef();
-        return S_OK;
-    }
+	if (riid == IID_IUnknown || riid == IID_IComponent)
+		*ppv = this;
 
-    return E_NOINTERFACE;
+	if (*ppv) {
+		((LPUNKNOWN)*ppv)->AddRef();
+		return S_OK;
+	}
+
+	return E_NOINTERFACE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -56,8 +56,8 @@ STDMETHODIMP ODBMgrComponent::Initialize(LPCONSOLE lpConsole)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-STDMETHODIMP ODBMgrComponent::Notify(LPDATAOBJECT lpDataObject, 
-	MMC_NOTIFY_TYPE event, LPARAM arg, LPARAM param)
+STDMETHODIMP ODBMgrComponent::Notify(LPDATAOBJECT lpDataObject,
+                                     MMC_NOTIFY_TYPE event, LPARAM arg, LPARAM param)
 {
 	return E_NOTIMPL;
 }
@@ -69,15 +69,15 @@ STDMETHODIMP ODBMgrComponent::Destroy(MMC_COOKIE cookie)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-STDMETHODIMP ODBMgrComponent::QueryDataObject(MMC_COOKIE cookie, 
-	DATA_OBJECT_TYPES type, LPDATAOBJECT *ppDataObject)
+STDMETHODIMP ODBMgrComponent::QueryDataObject(MMC_COOKIE cookie,
+        DATA_OBJECT_TYPES type, LPDATAOBJECT *ppDataObject)
 {
 	return E_NOTIMPL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-STDMETHODIMP ODBMgrComponent::GetResultViewType(MMC_COOKIE cookie, 
-	LPOLESTR *ppViewType, long *pViewOptions)
+STDMETHODIMP ODBMgrComponent::GetResultViewType(MMC_COOKIE cookie,
+        LPOLESTR *ppViewType, long *pViewOptions)
 {
 	return E_NOTIMPL;
 }
@@ -90,7 +90,7 @@ STDMETHODIMP ODBMgrComponent::GetDisplayInfo(RESULTDATAITEM *pResultDataItem)
 
 /////////////////////////////////////////////////////////////////////////////
 STDMETHODIMP ODBMgrComponent::CompareObjects(LPDATAOBJECT lpDataObjectA,
-	LPDATAOBJECT lpDataObjectB)
+        LPDATAOBJECT lpDataObjectB)
 {
 	return E_NOTIMPL;
 }

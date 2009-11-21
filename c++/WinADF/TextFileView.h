@@ -4,8 +4,7 @@
 
 // TextFileView view
 
-class TextFileView : public TextView
-{
+class TextFileView : public TextView {
 	DECLARE_DYNCREATE(TextFileView)
 
 protected:
@@ -33,8 +32,9 @@ protected:
 };
 
 #ifndef _DEBUG  //debug version in WinADFView.cpp
-inline WinADFDoc* TextFileView::GetDocument() const { 
-	return reinterpret_cast<WinADFDoc*>(m_pDocument); 
+inline WinADFDoc* TextFileView::GetDocument() const
+{
+	return reinterpret_cast<WinADFDoc*>(m_pDocument);
 }
 #endif
 

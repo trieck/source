@@ -1,7 +1,7 @@
 /*
  * 	SYMBOL.C
  *
- * 	Instruction Symbol Table 
+ * 	Instruction Symbol Table
  *
  *	Neptune64 Commodore 64 Emulator
  * 	Copyright (C) 2001 Thomas A. Rieck <trieck@bellsouth.net>
@@ -27,7 +27,7 @@
 #define TBLSIZE 1103
 static void freesymbol(PSYMBOL);
 static unsigned hash (const char *key);
-/* 
+/*
  * allocate symbol table
  */
 SymbolTable symalloc()
@@ -37,7 +37,7 @@ SymbolTable symalloc()
 	memset(table, 0, sizeof(PSYMBOL) * TBLSIZE);
 	return table;
 }
-/* 
+/*
  * initialize symbol table
  */
 void syminit(SymbolTable table)
@@ -100,7 +100,7 @@ void syminit(SymbolTable table)
 	opinsert(table, "txs", &txs);
 	opinsert(table, "tya", &tya);
 }
-/* 
+/*
  * free symbol table
  */
 void symfree(SymbolTable table)
@@ -113,27 +113,27 @@ void symfree(SymbolTable table)
 	}
 	free(table);
 }
-/* 
- * insert opcode 
+/*
+ * insert opcode
  */
 PSYMBOL opinsert(SymbolTable table, const char *name, const instr *instr)
 {
 	PSYMBOL ps;
 	unsigned int index;
-	
+
 	ps = (Symbol *)malloc(sizeof(Symbol));
 	index = hash(name);
-	
+
 	ps->name = strcopy(name);
 	ps->instr = instr;
-	
+
 	ps->next = table[index];
 	table[index] = ps;
-		
+
 	return ps;
 }
-/* 
- * lookup entry in symbol table 
+/*
+ * lookup entry in symbol table
  */
 PSYMBOL lookup(SymbolTable table, const char *name)
 {
@@ -169,6 +169,6 @@ unsigned int hash (const char * p)
 		n = (n << 1) ^ toupper(*p++);
 	}
 	n %= TBLSIZE;
-	
+
 	return n;
 }

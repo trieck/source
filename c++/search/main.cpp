@@ -8,17 +8,17 @@ void displayResults(LPCSTR idxname, const DocVector &v)
 {
 	char filename[MAX_PATH];
 	sprintf(filename, "%s%s.txt",
-		dirname(idxname).c_str(),
-		basename(idxname).c_str());
+	        dirname(idxname).c_str(),
+	        basename(idxname).c_str());
 
 	RandomFileStreamPtr stream;
-	stream.Attach(RandomFileStream::Create(filename, 
-		GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, 
-		FILE_ATTRIBUTE_READONLY));
+	stream.Attach(RandomFileStream::Create(filename,
+	                                       GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
+	                                       FILE_ATTRIBUTE_READONLY));
 	if (stream == NULL)
 		throw Exception(lasterror());	// can't open
 
-	UINT word_pos, i; 
+	UINT word_pos, i;
 	ULONG read;
 	UINT64 loc;
 	HRESULT hr;
@@ -42,8 +42,8 @@ void displayResults(LPCSTR idxname, const DocVector &v)
 			throw Exception(lasterror());	// can't open
 
 		buf[read] = '\0';
-		cout << "(" << i << ")  " << trim(buf) << "..." << endl 
-			<< x << endl;
+		cout << "(" << i << ")  " << trim(buf) << "..." << endl
+		     << x << endl;
 	}
 }
 
@@ -63,9 +63,9 @@ int main(int argc, char *argv[])
 	DocVector v;
 
 	try {
-		Search search(argv[1]);				 
+		Search search(argv[1]);
 		v = search.search(argv[2]);
-		displayResults(argv[1], v);		
+		displayResults(argv[1], v);
 	} catch (RCEXCEPTION e) {
 		cerr << e.getDescription() << endl;
 		return 1;

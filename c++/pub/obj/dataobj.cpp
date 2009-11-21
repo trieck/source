@@ -39,8 +39,7 @@ STDMETHODIMP CImpIDataObject :: DAdvise (LPFORMATETC pFE, DWORD grfAdv, LPADVISE
 {
 	HRESULT hr;
 
-	if (!m_pObj->m_pIDataAdviseHolder)
-	{
+	if (!m_pObj->m_pIDataAdviseHolder) {
 		hr = CreateDataAdviseHolder(&m_pObj->m_pIDataAdviseHolder);
 
 		if (FAILED(hr))
@@ -48,7 +47,7 @@ STDMETHODIMP CImpIDataObject :: DAdvise (LPFORMATETC pFE, DWORD grfAdv, LPADVISE
 	}
 
 	hr = m_pObj->m_pIDataAdviseHolder->Advise((LPDATAOBJECT)this, pFE,
-			grfAdv, pAdvSink, pdwConnection);
+	        grfAdv, pAdvSink, pdwConnection);
 
 	return hr;
 }
@@ -96,11 +95,11 @@ STDMETHODIMP CImpIDataObject :: GetData(LPFORMATETC pFEIn, LPSTGMEDIUM pSTM)
 
 	if (cf != CF_METAFILEPICT)
 		return ResultFromScode(DATA_E_FORMATETC);
-	
+
 	pSTM->tymed				= TYMED_MFPICT;
 	pSTM->hGlobal			= m_pObj->m_pSTM->hGlobal;
 	pSTM->pUnkForRelease	= NULL;
-	
+
 	return NOERROR;
 }
 
@@ -117,8 +116,7 @@ STDMETHODIMP CImpIDataObject :: QueryGetData(LPFORMATETC pFE)
 	if (!(DVASPECT_CONTENT & pFE->dwAspect))
 		return ResultFromScode(DATA_E_FORMATETC);
 
-	switch (cf)
-	{
+	switch (cf) {
 	case CF_METAFILEPICT:
 		fRet = (BOOL)(pFE->tymed & TYMED_MFPICT);
 		break;
@@ -131,12 +129,12 @@ STDMETHODIMP CImpIDataObject :: QueryGetData(LPFORMATETC pFE)
 }
 
 STDMETHODIMP CImpIDataObject :: SetData(LPFORMATETC pFE, LPSTGMEDIUM pSTM, BOOL fRelease)
-{	
+{
 	UINT cf = pFE->cfFormat;
 
 	// We have to remain responsible for the data.
-    if (!fRelease)
-        return ResultFromScode(E_FAIL);
+	if (!fRelease)
+		return ResultFromScode(E_FAIL);
 
 	if (!(DVASPECT_CONTENT & pFE->dwAspect))
 		return ResultFromScode(DATA_E_FORMATETC);

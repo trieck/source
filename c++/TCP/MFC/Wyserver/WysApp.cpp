@@ -21,8 +21,7 @@ BOOL CWysApp :: InitInstance()
 	AfxSocketInit(&wsa);
 
 	// create sockets
-	for (INT i = 0; i < MAXCONN; i++)
-	{
+	for (INT i = 0; i < MAXCONN; i++) {
 		pSockets[i] = new CWySock;
 		ASSERT_VALID (pSockets[i]);
 	}
@@ -32,10 +31,10 @@ BOOL CWysApp :: InitInstance()
 
 	// create main window
 	this->m_pMainWnd = pWnd;
-	
+
 	pWnd->Create(NULL, _T("Wysock Server"), WS_OVERLAPPEDWINDOW,
-		CRect(0, 0, 450, 200), 0, MAKEINTRESOURCE(IDM_MAINMENU),
-		WS_EX_OVERLAPPEDWINDOW, NULL);
+	             CRect(0, 0, 450, 200), 0, MAKEINTRESOURCE(IDM_MAINMENU),
+	             WS_EX_OVERLAPPEDWINDOW, NULL);
 
 	// create the list box
 	pWnd->CreateListBox();
@@ -47,7 +46,7 @@ BOOL CWysApp :: InitInstance()
 	pWnd->CenterWindow();
 	pWnd->ShowWindow(m_nCmdShow);
 	pWnd->UpdateWindow();
-	
+
 	// set the winsock description
 	SCREENLINE sl;
 	sl.uColor = COLOR_BLUE;
@@ -76,9 +75,8 @@ DWORD CWysApp :: AsyncListen()
 	CWysWnd* pWnd = (CWysWnd*)m_pMainWnd;
 	ASSERT_VALID(pWnd);
 
-	// create listen socket             
-    if ((i = GetSocket()) == NOTFOUND) 
-	{
+	// create listen socket
+	if ((i = GetSocket()) == NOTFOUND) {
 		sl.uColor = COLOR_RED;
 		sl.szText.LoadString(IDS_LISTENERR);
 		pWnd->AddListItem(&sl);
@@ -86,12 +84,11 @@ DWORD CWysApp :: AsyncListen()
 	}
 
 	// create the socket
-	pSockets[i]->Create(DEFAULT_PORT, SOCK_STREAM, 
-				FD_ACCEPT | FD_READ | FD_CLOSE);
-		
+	pSockets[i]->Create(DEFAULT_PORT, SOCK_STREAM,
+	                    FD_ACCEPT | FD_READ | FD_CLOSE);
+
 	// start listening
-	if (!(pSockets[i]->Listen(MAXCONN)))
-	{
+	if (!(pSockets[i]->Listen(MAXCONN))) {
 		SCREENLINE sl;
 		sl.uColor = COLOR_RED;
 		sl.szText.LoadString(IDS_LISTENERR);
@@ -106,17 +103,16 @@ DWORD CWysApp :: AsyncListen()
 
 INT CWysApp :: GetSocket()
 {
-    for (INT i = 0; i < MAXCONN; i++) 
-        if (pSockets[i]->m_hSocket == INVALID_SOCKET) 
-            return(i);
-    
-    return (NOTFOUND);
+	for (INT i = 0; i < MAXCONN; i++)
+		if (pSockets[i]->m_hSocket == INVALID_SOCKET)
+			return(i);
+
+	return (NOTFOUND);
 }
 
 INT CWysApp :: GetLoggingPath(CString& szLogPath)
 {
-	if (!m_bIsLogging)
-	{
+	if (!m_bIsLogging) {
 		szLogPath = "";
 		return (-1);
 	}

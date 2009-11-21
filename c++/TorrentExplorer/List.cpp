@@ -50,6 +50,6 @@ LPTORRENTOBJECT List::GetAt(UINT n) const
 	POSITION pos = list.FindIndex(n);
 	if (pos == NULL)
 		return NULL;
-	
+
 	return list.GetAt(pos);
 }

@@ -69,7 +69,7 @@ PSYMBOL symlookup(SymbolTable table, const char *s)
 
 /* insert string symbol */
 PSYMBOL syminsert(SymbolTable table, const char *name, int type,
-				  int subtype, const char *val)
+                  int subtype, const char *val)
 {
 	int i = hash(name);
 
@@ -85,7 +85,7 @@ PSYMBOL syminsert(SymbolTable table, const char *name, int type,
 
 /* insert float symbol */
 PSYMBOL syminsertf(SymbolTable table, const char *name, int type,
-				   int subtype, double val)
+                   int subtype, double val)
 {
 	int i = hash(name);
 
@@ -146,7 +146,7 @@ void symdup(PSYMBOL dest, PSYMBOL src)
 		xfree(dest->u.sval);
 	else if (dest->subtype & SLIST)
 		listfree(dest->u.lval);
-    
+
 	if (src->subtype & SFLOAT)
 		dest->u.fval = src->u.fval;
 	if (src->subtype & SSTRING)

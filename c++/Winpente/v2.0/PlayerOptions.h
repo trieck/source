@@ -1,6 +1,6 @@
 /*------------------------------------------
-	Module Name	:	PlayerOptions.h	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	PlayerOptions.h
+	Author		:	Thomas A. Rieck
 	Purpose		:	Player Options Dialog
 					declarations
 	Date		:	09/01/1997
@@ -11,8 +11,7 @@
 
 #include "ResDll\resource.h"
 
-class CPlayerOptionsDlg : public CDialog
-{
+class CPlayerOptionsDlg : public CDialog {
 	DECLARE_DYNCREATE(CPlayerOptionsDlg);
 
 public:

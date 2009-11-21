@@ -12,7 +12,7 @@
 #include "vector.h"
 #include "capture.h"
 
-// size of board 
+// size of board
 #define BOARD_SIZE		(19)
 #define BOARD_ENTRIES	(BOARD_SIZE*BOARD_SIZE)
 
@@ -25,8 +25,7 @@ typedef std::vector<Entry> EntryVec;
 typedef std::vector<Vector> VecVec;
 
 /////////////////////////////////////////////////////////////////////////////
-class Board
-{
+class Board {
 // Construction / Destruction
 private:
 	Board();
@@ -45,11 +44,13 @@ public:
 	EntryVec empty();
 	const VecVec &getVectors() const;
 	const Vector* winner(uint32_t &nplayer) const;
-	uint32_t size() const { return rep.size(); }
+	uint32_t size() const {
+		return rep.size();
+	}
 	void getCaptures(uint32_t x, uint32_t y, CaptureVec &captures);
-	
+
 // Implementation
-private:	
+private:
 	void generate();
 
 	static BoardPtr This;
@@ -58,7 +59,8 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline const VecVec &Board::getVectors() const {
+inline const VecVec &Board::getVectors() const
+{
 	return vectors;
 }
 

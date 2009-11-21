@@ -6,8 +6,7 @@
 
 class WinADFView;
 
-class ChildFrame : public CMDIChildWnd
-{
+class ChildFrame : public CMDIChildWnd {
 	DECLARE_DYNCREATE(ChildFrame)
 public:
 	ChildFrame();
@@ -21,8 +20,8 @@ public:
 public:
 
 // Overrides
-	public:
-	public:
+public:
+public:
 	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 

@@ -9,30 +9,41 @@
 #define __MIDIMESSAGE_H__
 
 ///////////////////////////////////////////////////////////////////////
-class MidiMessage
-{
+class MidiMessage {
 public:
 	// Construction / Destruction
-    MidiMessage();
-    MidiMessage(DWORD);
+	MidiMessage();
+	MidiMessage(DWORD);
 	virtual ~MidiMessage();
 
-    // Interface
-    inline BYTE GetVelocity() const { return m_velocity; }
-    inline BYTE GetData() const { return m_data; }
-    inline BYTE GetStatus() const { return m_status; }
+	// Interface
+	inline BYTE GetVelocity() const {
+		return m_velocity;
+	}
+	inline BYTE GetData() const {
+		return m_data;
+	}
+	inline BYTE GetStatus() const {
+		return m_status;
+	}
 
-    inline void SetVelocity(BYTE b) { m_velocity = b; }
-    inline void SetData(BYTE b) { m_data = b; }
-    inline void SetStatus(BYTE b) { m_status = b; }
+	inline void SetVelocity(BYTE b) {
+		m_velocity = b;
+	}
+	inline void SetData(BYTE b) {
+		m_data = b;
+	}
+	inline void SetStatus(BYTE b) {
+		m_status = b;
+	}
 
-    operator DWORD() const;
+	operator DWORD() const;
 
 protected:
 	// Implementation
-    BYTE m_velocity;
-    BYTE m_data;
-    BYTE m_status;
+	BYTE m_velocity;
+	BYTE m_data;
+	BYTE m_status;
 };
 ///////////////////////////////////////////////////////////////////////
 

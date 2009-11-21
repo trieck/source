@@ -9,8 +9,7 @@
 #define __GETHANDLER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class GetHandler : public IHandler
-{
+class GetHandler : public IHandler {
 // Construction / Destruction
 public:
 	GetHandler();

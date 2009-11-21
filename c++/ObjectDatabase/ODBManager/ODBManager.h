@@ -9,20 +9,21 @@
 #define __ODBMANAGER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ODBManager : public IUnknown
-{
+class ODBManager : public IUnknown {
 // Construction / Destruction
 public:
-	ODBManager();	
+	ODBManager();
 	virtual ~ODBManager();
-    
-// Interface
-	static LONG GetObjectCount() { return m_cCount; }
 
-    // IUnknown members
-    STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
-    STDMETHODIMP_(ULONG) AddRef();
-    STDMETHODIMP_(ULONG) Release();
+// Interface
+	static LONG GetObjectCount() {
+		return m_cCount;
+	}
+
+	// IUnknown members
+	STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
+	STDMETHODIMP_(ULONG) AddRef();
+	STDMETHODIMP_(ULONG) Release();
 
 private:
 	IComponentData *m_pData;	// component data

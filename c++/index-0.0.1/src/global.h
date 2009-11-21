@@ -63,7 +63,7 @@ typedef vector<string> stringvec;
 #define    MIN(a,b)    (((a)<(b))?(a):(b))
 #define    MAX(a,b)    (((a)>(b))?(a):(b))
 
-// utility functions 
+// utility functions
 extern void error(const char *fmt, ...);
 uint64_t fnvhash(const void *key, uint32_t len);
 uint64_t doublehash(const void *key, uint32_t len);

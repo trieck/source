@@ -10,13 +10,15 @@
 #import "Board.h"
 #import "Vector.h"
 
-@interface Machine : NSObject {
+@interface Machine :
+NSObject {
 	/* all initially feasible vectors */
 	NSMutableArray *vectors;
 	Board *board;
 }
 
 - (Point)move;
-- (Vector*)winner:(uint32_t *)type;
+- (Vector*)winner:
+(uint32_t *)type;
 
 @end

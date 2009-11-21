@@ -40,7 +40,7 @@ Charge::ChargePtr Charge::instance()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-int Charge::Run(int argc, char **argv) 
+int Charge::Run(int argc, char **argv)
 {
 	pservice->Execute(argc, argv);
 
@@ -51,8 +51,8 @@ int Charge::Run(int argc, char **argv)
 int main(int argc, char **argv)
 {
 	Charge::ChargePtr charger =
-		Charge::instance();
+	    Charge::instance();
 
-	return charger->Run(argc, argv);	
+	return charger->Run(argc, argv);
 }
 

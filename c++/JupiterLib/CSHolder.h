@@ -9,12 +9,15 @@
 #define __CSHOLDER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class CSHolder
-{
+class CSHolder {
 // Construction / Destruction
 public:
-	CSHolder(CComAutoCriticalSection &s) : cs(s) { cs.Lock(); }
-	~CSHolder() { cs.Unlock(); }
+	CSHolder(CComAutoCriticalSection &s) : cs(s) {
+		cs.Lock();
+	}
+	~CSHolder() {
+		cs.Unlock();
+	}
 
 // Implementation
 private:

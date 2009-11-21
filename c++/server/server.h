@@ -13,15 +13,14 @@
 #define DEFAULT_HTTP_PORT 80
 
 /////////////////////////////////////////////////////////////////////////////
-class HttpServer
-{
+class HttpServer {
 public:
 	HttpServer(int port = DEFAULT_HTTP_PORT);
 	~HttpServer();
 
 // Interface
 	bool run();
-	
+
 // Implementation
 private:
 	bool service(Connection *request);

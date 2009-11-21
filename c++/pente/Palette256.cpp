@@ -20,17 +20,17 @@ Palette256::~Palette256()
 /////////////////////////////////////////////////////////////////////////////
 void Palette256::load()
 {
-	HRSRC hResource = ::FindResource(AfxGetResourceHandle(), 
-		MAKEINTRESOURCE(IDR_DEF_PALETTE),
-        "PALETTE");
+	HRSRC hResource = ::FindResource(AfxGetResourceHandle(),
+	                                 MAKEINTRESOURCE(IDR_DEF_PALETTE),
+	                                 "PALETTE");
 	if (hResource == NULL)
 		AfxThrowResourceException();
 
-    HGLOBAL hGlobal = ::LoadResource(AfxGetResourceHandle(), hResource);
+	HGLOBAL hGlobal = ::LoadResource(AfxGetResourceHandle(), hResource);
 	if (hGlobal == NULL)
 		AfxThrowResourceException();
 
-    LPCSTR pResource = (LPCSTR)::LockResource(hGlobal);
+	LPCSTR pResource = (LPCSTR)::LockResource(hGlobal);
 	if (pResource == NULL) {
 		UnlockResource(hGlobal);
 		FreeResource(hGlobal);
@@ -44,15 +44,15 @@ void Palette256::load()
 	COLORREF color;
 
 	m_pPalette = new RGBTRIPLE[NUM_PALETTE_COLORS];
-	for (uint8_t i = 0; i < NUM_PALETTE_COLORS 
-		&& (tok = tokenizer.next()) != ""; i++) {
+	for (uint8_t i = 0; i < NUM_PALETTE_COLORS
+	        && (tok = tokenizer.next()) != ""; i++) {
 		sscanf(tok, "%d %d %d", &red, &green, &blue);
 		color = RGB(red, green, blue);
 		m_pPalette[i].rgbtRed = (BYTE)red;
 		m_pPalette[i].rgbtGreen = (BYTE)green;
 		m_pPalette[i].rgbtBlue = (BYTE)blue;
 		m_ColorMap[color] = i;
-    }
+	}
 
 	UnlockResource(hGlobal);
 	FreeResource(hGlobal);
@@ -88,8 +88,8 @@ BOOL Palette256::CreatePalette(CPalette &pal)
 {
 	pal.DeleteObject();
 
-	LPLOGPALETTE pPal = (LPLOGPALETTE)GlobalAlloc(GPTR, sizeof(LOGPALETTE) 
-		+ (sizeof(PALETTEENTRY) * 256));
+	LPLOGPALETTE pPal = (LPLOGPALETTE)GlobalAlloc(GPTR, sizeof(LOGPALETTE)
+	                    + (sizeof(PALETTEENTRY) * 256));
 
 	pPal->palVersion = 0x300;
 	pPal->palNumEntries = 256;

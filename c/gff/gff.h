@@ -1,24 +1,24 @@
 /*
- * GFF.C 
- * 
- * The Generic File Format (GFF) is an all-purpose generic format used to 
- * store data in BioWare games. It is designed to make it easy to add or 
- * remove fields and data structures while still maintaining backward and 
+ * GFF.C
+ *
+ * The Generic File Format (GFF) is an all-purpose generic format used to
+ * store data in BioWare games. It is designed to make it easy to add or
+ * remove fields and data structures while still maintaining backward and
  * forward compatibility in reading old or new versions of a file format.
  *
  * The following file types within a module are all in GFF:
  *
  *	Module info file (ifo)
- *	Area-related files: area file (are), game object instances and dynamic 
+ *	Area-related files: area file (are), game object instances and dynamic
  *		area properties (git), game instance comments (gic)
- *	Object Blueprints: creature (utc), door (utd), encounter (ute), 
- *		item (uti), placeable (utp), sound (uts), store (utm), 
- *		trigger (utt), waypoint (utw) 
+ *	Object Blueprints: creature (utc), door (utd), encounter (ute),
+ *		item (uti), placeable (utp), sound (uts), store (utm),
+ *		trigger (utt), waypoint (utw)
  *	Conversation files (dlg)
  *	Journal file (jrl)
  *	Faction file (fac)
  *	Palette file (itp)
- *	Plot Wizard files: plot instance/plot manager file (ptm), 
+ *	Plot Wizard files: plot instance/plot manager file (ptm),
  *		plot wizard blueprint (ptt)
  *
  * The following files created by the game are also GFF:
@@ -58,12 +58,12 @@ typedef struct tagStruct {
 	unsigned Type;					/* Programmer defined id */
 	unsigned DataOrDataOffset;		/* If FieldCount = 1, this is an index
 										into the Field Array.
-									 	If FieldCount > 1, this is a byte 
+									 	If FieldCount > 1, this is a byte
 									 	offset into the Field Indices
-										array, where there is an array of 
-										DWORDs having a number of elements 
+										array, where there is an array of
+										DWORDs having a number of elements
 										equal to FieldCount. Each one of these DWORDs
-										is an index into the Field Array.										
+										is an index into the Field Array.
 									*/
 	unsigned FieldCount;			/* Number of fields in this struct */
 } Struct;
@@ -72,13 +72,13 @@ typedef struct tagStruct {
 typedef struct tagField {
 	unsigned FieldType;				/* Field data type */
 	unsigned LabelIndex;			/* Index into the Label array */
-	unsigned DataOrDataOffset;		/* If FieldType is a simple data type 
-										then this is the value actual of 
-										the field.  If FieldType is a complex 
+	unsigned DataOrDataOffset;		/* If FieldType is a simple data type
+										then this is the value actual of
+										the field.  If FieldType is a complex
 										data type , then this is
 										a byte offset into the Field Data block.
 									*/
-	
+
 } Field;
 
 enum FTYPE {
@@ -103,7 +103,7 @@ enum FTYPE {
 /* simple character string type */
 typedef struct tagCExoString {
 	unsigned Size;
-	char *Str;	
+	char *Str;
 } CExoString;
 
 /* localized substring */
@@ -117,19 +117,19 @@ typedef struct tagCExoLocSubString {
 typedef struct tagCExoLocString {
 	unsigned Size;
 	unsigned StrRef;	/* index into user's dialog.tlk file,
-							which contains a list of almost all 
+							which contains a list of almost all
 							the localized text in the game and toolset.
 							if StrRef = 0xFFFFFFFF, then LocString
 							does not reference dialog.tlk at all.
 						*/
-	unsigned StrCount;	
+	unsigned StrCount;
 	CExoLocSubString *SubStrs;
 } CExoLocString;
 
 /* used to store filename */
 typedef struct tagCResRef {
 	unsigned char Size;
-	char Str[GFF_CRESREFMAX];	
+	char Str[GFF_CRESREFMAX];
 } CResRef;
 
 /* VOID data */

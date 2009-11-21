@@ -37,10 +37,10 @@ static void printregs(void);
 static void process_input(void);
 static void step(void);
 static const char *pinput = NULL;	/* pointer to current input */
-extern int assemmode;				/* are we in assembly mode ? */		
+extern int assemmode;				/* are we in assembly mode ? */
 extern word assemc;					/* counter used during assembly */
-static void monitor_dump(const word *start, 
- const word *end);
+static void monitor_dump(const word *start,
+                         const word *end);
 #define BUFFSIZE 256
 /*
  * initialize the monitor
@@ -58,15 +58,15 @@ void monitor_term(void)
 {
 }
 /*
- * run the monitor 
+ * run the monitor
  */
 void monitor_run(void)
 {
 	char line[BUFFSIZE];
-	
+
 	for (;;) {
 		pinput = line;
-		if (assemmode) { 
+		if (assemmode) {
 			printf("($%.4hx) ", assemc);
 			fgets(line, BUFFSIZE, stdin);
 			assemble_inmode(&pinput);
@@ -77,7 +77,7 @@ void monitor_run(void)
 			process_input();
 		}
 		fflush(stdout);
-	}    	
+	}
 }
 /*
  * print the machine registers
@@ -89,7 +89,7 @@ void printregs(void)
 	byte io = fetch_byte(1);
 	sr[0] = get_neg_flag() ? '1' : '0';
 	sr[1] = get_overflow_flag() ? '1' : '0';
-	sr[2] = '1'; /* unused */ 
+	sr[2] = '1'; /* unused */
 	sr[3] = get_brk_flag() ? '1' : '0';
 	sr[4] = get_dec_flag() ? '1' : '0';
 	sr[5] = get_int_disable_flag() ? '1' : '0';
@@ -97,12 +97,12 @@ void printregs(void)
 	sr[7] = get_carry_flag() ? '1' : '0';
 	sr[8] = '\0';
 	sprintf(buffer,
-		"%.4x %.2x %.2x %.2x %.2x %.2x %s",
-		cpu.pc, cpu.a, cpu.x, 
-		cpu.y,
-		cpu.sp, io, sr);
-	
-	printf("ADDR AC XR YR SP 01 NV-BDIZC\n%s\n", buffer);	
+	        "%.4x %.2x %.2x %.2x %.2x %.2x %s",
+	        cpu.pc, cpu.a, cpu.x,
+	        cpu.y,
+	        cpu.sp, io, sr);
+
+	printf("ADDR AC XR YR SP 01 NV-BDIZC\n%s\n", buffer);
 }
 /*
  * process the current input option
@@ -110,7 +110,7 @@ void printregs(void)
 void process_input(void)
 {
 	Token t = gettok(&pinput);
-		
+
 	if (strcmp(t.value, "?") == 0) {
 		help();
 	} else if (strcmp(t.value, "a") == 0) {
@@ -195,13 +195,13 @@ void dump(void)
 	}
 	monitor_dump(pstart, pend);
 }
-/* 
+/*
  * dump memory
  */
-void monitor_dump(const word *start, 
- const word *end)
+void monitor_dump(const word *start,
+                  const word *end)
 {
-	/* 
+	/*
 	 * this is a hack; rewrite this
 	 */
 	int i = 0, j;
@@ -209,30 +209,30 @@ void monitor_dump(const word *start,
 	const int LINES = 9;
 	static word pc;
 	static initialized;
-	
+
 	if (!initialized) {
 		pc = cpu.pc;
 		initialized = 1;
 	}
-	
+
 	if (NULL != start)
 		pc = *start;
 	do {
 		printf("$%.4x\t", pc);
-		
+
 		for (j = 0; j < LINESIZE; j++) {
 			byte b = fetch_byte((word)(pc + j));
 			printf("%.2x", b);
 			if (end && (word)(pc + j) == *end) break;
 			if (j != LINESIZE - 1) putchar(' ');
-		}		
-		
+		}
+
 		do {
 			putchar (' ');
 			putchar (' ');
 			putchar (' ');
 		} while (++j < LINESIZE);
-		
+
 		for (j = 0; j < LINESIZE; j++) {
 			byte b = fetch_byte((word)(pc + j));
 			if (isprint(b))
@@ -240,20 +240,20 @@ void monitor_dump(const word *start,
 			else putchar('.');
 			if (end && (word)(pc + j) == *end) break;
 		}
-		
+
 		putchar('\n');
 		pc += j;
-		
+
 	} while (NULL == end ? ++i < LINES : pc != *end);
 }
 /*
- * command help 
+ * command help
  */
 void help(void)
 {
 	printf("a   assemble\td   disassemble\n"
-		"g   go\t\tm   memory\n"
-		"r   registers\ts   step\n"
-		"x   exit\tz   run the cpu\n"
-		"?   help\n");
+	       "g   go\t\tm   memory\n"
+	       "r   registers\ts   step\n"
+	       "x   exit\tz   run the cpu\n"
+	       "?   help\n");
 }

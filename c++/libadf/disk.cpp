@@ -15,12 +15,14 @@
 #include "disk.h"
 #include <errno.h>
 
-namespace { int32_t getDiskType(uint32_t size); }
+namespace {
+int32_t getDiskType(uint32_t size);
+}
 
 /////////////////////////////////////////////////////////////////////////////
 Disk::Disk()
- : type(0), cylinders(0), heads(0), sectors(0), size(0), fp(0), 
- readonly(true)
+		: type(0), cylinders(0), heads(0), sectors(0), size(0), fp(0),
+		readonly(true)
 {
 }
 
@@ -53,8 +55,8 @@ void Disk::unmount()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-DiskPtr Disk::create(const char *filename, uint32_t cylinders, 
-	uint32_t heads, uint32_t sectors)
+DiskPtr Disk::create(const char *filename, uint32_t cylinders,
+                     uint32_t heads, uint32_t sectors)
 {
 	DiskPtr pDisk = DiskPtr(new Disk());
 	pDisk->readonly = false;
@@ -68,7 +70,7 @@ DiskPtr Disk::create(const char *filename, uint32_t cylinders,
 	if (fseek(pDisk->fp, offset, SEEK_SET) != 0) {
 		throw ADFException();
 	}
-	 
+
 	uint8_t buf[BSIZE];
 	memset(buf, 0, BSIZE);
 	if (fwrite(buf, BSIZE, 1, pDisk->fp) != 1) {
@@ -82,9 +84,9 @@ DiskPtr Disk::create(const char *filename, uint32_t cylinders,
 	}
 
 	pDisk->cylinders = cylinders;
-    pDisk->heads = heads;
-    pDisk->sectors = sectors;
-    pDisk->size = cylinders * heads * sectors * BSIZE;
+	pDisk->heads = heads;
+	pDisk->sectors = sectors;
+	pDisk->size = cylinders * heads * sectors * BSIZE;
 	pDisk->type = getDiskType(pDisk->size);
 
 	return pDisk;
@@ -104,7 +106,7 @@ DiskPtr Disk::open(const char *filename, bool ro)
 	if ((type = getDiskType(buf.st_size)) == -1) {
 		throw ADFException("unknown disk type.");
 	}
-	
+
 	if (!ro) {
 		if ((pDisk->fp = fopen(filename, "rb+")) == NULL) {
 			if (errno == EACCES || errno==EROFS) {
@@ -126,22 +128,22 @@ DiskPtr Disk::open(const char *filename, bool ro)
 	pDisk->type = type;
 
 	switch (type) {
-		case DISKTYPE_FLOPDD:
-			pDisk->cylinders = FLOPPY_CYLINDERS;
-			pDisk->heads = FLOPPY_HEADS;
-			pDisk->sectors = FLOPDD_SECTORS;
-			break;
-		case DISKTYPE_FLOPHD:
-			pDisk->cylinders = FLOPPY_CYLINDERS;
-			pDisk->heads = FLOPPY_HEADS;
-			pDisk->sectors = FLOPHD_SECTORS;
-			break;
-		default:	// DISKTYPE_HARDFILE
-			pDisk->cylinders = pDisk->size / BSIZE;
-			pDisk->heads = 1;
-			pDisk->sectors = 1;
-			// TODO: 
-			break;
+	case DISKTYPE_FLOPDD:
+		pDisk->cylinders = FLOPPY_CYLINDERS;
+		pDisk->heads = FLOPPY_HEADS;
+		pDisk->sectors = FLOPDD_SECTORS;
+		break;
+	case DISKTYPE_FLOPHD:
+		pDisk->cylinders = FLOPPY_CYLINDERS;
+		pDisk->heads = FLOPPY_HEADS;
+		pDisk->sectors = FLOPHD_SECTORS;
+		break;
+	default:	// DISKTYPE_HARDFILE
+		pDisk->cylinders = pDisk->size / BSIZE;
+		pDisk->heads = 1;
+		pDisk->sectors = 1;
+		// TODO:
+		break;
 	}
 
 	return DiskPtr(pDisk);
@@ -167,14 +169,14 @@ void Disk::readblock(uint32_t blockno, void *block)
 Volume *Disk::mount()
 {
 	Volume *pVol = new Volume();
-	volumes.push_back(pVol);	
+	volumes.push_back(pVol);
 
 	pVol->mounted = true;
 	pVol->firstblock = 0;
-    pVol->lastblock = (cylinders * heads * sectors)-1;
-    pVol->rootblock = (pVol->lastblock+1 - pVol->firstblock) / 2;
+	pVol->lastblock = (cylinders * heads * sectors)-1;
+	pVol->rootblock = (pVol->lastblock+1 - pVol->firstblock) / 2;
 	pVol->currdir = pVol->rootblock;
-    pVol->blocksize = BSIZE;
+	pVol->blocksize = BSIZE;
 	pVol->readonly = readonly;
 	pVol->disk = this;
 
@@ -198,7 +200,7 @@ Volume *Disk::createFloppy(const char *name, uint32_t type)
 	Volume *pVol = createVolume(0, FLOPPY_CYLINDERS, name, type);
 	pVol->blocksize = BSIZE;
 	pVol->mounted = true;
-	volumes.push_back(pVol);	
+	volumes.push_back(pVol);
 	return pVol;
 }
 
@@ -213,8 +215,8 @@ Volume *Disk::createHardfile(const char *name, uint32_t type)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-Volume *Disk::createVolume(uint32_t start, uint32_t len, const char *name, 
-	uint32_t type)
+Volume *Disk::createVolume(uint32_t start, uint32_t len, const char *name,
+                           uint32_t type)
 {
 	VolumePtr pVol = VolumePtr(new Volume());
 
@@ -226,7 +228,7 @@ Volume *Disk::createVolume(uint32_t start, uint32_t len, const char *name,
 	pVol->currdir = pVol->rootblock;
 	pVol->readonly = readonly;
 	pVol->mounted = true;
-	
+
 	uint32_t namelen = min(MAXNAMELEN, strlen(name));
 	pVol->name = string(name, namelen);
 
@@ -253,15 +255,15 @@ Volume *Disk::createVolume(uint32_t start, uint32_t len, const char *name,
 	ADFDateTime dt = adfGetCurrentTime();
 	adfTime2AmigaTime(dt, root.codays, root.comins, root.coticks);
 
-	// dircache block 
-    if (isDIRCACHE(type) ) {
-        root.extension = 0;
-        root.sectype = ST_ROOT; 
+	// dircache block
+	if (isDIRCACHE(type) ) {
+		root.extension = 0;
+		root.sectype = ST_ROOT;
 		pVol->createEmptyCache((entryblock_t*)&root, blocks[1]);
-    }
+	}
 
 	pVol->writerootblock(blocks[0], &root);
-	
+
 	pVol->writenewbitmap();
 
 	pVol->updatebitmap();
@@ -295,14 +297,14 @@ namespace {	// anonymous
 int32_t getDiskType(uint32_t size)
 {
 	if ((size == FLOPDD_SIZE) ||
-		(size == FLOPDD_SIZE+1) ||
-        (size == FLOPDD_SIZE+2) ||
-		(size == FLOPDD_SIZE+3)) {
-        return DISKTYPE_FLOPDD;
+	        (size == FLOPDD_SIZE+1) ||
+	        (size == FLOPDD_SIZE+2) ||
+	        (size == FLOPDD_SIZE+3)) {
+		return DISKTYPE_FLOPDD;
 	} else if (size == FLOPHD_SIZE) {
-        return DISKTYPE_FLOPHD;
+		return DISKTYPE_FLOPHD;
 	} else if (size > FLOPHD_SIZE) {
-        return DISKTYPE_HARDFILE;
+		return DISKTYPE_HARDFILE;
 	}
 
 	return -1;

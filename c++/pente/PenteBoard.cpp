@@ -10,27 +10,27 @@
 IMPLEMENT_SERIAL(PenteBoard, CObject, VERSIONABLE_SCHEMA | 1)
 
 /////////////////////////////////////////////////////////////////////////////
-PenteBoard::PenteBoard() 
+PenteBoard::PenteBoard()
 {
 	CWinApp *pApp = AfxGetApp();
 	ASSERT_VALID(pApp);
 
 	bkgColor = pApp->GetProfileInt(_T("Settings"), _T("BoardColor"),
-		DEFAULT_BOARD_COLOR);
+	                               DEFAULT_BOARD_COLOR);
 	gridColor = pApp->GetProfileInt(_T("Settings"), _T("GridColor"),
-		DEFAULT_GRID_COLOR);
+	                                DEFAULT_GRID_COLOR);
 	bkgBrush.CreateSolidBrush(bkgColor);
 	pen.CreatePen(PS_SOLID, 0, gridColor);
 
-	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"), 
-		_T("playerOneColor"), DEFAULT_PLAYER_ONE_COLOR);
-	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"), 
-		_T("playerTwoColor"), DEFAULT_PLAYER_TWO_COLOR);
+	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"),
+	                          _T("playerOneColor"), DEFAULT_PLAYER_ONE_COLOR);
+	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"),
+	                          _T("playerTwoColor"), DEFAULT_PLAYER_TWO_COLOR);
 
 	bmPlayerOne.setColor(playerOneColor);
 	bmPlayerTwo.setColor(playerTwoColor);
 
-	board = Board::instance();	
+	board = Board::instance();
 
 	CreateBitmap();
 }
@@ -51,15 +51,15 @@ void PenteBoard::render(CDC *pDC, const CRect & rc)
 /////////////////////////////////////////////////////////////////////////////
 void PenteBoard::renderTable(CDC *pDC, const CRect & rc)
 {
-	CBitmap *pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);	
+	CBitmap *pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
 
 	CRect aRect(rc);
 	aRect.OffsetRect(-cxBorder, -cyBorder);
 
-	pDC->BitBlt(rc.left, rc.top, 
-		rc.Width(), rc.Height(), &m_MemDC, 
-		aRect.left, aRect.top, SRCCOPY
-	);
+	pDC->BitBlt(rc.left, rc.top,
+	            rc.Width(), rc.Height(), &m_MemDC,
+	            aRect.left, aRect.top, SRCCOPY
+	           );
 
 	m_MemDC.SelectObject(pOldBitmap);
 }
@@ -69,7 +69,7 @@ void PenteBoard::renderBoard(CDC *pDC, const CRect & rc)
 {
 	CPoint pt;
 	CRect rcPiece;
-	
+
 	UInt32EntryMapEnum e = board->enumEntries();
 	while (e.hasNext()) {
 		const Entry & entry = e.next().second;
@@ -83,7 +83,7 @@ void PenteBoard::renderBoard(CDC *pDC, const CRect & rc)
 			continue;
 
 		PieceBitmap &piece = entry.getType() == ET_PLAYER_ONE ?
-			bmPlayerOne : bmPlayerTwo;
+		                     bmPlayerOne : bmPlayerTwo;
 
 		piece.Draw(pDC, pt.x, pt.y);
 	}
@@ -119,7 +119,7 @@ bool PenteBoard::ptOnBoard(const CPoint & pt) const
 CPoint PenteBoard::getSquare(const CPoint & pt) const
 {
 	CPoint square;
-	
+
 	CPoint aPoint(pt);
 	aPoint.x -= (cxBorder - (cxPiece / 2));
 	aPoint.y -= (cyBorder - (cyPiece / 2));
@@ -182,10 +182,10 @@ void PenteBoard::Serialize(CArchive& ar)
 			const Entry & entry = e.next().second;
 			ar << entry.where();
 			ar << entry.getType();
-		}		
+		}
 	} else {
 		board->clear();
-		
+
 		POINT pt;
 		uint32_t size, type;
 
@@ -208,15 +208,15 @@ void PenteBoard::CreateBitmap()
 
 	CDC dc;
 	dc.Attach(::GetDC(NULL));
-    if (!m_MemDC.CreateCompatibleDC(&dc))
+	if (!m_MemDC.CreateCompatibleDC(&dc))
 		AfxThrowResourceException();
 
-    m_MemDC.SetMapMode(dc.GetMapMode());
+	m_MemDC.SetMapMode(dc.GetMapMode());
 
-	if (!m_Bitmap.CreateCompatibleBitmap(&dc, rcRegion.Width(), 
-		rcRegion.Height()))
+	if (!m_Bitmap.CreateCompatibleBitmap(&dc, rcRegion.Width(),
+	                                     rcRegion.Height()))
 		AfxThrowResourceException();
-	
+
 	PaintBitmap();
 }
 
@@ -225,9 +225,9 @@ void PenteBoard::PaintBitmap()
 {
 	CRect rcBoard;
 	m_Region.GetRgnBox(rcBoard);
-	
-	CBitmap *pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);	
-	
+
+	CBitmap *pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
+
 	CBrush *pOldBrush = (CBrush *)m_MemDC.SelectObject(&bkgBrush);
 	CPen *pOldPen = (CPen *)m_MemDC.SelectObject(&pen);
 
@@ -257,7 +257,7 @@ void PenteBoard::PaintBitmap()
 
 	m_MemDC.SelectObject(pOldBrush);
 	m_MemDC.SelectObject(pOldPen);
-	m_MemDC.SelectObject(pOldBitmap);	
+	m_MemDC.SelectObject(pOldBitmap);
 }
 
 /////////////////////////////////////////////////////////////////////////////

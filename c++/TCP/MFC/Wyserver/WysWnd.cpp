@@ -28,9 +28,9 @@ BOOL CWysWnd :: PreCreateWindow(CREATESTRUCT& cs)
 {
 	// Get the icon handle from the resource data
 	m_hIcon = (HICON)::LoadImage(cs.hInstance,
-								MAKEINTRESOURCE(IDI_MAIN),
-								IMAGE_ICON, 32, 32,
-								LR_DEFAULTCOLOR);
+	                             MAKEINTRESOURCE(IDI_MAIN),
+	                             IMAGE_ICON, 32, 32,
+	                             LR_DEFAULTCOLOR);
 
 	return (CFrameWnd :: PreCreateWindow(cs));
 }
@@ -40,7 +40,7 @@ int CWysWnd :: OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// make the resource icon the default for the frame window
 	if (m_hIcon)
 		::SetClassLong(GetSafeHwnd(), GCL_HICON, (LONG)m_hIcon);
-	
+
 	return (0);
 }
 void CWysWnd :: OnSize(UINT nType, int cx, int cy)
@@ -53,7 +53,7 @@ CListBox* CWysWnd :: GetListBox()
 {
 	return (m_pListBox);
 }
-	
+
 CWysWnd :: CWysWnd()
 {
 	// initialize class members
@@ -71,9 +71,9 @@ void CWysWnd :: CreateListBox()
 	ASSERT_VALID (m_pListBox);
 
 	m_pListBox->Create(WS_VISIBLE | WS_CHILD | WS_VSCROLL |
-				LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT |
-				LBS_OWNERDRAWFIXED, rc,
-				this, ID_LISTBOX);
+	                   LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT |
+	                   LBS_OWNERDRAWFIXED, rc,
+	                   this, ID_LISTBOX);
 }
 
 BOOL CWysWnd :: CreateListFont(LPLOGFONT lpLogFont)
@@ -83,18 +83,17 @@ BOOL CWysWnd :: CreateListFont(LPLOGFONT lpLogFont)
 
 	// create the font
 	if (m_pFont) delete (m_pFont);
-	
+
 	m_pFont = new CFont;
 	ASSERT_VALID(m_pFont);
 
-	if (lpLogFont == NULL)
-	{
+	if (lpLogFont == NULL) {
 		LOGFONT lf;
 		INT cyPixels;
-		
+
 		cyPixels = pDC->GetDeviceCaps(LOGPIXELSY);
-		lpLogFont = &lf;	
-		
+		lpLogFont = &lf;
+
 		lf.lfHeight			= -MulDiv(DEFAULT_FONTSIZE, cyPixels, 72);
 		lf.lfWidth			= 0;
 		lf.lfEscapement		= 0;
@@ -108,11 +107,11 @@ BOOL CWysWnd :: CreateListFont(LPLOGFONT lpLogFont)
 		lf.lfClipPrecision	= CLIP_DEFAULT_PRECIS;
 		lf.lfQuality		= DEFAULT_QUALITY;
 		lf.lfPitchAndFamily	= DEFAULT_PITCH;
-		strcpy(lf.lfFaceName, DEFAULT_FACENAME);	
+		strcpy(lf.lfFaceName, DEFAULT_FACENAME);
 	}
 
 	ReleaseDC(pDC);
-	
+
 	return (m_pFont->CreateFontIndirect(lpLogFont));
 }
 
@@ -122,13 +121,13 @@ void CWysWnd :: AddListItem(LPSCREENLINE lpScreenLine)
 
 	if (!m_pListBox)
 		return;
-	
+
 	// add string to list
 	m_pListBox->AddString(lpScreenLine->szText);
-	
+
 	// get count of items
 	iCount = m_pListBox->GetCount() - 1;
-	
+
 	m_pListBox->SetItemData(iCount, lpScreenLine->uColor);
 }
 
@@ -136,7 +135,7 @@ CWysWnd :: ~CWysWnd()
 {
 	// destroy list box
 	if (m_pListBox) m_pListBox->DestroyWindow();
-	
+
 	// delete allocated data members
 	if (m_pListBox)	delete m_pListBox;
 	if (m_pFont) delete m_pFont;
@@ -168,9 +167,9 @@ void CWysWnd :: OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruc
 
 	lpMeasureItemStruct->itemWidth	= tm.tmAveCharWidth;
 	lpMeasureItemStruct->itemHeight	= tm.tmHeight + tm.tmExternalLeading;
-			
+
 	pDC->SelectObject(pOldFont);
-	
+
 	m_pListBox->ReleaseDC(pDC);
 }
 
@@ -178,75 +177,74 @@ void CWysWnd :: OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	CBrush aBrush, *pOldBrush;
 
-	if (lpDrawItemStruct->itemID == -1)  
+	if (lpDrawItemStruct->itemID == -1)
 		return;
-            
-	switch (lpDrawItemStruct->itemAction)
-	{ 
+
+	switch (lpDrawItemStruct->itemAction) {
 		INT y;
 		TCHAR tchBuffer[255];
 		COLORREF uColor;
 		CDC* pDC;
 		TEXTMETRIC tm;
 
-		case ODA_SELECT: 
-        case ODA_DRAWENTIRE:
-			// get item text
-			::SendMessage(lpDrawItemStruct->hwndItem, LB_GETTEXT, 
-				lpDrawItemStruct->itemID, (LPARAM) tchBuffer); 
- 
-			// get item color
-			uColor = ::SendMessage(lpDrawItemStruct->hwndItem, LB_GETITEMDATA,
-							lpDrawItemStruct->itemID, 0);
+	case ODA_SELECT:
+	case ODA_DRAWENTIRE:
+		// get item text
+		::SendMessage(lpDrawItemStruct->hwndItem, LB_GETTEXT,
+		              lpDrawItemStruct->itemID, (LPARAM) tchBuffer);
 
-            // retrieve position
-			pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
-			pDC->GetTextMetrics(&tm); 
+		// get item color
+		uColor = ::SendMessage(lpDrawItemStruct->hwndItem, LB_GETITEMDATA,
+		                       lpDrawItemStruct->itemID, 0);
 
-			y = (lpDrawItemStruct->rcItem.bottom + lpDrawItemStruct->rcItem.top - 
-					tm.tmHeight) / 2; 
-                     
-			// check if item is selected
-			if (lpDrawItemStruct->itemState & ODS_SELECTED)
-				// draw selected rectangle
-				aBrush.CreateSolidBrush(COLOR_YELLOW);
-			else	// draw default background
-				aBrush.CreateSolidBrush(GetSysColor(COLOR_WINDOW));
-					
-			pOldBrush = (CBrush*)pDC->SelectObject(&aBrush);
-			ASSERT_VALID(pOldBrush);
-			
-			pDC->FillRect(&(lpDrawItemStruct->rcItem), &aBrush);
-		
-			pDC->SelectObject(pOldBrush);
-			aBrush.DeleteObject();
+		// retrieve position
+		pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
+		pDC->GetTextMetrics(&tm);
 
-			// set background mode
-			pDC->SetBkMode(TRANSPARENT);
+		y = (lpDrawItemStruct->rcItem.bottom + lpDrawItemStruct->rcItem.top -
+		     tm.tmHeight) / 2;
 
-			// set text item color
-			pDC->SetTextColor(uColor);
+		// check if item is selected
+		if (lpDrawItemStruct->itemState & ODS_SELECTED)
+			// draw selected rectangle
+			aBrush.CreateSolidBrush(COLOR_YELLOW);
+		else	// draw default background
+			aBrush.CreateSolidBrush(GetSysColor(COLOR_WINDOW));
 
-			// display the text item
-			pDC->TextOut(0, y, tchBuffer, strlen(tchBuffer));
-			break;
+		pOldBrush = (CBrush*)pDC->SelectObject(&aBrush);
+		ASSERT_VALID(pOldBrush);
+
+		pDC->FillRect(&(lpDrawItemStruct->rcItem), &aBrush);
+
+		pDC->SelectObject(pOldBrush);
+		aBrush.DeleteObject();
+
+		// set background mode
+		pDC->SetBkMode(TRANSPARENT);
+
+		// set text item color
+		pDC->SetTextColor(uColor);
+
+		// display the text item
+		pDC->TextOut(0, y, tchBuffer, strlen(tchBuffer));
+		break;
 	}
 }
 
 void CWysWnd :: OnAbout()
 {
 	CDialog dlg(MAKEINTRESOURCE(IDD_ABOUT), this);
-	
+
 	dlg.DoModal();
 }
 
 void CWysWnd :: OnActiveConn()
 {
 	CConnDlg dlg(this);
-	
+
 	dlg.DoModal();
 }
-	
+
 void CWysWnd :: OnPreferences()
 {
 	CPrefDlg dlg(this);
@@ -275,15 +273,14 @@ void CWysWnd :: OnFont()
 	cf.hInstance		= 0;
 	cf.lpszStyle		= 0;
 	cf.nFontType		= 0;
-					
-	if (ChooseFont(&cf))
-	{
+
+	if (ChooseFont(&cf)) {
 		// copy font returned from dialog
 		CreateListFont(cf.lpLogFont);
-		
+
 		CDC* pDC		= m_pListBox->GetDC();
 		CFont* pOldFont = pDC->SelectObject(m_pFont);
-						
+
 		// set the listbox item size and new font
 		TEXTMETRIC tmList;
 		INT cyItem;
@@ -292,13 +289,13 @@ void CWysWnd :: OnFont()
 		pDC->GetTextMetrics(&tmList);
 		cyItem = tmList.tmHeight + tmList.tmExternalLeading;
 		m_pListBox->SetItemHeight(0, cyItem);
-		
+
 		// set the font
 		m_pListBox->SetFont(m_pFont, TRUE);
-		
+
 		// clean up
 		pDC->SelectObject(pOldFont);
 		m_pListBox->ReleaseDC(pDC);
-	}								
+	}
 	return;
 }

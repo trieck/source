@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CScoresPreviewWnd window
 
-class CScoresPreviewWnd : public CWnd
-{
+class CScoresPreviewWnd : public CWnd {
 // Construction
 public:
 	CScoresPreviewWnd();
@@ -25,7 +24,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CScoresPreviewWnd)
-	protected:
+protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL
 
@@ -40,7 +39,7 @@ protected:
 	VOID DrawPreview(CDC*, INT, INT);
 
 	CFont m_Font;
-	
+
 	//{{AFX_MSG(CScoresPreviewWnd)
 	afx_msg void OnPaint();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

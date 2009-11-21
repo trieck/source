@@ -2,8 +2,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // IMiscellaneous wrapper class
 
-class IMiscellaneous : public COleDispatchDriver
-{
+class IMiscellaneous : public COleDispatchDriver {
 public:
 	IMiscellaneous() {}		// Calls COleDispatchDriver default constructor
 	IMiscellaneous(LPDISPATCH pDispatch) : COleDispatchDriver(pDispatch) {}

@@ -86,7 +86,7 @@ LPTORRENTOBJECT LoadElement(CFile *fp)
 		return list(fp);
 	case ET_STRING:
 		return string(fp);
-	default: 
+	default:
 		AfxThrowArchiveException(CArchiveException::badIndex);
 	}
 
@@ -121,11 +121,17 @@ int Gettok(CFile *fp)
 	int c = Peek(fp);
 
 	switch (c) {
-	case 'd': Getch(fp); return ET_DICT;
-	case 'i': Getch(fp); return ET_INTEGER;
-	case 'l': Getch(fp); return ET_LIST;
+	case 'd':
+		Getch(fp);
+		return ET_DICT;
+	case 'i':
+		Getch(fp);
+		return ET_INTEGER;
+	case 'l':
+		Getch(fp);
+		return ET_LIST;
 	default:
-		if (isdigit(c)) 
+		if (isdigit(c))
 			return ET_STRING;
 	}
 
@@ -138,8 +144,9 @@ int Gettok(CFile *fp)
 LPDICTIONARY dictionary(CFile *fp)
 {
 	LPDICTIONARY d = new Dictionary();
-	LPSTRING k; LPTORRENTOBJECT v; 
-	
+	LPSTRING k;
+	LPTORRENTOBJECT v;
+
 	int c;
 	while ((c = Peek(fp)) != 'e' && c != EOF) {
 		k = string(fp);
@@ -165,14 +172,14 @@ LPINTEGER integer(CFile *fp)
 
 	Getch(fp);	// 'e'
 
-	return new Integer(_atoi64(output));	
+	return new Integer(_atoi64(output));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 LPLIST list(CFile *fp)
 {
 	LPLIST list = new List();
-	
+
 	int c;
 	while ((c = Peek(fp)) != 'e' && c != EOF) {
 		list->append(LoadElement(fp));
@@ -188,7 +195,7 @@ LPSTRING string(CFile *fp)
 {
 	int c;
 	CString slen;
-	
+
 	while ((c = Peek(fp)) != ':' && c != EOF) {
 		slen += (TCHAR)Getch(fp);
 	}
@@ -199,14 +206,14 @@ LPSTRING string(CFile *fp)
 	LPSTR buf = s.GetBufferSetLength(length);
 
 	Getch(fp);	// ':'
-	
+
 	for (int i = 0; i < length; i++) {
 		int c = Getch(fp);
 		if (c == EOF)
 			AfxThrowFileException(CFileException::endOfFile);
 		*buf++ = (char)c;
 	}
-	
+
 
 	return new String(s, length);
 }

@@ -1,6 +1,6 @@
 /*---------------------------------------------
-	Module Name	:	MiscPage.h	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	MiscPage.h
+	Author		:	Thomas A. Rieck
 	Purpose		:	Miscellaneous Preference
 					Property Page
 	Date		:	01/18/1997
@@ -11,8 +11,7 @@
 
 #include "ResDll\resource.h"
 
-class CMiscPage : public CPropertyPage
-{
+class CMiscPage : public CPropertyPage {
 	DECLARE_DYNCREATE(CMiscPage);
 
 public:
@@ -23,11 +22,13 @@ protected:
 	virtual BOOL		OnInitDialog();
 	virtual void		OnOK();
 	virtual BOOL		OnApply();
-	inline	CButton&	GetCheckBox(){ return * (CButton*)GetDlgItem(IDC_DEBUGOPTIONS); }
+	inline	CButton&	GetCheckBox() {
+		return * (CButton*)GetDlgItem(IDC_DEBUGOPTIONS);
+	}
 
 private:
 	enum {IDD = IDD_MISCPAGE};
-	
+
 	afx_msg VOID OnPaint();
 	afx_msg VOID OnEnableDebug();
 	afx_msg VOID OnFlushPlayers();

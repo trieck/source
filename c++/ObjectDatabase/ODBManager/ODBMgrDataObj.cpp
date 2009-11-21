@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 ODBMgrDataObj::ODBMgrDataObj(LPUNKNOWN pUnknown)
- : m_cRef(0), m_pUnknown(pUnknown)
+		: m_cRef(0), m_pUnknown(pUnknown)
 {
 }
 
@@ -24,15 +24,15 @@ STDMETHODIMP ODBMgrDataObj::QueryInterface(REFIID riid, LPVOID *ppv)
 {
 	*ppv = NULL;
 
-    if (riid == IID_IUnknown || riid == IID_IDataObject)
-        *ppv = this;
-    
-    if (*ppv) {
-        ((LPUNKNOWN)*ppv)->AddRef();
-        return S_OK;
-    }
+	if (riid == IID_IUnknown || riid == IID_IDataObject)
+		*ppv = this;
 
-    return E_NOINTERFACE;
+	if (*ppv) {
+		((LPUNKNOWN)*ppv)->AddRef();
+		return S_OK;
+	}
+
+	return E_NOINTERFACE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

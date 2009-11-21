@@ -32,12 +32,12 @@
 #endif				/* __GNUC__ */
 
 /*
- * lexical buffer size 
+ * lexical buffer size
  */
 #define BSIZE 128
 
 /*
- * file open modes 
+ * file open modes
  */
 enum {
 	OM_READ_ONLY,

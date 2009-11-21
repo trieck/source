@@ -65,7 +65,7 @@
 #define TYA &opnames[55]
 /* opcode names */
 static const char *opnames[OPCODES] = {
-	"adc", "and", "asl", "bcc", "bcs", "beq", "bit", "bmi", "bne", "bpl", 
+	"adc", "and", "asl", "bcc", "bcs", "beq", "bit", "bmi", "bne", "bpl",
 	"brk", "bvc", "bvs", "clc", "cld", "cli", "clv", "cmp", "cpx", "cpy",
 	"dec", "dex", "dey", "eor", "inc", "inx", "iny", "jmp", "jsr", "lda",
 	"ldx", "ldy", "lsr", "nop", "ora", "pha", "php", "pla", "plp", "rol",

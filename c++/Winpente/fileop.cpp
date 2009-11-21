@@ -77,25 +77,22 @@ BOOL FileWrite(PSTR pstrFileName)
 	FILE* file;
 	int i,j;
 	int iLength;
-    GAMEFILE* SaveGame;
-			
+	GAMEFILE* SaveGame;
+
 	iLength = sizeof(GAMEFILE);
 
 	if (!(SaveGame = (GAMEFILE*)malloc( iLength)))
 		return(FALSE);
 
-	if (NULL == (file = fopen(pstrFileName, "wb")))
-	{
+	if (NULL == (file = fopen(pstrFileName, "wb"))) {
 		free(SaveGame);
 		return(FALSE);
 	}
 
 	/*Copy Data from  existing structure */
-	for (i=0, j=0;  i<19; j++)
-	{
+	for (i=0, j=0;  i<19; j++) {
 		SaveGame->piece[i][j] = p_Box[i][j]->piece;
-		if (j == 18)
-		{
+		if (j == 18) {
 			i++;
 			j=-1;
 		}
@@ -105,8 +102,7 @@ BOOL FileWrite(PSTR pstrFileName)
 	SaveGame->info[2] = p_Board->p2_captures;
 	SaveGame->info[3] = p_Board->game_option;
 
-	if (iLength != (int)fwrite (SaveGame,1, iLength, file))
-	{
+	if (iLength != (int)fwrite (SaveGame,1, iLength, file)) {
 		free(SaveGame);
 		fclose(file);
 		return(FALSE);
@@ -125,30 +121,26 @@ BOOL FileRead(PSTR pstrFileName)
 	int i,j;
 	int iLength;
 	GAMEFILE* OpenGame;
-		
+
 	iLength = sizeof(GAMEFILE);
 
 	if (!(OpenGame = (GAMEFILE*)malloc( iLength)))
 		return(FALSE);
 
-	if (NULL == (file = fopen(pstrFileName, "rb")))
-	{
+	if (NULL == (file = fopen(pstrFileName, "rb"))) {
 		free(OpenGame);
 		return (FALSE);
 	}
-		
-	if (iLength != (int)fread(OpenGame, 1, iLength, file))
-	{
+
+	if (iLength != (int)fread(OpenGame, 1, iLength, file)) {
 		free(OpenGame);
 		fclose(file);
 		return (FALSE);
 	}
 	/*Copy Data into existing structure */
-	for (i=0, j=0; i<19; j++)
-	{
+	for (i=0, j=0; i<19; j++) {
 		p_Box[i][j]->piece =  OpenGame->piece[i][j];
-		if (j == 18)
-		{
+		if (j == 18) {
 			i++;
 			j=-1;
 		}
@@ -157,7 +149,7 @@ BOOL FileRead(PSTR pstrFileName)
 	p_Board->p1_captures = OpenGame->info[1];
 	p_Board->p2_captures = OpenGame->info[2];
 	p_Board->game_option = OpenGame->info[3];
-		
+
 	free(OpenGame);
 	fclose(file);
 	return (TRUE);

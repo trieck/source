@@ -12,8 +12,7 @@ class Memory;
 typedef auto_ptr<Memory> MemoryPtr;
 
 /////////////////////////////////////////////////////////////////////////////
-class Memory
-{
+class Memory {
 // Construction / Destruction
 private:
 	Memory();

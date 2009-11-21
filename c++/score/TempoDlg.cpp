@@ -1,104 +1,105 @@
-// TempoDlg.cpp : implementation file
-//
+// TempoDlg.cpp : implementation file
+//
 
-#include "stdafx.h"
-#include "baseinc.h"
-#include "score.h"
-#include "TempoDlg.h"
+#include "stdafx.h"
+#include "baseinc.h"
+#include "score.h"
+#include "TempoDlg.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
 
-static const int minTempo = 10;
-static const int maxTempo = 400;
+static const int minTempo = 10;
+static const int maxTempo = 400;
 
-/////////////////////////////////////////////////////////////////////////////
-// TempoDlg dialog
-
-
-TempoDlg::TempoDlg(Measure * pMeasure, CWnd* pParent /*=NULL*/)
- : m_pMeasure(pMeasure), 
- CDialog(TempoDlg::IDD, pParent)
-{
-	//{{AFX_DATA_INIT(TempoDlg)
-    m_Tempo = DEFAULT_TEMPO;
-	m_ApplyForward = FALSE;
-	//}}AFX_DATA_INIT
-
-    ASSERT(m_pMeasure != NULL);
-}
+/////////////////////////////////////////////////////////////////////////////
+// TempoDlg dialog
 
 
-void TempoDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(TempoDlg)
-    DDX_Control(pDX, IDC_SPINTEMPO, m_TempoSpin);
-	DDX_Text(pDX, IDC_TEMPO, m_Tempo);
-	DDV_MinMaxUInt(pDX, m_Tempo, minTempo, maxTempo);
-	DDX_Check(pDX, IDC_CHKAPPLYMEASURESAHEAD, m_ApplyForward);
-	//}}AFX_DATA_MAP
-}
+TempoDlg::TempoDlg(Measure * pMeasure, CWnd* pParent /*=NULL*/)
+		: m_pMeasure(pMeasure),
+		CDialog(TempoDlg::IDD, pParent)
+{
+	//{{AFX_DATA_INIT(TempoDlg)
+	m_Tempo = DEFAULT_TEMPO;
+	m_ApplyForward = FALSE;
+	//}}AFX_DATA_INIT
+
+	ASSERT(m_pMeasure != NULL);
+}
 
 
-BEGIN_MESSAGE_MAP(TempoDlg, CDialog)
-	//{{AFX_MSG_MAP(TempoDlg)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+void TempoDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+	//{{AFX_DATA_MAP(TempoDlg)
+	DDX_Control(pDX, IDC_SPINTEMPO, m_TempoSpin);
+	DDX_Text(pDX, IDC_TEMPO, m_Tempo);
+	DDV_MinMaxUInt(pDX, m_Tempo, minTempo, maxTempo);
+	DDX_Check(pDX, IDC_CHKAPPLYMEASURESAHEAD, m_ApplyForward);
+	//}}AFX_DATA_MAP
+}
 
-/////////////////////////////////////////////////////////////////////////////
-// TempoDlg message handlers
 
-BOOL TempoDlg::OnInitDialog() 
-{
-	CDialog::OnInitDialog();
-	
-    m_Tempo = m_pMeasure->GetTempo();
-    m_TempoSpin.SetRange(minTempo, maxTempo);
-	
-    UpdateData(FALSE);
+BEGIN_MESSAGE_MAP(TempoDlg, CDialog)
+	//{{AFX_MSG_MAP(TempoDlg)
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
-}
+/////////////////////////////////////////////////////////////////////////////
+// TempoDlg message handlers
 
-//
-// OnOK
-//
-void TempoDlg :: OnOK() 
-{
-	CDialog::OnOK();
+BOOL TempoDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
 
-    m_pMeasure->SetTempo(m_Tempo);
+	m_Tempo = m_pMeasure->GetTempo();
+	m_TempoSpin.SetRange(minTempo, maxTempo);
 
-    if (m_ApplyForward)
-        ApplyForward();
-}
+	UpdateData(FALSE);
 
-//
-// ApplyForward
-//
-void TempoDlg :: ApplyForward() const
-{
-    const Staff * pStaff = m_pMeasure->GetStaff();
-    ASSERT(pStaff != NULL);
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// EXCEPTION: OCX Property Pages should return FALSE
+}
 
-    const MEASUREARRAY* pMeasures = pStaff->GetMeasures();
-    ASSERT(pMeasures != NULL);
+//
+// OnOK
+//
+void TempoDlg :: OnOK()
+{
+	CDialog::OnOK();
 
-    BOOL ahead = FALSE;
+	m_pMeasure->SetTempo(m_Tempo);
 
-    int Count = pMeasures->GetSize();
-    for (int i = 0; i < Count; i++) {
-        Measure * pMeasure = pMeasures->GetAt(i);
-        ASSERT(pMeasure != NULL);
+	if (m_ApplyForward)
+		ApplyForward();
+}
 
-        if (pMeasure == m_pMeasure)
-            ahead = TRUE;
-        else if (ahead) 
-            pMeasure->SetTempo(m_Tempo);
-    }
+//
+// ApplyForward
+//
+void TempoDlg :: ApplyForward() const
+{
+	const Staff * pStaff = m_pMeasure->GetStaff();
+	ASSERT(pStaff != NULL);
+
+	const MEASUREARRAY* pMeasures = pStaff->GetMeasures();
+	ASSERT(pMeasures != NULL);
+
+	BOOL ahead = FALSE;
+
+	int Count = pMeasures->GetSize();
+	for (int i = 0; i < Count; i++) {
+		Measure * pMeasure = pMeasures->GetAt(i);
+		ASSERT(pMeasure != NULL);
+
+		if (pMeasure == m_pMeasure)
+			ahead = TRUE;
+		else if (ahead)
+			pMeasure->SetTempo(m_Tempo);
+	}
+
 }

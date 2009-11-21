@@ -27,8 +27,7 @@ BEGIN_MESSAGE_MAP(MainFrame, CFrameWnd)
 	ON_COMMAND_RANGE(AFX_ID_VIEW_MINIMUM, AFX_ID_VIEW_MAXIMUM, OnViewStyle)
 END_MESSAGE_MAP()
 
-static UINT indicators[] =
-{
+static UINT indicators[] = {
 	ID_SEPARATOR,           // status line indicator
 	ID_INDICATOR_CAPS,
 	ID_INDICATOR_NUM,
@@ -50,19 +49,17 @@ int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
+
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
-		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
-		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
-	{
+	                           | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
+	        !m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
 	}
 
 	if (!m_wndStatusBar.Create(this) ||
-		!m_wndStatusBar.SetIndicators(indicators,
-		  sizeof(indicators)/sizeof(UINT)))
-	{
+	        !m_wndStatusBar.SetIndicators(indicators,
+	                                      sizeof(indicators)/sizeof(UINT))) {
 		TRACE0("Failed to create status bar\n");
 		return -1;      // fail to create
 	}
@@ -75,15 +72,14 @@ int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 }
 
 BOOL MainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
-	CCreateContext* pContext)
+                               CCreateContext* pContext)
 {
 	// create splitter window
 	if (!m_wndSplitter.CreateStatic(this, 1, 2))
 		return FALSE;
 
 	if (!m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(LeftView), CSize(100, 100), pContext) ||
-		!m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(WindumpView), CSize(100, 100), pContext))
-	{
+	        !m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(WindumpView), CSize(100, 100), pContext)) {
 		m_wndSplitter.DestroyWindow();
 		return FALSE;
 	}
@@ -93,7 +89,7 @@ BOOL MainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
 
 BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	if( !CFrameWnd::PreCreateWindow(cs) )
+	if ( !CFrameWnd::PreCreateWindow(cs) )
 		return FALSE;
 	return TRUE;
 }
@@ -127,29 +123,24 @@ WindumpView* MainFrame::GetRightPane()
 void MainFrame::OnUpdateViewStyles(CCmdUI* pCmdUI)
 {
 
-	WindumpView* pView = GetRightPane(); 
+	WindumpView* pView = GetRightPane();
 
 
 	if (pView == NULL)
 		pCmdUI->Enable(FALSE);
-	else
-	{
+	else {
 		DWORD dwStyle = pView->GetStyle() & LVS_TYPEMASK;
 
-		if (pCmdUI->m_nID == ID_VIEW_LINEUP)
-		{
+		if (pCmdUI->m_nID == ID_VIEW_LINEUP) {
 			if (dwStyle == LVS_ICON || dwStyle == LVS_SMALLICON)
 				pCmdUI->Enable();
 			else
 				pCmdUI->Enable(FALSE);
-		}
-		else
-		{
+		} else {
 			pCmdUI->Enable();
 			BOOL bChecked = FALSE;
 
-			switch (pCmdUI->m_nID)
-			{
+			switch (pCmdUI->m_nID) {
 			case ID_VIEW_DETAILS:
 				bChecked = (dwStyle == LVS_REPORT);
 				break;
@@ -181,18 +172,15 @@ void MainFrame::OnViewStyle(UINT nCommandID)
 {
 	WindumpView* pView = GetRightPane();
 
-	if (pView != NULL)
-	{
+	if (pView != NULL) {
 		DWORD dwStyle = -1;
 
-		switch (nCommandID)
-		{
-		case ID_VIEW_LINEUP:
-			{
-				CListCtrl& refListCtrl = pView->GetListCtrl();
-				refListCtrl.Arrange(LVA_SNAPTOGRID);
-			}
-			break;
+		switch (nCommandID) {
+		case ID_VIEW_LINEUP: {
+			CListCtrl& refListCtrl = pView->GetListCtrl();
+			refListCtrl.Arrange(LVA_SNAPTOGRID);
+		}
+		break;
 
 		case ID_VIEW_DETAILS:
 			dwStyle = LVS_REPORT;

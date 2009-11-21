@@ -4,7 +4,7 @@
 
 // Message Map for CDlgWin
 BEGIN_MESSAGE_MAP(CDlgWin, CFrameWnd)
-    ON_WM_HSCROLL()
+	ON_WM_HSCROLL()
 	ON_WM_ERASEBKGND()
 	ON_LBN_SELCHANGE(ID_LISTBOX, OnLBSelChange)
 	ON_LBN_DBLCLK(ID_LISTBOX, OnLBDblClick)
@@ -45,21 +45,30 @@ CDlgWin::~CDlgWin()
 void CDlgWin::CreateControls()
 {
 	// Allocate memory for controls
-	m_pOpenBtn = new CButton; ASSERT_VALID(m_pOpenBtn);
-	m_pExitBtn = new CButton; ASSERT_VALID(m_pExitBtn);
-    m_pRedSlider = new CSliderCtrl; ASSERT_VALID(m_pRedSlider);
-	m_pGreenSlider = new CSliderCtrl; ASSERT_VALID(m_pGreenSlider);
-	m_pBlueSlider = new CSliderCtrl; ASSERT_VALID(m_pBlueSlider);
-	m_pListBox = new CListBox; ASSERT_VALID(m_pListBox);
-	m_pEdit = new CEdit; ASSERT_VALID(m_pEdit);
-	m_pComboBox = new CColorCombo; ASSERT_VALID(m_pComboBox);
-	m_pProgressCtrl = new CProgressCtrl; ASSERT_VALID(m_pProgressCtrl);
-	
+	m_pOpenBtn = new CButton;
+	ASSERT_VALID(m_pOpenBtn);
+	m_pExitBtn = new CButton;
+	ASSERT_VALID(m_pExitBtn);
+	m_pRedSlider = new CSliderCtrl;
+	ASSERT_VALID(m_pRedSlider);
+	m_pGreenSlider = new CSliderCtrl;
+	ASSERT_VALID(m_pGreenSlider);
+	m_pBlueSlider = new CSliderCtrl;
+	ASSERT_VALID(m_pBlueSlider);
+	m_pListBox = new CListBox;
+	ASSERT_VALID(m_pListBox);
+	m_pEdit = new CEdit;
+	ASSERT_VALID(m_pEdit);
+	m_pComboBox = new CColorCombo;
+	ASSERT_VALID(m_pComboBox);
+	m_pProgressCtrl = new CProgressCtrl;
+	ASSERT_VALID(m_pProgressCtrl);
+
 	// Create them
 	m_pOpenBtn->Create("&Open File", BS_PUSHBUTTON | WS_VISIBLE | WS_CHILD,
-			CRect(350, 8, 513, 33), this, ID_OPENBTN);
+	                   CRect(350, 8, 513, 33), this, ID_OPENBTN);
 	m_pExitBtn->Create("E&xit", BS_PUSHBUTTON | WS_VISIBLE | WS_CHILD,
-            CRect(350, 40, 513, 65), this, ID_EXITBTN);
+	                   CRect(350, 40, 513, 65), this, ID_EXITBTN);
 	m_pRedSlider->Create(WS_VISIBLE | WS_CHILD, CRect(0, 0, 250, 20), this, ID_REDSLIDER);
 	m_pGreenSlider->Create(WS_VISIBLE | WS_CHILD, CRect(0, 20, 250, 40), this, ID_GREENSLIDER);
 	m_pBlueSlider->Create(WS_VISIBLE | WS_CHILD, CRect(0, 40, 250, 60), this, ID_BLUESLIDER);
@@ -67,12 +76,12 @@ void CDlgWin::CreateControls()
 	m_pEdit->Create(ES_MULTILINE | ES_READONLY | WS_VISIBLE | WS_VSCROLL | WS_CHILD | WS_BORDER, CRect (260, 80, 515, 240), this, ID_EDIT);
 	m_pComboBox->Create(CBS_OWNERDRAWFIXED | CBS_NOINTEGRALHEIGHT | CBS_DROPDOWNLIST | WS_BORDER | WS_VISIBLE | WS_CHILD | WS_VSCROLL, CRect(260, 250, 515, 360), this, ID_COMBOBOX);
 	m_pProgressCtrl->Create(WS_CHILD | WS_VISIBLE | WS_BORDER, CRect(0, 275, 520, 295), this, ID_PROGRESSCTRL);
-	
+
 	// Set slider ranges and positions
 	m_pRedSlider->SetRange(0,255, FALSE);
 	m_pGreenSlider->SetRange(0,255, FALSE);
 	m_pBlueSlider->SetRange(0,255, FALSE);
-    
+
 	m_pRedSlider->SetPos(128);
 	m_pGreenSlider->SetPos(128);
 	m_pBlueSlider->SetPos(128);
@@ -104,19 +113,19 @@ void CDlgWin::OnBtnOpenClick()
 	// initialize file member
 	m_pFile = NULL;
 
-	if ((nIndex = m_pListBox->GetCurSel())!=-1)
-	{
+	if ((nIndex = m_pListBox->GetCurSel())!=-1) {
 		// extract string from list box
 		m_pListBox->GetText(nIndex, _T(szFile));
-		
-		// create file
-		m_pFile = new CStdioFile(_T(szFile), CFile::modeRead | CFile::typeBinary); ASSERT_VALID(m_pFile);
-		
-		// allocate memory
-		lpBuff = new BYTE[m_pFile->GetLength()]; ASSERT_VALID(m_pFile);
 
-		if (!(lpBuff))
-		{
+		// create file
+		m_pFile = new CStdioFile(_T(szFile), CFile::modeRead | CFile::typeBinary);
+		ASSERT_VALID(m_pFile);
+
+		// allocate memory
+		lpBuff = new BYTE[m_pFile->GetLength()];
+		ASSERT_VALID(m_pFile);
+
+		if (!(lpBuff)) {
 			AfxMessageBox("Error allocating memory.", MB_ICONINFORMATION);
 			return;
 		}
@@ -125,8 +134,7 @@ void CDlgWin::OnBtnOpenClick()
 		m_pProgressCtrl->SetRange(0, m_pFile->GetLength());
 
 		// read data
-		while (dwCount < m_pFile->GetLength())
-		{
+		while (dwCount < m_pFile->GetLength()) {
 			m_pFile->Read(lpBuff+dwCount, 10);
 			dwCount +=10;
 			m_pProgressCtrl->SetPos(dwCount);
@@ -134,7 +142,7 @@ void CDlgWin::OnBtnOpenClick()
 
 		// set text in edit control
 		m_pEdit->SetWindowText((LPCTSTR)lpBuff);
-		
+
 		// close file
 		m_pFile->Close();
 
@@ -181,8 +189,7 @@ void CDlgWin::UpdateClientColor()
 
 void CDlgWin::SetWndFont(CWnd* pWnd, CString szFont, LONG lSize)
 {
-	if (!m_pFont)
-	{
+	if (!m_pFont) {
 		m_pFont = new CFont;
 		ASSERT_VALID(m_pFont);
 
@@ -202,8 +209,7 @@ void CDlgWin::SetWndFont(CWnd* pWnd, CString szFont, LONG lSize)
 
 void CDlgWin::SetChildFonts(int nFirst, int nLast, CString szFont, long lSize)
 {
-	for (int i = nFirst; i<= nLast; i++)
-	{
+	for (int i = nFirst; i<= nLast; i++) {
 		CWnd* pWnd = GetDlgItem(i);
 
 		if (pWnd) SetWndFont(pWnd, szFont, lSize);

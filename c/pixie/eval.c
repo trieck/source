@@ -157,7 +157,7 @@ Symbol *arith(Node * N)
 		break;
 	default:
 		error("unknown arithmetic procedure [%d] near line %d.",
-			  N->nobj, N->lineno);
+		      N->nobj, N->lineno);
 	}
 
 	return t;
@@ -649,7 +649,7 @@ Symbol *decl(Node * N)
 
 			if (islocal(sym->name)) {
 				error("local %s already declared near line %d.",
-					  sym->name, p->args[0]->lineno);
+				      sym->name, p->args[0]->lineno);
 			}
 
 			binstall(sym->name, SVAR, SFLOAT, 0);
@@ -662,14 +662,14 @@ Symbol *decl(Node * N)
 
 			if (islocal(sym->name)) {
 				error("local %s already declared near line %d.",
-					  sym->name, p->lineno);
+				      sym->name, p->lineno);
 			}
 
 			sym = binstall(sym->name, SVAR, SFLOAT, 0);
 			break;
 		default:
 			error("unknown node type [%d] near line %d.",
-				  p->type, p->lineno);
+			      p->type, p->lineno);
 		}
 	}
 
@@ -690,7 +690,7 @@ Symbol *block(Node * N)
 	blockenter();
 
 	for (p = N->args[0];
-		 p && !returning && !breaking && !continuing; p = p->next) {
+	        p && !returning && !breaking && !continuing; p = p->next) {
 		tempfree(sym);
 		sym = evalnode(p);
 	}
@@ -1023,7 +1023,7 @@ Symbol *lshift(Node * N)
 
 	temp = maketemp();
 	temp->u.fval = (int)floatval(N->args[0]) << (int)floatval(N->args[1]);
-	
+
 	return temp;
 }
 
@@ -1036,7 +1036,7 @@ Symbol *rshift(Node * N)
 
 	temp = maketemp();
 	temp->u.fval = (int)floatval(N->args[0]) >> (int)floatval(N->args[1]);
-	
+
 	return temp;
 }
 
@@ -1074,9 +1074,9 @@ Symbol *asc(Node * N)
 	CHECKARGS(N, 1, "asc");
 
 	res = stringval(N->args[0]);
-	if (strlen(res->u.sval) == 0) 
+	if (strlen(res->u.sval) == 0)
 		error("zero-length string unexpected near line %d.", N->lineno);
-	
+
 	temp = maketemp();
 	temp->u.fval = res->u.sval[0];
 
@@ -1092,7 +1092,7 @@ Symbol *chr(Node * N)
 	CHECKARGS(N, 1, "chr");
 
 	buf[0] = (char)floatval(N->args[0]);
-		
+
 	temp = maketemp();
 	temp->sub &= ~SFLOAT;
 	temp->sub |= SSTRING;
@@ -1170,10 +1170,10 @@ double floatval(Node * N)
 			d = atof(sym->u.sval);
 		} else if (sym->sub & SARRAY) {
 			error("array %s unexpected near line %d.",
-				  sym->name, N->lineno);
+			      sym->name, N->lineno);
 		} else {
 			error("unknown symbol sub-type %d near line %d.",
-				  sym->sub, N->lineno);
+			      sym->sub, N->lineno);
 		}
 		break;
 	case SUNDEF:
@@ -1181,7 +1181,7 @@ double floatval(Node * N)
 		break;
 	default:
 		error("unknown symbol type %d near line %d.",
-			  sym->type, N->lineno);
+		      sym->type, N->lineno);
 	}
 
 	tempfree(sym);
@@ -1211,10 +1211,10 @@ Symbol *stringval(Node * N)
 			t->u.sval = xstrdup(sym->u.sval);
 		} else if (sym->sub & SARRAY) {
 			error("array %s unexpected near line %d.",
-				  sym->name, N->lineno);
+			      sym->name, N->lineno);
 		} else {
 			error("unknown symbol sub-type %d near line %d.",
-				  sym->sub, N->lineno);
+			      sym->sub, N->lineno);
 		}
 		break;
 	case SUNDEF:
@@ -1222,7 +1222,7 @@ Symbol *stringval(Node * N)
 		break;
 	default:
 		error("unknown symbol type %d near line %d.",
-			  sym->type, N->lineno);
+		      sym->type, N->lineno);
 	}
 
 	tempfree(sym);

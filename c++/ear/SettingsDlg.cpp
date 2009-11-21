@@ -17,7 +17,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 SettingsDlg::SettingsDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(SettingsDlg::IDD, pParent)
+		: CDialog(SettingsDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(SettingsDlg)
 	m_Fifths = FALSE;
@@ -56,55 +56,55 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // SettingsDlg message handlers
 
-BOOL SettingsDlg::OnInitDialog() 
+BOOL SettingsDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	SetIntervals();
 	BuildInstruments();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void SettingsDlg::BuildInstruments()
 {
-	EarApp *pApp = (EarApp *)AfxGetApp();	
+	EarApp *pApp = (EarApp *)AfxGetApp();
 	ASSERT_VALID(pApp);
 
-    CComboBox * pInstruments = 
-        (CComboBox *)GetDlgItem(IDC_INSTRUMENTS);
-    ASSERT_VALID(pInstruments);
+	CComboBox * pInstruments =
+	    (CComboBox *)GetDlgItem(IDC_INSTRUMENTS);
+	ASSERT_VALID(pInstruments);
 
-    HRSRC hResource = ::FindResource(AfxGetResourceHandle(), 
-                        MAKEINTRESOURCE(IDR_INSTRUMENTS),
-                        "TEXT");
-    ASSERT(hResource != NULL);
+	HRSRC hResource = ::FindResource(AfxGetResourceHandle(),
+	                                 MAKEINTRESOURCE(IDR_INSTRUMENTS),
+	                                 "TEXT");
+	ASSERT(hResource != NULL);
 
-    HGLOBAL hGlobal = ::LoadResource(AfxGetResourceHandle(), hResource);
-    ASSERT(hGlobal != NULL);
+	HGLOBAL hGlobal = ::LoadResource(AfxGetResourceHandle(), hResource);
+	ASSERT(hGlobal != NULL);
 
-    LPCSTR pResource = (LPCSTR)::LockResource(hGlobal);
-    ASSERT(pResource != NULL);
-    LPSTR pdata = strdup(pResource);
+	LPCSTR pResource = (LPCSTR)::LockResource(hGlobal);
+	ASSERT(pResource != NULL);
+	LPSTR pdata = strdup(pResource);
 
-    LPCSTR ptok = strtok(pdata, "\r\n");
-    while (ptok != NULL) {
-        pInstruments->AddString(ptok);
-        ptok = strtok(NULL, "\r\n");
-    }
+	LPCSTR ptok = strtok(pdata, "\r\n");
+	while (ptok != NULL) {
+		pInstruments->AddString(ptok);
+		ptok = strtok(NULL, "\r\n");
+	}
 
-    if (pdata != NULL) delete [] pdata;
+	if (pdata != NULL) delete [] pdata;
 
-    if (pInstruments->GetCount() > 0) {
-        m_instrument = pApp->GetInstrument();
+	if (pInstruments->GetCount() > 0) {
+		m_instrument = pApp->GetInstrument();
 		UpdateData(FALSE);
 	}
 }
 
 void SettingsDlg::SetIntervals()
 {
-	EarApp *pApp = (EarApp *)AfxGetApp();	
+	EarApp *pApp = (EarApp *)AfxGetApp();
 	ASSERT_VALID(pApp);
 
 	int intervals = pApp->GetIntervals();
@@ -119,12 +119,12 @@ void SettingsDlg::SetIntervals()
 
 	UpdateData(FALSE);
 }
-void SettingsDlg::OnOK() 
+void SettingsDlg::OnOK()
 {
 	int intervals = 0;
 
 	UpdateData(TRUE);
-	
+
 	if (m_Seconds) intervals |= INTERVAL_SECONDS;
 	if (m_Thirds) intervals |= INTERVAL_THIRDS;
 	if (m_Fourths) intervals |= INTERVAL_FOURTHS;
@@ -132,8 +132,8 @@ void SettingsDlg::OnOK()
 	if (m_Sixths) intervals |= INTERVAL_SIXTHS;
 	if (m_Sevenths) intervals |= INTERVAL_SEVENTHS;
 	if (m_Octaves) intervals |= INTERVAL_OCTAVES;
-	
-	EarApp *pApp = (EarApp *)AfxGetApp();	
+
+	EarApp *pApp = (EarApp *)AfxGetApp();
 	ASSERT_VALID(pApp);
 
 	pApp->SetIntervals(intervals);

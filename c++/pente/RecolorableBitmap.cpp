@@ -9,8 +9,8 @@
 // RecolorableBitmap
 
 RecolorableBitmap::RecolorableBitmap(COLORREF nSourceColor)
-: TransparentBitmap(TRANSPARENT_COLOR), m_dwBmpSize(0), m_Bits(0), 
-	m_Color(nSourceColor)
+		: TransparentBitmap(TRANSPARENT_COLOR), m_dwBmpSize(0), m_Bits(0),
+		m_Color(nSourceColor)
 {
 }
 
@@ -22,7 +22,7 @@ RecolorableBitmap::~RecolorableBitmap()
 // RecolorableBitmap member functions
 void RecolorableBitmap::Load(UINT nID)
 {
-	LoadBitmap(nID);	
+	LoadBitmap(nID);
 
 	BITMAP bm;
 	GetBitmap(&bm);

@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "unable to open file %s.\n", argv[1]);
 		return 1;
 	}
-	
+
 	while ((c = getc(fp)) != EOF) {
 		int i;
 		for (i = 8; i > 0; i--) {

@@ -11,9 +11,8 @@
 
 #include "gripbar.h"
 
-class MainFrame : public CFrameWnd
-{
-	
+class MainFrame : public CFrameWnd {
+
 protected: // create from serialization only
 	MainFrame();
 	DECLARE_DYNCREATE(MainFrame)
@@ -56,7 +55,7 @@ protected:
 	afx_msg void OnUpdateMemory(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-	
+
 public:
 	afx_msg void OnUpdateDisassembly(CCmdUI *pCmdUI);
 	afx_msg void OnDisassembly();

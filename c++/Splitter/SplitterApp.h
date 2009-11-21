@@ -13,13 +13,12 @@
 ///////////////////////////////////////////////////////////////////
 // The CSplitterApp application class
 
-class CSplitterApp : public CWinApp
-{
+class CSplitterApp : public CWinApp {
 public:
-   CSplitterApp();
-   virtual ~CSplitterApp();
+	CSplitterApp();
+	virtual ~CSplitterApp();
 
-   // Overrides
+	// Overrides
 	virtual BOOL InitInstance();
 };
 

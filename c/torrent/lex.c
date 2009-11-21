@@ -30,14 +30,17 @@ int gettok(FILE *fp)
 	c = fgetc(fp);
 
 	switch (c) {
-	case 'd': return ET_DICT;
-	case 'i': return ET_INTEGER;
-	case 'l': return ET_LIST;
+	case 'd':
+		return ET_DICT;
+	case 'i':
+		return ET_INTEGER;
+	case 'l':
+		return ET_LIST;
 	default:
-		if (isdigit(c)) { 
-			ungetc(c, fp); 
+		if (isdigit(c)) {
+			ungetc(c, fp);
 			return ET_STRING;
-		}		
+		}
 	}
 	return c;
 }
@@ -60,10 +63,14 @@ bt_element getelement(FILE *fp)
 	t = gettok(fp);
 
 	switch (t) {
-	case ET_DICT: return dictionary(fp);
-	case ET_INTEGER: return integer(fp);
-	case ET_LIST: return list(fp);
-	case ET_STRING: return string(fp);
+	case ET_DICT:
+		return dictionary(fp);
+	case ET_INTEGER:
+		return integer(fp);
+	case ET_LIST:
+		return list(fp);
+	case ET_STRING:
+		return string(fp);
 	default:
 		ui_error("unexpected token 0x%.2x.\n", t);
 		break;
@@ -86,7 +93,7 @@ bt_element dictionary(FILE *fp)
 		k = string(fp);
 		v = getelement(fp);
 		bt_dict_insert(e.dval, k.sval->data, &v);
-		free_element(k);		
+		free_element(k);
 	}
 
 	gettok(fp);	/* 'e' */
@@ -115,10 +122,13 @@ bt_element list(FILE *fp)
 
 	memset(&e, 0, sizeof(bt_element));
 	e.type = ET_LIST;
-		
+
 	while ((c = lookahead(fp)) != 'e' && c != EOF) {
 		if (l == NULL) e.lval = l = alloc_bt_list();
-		else { l->next = alloc_bt_list(); l = l->next; }
+		else {
+			l->next = alloc_bt_list();
+			l = l->next;
+		}
 		l->e = getelement(fp);
 	}
 

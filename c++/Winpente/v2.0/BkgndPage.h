@@ -1,6 +1,6 @@
 /*------------------------------------------
-	Module Name	:	BkgndPage.h	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	BkgndPage.h
+	Author		:	Thomas A. Rieck
 	Purpose		:	Backgrounds Preference
 					Property Page
 	Date		:	08/30/1997
@@ -14,13 +14,12 @@
 #include "ResDll\resource.h"
 #include "resource.h"
 
-class CBkgndPage : public CPropertyPage
-{
+class CBkgndPage : public CPropertyPage {
 	DECLARE_DYNCREATE(CBkgndPage);
 public:
 	CBkgndPage();
 	~CBkgndPage();
-		
+
 	CBkgndBitmap *	m_pCurrentBitmap;
 	VOID RedrawBitmaps();
 
@@ -33,16 +32,16 @@ protected:
 	CBkgndBitmap*	GetBkgndBitmapFromRes(UINT);
 
 	enum {IDD = IDD_BKGNDPAGE};
-	
+
 	static const UINT	ctlIDs[];
 	static const UINT	resIDs[];
 	static const RECT	rcs[];
-	
+
 	CPenteView*		m_pView;
 	LPCTSTR			m_lpszClassName;
 
 	CBkgndBitmap *	m_pBkgndBitmaps[6];
-	
+
 	// Message Handlers
 	afx_msg VOID	OnPaletteChanged(CWnd*);
 	afx_msg BOOL	OnQueryNewPalette();

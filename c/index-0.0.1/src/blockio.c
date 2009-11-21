@@ -1,6 +1,6 @@
 /*
  * BLOCKIO.C
- * 
+ *
  * Block i/o interface
  * Copyright (c) 2008 Thomas A. Rieck
  */
@@ -12,7 +12,7 @@
 extern int __cdecl _fseeki64(FILE * stream, __int64 offset, int whence);
 #endif				/* _MSC_VER
 
-				   /* read a block */
+/* read a block */
 int readblock(FILE * fp, uint64_t blockno, void *buf)
 {
 	uint64_t offset = blockno * BLOCK_SIZE;
@@ -27,7 +27,7 @@ int readblock(FILE * fp, uint64_t blockno, void *buf)
 }
 
 /*
- * write a block 
+ * write a block
  */
 int writeblock(FILE * fp, uint64_t blockno, const void *buf)
 {

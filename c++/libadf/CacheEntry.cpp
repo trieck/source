@@ -12,7 +12,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 CacheEntry::CacheEntry() : days(0), header(0), mins(0), protect(0), size(0),
- ticks(0), type(0)
+		ticks(0), type(0)
 {
 }
 

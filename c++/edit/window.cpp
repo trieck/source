@@ -8,7 +8,7 @@
 #include "common.h"
 
 Window::Window()
- : m_hWnd(0)
+		: m_hWnd(0)
 {
 }
 
@@ -21,12 +21,12 @@ void Window::RegisterMessages()
 	// empty
 }
 
-LRESULT CALLBACK Window::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam,  
-  LPARAM lParam)
+LRESULT CALLBACK Window::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam,
+                                    LPARAM lParam)
 {
 	static Window * pWnd;
 	ASSERT(pWnd == NULL || pWnd->m_hWnd == hWnd);
-	
+
 	if (uMsg == WM_CREATE)
 		pWnd = (Window *)((LPCREATESTRUCT)lParam)->lpCreateParams;
 

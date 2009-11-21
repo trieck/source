@@ -1,6 +1,6 @@
 /*
  * BTREE.H
- * 
+ *
  * B-tree
  * Copyright (c) 2008 Thomas A. Rieck
  */
@@ -9,7 +9,7 @@
 #define __BTREE_H__
 
 /*
- * item struct 
+ * item struct
  */
 struct Item {
 	uint64_t key;
@@ -23,7 +23,7 @@ typedef struct Item Item_t;
 #endif				/* _MSCVER */
 
 /*
- * cell struct 
+ * cell struct
  */
 struct Cell {
 	uint64_t next;		/* link to next subpage */
@@ -34,7 +34,7 @@ struct Cell {
 typedef struct Cell Cell_t;
 
 /*
- * page header 
+ * page header
  */
 struct PageHeader {
 	uint8_t flags;		/* page flags */
@@ -45,7 +45,7 @@ struct PageHeader {
 typedef struct PageHeader PageHeader_t;
 
 /*
- * page definition 
+ * page definition
  */
 struct Page {
 	PageHeader_t header;	/* page header */
@@ -59,17 +59,17 @@ typedef struct Page Page_t;
 #endif				/* _MSCVER */
 
 /*
- * maximum depth of tree 
+ * maximum depth of tree
  */
 enum { MAXDEPTH = 5 };
 
 /*
- * maximum value 
+ * maximum value
  */
 enum { MAXV = -1 };
 
 /*
- * btree definition 
+ * btree definition
  */
 struct BTree {
 	uint64_t npages;	/* # of pages */

@@ -4,8 +4,7 @@
 
 // VolPropPage dialog
 
-class VolPropPage : public CPropertyPage
-{
+class VolPropPage : public CPropertyPage {
 	DECLARE_DYNCREATE(VolPropPage)
 
 public:

@@ -36,5 +36,6 @@ void interrupt_st::handleTrap()
 void interrupt_st::setTrap(LPTRAPHANDLER handler, void *data)
 {
 	pending |= IK_TRAP;
-	trap = handler; trap_data = data;
+	trap = handler;
+	trap_data = data;
 }

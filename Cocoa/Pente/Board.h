@@ -12,13 +12,21 @@
 #define BOARD_SIZE		(19)
 #define BOARD_ENTRIES	(BOARD_SIZE*BOARD_SIZE)
 
-@interface Board : NSObject {
+@interface Board :
+NSObject {
 	NSMapTable *rep;
 }
 
-- (uint32_t)entry:(uint32_t)row :(uint32_t)col;
-- (void)remove:(uint32_t)row :(uint32_t)col;
-- (void)setEntry:(uint32_t)row :(uint32_t)col :(uint32_t)type;
+- (uint32_t)entry:
+(uint32_t)row :
+(uint32_t)col;
+- (void)remove:
+(uint32_t)row :
+(uint32_t)col;
+- (void)setEntry:
+(uint32_t)row :
+(uint32_t)col :
+(uint32_t)type;
 - (void)clear;
 - (NSEnumerator*)enumEntries;
 - (NSArray*)empty;

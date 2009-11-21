@@ -19,19 +19,19 @@ static	HWND	g_hWnd			= NULL;		// Global window handle
 // are no more components or server locks
 VOID ObjectDestroyed()
 {
-    g_cComponents--;
+	g_cComponents--;
 
 	//No more objects and no locks, shut the app down.
-    if (0L == g_cComponents && 0L== g_cServerLocks && IsWindow(g_hWnd))
-        PostMessage(g_hWnd, WM_CLOSE, 0, 0);
+	if (0L == g_cComponents && 0L== g_cServerLocks && IsWindow(g_hWnd))
+		PostMessage(g_hWnd, WM_CLOSE, 0, 0);
 
 }
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-				LPSTR lpCmdLine, INT nCmdShow)
+                   LPSTR lpCmdLine, INT nCmdShow)
 {
 	MSG	msg;
-		
+
 	// Controls whether UI is shown or not
 	BOOL bUI = TRUE;
 
@@ -42,7 +42,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	HRESULT hr = CoInitialize(NULL) ;
 	if (FAILED(hr))
 		return 0;
-	
+
 	// Read the command line.
 	TCHAR	szTokens[] = _T("-/");
 	TCHAR	szCmdLine[128];
@@ -50,14 +50,13 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 #ifdef _UNICODE
 	MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, lpCmdLine, - 1, szCmdLine, 128);
-	lpszToken = wcstok(szCmdLine, szTokens); 
+	lpszToken = wcstok(szCmdLine, szTokens);
 #else
 	strcpy(szCmdLine, lpCmdLine);
-	lpszToken = strtok(szCmdLine, szTokens); 
-#endif	
-	
-	while (lpszToken != NULL)
-	{
+	lpszToken = strtok(szCmdLine, szTokens);
+#endif
+
+	while (lpszToken != NULL) {
 #ifdef _UNICODE
 		if (_wcsicmp(lpszToken, _T("UnregServer")) == 0)
 #else
@@ -65,7 +64,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 #endif
 		{
 			UnregisterServer(CLSID_Miscellaneous, g_szVerIndProgID,
-							g_szProgID);
+			g_szProgID);
 
 			// We are done, so exit.
 			bExit = TRUE;
@@ -78,8 +77,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 #endif
 		{
 			RegisterServer(hInstance, CLSID_Miscellaneous,
-						g_szFriendlyName, g_szVerIndProgID, g_szProgID,
-						LIBID_MiscLib);
+			g_szFriendlyName, g_szVerIndProgID, g_szProgID,
+			LIBID_MiscLib);
 
 			// We are done, so exit.
 			bExit = TRUE;
@@ -106,7 +105,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	CApp* pApp = new CApp(hInstance, nCmdShow);
 	if (!pApp) return -1;
-	
+
 	// Initialize application
 	if (!pApp->Init(_T("OutProcServer")))
 		return -2;
@@ -117,12 +116,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	g_hWnd = pApp->GetMainWnd();
 
-	if (bUI)
-	{
+	if (bUI) {
 		ShowWindow(g_hWnd, nCmdShow);
 		UpdateWindow(g_hWnd);
 	}
-	
+
 	LPCLASSFACTORY	pIClassFactory;
 	DWORD			dwCookie;
 
@@ -132,15 +130,14 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		return 0;
 
 	hr = ::CoRegisterClassObject(CLSID_Miscellaneous, pIClassFactory
-    	, CLSCTX_LOCAL_SERVER, REGCLS_MULTIPLEUSE, &dwCookie);
-    if (FAILED(hr))
-    	return 0;
+	                             , CLSCTX_LOCAL_SERVER, REGCLS_MULTIPLEUSE, &dwCookie);
+	if (FAILED(hr))
+		return 0;
 
-	// Enter the message loop	
-	while (GetMessage(&msg, NULL, 0, 0)) 
-	{
-		TranslateMessage(&msg);    
-		DispatchMessage(&msg);     
+	// Enter the message loop
+	while (GetMessage(&msg, NULL, 0, 0)) {
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
 
 	// Revoke the Class Factory
@@ -154,7 +151,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	CoUninitialize();
 
-	return (msg.wParam); 
+	return (msg.wParam);
 }
 
 CApp :: CApp(HINSTANCE hInstance, INT nCmdShow)
@@ -179,23 +176,23 @@ BOOL CApp :: Init(LPCTSTR lpszClassName)
 #endif
 
 	// Create Frame class
-	m_wndClass.style			= CS_HREDRAW | CS_VREDRAW;                    
-    m_wndClass.lpfnWndProc		= (WNDPROC)MainWndProc;       
+	m_wndClass.style			= CS_HREDRAW | CS_VREDRAW;
+	m_wndClass.lpfnWndProc		= (WNDPROC)MainWndProc;
 	m_wndClass.cbClsExtra		= 0;
-    m_wndClass.cbWndExtra		= 0;
-    m_wndClass.hIcon			= LoadIcon(m_hInst, MAKEINTRESOURCE(IDI_MAIN));
-    m_wndClass.hInstance		= m_hInst;
-    m_wndClass.hCursor			= LoadCursor(NULL, IDC_ARROW);
-    m_wndClass.hbrBackground	= NULL;
-    m_wndClass.lpszMenuName		= NULL;
-    m_wndClass.lpszClassName	= m_szClassName; 
+	m_wndClass.cbWndExtra		= 0;
+	m_wndClass.hIcon			= LoadIcon(m_hInst, MAKEINTRESOURCE(IDI_MAIN));
+	m_wndClass.hInstance		= m_hInst;
+	m_wndClass.hCursor			= LoadCursor(NULL, IDC_ARROW);
+	m_wndClass.hbrBackground	= NULL;
+	m_wndClass.lpszMenuName		= NULL;
+	m_wndClass.lpszClassName	= m_szClassName;
 
-    if (!RegisterClass(&m_wndClass))
+	if (!RegisterClass(&m_wndClass))
 		return FALSE;
-	
+
 	// Create Child Class
-	m_wndChildClass.style			= CS_HREDRAW | CS_VREDRAW | CS_BYTEALIGNCLIENT;  
-	m_wndChildClass.lpfnWndProc		= (WNDPROC)ChildProc;       
+	m_wndChildClass.style			= CS_HREDRAW | CS_VREDRAW | CS_BYTEALIGNCLIENT;
+	m_wndChildClass.lpfnWndProc		= (WNDPROC)ChildProc;
 	m_wndChildClass.cbClsExtra		= 0;
 	m_wndChildClass.cbWndExtra		= 0;
 	m_wndChildClass.hIcon			= LoadIcon(m_hInst, MAKEINTRESOURCE(IDI_MAIN));
@@ -217,23 +214,23 @@ BOOL CApp :: Create(LPCTSTR lpszCaption)
 
 	// Create the mainframe window
 	m_hWnd = CreateWindowEx(
-			0L,							
-			m_szClassName,                  
-			lpszCaption,   
-			WS_OVERLAPPEDWINDOW |
-			WS_CLIPCHILDREN, 		// Window style.                      
-			CW_USEDEFAULT,          // Default horizontal position.       
-			CW_USEDEFAULT,          // Default vertical position.         
-			400,					// Width.                     
-			400,					// Height.                    
-			NULL,                   // Overlapped windows have no parent. 
-			NULL,                   // Use the window class menu.         
-			m_hInst,				// This instance owns this window.    
-			this
-			);
+	             0L,
+	             m_szClassName,
+	             lpszCaption,
+	             WS_OVERLAPPEDWINDOW |
+	             WS_CLIPCHILDREN, 		// Window style.
+	             CW_USEDEFAULT,          // Default horizontal position.
+	             CW_USEDEFAULT,          // Default vertical position.
+	             400,					// Width.
+	             400,					// Height.
+	             NULL,                   // Overlapped windows have no parent.
+	             NULL,                   // Use the window class menu.
+	             m_hInst,				// This instance owns this window.
+	             this
+	         );
 
 	return (m_hWnd != NULL);
-}            
+}
 
 CApp::~CApp()
 {
@@ -246,16 +243,15 @@ VOID CApp :: Message (LPCTSTR szMessage)
 	MessageBox(m_hWnd, szMessage, m_szClassName, MB_ICONEXCLAMATION);
 }
 
-LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,             
-				WPARAM wParam, LPARAM lParam)
+LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,
+                             WPARAM wParam, LPARAM lParam)
 {
 	static PAPP		pApp;
 	LPCREATESTRUCT	lpcs;
 	RECT			rc;
 	INT				cx, cy, yStatus;
 
-	switch (message) 
-	{
+	switch (message) {
 	case WM_CREATE:
 		lpcs = (LPCREATESTRUCT)lParam;
 		assert(lpcs != NULL);
@@ -268,7 +264,7 @@ LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,
 
 		// Create Status Bar
 		pApp->m_hWndStatus = CreateStatusWindow(WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS,
-						NULL, hWnd, IDC_STATUS);
+		                                        NULL, hWnd, IDC_STATUS);
 
 		assert(IsWindow(pApp->m_hWndStatus));
 
@@ -277,18 +273,18 @@ LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,
 
 		// Create the child window
 		pApp->m_hWndChild = CreateWindowEx(
-				WS_EX_CLIENTEDGE,							
-				pApp->m_wndChildClass.lpszClassName,                  
-				NULL,   
-				WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS,    // Window style.                      
-				0,	                  						// Default horizontal position.       
-				0,                  						// Default vertical position.         
-				lpcs->cx,                  					// Width.                     
-				lpcs->cy - yStatus,                			// Height.                    
-				hWnd,			                           	// Window parent
-				NULL,                           			// Use the window class menu.         
-				pApp->m_hInst,								// This instance owns this window.    
-				pApp);
+		                        WS_EX_CLIENTEDGE,
+		                        pApp->m_wndChildClass.lpszClassName,
+		                        NULL,
+		                        WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS,    // Window style.
+		                        0,	                  						// Default horizontal position.
+		                        0,                  						// Default vertical position.
+		                        lpcs->cx,                  					// Width.
+		                        lpcs->cy - yStatus,                			// Height.
+		                        hWnd,			                           	// Window parent
+		                        NULL,                           			// Use the window class menu.
+		                        pApp->m_hInst,								// This instance owns this window.
+		                        pApp);
 
 		assert(IsWindow(pApp->m_hWndChild));
 
@@ -298,9 +294,9 @@ LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,
 	case WM_SIZE:
 		RECT 	rcStatus;
 		INT 	xClient, yClient, yStatus;
-		
+
 		GetWindowRect(pApp->m_hWndStatus, &rcStatus);
-		
+
 		xClient = LOWORD(lParam);
 		yClient = HIWORD(lParam);
 
@@ -317,21 +313,20 @@ LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
-        break;
+		break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 		break;
 	}
 	return (0);
-} 
+}
 
-LRESULT APIENTRY ChildProc(HWND hWnd, UINT message,             
-				WPARAM wParam, LPARAM lParam)
+LRESULT APIENTRY ChildProc(HWND hWnd, UINT message,
+                           WPARAM wParam, LPARAM lParam)
 {
 	static		PAPP pApp;
-	
-	switch (message) 
-	{
+
+	switch (message) {
 	case WM_CREATE:
 		pApp = (PAPP)((LPCREATESTRUCT)lParam)->lpCreateParams;
 		assert(pApp);
@@ -352,16 +347,15 @@ HRESULT __stdcall CFactory :: QueryInterface(REFIID iid, PPVOID ppv)
 
 	if ((iid == IID_IUnknown) || (iid == IID_IClassFactory))
 		pI = static_cast<LPCLASSFACTORY>(this);
-	else
-	{
+	else {
 		*ppv = NULL;
 		return E_NOINTERFACE;
 	}
-	
+
 	pI->AddRef();
 
 	*ppv = pI;
-	
+
 	return S_OK;
 }
 
@@ -372,8 +366,7 @@ ULONG CFactory :: AddRef()
 
 ULONG CFactory :: Release()
 {
-	if (InterlockedDecrement(&m_cRef) == 0)
-	{
+	if (InterlockedDecrement(&m_cRef) == 0) {
 		delete this;
 		return 0;
 	}
@@ -384,7 +377,7 @@ ULONG CFactory :: Release()
 // IClassFactory implementation
 //
 HRESULT __stdcall CFactory :: CreateInstance(LPUNKNOWN pUnknownOuter,
-									REFIID iid, PPVOID ppv)
+        REFIID iid, PPVOID ppv)
 {
 	HRESULT hr = E_FAIL;
 
@@ -394,26 +387,24 @@ HRESULT __stdcall CFactory :: CreateInstance(LPUNKNOWN pUnknownOuter,
 
 	// Create component telling us to notify us when it's gone.
 	CMiscellaneous* pMisc = new CMiscellaneous(ObjectDestroyed);
-	if (!pMisc)
-	{
-        // This starts shutdown if there are no other objects.
-        InterlockedIncrement(&g_cServerLocks);
-        ObjectDestroyed();
-        return E_OUTOFMEMORY;
+	if (!pMisc) {
+		// This starts shutdown if there are no other objects.
+		InterlockedIncrement(&g_cServerLocks);
+		ObjectDestroyed();
+		return E_OUTOFMEMORY;
 	}
 
 	// Initialize the component
 	HMODULE hModule = GetModuleHandle(NULL);
 	hr = pMisc->Init(hModule);
-	if (FAILED(hr))
-	{
+	if (FAILED(hr)) {
 		pMisc->Release();
 		return hr;
 	}
 
 	// Get the requested interface
 	hr = pMisc->QueryInterface(iid, ppv);
-	
+
 	pMisc->Release();
 
 	InterlockedIncrement(&g_cComponents);
@@ -426,21 +417,19 @@ HRESULT __stdcall CFactory :: LockServer(BOOL bLock)
 {
 	if (bLock)
 		InterlockedIncrement(&g_cServerLocks);
-	else
-	{
+	else {
 		InterlockedDecrement(&g_cServerLocks);
-        //
+		//
 		// Fake an object destruction:  this centralizes
-        // all the shutdown code in the ObjectDestroyed
+		// all the shutdown code in the ObjectDestroyed
 		// function, eliminating duplicate code here.
-        //
-        InterlockedIncrement(&g_cServerLocks);
+		//
+		InterlockedIncrement(&g_cServerLocks);
 
-        ObjectDestroyed();
+		ObjectDestroyed();
 	}
 
 	return S_OK;
 }
- 
 
-   
+

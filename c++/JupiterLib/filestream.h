@@ -10,8 +10,7 @@
 #define __FILESTREAM_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class FileStream : public IPeekableStream
-{
+class FileStream : public IPeekableStream {
 // Construction / Destruction
 private:
 	FileStream();
@@ -20,28 +19,28 @@ public:
 
 // Interface
 	static FileStream *Create(LPCSTR lpFileName,
-		DWORD dwDesiredAccess,
-		DWORD dwShareMode,
-		DWORD dwCreationDisposition,
-		DWORD dwFlagsAndAttributes);
+	                          DWORD dwDesiredAccess,
+	                          DWORD dwShareMode,
+	                          DWORD dwCreationDisposition,
+	                          DWORD dwFlagsAndAttributes);
 
 	// inherited methods
 	STDMETHODIMP_(ULONG) AddRef(void);
-    STDMETHODIMP_(ULONG) Release(void);
-    STDMETHODIMP QueryInterface(REFIID riid, LPVOID *ppv);
-    
-    STDMETHODIMP Read(/* [out] */ void __RPC_FAR *pv, /* [in]  */ ULONG cb,
-            /* [out] */ ULONG __RPC_FAR *pcbRead);
+	STDMETHODIMP_(ULONG) Release(void);
+	STDMETHODIMP QueryInterface(REFIID riid, LPVOID *ppv);
+
+	STDMETHODIMP Read(/* [out] */ void __RPC_FAR *pv, /* [in]  */ ULONG cb,
+	                              /* [out] */ ULONG __RPC_FAR *pcbRead);
 	STDMETHODIMP Peek(/* [out] */ void __RPC_FAR *pv, /* [in]  */ ULONG cb,
-            /* [out] */ ULONG __RPC_FAR *pcbRead);
+	                              /* [out] */ ULONG __RPC_FAR *pcbRead);
 	STDMETHODIMP Write(/* [in] */ const void __RPC_FAR *pv, /* [in] */ ULONG cb,
-            /* [out]*/ ULONG __RPC_FAR *pcbWritten);
+	                              /* [out]*/ ULONG __RPC_FAR *pcbWritten);
 
 // Implementation
 private:
 	BOOL Open(LPCSTR lpFileName, DWORD dwDesiredAccess,
-		DWORD dwShareMode, DWORD dwCreationDisposition, 
-		DWORD dwFlagsAndAttributes);
+	          DWORD dwShareMode, DWORD dwCreationDisposition,
+	          DWORD dwFlagsAndAttributes);
 
 	void Close();
 

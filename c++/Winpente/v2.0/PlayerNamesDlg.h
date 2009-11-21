@@ -13,8 +13,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CPlayerNamesDlg dialog
 
-class CPlayerNamesDlg : public CDialog
-{
+class CPlayerNamesDlg : public CDialog {
 // Construction
 public:
 	CPlayerNamesDlg(CWnd* pParent = NULL);   // standard constructor
@@ -23,23 +22,29 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CPlayerNamesDlg)
 	enum { IDD = IDD_PLAYERNAMES };
-		// NOTE: the ClassWizard will add data members here
+	// NOTE: the ClassWizard will add data members here
 	//}}AFX_DATA
 
 
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CPlayerNamesDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	inline CComboBox&	GetPlayerOneNameList() { return * (CComboBox*) GetDlgItem(IDC_PLAYERONENAME); }
-	inline CComboBox&	GetPlayerTwoNameList() { return * (CComboBox*) GetDlgItem(IDC_PLAYERTWONAME); }
-	inline CButton&		GetTwoPlayerGame() { return * (CButton*) GetDlgItem(IDC_TWOPLAYERGAME); }
-	
+	inline CComboBox&	GetPlayerOneNameList() {
+		return * (CComboBox*) GetDlgItem(IDC_PLAYERONENAME);
+	}
+	inline CComboBox&	GetPlayerTwoNameList() {
+		return * (CComboBox*) GetDlgItem(IDC_PLAYERTWONAME);
+	}
+	inline CButton&		GetTwoPlayerGame() {
+		return * (CButton*) GetDlgItem(IDC_TWOPLAYERGAME);
+	}
+
 	CPenteDoc *		m_pDoc;
 	LPTSTR			m_lpszComputerName;
 	LPTSTR			m_lpszUserName;

@@ -12,16 +12,14 @@
 typedef void ** PPVOID;
 typedef BYTE ** PPBYTE;
 
-typedef struct
-{
+typedef struct {
 	BYTE	bPiece;			// Current piece
 	CRect	rcDims;			// Dimensions
 } SQUARE, *LPSQUARE;
 
-typedef struct
-{
+typedef struct {
 	CWnd*	pWnd;
 	INT		nResource;
-}PLAYERPIECE, *LPPLAYERPIECE;
+} PLAYERPIECE, *LPPLAYERPIECE;
 
 #endif // _OURTYPES_H_

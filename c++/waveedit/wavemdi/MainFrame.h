@@ -10,11 +10,10 @@
 #define __MAINFRAME_H__
 
 #include "stdafx.h"
- 
+
 ///////////////////////////////////////////////////////////////////
 // The CMainFrame frame window class
-class CMainFrame : public CMDIFrameWnd
-{
+class CMainFrame : public CMDIFrameWnd {
 public:
 	CMainFrame();
 	virtual ~CMainFrame();
@@ -24,13 +23,13 @@ public:
 protected: // create from serialization only
 
 	virtual BOOL PreCreateWindow(CREATESTRUCT&);
-	
+
 	// message map entries
 	afx_msg	INT		OnCreate(LPCREATESTRUCT);
 	afx_msg VOID	OnSize(UINT, INT, INT);
 	afx_msg VOID	OnExit ();
 	afx_msg VOID	OnDeviceInformation();
-	
+
 	CToolBar	m_ToolBar;
 	CStatusBar	m_wndStatus;
 

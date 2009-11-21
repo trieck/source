@@ -57,15 +57,15 @@ POINT Machine::move()
 	// check if we must block
 	if (!isNilMove(block) && maxWeight < MAX_WEIGHT) {
 		pt = block;
-	} else if (maxV != NULL) {	
+	} else if (maxV != NULL) {
 		pt = bestMove(*maxV);
 	}
-	
+
 	// mark the board
 	if (!isNilMove(pt)) {
 		board->setEntry(pt.x, pt.y, ET_PLAYER_TWO);
 	}
-	
+
 	return pt;
 }
 
@@ -74,25 +74,25 @@ float Machine::weightVector(const Vector &v) const
 {
 	float weight = 0;
 	uint32_t type, i, m, n, x, y, d;
-	
+
 	POINT pt;
 	for (i = 0; i < VSIZE; i++) {
 		pt = v.entry(i);
 		type = board->getEntry(pt.x, pt.y);
 		switch (type) {
-			case ET_PLAYER_ONE:
-				return MIN_WEIGHT;	// vector must not contain opponent pieces
-			case ET_PLAYER_TWO:
-				weight += PIECE_WEIGHT;
-				break;
+		case ET_PLAYER_ONE:
+			return MIN_WEIGHT;	// vector must not contain opponent pieces
+		case ET_PLAYER_TWO:
+			weight += PIECE_WEIGHT;
+			break;
 		}
 	}
-	
+
 	if (weight == (VSIZE - 1) * PIECE_WEIGHT)
 		return MAX_WEIGHT;   // winner
-	
+
 	// TODO: vector must contain a blocking strategy
-	
+
 	// add the individual piece weights
 	for (i = 0; i < VSIZE; i++) {
 		pt = v.entry(i);
@@ -101,24 +101,26 @@ float Machine::weightVector(const Vector &v) const
 			weight += weightPoint(pt);
 		}
 	}
-	
+
 	// add weighted distance from center
 	pt = v.entry(MEAN_POINT);
-	m = pt.x; n = pt.y;
-	x = CENTER / BOARD_SIZE; y = CENTER % BOARD_SIZE;
+	m = pt.x;
+	n = pt.y;
+	x = CENTER / BOARD_SIZE;
+	y = CENTER % BOARD_SIZE;
 	d = abs(x - m) + abs(y - n) + 1;
 	weight += 1/float(d);
-	
+
 	// add weighted contiguity
 	weight += CONT_WEIGHT * contiguity(v);
-	
+
 	return weight;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 float Machine::weightPoint(const POINT &pt) const
 {
-	/* 
+	/*
 	 * Determine weight of a square
 	 * By the number of maximally feasible vectors
 	 * it is contained in.
@@ -126,23 +128,23 @@ float Machine::weightPoint(const POINT &pt) const
 	float weight = 0, vweight;
 	POINT p;
 	uint32_t i;
-	
+
 	if (board->getEntry(pt.x, pt.y) != ET_EMPTY)
 		return MIN_WEIGHT;
-	
+
 	VecVec::const_iterator it = vectors.begin();
 	for ( ; it != vectors.end(); it++) {
 		for (i = 0; i < VSIZE; i++) {
 			p = (*it).entry(i);
 			if (isEqualPoint(pt, p)) break;
 		}
-		
+
 		if (i < VSIZE) {
 			vweight = weightVector(*it);
 			weight += max(0, vweight);
 		}
 	}
-		
+
 	return weight;
 }
 
@@ -152,14 +154,14 @@ bool Machine::center(const Vector &v) const
 	// does vector contain an empty center?
 	uint32_t i, piece;
 	POINT p;
-	
+
 	for (i = 0; i < VSIZE; i++) {
 		p = v.entry(i);
 		piece = p.x * BOARD_SIZE + p.y;
 		if ((piece == CENTER) && board->getEntry(p.x, p.y) == ET_EMPTY)
 			return true;
 	}
-	
+
 	return false;
 }
 
@@ -169,7 +171,7 @@ POINT Machine::bestMove(const Vector &v) const
 	float weight, maxWeight = MIN_WEIGHT;
 	POINT p, maxP = NIL_MOVE;
 	uint32_t i;
-	
+
 	if (center(v)) {
 		POINT c = { CENTER / BOARD_SIZE, CENTER % BOARD_SIZE };
 		return c;
@@ -177,7 +179,7 @@ POINT Machine::bestMove(const Vector &v) const
 
 	// try to find an adjacent move
 	for (i = 0; i < VSIZE; i++) {
-		p = v.entry(i);		
+		p = v.entry(i);
 		if (i < VSIZE-1 && board->getEntry(p.x, p.y) == ET_PLAYER_TWO) {
 			p = v.entry(i+1);
 			if (board->getEntry(p.x, p.y) == ET_EMPTY) {
@@ -187,7 +189,7 @@ POINT Machine::bestMove(const Vector &v) const
 				}
 			}
 		}
-		
+
 		if (i > 0 && board->getEntry(p.x, p.y) == ET_PLAYER_TWO) {
 			p = v.entry(i-1);
 			if (board->getEntry(p.x, p.y) == ET_EMPTY) {
@@ -198,13 +200,13 @@ POINT Machine::bestMove(const Vector &v) const
 			}
 		}
 	}
-	
+
 	if (!isNilMove(maxP))
 		return maxP;
-	
+
 	// try to find an empty piece
 	for (i = 0; i < VSIZE; i++) {
-		p = v.entry(i);					
+		p = v.entry(i);
 		if (board->getEntry(p.x, p.y) == ET_EMPTY) {
 			if ((weight = weightPoint(p)) > maxWeight) {
 				maxWeight = weight;
@@ -212,37 +214,37 @@ POINT Machine::bestMove(const Vector &v) const
 			}
 		}
 	}
-	
+
 	return maxP;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 POINT Machine::mustBlock() const
 {
-	/* 
+	/*
 	 * Determine square where we must block
 	 * where the vector contains VSIZE-1 ET_PLAYER_ONE and one ET_EMPTY
 	 */
 	POINT p, q, b, maxP = NIL_MOVE;
 	uint32_t i, type, onecount, ecount;
 	float weight, maxWeight = MIN_WEIGHT;
-	
+
 	VecVec::const_iterator it = vectors.begin();
 	for ( ; it != vectors.end(); it++) {
 		for (i = 0, onecount = 0, ecount = 0; i < VSIZE; i++) {
 			p = (*it).entry(i);
 			type = board->getEntry(p.x, p.y);
 			switch (type) {
-				case ET_PLAYER_ONE:
-					onecount++;
-					break;
-				case ET_EMPTY:
-					ecount++;
-					b = p;
-					break;
+			case ET_PLAYER_ONE:
+				onecount++;
+				break;
+			case ET_EMPTY:
+				ecount++;
+				b = p;
+				break;
 			}
 		}
-		
+
 		if (onecount == VSIZE-1 && ecount == 1) { // must block, b contains the square to block
 			weight = weightPoint(b);
 			if (weight > maxWeight) {
@@ -250,13 +252,14 @@ POINT Machine::mustBlock() const
 				maxWeight = weight;
 			}
 		}
-		
+
 		// block contiguous with open ends
 		if (onecount == VSIZE-2 && ecount == 2) {
-			p = (*it).entry(0); q = (*it).entry(VSIZE-1);
-			
+			p = (*it).entry(0);
+			q = (*it).entry(VSIZE-1);
+
 			if (board->getEntry(p.x, p.y) == ET_EMPTY &&
-				board->getEntry(q.x, q.y) == ET_EMPTY) {
+			        board->getEntry(q.x, q.y) == ET_EMPTY) {
 				weight = weightPoint(b);
 				if (weight > maxWeight) {
 					maxP = b;
@@ -265,7 +268,7 @@ POINT Machine::mustBlock() const
 			}
 		}
 	}
-		
+
 	return maxP;
 }
 
@@ -278,16 +281,16 @@ POINT Machine::blockMove() const
 	const Vector *v;
 	uint32_t i, type;
 	POINT p;
-	
+
 	if ((v = maxOpponentV()) == NULL)
 		return NIL_MOVE;
-	
+
 	for (i = 0; i < VSIZE; i++) {
 		p = v->entry(i);
 		type = board->getEntry(p.x, p.y);
 		if (type == ET_EMPTY) return p;
 	}
-	
+
 	return NIL_MOVE;
 }
 
@@ -322,7 +325,9 @@ const Vector *Machine::maxOpponentV() const
 		for (i = 0, weight = 0; i < VSIZE; i++) {
 			p = (*it).entry(i);
 			type = board->getEntry(p.x, p.y);
-			if (type == ET_PLAYER_ONE) { weight += PIECE_WEIGHT; }
+			if (type == ET_PLAYER_ONE) {
+				weight += PIECE_WEIGHT;
+			}
 			if (type == ET_PLAYER_TWO) break;	// not feasible
 		}
 
@@ -340,27 +345,27 @@ uint32_t Machine::contiguity(const Vector &v) const
 {
 	uint32_t i, type, cont = 0, maxCont = 0;
 	POINT pt;
-	
+
 	for (i = 0; i < VSIZE; i++) {
 		pt = v.entry(i);
 		type = board->getEntry(pt.x, pt.y);
 		switch (type) {
-			case ET_PLAYER_TWO:
-				cont++;
-				break;
-			case ET_EMPTY:
-				if (cont > maxCont) {
-                    maxCont = cont;
-                }
-                cont = 0;
-				break;
+		case ET_PLAYER_TWO:
+			cont++;
+			break;
+		case ET_EMPTY:
+			if (cont > maxCont) {
+				maxCont = cont;
+			}
+			cont = 0;
+			break;
 		}
 	}
-	
+
 	if (cont > maxCont) {
 		maxCont = cont;
 	}
-	
+
 	return maxCont;
 }
 

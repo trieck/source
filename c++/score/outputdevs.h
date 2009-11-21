@@ -1,31 +1,32 @@
-///////////////////////////////////////////////////////////////////////
-//
-//	OUTPUTDEVS.H
-//
-//	Copyright © 1999 Rieck Enterprises
-//
+///////////////////////////////////////////////////////////////////////
+//
+//	OUTPUTDEVS.H
+//
+//	Copyright © 1999 Rieck Enterprises
+//
 
-#ifndef __OUTPUTDEVS_H__
-#define __OUTPUTDEVS_H__
+#ifndef __OUTPUTDEVS_H__
+#define __OUTPUTDEVS_H__
 
-#include "mididevs.h"
+#include "mididevs.h"
 
-///////////////////////////////////////////////////////////////////////
-class OutputDevices : public MidiDevices
-{
-public:
-	// Construction / Destruction
-    OutputDevices();
-    virtual ~OutputDevices();
+///////////////////////////////////////////////////////////////////////
+class OutputDevices : public MidiDevices
+{
+public:
+	// Construction / Destruction
+	OutputDevices();
+	virtual ~OutputDevices();
 
-	// Interface
-    UINT Count() const;
-    MidiDevice * GetDevice(UINT) const;
-    MidiDevice * GetStream(UINT) const;
+	// Interface
+	UINT Count() const;
+	MidiDevice * GetDevice(UINT) const;
+	MidiDevice * GetStream(UINT) const;
 
-protected:
-	// Implementation
-};
-///////////////////////////////////////////////////////////////////////
+protected:
+	// Implementation
+};
+///////////////////////////////////////////////////////////////////////
 
+
 #endif // __OUTPUTDEVS_H__

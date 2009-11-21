@@ -52,11 +52,11 @@ BOOL CmwrtApp::InitInstance()
 
 	// Standard initialization
 	SetRegistryKey(_T("Rieck Enterprises"));
-	
+
 	CmwrtDlg dlg;
 	m_pMainWnd = &dlg;
 	dlg.DoModal();
-	
+
 	return FALSE;
 }
 
@@ -68,15 +68,15 @@ CString LastError()
 
 	LPTSTR pmsg = NULL;
 
-    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&pmsg, 0, NULL);
-	
+	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
+	              NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+	              (LPTSTR)&pmsg, 0, NULL);
+
 	if (pmsg != NULL) {
 		uint32_t N = _tcslen(pmsg);
-        if (N > 1 && pmsg[N - 1] == _T('\n'))
+		if (N > 1 && pmsg[N - 1] == _T('\n'))
 			pmsg[N - 1] = _T('\0');
- 
+
 		if (N > 1 && pmsg[N - 2] == _T('\r'))
 			pmsg[N - 2] = _T('\0');
 
@@ -84,5 +84,5 @@ CString LastError()
 		LocalFree(pmsg);
 	}
 
-    return output;                     
+	return output;
 }

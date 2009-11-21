@@ -1,7 +1,7 @@
 /*---------------------------------------
 
 	Module	:	DEVICEDLG.CPP
-	Purpose	:	Wave Dialog 
+	Purpose	:	Wave Dialog
 				Implementations
 	Date	:	11/22/1997
 
@@ -43,7 +43,7 @@ BOOL CDeviceDlg :: OnInitDialog()
 	// device lists.
 	BuildInputDeviceList();
 	BuildOutputDeviceList();
-	
+
 	return TRUE;
 }
 
@@ -89,7 +89,7 @@ VOID CDeviceDlg :: OnOutputDevices()
 		GetQueryOutput().EnableWindow(TRUE);
 	else
 		GetQueryOutput().EnableWindow(FALSE);
-	
+
 }
 
 ////////////////////////////////////

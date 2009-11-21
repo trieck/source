@@ -48,12 +48,12 @@ BOOL WinADFDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		TRACE(traceAppMsg, 0, "Warning: OnOpenDocument replaces an unsaved document.\n");
 #endif
 	ENSURE(lpszPathName);
-	
+
 	DeleteContents();
-	
+
 	try {
 		CWaitCursor wait;
-		m_pDisk = Disk::open(lpszPathName, false);		
+		m_pDisk = Disk::open(lpszPathName, false);
 		m_pVolume = m_pDisk->mount();
 	} catch (const ADFException &e) {
 		DeleteContents();   // remove failed contents
@@ -71,7 +71,7 @@ BOOL WinADFDoc::OnOpenDocument(LPCTSTR lpszPathName)
 void WinADFDoc::DeleteContents()
 {
 	m_pVolume = NULL;
-	
+
 	if (m_pEntry != NULL) {
 		delete m_pEntry;
 		m_pEntry = NULL;
@@ -80,7 +80,7 @@ void WinADFDoc::DeleteContents()
 	if (m_pDisk.get() != NULL) {
 		Disk *pDisk = m_pDisk.release();
 		delete pDisk;
-	}	
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -89,8 +89,8 @@ EntryList WinADFDoc::readdir()
 	if (m_pVolume == NULL)
 		return EntryList();
 
-	EntryList entries = m_pVolume->readdir(m_pVolume->getCurrentDir(), 
-		false);
+	EntryList entries = m_pVolume->readdir(m_pVolume->getCurrentDir(),
+	                                       false);
 
 	return entries;
 }

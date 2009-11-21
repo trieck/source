@@ -17,7 +17,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(StackView, MultirowView)
 
-StackView::StackView() 
+StackView::StackView()
 {
 	SetNumLines(256);
 }
@@ -95,10 +95,10 @@ int StackView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	m_Font.CreatePointFont(110, _T("Courier New"));
-	
-	CClientDC dc(this);	
+
+	CClientDC dc(this);
 	CFont *pOldFont = dc.SelectObject(&m_Font);
-	
+
 	TEXTMETRIC tm;
 	dc.GetTextMetrics(&tm);
 	m_szChar.cx = tm.tmAveCharWidth;

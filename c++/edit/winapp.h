@@ -9,10 +9,9 @@
 #define __WINAPP_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class WinApp
-{
+class WinApp {
 	friend int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-		LPSTR command, int nCmdShow);
+	                          LPSTR command, int nCmdShow);
 
 // Construction / Destruction
 protected:
@@ -37,11 +36,13 @@ private:
 };
 /////////////////////////////////////////////////////////////////////////////
 
-inline HINSTANCE WinApp::GetCurrentInstance() const {
+inline HINSTANCE WinApp::GetCurrentInstance() const
+{
 	return m_hInstance;
 }
 
-inline int WinApp::GetShow() const {
+inline int WinApp::GetShow() const
+{
 	return m_nCmdShow;
 }
 

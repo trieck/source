@@ -8,8 +8,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class PenteView : public CView
-{
+class PenteView : public CView {
 protected: // create from serialization only
 	PenteView();
 	DECLARE_DYNCREATE(PenteView)
@@ -22,11 +21,11 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(PenteView)
-	public:
+public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void OnInitialUpdate();
-	protected:
+protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
@@ -58,7 +57,9 @@ private:
 
 #ifndef _DEBUG  // debug version in pentevw.cpp
 inline PenteDoc* PenteView::GetDocument()
-   { return (PenteDoc*)m_pDocument; }
+{
+	return (PenteDoc*)m_pDocument;
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

@@ -31,7 +31,7 @@ typedef struct PageHeader {
 	uint64_t pageno;		// page number
 	uint16_t cells;			// number of cells on the page
 	uint8_t pad[5];			// padding for alignment
-} *PPAGEHEADER;	
+} *PPAGEHEADER;
 
 /////////////////////////////////////////////////////////////////////////////
 typedef struct Cell {
@@ -40,9 +40,9 @@ typedef struct Cell {
 	uint16_t keylen;		// length of key
 	uint16_t vallen;		// length of value (for leaf pages)
 	uint64_t next;			// link to next subpage
-	uint8_t pad[1];			// padding for alignment	
-} *PCELL;		
-  
+	uint8_t pad[1];			// padding for alignment
+} *PCELL;
+
 /////////////////////////////////////////////////////////////////////////////
 typedef struct SpillCellPtr {
 	uint64_t pageno;		// page number of spill page
@@ -54,7 +54,7 @@ typedef struct SpillCell {
 	uint32_t totallen;		// total length of datum
 	uint16_t len;			// length of datum stored in this cell
 	SpillCellPtr next;		// link where more data can be found
-} *PSPILLCELL;				
+} *PSPILLCELL;
 
 /////////////////////////////////////////////////////////////////////////////
 typedef struct Page {
@@ -81,12 +81,12 @@ class BTree : public IWalkableItem {
 public:
 	BTree();
 	virtual ~BTree();
-	
+
 // Interface
 public:
 	bool open(LPCSTR filename, OpenMode m);
 	void close();
-	
+
 	void insert(PENTRY entry);
 	bool append(PENTRY entry);
 	PITEM search(PITEM key);
@@ -96,7 +96,7 @@ public:
 
 	// IWalkableItem methods
 	void Walk(PITEMWALKER pWalker);
-	
+
 // Implementation
 private:
 	/*
@@ -105,8 +105,8 @@ private:
 	 * Currently this is set to 10.
 	 *
 	 * The average number of probes p is about
-	 * log_M(N).  So, we can have about M^p 
-	 * items in the tree before we exceed the depth 
+	 * log_M(N).  So, we can have about M^p
+	 * items in the tree before we exceed the depth
 	 * limits of the tree.
 	 */
 	enum { MAXDEPTH = 10 };
@@ -131,11 +131,11 @@ private:
 	bool readpage(PPAGE h);
 	bool writepage(PPAGE h);
 	bool insertpage(PPAGE h);
-	
+
 	PPAGE insertR(PPAGE h, PENTRY entry, uint8_t level);
 	void append(PPAGE h, uint16_t item, PITEM val);
-	SpillCellPtr appendlarge(SpillCellPtr first, SpillCellPtr last, 
-		PITEM val);
+	SpillCellPtr appendlarge(SpillCellPtr first, SpillCellPtr last,
+	                         PITEM val);
 
 	PPAGE find(PITEM key, uint16_t &cell);
 	PPAGE findR(PPAGE h, PITEM key, uint8_t level, uint16_t &cell);
@@ -145,8 +145,8 @@ private:
 
 	int compare(PITEM key, PPAGE h, uint16_t item);
 
-	void store(PPAGE h, uint16_t item, PENTRY entry, 
-		PITEM newKey = NULL, uint64_t *next = NULL);
+	void store(PPAGE h, uint16_t item, PENTRY entry,
+	           PITEM newKey = NULL, uint64_t *next = NULL);
 	void storeK(PPAGE h, uint16_t item, PITEM key);
 	void storeV(PPAGE h, uint16_t item, PITEM val);
 
@@ -176,6 +176,6 @@ private:
 	FileHeader header;			// file header
 	set<uint64_t> pageset;		// set of pages seen during walk
 };
-/////////////////////////////////////////////////////////////////////////////	
+/////////////////////////////////////////////////////////////////////////////
 
 #endif // __BTREE_H__

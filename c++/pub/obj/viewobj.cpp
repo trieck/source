@@ -31,23 +31,22 @@ STDMETHODIMP CImpIViewObject2 :: QueryInterface(REFIID riid, PPVOID ppv)
 }
 
 STDMETHODIMP CImpIViewObject2 :: Draw(DWORD dwAspect, LONG lindex, LPVOID pvAspect,
-									  DVTARGETDEVICE *ptd, HDC hicTargetDev, HDC hDC,
-									  LPCRECTL prcBounds, LPCRECTL prcWBounds,
-									  BOOL (CALLBACK *pfnContinue)(DWORD), DWORD dwContinue)
+                                      DVTARGETDEVICE *ptd, HDC hicTargetDev, HDC hDC,
+                                      LPCRECTL prcBounds, LPCRECTL prcWBounds,
+                                      BOOL (CALLBACK *pfnContinue)(DWORD), DWORD dwContinue)
 {
 	INT	nSavedDC;
-	
+
 	if (!hDC || !prcBounds)
 		return ResultFromScode(E_POINTER);
 
 	nSavedDC = SaveDC(hDC);
 
-	switch (dwAspect)
-	{
+	switch (dwAspect) {
 	case DVASPECT_CONTENT:
 		LPMETAFILEPICT	pMF;
 		BOOL			fRtn;
-		
+
 		pMF = (LPMETAFILEPICT)GlobalLock(m_pObj->m_pSTM->hGlobal);
 		if (!pMF)
 			break;
@@ -66,14 +65,14 @@ STDMETHODIMP CImpIViewObject2 :: Draw(DWORD dwAspect, LONG lindex, LPVOID pvAspe
 }
 
 STDMETHODIMP CImpIViewObject2 :: GetColorSet(DWORD dwAspect, LONG lindex, LPVOID pvAspect,
-									  DVTARGETDEVICE *ptd, HDC hicTargetDev,
-									  LPLOGPALETTE *ppColorSet)
+        DVTARGETDEVICE *ptd, HDC hicTargetDev,
+        LPLOGPALETTE *ppColorSet)
 {
 	return ResultFromScode(E_NOTIMPL);
 }
 
 STDMETHODIMP CImpIViewObject2 :: Freeze(DWORD dwAspect, LONG lindex, LPVOID pvAspect,
-									   LPDWORD pdwFreeze)
+                                        LPDWORD pdwFreeze)
 {
 	return ResultFromScode(E_NOTIMPL);
 }
@@ -84,19 +83,19 @@ STDMETHODIMP CImpIViewObject2 :: Unfreeze(DWORD dwFreeze)
 }
 
 STDMETHODIMP CImpIViewObject2 :: SetAdvise (DWORD dwAspects, DWORD dwAdvf,
-											LPADVISESINK pAdvSink)
+        LPADVISESINK pAdvSink)
 {
 	return ResultFromScode(E_NOTIMPL);
 }
 
 STDMETHODIMP CImpIViewObject2 :: GetAdvise (LPDWORD pAspects, LPDWORD pdwAdvf,
-											LPADVISESINK* ppAdvSink)
+        LPADVISESINK* ppAdvSink)
 {
 	return ResultFromScode(E_NOTIMPL);
 }
 
 STDMETHODIMP CImpIViewObject2 :: GetExtent(DWORD dwAspect, LONG lindex, DVTARGETDEVICE *ptd,
-										   LPSIZEL pszl)
+        LPSIZEL pszl)
 {
 	return ResultFromScode(E_NOTIMPL);
 }

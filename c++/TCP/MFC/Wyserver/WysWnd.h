@@ -18,15 +18,13 @@
 #define DEFAULT_WEIGHT		FW_BOLD
 #define DEFAULT_FACENAME	"MS Sans Serif"
 
-typedef struct // screen line structure
-{
+typedef struct { // screen line structure
 	COLORREF	uColor;
 	CString		szText;
-}SCREENLINE, *LPSCREENLINE; 
+} SCREENLINE, *LPSCREENLINE;
 
 // CFrameWnd derived class
-class CWysWnd : public CFrameWnd
-{
+class CWysWnd : public CFrameWnd {
 private:
 	HICON		m_hIcon;
 	CListBox*	m_pListBox;
@@ -49,7 +47,7 @@ public:
 	void AddListItem(LPSCREENLINE lpScreenLine);
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual ~CWysWnd();
-	
+
 	DECLARE_MESSAGE_MAP();
 };
 #endif // __WYSWND_H__

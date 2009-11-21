@@ -66,15 +66,15 @@ void CreateHandler::Call(LPDICTIONARY request, LPDICTIONARY response)
 
 	// object id is an optional parameter
 	LPBEOBJECT pObjectID = request->Get(KEY_OBJECT_ID);
-	if (pObjectID != NULL && 
-		pObjectID->GetType() != BEObject::BET_STRING) {
+	if (pObjectID != NULL &&
+	        pObjectID->GetType() != BEObject::BET_STRING) {
 		response->Set(KEY_RESPONSE_CD, E_BAD_REQUEST);
 		response->Set(KEY_RESPONSE_MSG, RESP_OBJ_FMT);
 		return;
 	}
 
 	LPSTRING pObjectKey = pObjectID == NULL ? NULL:
-		static_cast<LPSTRING>(pObjectID);
+	                      static_cast<LPSTRING>(pObjectID);
 
 	// object value is an optional parameter
 	LPBEOBJECT pValue = request->Get(KEY_OBJECT_VAL);
@@ -82,10 +82,10 @@ void CreateHandler::Call(LPDICTIONARY request, LPDICTIONARY response)
 	// Create a new object
 	ObjectDB *pDB = ObjectDB::instance();
 	LPCSTR objectid = pDB->CreateObject(
-		poolid,
-		ntype,
-		pObjectKey,
-		pValue);
+	                      poolid,
+	                      ntype,
+	                      pObjectKey,
+	                      pValue);
 	if (objectid == NULL) {
 		response->Set(KEY_RESPONSE_CD, E_CANT_CREATE);
 		response->Set(KEY_RESPONSE_MSG, lasterror());

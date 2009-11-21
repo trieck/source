@@ -9,8 +9,7 @@
 #define __BEOBJECT_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class BEObject
-{
+class BEObject {
 protected:
 	// Construction / Destruction
 	BEObject();

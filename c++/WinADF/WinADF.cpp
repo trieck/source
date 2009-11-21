@@ -35,8 +35,8 @@ END_MESSAGE_MAP()
 // WinADFApp construction
 
 WinADFApp::WinADFApp()
- : m_pTextFileViewTemplate(NULL), m_pBinaryFileViewTemplate(NULL), 
- m_pWarningFrame(NULL)
+		: m_pTextFileViewTemplate(NULL), m_pBinaryFileViewTemplate(NULL),
+		m_pWarningFrame(NULL)
 {
 }
 
@@ -65,25 +65,25 @@ BOOL WinADFApp::InitInstance()
 	//  serve as the connection between documents, frame windows and views
 	CMultiDocTemplate* pDocTemplate;
 	pDocTemplate = new CMultiDocTemplate(IDR_WINADFTYPE,
-		RUNTIME_CLASS(WinADFDoc),
-		RUNTIME_CLASS(ChildFrame), // custom MDI child frame
-		RUNTIME_CLASS(LeftView));
+	                                     RUNTIME_CLASS(WinADFDoc),
+	                                     RUNTIME_CLASS(ChildFrame), // custom MDI child frame
+	                                     RUNTIME_CLASS(LeftView));
 	if (!pDocTemplate)
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
 
 	m_pTextFileViewTemplate = new CMultiDocTemplate(IDR_FILEVIEWTYPE,
-		RUNTIME_CLASS(WinADFDoc),
-		RUNTIME_CLASS(FileViewFrame), // custom MDI child frame
-		RUNTIME_CLASS(TextFileView));
+	        RUNTIME_CLASS(WinADFDoc),
+	        RUNTIME_CLASS(FileViewFrame), // custom MDI child frame
+	        RUNTIME_CLASS(TextFileView));
 	if (!m_pTextFileViewTemplate)
 		return FALSE;
 	AddDocTemplate(m_pTextFileViewTemplate);
 
 	m_pBinaryFileViewTemplate = new CMultiDocTemplate(IDR_FILEVIEWTYPE,
-		RUNTIME_CLASS(WinADFDoc),
-		RUNTIME_CLASS(FileViewFrame), // custom MDI child frame
-		RUNTIME_CLASS(BinaryFileView));
+	        RUNTIME_CLASS(WinADFDoc),
+	        RUNTIME_CLASS(FileViewFrame), // custom MDI child frame
+	        RUNTIME_CLASS(BinaryFileView));
 	if (!m_pBinaryFileViewTemplate)
 		return FALSE;
 	AddDocTemplate(m_pBinaryFileViewTemplate);
@@ -128,8 +128,7 @@ BOOL WinADFApp::InitInstance()
 
 // CAboutDlg dialog used for App About
 
-class CAboutDlg : public CDialog
-{
+class CAboutDlg : public CDialog {
 public:
 	CAboutDlg();
 
@@ -183,7 +182,7 @@ void WinADFApp::OnFileOpen()
 int WinADFApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt)
 {
 	MSGBOXPARAMS mbp;
-	
+
 	mbp.cbSize = sizeof(MSGBOXPARAMS);
 	mbp.hwndOwner = GetMainWnd()->GetSafeHwnd();
 	mbp.hInstance = AfxGetResourceHandle();
@@ -206,7 +205,7 @@ void WinADFApp::ShowTextFileView(CDocument *pDoc)
 		ASSERT(pView != NULL);
 		ASSERT(pView->IsKindOf(RUNTIME_CLASS(TextFileView)));
 		m_pTextFileViewTemplate->InitialUpdateFrame(pFrame, pDoc);
-	} 
+	}
 }
 
 void WinADFApp::ShowBinaryFileView(CDocument *pDoc)
@@ -236,8 +235,8 @@ void WinADFApp::CreateWarningWnd()
 		return;
 	}
 
-	if (!m_pWarningFrame->LoadFrame(IDR_MAINFRAME, WS_OVERLAPPEDWINDOW, 
-		NULL)) {
+	if (!m_pWarningFrame->LoadFrame(IDR_MAINFRAME, WS_OVERLAPPEDWINDOW,
+	                                NULL)) {
 		TRACE0("Unable to load warning frame.");
 		return;
 	}
@@ -251,20 +250,20 @@ string comma(uint64_t i)
 {
 	string output;
 
-    char buff[20];
-    sprintf(buff,"%I64u", i);
+	char buff[20];
+	sprintf(buff,"%I64u", i);
 
-    int n = strlen(buff);
+	int n = strlen(buff);
 
-    for (int j = n - 1, k = 1; j >= 0; j--, k++) {
-        output += buff[j];
-        if (k % 3 == 0 && j > 0 && j < n - 1)
-            output += ',';
-    }
-	
+	for (int j = n - 1, k = 1; j >= 0; j--, k++) {
+		output += buff[j];
+		if (k % 3 == 0 && j > 0 && j < n - 1)
+			output += ',';
+	}
+
 	std::reverse(output.begin(), output.end());
 
-    return output;
+	return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -274,15 +273,15 @@ CString LastError()
 
 	LPTSTR pmsg = NULL;
 
-    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&pmsg, 0, NULL);
-	
+	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
+	              NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+	              (LPTSTR)&pmsg, 0, NULL);
+
 	if (pmsg != NULL) {
 		uint32_t N = _tcslen(pmsg);
-        if (N > 1 && pmsg[N - 1] == _T('\n'))
+		if (N > 1 && pmsg[N - 1] == _T('\n'))
 			pmsg[N - 1] = _T('\0');
- 
+
 		if (N > 1 && pmsg[N - 2] == _T('\r'))
 			pmsg[N - 2] = _T('\0');
 
@@ -292,7 +291,7 @@ CString LastError()
 		AfxMessageBox(LastError());
 	}
 
-    return output;                     
+	return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -313,22 +312,22 @@ void PumpMessages()
 {
 	CWinThread *pThread = AfxGetApp();
 	MSG msg;
-    while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) { 
-        if (!pThread->PumpMessage()) {
-            break; 
-        } 
-    } 
-    LONG lIdle = 0;
-    while (pThread->OnIdle(lIdle++))
-        ;  
+	while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
+		if (!pThread->PumpMessage()) {
+			break;
+		}
+	}
+	LONG lIdle = 0;
+	while (pThread->OnIdle(lIdle++))
+		;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 BOOL LoadBootblock(bootblock_t *block)
 {
-	HRSRC hResource = ::FindResource(AfxGetResourceHandle(), 
-		MAKEINTRESOURCE(IDR_BOOTBLOCK),
-        "BOOTBLOCK");
+	HRSRC hResource = ::FindResource(AfxGetResourceHandle(),
+	                                 MAKEINTRESOURCE(IDR_BOOTBLOCK),
+	                                 "BOOTBLOCK");
 	if (hResource == NULL)
 		return FALSE;
 
@@ -360,6 +359,6 @@ void WinADFApp::OnViewWarnings()
 
 void WinADFApp::OnUpdateViewWarnings(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(m_pWarningFrame != NULL && 
-		!m_pWarningFrame->IsWindowVisible());
+	pCmdUI->Enable(m_pWarningFrame != NULL &&
+	               !m_pWarningFrame->IsWindowVisible());
 }

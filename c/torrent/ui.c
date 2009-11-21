@@ -19,11 +19,11 @@
 #include "lex.h"
 
 static long CALLBACK window_proc(HWND window, UINT msg,
-	WPARAM wparam, LPARAM lparam);
+                                 WPARAM wparam, LPARAM lparam);
 static long CALLBACK child_proc(HWND window, UINT msg,
-	WPARAM wparam, LPARAM lparam);
-static INT_PTR CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, 
-	WPARAM wParam, LPARAM lParam);
+                                WPARAM wparam, LPARAM lparam);
+static INT_PTR CALLBACK DlgProc(HWND hwndDlg, UINT uMsg,
+                                WPARAM wParam, LPARAM lParam);
 
 static void ui_dispatch_event(MSG *msg);
 static BOOL OnCreate(HWND hWnd, LPCREATESTRUCT lpCreateStruct);
@@ -68,28 +68,28 @@ int ui_init(int argc, char **argv)
 
 	InitCommonControls();
 
-    /* Register the window class.  */
-    window_class.style = CS_HREDRAW | CS_VREDRAW;
-    window_class.lpfnWndProc = window_proc;
-    window_class.hInstance = winmain_instance;
-    window_class.hIcon = LoadIcon(winmain_instance,
-		MAKEINTRESOURCE(IDI_TORRENT));
-    window_class.hCursor = LoadCursor(NULL, IDC_ARROW);
-    window_class.lpszClassName = APPLICATION_CLASS_MAIN;
+	/* Register the window class.  */
+	window_class.style = CS_HREDRAW | CS_VREDRAW;
+	window_class.lpfnWndProc = window_proc;
+	window_class.hInstance = winmain_instance;
+	window_class.hIcon = LoadIcon(winmain_instance,
+	                              MAKEINTRESOURCE(IDI_TORRENT));
+	window_class.hCursor = LoadCursor(NULL, IDC_ARROW);
+	window_class.lpszClassName = APPLICATION_CLASS_MAIN;
 	window_class.hbrBackground = (HBRUSH)COLOR_APPWORKSPACE + 1;
-    RegisterClass(&window_class);
+	RegisterClass(&window_class);
 
 	main_hwnd = CreateWindow(APPLICATION_CLASS_MAIN,
-		"torrent", 
-		WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        NULL,
-        NULL,
-        winmain_instance,
-        NULL);
+	                         "torrent",
+	                         WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
+	                         CW_USEDEFAULT,
+	                         CW_USEDEFAULT,
+	                         CW_USEDEFAULT,
+	                         CW_USEDEFAULT,
+	                         NULL,
+	                         NULL,
+	                         winmain_instance,
+	                         NULL);
 
 	if (main_hwnd == NULL)
 		return -1;
@@ -101,8 +101,8 @@ int ui_init(int argc, char **argv)
 	return 0;
 }
 
-long CALLBACK window_proc(HWND window, UINT msg, WPARAM wparam, 
-	LPARAM lparam)
+long CALLBACK window_proc(HWND window, UINT msg, WPARAM wparam,
+                          LPARAM lparam)
 {
 	switch (msg) {
 	case WM_SIZE:
@@ -115,11 +115,11 @@ long CALLBACK window_proc(HWND window, UINT msg, WPARAM wparam,
 		return 0;
 	}
 
-    return DefWindowProc(window, msg, wparam, lparam);
+	return DefWindowProc(window, msg, wparam, lparam);
 }
 
-long CALLBACK child_proc(HWND window, UINT msg, WPARAM wparam, 
-	LPARAM lparam)
+long CALLBACK child_proc(HWND window, UINT msg, WPARAM wparam,
+                         LPARAM lparam)
 {
 	return DefWindowProc(window, msg, wparam, lparam);
 }
@@ -129,7 +129,7 @@ int ui_error(const char *format, ...)
 	va_list args;
 	char buff[1000];	/* overflow?? */
 
-    va_start(args, format);	
+	va_start(args, format);
 	vsprintf(buff, format, args);
 	va_end(args);
 
@@ -144,9 +144,9 @@ void ui_dispatch_event(MSG *msg)
 
 int ui_dispatch_events(void)
 {
-    MSG msg;
+	MSG msg;
 	while (GetMessage(&msg, NULL, 0, 0) > 0) {
-		ui_dispatch_event(&msg);	
+		ui_dispatch_event(&msg);
 	}
 
 	return msg.wParam;
@@ -155,12 +155,12 @@ int ui_dispatch_events(void)
 void OnPaint(HWND hWnd)
 {
 	RECT update_rect;
-    if (GetUpdateRect(hWnd, &update_rect, FALSE)) {
+	if (GetUpdateRect(hWnd, &update_rect, FALSE)) {
 		PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hWnd, &ps);
+		HDC hdc = BeginPaint(hWnd, &ps);
 
 		EndPaint(hWnd, &ps);
-	} 
+	}
 }
 
 BOOL OnCreate(HWND hWnd, LPCREATESTRUCT lpCreateStruct)
@@ -186,24 +186,24 @@ void CenterWindow(HWND hWnd)
 
 	hWndParent = GetParent(hWnd);
 	if (hWndParent == NULL) {
-		hWndParent = GetDesktopWindow(); 
+		hWndParent = GetDesktopWindow();
 	}
 
-    GetWindowRect(hWndParent, &rcParent); 
-    GetWindowRect(hWnd, &rcWindow); 
-    CopyRect(&rc, &rcParent); 
+	GetWindowRect(hWndParent, &rcParent);
+	GetWindowRect(hWnd, &rcWindow);
+	CopyRect(&rc, &rcParent);
 
-	OffsetRect(&rcWindow, -rcWindow.left, -rcWindow.top); 
-    OffsetRect(&rc, -rc.left, -rc.top); 
-    OffsetRect(&rc, -rcWindow.right, -rcWindow.bottom); 
- 
-    SetWindowPos(hWnd, 
-		HWND_TOP, 
-        rcParent.left + (rc.right / 2), 
-        rcParent.top + (rc.bottom / 2), 
-        0, 
-		0,
-        SWP_NOSIZE); 
+	OffsetRect(&rcWindow, -rcWindow.left, -rcWindow.top);
+	OffsetRect(&rc, -rc.left, -rc.top);
+	OffsetRect(&rc, -rcWindow.right, -rcWindow.bottom);
+
+	SetWindowPos(hWnd,
+	             HWND_TOP,
+	             rcParent.left + (rc.right / 2),
+	             rcParent.top + (rc.bottom / 2),
+	             0,
+	             0,
+	             SWP_NOSIZE);
 }
 
 void OnSize(HWND hwnd, UINT state, int cx, int cy)
@@ -213,23 +213,23 @@ void OnSize(HWND hwnd, UINT state, int cx, int cy)
 
 	/* forward message to status bar */
 	SendMessage(status_hwnd, WM_SIZE, SIZE_RESTORED,
-		MAKELPARAM(cx, cy));
+	            MAKELPARAM(cx, cy));
 
 	/* resize child window */
 	if (IsWindowVisible(child_hwnd)) {
-		cx /= 2;		
-		MoveWindow(child_hwnd, 
-			cx, 0,  
-			cx, 
-			cy - (rc.bottom - rc.top), 
-			TRUE);
+		cx /= 2;
+		MoveWindow(child_hwnd,
+		           cx, 0,
+		           cx,
+		           cy - (rc.bottom - rc.top),
+		           TRUE);
 	}
-	
+
 	/* resize form dialog */
-	MoveWindow(form_hwnd, 0, 0, 
-		cx, 
-		cy - (rc.bottom - rc.top), 
-		TRUE);
+	MoveWindow(form_hwnd, 0, 0,
+	           cx,
+	           cy - (rc.bottom - rc.top),
+	           TRUE);
 }
 
 void OnDestroy(HWND hWnd)
@@ -243,28 +243,28 @@ BOOL CreateChild(HWND hWnd)
 	WNDCLASS window_class;
 	memset(&window_class, 0, sizeof(WNDCLASS));
 
-    /* Register the child window class.  */
-    window_class.style = CS_HREDRAW | CS_VREDRAW;
-    window_class.lpfnWndProc = child_proc;
-    window_class.hInstance = winmain_instance;
-    window_class.hCursor = LoadCursor(NULL, IDC_ARROW);
-    window_class.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-    window_class.lpszClassName = APPLICATION_CLASS_CHILD;
-    RegisterClass(&window_class);
+	/* Register the child window class.  */
+	window_class.style = CS_HREDRAW | CS_VREDRAW;
+	window_class.lpfnWndProc = child_proc;
+	window_class.hInstance = winmain_instance;
+	window_class.hCursor = LoadCursor(NULL, IDC_ARROW);
+	window_class.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	window_class.lpszClassName = APPLICATION_CLASS_CHILD;
+	RegisterClass(&window_class);
 
 	child_hwnd = CreateWindowEx(
-		WS_EX_CLIENTEDGE,
-		APPLICATION_CLASS_CHILD,
-		NULL, 
-		WS_CHILDWINDOW | WS_CLIPSIBLINGS,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        hWnd,
-        NULL,
-        winmain_instance,
-        NULL);
+	                 WS_EX_CLIENTEDGE,
+	                 APPLICATION_CLASS_CHILD,
+	                 NULL,
+	                 WS_CHILDWINDOW | WS_CLIPSIBLINGS,
+	                 CW_USEDEFAULT,
+	                 CW_USEDEFAULT,
+	                 CW_USEDEFAULT,
+	                 CW_USEDEFAULT,
+	                 hWnd,
+	                 NULL,
+	                 winmain_instance,
+	                 NULL);
 
 	return child_hwnd != NULL;
 }
@@ -273,18 +273,18 @@ BOOL CreateStatus(HWND hWnd)
 {
 	/* create status bar */
 	status_hwnd = CreateStatusWindow(
-		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | SBARS_SIZEGRIP,
-		NULL, hWnd, IDC_STATUS);
+	                  WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | SBARS_SIZEGRIP,
+	                  NULL, hWnd, IDC_STATUS);
 
 	return status_hwnd != NULL;
 }
 
 BOOL CreateDialogForm(HWND hWnd)
 {
-	form_hwnd = CreateDialog(winmain_instance, 
-		MAKEINTRESOURCE(IDD_FORMVIEW),
-		hWnd,
-		DlgProc);
+	form_hwnd = CreateDialog(winmain_instance,
+	                         MAKEINTRESOURCE(IDD_FORMVIEW),
+	                         hWnd,
+	                         DlgProc);
 	if (form_hwnd == NULL)
 		return FALSE;
 
@@ -315,39 +315,39 @@ void OnFormSize(HWND hwnd, UINT state, int cx, int cy)
 {
 	HWND tab_hwnd = GetDlgItem(hwnd, IDC_TAB);
 	int width;
-	
+
 	/* move tab window */
-	MoveWindow(tab_hwnd, 
-		CX_TABOFFSET, 
-		CY_TABOFFSET, 
-		cx - (CX_TABOFFSET*2), 
-		cy - (CY_TABOFFSET*2), 
-		TRUE);
+	MoveWindow(tab_hwnd,
+	           CX_TABOFFSET,
+	           CY_TABOFFSET,
+	           cx - (CX_TABOFFSET*2),
+	           cy - (CY_TABOFFSET*2),
+	           TRUE);
 
 	/* resize controls */
 	width = cx - (CX_TABOFFSET*2) - CX_FRAMEOFFSET;
-	ResizeToTab(hwnd, IDC_FRAME, width);	
-	ResizeToTab(hwnd, IDC_FILELIST, width);	
-	
+	ResizeToTab(hwnd, IDC_FRAME, width);
+	ResizeToTab(hwnd, IDC_FILELIST, width);
+
 	MoveToTab(hwnd, IDC_BROWSE, width);
 	MoveToTab(hwnd, IDC_EXPAND, width);
 
 	width = cx - (CX_TABOFFSET*3) - (CX_FRAMEOFFSET*2);
-	ResizeToTab(hwnd, IDC_ANNOUNCE, width);	
-	ResizeToTab(hwnd, IDC_CREATEDBY, width);	
-	ResizeToTab(hwnd, IDC_CREATIONDATE, width);	
-	ResizeToTab(hwnd, IDC_COMMENT, width);	
+	ResizeToTab(hwnd, IDC_ANNOUNCE, width);
+	ResizeToTab(hwnd, IDC_CREATEDBY, width);
+	ResizeToTab(hwnd, IDC_CREATIONDATE, width);
+	ResizeToTab(hwnd, IDC_COMMENT, width);
 }
 
 BOOL OnInitForm(HWND hwnd, HWND hwndFocus, LPARAM lParam)
 {
-	TCITEM item; 
+	TCITEM item;
 	LV_COLUMN lvc;
 
 	HWND tab_hwnd = GetDlgItem(hwnd, IDC_TAB);
 	if (tab_hwnd == NULL)
 		return FALSE;
-	
+
 	item.mask = TCIF_TEXT;
 	item.pszText = "Torrent Info";
 	if (SendMessage(tab_hwnd, TCM_INSERTITEM, 0, (LPARAM)&item) == -1)
@@ -358,11 +358,11 @@ BOOL OnInitForm(HWND hwnd, HWND hwndFocus, LPARAM lParam)
 		return FALSE;
 
 	ListView_SetTextColor(list_hwnd, RGB(64, 0, 0));
-	ListView_SetExtendedListViewStyleEx(list_hwnd, 
-		0, 
-		LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES
-	);
-	
+	ListView_SetExtendedListViewStyleEx(list_hwnd,
+	                                    0,
+	                                    LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES
+	                                   );
+
 	memset(&lvc, 0, sizeof(LV_COLUMN));
 	lvc.mask = LVCF_SUBITEM | LVCF_TEXT | LVCF_WIDTH;
 	lvc.iSubItem = 0;
@@ -387,11 +387,11 @@ BOOL ResizeToTab(HWND hWnd, UINT id, int cx)
 
 	GetWindowRect(hwndControl, &rc);
 	MapWindowPoints(HWND_DESKTOP, hWnd, (LPPOINT)&rc, 2);
-	
-	SetWindowPos(hwndControl, NULL, 0, 0, 
-		cx - rc.left,
-		rc.bottom - rc.top,
-		SWP_NOMOVE | SWP_NOZORDER);
+
+	SetWindowPos(hwndControl, NULL, 0, 0,
+	             cx - rc.left,
+	             rc.bottom - rc.top,
+	             SWP_NOMOVE | SWP_NOZORDER);
 
 	return TRUE;
 }
@@ -407,13 +407,13 @@ BOOL MoveToTab(HWND hWnd, UINT id, int cx)
 	MapWindowPoints(HWND_DESKTOP, hWnd, (LPPOINT)&rc, 2);
 
 	cx -= rc.right - rc.left;
-	
-	SetWindowPos(hwndControl, NULL, 
-		cx, 
-		rc.top, 
-		0,
-		0,
-		SWP_NOSIZE | SWP_NOZORDER);
+
+	SetWindowPos(hwndControl, NULL,
+	             cx,
+	             rc.top,
+	             0,
+	             0,
+	             SWP_NOSIZE | SWP_NOZORDER);
 
 	return TRUE;
 }
@@ -431,22 +431,22 @@ void ResizeFrameToDlg(HWND hWnd)
 	GetWindowRect(status_hwnd, &rcStatus);
 	rc.bottom += (rcStatus.bottom - rcStatus.top);
 
-	AdjustWindowRectEx(&rc, 
-		GetWindowLong(hWnd, GWL_STYLE),
-		FALSE,
-		GetWindowLong(hWnd, GWL_EXSTYLE));
-	
+	AdjustWindowRectEx(&rc,
+	                   GetWindowLong(hWnd, GWL_STYLE),
+	                   FALSE,
+	                   GetWindowLong(hWnd, GWL_EXSTYLE));
+
 	cx = rc.right - rc.left;
 	cy = rc.bottom - rc.top;
-	
+
 	SetWindowPos(hWnd, NULL, 0, 0, cx, cy,
-		SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);	
+	             SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);
 	SendMessage(hWnd, WM_SIZE, SIZE_RESTORED, MAKELPARAM(cx, cy));
 }
 
 void OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 {
-	switch(id) {
+	switch (id) {
 	case IDC_EXPAND:
 		OnExpand();
 		break;
@@ -489,21 +489,21 @@ void OnBrowse(void)
 void OnExpand(void)
 {
 	RECT rc;
-	int cx, cy;	
+	int cx, cy;
 	int nCmdShow = IsWindowVisible(child_hwnd) ?
-		SW_HIDE : SW_SHOW;
+	               SW_HIDE : SW_SHOW;
 
-	SetDlgItemText(form_hwnd, IDC_EXPAND, 
-		nCmdShow == SW_HIDE ? ">>>" : "<<<");
-	
+	SetDlgItemText(form_hwnd, IDC_EXPAND,
+	               nCmdShow == SW_HIDE ? ">>>" : "<<<");
+
 	ShowWindow(child_hwnd, nCmdShow);
-	GetWindowRect(main_hwnd, &rc);		
-	cx = nCmdShow == SW_HIDE ? 
-		((rc.right - rc.left) / 2) :
-		((rc.right - rc.left) * 2);
+	GetWindowRect(main_hwnd, &rc);
+	cx = nCmdShow == SW_HIDE ?
+	     ((rc.right - rc.left) / 2) :
+	     ((rc.right - rc.left) * 2);
 	cy = (rc.bottom - rc.top);
 	SetWindowPos(main_hwnd, NULL, 0, 0, cx, cy,
-		SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);	
+	             SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);
 }
 
 void SetFrameTitle(LPCSTR title)
@@ -524,7 +524,7 @@ BOOL LoadFile(LPCSTR filename)
 	free_element(torrent);
 
 	torrent = getelement(fp);
-	if (torrent.type != ET_DICT) 
+	if (torrent.type != ET_DICT)
 		ui_error("bad torrent file \"%s\".", filename);
 
 	fclose(fp);
@@ -534,14 +534,14 @@ BOOL LoadFile(LPCSTR filename)
 
 void UpdateForm(void)
 {
-	UpdateControlText(IDC_ANNOUNCE, 
-		bt_dict_cstring(torrent.dval, "announce"));
-	UpdateControlText(IDC_CREATEDBY, 
-		bt_dict_cstring(torrent.dval, "created by"));
-	UpdateControlDate(IDC_CREATIONDATE, 
-		bt_dict_date(torrent.dval, "creation date"));	
-	UpdateControlText(IDC_COMMENT, 
-		bt_dict_cstring(torrent.dval, "comment"));
+	UpdateControlText(IDC_ANNOUNCE,
+	                  bt_dict_cstring(torrent.dval, "announce"));
+	UpdateControlText(IDC_CREATEDBY,
+	                  bt_dict_cstring(torrent.dval, "created by"));
+	UpdateControlDate(IDC_CREATIONDATE,
+	                  bt_dict_date(torrent.dval, "creation date"));
+	UpdateControlText(IDC_COMMENT,
+	                  bt_dict_cstring(torrent.dval, "comment"));
 
 	UpdateInfo();
 }
@@ -563,7 +563,7 @@ void UpdateControlDate(UINT id, struct tm *date)
 		SetDlgItemText(form_hwnd, id, buf);
 	} else {
 		SetDlgItemText(form_hwnd, id, "");
-	}	
+	}
 }
 
 void UpdateInfo(void)
@@ -575,8 +575,8 @@ void UpdateInfo(void)
 	info = bt_dict_dict(torrent.dval, "info");
 	if (info != NULL) {
 		InsertFileItem(
-			bt_dict_cstring(info, "name"),
-			bt_dict_int(info, "length")
+		    bt_dict_cstring(info, "name"),
+		    bt_dict_int(info, "length")
 		);
 	}
 }

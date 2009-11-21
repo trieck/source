@@ -10,8 +10,7 @@
 #endif // _MSC_VER > 1000
 
 
-class TorrentView : public CTreeView
-{
+class TorrentView : public CTreeView {
 protected: // create from serialization only
 	TorrentView();
 	DECLARE_DYNCREATE(TorrentView)
@@ -26,10 +25,10 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(TorrentView)
-	public:
+public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	protected:
+protected:
 	virtual void OnInitialUpdate(); // called first time after construct
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
@@ -80,7 +79,9 @@ private:
 
 #ifndef _DEBUG  // debug version in TorrentView.cpp
 inline TorrentDoc* TorrentView::GetDocument()
-   { return (TorrentDoc*)m_pDocument; }
+{
+	return (TorrentDoc*)m_pDocument;
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

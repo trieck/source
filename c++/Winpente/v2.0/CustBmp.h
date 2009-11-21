@@ -1,6 +1,6 @@
 /*---------------------------------------
-	Module Name	:	CustBmp.h	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	CustBmp.h
+	Author		:	Thomas A. Rieck
 	Purpose		:	Custom Bitmap
 					Drawing Declarations
 	Date		:	08/31/1997
@@ -11,13 +11,12 @@
 
 ///////////////////////////////////////////////////////////////////
 // The CCustomBitmap class
-     
-class CCustomBitmap : public CObject
-{
+
+class CCustomBitmap : public CObject {
 public:
 	CCustomBitmap();
 	virtual ~CCustomBitmap();
-protected: 
+protected:
 	HPALETTE			CreateDIBPalette(LPBITMAPINFO, LPINT);
 public:
 	VOID				PaintDCByHBitmap(CDC*, HBITMAP, BOOL);

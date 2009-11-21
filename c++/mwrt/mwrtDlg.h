@@ -8,8 +8,7 @@
 #include "afxwin.h"
 
 // CmwrtDlg dialog
-class CmwrtDlg : public CDialog
-{
+class CmwrtDlg : public CDialog {
 // Construction
 public:
 	CmwrtDlg(CWnd* pParent = NULL);	// standard constructor
@@ -17,7 +16,7 @@ public:
 // Dialog Data
 	enum { IDD = IDD_MWRT_DIALOG };
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 
 
@@ -34,7 +33,7 @@ protected:
 public:
 	afx_msg void OnBnClickedOk();
 	CString m_Status;
-	afx_msg void OnBnClickedCancel();	
+	afx_msg void OnBnClickedCancel();
 private:
 	CString m_Detail;
 	CButton m_Go;
@@ -47,7 +46,7 @@ private:
 
 	CString expandString(LPCTSTR input);
 	bool removeFile(LPCTSTR filename);
-	void removeRegValue(LPCTSTR regKey, uint32_t type, LPCTSTR valName, 
-		LPCTSTR value);
+	void removeRegValue(LPCTSTR regKey, uint32_t type, LPCTSTR valName,
+	                    LPCTSTR value);
 	HKEY splitKey(LPCTSTR regKey, CString & path);
 };

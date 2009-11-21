@@ -10,8 +10,7 @@
 #endif // _MSC_VER > 1000
 
 
-class WinEditDoc : public CDocument
-{
+class WinEditDoc : public CDocument {
 protected: // create from serialization only
 	WinEditDoc();
 	DECLARE_DYNCREATE(WinEditDoc)
@@ -25,7 +24,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(WinEditDoc)
-	public:
+public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 	//}}AFX_VIRTUAL

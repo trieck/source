@@ -15,7 +15,7 @@ public:
 		} else if (r == 1 || r == 2) {
 			x = n / 2 + 1;
 		} else {
-			x = (n + 1) / 2;		
+			x = (n + 1) / 2;
 		}
 		return x;
 	}
@@ -69,14 +69,14 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 class G {
 public:
-	static string g(int n) {		
+	static string g(int n) {
 		int u = U::s(n);
 		int x = X::s(n);
 
 		ostringstream os;
 		os << x <<"x + " << u;
 		return os.str();
-	}	
+	}
 };
 
 /////////////////////////////////////////////////////////////////////////////

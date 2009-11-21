@@ -22,8 +22,7 @@ struct StringLess : std::binary_function <LPSTRING, LPSTRING, bool> {
 class DictIterator;
 
 /////////////////////////////////////////////////////////////////////////////
-class Dictionary : public BEObject
-{
+class Dictionary : public BEObject {
 private:
 	// Construction / Destruction
 	Dictionary();
@@ -34,7 +33,9 @@ public:
 // Interface
 	Dictionary &operator =(const Dictionary &rhs);
 
-	virtual ObjectType GetType() const { return BET_DICT; }
+	virtual ObjectType GetType() const {
+		return BET_DICT;
+	}
 	virtual LPBEOBJECT Copy() const;
 
 	void Set(LPSTRING k, LPBEOBJECT v);
@@ -49,7 +50,7 @@ public:
 	typedef map<LPSTRING, LPBEOBJECT, StringLess> ObjectMap;
 	typedef ObjectMap::const_iterator CIterator;
 	typedef const std::pair<LPSTRING, LPBEOBJECT> ObjectEntry;
-	
+
 // Implementation
 private:
 	ObjectMap m;
@@ -60,26 +61,31 @@ private:
 typedef Dictionary *LPDICTIONARY;
 
 /////////////////////////////////////////////////////////////////////////////
-class DictIterator 
-{
+class DictIterator {
 public:
 	DictIterator(Dictionary::CIterator s, Dictionary::CIterator e) {
 		start = it = s;
 		end = e;
 	}
-	DictIterator(const DictIterator &rhs) { 
-		*this = rhs; 
+	DictIterator(const DictIterator &rhs) {
+		*this = rhs;
 	}
 	DictIterator &operator = (const DictIterator &rhs) {
-		if (this != &rhs) {		
+		if (this != &rhs) {
 			start = it = rhs.start;
-			end = rhs.end;			
+			end = rhs.end;
 		}
 		return *this;
 	}
-	Dictionary::ObjectEntry GetNext() { return *it++; }
-	bool HasNext() const { return it != end; }
-	void Reset() { it = start; }
+	Dictionary::ObjectEntry GetNext() {
+		return *it++;
+	}
+	bool HasNext() const {
+		return it != end;
+	}
+	void Reset() {
+		it = start;
+	}
 private:
 	Dictionary::CIterator start, end, it;
 };

@@ -15,14 +15,14 @@ static PageDef pagedefs[] = {
 IMPLEMENT_DYNAMIC(EntryPropertySheet, CPropertySheet)
 
 EntryPropertySheet::EntryPropertySheet(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
-	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage), 
-	m_pPages(0), m_nPages(0), m_pEntry(0)
+		: CPropertySheet(nIDCaption, pParentWnd, iSelectPage),
+		m_pPages(0), m_nPages(0), m_pEntry(0)
 {
 }
 
 EntryPropertySheet::EntryPropertySheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
-	:CPropertySheet(pszCaption, pParentWnd, iSelectPage), 
-	m_pPages(0), m_nPages(0), m_pEntry(0)
+		:CPropertySheet(pszCaption, pParentWnd, iSelectPage),
+		m_pPages(0), m_nPages(0), m_pEntry(0)
 {
 
 }
@@ -49,7 +49,7 @@ void EntryPropertySheet::BuildPropPageArray()
 	m_pPages = new CPropertyPage*[m_nPages];
 
 	for (uint32_t i = 0; i < m_nPages; i++) {
-		m_pPages[i] = (CPropertyPage*)pagedefs[i].Class->CreateObject();		
+		m_pPages[i] = (CPropertyPage*)pagedefs[i].Class->CreateObject();
 		ASSERT_VALID(m_pPages[i]);
 		m_pPages[i]->Construct(pagedefs[i].id, 0);
 		AddPage(m_pPages[i]);

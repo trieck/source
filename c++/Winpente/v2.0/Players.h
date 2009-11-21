@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CPlayers window
 
-class CPlayers : public CObject
-{
+class CPlayers : public CObject {
 // Construction
 public:
 	CPlayers();
@@ -45,7 +44,7 @@ protected:
 	BOOL UpdateRegistry();
 
 	//{{AFX_MSG(CPlayers)
-		// NOTE - the ClassWizard will add and remove member functions here.
+	// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 };
 

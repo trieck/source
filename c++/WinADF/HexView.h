@@ -1,8 +1,7 @@
 #pragma once
 #include "bigscrollview.h"
 
-class HexView :	public BigScrollView
-{
+class HexView :	public BigScrollView {
 	DECLARE_DYNCREATE(HexView)
 public:
 	HexView(void);
@@ -15,7 +14,7 @@ protected:
 	uint8_t *m_pBuffer;
 	LPSTR m_pLine;
 	uint32_t m_nBufferLen;
-	
+
 	virtual void OnDraw(CDC* /*pDC*/);
 	void Render(CDC* pDC);
 	void DrawGridLine(CDC *pDC, uint32_t line, uint32_t cx);

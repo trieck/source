@@ -15,16 +15,15 @@
 ///////////////////////////////////////////////////////////////////
 // The CDocViewView view class
 
-class CDocViewView : public CView
-{
+class CDocViewView : public CView {
 protected:
 	CDocViewView();
 	DECLARE_DYNCREATE(CDocViewView)
 
 // Attributes
 public:
-   CDocViewDoc* GetDocument();
-   
+	CDocViewDoc* GetDocument();
+
 // Overrides
 public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
@@ -39,13 +38,13 @@ protected:
 	afx_msg	INT	OnCreate(LPCREATESTRUCT);
 
 	DECLARE_MESSAGE_MAP()
-};       
+};
 
 inline CDocViewDoc* CDocViewView::GetDocument()
-{ 
-   return (CDocViewDoc*)m_pDocument; 
+{
+	return (CDocViewDoc*)m_pDocument;
 }
 
 ///////////////////////////////////////////////////////////////////
-  
+
 #endif	// __DOCVIEWVIEW_H__

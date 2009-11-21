@@ -12,8 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CScoresDlg dialog
 
-class CScoresDlg : public CDialog
-{
+class CScoresDlg : public CDialog {
 // Construction
 public:
 	CScoresDlg(CWnd* pParent = NULL);   // standard constructor
@@ -24,14 +23,14 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CScoresDlg)
 	enum { IDD = IDD_SCORES};
-		// NOTE: the ClassWizard will add data members here
+	// NOTE: the ClassWizard will add data members here
 	//}}AFX_DATA
 
 
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CScoresDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
@@ -40,11 +39,13 @@ protected:
 	VOID	InsertItems();
 	VOID	InsertHeaders();
 
-	inline	CListCtrl& GetListCtrl(){ return * (CListCtrl*) GetDlgItem(IDC_SCORES); }
+	inline	CListCtrl& GetListCtrl() {
+		return * (CListCtrl*) GetDlgItem(IDC_SCORES);
+	}
 
 	CScores *				m_pScores;
 	CScoresPreviewFrame *	m_pFrame;
-	
+
 	VOID	afx_msg	OnPreview();
 
 	// Generated message map functions

@@ -112,7 +112,7 @@ void error(const char *fmt, ...)
 void AssertMessage(const char *msg, const char *file, int line)
 {
 	dprint("ASSERTION FAILURE (%s)! in file %s at line %d.", msg, file,
-		   line);
+	       line);
 	exit(EXIT_FAILURE);
 }
 
@@ -129,7 +129,7 @@ void cleanup(void)
 		fclose(yyin);
 		yyin = 0;
 	}
-	
+
 	if (module_name) {
 		free(module_name);
 		module_name = 0;
@@ -151,7 +151,7 @@ void getinput(int argc, char **argv)
 		fprintf(stderr, "%s: can't open \"%s\".\n", argv[0], argv[1]);
 		exit(EXIT_FAILURE);
 	}
-	
+
 	module_name = strdup(argv[1]);
 }
 

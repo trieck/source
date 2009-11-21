@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 // SYMBOLTABLE.CPP : Symbol table
 //
 // Copyright(c) 2006, Thomas A. Rieck, All Rights Reserved
@@ -189,7 +189,7 @@ LPSYMBOL SymbolTable::lookup(const string &s) const
 void SymbolTable::flushtmp()
 {
 	symmap::iterator it = table.begin();
-	for ( ; it != table.end(); it++) {		
+	for ( ; it != table.end(); it++) {
 		if ((*it).second->type & ST_TEMP) {
 			delete (*it).second;
 			table.erase(it);

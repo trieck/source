@@ -11,9 +11,8 @@
 
 class BackendsView;
 
-class MainFrame : public CFrameWnd
-{
-	
+class MainFrame : public CFrameWnd {
+
 protected: // create from serialization only
 	MainFrame();
 	DECLARE_DYNCREATE(MainFrame)
@@ -29,7 +28,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(MainFrame)
-	public:
+public:
 	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL

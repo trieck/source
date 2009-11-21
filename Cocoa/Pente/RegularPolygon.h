@@ -11,6 +11,7 @@
 
 @interface NSBezierPath (Polygons)
 
-+ (NSBezierPath *) polygonWithSides:(uint32_t) sides;
++ (NSBezierPath *) polygonWithSides:
+(uint32_t) sides;
 
 @end

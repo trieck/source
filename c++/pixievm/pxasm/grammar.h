@@ -26,24 +26,24 @@
 /* Tokens.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-   /* Put the tokens into the symbol table, so that GDB and other debuggers
-      know about them.  */
-   enum yytokentype {
-     PLUS = 258,
-     SUB = 259,
-     MULT = 260,
-     DIV = 261,
-     MOD = 262,
-     EXP = 263,
-     SIN = 264,
-     COS = 265,
-     ATAN = 266,
-     LOG = 267,
-     LOG10 = 268,
-     SQRT = 269,
-     INT = 270,
-     ABS = 271
-   };
+/* Put the tokens into the symbol table, so that GDB and other debuggers
+   know about them.  */
+enum yytokentype {
+	PLUS = 258,
+	SUB = 259,
+	MULT = 260,
+	DIV = 261,
+	MOD = 262,
+	EXP = 263,
+	SIN = 264,
+	COS = 265,
+	ATAN = 266,
+	LOG = 267,
+	LOG10 = 268,
+	SQRT = 269,
+	INT = 270,
+	ABS = 271
+};
 #endif
 #define PLUS 258
 #define SUB 259

@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 // WALKER.CPP : B-tree walker
 //
 // Copyright (c) 2006 Thomas. A. Rieck, All Rights Reserved
@@ -12,7 +12,7 @@
 #include "blockio.h"
 #include "btree.h"
 #include "walker.h"
-																			 
+
 /////////////////////////////////////////////////////////////////////////////
 Walker::Walker()
 {

@@ -17,7 +17,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-LPCTSTR headers[] = { 
+LPCTSTR headers[] = {
 	"Value"
 };
 
@@ -74,21 +74,21 @@ void ValueView::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // ValueView message handlers
 
-int ValueView::OnCreate(LPCREATESTRUCT lpcs) 
+int ValueView::OnCreate(LPCREATESTRUCT lpcs)
 {
 	if (CListView::OnCreate(lpcs) == -1)
 		return -1;
 
-	CListCtrl &list = GetListCtrl();		
+	CListCtrl &list = GetListCtrl();
 	list.SetExtendedStyle(/*LVS_EX_GRIDLINES | */LVS_EX_FULLROWSELECT);
 
 	// Add the columns
 	int ncols = sizeof(headers) / sizeof(LPCSTR);
 	int nwidth = (lpcs->cx / ncols);
-	
+
 	for (int i = 0; i < ncols; i++) {
-		list.InsertColumn(i, headers[i], LVCFMT_CENTER, 
-			nwidth);	
+		list.InsertColumn(i, headers[i], LVCFMT_CENTER,
+		                  nwidth);
 	}
 
 	OnSettingChange(0, 0);
@@ -96,15 +96,15 @@ int ValueView::OnCreate(LPCREATESTRUCT lpcs)
 	return 0;
 }
 
-BOOL ValueView::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL ValueView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.style = cs.style | WS_CLIPSIBLINGS | LVS_REPORT
-		| LVS_SHOWSELALWAYS | LVS_NOSORTHEADER;
-	
+	           | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER;
+
 	return CListView::PreCreateWindow(cs);
 }
 
-void ValueView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
+void ValueView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
 	CListCtrl& list = GetListCtrl();
 	list.DeleteAllItems();
@@ -141,7 +141,7 @@ LRESULT ValueView::OnSettingChange(WPARAM wParam, LPARAM lParam)
 		COLORREF textColor = pApp->GetIntSetting("ui_text_color");
 		list.SetTextColor(textColor);
 	}
-	
+
 	list.RedrawWindow();
 
 	return 0;
@@ -167,15 +167,15 @@ CString Comma(__int64 i)
 {
 	CString input, output;
 	input.Format("%I64d", i);
-	
+
 	int n = input.GetLength();
 
-    for (int j = n - 1, k = 1; j >= 0; j--, k++) {
-        output += input[(int)j];
-        if (k % 3 == 0 && j > 0 && j < n - 1)
-            output += ',';
-    }
-	
+	for (int j = n - 1, k = 1; j >= 0; j--, k++) {
+		output += input[(int)j];
+		if (k % 3 == 0 && j > 0 && j < n - 1)
+			output += ',';
+	}
+
 	strrev(output.GetBuffer(output.GetLength()));
 	output.ReleaseBuffer();
 

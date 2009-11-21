@@ -42,8 +42,8 @@ int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	if (!toolBar.Create(this, WS_CHILD | WS_VISIBLE | CBRS_TOP
-		| CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) || 
-		!toolBar.LoadToolBar(IDR_MAINFRAME)) {
+	                    | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
+	        !toolBar.LoadToolBar(IDR_MAINFRAME)) {
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
 	}
@@ -58,14 +58,14 @@ int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	DockControlBar(&toolBar);
 	RecalcLayout();
 	CenterWindow();
-	
+
 	return 0;
 }
 
 BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.style &= ~(WS_THICKFRAME | WS_MAXIMIZE | WS_MAXIMIZEBOX);
-	if(!CFrameWnd::PreCreateWindow(cs))
+	if (!CFrameWnd::PreCreateWindow(cs))
 		return FALSE;
 	return TRUE;
 }
@@ -88,7 +88,7 @@ void MainFrame::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // MainFrame message handlers
 
-void MainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection) 
+void MainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
 	CFrameWnd::OnSettingChange(uFlags, lpszSection);
 	RecalcLayout();
@@ -140,17 +140,17 @@ void MainFrame::adjustFrameByBoard()
 	DWORD style = GetStyle();
 	DWORD dwExStyle = GetExStyle() | WS_EX_CLIENTEDGE;
 	AdjustWindowRectEx(&rc, style, TRUE, dwExStyle);
-	
-	SetWindowPos(NULL, 0, 0, rc.Width(), rc.Height(), 
-		SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);
+
+	SetWindowPos(NULL, 0, 0, rc.Width(), rc.Height(),
+	             SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void MainFrame::RecalcLayout(BOOL bNotify) 
+void MainFrame::RecalcLayout(BOOL bNotify)
 {
 	if (IsWindow(statusBar) && IsWindow(toolBar))
 		adjustFrameByBoard();
-	
+
 	CFrameWnd::RecalcLayout(bNotify);
 }
 

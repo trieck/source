@@ -8,23 +8,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 ProcessEnumerator::ProcessEnumerator()
- : hModule(NULL)
+		: hModule(NULL)
 {
 	hModule = LoadLibrary(_T("PSAPI"));
 	if (hModule == NULL)
 		throw Exception(_T("Unable to load PSAPI library."));
 
-	EnumProcesses = (EnumProcessesProc)GetProcAddress(hModule, 
-		_T("EnumProcesses"));
-	EnumProcessModules = (EnumProcessModulesProc)GetProcAddress(hModule, 
-		_T("EnumProcessModules"));
+	EnumProcesses = (EnumProcessesProc)GetProcAddress(hModule,
+	                _T("EnumProcesses"));
+	EnumProcessModules = (EnumProcessModulesProc)GetProcAddress(hModule,
+	                     _T("EnumProcessModules"));
 	GetModuleBaseName = (GetModuleBaseNameProc)GetProcAddress(hModule,
-		_TPROCNAME(GetModuleBaseName));
+	                    _TPROCNAME(GetModuleBaseName));
 	GetModuleFileNameEx = (GetModuleFileNameExProc)GetProcAddress(hModule,
-		_TPROCNAME(GetModuleFileNameEx));
+	                      _TPROCNAME(GetModuleFileNameEx));
 
 	if (!EnumProcesses || !EnumProcessModules ||
-		!GetModuleBaseName || !GetModuleFileNameEx)
+	        !GetModuleBaseName || !GetModuleFileNameEx)
 		throw Exception(_T("Unable to locate procedure."));
 
 	enumerate();
@@ -66,8 +66,8 @@ PidVector ProcessEnumerator::getMatchingPids(LPCTSTR process)
 		tstring basename = getBaseName(name.c_str());
 		tstring baseproc = getBaseName(process);
 
-		if (_tcsnicmp(basename.c_str(), baseproc.c_str(), 
-			baseproc.length()) == 0)
+		if (_tcsnicmp(basename.c_str(), baseproc.c_str(),
+		              baseproc.length()) == 0)
 			output.push_back(pids[i]);
 	}
 
@@ -77,8 +77,8 @@ PidVector ProcessEnumerator::getMatchingPids(LPCTSTR process)
 /////////////////////////////////////////////////////////////////////////////
 tstring ProcessEnumerator::getProcessName(DWORD pid) const
 {
-	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, 
-		FALSE, pid);
+	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,
+	                              FALSE, pid);
 	if (hProcess == NULL)
 		return _T("");
 
@@ -92,24 +92,24 @@ tstring ProcessEnumerator::getProcessName(DWORD pid) const
 
 	TCHAR module[_MAX_PATH + _MAX_FNAME + 1];
 	module[0] = _T('\0');
-	
-	DWORD rtn = (*GetModuleFileNameEx)(hProcess, hModule, module, 
-		_MAX_PATH + _MAX_FNAME);
-	
+
+	DWORD rtn = (*GetModuleFileNameEx)(hProcess, hModule, module,
+	                                   _MAX_PATH + _MAX_FNAME);
+
 	CloseHandle(hProcess);
-	
+
 	return module;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 tstring ProcessEnumerator::getBaseName(LPCTSTR process)
-{	
+{
 	TCHAR drive[_MAX_DRIVE];
 	TCHAR dir[_MAX_DIR];
 	TCHAR fname[_MAX_FNAME];
 	TCHAR ext[_MAX_EXT];
 
 	_tsplitpath(process, drive, dir, fname, ext );
-    
+
 	return fname;
 }

@@ -30,8 +30,8 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // PenteApp construction
 
-PenteApp::PenteApp() 
-: twoPlayerGame(true)
+PenteApp::PenteApp()
+		: twoPlayerGame(true)
 {
 }
 
@@ -52,16 +52,16 @@ BOOL PenteApp::InitInstance()
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 	LoadStdProfileSettings();  // Load standard IhI file options (including MRU)
 
-	twoPlayerGame = GetProfileInt(_T("Settings"), 
-		_T("TwoPlayerGame"), 1) == 1 ? true : false;
+	twoPlayerGame = GetProfileInt(_T("Settings"),
+	                              _T("TwoPlayerGame"), 1) == 1 ? true : false;
 
 	// Register document templates
 	CSingleDocTemplate* pDocTemplate;
 	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(PenteDoc),
-		RUNTIME_CLASS(MainFrame),       // main SDI frame window
-		RUNTIME_CLASS(PenteView));
+	    IDR_MAINFRAME,
+	    RUNTIME_CLASS(PenteDoc),
+	    RUNTIME_CLASS(MainFrame),       // main SDI frame window
+	    RUNTIME_CLASS(PenteView));
 	AddDocTemplate(pDocTemplate);
 
 	HKEY HKCU;
@@ -92,8 +92,7 @@ BOOL PenteApp::InitInstance()
 /////////////////////////////////////////////////////////////////////////////
 // AboutDlg dialog used for App About
 
-class AboutDlg : public CDialog
-{
+class AboutDlg : public CDialog {
 public:
 	AboutDlg();
 	// Dialog Data
@@ -130,7 +129,7 @@ void AboutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(AboutDlg, CDialog)
 	//{{AFX_MSG_MAP(AboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -145,14 +144,14 @@ void PenteApp::OnAppAbout()
 // PenteApp message handlers
 
 /////////////////////////////////////////////////////////////////////////////
-int PenteApp::ExitInstance() 
+int PenteApp::ExitInstance()
 {
 	WriteProfileInt(_T("Settings"), _T("TwoPlayerGame"),
-		twoPlayerGame ? 1 : 0);
+	                twoPlayerGame ? 1 : 0);
 	return CWinApp::ExitInstance();
 }
 
-void PenteApp::OnFileNew() 
+void PenteApp::OnFileNew()
 {
 	CWinApp::OnFileNew();
 }

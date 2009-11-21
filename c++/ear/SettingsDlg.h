@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // SettingsDlg dialog
 
-class SettingsDlg : public CDialog
-{
+class SettingsDlg : public CDialog {
 // Construction
 public:
 	SettingsDlg(CWnd* pParent = NULL);   // standard constructor
@@ -33,7 +32,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(SettingsDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 

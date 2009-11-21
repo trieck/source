@@ -74,7 +74,7 @@ int TextFileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (TextView::OnCreate(lpCreateStruct) != 0)
 		return -1;
 
-	m_Font.CreatePointFont(90, _T("Courier New"));	
+	m_Font.CreatePointFont(90, _T("Courier New"));
 
 	WinADFDoc *pDoc = GetDocument();
 	ASSERT_VALID(pDoc);

@@ -1,10 +1,10 @@
 /*-------------------------------
-		   MERLIN.H			
+		   MERLIN.H
 
-	-	Protocol Specification			
-		for Merlin Services	
+	-	Protocol Specification
+		for Merlin Services
 
-	-	Created: 06/14/1997	
+	-	Created: 06/14/1997
 	-	Author:  Thomas A. Rieck
 
 ----------------------------------*/
@@ -29,17 +29,15 @@
 #define	SUCCESS		3
 
 // message structures
-typedef struct 
-{
+typedef struct {
 	char	cType;
 	char	cSubType;
 	char	cDetails;
 	char	cPad;						// align to even byte boundary
-	char	cMsgSpec[MAXMSGSPEC];		// message specific data	
+	char	cMsgSpec[MAXMSGSPEC];		// message specific data
 } REQUEST, *LPREQUEST;
 
-typedef struct
-{
+typedef struct {
 	char			cType;
 	char			cSubType;
 	char			cDetails;
@@ -50,8 +48,7 @@ typedef struct
 
 // message specific data structures
 
-typedef struct
-{
+typedef struct {
 	unsigned long	lTotalBytes;
 	unsigned long	lFreeBytes;
 } DISKINFOSTRUCT, *LPDISKINFOSTRUCT;

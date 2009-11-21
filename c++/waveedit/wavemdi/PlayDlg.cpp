@@ -1,6 +1,6 @@
 /*---------------------------------------
 	Module	:	PLAYDLG.CPP
-	Purpose	:	Player Dialog 
+	Purpose	:	Player Dialog
 				Implementations
 	Date	:	12/01/1997
 ---------------------------------------*/
@@ -10,13 +10,15 @@
 
 // Initialize static data members
 const UINT CPlayDlg::sm_nCtrlIDs[] = {IDC_BACKFRAME1, IDC_BACKFRAME2, IDC_BACKFRAME3,
-									IDC_BACKFRAME4, IDC_BACKFRAME5, IDC_BACKFRAME6};
+                                      IDC_BACKFRAME4, IDC_BACKFRAME5, IDC_BACKFRAME6
+                                     };
 const RECT CPlayDlg::sm_rcDigitSizes[] = {{67, 7, 79, 25},
-										{55, 7, 67, 25},
-										{43, 7, 55, 25},
-										{31, 7, 43, 25},
-										{19, 7, 31, 25},
-										{7, 7, 19, 25}};
+	{55, 7, 67, 25},
+	{43, 7, 55, 25},
+	{31, 7, 43, 25},
+	{19, 7, 31, 25},
+	{7, 7, 19, 25}
+};
 
 IMPLEMENT_DYNCREATE (CPlayDlg, CDialog)
 
@@ -63,12 +65,11 @@ BOOL CPlayDlg :: OnInitDialog()
 
 	UINT nCount = sizeof(nIcons) / sizeof(UINT);
 
-	for (UINT i = 0; i < nCount; i++)
-	{
+	for (UINT i = 0; i < nCount; i++) {
 		// Set the Button Icons
 		HICON hIcon = (HICON)::LoadImage(AfxGetInstanceHandle(),
-										MAKEINTRESOURCE(nIcons[i]),
-										IMAGE_ICON, 15, 15, LR_LOADMAP3DCOLORS);
+		                                 MAKEINTRESOURCE(nIcons[i]),
+		                                 IMAGE_ICON, 15, 15, LR_LOADMAP3DCOLORS);
 		SendDlgItemMessage(nCtrls[i], BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIcon);
 	}
 
@@ -76,8 +77,8 @@ BOOL CPlayDlg :: OnInitDialog()
 
 	nCount = sizeof(CPlayDlg::sm_nCtrlIDs) / sizeof(UINT);
 
-	m_pDigitCtrlMgr = new CDigitCtrlMgr(this, CPlayDlg::sm_nCtrlIDs, 
-						CPlayDlg::sm_rcDigitSizes, nCount);
+	m_pDigitCtrlMgr = new CDigitCtrlMgr(this, CPlayDlg::sm_nCtrlIDs,
+	                                    CPlayDlg::sm_rcDigitSizes, nCount);
 
 	ASSERT_VALID(m_pDigitCtrlMgr);
 
@@ -97,7 +98,7 @@ BOOL CPlayDlg :: OnInitDialog()
 	ASSERT_VALID(m_pRightChannel);
 
 	m_pRightChannel->Create(WS_VISIBLE | WS_CHILD, rcRight,
-				this, IDC_RIGHTCHANNEL);
+	                        this, IDC_RIGHTCHANNEL);
 
 	m_pLeftChannel->SetPos(50);
 	m_pRightChannel->SetPos(85);
@@ -111,12 +112,10 @@ BOOL CPlayDlg :: OnInitDialog()
 
 VOID CPlayDlg :: OnStopWave()
 {
-	if (m_pDoc)
-	{
-		if (m_pDoc->Stop())
-		{
+	if (m_pDoc) {
+		if (m_pDoc->Stop()) {
 			KillTimer(1);
-				
+
 			CString strValue = _T("000000");
 			m_pDigitCtrlMgr->SetValue(strValue);
 
@@ -132,26 +131,19 @@ VOID CPlayDlg :: OnStopWave()
 
 VOID CPlayDlg :: OnPlayWave()
 {
-	if (!m_fPaused)
-	{	// Play current document file
+	if (!m_fPaused) {	// Play current document file
 		m_pDoc = GetActiveDocument();
-		if (m_pDoc)
-		{
-			if (m_pDoc->Play())
-			{
+		if (m_pDoc) {
+			if (m_pDoc->Play()) {
 				SetTimer(1, 1, NULL);
 				GetDlgItem(IDC_STOP)->EnableWindow(TRUE);
 				GetDlgItem(IDC_PLAY)->EnableWindow(FALSE);
 				GetDlgItem(IDC_PAUSE)->EnableWindow(TRUE);
 			}
 		}
-	}
-	else // Restart a paused document
-	{
-		if (m_pDoc)
-		{
-			if (m_pDoc->Restart())
-			{
+	} else { // Restart a paused document
+		if (m_pDoc) {
+			if (m_pDoc->Restart()) {
 				SetTimer(1, 1, NULL);
 				GetDlgItem(IDC_STOP)->EnableWindow(TRUE);
 				GetDlgItem(IDC_PLAY)->EnableWindow(FALSE);
@@ -164,10 +156,8 @@ VOID CPlayDlg :: OnPlayWave()
 
 VOID CPlayDlg :: OnPauseWave()
 {
-	if (m_pDoc)
-	{
-		if (m_pDoc->Pause())
-		{
+	if (m_pDoc) {
+		if (m_pDoc->Pause()) {
 			KillTimer(1);
 			GetDlgItem(IDC_PLAY)->EnableWindow(TRUE);
 			GetDlgItem(IDC_PAUSE)->EnableWindow(FALSE);
@@ -180,21 +170,19 @@ void CPlayDlg :: OnTimer(UINT nIDEvent)
 {
 	DWORD dwPlayPosition, dwWritePosition, dwBytesPerMs;
 
-	if (m_pDoc)
-	{
+	if (m_pDoc) {
 		// If we are not playing anymore kill the timer.
-		if (!m_pDoc->IsPlaying())
-		{
+		if (!m_pDoc->IsPlaying()) {
 			OnStopWave();
 			return;
 		}
 
 		// Get Current play rate and convert to BytesPerMillisecond.
 		dwBytesPerMs = m_pDoc->GetRate() / 1000;
-		
+
 		// Get Current Play Position
 		m_pDoc->GetCurrentPosition(&dwPlayPosition, &dwWritePosition);
-		
+
 		dwPlayPosition /= dwBytesPerMs;
 
 		// Update the display with current value.
@@ -219,12 +207,11 @@ CString CPlayDlg :: TranslatePlayPosition(DWORD dwPosition)
 	int		nLength;
 	int		nCount;
 	CString strPosition;
-	
+
 	nCount = sizeof(CPlayDlg::sm_nCtrlIDs) / sizeof(UINT);
-	
+
 	strPosition.Format(_T("%ld"), dwPosition);
-	if ((nLength = strPosition.GetLength()) < nCount)
-	{
+	if ((nLength = strPosition.GetLength()) < nCount) {
 		CString strTemp;
 		int nDiff = nCount - nLength;
 		for (int i = nDiff; i > 0; i--)

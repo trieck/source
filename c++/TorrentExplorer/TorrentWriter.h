@@ -9,8 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class TorrentWriter  
-{
+class TorrentWriter {
 private:
 	TorrentWriter();
 	virtual ~TorrentWriter();

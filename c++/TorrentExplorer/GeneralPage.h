@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // GeneralPage dialog
 
-class GeneralPage : public CPropertyPage
-{
+class GeneralPage : public CPropertyPage {
 	DECLARE_DYNCREATE(GeneralPage)
 
 // Construction
@@ -29,9 +28,9 @@ public:
 // Overrides
 	// ClassWizard generate virtual function overrides
 	//{{AFX_VIRTUAL(GeneralPage)
-	public:
+public:
 	virtual void OnOK();
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 

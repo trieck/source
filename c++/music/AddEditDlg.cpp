@@ -15,9 +15,9 @@ static char THIS_FILE[] = __FILE__;
 // AddEditDlg dialog
 
 AddEditDlg::AddEditDlg(Mode M, LPRECORD rec, CWnd* pParent /*=NULL*/)
- : CDialog(AddEditDlg::IDD, pParent),
- _mode(M),
- _rec(rec)
+		: CDialog(AddEditDlg::IDD, pParent),
+		_mode(M),
+		_rec(rec)
 {
 	//{{AFX_DATA_INIT(AddEditDlg)
 	m_Album = _T("");
@@ -48,13 +48,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // AddEditDlg message handlers
 
-BOOL AddEditDlg::OnInitDialog() 
+BOOL AddEditDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	if (_mode == addMode) {
 		SetWindowText(LoadString(IDS_ADDMODE));
-	}else {
+	} else {
 		m_Artist = _rec->Artist;
 		m_Album = _rec->Album;
 		m_Label = _rec->Label;
@@ -64,14 +64,14 @@ BOOL AddEditDlg::OnInitDialog()
 	}
 
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void AddEditDlg::OnNewArtist() 
+void AddEditDlg::OnNewArtist()
 {
 }
 
-void AddEditDlg::OnOK() 
+void AddEditDlg::OnOK()
 {
 	CDialog::OnOK();
 }

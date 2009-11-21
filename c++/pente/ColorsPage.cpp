@@ -22,7 +22,7 @@ BEGIN_MESSAGE_MAP(CColorsPage, CPropertyPage)
 END_MESSAGE_MAP()
 
 CColorsPage::CColorsPage()
-	: CPropertyPage(CColorsPage::IDD), m_ModFlags(0)
+		: CPropertyPage(CColorsPage::IDD), m_ModFlags(0)
 {
 }
 
@@ -44,7 +44,7 @@ void CColorsPage::DoDataExchange(CDataExchange* pDX)
 
 // CColorsPage message handlers
 
-void CColorsPage::OnTableColor() 
+void CColorsPage::OnTableColor()
 {
 	CColorChooserDlg dlg(&m_TableColor);
 	if (dlg.DoModal() == IDOK) {
@@ -54,7 +54,7 @@ void CColorsPage::OnTableColor()
 	}
 }
 
-void CColorsPage::OnBoardColor() 
+void CColorsPage::OnBoardColor()
 {
 	CColorChooserDlg dlg(&m_BoardColor);
 	if (dlg.DoModal() == IDOK) {
@@ -64,7 +64,7 @@ void CColorsPage::OnBoardColor()
 	}
 }
 
-void CColorsPage::OnGridColor() 
+void CColorsPage::OnGridColor()
 {
 	CColorChooserDlg dlg(&m_GridColor);
 	if (dlg.DoModal() == IDOK) {
@@ -74,7 +74,7 @@ void CColorsPage::OnGridColor()
 	}
 }
 
-void CColorsPage::OnPlayerOneColor() 
+void CColorsPage::OnPlayerOneColor()
 {
 	CColorChooserDlg dlg(&m_PlayerOneColor);
 	if (dlg.DoModal() == IDOK) {
@@ -84,7 +84,7 @@ void CColorsPage::OnPlayerOneColor()
 	}
 }
 
-void CColorsPage::OnPlayerTwoColor() 
+void CColorsPage::OnPlayerTwoColor()
 {
 	CColorChooserDlg dlg(&m_PlayerTwoColor);
 	if (dlg.DoModal() == IDOK) {
@@ -100,24 +100,24 @@ BOOL CColorsPage::OnInitDialog()
 
 	CWinApp *pApp = AfxGetApp();
 	COLORREF tableColor = pApp->GetProfileInt(_T("Settings"), _T("TableColor"),
-		PenteBoard::DEFAULT_TABLE_COLOR);
+	                      PenteBoard::DEFAULT_TABLE_COLOR);
 	m_TableColor.SetFillColor(tableColor);
 
 	COLORREF boardColor = pApp->GetProfileInt(_T("Settings"), _T("BoardColor"),
-		PenteBoard::DEFAULT_BOARD_COLOR);
+	                      PenteBoard::DEFAULT_BOARD_COLOR);
 	m_BoardColor.SetFillColor(boardColor);
 
 	COLORREF gridColor = pApp->GetProfileInt(_T("Settings"), _T("GridColor"),
-		PenteBoard::DEFAULT_GRID_COLOR);
+	                     PenteBoard::DEFAULT_GRID_COLOR);
 	m_GridColor.SetFillColor(gridColor);
 
-	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"), 
-		_T("PlayerOneColor"), PenteBoard::DEFAULT_PLAYER_ONE_COLOR);
+	COLORREF playerOneColor = pApp->GetProfileInt(_T("Settings"),
+	                          _T("PlayerOneColor"), PenteBoard::DEFAULT_PLAYER_ONE_COLOR);
 	m_PlayerOneColor.SetFillColor(playerOneColor);
 
-	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"), 
-		_T("PlayerTwoColor"),
-		PenteBoard::DEFAULT_PLAYER_TWO_COLOR);
+	COLORREF playerTwoColor = pApp->GetProfileInt(_T("Settings"),
+	                          _T("PlayerTwoColor"),
+	                          PenteBoard::DEFAULT_PLAYER_TWO_COLOR);
 	m_PlayerTwoColor.SetFillColor(playerTwoColor);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -131,31 +131,31 @@ BOOL CColorsPage::OnApply()
 	PenteBoard *board = doc->getGame()->getBoard();
 
 	if (m_ModFlags & TABLE_COLOR) {
-		pApp->WriteProfileInt(_T("Settings"), _T("TableColor"), 
-			m_TableColor.GetFillColor());
+		pApp->WriteProfileInt(_T("Settings"), _T("TableColor"),
+		                      m_TableColor.GetFillColor());
 	}
 
 	if (m_ModFlags & BOARD_COLOR) {
-		pApp->WriteProfileInt(_T("Settings"), _T("BoardColor"), 
-			m_BoardColor.GetFillColor());
+		pApp->WriteProfileInt(_T("Settings"), _T("BoardColor"),
+		                      m_BoardColor.GetFillColor());
 		board->setBackgroundColor(m_BoardColor.GetFillColor());
 	}
 
 	if (m_ModFlags & GRID_COLOR) {
-		pApp->WriteProfileInt(_T("Settings"), _T("GridColor"), 
-			m_GridColor.GetFillColor());
+		pApp->WriteProfileInt(_T("Settings"), _T("GridColor"),
+		                      m_GridColor.GetFillColor());
 		board->setGridColor(m_GridColor.GetFillColor());
 	}
 
 	if (m_ModFlags & PLAYER_ONE_COLOR) {
-		pApp->WriteProfileInt(_T("Settings"), _T("PlayerOneColor"), 
-			m_PlayerOneColor.GetFillColor());
+		pApp->WriteProfileInt(_T("Settings"), _T("PlayerOneColor"),
+		                      m_PlayerOneColor.GetFillColor());
 		board->setPlayerOneColor(m_PlayerOneColor.GetFillColor());
 	}
 
 	if (m_ModFlags & PLAYER_TWO_COLOR) {
-		pApp->WriteProfileInt(_T("Settings"), _T("PlayerTwoColor"), 
-			m_PlayerTwoColor.GetFillColor());
+		pApp->WriteProfileInt(_T("Settings"), _T("PlayerTwoColor"),
+		                      m_PlayerTwoColor.GetFillColor());
 		board->setPlayerTwoColor(m_PlayerTwoColor.GetFillColor());
 	}
 
@@ -176,8 +176,8 @@ void CColorsPage::OnBnClickedDefault()
 	m_GridColor.SetFillColor(PenteBoard::DEFAULT_GRID_COLOR);
 	m_PlayerOneColor.SetFillColor(PenteBoard::DEFAULT_PLAYER_ONE_COLOR);
 	m_PlayerTwoColor.SetFillColor(PenteBoard::DEFAULT_PLAYER_TWO_COLOR);
-	
-	m_ModFlags |= TABLE_COLOR | BOARD_COLOR | GRID_COLOR | 
-		PLAYER_ONE_COLOR | PLAYER_TWO_COLOR;
+
+	m_ModFlags |= TABLE_COLOR | BOARD_COLOR | GRID_COLOR |
+	              PLAYER_ONE_COLOR | PLAYER_TWO_COLOR;
 	SetModified();
 }

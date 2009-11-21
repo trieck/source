@@ -1,6 +1,6 @@
 /*
  * INVERTER.C
- * 
+ *
  * Inverted list of term locations in memory
  * Copyright (c) 2008 Thomas A. Rieck
  */
@@ -203,5 +203,5 @@ int inverter_write(Inverter_t * v, FILE * fp)
 int inverter_isfull(Inverter_t * v)
 {
 	return (v->count > MAX_COUNT
-		|| v->ppool - v->pool > (int) v->maxpool);
+	        || v->ppool - v->pool > (int) v->maxpool);
 }

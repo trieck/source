@@ -25,7 +25,7 @@ typedef struct {
 } PIECESIZE;
 
 static PIECESIZE piece_sizes[] = {
-/*	{ "(auto detect)", 0 }, */
+	/*	{ "(auto detect)", 0 }, */
 	{ "32 kB", 1 << 15 },
 	{ "64 kB", 1 << 16 },
 	{ "128 kB", 1 << 17 },
@@ -45,7 +45,7 @@ CStringVec ParseTrackers(const CString &input);
 
 
 TorrentDlg::TorrentDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(TorrentDlg::IDD, pParent), m_pMaker(NULL)
+		: CDialog(TorrentDlg::IDD, pParent), m_pMaker(NULL)
 {
 	//{{AFX_DATA_INIT(TorrentDlg)
 	m_Trackers = _T("");
@@ -85,7 +85,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // TorrentDlg message handlers
 
-void TorrentDlg::OnBrowse() 
+void TorrentDlg::OnBrowse()
 {
 	BROWSEINFO bi;
 	CString displayName, fileName;
@@ -99,17 +99,17 @@ void TorrentDlg::OnBrowse()
 	displayName.ReleaseBuffer();
 
 	if (pidl != NULL) {
-		BOOL fRtn = SHGetPathFromIDList(pidl, 
-			fileName.GetBuffer(_MAX_PATH));
+		BOOL fRtn = SHGetPathFromIDList(pidl,
+		                                fileName.GetBuffer(_MAX_PATH));
 		fileName.ReleaseBuffer();
 		if (fRtn) {
 			m_SourceFiles.SetWindowText(fileName);
 		}
 		CoTaskMemFree(pidl);
-	}		
+	}
 }
 
-void TorrentDlg::OnOK() 
+void TorrentDlg::OnOK()
 {
 	if (!UpdateData(TRUE)) {
 		TRACE0("UpdateData failed during dialog termination.\n");
@@ -121,12 +121,13 @@ void TorrentDlg::OnOK()
 	m_SourceFiles.GetWindowText(sourceFiles.GetBuffer(nLen), nLen);
 	sourceFiles.ReleaseBuffer();
 
-	sourceFiles.TrimLeft(); sourceFiles.TrimRight();
+	sourceFiles.TrimLeft();
+	sourceFiles.TrimRight();
 	if (sourceFiles.GetLength() == 0) {
 		AfxMessageBox(IDS_NOPATH);
 		return;
 	}
-	
+
 	if (access(sourceFiles, 0) == -1) {
 		CString message;
 		message.Format(IDS_FILEDOESNOTEXIST, sourceFiles);
@@ -143,34 +144,35 @@ void TorrentDlg::OnOK()
 
 	CStringVec trackers = ParseTrackers(m_Trackers);
 	if (trackers.size() == 0) {
-		int nRtn = AfxMessageBox(IDS_NOTRACKERS, 
-			MB_YESNO | MB_ICONQUESTION);
+		int nRtn = AfxMessageBox(IDS_NOTRACKERS,
+		                         MB_YESNO | MB_ICONQUESTION);
 		if (nRtn == IDNO) return;
 	}
 
-	m_Comment.TrimLeft(); m_Comment.TrimRight();
-	
+	m_Comment.TrimLeft();
+	m_Comment.TrimRight();
+
 	int current;
 	if ((current = m_PieceSize.GetCurSel()) == -1) {
-		AfxMessageBox(IDS_NOPIECESIZE); 
+		AfxMessageBox(IDS_NOPIECESIZE);
 		return;
 	}
 
 	DWORD pieceSize = m_PieceSize.GetItemData(current);
-	
+
 	// Make the torrent
 	m_Create.EnableWindow(FALSE);
-	
+
 	try {
-		m_pMaker->Make(sourceFiles, trackers, m_Comment, 
-			pieceSize, m_Private);
+		m_pMaker->Make(sourceFiles, trackers, m_Comment,
+		               pieceSize, m_Private);
 	} catch (CUserException *pException) {
 		pException->Delete();
 		m_Create.EnableWindow(TRUE);
 		m_Progress.SetPos(0);
 		return;
 	}
-	
+
 	if (m_pMaker->DidCancel()) {	// user cancelled
 		EndDialog(IDCANCEL);
 	} else {
@@ -185,17 +187,17 @@ void TorrentDlg::Call(DWORD param)
 	if (!IsWindow(m_Progress)) return;
 
 	if (param != 0) {	// total size in pieces
-		m_Progress.SetRange32(0, param);	
+		m_Progress.SetRange32(0, param);
 		m_Progress.SetStep(1);
 	} else {
 		m_Progress.StepIt();
 	}
 }
 
-BOOL TorrentDlg::OnInitDialog() 
+BOOL TorrentDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	m_pMaker = new TorrentMaker(this);
 
 	int nentries = sizeof(piece_sizes) / sizeof(PIECESIZE);
@@ -205,9 +207,9 @@ BOOL TorrentDlg::OnInitDialog()
 	}
 
 	m_PieceSize.SetCurSel(0);
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
 CFile *TorrentDlg::GetFile()
@@ -227,7 +229,7 @@ CStringVec ParseTrackers(const CString &input)
 	CString tok;
 	while ((tok = tokenizer.next()) != "") {
 		if (tok.GetLength() < 7) continue;
-		if (tok.Mid(0, 7) == "http://") 
+		if (tok.Mid(0, 7) == "http://")
 			output.push_back(tok);
 	}
 
@@ -236,7 +238,7 @@ CStringVec ParseTrackers(const CString &input)
 
 }	// anonymous
 
-void TorrentDlg::OnCancel() 
+void TorrentDlg::OnCancel()
 {
 	if (m_pMaker != NULL)
 		m_pMaker->DoCancel();

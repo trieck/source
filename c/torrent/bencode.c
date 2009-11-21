@@ -1,7 +1,7 @@
 /*
  * BENCODE.C
  *
- * Bencode library 
+ * Bencode library
  * Copyright (c) 2006, Thomas A. Rieck
  */
 

@@ -8,7 +8,7 @@
  *
  *	This module is based largely on the
  * 	c64mem.h, c64mem.c modules in VICE, the Versatile Commodore Emulator
- * 	Written by: 
+ * 	Written by:
  *
  *  Ettore Perazzoli <ettore@comm2000.it>
  *  Andreas Boose <boose@linux.rz.fh-hannover.de>
@@ -29,7 +29,7 @@
  *  02111-1307  USA.
  *
  */
- 
+
 #ifndef __MEM_H__
 #define __MEM_H__
 /***************************************************************************/

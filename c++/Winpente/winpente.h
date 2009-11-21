@@ -1,5 +1,5 @@
 /*------------------------------
-		WINPENTE.H				
+		WINPENTE.H
 -------------------------------*/
 
 #ifndef _WINPENTE_H
@@ -23,37 +23,32 @@
 #define PLAYER_VS_COMP			1
 #define ID_STATUS				101
 
-typedef struct
-{
+typedef struct {
 	char szPlayerOne[16];
 	char szPlayerTwo[16];
 	char szWinner[16];
 	char szTime[25];
 } GAME, *LPGAME;
 
-typedef struct 
-{
+typedef struct {
 	int piece;							/* Current Piece */
 	RECT bRect;						    /* Rectangle coordinates */
 } BOX, *LPBOX;
 
-typedef struct 
-{
+typedef struct {
 	int p1_captures;					/* # of Green Captures */
 	int p2_captures;					/* # of Red Captures */
 	int current_turn;					/* Current Turn */
 	int game_option;					/* Game Option */
 	BOX box[19][19];					/* Array of Rectangles */
-}BOARD, *LPBOARD;
+} BOARD, *LPBOARD;
 
-typedef struct 
-{
+typedef struct {
 	int piece[19][19];					/* Which Piece */
 	int info[4];						/* Current turn, captures, option*/
 } GAMEFILE, *LPGAMEFILE;
 
-struct MOVES							/* linked list structure of possible MOVES */
-{
+struct MOVES {						/* linked list structure of possible MOVES */
 	POINT mPoint;
 	struct MOVES *next;
 };
@@ -78,10 +73,10 @@ extern int RegisterWindow(HINSTANCE hInstance, LPCSTR szAppName);
 ////////////////////////////////////////////
 // DisplayWindow Prototype //
 ////////////////////////////////////////////
-extern HWND DisplayWindow(HINSTANCE hInstance, 
-					   LPCSTR szAppName,
-					   LPCSTR szTitle,
-					   int nCmdShow);
+extern HWND DisplayWindow(HINSTANCE hInstance,
+                          LPCSTR szAppName,
+                          LPCSTR szTitle,
+                          int nCmdShow);
 
 ///////////////////////////////////
 // DrawGrid Prototype //
@@ -102,7 +97,7 @@ extern void DrawPiece (HWND hWnd, POINT c_point, LPSTR szResName);
 // WindowProc Prototype //
 ///////////////////////////////////////
 extern long WINAPI WindowProc(HWND hWnd, UINT message,
-					   WPARAM wParam, LPARAM lParam);
+                              WPARAM wParam, LPARAM lParam);
 
 //////////////////////////////
 // About Prototype //
@@ -198,13 +193,13 @@ extern void CenterDialog(HWND hDlg);
 // Scores Prototype //
 ///////////////////////////////
 extern BOOL Scores(HWND hDlg, unsigned message,
-		WPARAM wParam, LPARAM lParam);
+                   WPARAM wParam, LPARAM lParam);
 
 ////////////////////////////////
 // Players Prototype //
 ////////////////////////////////
 extern BOOL Players(HWND hDlg, unsigned message,
-		WPARAM wParam, LPARAM lParam);
+                    WPARAM wParam, LPARAM lParam);
 
 ////////////////////////////////////
 // PlayWave Prototype //
@@ -314,8 +309,8 @@ extern POINT GetBestPoint(PPMOVES head, PPMOVES current, PPMOVES prev, int oppon
 //////////////////////////////////
 // Pieces (DialogProc) Function //
 //////////////////////////////////
-extern BOOL Pieces(HWND hDlg, unsigned message, 
-				   WPARAM wParam, LPARAM lParam);
+extern BOOL Pieces(HWND hDlg, unsigned message,
+                   WPARAM wParam, LPARAM lParam);
 
 ////////////////////////
 // DrawFrame Function //

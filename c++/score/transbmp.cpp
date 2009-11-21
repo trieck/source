@@ -1,130 +1,131 @@
-///////////////////////////////////////////////////////////////////////
-//
-//	TRANSBMP.CPP : transparent bitmap
-//	
-//	Copyright © 1999 Rieck Enterprises
-//
+///////////////////////////////////////////////////////////////////////
+//
+//	TRANSBMP.CPP : transparent bitmap
+//
+//	Copyright © 1999 Rieck Enterprises
+//
 
-#include "stdafx.h"
-#include "transbmp.h"
+#include "stdafx.h"
+#include "transbmp.h"
 
-//
-// Constructor
-//
-TransparentBitmap :: TransparentBitmap(UINT nID, COLORREF transparent)
-{
-    m_fInitialized = FALSE;
-    m_pOldBitmapMem = NULL;
-    m_pOldBitmapXor = NULL;
-    m_pOldBitmapAnd = NULL;
-    
-    m_transparent = transparent;
+//
+// Constructor
+//
+TransparentBitmap :: TransparentBitmap(UINT nID, COLORREF transparent)
+{
+	m_fInitialized = FALSE;
+	m_pOldBitmapMem = NULL;
+	m_pOldBitmapXor = NULL;
+	m_pOldBitmapAnd = NULL;
 
-    if (!LoadBitmap(nID))
-        AfxThrowUserException();
-}
+	m_transparent = transparent;
 
-//
-// Initialize
-//
-BOOL TransparentBitmap :: Initialize(CDC * pDC)
-{
-    ASSERT((HBITMAP)*this != NULL);
-    ASSERT_VALID(pDC);
-    
-    if (m_fInitialized)
-        return FALSE;
+	if (!LoadBitmap(nID))
+		AfxThrowUserException();
+}
 
-    BITMAP bm;
-    GetObject(sizeof(BITMAP), &bm);
-    CPoint size(bm.bmWidth, bm.bmHeight);
+//
+// Initialize
+//
+BOOL TransparentBitmap :: Initialize(CDC * pDC)
+{
+	ASSERT((HBITMAP)*this != NULL);
+	ASSERT_VALID(pDC);
 
-    CPoint org(0, 0);
+	if (m_fInitialized)
+		return FALSE;
 
-    // Create a memory DC and select the bitmap into it
-    CDC dcImage;
-    dcImage.CreateCompatibleDC(pDC);
-    CBitmap * pOldBitmapImage = dcImage.SelectObject(this);
-    dcImage.SetMapMode(pDC->GetMapMode());
+	BITMAP bm;
+	GetObject(sizeof(BITMAP), &bm);
+	CPoint size(bm.bmWidth, bm.bmHeight);
 
-    // Create a second memory DC and in it create an AND mask
-    m_AndDC.CreateCompatibleDC(pDC);
-    m_AndDC.SetMapMode(pDC->GetMapMode());
+	CPoint org(0, 0);
 
-    CBitmap bitmapAnd;
-    bitmapAnd.CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL);
-    m_pOldBitmapAnd = m_AndDC.SelectObject(&bitmapAnd);
+	// Create a memory DC and select the bitmap into it
+	CDC dcImage;
+	dcImage.CreateCompatibleDC(pDC);
+	CBitmap * pOldBitmapImage = dcImage.SelectObject(this);
+	dcImage.SetMapMode(pDC->GetMapMode());
 
-    dcImage.SetBkColor(m_transparent);
-    m_AndDC.BitBlt(org.x, org.y, size.x, size.y, &dcImage, org.x, org.y, SRCCOPY);
+	// Create a second memory DC and in it create an AND mask
+	m_AndDC.CreateCompatibleDC(pDC);
+	m_AndDC.SetMapMode(pDC->GetMapMode());
 
-    // Create a third memory DC and in it create an XOR mask
-    m_XOrDC.CreateCompatibleDC(pDC);
-    m_XOrDC.SetMapMode(pDC->GetMapMode());
+	CBitmap bitmapAnd;
+	bitmapAnd.CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL);
+	m_pOldBitmapAnd = m_AndDC.SelectObject(&bitmapAnd);
 
-    CBitmap bitmapXor;
-    bitmapXor.CreateCompatibleBitmap(&dcImage, bm.bmWidth, bm.bmHeight);
-    m_pOldBitmapXor = m_XOrDC.SelectObject(&bitmapXor);
+	dcImage.SetBkColor(m_transparent);
+	m_AndDC.BitBlt(org.x, org.y, size.x, size.y, &dcImage, org.x, org.y, SRCCOPY);
 
-    m_XOrDC.BitBlt(org.x, org.y, size.x, size.y, &dcImage, org.x, org.y, SRCCOPY);
+	// Create a third memory DC and in it create an XOR mask
+	m_XOrDC.CreateCompatibleDC(pDC);
+	m_XOrDC.SetMapMode(pDC->GetMapMode());
 
-    m_XOrDC.BitBlt(org.x, org.y, size.x, size.y, &m_AndDC, org.x, org.y, 0x220326);
+	CBitmap bitmapXor;
+	bitmapXor.CreateCompatibleBitmap(&dcImage, bm.bmWidth, bm.bmHeight);
+	m_pOldBitmapXor = m_XOrDC.SelectObject(&bitmapXor);
 
-    // Copy the pixels in the destination rectangle to the memory DC
-    m_MemDC.CreateCompatibleDC(pDC);
-    m_MemDC.SetMapMode(pDC->GetMapMode());
+	m_XOrDC.BitBlt(org.x, org.y, size.x, size.y, &dcImage, org.x, org.y, SRCCOPY);
 
-    CBitmap bitmapMem;
-    bitmapMem.CreateCompatibleBitmap(&dcImage, bm.bmWidth, bm.bmHeight);
-    m_pOldBitmapMem = m_MemDC.SelectObject(&bitmapMem);
+	m_XOrDC.BitBlt(org.x, org.y, size.x, size.y, &m_AndDC, org.x, org.y, 0x220326);
 
-    dcImage.SelectObject(pOldBitmapImage);
+	// Copy the pixels in the destination rectangle to the memory DC
+	m_MemDC.CreateCompatibleDC(pDC);
+	m_MemDC.SetMapMode(pDC->GetMapMode());
 
-    m_fInitialized = TRUE;
+	CBitmap bitmapMem;
+	bitmapMem.CreateCompatibleBitmap(&dcImage, bm.bmWidth, bm.bmHeight);
+	m_pOldBitmapMem = m_MemDC.SelectObject(&bitmapMem);
 
-    return TRUE;
-}
+	dcImage.SelectObject(pOldBitmapImage);
 
-//
-// Render
-//
-BOOL TransparentBitmap :: Render(CDC * pDC, int x, int y)
-{
-    ASSERT_VALID(pDC);
+	m_fInitialized = TRUE;
 
-    if (!m_fInitialized)
-        return FALSE;
+	return TRUE;
+}
 
-    BITMAP bm;
-    GetObject(sizeof(BITMAP), &bm);
-    CPoint size(bm.bmWidth, bm.bmHeight);
+//
+// Render
+//
+BOOL TransparentBitmap :: Render(CDC * pDC, int x, int y)
+{
+	ASSERT_VALID(pDC);
 
-    CPoint org(0, 0);
+	if (!m_fInitialized)
+		return FALSE;
 
-    m_MemDC.BitBlt(org.x, org.y, size.x, size.y, pDC, x, y, SRCCOPY);
+	BITMAP bm;
+	GetObject(sizeof(BITMAP), &bm);
+	CPoint size(bm.bmWidth, bm.bmHeight);
 
-    // Generate the final image by applying the AND and XOR masks to 
-    // the image in the temporary memory DC
-    m_MemDC.BitBlt(org.x, org.y, size.x, size.y, &m_AndDC, org.x, org.y, SRCAND);
-    m_MemDC.BitBlt(org.x, org.y, size.x, size.y, &m_XOrDC, org.x, org.y, SRCINVERT);
+	CPoint org(0, 0);
 
-    // Blit the resulting image to the screen
-    pDC->BitBlt(x, y, size.x, size.y, &m_MemDC, org.x, org.y, SRCCOPY);
+	m_MemDC.BitBlt(org.x, org.y, size.x, size.y, pDC, x, y, SRCCOPY);
 
-    return TRUE;
-}
+	// Generate the final image by applying the AND and XOR masks to
+	// the image in the temporary memory DC
+	m_MemDC.BitBlt(org.x, org.y, size.x, size.y, &m_AndDC, org.x, org.y, SRCAND);
+	m_MemDC.BitBlt(org.x, org.y, size.x, size.y, &m_XOrDC, org.x, org.y, SRCINVERT);
 
-//
-// Destructor
-//
-TransparentBitmap :: ~TransparentBitmap()
-{
-    if (m_pOldBitmapMem != NULL)
-        m_MemDC.SelectObject(m_pOldBitmapMem);
+	// Blit the resulting image to the screen
+	pDC->BitBlt(x, y, size.x, size.y, &m_MemDC, org.x, org.y, SRCCOPY);
 
-    if (m_pOldBitmapXor != NULL)
-        m_XOrDC.SelectObject(m_pOldBitmapXor);
+	return TRUE;
+}
 
-    if (m_pOldBitmapAnd != NULL)
-        m_AndDC.SelectObject(m_pOldBitmapAnd);
-}
+//
+// Destructor
+//
+TransparentBitmap :: ~TransparentBitmap()
+{
+	if (m_pOldBitmapMem != NULL)
+		m_MemDC.SelectObject(m_pOldBitmapMem);
+
+	if (m_pOldBitmapXor != NULL)
+		m_XOrDC.SelectObject(m_pOldBitmapXor);
+
+	if (m_pOldBitmapAnd != NULL)
+		m_AndDC.SelectObject(m_pOldBitmapAnd);
+}
+

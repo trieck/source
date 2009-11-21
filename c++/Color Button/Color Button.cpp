@@ -12,8 +12,7 @@ static char THIS_FILE[] = __FILE__;
 
 CColorButtonApp NEAR theApp;
 
-const GUID CDECL BASED_CODE _tlid =
-		{ 0xa3afc613, 0xb347, 0x11d0, { 0x97, 0xf7, 0x44, 0x45, 0x53, 0x54, 0, 0 } };
+const GUID CDECL BASED_CODE _tlid = { 0xa3afc613, 0xb347, 0x11d0, { 0x97, 0xf7, 0x44, 0x45, 0x53, 0x54, 0, 0 } };
 const WORD _wVerMajor = 1;
 const WORD _wVerMinor = 0;
 
@@ -25,8 +24,7 @@ BOOL CColorButtonApp::InitInstance()
 {
 	BOOL bInit = COleControlModule::InitInstance();
 
-	if (bInit)
-	{
+	if (bInit) {
 	}
 
 	return bInit;

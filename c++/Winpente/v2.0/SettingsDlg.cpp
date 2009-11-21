@@ -16,13 +16,13 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CSettingsDlg, CPropertySheet)
 
 CSettingsDlg::CSettingsDlg(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
-	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
+		: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 {
 	m_pMiscPage = NULL;
 }
 
 CSettingsDlg::CSettingsDlg(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
-	: CPropertySheet(pszCaption, pParentWnd, iSelectPage)
+		: CPropertySheet(pszCaption, pParentWnd, iSelectPage)
 {
 	m_pMiscPage = NULL;
 }
@@ -35,7 +35,7 @@ CSettingsDlg::~CSettingsDlg()
 
 BEGIN_MESSAGE_MAP(CSettingsDlg, CPropertySheet)
 	//{{AFX_MSG_MAP(CSettingsDlg)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
+	// NOTE - the ClassWizard will add and remove mapping macros here.
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

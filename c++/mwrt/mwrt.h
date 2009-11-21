@@ -4,7 +4,7 @@
 #pragma once
 
 #ifndef __AFXWIN_H__
-	#error "include 'stdafx.h' before including this file for PCH"
+#error "include 'stdafx.h' before including this file for PCH"
 #endif
 
 #include "resource.h"		// main symbols
@@ -14,13 +14,12 @@
 // See mwrt.cpp for the implementation of this class
 //
 
-class CmwrtApp : public CWinApp
-{
+class CmwrtApp : public CWinApp {
 public:
 	CmwrtApp();
 
 // Overrides
-	public:
+public:
 	virtual BOOL InitInstance();
 
 // Implementation

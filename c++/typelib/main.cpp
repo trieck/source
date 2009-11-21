@@ -33,13 +33,13 @@ int _tmain (int argc, TCHAR *argv[])
 
 	try {
 		ITypeLibPtr ptypelib;
-		
+
 		loadTypeLibrary(argv[1], &ptypelib);
 		describeTypeLibrary(ptypelib);
 
 	} catch (const _com_error &E) {
 		bstr_t desc = E.Description();
-		if (desc.length()) 
+		if (desc.length())
 			cerr << (LPCTSTR)desc << endl;
 		else cerr << E.ErrorMessage() << endl;
 		return 1;
@@ -69,8 +69,8 @@ bool describeTypeLibrary(ITypeLibPtr ptypelib) throw (_com_error)
 	CComBSTR name, docstring, helpfile;
 	DWORD context;
 
-	_com_util::CheckError(ptypelib->GetDocumentation(-1, &name, &docstring, 
-		&context, &helpfile));
+	_com_util::CheckError(ptypelib->GetDocumentation(-1, &name, &docstring,
+	                      &context, &helpfile));
 
 	ostrstream ss;
 	ss << "Name: " << BSTRtoString(name) << endl;

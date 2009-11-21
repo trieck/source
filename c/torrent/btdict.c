@@ -1,7 +1,7 @@
 /*
  * BTDICT.C
  *
- * Red-Black tree for use 
+ * Red-Black tree for use
  * with bencoded dictionaries
  *
  * Copyright (c) 2006, Thomas A. Rieck
@@ -16,8 +16,8 @@
 
 static bt_dict *mknode(const char *k, bt_element *v);
 static void xfernode(bt_dict *t, const char *k, bt_element *v);
-static bt_dict *split(bt_dict *head, bt_dict *t, bt_dict *p, bt_dict *g, 
-	bt_dict *gg, const char *k);
+static bt_dict *split(bt_dict *head, bt_dict *t, bt_dict *p, bt_dict *g,
+                      bt_dict *gg, const char *k);
 static bt_dict *rotate(bt_dict *t, const char *k);
 static int less(const char *k1, const char *k2);
 
@@ -53,18 +53,21 @@ void bt_dict_insert(bt_dict *t, const char *k, bt_element *v)
 		return;
 	}
 
-	x = p = g = t;	
+	x = p = g = t;
 	while (x != NULL) {
-		gg = g; g = p; p = x;
+		gg = g;
+		g = p;
+		p = x;
 		n = strcmp(k, x->key);
 		if (n == 0) return;	/* no dupes */
 		x = n < 0 ? x->left : x->right;
-		if (x && x->left && x->right && x->left->red && x->right->red) 
+		if (x && x->left && x->right && x->left->red && x->right->red)
 			x = split(t, x, p, g, gg, k);
 	}
 
 	x = mknode(k, v);
-	if (less(k, p->key)) p->left = x; else p->right = x;
+	if (less(k, p->key)) p->left = x;
+	else p->right = x;
 	split(t, x, p, g, gg, k);
 }
 
@@ -90,8 +93,9 @@ bt_element *bt_dict_search(bt_dict *t, const char *k)
 
 bt_dict *split(bt_dict *head, bt_dict *t, bt_dict *p, bt_dict *g, bt_dict *gg, const char *k)
 {
-	t->red = 1; 
-	if (t->left) t->left->red = 0; if (t->right) t->right->red = 0;
+	t->red = 1;
+	if (t->left) t->left->red = 0;
+	if (t->right) t->right->red = 0;
 
 	if (p->red) {
 		g->red = 1;
@@ -109,19 +113,24 @@ bt_dict *rotate(bt_dict *t, const char *k)
 	bt_dict *c, *gc;
 	int m, n;
 
-	m = strcmp(k, t->key);	
+	m = strcmp(k, t->key);
 	c = m < 0 ? t->left : t->right;
 	if (c == NULL) gc = NULL;
 	else {
 		n = strcmp(k, c->key);
 		if (n < 0) {
-			gc = c->left; c->left = gc->right; gc->right = c;
+			gc = c->left;
+			c->left = gc->right;
+			gc->right = c;
 		} else {
-			gc = c->right; c->right = gc->left; gc->left = c;
+			gc = c->right;
+			c->right = gc->left;
+			gc->left = c;
 		}
 	}
 
-	if (m < 0) t->left = gc; else t->right = gc;
+	if (m < 0) t->left = gc;
+	else t->right = gc;
 
 	return gc;
 }
@@ -179,11 +188,10 @@ __int64 bt_dict_int(bt_dict *d, const char *k)
 }
 
 /* retrieve a date value from dictionary */
-struct tm *bt_dict_date(bt_dict *d, const char *k)
-{
+struct tm *bt_dict_date(bt_dict *d, const char *k) {
 	bt_element *v = bt_dict_search(d, k);
 	if (v == NULL) return NULL;
-	if (v->type != ET_INTEGER) return 0;	
+	if (v->type != ET_INTEGER) return 0;
 	return localtime((time_t*)&v->ival);
 }
 

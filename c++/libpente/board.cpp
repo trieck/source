@@ -42,12 +42,12 @@ void Board::generate()
 	uint32_t i, j, m, n;
 	Vector v;
 
-	// generate all initially feasible vectors 
+	// generate all initially feasible vectors
 
 	for (i = 0; i < BOARD_ENTRIES; i++) {
 		m = i / BOARD_SIZE;
 		n = i % BOARD_SIZE;
-		
+
 		// check for horizontal vector
 		if (VSIZE + n <= BOARD_SIZE) {
 			v.clear();
@@ -104,7 +104,7 @@ void Board::setEntry(uint32_t x, uint32_t y, uint32_t type)
 	uint32_t k = key(x, y);
 
 	POINT pt = { x, y };
-	
+
 	rep[k] = Entry(pt, type);
 }
 
@@ -137,7 +137,7 @@ EntryVec Board::empty()
 	EntryVec v;
 
 	uint32_t i, j;
-	
+
 	for (i = 0; i < BOARD_SIZE; i++) {
 		for (j = 0; j < BOARD_SIZE; j++) {
 			if (getEntry(i, j) == ET_EMPTY) {
@@ -147,7 +147,7 @@ EntryVec Board::empty()
 			}
 		}
 	}
-	
+
 	return v;
 }
 
@@ -162,15 +162,19 @@ const Vector* Board::winner(uint32_t &nplayer) const
 		for (i = 0, onecount = 0, twocount = 0; i < VSIZE; i++) {
 			pt = (*it).entry(i);
 			type = getEntry(pt.x, pt.y);
-			if (type == ET_PLAYER_ONE) { onecount++; }
-			if (type == ET_PLAYER_TWO) { twocount++; }
+			if (type == ET_PLAYER_ONE) {
+				onecount++;
+			}
+			if (type == ET_PLAYER_TWO) {
+				twocount++;
+			}
 		}
 
 		if (onecount == VSIZE) {
 			nplayer = ET_PLAYER_ONE;
 			return &*it;
 		}
-		
+
 		if (twocount == VSIZE) {
 			nplayer = ET_PLAYER_TWO;
 			return &*it;
@@ -194,8 +198,8 @@ void Board::getCaptures(uint32_t x, uint32_t y, CaptureVec &captures)
 	// check for capture from below
 	if (y >= 3) {
 		if (getEntry(x, y-1) == opponent &&
-			getEntry(x, y-2) == opponent &&
-			getEntry(x, y-3) == player) {
+		        getEntry(x, y-2) == opponent &&
+		        getEntry(x, y-3) == player) {
 			pts[0].x = x;
 			pts[0].y = y - 1;
 			pts[1].x = x;
@@ -207,8 +211,8 @@ void Board::getCaptures(uint32_t x, uint32_t y, CaptureVec &captures)
 	// check for capture from above
 	if (y <= BOARD_SIZE-4) {
 		if (getEntry(x, y+1) == opponent &&
-			getEntry(x, y+2) == opponent &&
-			getEntry(x, y+3) == player) {
+		        getEntry(x, y+2) == opponent &&
+		        getEntry(x, y+3) == player) {
 			pts[0].x = x;
 			pts[0].y = y + 1;
 			pts[1].x = x;
@@ -220,8 +224,8 @@ void Board::getCaptures(uint32_t x, uint32_t y, CaptureVec &captures)
 	// check for capture from right
 	if (x >=3) {
 		if (getEntry(x-1, y) == opponent &&
-			getEntry(x-2, y) == opponent &&
-			getEntry(x-3, y) == player) {
+		        getEntry(x-2, y) == opponent &&
+		        getEntry(x-3, y) == player) {
 			pts[0].x = x - 1;
 			pts[0].y = y;
 			pts[1].x = x - 2;
@@ -233,8 +237,8 @@ void Board::getCaptures(uint32_t x, uint32_t y, CaptureVec &captures)
 	// check for capture from left
 	if (x <= BOARD_SIZE-4) {
 		if (getEntry(x+1, y) == opponent &&
-			getEntry(x+2, y) == opponent &&
-			getEntry(x+3, y) == player) {
+		        getEntry(x+2, y) == opponent &&
+		        getEntry(x+3, y) == player) {
 			pts[0].x = x + 1;
 			pts[0].y = y;
 			pts[1].x = x + 2;
@@ -246,8 +250,8 @@ void Board::getCaptures(uint32_t x, uint32_t y, CaptureVec &captures)
 	// check for diagonal capture from bottom left
 	if (y >= 3 && x <= BOARD_SIZE-4) {
 		if (getEntry(x+1, y-1) == opponent &&
-			getEntry(x+2, y-2) == opponent &&
-			getEntry(x+3, y-3) == player) {
+		        getEntry(x+2, y-2) == opponent &&
+		        getEntry(x+3, y-3) == player) {
 			pts[0].x = x + 1;
 			pts[0].y = y - 1;
 			pts[1].x = x + 2;
@@ -259,8 +263,8 @@ void Board::getCaptures(uint32_t x, uint32_t y, CaptureVec &captures)
 	// check for diagonal capture from bottom right
 	if (y >= 3 && x >= 3) {
 		if (getEntry(x-1, y-1) == opponent &&
-			getEntry(x-2, y-2) == opponent &&
-			getEntry(x-3, y-3) == player) {
+		        getEntry(x-2, y-2) == opponent &&
+		        getEntry(x-3, y-3) == player) {
 			pts[0].x = x - 1;
 			pts[0].y = y - 1;
 			pts[1].x = x - 2;
@@ -272,8 +276,8 @@ void Board::getCaptures(uint32_t x, uint32_t y, CaptureVec &captures)
 	// check for diagonal capture from top left
 	if (y <= BOARD_SIZE-4 && x <= BOARD_SIZE-4) {
 		if (getEntry(x+1, y+1) == opponent &&
-			getEntry(x+2, y+2) == opponent &&
-			getEntry(x+3, y+3) == player) {
+		        getEntry(x+2, y+2) == opponent &&
+		        getEntry(x+3, y+3) == player) {
 			pts[0].x = x + 1;
 			pts[0].y = y + 1;
 			pts[1].x = x + 2;
@@ -285,8 +289,8 @@ void Board::getCaptures(uint32_t x, uint32_t y, CaptureVec &captures)
 	// check for diagonal capture from top right
 	if (y <= BOARD_SIZE-4 && x >= 3) {
 		if (getEntry(x-1, y+1) == opponent &&
-			getEntry(x-2, y+2) == opponent &&
-			getEntry(x-3, y+3) == player) {
+		        getEntry(x-2, y+2) == opponent &&
+		        getEntry(x-3, y+3) == player) {
 			pts[0].x = x - 1;
 			pts[0].y = y + 1;
 			pts[1].x = x - 2;

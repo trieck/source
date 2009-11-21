@@ -11,15 +11,13 @@
 #define ID_LISTBOX 12
 
 // CWinApp derived class
-class CDlgApp : public CWinApp
-{
+class CDlgApp : public CWinApp {
 public:
 	virtual BOOL InitInstance();
 };
 
 // CFrameWnd derived class
-class CDlgWin : public CFrameWnd
-{
+class CDlgWin : public CFrameWnd {
 private:
 	void UpdateClientColor();
 	void SetWndFont(CWnd* pWnd, CString szFont, LONG lSize);
@@ -42,13 +40,13 @@ public:
 	~CDlgWin();
 	void SetChildFonts(int nFirst, int nLast, CString szFont, long lSize);
 	void CreateControls();
-	
+
 	DECLARE_MESSAGE_MAP();
 };
 
 // Message Map for CDlgWin
 BEGIN_MESSAGE_MAP(CDlgWin, CFrameWnd)
-    ON_WM_HSCROLL()
+	ON_WM_HSCROLL()
 	ON_WM_ERASEBKGND()
 	ON_COMMAND(ID_EXEBTN, OnBtnExplorerClick)
 	ON_COMMAND(ID_EXITBTN, OnBtnExitClick)

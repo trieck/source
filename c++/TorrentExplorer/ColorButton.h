@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // ColorButton window
 
-class ColorButton : public CButton
-{
+class ColorButton : public CButton {
 // Construction
 public:
 	ColorButton();
@@ -25,7 +24,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(ColorButton)
-	public:
+public:
 	virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
 	//}}AFX_VIRTUAL
 
@@ -33,7 +32,9 @@ public:
 public:
 	COLORREF GetFillColor() const;
 	void SetFillColor(COLORREF clr);
-	BOOL IsSet() const { return m_Set; }
+	BOOL IsSet() const {
+		return m_Set;
+	}
 	virtual ~ColorButton();
 
 	// Generated message map functions

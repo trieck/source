@@ -9,14 +9,13 @@
 #include "app.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class MyApp : public Application
-{
+class MyApp : public Application {
 public:
 // Construction / Destruction
 	MyApp();
 	~MyApp();
 
-// Interface 
+// Interface
 	bool initInstance();
 	bool run();
 	int exitInstance();

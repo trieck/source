@@ -1,8 +1,7 @@
 #pragma once
 
 /////////////////////////////////////////////////////////////////////////////
-class BigScrollView : public CScrollView
-{
+class BigScrollView : public CScrollView {
 	DECLARE_DYNAMIC(BigScrollView)
 
 protected:

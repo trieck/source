@@ -21,11 +21,11 @@ ADFException::ADFException()
 ADFException::ADFException(const char *fmt, ...)
 {
 	va_list arglist;
-    char buff[256];
+	char buff[256];
 
 	va_start(arglist, fmt);
 	vsnprintf(buff, 256, fmt, arglist);
-    va_end (arglist);
+	va_end (arglist);
 
 	description = buff;
 }

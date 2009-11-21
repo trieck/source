@@ -17,8 +17,7 @@
 #include "NoiseList.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class Index
-{
+class Index {
 // Construction / Destruction
 public:
 	Index();

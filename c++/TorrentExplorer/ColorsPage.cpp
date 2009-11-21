@@ -17,11 +17,11 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(ColorsPage, CPropertyPage)
 
-ColorsPage::ColorsPage() 
- : CPropertyPage(ColorsPage::IDD), m_ModFlags(0)
+ColorsPage::ColorsPage()
+		: CPropertyPage(ColorsPage::IDD), m_ModFlags(0)
 {
 	//{{AFX_DATA_INIT(ColorsPage)
-		// NOTE: the ClassWizard will add member initialization here
+	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
 
@@ -55,7 +55,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // ColorsPage message handlers
 
-void ColorsPage::OnBkgndColor() 
+void ColorsPage::OnBkgndColor()
 {
 	ColorChooserDlg dlg(&m_BkgndColor);
 	if (dlg.DoModal() == IDOK) {
@@ -65,7 +65,7 @@ void ColorsPage::OnBkgndColor()
 	}
 }
 
-void ColorsPage::OnGridColor() 
+void ColorsPage::OnGridColor()
 {
 	ColorChooserDlg dlg(&m_GridColor);
 	if (dlg.DoModal() == IDOK) {
@@ -75,7 +75,7 @@ void ColorsPage::OnGridColor()
 	}
 }
 
-void ColorsPage::OnTextColor() 
+void ColorsPage::OnTextColor()
 {
 	ColorChooserDlg dlg(&m_TextColor);
 	if (dlg.DoModal() == IDOK) {
@@ -86,7 +86,7 @@ void ColorsPage::OnTextColor()
 }
 
 
-void ColorsPage::OnHilightColor() 
+void ColorsPage::OnHilightColor()
 {
 	ColorChooserDlg dlg(&m_HilightColor);
 	if (dlg.DoModal() == IDOK) {
@@ -96,7 +96,7 @@ void ColorsPage::OnHilightColor()
 	}
 }
 
-void ColorsPage::OnHilightBorder() 
+void ColorsPage::OnHilightBorder()
 {
 	ColorChooserDlg dlg(&m_HilightBorderColor);
 	if (dlg.DoModal() == IDOK) {
@@ -106,7 +106,7 @@ void ColorsPage::OnHilightBorder()
 	}
 }
 
-void ColorsPage::OnOK() 
+void ColorsPage::OnOK()
 {
 	TorrentExplorer *pApp = (TorrentExplorer*)AfxGetApp();
 	if (m_ModFlags & BKGND_COLOR) {
@@ -131,15 +131,15 @@ void ColorsPage::OnOK()
 	m_ModFlags = 0;
 }
 
-BOOL ColorsPage::OnApply() 
+BOOL ColorsPage::OnApply()
 {
 	return CPropertyPage::OnApply();
 }
 
-BOOL ColorsPage::OnInitDialog() 
+BOOL ColorsPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
-	
+
 	TorrentExplorer *pApp = (TorrentExplorer*)AfxGetApp();
 	if (pApp->IsSetting("ui_bkgnd_color"))
 		m_BkgndColor.SetFillColor(pApp->GetIntSetting("ui_bkgnd_color"));
@@ -151,10 +151,10 @@ BOOL ColorsPage::OnInitDialog()
 		m_HilightColor.SetFillColor(pApp->GetIntSetting("ui_hilight_color"));
 	if (pApp->IsSetting("ui_hilight_border_color"))
 		m_HilightBorderColor.SetFillColor(
-			pApp->GetIntSetting("ui_hilight_border_color"));
-		
+		    pApp->GetIntSetting("ui_hilight_border_color"));
+
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
 

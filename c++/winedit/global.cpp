@@ -37,7 +37,7 @@ int GetProfileInt(LPCSTR section, LPCSTR entry)
 //
 BOOL SetProfileString(LPCSTR section, LPCSTR entry, LPCSTR value)
 {
-    return WritePrivateProfileString(section, entry, value, GetProfilePath());
+	return WritePrivateProfileString(section, entry, value, GetProfilePath());
 }
 
 //
@@ -45,10 +45,10 @@ BOOL SetProfileString(LPCSTR section, LPCSTR entry, LPCSTR value)
 //
 BOOL SetProfileInt(LPCSTR section, LPCSTR entry, int value)
 {
-    CString strValue;
-    strValue.Format("%d", value);
+	CString strValue;
+	strValue.Format("%d", value);
 
-    return SetProfileString(section, entry, strValue);
+	return SetProfileString(section, entry, strValue);
 }
 
 // Helper functions
@@ -102,15 +102,15 @@ CString Comma(UINT i)
 {
 	CString input, output;
 	input.Format("%ld", i);
-	
+
 	int n = input.GetLength();
 
-    for (int j = n - 1, k = 1; j >= 0; j--, k++) {
-        output += input[(int)j];
-        if (k % 3 == 0 && j > 0 && j < n - 1)
-            output += ',';
-    }
-	
+	for (int j = n - 1, k = 1; j >= 0; j--, k++) {
+		output += input[(int)j];
+		if (k % 3 == 0 && j > 0 && j < n - 1)
+			output += ',';
+	}
+
 	strrev(output.GetBuffer(output.GetLength()));
 	output.ReleaseBuffer();
 

@@ -13,8 +13,7 @@ class Monitor;
 
 /////////////////////////////////////////////////////////////////////////////
 // Monitor command
-class Command 
-{
+class Command {
 public:
 	Command(Monitor *pmon) : mon(pmon) {}
 	virtual ~Command() {}
@@ -22,7 +21,9 @@ public:
 	virtual void exec(const stringvec &v) = 0;
 
 protected:
-	Monitor *getMonitor() { return mon; }
+	Monitor *getMonitor() {
+		return mon;
+	}
 private:
 	Monitor *mon;	/* back pointer to the monitor */
 };
@@ -35,15 +36,14 @@ typedef map<string, LPCOMMAND, stringless> CommandMap;
 
 /////////////////////////////////////////////////////////////////////////////
 // Monitor class
-class Monitor : public TrapHandler 
-{
+class Monitor : public TrapHandler {
 // Construction / Destruction
 public:
 	Monitor();
 	virtual ~Monitor();
 
 // Interface
-	
+
 	void trap(void *data);
 	void setExit(bool f);
 
@@ -61,7 +61,8 @@ private:
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
-inline void Monitor::setExit(bool f) {
+inline void Monitor::setExit(bool f)
+{
 	exit_mon = f;
 }
 

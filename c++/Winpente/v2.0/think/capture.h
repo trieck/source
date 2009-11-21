@@ -13,8 +13,8 @@
 
 // Local functions
 void			SetPointPair(POINT pt[], int x1, int y1, int x2, int y2);
-void			ClearPair(int aBoard[][19], POINT pt[]); 
-			
+void			ClearPair(int aBoard[][19], POINT pt[]);
+
 // Exported functions
 EXTERNC	int	DllExport CheckCapture(int aBoard[][19], LPPOINT ppt, int nCurrentPlayer);
 

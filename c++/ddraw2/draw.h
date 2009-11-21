@@ -1,7 +1,7 @@
 
 #ifdef __DDRAW_INCLUDED_H__
 #error "can only include draw.h once."
-#endif 
+#endif
 
 #define __DDRAW_INCLUDED_H__
 #define INITGUID

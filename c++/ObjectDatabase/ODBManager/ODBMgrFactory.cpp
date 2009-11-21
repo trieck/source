@@ -13,7 +13,7 @@ LONG ODBMgrFactory::m_cLock = 0;
 
 /////////////////////////////////////////////////////////////////////////////
 ODBMgrFactory::ODBMgrFactory()
- : m_cRef(0)
+		: m_cRef(0)
 {
 }
 
@@ -33,15 +33,15 @@ STDMETHODIMP ODBMgrFactory::QueryInterface(REFIID riid, LPVOID *ppv)
 {
 	*ppv = NULL;
 
-    if (riid == IID_IUnknown || riid == IID_IClassFactory)
-        *ppv = this;
-    
-    if (*ppv) {
-        ((LPUNKNOWN)*ppv)->AddRef();
-        return S_OK;
-    }
+	if (riid == IID_IUnknown || riid == IID_IClassFactory)
+		*ppv = this;
 
-    return E_NOINTERFACE;
+	if (*ppv) {
+		((LPUNKNOWN)*ppv)->AddRef();
+		return S_OK;
+	}
+
+	return E_NOINTERFACE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -62,8 +62,8 @@ STDMETHODIMP_(ULONG) ODBMgrFactory::Release()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-STDMETHODIMP ODBMgrFactory::CreateInstance(LPUNKNOWN pUnkOuter, REFIID riid, 
- LPVOID * ppv)
+STDMETHODIMP ODBMgrFactory::CreateInstance(LPUNKNOWN pUnkOuter, REFIID riid,
+        LPVOID * ppv)
 {
 	if (pUnkOuter != NULL)
 		return CLASS_E_NOAGGREGATION;
@@ -87,10 +87,10 @@ STDMETHODIMP ODBMgrFactory::CreateInstance(LPUNKNOWN pUnkOuter, REFIID riid,
 STDMETHODIMP ODBMgrFactory::LockServer(BOOL fLock)
 {
 	if (fLock) {
-        InterlockedIncrement(&m_cLock);
+		InterlockedIncrement(&m_cLock);
 	} else {
-        InterlockedDecrement(&m_cLock);
+		InterlockedDecrement(&m_cLock);
 	}
 
-    return S_OK;
+	return S_OK;
 }

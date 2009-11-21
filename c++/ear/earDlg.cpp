@@ -16,8 +16,7 @@ static int random(int lo, int hi);
 static CString IntervalToString(Interval i);
 /////////////////////////////////////////////////////////////////////////////
 // AboutDlg dialog used for App About
-class AboutDlg : public CDialog
-{
+class AboutDlg : public CDialog {
 public:
 	AboutDlg();
 // Dialog Data
@@ -26,7 +25,7 @@ public:
 	//}}AFX_DATA
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(AboutDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 // Implementation
@@ -48,13 +47,13 @@ void AboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 BEGIN_MESSAGE_MAP(AboutDlg, CDialog)
 	//{{AFX_MSG_MAP(AboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // EarDlg dialog
 EarDlg::EarDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(EarDlg::IDD, pParent)
+		: CDialog(EarDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(EarDlg)
 	m_Interval = 0;
@@ -112,19 +111,19 @@ void EarDlg::OnSysCommand(UINT nID, LPARAM lParam)
 		dlgAbout.DoModal();
 	} else CDialog::OnSysCommand(nID, lParam);
 }
-void EarDlg::OnSettings() 
+void EarDlg::OnSettings()
 {
 	SettingsDlg().DoModal();
 }
-void EarDlg::OnListen() 
+void EarDlg::OnListen()
 {
-	EarApp *pApp = (EarApp *)AfxGetApp();	
+	EarApp *pApp = (EarApp *)AfxGetApp();
 	ASSERT_VALID(pApp);
 	pApp->Play(&m_buffer);
 }
-void EarDlg::OnCancel() 
+void EarDlg::OnCancel()
 {
-	EarApp *pApp = (EarApp *)AfxGetApp();	
+	EarApp *pApp = (EarApp *)AfxGetApp();
 	ASSERT_VALID(pApp);
 	pApp->Stop();
 	CDialog::OnCancel();
@@ -135,7 +134,7 @@ void EarDlg::CreateInterval()
 	first = random(loNote, hiNote);
 	while ((second = random(loNote, hiNote)) == first)
 		;
-	
+
 	m_MidiInterval = Interval(abs(second - first));
 	m_buffer.Transform(first, second);
 }
@@ -145,7 +144,7 @@ int random(int lo, int hi)
 	return lo + int(rand() * double(hi - lo) / RAND_MAX);
 }
 
-void EarDlg::OnEnter() 
+void EarDlg::OnEnter()
 {
 	CString message;
 	UpdateData(TRUE);
@@ -162,17 +161,18 @@ void EarDlg::OnEnter()
 		GetDlgItem(IDC_INCORRECT)->SetWindowText(incorrect);
 	}
 	float total = 100 * m_correct / (float)(m_correct + m_incorrect);
-	CString T; T.Format("%.2f%%", total);
+	CString T;
+	T.Format("%.2f%%", total);
 	GetDlgItem(IDC_TOTAL)->SetWindowText(T);
 	m_Output = message;
 	UpdateData(FALSE);
-	CreateInterval();	
+	CreateInterval();
 	OnListen();
 }
 CString IntervalToString(Interval i)
 {
 	CString output;
-	switch(i) {
+	switch (i) {
 	case Unison:
 		output = "Unison";
 		break;
@@ -215,17 +215,17 @@ CString IntervalToString(Interval i)
 	}
 	return output;
 }
-HBRUSH EarDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH EarDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
-	
+
 	HWND correct = GetDlgItem(IDC_CORRECT)->GetSafeHwnd();
 	HWND incorrect = GetDlgItem(IDC_INCORRECT)->GetSafeHwnd();
 	HWND total = GetDlgItem(IDC_TOTAL)->GetSafeHwnd();
-	if (pWnd->GetSafeHwnd() == correct || 
-		pWnd->GetSafeHwnd() == incorrect ||
-		pWnd->GetSafeHwnd() == total) {
+	if (pWnd->GetSafeHwnd() == correct ||
+	        pWnd->GetSafeHwnd() == incorrect ||
+	        pWnd->GetSafeHwnd() == total) {
 		pDC->SetTextColor(RGB(128, 0, 0));
-	}	
+	}
 	return hbr;
 }

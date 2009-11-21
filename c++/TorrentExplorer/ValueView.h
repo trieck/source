@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // ValueView view
 
-class ValueView : public CListView
-{
+class ValueView : public CListView {
 protected:
 	ValueView();           // protected constructor used by dynamic creation
 	DECLARE_DYNCREATE(ValueView)
@@ -25,7 +24,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(ValueView)
-	protected:
+protected:
 	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);

@@ -26,10 +26,10 @@ WinADFView::~WinADFView()
 
 BEGIN_MESSAGE_MAP(WinADFView, CListView)
 	ON_WM_CREATE()
-	ON_WM_STYLECHANGED()	// Standard printing commands	
-	ON_COMMAND(ID_FILE_PRINT, &CListView::OnFilePrint)	
-	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CListView::OnFilePrint)	
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CListView::OnFilePrintPreview)	
+	ON_WM_STYLECHANGED()	// Standard printing commands
+	ON_COMMAND(ID_FILE_PRINT, &CListView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CListView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CListView::OnFilePrintPreview)
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, &WinADFView::OnLvnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_RCLICK, &WinADFView::OnNMRClick)
 	ON_COMMAND(ID_VIEWASTEXT, &WinADFView::OnViewasText)
@@ -79,29 +79,29 @@ WinADFDoc* WinADFView::GetDocument() const // non-debug version is inline
 
 void WinADFView::OnInitialUpdate()
 {
-	ListView_SetExtendedListViewStyleEx(*this, 
-		0, 
-		LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES |
-		LVS_EX_INFOTIP | LVS_EX_DOUBLEBUFFER |
-		LVS_EX_SNAPTOGRID | LVS_EX_JUSTIFYCOLUMNS |
-		LVS_EX_TRANSPARENTBKGND | LVS_EX_AUTOSIZECOLUMNS
-	);
-	
+	ListView_SetExtendedListViewStyleEx(*this,
+	                                    0,
+	                                    LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES |
+	                                    LVS_EX_INFOTIP | LVS_EX_DOUBLEBUFFER |
+	                                    LVS_EX_SNAPTOGRID | LVS_EX_JUSTIFYCOLUMNS |
+	                                    LVS_EX_TRANSPARENTBKGND | LVS_EX_AUTOSIZECOLUMNS
+	                                   );
+
 	InsertHeaders();
 
 	m_hStdCursor = GetCursor();
 	m_hCursor = (HCURSOR)::LoadImage(AfxGetResourceHandle(),
-		MAKEINTRESOURCE(IDC_DRAG),
-		IMAGE_CURSOR,
-		16,
-		16,
-		LR_DEFAULTCOLOR);
+	                                 MAKEINTRESOURCE(IDC_DRAG),
+	                                 IMAGE_CURSOR,
+	                                 16,
+	                                 16,
+	                                 LR_DEFAULTCOLOR);
 
 	ASSERT(m_hCursor != NULL);
 
 	DragAcceptFiles();
 
-	CListView::OnInitialUpdate();	
+	CListView::OnInitialUpdate();
 }
 
 void WinADFView::InsertHeaders()
@@ -119,12 +119,12 @@ void WinADFView::InsertHeaders()
 	LV_COLUMN lvc;
 	CRect rc;
 	GetListCtrl().GetClientRect(&rc);
-		
-	for (uint32_t i = 0; i < ncount; i++) {	
+
+	for (uint32_t i = 0; i < ncount; i++) {
 		lvc.mask = LVCF_TEXT | LVCF_WIDTH;
 		lvc.cx = rc.Width() / ncount;
 		lvc.pszText	= (LPTSTR)headers[i];
-		lvc.cchTextMax = lstrlen(headers[i]);		
+		lvc.cchTextMax = lstrlen(headers[i]);
 		GetListCtrl().InsertColumn(i, &lvc);
 	}
 }
@@ -134,10 +134,10 @@ void WinADFView::OnUpdate(CView* pSender, LPARAM lHint, CObject* /*pHint*/)
 {
 	WinADFDoc *pdoc = GetDocument();
 	EntryList entries = pdoc->readdir();
-	
+
 	CListCtrl &list = GetListCtrl();
 	list.DeleteAllItems();
-		
+
 	EntryList::const_iterator it = entries.begin();
 	uint32_t i;
 	for (i = 0; it != entries.end(); it++, i++) {
@@ -149,24 +149,24 @@ int WinADFView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CListView::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
-	if (!m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 2, 0)) {		
-		TRACE0("Could not create image list.\n");		
-		return -1;	
+
+	if (!m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 2, 0)) {
+		TRACE0("Could not create image list.\n");
+		return -1;
 	}
 
 	AddImages();
 
-	CListCtrl &list = GetListCtrl();	
-	list.SetImageList(&m_ImageList, LVSIL_SMALL);		
-	
+	CListCtrl &list = GetListCtrl();
+	list.SetImageList(&m_ImageList, LVSIL_SMALL);
+
 	return 0;
 }
 
 void WinADFView::AddImages()
 {
 	static uint32_t images[] = {
-		IDR_CLOSED,	
+		IDR_CLOSED,
 		IDR_DOCUMENT
 	};
 
@@ -174,10 +174,10 @@ void WinADFView::AddImages()
 
 	for (int i = 0; i < nimages; i++) {
 		HICON hIcon = (HICON)::LoadImage(AfxGetResourceHandle(),
-			MAKEINTRESOURCE(images[i]),
-			IMAGE_ICON,
-			16, 16,
-			LR_LOADTRANSPARENT | LR_SHARED);
+		                                 MAKEINTRESOURCE(images[i]),
+		                                 IMAGE_ICON,
+		                                 16, 16,
+		                                 LR_LOADTRANSPARENT | LR_SHARED);
 		ASSERT(hIcon != NULL);
 		m_ImageList.Add(hIcon);
 	}
@@ -219,23 +219,23 @@ void WinADFView::OnNMRClick(NMHDR *pNMHDR, LRESULT *pResult)
 	menu.LoadMenu(IDR_WINADFTYPE);
 	CMenu* pPopup = menu.GetSubMenu(3);
 	ASSERT(pPopup);
-	
+
 	CPoint point(pNMItemActivate->ptAction.x, pNMItemActivate->ptAction.y);
 	ClientToScreen(&point);
 
 	pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_VERTICAL,
-		point.x, point.y, GetParentFrame());
+	                       point.x, point.y, GetParentFrame());
 
 	*pResult = 0;
 }
 
 Entry *WinADFView::GetSelectedEntry(int *pItem)
 {
-	CListCtrl &list = GetListCtrl();	
+	CListCtrl &list = GetListCtrl();
 	POSITION pos = list.GetFirstSelectedItemPosition();
 	if (pos == NULL)
 		return NULL;	// nothing selected
-	
+
 	int nItem = list.GetNextSelectedItem(pos);
 	if (pItem != NULL)
 		*pItem = nItem;
@@ -276,13 +276,13 @@ void WinADFView::OnUpdateViewAsText(CCmdUI *pCmdUI)
 void WinADFView::OnUpdateViewAsBinary(CCmdUI *pCmdUI)
 {
 	Entry *pEntry = GetSelectedEntry();
-	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);	
+	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);
 }
 
 void WinADFView::OnUpdateProperties(CCmdUI *pCmdUI)
 {
 	Entry *pEntry = GetSelectedEntry();
-	pCmdUI->Enable(pEntry != NULL);	
+	pCmdUI->Enable(pEntry != NULL);
 }
 
 void WinADFView::OnProperties()
@@ -297,7 +297,7 @@ void WinADFView::OnProperties()
 void WinADFView::OnUpdateEntryOpen(CCmdUI *pCmdUI)
 {
 	Entry *pEntry = GetSelectedEntry();
-	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_DIR);	
+	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_DIR);
 }
 
 void WinADFView::OnEntryOpen()
@@ -324,7 +324,7 @@ void WinADFView::OnEntryOpen()
 void WinADFView::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-	
+
 	OnEntryOpen();
 
 	*pResult = 0;
@@ -337,7 +337,7 @@ void WinADFView::OnEntryExport()
 void WinADFView::OnUpdateEntryExport(CCmdUI *pCmdUI)
 {
 	Entry *pEntry = GetSelectedEntry();
-	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);	
+	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);
 }
 
 void WinADFView::OnEntryDelete()
@@ -366,20 +366,20 @@ void WinADFView::OnEntryDelete()
 	}
 
 	CListCtrl &list = GetListCtrl();
-	list.DeleteItem(nitem);	
+	list.DeleteItem(nitem);
 }
 
 void WinADFView::OnUpdateEntryDelete(CCmdUI *pCmdUI)
 {
 	// TODO: can only delete "files"
 	Entry *pEntry = GetSelectedEntry();
-	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);	
+	pCmdUI->Enable(pEntry != NULL && pEntry->type == ST_FILE);
 }
 
 void WinADFView::OnDropFiles(HDROP hDropInfo)
 {
 	char filename[MAX_PATH+_MAX_FNAME+1];
-	
+
 	uint32_t nCount = DragQueryFile(hDropInfo, 0xFFFFFFFF, NULL, 0);
 	uint32_t n;
 
@@ -407,10 +407,10 @@ void WinADFView::InsertEntry(const Entry &entry)
 
 	LVITEM item;
 	memset(&item, 0, sizeof(LVITEM));
-	
+
 	item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
-	item.iSubItem = 0;	
-	item.iItem = nItems;		
+	item.iSubItem = 0;
+	item.iItem = nItems;
 	item.iImage = entry.type == ST_DIR ? 0 : 1;
 	item.pszText = (LPSTR)entry.name.c_str();
 	item.cchTextMax = strlen(item.pszText);
@@ -426,11 +426,11 @@ void WinADFView::InsertEntry(const Entry &entry)
 	}
 
 	list.SetItemText(nItems, 3, adfaccess(entry.access).c_str());
-	CTime time = CTime(entry.year, entry.month, entry.days/*+1*/, 
-		entry.hour, entry.mins, entry.secs);
+	CTime time = CTime(entry.year, entry.month, entry.days/*+1*/,
+	                   entry.hour, entry.mins, entry.secs);
 
 	list.SetItemText(nItems, 4, time.Format("%m/%d/%Y %H:%M:%S"));
-	
+
 }
 
 BOOL WinADFView::CopyFile(LPCSTR filename, Entry &entry)
@@ -454,34 +454,34 @@ BOOL WinADFView::CopyFile(LPCSTR filename, Entry &entry)
 	uint32_t freeblocks = pVol->freeblocks();
 	if (nblocks > freeblocks) {
 		AfxMessageBox("Could not copy file. There is insufficient "
-			"free space on the destination volume.");
+		              "free space on the destination volume.");
 		return FALSE;
 	}
 
 	CFileException except;
 	CFile file;
-	if (!file.Open(filename, CFile::modeRead |   
-		CFile::typeBinary | CFile::osSequentialScan, &except))
-		throw new CFileException(except.m_cause, except.m_lOsError, 
-			except.m_strFileName);
+	if (!file.Open(filename, CFile::modeRead |
+	               CFile::typeBinary | CFile::osSequentialScan, &except))
+		throw new CFileException(except.m_cause, except.m_lOsError,
+		                         except.m_strFileName);
 
 	CPath path(filename);
 	path.StripPath();
 
 	CString name = path;
 	FilePtr pFile = pVol->openfile(name, "w");
-	
+
 	uint8_t buf[BSIZE];
 	uint32_t read, written;
-	
+
 	while ((read = file.Read(buf, BSIZE))) {
 		written = pFile->write(read, buf);
 	}
 
 	pFile->close();
-	file.Close();	
+	file.Close();
 
-	entry = pFile->getEntry();	
+	entry = pFile->getEntry();
 
 	return TRUE;
 }
@@ -489,7 +489,7 @@ BOOL WinADFView::CopyFile(LPCSTR filename, Entry &entry)
 void WinADFView::OnLvnBegindrag(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	
+
 	SetCapture();
 
 	SetCursor(m_hCursor);

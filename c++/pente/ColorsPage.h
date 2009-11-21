@@ -4,8 +4,7 @@
 
 // CColorsPage dialog
 
-class CColorsPage : public CPropertyPage
-{
+class CColorsPage : public CPropertyPage {
 	DECLARE_DYNAMIC(CColorsPage)
 
 public:
@@ -15,7 +14,7 @@ public:
 // Dialog Data
 	enum { IDD = IDD_COLORS_PAGE };
 
-	ColorButton	m_TableColor;		
+	ColorButton	m_TableColor;
 	ColorButton	m_BoardColor;
 	ColorButton	m_GridColor;
 	ColorButton m_PlayerOneColor;

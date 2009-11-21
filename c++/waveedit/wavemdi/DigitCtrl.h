@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CDigitCtrl window
 
-class CDigitCtrl : public CWnd
-{
+class CDigitCtrl : public CWnd {
 // Construction
 public:
 	CDigitCtrl();
@@ -31,7 +30,9 @@ public:
 public:
 	VOID SetBackColor(COLORREF lColor);
 	BOOL			SetValue(UINT);
-	inline	UINT	GetCurrentDigit() { return m_nCurrentDigit; }
+	inline	UINT	GetCurrentDigit() {
+		return m_nCurrentDigit;
+	}
 	virtual VOID	DrawDigit(CDC*);
 	VOID			SetNextDigit();
 	virtual			~CDigitCtrl();
@@ -42,7 +43,7 @@ protected:
 	afx_msg	VOID	OnPaint();
 
 	//{{AFX_MSG(CDigitCtrl)
-		// NOTE - the ClassWizard will add and remove member functions here.
+	// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 private:
 	UINT	m_nCurrentDigit;

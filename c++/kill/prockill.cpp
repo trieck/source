@@ -10,8 +10,8 @@
 ProcessKiller::ProcessKiller()
 {
 	// open token
-	if (!OpenProcessToken(GetCurrentProcess(), 
-		TOKEN_ADJUST_PRIVILEGES, &hToken)) {
+	if (!OpenProcessToken(GetCurrentProcess(),
+	                      TOKEN_ADJUST_PRIVILEGES, &hToken)) {
 		throw Exception(_T("Unable to open process token."));
 	}
 
@@ -50,7 +50,7 @@ void ProcessKiller::kill(DWORD pid, ostream *pstream)
 	BOOL rtn = TerminateProcess(hProcess, 1);
 
 	CloseHandle(hProcess);
-	
+
 	if (!rtn)
 		throw Exception(_T("Unable to terminate process."));
 
@@ -62,12 +62,12 @@ void ProcessKiller::kill(DWORD pid, ostream *pstream)
 bool ProcessKiller::enablePrivileges()
 {
 	TOKEN_PRIVILEGES tp;
-    tp.PrivilegeCount = 1;
-   
-	LookupPrivilegeValue(NULL, SE_DEBUG_NAME, &tp.Privileges[0].Luid);
-    tp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-    AdjustTokenPrivileges(hToken, FALSE, &tp, sizeof(tp), NULL, NULL);
+	tp.PrivilegeCount = 1;
 
-    return (GetLastError() == ERROR_SUCCESS);
+	LookupPrivilegeValue(NULL, SE_DEBUG_NAME, &tp.Privileges[0].Luid);
+	tp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+	AdjustTokenPrivileges(hToken, FALSE, &tp, sizeof(tp), NULL, NULL);
+
+	return (GetLastError() == ERROR_SUCCESS);
 }
 

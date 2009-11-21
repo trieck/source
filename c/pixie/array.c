@@ -188,8 +188,8 @@ void range_check(Array * array, unsigned n)
 {
 	while (array->alloced < n) {
 		array->v = (Symbol **) xrealloc(array->v,
-										(array->alloced * 2) *
-										sizeof(Symbol *));
+		                                (array->alloced * 2) *
+		                                sizeof(Symbol *));
 		array->alloced = array->alloced * 2;
 	}
 }

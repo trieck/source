@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 //	DISASSEM.H : 6502 CPU Disassembler
 //
 //	Copyright(c) 2003, Thomas A. Rieck
@@ -21,7 +21,7 @@ enum Modes {
 	ABSY,
 	IND,
 	ZPAGEY,
-	_RELATIVE	/* conflicts with wingdi.h */	
+	_RELATIVE	/* conflicts with wingdi.h */
 };
 
 typedef struct tagInstruction {
@@ -33,7 +33,7 @@ typedef struct tagInstruction {
 class Disassembler {
 
 // Construction / Destruction
-public:	
+public:
 	Disassembler();
 	~Disassembler();
 
@@ -44,7 +44,7 @@ public:
 private:
 	void init();
 	CString FormatInstruction(const Instruction *pInstr, BYTE b,
-		USHORT &address);
+	                          USHORT &address);
 	CString FormatInstruction(const Instruction *pInstr, USHORT &address);
 };
 

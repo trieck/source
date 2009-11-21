@@ -59,7 +59,8 @@ void BTreeImpl::insert(const string &key, const string &val)
 {
 	Entry entry;
 	Item keyItem(key.c_str()), valItem(val.c_str());
-	entry.key = &keyItem; entry.val = &valItem;
+	entry.key = &keyItem;
+	entry.val = &valItem;
 
 	btree.insert(&entry);
 }
@@ -69,7 +70,8 @@ BOOL BTreeImpl::append(const string &key, const string &val)
 {
 	Entry entry;
 	Item keyItem(key.c_str()), valItem(val.c_str());
-	entry.key = &keyItem; entry.val = &valItem;
+	entry.key = &keyItem;
+	entry.val = &valItem;
 
 	return btree.append(&entry);
 }

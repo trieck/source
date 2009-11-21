@@ -7,18 +7,18 @@ BOOL CDlgApp::InitInstance()
 	CDlgWin* pDlg = new CDlgWin();
 
 	m_pMainWnd = pDlg;
-	
+
 	pDlg->Create(0, _T("Dialog Test"),
-				WS_OVERLAPPED | WS_MINIMIZEBOX
-				| WS_SYSMENU | WS_DLGFRAME | WS_CLIPCHILDREN,
-				CRect(0,0,530,290));
+	             WS_OVERLAPPED | WS_MINIMIZEBOX
+	             | WS_SYSMENU | WS_DLGFRAME | WS_CLIPCHILDREN,
+	             CRect(0,0,530,290));
 
 	// Create controls
 	pDlg->CreateControls();
-	
+
 	// Set child fonts
-	pDlg->SetChildFonts(ID_EXEBTN, ID_LISTBOX, 
-			"MS Sans Serif", 8);
+	pDlg->SetChildFonts(ID_EXEBTN, ID_LISTBOX,
+	                    "MS Sans Serif", 8);
 
 	pDlg->CenterWindow();
 	pDlg->ShowWindow(m_nCmdShow);
@@ -54,18 +54,24 @@ CDlgWin::~CDlgWin()
 void CDlgWin::CreateControls()
 {
 	// Allocate memory for controls
-	m_pExeBtn = new CButton; ASSERT_VALID(m_pExeBtn);
-	m_pExitBtn = new CButton; ASSERT_VALID(m_pExitBtn);
-    m_pRedSlider = new CSliderCtrl; ASSERT_VALID(m_pRedSlider);
-	m_pGreenSlider = new CSliderCtrl; ASSERT_VALID(m_pGreenSlider);
-	m_pBlueSlider = new CSliderCtrl; ASSERT_VALID(m_pBlueSlider);
-	m_pListBox = new CListBox; ASSERT_VALID(m_pListBox);
+	m_pExeBtn = new CButton;
+	ASSERT_VALID(m_pExeBtn);
+	m_pExitBtn = new CButton;
+	ASSERT_VALID(m_pExitBtn);
+	m_pRedSlider = new CSliderCtrl;
+	ASSERT_VALID(m_pRedSlider);
+	m_pGreenSlider = new CSliderCtrl;
+	ASSERT_VALID(m_pGreenSlider);
+	m_pBlueSlider = new CSliderCtrl;
+	ASSERT_VALID(m_pBlueSlider);
+	m_pListBox = new CListBox;
+	ASSERT_VALID(m_pListBox);
 
 	// Create them
 	m_pExeBtn->Create("Execute Program", BS_PUSHBUTTON | WS_VISIBLE | WS_CHILD,
-			CRect(350, 8, 513, 33), this, ID_EXEBTN);
+	                  CRect(350, 8, 513, 33), this, ID_EXEBTN);
 	m_pExitBtn->Create("&Exit", BS_PUSHBUTTON | WS_VISIBLE | WS_CHILD,
-            CRect(350, 40, 513, 65), this, ID_EXITBTN);
+	                   CRect(350, 40, 513, 65), this, ID_EXITBTN);
 	m_pRedSlider->Create(WS_VISIBLE | WS_CHILD, CRect(0, 0, 250, 20), this, ID_REDSLIDER);
 	m_pGreenSlider->Create(WS_VISIBLE | WS_CHILD, CRect(0, 20, 250, 40), this, ID_GREENSLIDER);
 	m_pBlueSlider->Create(WS_VISIBLE | WS_CHILD, CRect(0, 40, 250, 60), this, ID_BLUESLIDER);
@@ -75,7 +81,7 @@ void CDlgWin::CreateControls()
 	m_pRedSlider->SetRange(0,255, FALSE);
 	m_pGreenSlider->SetRange(0,255, FALSE);
 	m_pBlueSlider->SetRange(0,255, FALSE);
-    
+
 	m_pRedSlider->SetPos(128);
 	m_pGreenSlider->SetPos(128);
 	m_pBlueSlider->SetPos(128);
@@ -97,11 +103,10 @@ void CDlgWin::OnBtnExplorerClick()
 	int nIndex;
 	CString szText;
 
-	if ((nIndex = m_pListBox->GetCurSel())!=-1)
-	{
-	// extract string from list box
+	if ((nIndex = m_pListBox->GetCurSel())!=-1) {
+		// extract string from list box
 		m_pListBox->GetText(nIndex, szText);
-	// execute program
+		// execute program
 		::WinExec(szText, SW_SHOWNORMAL);
 	}
 }
@@ -115,10 +120,10 @@ BOOL CDlgWin::OnEraseBkgnd(CDC* pDC)
 {
 	// call the inherited handler
 	CFrameWnd::OnEraseBkgnd(pDC);
-	
+
 	// paint the client area as needed
 	UpdateClientColor();
-	
+
 	return (TRUE);
 }
 
@@ -145,8 +150,7 @@ CDlgApp TheApp;
 
 void CDlgWin::SetWndFont(CWnd* pWnd, CString szFont, LONG lSize)
 {
-	if (!m_pFont)
-	{
+	if (!m_pFont) {
 		m_pFont = new CFont;
 		ASSERT_VALID(m_pFont);
 
@@ -166,8 +170,7 @@ void CDlgWin::SetWndFont(CWnd* pWnd, CString szFont, LONG lSize)
 
 void CDlgWin::SetChildFonts(int nFirst, int nLast, CString szFont, long lSize)
 {
-	for (int i = nFirst; i<= nLast; i++)
-	{
+	for (int i = nFirst; i<= nLast; i++) {
 		CWnd* pWnd = GetDlgItem(i);
 
 		if (pWnd) SetWndFont(pWnd, szFont, lSize);

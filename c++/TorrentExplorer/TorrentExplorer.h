@@ -9,7 +9,7 @@
 #endif // _MSC_VER > 1000
 
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+#error include 'stdafx.h' before including this file for PCH
 #endif
 
 #include "resource.h"       // main symbols
@@ -23,19 +23,18 @@ typedef CMap<COLORREF, COLORREF, int, int> ColorMap;
 // See TorrentExplorer.cpp for the implementation of this class
 //
 
-class TorrentExplorer : public CWinApp
-{
+class TorrentExplorer : public CWinApp {
 public:
 	BOOL IsSetting(LPCSTR key);
 	TorrentExplorer();
-	
+
 	__int64 GetIntSetting(LPCSTR key);
 	BOOL GetBOOLSetting(LPCSTR key);
 	LPTORRENTOBJECT GetSetting(LPCSTR key);
 	void PutSetting(LPCSTR key, __int64 val);
 	void PutSetting(LPCSTR key, LPCSTR val);
 	RGBTRIPLE *GetPalette() const {
-		return m_pPalette; 
+		return m_pPalette;
 	}
 	BOOL GetPaletteIndex(COLORREF c, int &i) const;
 
@@ -44,7 +43,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(TorrentExplorer)
-	public:
+public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
 	//}}AFX_VIRTUAL
@@ -54,12 +53,12 @@ public:
 	afx_msg void OnAppAbout();
 	afx_msg void OnSettings();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()	
+	DECLARE_MESSAGE_MAP()
 
 private:
 	BOOL CheckInstance();
 	BOOL LoadPalette();
-	TorrentSettings *m_pSettings;	
+	TorrentSettings *m_pSettings;
 	RGBTRIPLE *m_pPalette;
 	ColorMap m_ColorMap;
 	HANDLE m_hMutex;

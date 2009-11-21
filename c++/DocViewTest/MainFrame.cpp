@@ -31,7 +31,7 @@ BOOL CMainFrame :: PreCreateWindow(CREATESTRUCT& cs)
 }
 
 INT CMainFrame :: OnCreate(LPCREATESTRUCT lpCreateStruct)
-{	
+{
 	m_pWndStatus = new CStatusBar();
 	ASSERT_VALID(m_pWndStatus);
 
@@ -43,7 +43,7 @@ INT CMainFrame :: OnCreate(LPCREATESTRUCT lpCreateStruct)
 VOID CMainFrame :: OnSize(UINT nType, int cx, int cy)
 {
 	INT		pSizes[3];
-		
+
 	pSizes[0] = cx / 3;
 	pSizes[1] = pSizes[0] + (cx / 3);
 	pSizes[2] = -1;

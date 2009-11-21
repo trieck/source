@@ -16,10 +16,10 @@ static char THIS_FILE[] = __FILE__;
 // CScoresDlg dialog
 
 CScoresDlg::CScoresDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CScoresDlg::IDD, pParent)
+		: CDialog(CScoresDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CScoresDlg)
-		// NOTE: the ClassWizard will add member initialization here
+	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 	m_pScores	= NULL;
 	m_pFrame	= NULL;
@@ -28,10 +28,8 @@ CScoresDlg::CScoresDlg(CWnd* pParent /*=NULL*/)
 CScoresDlg::~CScoresDlg()
 {
 	if (m_pScores) delete m_pScores;
-	if (m_pFrame)
-	{
-		if (::IsWindow(m_pFrame->GetSafeHwnd()))
-		{
+	if (m_pFrame) {
+		if (::IsWindow(m_pFrame->GetSafeHwnd())) {
 			m_pFrame->DestroyWindow();
 		}
 	}
@@ -41,7 +39,7 @@ void CScoresDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CScoresDlg)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	// NOTE: the ClassWizard will add DDX and DDV calls here
 	//}}AFX_DATA_MAP
 }
 
@@ -56,8 +54,7 @@ END_MESSAGE_MAP()
 
 VOID CScoresDlg::InsertHeaders()
 {
-	LPCTSTR lpszHeaders[] = 
-	{
+	LPCTSTR lpszHeaders[] = {
 		_T("Player One"),
 		_T("Player Two"),
 		_T("Winner"),
@@ -70,14 +67,13 @@ VOID CScoresDlg::InsertHeaders()
 	CRect		rc;
 
 	GetListCtrl().GetClientRect(&rc);
-		
-	for (UINT i = 0; i < nCount; i++)
-	{	
+
+	for (UINT i = 0; i < nCount; i++) {
 		lvc.mask		= LVCF_TEXT | LVCF_WIDTH;
 		lvc.cx			= rc.Width() / nCount;
 		lvc.pszText		= (LPTSTR)lpszHeaders[i];
 		lvc.cchTextMax	= lstrlen(lpszHeaders[i]);
-		
+
 		GetListCtrl().InsertColumn(i, &lvc);
 	}
 }
@@ -86,12 +82,10 @@ VOID CScoresDlg::InsertItems()
 {
 	ASSERT_VALID(m_pScores);
 
-	for (int i = 0; i < m_pScores->GetScoreCount(); i++)
-	{
+	for (int i = 0; i < m_pScores->GetScoreCount(); i++) {
 		CString strItems[4];
 
-		for (int j = 0; j < 4; j++)
-		{
+		for (int j = 0; j < 4; j++) {
 			m_pScores->GetScoreItem(i, j, strItems[j]);
 		}
 
@@ -110,7 +104,7 @@ VOID CScoresDlg::InsertItems()
 	}
 }
 
-BOOL CScoresDlg::OnInitDialog() 
+BOOL CScoresDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -128,8 +122,8 @@ BOOL CScoresDlg::OnInitDialog()
 
 	// Insert Items
 	InsertItems();
-	
-	return TRUE;  
+
+	return TRUE;
 }
 
 VOID CScoresDlg::OnPreview()
@@ -140,21 +134,18 @@ VOID CScoresDlg::OnPreview()
 	strTitle.LoadString(IDS_SCORESPREVIEWTITLE);
 
 	// Allow only one instance
-	if (m_pFrame)
-	{
-		if (::IsWindow(m_pFrame->GetSafeHwnd()))
-		{
+	if (m_pFrame) {
+		if (::IsWindow(m_pFrame->GetSafeHwnd())) {
 			m_pFrame->ShowWindow(SW_RESTORE);
 			return;
 		}
 	}
-	
+
 	m_pFrame = new CScoresPreviewFrame();
 	ASSERT_VALID(m_pFrame);
 
 	if (m_pFrame->Create(NULL, strTitle, WS_OVERLAPPEDWINDOW,
-		CRect(100, 100, 600, 500), GetParentFrame(), NULL, WS_EX_OVERLAPPEDWINDOW, NULL))
-	{
+	                     CRect(100, 100, 600, 500), GetParentFrame(), NULL, WS_EX_OVERLAPPEDWINDOW, NULL)) {
 		m_pFrame->CenterWindow();
 		m_pFrame->ShowWindow(SW_SHOW);
 		m_pFrame->UpdateWindow();

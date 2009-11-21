@@ -9,14 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "queue.h"
 
-@interface CocoaQueue : NSObject {
+@interface CocoaQueue :
+NSObject {
 
 	struct queue *myQueue;
 }
 
 - (id)init;
 - (void)dealloc;
-- (void)addObject:(id)anObject;
+- (void)addObject:
+(id)anObject;
 - (id)removeObject;
 - (BOOL)isEmpty;
 

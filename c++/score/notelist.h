@@ -1,39 +1,40 @@
-///////////////////////////////////////////////////////////////////////
-//
-//	NOTELIST.H : doubly linked list of notes
-//
-//  This class represents a vertical list of notes
-//  represented as a musical chord
-//
-//	Copyright © 1999 Rieck Enterprises
-//
+///////////////////////////////////////////////////////////////////////
+//
+//	NOTELIST.H : doubly linked list of notes
+//
+//  This class represents a vertical list of notes
+//  represented as a musical chord
+//
+//	Copyright © 1999 Rieck Enterprises
+//
 
-#ifndef __NOTELIST_H__
-#define __NOTELIST_H__
+#ifndef __NOTELIST_H__
+#define __NOTELIST_H__
 
-///////////////////////////////////////////////////////////////////////
-class NoteList : public CList <Note *, Note *>
-{
-public:
-	// Construction / Destruction
-    NoteList();
-    NoteList(const NoteList &);
-    virtual ~NoteList();
+///////////////////////////////////////////////////////////////////////
+class NoteList : public CList <Note *, Note *>
+{
+public:
+	// Construction / Destruction
+	NoteList();
+	NoteList(const NoteList &);
+	virtual ~NoteList();
 
-    // Interface
-    NoteList & operator = (const NoteList &);
-    void Clear();
-    BOOL ismember(const Note *) const;
-	Note * find(BYTE) const;
-    Duration GetDuration() const;
-    BOOL Remove(Note *);
-    void Serialize(CArchive & ar);
-	int GetX() const;
+	// Interface
+	NoteList & operator = (const NoteList &);
+	void Clear();
+	BOOL ismember(const Note *) const;
+	Note * find(BYTE) const;
+	Duration GetDuration() const;
+	BOOL Remove(Note *);
+	void Serialize(CArchive & ar);
+	int GetX() const;
 
-	// Implementation
-protected:
-    DECLARE_SERIAL(NoteList)
-};
-///////////////////////////////////////////////////////////////////////
+	// Implementation
+protected:
+	DECLARE_SERIAL(NoteList)
+};
+///////////////////////////////////////////////////////////////////////
 
+
 #endif // __NOTELIST_H__

@@ -9,8 +9,7 @@
 #define __LAZYIO_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class LazyIO : public IRunnable
-{
+class LazyIO : public IRunnable {
 // Construction / Destruction
 public:
 	LazyIO(uint16_t bsize, uint16_t hsize);
@@ -19,8 +18,12 @@ public:
 // Interface
 	bool open(LPCSTR filename, OpenMode mode);
 	void close();
-	uint64_t getFileSize() { return io.getFileSize(); }
-	bool isOpen() const { return io.isOpen(); }
+	uint64_t getFileSize() {
+		return io.getFileSize();
+	}
+	bool isOpen() const {
+		return io.isOpen();
+	}
 
 	uint32_t readheader(void *pv);
 	uint32_t readblock(uint64_t blockno, void *pv);
@@ -38,7 +41,7 @@ private:
 	void flushblocks();
 	bool flushblock(uint64_t blockno);
 	uint16_t flushblock(Block *block);
-	
+
 	enum { TTL = 120 };
 
 	blockio io;

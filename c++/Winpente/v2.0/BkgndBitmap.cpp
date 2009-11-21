@@ -17,7 +17,7 @@ BEGIN_MESSAGE_MAP(CBkgndBitmap, CWnd)
 END_MESSAGE_MAP()
 
 CBkgndBitmap::CBkgndBitmap(HBITMAP hBitmap, HPALETTE hPalette, UINT ResID) :
- m_hBitmap(hBitmap), m_hPalette(hPalette), m_ResID(ResID)
+		m_hBitmap(hBitmap), m_hPalette(hPalette), m_ResID(ResID)
 {
 	m_pCustomBitmap = NULL;
 	m_fFrameBitmap	= FALSE;
@@ -25,8 +25,7 @@ CBkgndBitmap::CBkgndBitmap(HBITMAP hBitmap, HPALETTE hPalette, UINT ResID) :
 
 CBkgndBitmap::~CBkgndBitmap()
 {
-	if (m_pCustomBitmap)
-	{
+	if (m_pCustomBitmap) {
 		delete m_pCustomBitmap;
 	}
 }
@@ -49,11 +48,10 @@ VOID CBkgndBitmap::OnPaint()
 
 	::SelectPalette(dc.GetSafeHdc(), m_hPalette, TRUE);
 	::RealizePalette(dc.GetSafeHdc());
-		
+
 	m_pCustomBitmap->PaintDCByHBitmap(&dc, m_hBitmap, TRUE);
 
-	if (m_fFrameBitmap)
-	{
+	if (m_fFrameBitmap) {
 		FrameBitmap(&dc);
 	}
 }
@@ -62,14 +60,14 @@ VOID CBkgndBitmap::FrameBitmap(CDC* pDC)
 {
 	CBrush		aBrush, *pOldBrush;
 	CRect		rc;
-		
+
 	ASSERT_VALID(pDC);
 
 	GetClientRect(&rc);
-	
+
 	aBrush.CreateSolidBrush(COLOR_WHITE);
 	ASSERT_VALID(&aBrush);
-	
+
 	pOldBrush = pDC->SelectObject(&aBrush);
 	ASSERT_VALID(pOldBrush);
 
@@ -79,7 +77,7 @@ VOID CBkgndBitmap::FrameBitmap(CDC* pDC)
 	pDC->FrameRect(&rc, &aBrush);
 	rc.InflateRect(-1,-1,-1,-1);
 	pDC->FrameRect(&rc, &aBrush);
-	
+
 	pDC->SelectObject(pOldBrush);
 	aBrush.DeleteObject();
 }

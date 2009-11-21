@@ -64,7 +64,7 @@ void BigScrollView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	int nMaxPos = m_nDocWidth - m_nXPageSize;
 
 	SCROLLINFO info;
-	
+
 	switch (nSBCode) {
 	case SB_TOP:
 		pos = 0;
@@ -88,7 +88,7 @@ void BigScrollView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		info.cbSize = sizeof(SCROLLINFO);
 		info.fMask = SIF_TRACKPOS;
 		GetScrollInfo(SB_HORZ, &info);
-       	pos = (int)info.nTrackPos;
+		pos = (int)info.nTrackPos;
 		break;
 	case SB_PAGEDOWN:
 		if (pos >= nMaxPos)
@@ -120,7 +120,7 @@ void BigScrollView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	int nMaxPos = m_nDocHeight - m_nYPageSize;
 
 	SCROLLINFO info;
-	
+
 	switch (nSBCode) {
 	case SB_TOP:
 		pos = 0;
@@ -144,7 +144,7 @@ void BigScrollView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		info.cbSize = sizeof(SCROLLINFO);
 		info.fMask = SIF_TRACKPOS;
 		GetScrollInfo(SB_VERT, &info);
-       	pos = (int)info.nTrackPos;
+		pos = (int)info.nTrackPos;
 		break;
 	case SB_PAGEDOWN:
 		if (pos >= nMaxPos)
@@ -172,7 +172,7 @@ void BigScrollView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 void BigScrollView::OnSize(UINT nType, int cx, int cy)
 {
 	CView::OnSize(nType, cx, cy);
-	
+
 	int nScrollMax;
 	if (cy < m_nDocHeight) {
 		nScrollMax = m_nDocHeight;

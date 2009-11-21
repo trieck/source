@@ -9,8 +9,7 @@
 typedef vector<DWORD> PidVector;
 
 /////////////////////////////////////////////////////////////////////////////
-class ProcessEnumerator
-{
+class ProcessEnumerator {
 // Construction / Destruction
 public:
 	ProcessEnumerator();
@@ -24,14 +23,14 @@ protected:
 	void enumerate();
 	tstring getBaseName(LPCTSTR process);
 private:
-	typedef BOOL (WINAPI *EnumProcessesProc)(DWORD *ids, DWORD size, 
-		DWORD *needed);
-	typedef DWORD (WINAPI *GetModuleBaseNameProc)(HANDLE hProcess, 
-		HMODULE hModule, LPTSTR lpFilename, DWORD nSize);
-	typedef DWORD (WINAPI *GetModuleFileNameExProc)(HANDLE hProcess, 
-		HMODULE hModule, LPTSTR lpFilename, DWORD nSize);
-	typedef BOOL (WINAPI *EnumProcessModulesProc)(HANDLE hProcess, 
-		HMODULE *hMods, DWORD size, DWORD *needed);
+	typedef BOOL (WINAPI *EnumProcessesProc)(DWORD *ids, DWORD size,
+	        DWORD *needed);
+	typedef DWORD (WINAPI *GetModuleBaseNameProc)(HANDLE hProcess,
+	        HMODULE hModule, LPTSTR lpFilename, DWORD nSize);
+	typedef DWORD (WINAPI *GetModuleFileNameExProc)(HANDLE hProcess,
+	        HMODULE hModule, LPTSTR lpFilename, DWORD nSize);
+	typedef BOOL (WINAPI *EnumProcessModulesProc)(HANDLE hProcess,
+	        HMODULE *hMods, DWORD size, DWORD *needed);
 
 	HMODULE hModule;
 	PidVector pids;

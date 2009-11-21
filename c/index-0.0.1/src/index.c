@@ -1,6 +1,6 @@
 /*
  * INDEX.C
- * 
+ *
  * Index content
  * Copyright (c) 2008 Thomas A. Rieck
  */
@@ -15,7 +15,7 @@ static void cleanup(void);
 static void parse(void);
 
 /*
- * current input file 
+ * current input file
  */
 static const char *infile;
 
@@ -26,12 +26,12 @@ static Concord_t *concord;
 static uint32_t filenum;
 
 /*
- * current input file ptr 
+ * current input file ptr
  */
 FILE *fpin = NULL;
 
 /*
- * index content 
+ * index content
  */
 void mkindex(int nfiles, char **files)
 {
@@ -63,7 +63,7 @@ void mkindex(int nfiles, char **files)
 }
 
 /*
- * parse input stream 
+ * parse input stream
  */
 void parse(void)
 {
@@ -74,12 +74,12 @@ void parse(void)
 }
 
 /*
- * perform at exit cleanup 
+ * perform at exit cleanup
  */
 void cleanup(void)
 {
 	/*
-	 * close current input file 
+	 * close current input file
 	 */
 	if (fpin != NULL) {
 		fclose(fpin);

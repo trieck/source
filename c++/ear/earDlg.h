@@ -13,8 +13,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // EarDlg dialog
 
-class EarDlg : public CDialog
-{
+class EarDlg : public CDialog {
 // Construction
 public:
 	EarDlg(CWnd* pParent = NULL);	// standard constructor
@@ -28,7 +27,7 @@ public:
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(EarDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 	//}}AFX_VIRTUAL
 

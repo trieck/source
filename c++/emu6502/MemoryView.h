@@ -3,8 +3,7 @@
 #include "MultirowView.h"
 
 // MemoryView view
-class MemoryView : public MultirowView
-{
+class MemoryView : public MultirowView {
 	DECLARE_DYNCREATE(MemoryView)
 
 protected:
@@ -27,7 +26,7 @@ public:
 private:
 	void DrawMemory(CDC *pDC);
 	CString GetLine(USHORT base);
-	CFont m_Font;					// font	
+	CFont m_Font;					// font
 };
 
 

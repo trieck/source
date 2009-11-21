@@ -9,8 +9,7 @@
 #define __PAYFLOW_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class PayFlow
-{
+class PayFlow {
 public:
 	PayFlow(const string &host, int port, int timeout);
 	~PayFlow();
@@ -20,7 +19,7 @@ public:
 	static string version();
 
 	stringmap SubmitTransaction(const string &params);
-private:	
+private:
 	static stringmap ParseResponse(const char *response);
 	int CreateContext();
 	int DestroyContext();

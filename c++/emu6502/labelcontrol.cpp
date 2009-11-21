@@ -25,9 +25,9 @@ IMPLEMENT_DYNCREATE(CLabelControl, CWnd)
 void CLabelControl::SetAutoSize(BOOL bNewValue)
 {
 	static BYTE parms[] =
-		VTS_BOOL;
+	    VTS_BOOL;
 	InvokeHelper(0xfffffe0c, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 bNewValue);
+	             bNewValue);
 }
 
 BOOL CLabelControl::GetAutoSize()
@@ -40,9 +40,9 @@ BOOL CLabelControl::GetAutoSize()
 void CLabelControl::SetBackColor(long nNewValue)
 {
 	static BYTE parms[] =
-		VTS_I4;
+	    VTS_I4;
 	InvokeHelper(DISPID_BACKCOLOR, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 nNewValue);
+	             nNewValue);
 }
 
 long CLabelControl::GetBackColor()
@@ -55,9 +55,9 @@ long CLabelControl::GetBackColor()
 void CLabelControl::SetBackStyle(long nNewValue)
 {
 	static BYTE parms[] =
-		VTS_I4;
+	    VTS_I4;
 	InvokeHelper(0xfffffe0a, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 nNewValue);
+	             nNewValue);
 }
 
 long CLabelControl::GetBackStyle()
@@ -70,9 +70,9 @@ long CLabelControl::GetBackStyle()
 void CLabelControl::SetBorderColor(long nNewValue)
 {
 	static BYTE parms[] =
-		VTS_I4;
+	    VTS_I4;
 	InvokeHelper(0xfffffe09, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 nNewValue);
+	             nNewValue);
 }
 
 long CLabelControl::GetBorderColor()
@@ -85,9 +85,9 @@ long CLabelControl::GetBorderColor()
 void CLabelControl::SetBorderStyle(long nNewValue)
 {
 	static BYTE parms[] =
-		VTS_I4;
+	    VTS_I4;
 	InvokeHelper(DISPID_BORDERSTYLE, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 nNewValue);
+	             nNewValue);
 }
 
 long CLabelControl::GetBorderStyle()
@@ -100,9 +100,9 @@ long CLabelControl::GetBorderStyle()
 void CLabelControl::SetCaption(LPCTSTR lpszNewValue)
 {
 	static BYTE parms[] =
-		VTS_BSTR;
+	    VTS_BSTR;
 	InvokeHelper(0x0, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 lpszNewValue);
+	             lpszNewValue);
 }
 
 CString CLabelControl::GetCaption()
@@ -115,9 +115,9 @@ CString CLabelControl::GetCaption()
 void CLabelControl::SetEnabled(BOOL bNewValue)
 {
 	static BYTE parms[] =
-		VTS_BOOL;
+	    VTS_BOOL;
 	InvokeHelper(DISPID_ENABLED, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 bNewValue);
+	             bNewValue);
 }
 
 BOOL CLabelControl::GetEnabled()
@@ -130,9 +130,9 @@ BOOL CLabelControl::GetEnabled()
 void CLabelControl::SetRefFont(LPDISPATCH newValue)
 {
 	static BYTE parms[] =
-		VTS_DISPATCH;
+	    VTS_DISPATCH;
 	InvokeHelper(DISPID_FONT, DISPATCH_PROPERTYPUTREF, VT_EMPTY, NULL, parms,
-		 newValue);
+	             newValue);
 }
 
 COleFont CLabelControl::GetFont()
@@ -145,9 +145,9 @@ COleFont CLabelControl::GetFont()
 void CLabelControl::SetForeColor(long nNewValue)
 {
 	static BYTE parms[] =
-		VTS_I4;
+	    VTS_I4;
 	InvokeHelper(DISPID_FORECOLOR, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 nNewValue);
+	             nNewValue);
 }
 
 long CLabelControl::GetForeColor()
@@ -160,17 +160,17 @@ long CLabelControl::GetForeColor()
 void CLabelControl::SetMouseIcon(LPDISPATCH newValue)
 {
 	static BYTE parms[] =
-		VTS_DISPATCH;
+	    VTS_DISPATCH;
 	InvokeHelper(0xfffffdf6, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 newValue);
+	             newValue);
 }
 
 void CLabelControl::SetRefMouseIcon(LPDISPATCH newValue)
 {
 	static BYTE parms[] =
-		VTS_DISPATCH;
+	    VTS_DISPATCH;
 	InvokeHelper(0xfffffdf6, DISPATCH_PROPERTYPUTREF, VT_EMPTY, NULL, parms,
-		 newValue);
+	             newValue);
 }
 
 CPicture CLabelControl::GetMouseIcon()
@@ -183,9 +183,9 @@ CPicture CLabelControl::GetMouseIcon()
 void CLabelControl::SetMousePointer(long nNewValue)
 {
 	static BYTE parms[] =
-		VTS_I4;
+	    VTS_I4;
 	InvokeHelper(0xfffffdf7, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 nNewValue);
+	             nNewValue);
 }
 
 long CLabelControl::GetMousePointer()
@@ -198,17 +198,17 @@ long CLabelControl::GetMousePointer()
 void CLabelControl::SetPicture(LPDISPATCH newValue)
 {
 	static BYTE parms[] =
-		VTS_DISPATCH;
+	    VTS_DISPATCH;
 	InvokeHelper(0xfffffdf5, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 newValue);
+	             newValue);
 }
 
 void CLabelControl::SetRefPicture(LPDISPATCH newValue)
 {
 	static BYTE parms[] =
-		VTS_DISPATCH;
+	    VTS_DISPATCH;
 	InvokeHelper(0xfffffdf5, DISPATCH_PROPERTYPUTREF, VT_EMPTY, NULL, parms,
-		 newValue);
+	             newValue);
 }
 
 CPicture CLabelControl::GetPicture()
@@ -221,9 +221,9 @@ CPicture CLabelControl::GetPicture()
 void CLabelControl::SetPicturePosition(long nNewValue)
 {
 	static BYTE parms[] =
-		VTS_I4;
+	    VTS_I4;
 	InvokeHelper(0xb, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 nNewValue);
+	             nNewValue);
 }
 
 long CLabelControl::GetPicturePosition()
@@ -236,9 +236,9 @@ long CLabelControl::GetPicturePosition()
 void CLabelControl::SetSpecialEffect(long nNewValue)
 {
 	static BYTE parms[] =
-		VTS_I4;
+	    VTS_I4;
 	InvokeHelper(0xc, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 nNewValue);
+	             nNewValue);
 }
 
 long CLabelControl::GetSpecialEffect()
@@ -251,9 +251,9 @@ long CLabelControl::GetSpecialEffect()
 void CLabelControl::SetTextAlign(long nNewValue)
 {
 	static BYTE parms[] =
-		VTS_I4;
+	    VTS_I4;
 	InvokeHelper(0xd, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 nNewValue);
+	             nNewValue);
 }
 
 long CLabelControl::GetTextAlign()
@@ -266,9 +266,9 @@ long CLabelControl::GetTextAlign()
 void CLabelControl::SetWordWrap(BOOL bNewValue)
 {
 	static BYTE parms[] =
-		VTS_BOOL;
+	    VTS_BOOL;
 	InvokeHelper(0xfffffde8, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 bNewValue);
+	             bNewValue);
 }
 
 BOOL CLabelControl::GetWordWrap()
@@ -281,9 +281,9 @@ BOOL CLabelControl::GetWordWrap()
 void CLabelControl::SetAccelerator(LPCTSTR lpszNewValue)
 {
 	static BYTE parms[] =
-		VTS_BSTR;
+	    VTS_BSTR;
 	InvokeHelper(0xfffffde1, DISPATCH_PROPERTYPUT, VT_EMPTY, NULL, parms,
-		 lpszNewValue);
+	             lpszNewValue);
 }
 
 CString CLabelControl::GetAccelerator()

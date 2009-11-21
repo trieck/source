@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 //	BSTRSTREAM.CPP : BSTR peekable stream
 //
 //	Copyright (c) 2006 Thomas A. Rieck, All Rights Reserved
@@ -7,10 +7,10 @@
 
 #include "stdafx.h"
 #include "BstrStream.h"
-  
+
 /////////////////////////////////////////////////////////////////////////////
 BstrStream::BstrStream()
- : m_cRef(1), m_Pos(0), m_Size(0), m_Buf(0)	// new creation only
+		: m_cRef(1), m_Pos(0), m_Size(0), m_Buf(0)	// new creation only
 {
 	alloc();
 }
@@ -38,7 +38,7 @@ HRESULT BstrStream::QueryInterface(REFIID riid, void **ppvObject)
 		return E_NOINTERFACE;
 	}
 }
-            
+
 /////////////////////////////////////////////////////////////////////////////
 ULONG BstrStream::AddRef()
 {
@@ -54,7 +54,7 @@ ULONG BstrStream::Release(void)
 	}
 	return m_cRef;
 }
-    	
+
 /////////////////////////////////////////////////////////////////////////////
 HRESULT BstrStream::Read(void *pv, ULONG cb, ULONG *pcbRead)
 {
@@ -79,7 +79,7 @@ HRESULT BstrStream::Write(const void *pv, ULONG cb, ULONG *pcbWritten)
 {
 	*pcbWritten = 0;
 
-	ULONG n = min(avail(), cb); 
+	ULONG n = min(avail(), cb);
 	if (n == 0 && !resize(m_Size + cb)) {
 		return E_OUTOFMEMORY;	// no space
 	}
@@ -120,7 +120,7 @@ HRESULT BstrStream::WriteBstr(BSTR bstr)
 	LPBYTE pbuf = (LPBYTE)bstr;
 	for ( ; pos < nlen; cb -= written, pos += written) {
 		hr = Write(&pbuf[pos], cb, &written);
-		if (FAILED(hr)) return hr;		
+		if (FAILED(hr)) return hr;
 	}
 
 	return S_OK;
@@ -151,7 +151,7 @@ HRESULT BstrStream::ReadBstr(BSTR *bstr)
 /////////////////////////////////////////////////////////////////////////////
 void BstrStream::alloc()
 {
-	m_Buf = (LPBYTE)CoTaskMemAlloc(m_Size = 0);	
+	m_Buf = (LPBYTE)CoTaskMemAlloc(m_Size = 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////

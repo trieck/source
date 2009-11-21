@@ -29,11 +29,11 @@
 #include "video.h"
 #include "opcodes.h"
 #include "cia.h"
-int err = 0;	/* indicates an error during execution */ 
-/* 
+int err = 0;	/* indicates an error during execution */
+/*
  * initialize machine
  */
-void machine_init(void) 
+void machine_init(void)
 {
 	/* FIXME: is order significant */
 	mem_init();
@@ -47,21 +47,21 @@ void machine_step(const word *addr)
 {
 	byte i;
 	const Instr *pi;
-		
+
 	if (NULL != addr)
 		cpu.pc = *addr;
 	/* disassemble the instruction */
 	disassemble_instr(cpu.pc);
 	/* fetch the instruction */
 	i = fetch_byte(cpu.pc);
-		
+
 	pi = instructions[i];
 	if (NULL == pi) {
-		warning("unrecognized instruction \"$%.2x\" at $%.4hx.\n", 
-		i, cpu.pc);
+		warning("unrecognized instruction \"$%.2x\" at $%.4hx.\n",
+		        i, cpu.pc);
 		return;
 	}
-	
+
 	/* execute the instruction */
 	(*pi->fnc)();
 }

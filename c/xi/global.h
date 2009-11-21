@@ -1,7 +1,7 @@
 /*
  * GLOBAL.H
  *
- * Global symbol table 
+ * Global symbol table
  *
  * 'X' Programming Language
  * Copyright(c) 2004, Thomas A. Rieck

@@ -1,4 +1,4 @@
-// main.cpp 
+// main.cpp
 
 #include "stdafx.h"
 #include "index.h"
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	if (argc < 2) usage();
 
 	HiresTimer timer;
-	
+
 	try {
 		Index index;
 		index.index(argv[1]);
@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
 	} catch (RCEXCEPTION e) {
 		cerr << e.getDescription() << endl;
 		exit(1);
-	}						   
-	
+	}
+
 	cout << "   elapsed time " << timer << endl;
 
 	return 0;

@@ -19,8 +19,7 @@ DECLARE_MY_GUIDS
 //
 // CWaveLib
 //
-class CWaveLib : public IWaveLib
-{
+class CWaveLib : public IWaveLib {
 public:
 
 	// IUnknown methods
@@ -34,8 +33,10 @@ public:
 	virtual HRESULT __stdcall GetDeviceInCaps(UINT, WAVEINCAPS **);
 	virtual HRESULT __stdcall GetDeviceOutCaps(UINT, WAVEOUTCAPS **);
 
-	static inline LONG GetComponentCount() { return m_cComponents; }
-	
+	static inline LONG GetComponentCount() {
+		return m_cComponents;
+	}
+
 	CWaveLib();
 	~CWaveLib();
 
@@ -48,8 +49,7 @@ protected:
 //
 // Class factory
 //
-class CFactory : public IClassFactory
-{
+class CFactory : public IClassFactory {
 public:
 	// IUnknown methods
 	virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv);
@@ -58,15 +58,15 @@ public:
 
 	// IClassFactory methods
 	virtual HRESULT __stdcall CreateInstance(LPUNKNOWN pUnknownOuter,
-									REFIID iid,
-									PPVOID ppv);
+	        REFIID iid,
+	        PPVOID ppv);
 	virtual HRESULT __stdcall LockServer(BOOL bLock);
 
 	// Constructor
-	CFactory () : m_cRef(1){}
-	
+	CFactory () : m_cRef(1) {}
+
 	// Destructor
-	~CFactory(){}
+	~CFactory() {}
 
 private:
 	LONG m_cRef;

@@ -1,69 +1,68 @@
 ////////////////////////////////
-//	Module:	SOKCLIENT.C		  //	
+//	Module:	SOKCLIENT.C		  //
 //	Author:	Thomas A. Rieck	  //
 //	Date:	05/25/97		  //
 ////////////////////////////////
 
 #include	"..\MERLIN.H"
-#include	"SOKCLIENT.H"     
+#include	"SOKCLIENT.H"
 #include	"resource.h"
 
-HINSTANCE	hInst;          
+HINSTANCE	hInst;
 SOCKET		sock;
 LPCSTR		lpszClassName	= "SocketClient";
-CONST INT	WINDOW_STYLE	=	WS_SYSMENU | 
-								WS_MINIMIZEBOX | 
-								WS_BORDER | 
-								WS_CAPTION;
+CONST INT	WINDOW_STYLE	=	WS_SYSMENU |
+                         WS_MINIMIZEBOX |
+                         WS_BORDER |
+                         WS_CAPTION;
 
 ////////////////////////
 // WinMain Function
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-				LPSTR lpCmdLine, int nCmdShow)
+                   LPSTR lpCmdLine, int nCmdShow)
 {
-    MSG msg;
+	MSG msg;
 
-    if (!hPrevInstance)                  
-        if (!InitApplication(hInstance)) 
-            return (0);              
+	if (!hPrevInstance)
+		if (!InitApplication(hInstance))
+			return (0);
 
-    if (!InitInstance(hInstance, nCmdShow))
-        return (0);
+	if (!InitInstance(hInstance, nCmdShow))
+		return (0);
 
-    while (GetMessage(&msg, NULL, 0, 0)) 
-	{
-		TranslateMessage(&msg);    
-        DispatchMessage(&msg);     
+	while (GetMessage(&msg, NULL, 0, 0)) {
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
-    return (msg.wParam);
+	return (msg.wParam);
 }
 
 /////////////////////////////
 // InitApplication Function
-BOOL InitApplication(HINSTANCE hInstance)       
+BOOL InitApplication(HINSTANCE hInstance)
 {
-    WNDCLASS  wc;
+	WNDCLASS  wc;
 
-    wc.style			= 0;                    
-    wc.lpfnWndProc		= (WNDPROC)MainWndProc;       
+	wc.style			= 0;
+	wc.lpfnWndProc		= (WNDPROC)MainWndProc;
 	wc.cbClsExtra		= 0;
-    wc.cbWndExtra		= 0;
-    wc.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAIN));
-    wc.hInstance		= hInstance;          
-    wc.hCursor			= NULL;
-    wc.hbrBackground	= GetStockObject(GRAY_BRUSH);
-    wc.lpszMenuName		= MAKEINTRESOURCE(IDR_MAINMENU);
-    wc.lpszClassName	= lpszClassName; 
+	wc.cbWndExtra		= 0;
+	wc.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAIN));
+	wc.hInstance		= hInstance;
+	wc.hCursor			= NULL;
+	wc.hbrBackground	= GetStockObject(GRAY_BRUSH);
+	wc.lpszMenuName		= MAKEINTRESOURCE(IDR_MAINMENU);
+	wc.lpszClassName	= lpszClassName;
 
-    return (RegisterClass(&wc));
+	return (RegisterClass(&wc));
 }
 
 //////////////////////////
 // InitInstance Function
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)           
+BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-    HWND	hWnd;
-    
+	HWND	hWnd;
+
 	hInst = hInstance;
 
 	// disallow multiple instances
@@ -71,33 +70,33 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		return (FALSE);
 
 	hWnd = CreateWindowEx(
-			WS_EX_DLGMODALFRAME,			// Extended Window style
-			lpszClassName,					// Window Class Name                  
-			"Socket Client",				// Window Caption
-			WINDOW_STYLE,					// Window style.                      
-			CW_USEDEFAULT,                  // Default horizontal position.       
-			CW_USEDEFAULT,                  // Default vertical position.         
-			CW_USEDEFAULT,					// Default width                     
-			CW_USEDEFAULT,					// Default height                    
-			NULL,                           // Overlapped windows have no parent. 
-			NULL,                           // Use the window class menu.         
-			hInstance,                      // This instance owns this window.    
-			NULL							// Pointer not needed.                
-			);
-    
-    if (!hWnd)
-        return (FALSE);
+	           WS_EX_DLGMODALFRAME,			// Extended Window style
+	           lpszClassName,					// Window Class Name
+	           "Socket Client",				// Window Caption
+	           WINDOW_STYLE,					// Window style.
+	           CW_USEDEFAULT,                  // Default horizontal position.
+	           CW_USEDEFAULT,                  // Default vertical position.
+	           CW_USEDEFAULT,					// Default width
+	           CW_USEDEFAULT,					// Default height
+	           NULL,                           // Overlapped windows have no parent.
+	           NULL,                           // Use the window class menu.
+	           hInstance,                      // This instance owns this window.
+	           NULL							// Pointer not needed.
+	       );
 
-    ShowWindow(hWnd, nCmdShow);  
-    UpdateWindow(hWnd);          
+	if (!hWnd)
+		return (FALSE);
 
-    return (TRUE);               
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
+
+	return (TRUE);
 }
 
 ////////////////////////////
 // MainWndProc Function
-LONG APIENTRY MainWndProc(HWND hWnd, UINT message,             
-				WPARAM wParam, LPARAM lParam)              
+LONG APIENTRY MainWndProc(HWND hWnd, UINT message,
+                          WPARAM wParam, LPARAM lParam)
 {
 	static HWND			hMainDlg, hWndToolBar, hWndStatus;
 	static CHAR			szHostName[25];
@@ -114,273 +113,256 @@ LONG APIENTRY MainWndProc(HWND hWnd, UINT message,
 	LPNMHDR				pnmh;
 	LPHOSTENT			lphp;
 	DWORD				dwBytesSent;
-	
-	switch (message) 
-	{
-		case WM_COMMAND:
-			switch (LOWORD(wParam))
-			{
-				case IDM_ABOUT:
-					DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUT),
-							hWnd, AboutProc);
-					break;
-				case IDM_CONNECT:
-				case IDT_CONNECT:
 
-					SetCapture(hWnd);
-					hCursor = SetCursor(LoadCursor(NULL, IDC_WAIT));
-
-					GetDlgItemText(hMainDlg, IDC_HOSTNAME, szHostName, 80);
-					if (!strlen(szHostName))
-					{
-						LoadString(hInst, IDS_HOSTNAMEERR, szStrBuffer, 80);
-						MessageBox(hWnd, szStrBuffer, NULL,
-							MB_OK | MB_ICONINFORMATION);
-						SetCursor(hCursor);
-						ReleaseCapture();
-						break;
-					}
-					
-					// create socket
-					sock = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED);
-
-					if (sock == INVALID_SOCKET)
-					{
-						LoadString(hInst, IDS_CREATESOCKERR, szStrBuffer, 80);
-						MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
-						SetCursor(hCursor);
-						ReleaseCapture();
-						break;
-					}
-
-					// retrieve IP address and TCP port number
-					// from host name, will call WM_WSGETHOST when
-					// returning data
-					if (!(hHostID = WSAAsyncGetHostByName(hWnd, WM_WSGETHOST,
-								szHostName, szHostBuffer, MAXGETHOSTSTRUCT)))
-					{
-						closesocket(sock);
-						LoadString(hInst, WSAGetLastError(), szStrBuffer, 80);
-						MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
-						SetCursor(hCursor);
-						ReleaseCapture();
-						break;
-					}
-
-					// select asynchronous messages
-					if (WSAAsyncSelect(sock, hWnd, WSA_ASYNC, FD_CONNECT | FD_CLOSE) > 0) 
-					{
-						closesocket(sock);
-						LoadString(hInst, IDS_ASYNCERR, szStrBuffer, 80);
-						MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
-						SetCursor(hCursor);
-						ReleaseCapture();
-						break;
-					}
-					break;
-				case IDT_SEND:
-				case IDM_SENDMESSAGE:
-					break;
-
-					status = GetDlgItemText(hMainDlg, IDC_MESSAGE, szSendString, 80);
-					
-					if (!status || !strlen(szSendString))
-						break;
-
-					// send the string
-					WSABuffer.len = sizeof(REQUEST);
-					WSABuffer.buf = szSendString;
-					if (WSASend(sock, &WSABuffer, 1, &dwBytesSent, NO_FLAGS_SET, NULL, NULL) == SOCKET_ERROR)
-					{
-						LoadString(hInst, IDS_SENDERR, szStrBuffer, 80);
-						MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
-						break;
-					}
-					// set status window
-					LoadString(hInst, IDS_STATUSBYTES, szStrBuffer, 80);
-					sprintf(szStrBuffer, szStrBuffer, status);
-					SendMessage(hWndStatus, SB_SETTEXT, 1, (LPARAM)szStrBuffer);
-					break;
-				case IDM_EXIT:
-					SendMessage(hWnd, WM_DESTROY, 0, 0);
-					break;
-				case IDM_DISCONNECT:
-				case IDT_DISCONNECT:
-					shutdown(sock, SD_SEND);
-					closesocket(sock);
-					
-					// enable menus and toolbar buttons
-					SetConnectMenus(hWnd, hWndToolBar, FALSE);
-					SetConnectState(hWndStatus, FALSE);
-					
-					break;
-				case IDM_DISKINFO:
-				case IDT_DISKINFO:
-					DialogBoxParam(hInst, MAKEINTRESOURCE(IDD_DISKINFO),
-							hWnd, DiskInfoProc, (LPARAM)&dest_sin);
-					break;
-				default:
-					break;
-			}
+	switch (message) {
+	case WM_COMMAND:
+		switch (LOWORD(wParam)) {
+		case IDM_ABOUT:
+			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUT),
+			          hWnd, AboutProc);
 			break;
-		case WSA_ASYNC:
-			switch (WSAGETSELECTEVENT(lParam))
-			{
-			case FD_CLOSE:
-				LoadString(hInst, IDS_CONNECTDROP, szStrBuffer, 80);
-				MessageBox(hWnd, szStrBuffer, NULL, 
-				MB_OK | MB_ICONEXCLAMATION);
-				
-				// close the socket
-				shutdown(sock, SD_SEND);
-				closesocket(sock);
+		case IDM_CONNECT:
+		case IDT_CONNECT:
 
-				// enable menus and toolbar buttons
-				SetConnectMenus(hWnd, hWndToolBar, FALSE);
-				SetConnectState(hWndStatus, FALSE);
-				
-				break;
-			case FD_CONNECT:
+			SetCapture(hWnd);
+			hCursor = SetCursor(LoadCursor(NULL, IDC_WAIT));
+
+			GetDlgItemText(hMainDlg, IDC_HOSTNAME, szHostName, 80);
+			if (!strlen(szHostName)) {
+				LoadString(hInst, IDS_HOSTNAMEERR, szStrBuffer, 80);
+				MessageBox(hWnd, szStrBuffer, NULL,
+				           MB_OK | MB_ICONINFORMATION);
 				SetCursor(hCursor);
 				ReleaseCapture();
-				// connection completed. check for errors
-				if (WSAGETSELECTERROR(lParam) == 0)
-				{
-					// connected
-					// enable menus and toolbar buttons
-					SetConnectMenus(hWnd, hWndToolBar, TRUE);
-					SetConnectState(hWndStatus, TRUE);
-				}
-				else
-				{
-					// not connected
-					LoadString(hInst, IDS_CONNECTERR, szStrBuffer, 80);
-					MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
-					
-					// enable menus and toolbar buttons
-					SetConnectMenus(hWnd, hWndToolBar, FALSE);
-					SetConnectState(hWndStatus, FALSE);
-				}
 				break;
 			}
-			break;
-		case WM_WSGETHOST:
-			if (wParam != (WPARAM)hHostID)	// ignore message
-				break;
-			
-			if (WSAGETASYNCERROR(lParam) != 0)
-			{
-				closesocket(sock);
-				LoadString(hInst, IDS_HOSTBYNAMEERR, szStrBuffer, 80);
+
+			// create socket
+			sock = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED);
+
+			if (sock == INVALID_SOCKET) {
+				LoadString(hInst, IDS_CREATESOCKERR, szStrBuffer, 80);
 				MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
 				SetCursor(hCursor);
 				ReleaseCapture();
 				break;
 			}
 
-			// set address information
-			dest_sin.sin_family			= PF_INET;
-			dest_sin.sin_port			= ResolveServicePort();
-			lphp						= (LPHOSTENT)szHostBuffer;
-			dest_sin.sin_addr.s_addr	= ((LPIN_ADDR)(lphp->h_addr))->s_addr;
-
-			// connect
-			if (WSAConnect(sock, (PSOCKADDR)&dest_sin, sizeof(dest_sin), NULL, NULL, NULL, NULL) == SOCKET_ERROR)
-			{
-				// error occured on connect call.  however expecting
-				// to get WSAEWOULDBLOCK error indicating that 
-				// connection is in progress
-				if (WSAGetLastError() != WSAEWOULDBLOCK)
-				{
-					closesocket(sock);
-					LoadString(hInst, IDS_CONNECTERR, szStrBuffer, 80);
-					MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
-					SetCursor(hCursor);
-					ReleaseCapture();
-				}
-			}
-			break;
-		case WM_CREATE:
-			// start winsock services
-			if ((status = WSAStartup(MAKEWORD(2,0),  &WSAData)) != 0)
-			{
-				MessageBox(hWnd, WSAData.szDescription, 
-					WSAData.szSystemStatus, MB_OK | MB_ICONINFORMATION);
-				SendMessage(hWnd, WM_DESTROY, 0, 0);
+			// retrieve IP address and TCP port number
+			// from host name, will call WM_WSGETHOST when
+			// returning data
+			if (!(hHostID = WSAAsyncGetHostByName(hWnd, WM_WSGETHOST,
+			                                      szHostName, szHostBuffer, MAXGETHOSTSTRUCT))) {
+				closesocket(sock);
+				LoadString(hInst, WSAGetLastError(), szStrBuffer, 80);
+				MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
+				SetCursor(hCursor);
+				ReleaseCapture();
 				break;
 			}
 
-			// show main dialog
-			hMainDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_MAIN),
-									hWnd, MainDlgProc);
-			
-			GetWindowRect(hMainDlg, &DlgRect);
-			AdjustWindowRectEx(&DlgRect, WINDOW_STYLE, TRUE, WS_EX_DLGMODALFRAME);
-			
-			// move the dialog box past the toolbar
-			SetWindowPos(hMainDlg, HWND_TOP, 0, 28, 0, 0, SWP_NOSIZE);
-
-			// resize the window to accomodate the dialog box
-			SetWindowPos(hWnd, HWND_TOP, 0, 0, (DlgRect.right - DlgRect.left), 
-				(DlgRect.bottom - DlgRect.top), SWP_NOMOVE);
-
-			// show toolbar
-			hWndToolBar = CreateToolBar(hWnd);
-
-			// show status bar
-			hWndStatus = CreateStatusBar(hWnd);
-
-			// show connect state
-			SetConnectState(hWndStatus, FALSE);
-			break;
-		case WM_NOTIFY:
-			pnmh = (LPNMHDR)lParam;
-
-			// check whether the tooltip needs text
-			if (pnmh->code == TTN_NEEDTEXT)
-			{
-				LPTOOLTIPTEXT lpttt; 
- 
-				lpttt = (LPTOOLTIPTEXT) lParam; 
-				lpttt->hinst = hInst; 
- 
-				// specify the resource identifier of the descriptive 
-				// text for the given button. 
-				switch (lpttt->hdr.idFrom) 
-				{ 
-                case IDT_CONNECT: 
-                    lpttt->lpszText = MAKEINTRESOURCE(IDS_TIPS_CONNECT); 
-                    break; 
-                case IDT_SEND: 
-                    lpttt->lpszText = MAKEINTRESOURCE(IDS_TIPS_SENDMESSAGE); 
-                    break;
-				case IDT_DISCONNECT:
-					lpttt->lpszText = MAKEINTRESOURCE(IDS_TIPS_EXIT);
-					break;
-				case IDT_DISKINFO:
-					lpttt->lpszText = MAKEINTRESOURCE(IDS_TIPS_DISKINFO);
-					break;
-                }
+			// select asynchronous messages
+			if (WSAAsyncSelect(sock, hWnd, WSA_ASYNC, FD_CONNECT | FD_CLOSE) > 0) {
+				closesocket(sock);
+				LoadString(hInst, IDS_ASYNCERR, szStrBuffer, 80);
+				MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
+				SetCursor(hCursor);
+				ReleaseCapture();
+				break;
 			}
 			break;
-		case WM_SIZE:
-			// resize the toolbar
-			SendMessage(hWndToolBar, TB_AUTOSIZE, 0, 0);
+		case IDT_SEND:
+		case IDM_SENDMESSAGE:
 			break;
-		case WM_DESTROY:
-			// shutdown winsock services
+
+			status = GetDlgItemText(hMainDlg, IDC_MESSAGE, szSendString, 80);
+
+			if (!status || !strlen(szSendString))
+				break;
+
+			// send the string
+			WSABuffer.len = sizeof(REQUEST);
+			WSABuffer.buf = szSendString;
+			if (WSASend(sock, &WSABuffer, 1, &dwBytesSent, NO_FLAGS_SET, NULL, NULL) == SOCKET_ERROR) {
+				LoadString(hInst, IDS_SENDERR, szStrBuffer, 80);
+				MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
+				break;
+			}
+			// set status window
+			LoadString(hInst, IDS_STATUSBYTES, szStrBuffer, 80);
+			sprintf(szStrBuffer, szStrBuffer, status);
+			SendMessage(hWndStatus, SB_SETTEXT, 1, (LPARAM)szStrBuffer);
+			break;
+		case IDM_EXIT:
+			SendMessage(hWnd, WM_DESTROY, 0, 0);
+			break;
+		case IDM_DISCONNECT:
+		case IDT_DISCONNECT:
 			shutdown(sock, SD_SEND);
 			closesocket(sock);
-			WSACleanup();
 
-			// destroy dialog
-			if (hMainDlg) DestroyWindow(hMainDlg);
+			// enable menus and toolbar buttons
+			SetConnectMenus(hWnd, hWndToolBar, FALSE);
+			SetConnectState(hWndStatus, FALSE);
 
-			PostQuitMessage(0);
+			break;
+		case IDM_DISKINFO:
+		case IDT_DISKINFO:
+			DialogBoxParam(hInst, MAKEINTRESOURCE(IDD_DISKINFO),
+			               hWnd, DiskInfoProc, (LPARAM)&dest_sin);
 			break;
 		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
 			break;
+		}
+		break;
+	case WSA_ASYNC:
+		switch (WSAGETSELECTEVENT(lParam)) {
+		case FD_CLOSE:
+			LoadString(hInst, IDS_CONNECTDROP, szStrBuffer, 80);
+			MessageBox(hWnd, szStrBuffer, NULL,
+			           MB_OK | MB_ICONEXCLAMATION);
+
+			// close the socket
+			shutdown(sock, SD_SEND);
+			closesocket(sock);
+
+			// enable menus and toolbar buttons
+			SetConnectMenus(hWnd, hWndToolBar, FALSE);
+			SetConnectState(hWndStatus, FALSE);
+
+			break;
+		case FD_CONNECT:
+			SetCursor(hCursor);
+			ReleaseCapture();
+			// connection completed. check for errors
+			if (WSAGETSELECTERROR(lParam) == 0) {
+				// connected
+				// enable menus and toolbar buttons
+				SetConnectMenus(hWnd, hWndToolBar, TRUE);
+				SetConnectState(hWndStatus, TRUE);
+			} else {
+				// not connected
+				LoadString(hInst, IDS_CONNECTERR, szStrBuffer, 80);
+				MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
+
+				// enable menus and toolbar buttons
+				SetConnectMenus(hWnd, hWndToolBar, FALSE);
+				SetConnectState(hWndStatus, FALSE);
+			}
+			break;
+		}
+		break;
+	case WM_WSGETHOST:
+		if (wParam != (WPARAM)hHostID)	// ignore message
+			break;
+
+		if (WSAGETASYNCERROR(lParam) != 0) {
+			closesocket(sock);
+			LoadString(hInst, IDS_HOSTBYNAMEERR, szStrBuffer, 80);
+			MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
+			SetCursor(hCursor);
+			ReleaseCapture();
+			break;
+		}
+
+		// set address information
+		dest_sin.sin_family			= PF_INET;
+		dest_sin.sin_port			= ResolveServicePort();
+		lphp						= (LPHOSTENT)szHostBuffer;
+		dest_sin.sin_addr.s_addr	= ((LPIN_ADDR)(lphp->h_addr))->s_addr;
+
+		// connect
+		if (WSAConnect(sock, (PSOCKADDR)&dest_sin, sizeof(dest_sin), NULL, NULL, NULL, NULL) == SOCKET_ERROR) {
+			// error occured on connect call.  however expecting
+			// to get WSAEWOULDBLOCK error indicating that
+			// connection is in progress
+			if (WSAGetLastError() != WSAEWOULDBLOCK) {
+				closesocket(sock);
+				LoadString(hInst, IDS_CONNECTERR, szStrBuffer, 80);
+				MessageBox(hWnd, szStrBuffer, NULL, MB_OK | MB_ICONINFORMATION);
+				SetCursor(hCursor);
+				ReleaseCapture();
+			}
+		}
+		break;
+	case WM_CREATE:
+		// start winsock services
+		if ((status = WSAStartup(MAKEWORD(2,0),  &WSAData)) != 0) {
+			MessageBox(hWnd, WSAData.szDescription,
+			           WSAData.szSystemStatus, MB_OK | MB_ICONINFORMATION);
+			SendMessage(hWnd, WM_DESTROY, 0, 0);
+			break;
+		}
+
+		// show main dialog
+		hMainDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_MAIN),
+		                        hWnd, MainDlgProc);
+
+		GetWindowRect(hMainDlg, &DlgRect);
+		AdjustWindowRectEx(&DlgRect, WINDOW_STYLE, TRUE, WS_EX_DLGMODALFRAME);
+
+		// move the dialog box past the toolbar
+		SetWindowPos(hMainDlg, HWND_TOP, 0, 28, 0, 0, SWP_NOSIZE);
+
+		// resize the window to accomodate the dialog box
+		SetWindowPos(hWnd, HWND_TOP, 0, 0, (DlgRect.right - DlgRect.left),
+		             (DlgRect.bottom - DlgRect.top), SWP_NOMOVE);
+
+		// show toolbar
+		hWndToolBar = CreateToolBar(hWnd);
+
+		// show status bar
+		hWndStatus = CreateStatusBar(hWnd);
+
+		// show connect state
+		SetConnectState(hWndStatus, FALSE);
+		break;
+	case WM_NOTIFY:
+		pnmh = (LPNMHDR)lParam;
+
+		// check whether the tooltip needs text
+		if (pnmh->code == TTN_NEEDTEXT) {
+			LPTOOLTIPTEXT lpttt;
+
+			lpttt = (LPTOOLTIPTEXT) lParam;
+			lpttt->hinst = hInst;
+
+			// specify the resource identifier of the descriptive
+			// text for the given button.
+			switch (lpttt->hdr.idFrom) {
+			case IDT_CONNECT:
+				lpttt->lpszText = MAKEINTRESOURCE(IDS_TIPS_CONNECT);
+				break;
+			case IDT_SEND:
+				lpttt->lpszText = MAKEINTRESOURCE(IDS_TIPS_SENDMESSAGE);
+				break;
+			case IDT_DISCONNECT:
+				lpttt->lpszText = MAKEINTRESOURCE(IDS_TIPS_EXIT);
+				break;
+			case IDT_DISKINFO:
+				lpttt->lpszText = MAKEINTRESOURCE(IDS_TIPS_DISKINFO);
+				break;
+			}
+		}
+		break;
+	case WM_SIZE:
+		// resize the toolbar
+		SendMessage(hWndToolBar, TB_AUTOSIZE, 0, 0);
+		break;
+	case WM_DESTROY:
+		// shutdown winsock services
+		shutdown(sock, SD_SEND);
+		closesocket(sock);
+		WSACleanup();
+
+		// destroy dialog
+		if (hMainDlg) DestroyWindow(hMainDlg);
+
+		PostQuitMessage(0);
+		break;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+		break;
 	}
 	return (0);
 }
@@ -389,8 +371,7 @@ LONG APIENTRY MainWndProc(HWND hWnd, UINT message,
 // MainDlgProc Function
 BOOL WINAPI MainDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	switch (msg)
-	{
+	switch (msg) {
 	case WM_INITDIALOG:
 		return (TRUE);
 	default:
@@ -415,13 +396,11 @@ WORD ResolveServicePort()
 // AboutProc Function
 BOOL WINAPI AboutProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	switch (msg)
-	{
+	switch (msg) {
 	case WM_INITDIALOG:
 		return (TRUE);
 	case WM_COMMAND:
-		switch(wParam)
-		{
+		switch (wParam) {
 		case IDCANCEL:
 		case IDOK:
 			EndDialog(hDlg, TRUE);
@@ -453,9 +432,8 @@ BOOL WINAPI DiskInfoProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 	HDC					hDC;
 	REQUEST				req;
 	RESPONSE			rsp;
-	
-	switch (msg)
-	{
+
+	switch (msg) {
 	case WM_INITDIALOG:
 		// get destination address
 		lpdest_sin = (LPSOCKADDR_IN)lParam;
@@ -464,10 +442,10 @@ BOOL WINAPI DiskInfoProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 		strcpy(szInetAddr, inet_ntoa(lpdest_sin->sin_addr));
 		if (!szInetAddr)
 			EndDialog(hDlg, FALSE);
-		
+
 		// select aynchronous messages
 		iRc = WSAAsyncSelect(sock, hDlg, WSA_ASYNC, FD_READ | FD_WRITE | FD_CLOSE);
-		
+
 		// set the IP address in dialog box
 		SetDlgItemText(hDlg, IDC_SERVERADDRESS, szInetAddr);
 
@@ -475,10 +453,9 @@ BOOL WINAPI DiskInfoProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 		req.cType		= GET;
 		req.cSubType	= DISK;
 		req.cDetails	= ENUMDRIVES;
-		
+
 		iRc = send(sock, (LPSTR)&req, sizeof(REQUEST), 0);
-		if ((iRc == SOCKET_ERROR || iRc < sizeof(REQUEST)))
-		{
+		if ((iRc == SOCKET_ERROR || iRc < sizeof(REQUEST))) {
 			LoadString(hInst, IDS_SENDERR, szBuffer, 80);
 			MessageBox(hDlg, szBuffer, NULL, MB_ICONINFORMATION);
 			return (FALSE);
@@ -486,70 +463,62 @@ BOOL WINAPI DiskInfoProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		// load the drive icon
 		hIcon = (HCURSOR)LoadImage(hInst, MAKEINTRESOURCE(IDI_DRIVE),
-				IMAGE_ICON, ICON_WIDTH, ICON_HEIGHT, LR_DEFAULTCOLOR);
+		                           IMAGE_ICON, ICON_WIDTH, ICON_HEIGHT, LR_DEFAULTCOLOR);
 
 		return (TRUE);
 	case WM_COMMAND:
-		switch(LOWORD(wParam))
-		{
+		switch (LOWORD(wParam)) {
 			INT		nSel;
 			CHAR	szDriveName[4];
-			
-			case IDCANCEL:
-			case IDOK:
-				// reset select messages
-				WSAAsyncSelect(sock, GetParent(hDlg), WSA_ASYNC, FD_CONNECT | FD_CLOSE);
-				EndDialog(hDlg, TRUE);
-				break;
-			case IDC_DRIVELIST:
-				if (HIWORD(wParam) == LBN_DBLCLK)
-				{
-					nSel = SendDlgItemMessage(hDlg, IDC_DRIVELIST,
-											LB_GETCURSEL, 0, 0);
-					
-					if (nSel != LB_ERR)
-					{
-						SetCapture(hDlg);
-						hCursor = SetCursor(LoadCursor(NULL, IDC_WAIT));
 
-						SendDlgItemMessage(hDlg, IDC_DRIVELIST,
-									LB_GETTEXT, nSel, (LPARAM)szDriveName);
-						
-						// send the request for disk information
-						req.cType		= GET;
-						req.cSubType	= DISK;
-						req.cDetails	= DISKINFO;
-						strcpy(req.cMsgSpec, szDriveName);
-		
-						iRc = send(sock, (LPSTR)&req, sizeof(REQUEST), 0);
-						if ((iRc == SOCKET_ERROR || iRc < sizeof(REQUEST)))
-						{
-							SetCursor(hCursor);
-							ReleaseCapture();
-							LoadString(hInst, IDS_SENDERR, szBuffer, 80);
-							MessageBox(hDlg, szBuffer, NULL, MB_ICONINFORMATION);
-							break;
-						}
-											
+		case IDCANCEL:
+		case IDOK:
+			// reset select messages
+			WSAAsyncSelect(sock, GetParent(hDlg), WSA_ASYNC, FD_CONNECT | FD_CLOSE);
+			EndDialog(hDlg, TRUE);
+			break;
+		case IDC_DRIVELIST:
+			if (HIWORD(wParam) == LBN_DBLCLK) {
+				nSel = SendDlgItemMessage(hDlg, IDC_DRIVELIST,
+				                          LB_GETCURSEL, 0, 0);
+
+				if (nSel != LB_ERR) {
+					SetCapture(hDlg);
+					hCursor = SetCursor(LoadCursor(NULL, IDC_WAIT));
+
+					SendDlgItemMessage(hDlg, IDC_DRIVELIST,
+					                   LB_GETTEXT, nSel, (LPARAM)szDriveName);
+
+					// send the request for disk information
+					req.cType		= GET;
+					req.cSubType	= DISK;
+					req.cDetails	= DISKINFO;
+					strcpy(req.cMsgSpec, szDriveName);
+
+					iRc = send(sock, (LPSTR)&req, sizeof(REQUEST), 0);
+					if ((iRc == SOCKET_ERROR || iRc < sizeof(REQUEST))) {
+						SetCursor(hCursor);
+						ReleaseCapture();
+						LoadString(hInst, IDS_SENDERR, szBuffer, 80);
+						MessageBox(hDlg, szBuffer, NULL, MB_ICONINFORMATION);
+						break;
 					}
+
 				}
-				break;
+			}
+			break;
 		}
 		break;
 	case WSA_ASYNC:
-		switch (WSAGETSELECTEVENT(lParam))
-		{
+		switch (WSAGETSELECTEVENT(lParam)) {
 		case FD_READ:
 			iRc = recv(sock, (LPSTR)&rsp, sizeof(RESPONSE), 0);
-			if (iRc == SOCKET_ERROR)
-			{
-				if (WSAGetLastError() != WSAEWOULDBLOCK)
-				{
+			if (iRc == SOCKET_ERROR) {
+				if (WSAGetLastError() != WSAEWOULDBLOCK) {
 					LoadString(hInst, IDS_RCVERR, szBuffer, 80);
 					MessageBox(hDlg, szBuffer, NULL, MB_ICONINFORMATION);
 					break;
-				}
-				else
+				} else
 					break;
 
 			}
@@ -560,26 +529,22 @@ BOOL WINAPI DiskInfoProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 			if (iRc != sizeof(RESPONSE) || rsp.cType != RSP)
 				break;
 
-			if (rsp.cError != SUCCESS)
-			{
+			if (rsp.cError != SUCCESS) {
 				LoadString(hInst, IDS_REQERR, szBuffer, 80);
 				MessageBox(hDlg, szBuffer, NULL, MB_ICONINFORMATION);
 				break;
 			}
 
-			switch (rsp.cSubType)
-			{
-			CHAR szTemp[80];
+			switch (rsp.cSubType) {
+				CHAR szTemp[80];
 
 			case DISK:
-				switch (rsp.cDetails)
-				{
-				DISKINFOSTRUCT	dis;
+				switch (rsp.cDetails) {
+					DISKINFOSTRUCT	dis;
 
 				case ENUMDRIVES:
 					lpPos = rsp.cMsgSpec;
-					while (lpPos < (rsp.cMsgSpec + ntohs(rsp.iMsgLen)))
-					{
+					while (lpPos < (rsp.cMsgSpec + ntohs(rsp.iMsgLen))) {
 						SendDlgItemMessage(hDlg, IDC_DRIVELIST, LB_ADDSTRING, 0, (LPARAM)lpPos);
 						lpPos = strchr(lpPos, 0) + 1;
 					}
@@ -604,71 +569,70 @@ BOOL WINAPI DiskInfoProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_MEASUREITEM:	// owner drawn list box
 		lpMIS = (LPMEASUREITEMSTRUCT)lParam;
-			
+
 		hWndList = GetDlgItem(hDlg, IDC_DRIVELIST);
-			
+
 		hDC = GetDC(hWndList);
-			
+
 		GetTextMetrics(hDC, &tm);
 
 		lpMIS->itemWidth	= tm.tmAveCharWidth;
 		lpMIS->itemHeight	= tm.tmHeight + tm.tmExternalLeading;
-			
+
 		ReleaseDC(hWndList, hDC);
 
 		break;
 	case WM_DRAWITEM:	// owner drawn listbox
-		lpDIS = (LPDRAWITEMSTRUCT)lParam; 
- 
-        if (lpDIS->itemID == -1)  
-			break; 
-            
-		switch (lpDIS->itemAction)
-		{ 
+		lpDIS = (LPDRAWITEMSTRUCT)lParam;
+
+		if (lpDIS->itemID == -1)
+			break;
+
+		switch (lpDIS->itemAction) {
 			INT y;
 			CHAR tchBuffer[10];
 			HBRUSH hBrush, hBrushOld;
-			
-            case ODA_SELECT: 
-            case ODA_DRAWENTIRE:
-				// get item text
-				SendMessage(lpDIS->hwndItem, LB_GETTEXT, 
-					lpDIS->itemID, (LPARAM) tchBuffer); 
- 
-				// retrieve position
-				GetTextMetrics(lpDIS->hDC, &tm); 
-                    y = (lpDIS->rcItem.bottom + lpDIS->rcItem.top - 
-					tm.tmHeight) / 2; 
-                     
-				// check if item is selected
-				if (lpDIS->itemState & ODS_SELECTED)
-					// draw selected rectangle
-					hBrush = CreateSolidBrush(COLOR_YELLOW);
-				else	// draw default background
-					hBrush = CreateSolidBrush(GetSysColor(COLOR_WINDOW));
-				
-				hBrushOld = SelectObject(lpDIS->hDC, hBrush);
-				FillRect(lpDIS->hDC, &(lpDIS->rcItem), hBrush);
-				SelectObject(lpDIS->hDC, hBrushOld);
-				DeleteObject(hBrush);
 
-				// set background mode
-				SetBkMode(lpDIS->hDC, TRANSPARENT);
+		case ODA_SELECT:
+		case ODA_DRAWENTIRE:
+			// get item text
+			SendMessage(lpDIS->hwndItem, LB_GETTEXT,
+			            lpDIS->itemID, (LPARAM) tchBuffer);
 
-				// draw the icon
-				DrawIconEx(lpDIS->hDC, 0, y, hIcon, ICON_WIDTH, ICON_HEIGHT,
-							0, 0, DI_NORMAL);
+			// retrieve position
+			GetTextMetrics(lpDIS->hDC, &tm);
+			y = (lpDIS->rcItem.bottom + lpDIS->rcItem.top -
+			     tm.tmHeight) / 2;
 
-				// display the text item
-				TextOut(lpDIS->hDC, 
-						ICON_WIDTH + 5, 
-                        y, 
-                        tchBuffer, 
-                        strlen(tchBuffer));
-					
-				break;
-			}             
+			// check if item is selected
+			if (lpDIS->itemState & ODS_SELECTED)
+				// draw selected rectangle
+				hBrush = CreateSolidBrush(COLOR_YELLOW);
+			else	// draw default background
+				hBrush = CreateSolidBrush(GetSysColor(COLOR_WINDOW));
+
+			hBrushOld = SelectObject(lpDIS->hDC, hBrush);
+			FillRect(lpDIS->hDC, &(lpDIS->rcItem), hBrush);
+			SelectObject(lpDIS->hDC, hBrushOld);
+			DeleteObject(hBrush);
+
+			// set background mode
+			SetBkMode(lpDIS->hDC, TRANSPARENT);
+
+			// draw the icon
+			DrawIconEx(lpDIS->hDC, 0, y, hIcon, ICON_WIDTH, ICON_HEIGHT,
+			           0, 0, DI_NORMAL);
+
+			// display the text item
+			TextOut(lpDIS->hDC,
+			        ICON_WIDTH + 5,
+			        y,
+			        tchBuffer,
+			        strlen(tchBuffer));
+
 			break;
+		}
+		break;
 	default:
 		break;
 	}
@@ -681,7 +645,7 @@ HWND CreateToolBar(HWND hWndParent)
 {
 	HWND hWndToolBar;
 	TBBUTTON tbb[MAXTOOLBUTTONS];
-			
+
 	// initialize common control library
 	InitCommonControls();
 
@@ -725,7 +689,7 @@ HWND CreateToolBar(HWND hWndParent)
 	tbb[4].fsStyle		= TBSTYLE_BUTTON;
 	tbb[4].dwData		= 0;
 	tbb[4].iString		= 0;
-	
+
 	// disk information button
 	tbb[5].iBitmap		= 5;
 	tbb[5].idCommand	= IDT_DISKINFO;
@@ -733,23 +697,23 @@ HWND CreateToolBar(HWND hWndParent)
 	tbb[5].fsStyle		= TBSTYLE_BUTTON;
 	tbb[5].dwData		= 0;
 	tbb[5].iString		= 0;
-	
+
 	// create the maintoolbar window
 	hWndToolBar = CreateToolbarEx(hWndParent,
-					WS_CHILD | 
-					WS_VISIBLE |
-					TBSTYLE_TOOLTIPS,
-					IDR_TBARMAIN,
-					MAXTOOLBUTTONS - 1,
-					hInst,
-					IDR_TBARMAIN,
-					tbb,
-					MAXTOOLBUTTONS,
-					16,
-					16,
-					16,
-					16,
-					sizeof (TBBUTTON));
+	                              WS_CHILD |
+	                              WS_VISIBLE |
+	                              TBSTYLE_TOOLTIPS,
+	                              IDR_TBARMAIN,
+	                              MAXTOOLBUTTONS - 1,
+	                              hInst,
+	                              IDR_TBARMAIN,
+	                              tbb,
+	                              MAXTOOLBUTTONS,
+	                              16,
+	                              16,
+	                              16,
+	                              16,
+	                              sizeof (TBBUTTON));
 
 	// return the toolbar handle
 	return (hWndToolBar);
@@ -757,7 +721,7 @@ HWND CreateToolBar(HWND hWndParent)
 
 /////////////////////////////
 // CreateStatusBar Function
-//	NOTE ***	Must call InitCommonControls() 
+//	NOTE ***	Must call InitCommonControls()
 //				before this call ***
 HWND CreateStatusBar(HWND hWndParent)
 {
@@ -767,17 +731,17 @@ HWND CreateStatusBar(HWND hWndParent)
 
 	// create the status bar
 	hwndStatus = CreateStatusWindow(WS_VISIBLE | WS_CHILD,
-									NULL,
-									hWndParent,
-									ID_STATUSBAR);
+	                                NULL,
+	                                hWndParent,
+	                                ID_STATUSBAR);
 
 	// set status bar parts
 	GetClientRect(hWndParent, &rc);
-	
+
 	aWidths[0] = (rc.right - rc.left) /2;
 	aWidths[1] = -1;
-		
-	SendMessage(hwndStatus, SB_SETPARTS, 2, (LPARAM)aWidths); 
+
+	SendMessage(hwndStatus, SB_SETPARTS, 2, (LPARAM)aWidths);
 
 	return (hwndStatus);
 }
@@ -787,12 +751,12 @@ HWND CreateStatusBar(HWND hWndParent)
 VOID SetConnectState(HWND hWndStatus, BOOL bConnected)
 {
 	CHAR szMessage[25];
-	
+
 	if (bConnected)
 		LoadString(hInst, IDS_CONNECTED, szMessage, 25);
 	else
 		LoadString(hInst, IDS_NOTCONNECTED, szMessage, 25);
-		
+
 	SendMessage(hWndStatus, SB_SETTEXT, 0, (LPARAM)szMessage);
 }
 
@@ -801,8 +765,7 @@ VOID SetConnectState(HWND hWndStatus, BOOL bConnected)
 VOID SetConnectMenus(HWND hWnd, HWND hWndToolBar, BOOL bConnect)
 {
 	// enable menus and buttons
-	if (bConnect)
-	{
+	if (bConnect) {
 		EnableMenuItem(GetMenu(hWnd), IDM_CONNECT, MF_GRAYED);
 		EnableMenuItem(GetMenu(hWnd), IDM_DISCONNECT, MF_ENABLED);
 		EnableMenuItem(GetMenu(hWnd), IDM_SENDMESSAGE, MF_ENABLED);
@@ -812,9 +775,7 @@ VOID SetConnectMenus(HWND hWnd, HWND hWndToolBar, BOOL bConnect)
 		SendMessage(hWndToolBar, TB_ENABLEBUTTON, (WPARAM)IDT_DISCONNECT, (LPARAM)MAKELONG(TRUE,0));
 		SendMessage(hWndToolBar, TB_ENABLEBUTTON, (WPARAM)IDT_SEND, (LPARAM)MAKELONG(TRUE,0));
 		SendMessage(hWndToolBar, TB_ENABLEBUTTON, (WPARAM)IDT_DISKINFO, (LPARAM)MAKELONG(TRUE,0));
-	}
-	else
-	{
+	} else {
 		EnableMenuItem(GetMenu(hWnd), IDM_CONNECT, MF_ENABLED);
 		EnableMenuItem(GetMenu(hWnd), IDM_DISCONNECT, MF_GRAYED);
 		EnableMenuItem(GetMenu(hWnd), IDM_SENDMESSAGE, MF_GRAYED);
@@ -828,4 +789,3 @@ VOID SetConnectMenus(HWND hWnd, HWND hWndToolBar, BOOL bConnect)
 }
 
 
-	

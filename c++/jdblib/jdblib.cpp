@@ -4,8 +4,8 @@
 
 static HINSTANCE hInstance;
 
-static int err_handler(DBPROCESS *dbproc, int severity, int dberr, 
- int oserr, const char *dberrstr, const char *oserrstr);
+static int err_handler(DBPROCESS *dbproc, int severity, int dberr,
+                       int oserr, const char *dberrstr, const char *oserrstr);
 
 BOOL WINAPI DllMain(HINSTANCE hInstDLL, DWORD dwReason, LPVOID lpvReserved)
 {
@@ -19,13 +19,13 @@ BOOL WINAPI DllMain(HINSTANCE hInstDLL, DWORD dwReason, LPVOID lpvReserved)
 
 		break;
 	case DLL_PROCESS_DETACH:
-		dbwinexit();		
-	}	
+		dbwinexit();
+	}
 
 	return TRUE;
 }
 
-/* 
+/*
  * allocate a login record
  */
 JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dblogin(JNIEnv * env, jobject obj)
@@ -35,22 +35,22 @@ JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dblogin(JNIEnv * env, jobj
 	return reinterpret_cast<jint>(record);
 }
 
-/* 
+/*
  * free login record
  */
-JNIEXPORT void JNICALL Java_com_knowx_kxtrieck_JDBLib_dbfreelogin(JNIEnv * env, 
- jobject obj, jint record)
+JNIEXPORT void JNICALL Java_com_knowx_kxtrieck_JDBLib_dbfreelogin(JNIEnv * env,
+        jobject obj, jint record)
 {
 	PLOGINREC precord = reinterpret_cast<PLOGINREC>(record);
 
 	dbfreelogin(precord);
 }
 
-/* 
+/*
  * open a database connection
  */
 JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbopen(JNIEnv * env,
- jobject obj, jint record, jstring server)
+        jobject obj, jint record, jstring server)
 {
 	PLOGINREC precord = reinterpret_cast<PLOGINREC>(record);
 
@@ -73,22 +73,22 @@ JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbopen(JNIEnv * env,
 	return reinterpret_cast<jint>(process);
 }
 
-/* 
+/*
  * close a database connection
  */
-JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbclose(JNIEnv *env, 
- jobject obj, jint process)
+JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbclose(JNIEnv *env,
+        jobject obj, jint process)
 {
 	PDBPROCESS pprocess = reinterpret_cast<PDBPROCESS>(process);
 
 	return dbclose(pprocess);
 }
 
-/* 
+/*
  * set user name
  */
 JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsetluser(JNIEnv *env,
- jobject obj, jint record, jstring username)
+        jobject obj, jint record, jstring username)
 {
 	PLOGINREC precord = reinterpret_cast<PLOGINREC>(record);
 
@@ -109,7 +109,7 @@ JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsetluser(JNIEnv *env,
  * set password
  */
 JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsetlpwd(JNIEnv *env,
- jobject obj, jint record, jstring pwd)
+        jobject obj, jint record, jstring pwd)
 {
 	PLOGINREC precord = reinterpret_cast<PLOGINREC>(record);
 
@@ -126,11 +126,11 @@ JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsetlpwd(JNIEnv *env,
 	return retcode;
 }
 
-/* 
+/*
  * send command string
  */
 JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbcmd(JNIEnv *env,
- jobject obj, jint process, jstring cmd)
+        jobject obj, jint process, jstring cmd)
 {
 	PDBPROCESS pprocess = reinterpret_cast<PDBPROCESS>(process);
 
@@ -147,7 +147,7 @@ JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbcmd(JNIEnv *env,
 }
 
 JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsqlexec(JNIEnv *env,
- jobject obj, jint process)
+        jobject obj, jint process)
 {
 	PDBPROCESS pprocess = reinterpret_cast<PDBPROCESS>(process);
 	return dbsqlexec(pprocess);
@@ -156,14 +156,14 @@ JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsqlexec(JNIEnv *env,
 /*
  * error handling
  */
-int err_handler(DBPROCESS *dbproc, int severity, int dberr, 
- int oserr, const char *dberrstr, const char *oserrstr)
+int err_handler(DBPROCESS *dbproc, int severity, int dberr,
+                int oserr, const char *dberrstr, const char *oserrstr)
 {
 	// we need to look up the user's environment
-	// that requires disabling the error handler 
+	// that requires disabling the error handler
 	// to ensure we don't have an infinite recursion problem
-	dberrhandle(NULL);	
-	
+	dberrhandle(NULL);
+
 	JNIEnv *env = static_cast<JNIEnv*>(dbgetuserdata(dbproc));
 	if (env != NULL) {
 		jclass cls = env->FindClass("java/lang/Exception");

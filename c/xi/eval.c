@@ -65,7 +65,7 @@ PSYMBOL evalnode(PNODE N)
 		return evalatomic(N);
 	default:
 		error("unknown parse node type %d near line %d.",
-			  N->type, N->lineno);
+		      N->type, N->lineno);
 	}
 
 	return EMPTY;
@@ -148,13 +148,13 @@ PSYMBOL arith(PNODE N)
 				double d = symfloatval(n->sym);
 				if ((int) d == 0)
 					error("modulo division by zero near line %d.",
-						  N->lineno);
+					      N->lineno);
 				total->u.fval = (int) total->u.fval % (int) d;
 			}
 			break;
 		default:
 			error("unknown arithmetic procedure [%d] near line %d.",
-				  N->nobj, N->lineno);
+			      N->nobj, N->lineno);
 		}
 	}
 
@@ -232,13 +232,13 @@ PSYMBOL let(PNODE N)
 	/* pre-evaluation for implicit declaration */
 	for (i = 0, p = N->args[0]->args[0]; p; p = p->next, i++) {
 		if (i % 2 == 0) {
-			if (p->type != NATOMIC) 
+			if (p->type != NATOMIC)
 				error("'let' expects pairs of the form (id expr) near line %d.",
-					N->lineno);
+				      N->lineno);
 			t = (PSYMBOL)p->args[0];
 			if (t->type != SVAR && t->type != SUNDEF)
 				error("'let' expects pairs of the form (id expr) near line %d.",
-					N->lineno);
+				      N->lineno);
 			if (t->type == SUNDEF)
 				binstall(t->name, t->type = SVAR, SFLOAT, 0);
 		}
@@ -246,7 +246,7 @@ PSYMBOL let(PNODE N)
 
 	if (i == 0 || i % 2 != 0)
 		error("'let' expects pairs of the form (id expr) near line %d.",
-			N->lineno);
+		      N->lineno);
 
 	a = evalnode(N->args[0]);
 
@@ -271,7 +271,7 @@ PSYMBOL let(PNODE N)
 PSYMBOL map(PNODE N)
 {
 	PSYMBOL s, org;
-	
+
 	CHECKARGS(N, 1, "map");
 	ASSERT(N->type & NATOMIC);
 
@@ -334,9 +334,9 @@ double symfloatval(PSYMBOL sym)
 	} else if (sym->subtype & SSTRING) {
 		d = atof(sym->u.sval);
 	} else if (sym->subtype & SLIST) {
-		/* 
+		/*
 		 * The symfloatval of a list with size = 0 is 0.
-		 * The symfloatval of a list with size > 0 is 
+		 * The symfloatval of a list with size > 0 is
 		 * defined recursively to be symfloatval(h),
 		 * where h is the head of the list.
 		 */

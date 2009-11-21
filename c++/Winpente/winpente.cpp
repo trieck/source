@@ -9,7 +9,7 @@ const char	szTitle[] = "Pente for Windows";
 int			BoxSize;
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance,
-				   LPSTR lpCmdLine, int nCmdShow)
+                   LPSTR lpCmdLine, int nCmdShow)
 {
 	const char	szAppName[] = "WinPente";
 	MSG			msg;
@@ -19,8 +19,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance,
 
 	hInstance = hInst;
 
-	if (hPrevWnd = FindWindow(szAppName, NULL))
-	{
+	if (hPrevWnd = FindWindow(szAppName, NULL)) {
 		ShowWindow(hPrevWnd, SW_RESTORE);
 		return(0);
 	}
@@ -37,8 +36,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance,
 	if (!(DisplayWindow(hInstance, szAppName, szTitle, nCmdShow)))
 		return(0);
 
-	while (GetMessage(&msg, 0, 0, 0) == TRUE)
-	{
+	while (GetMessage(&msg, 0, 0, 0) == TRUE) {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}

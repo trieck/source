@@ -9,7 +9,7 @@
 // WaitDlg dialog
 
 struct ThreadParams {
-	uint32_t size;		
+	uint32_t size;
 	uint32_t flags;
 	bool boot;
 	char path[MAX_PATH+1];
@@ -19,9 +19,9 @@ struct ThreadParams {
 IMPLEMENT_DYNAMIC(WaitDlg, CDialog)
 
 WaitDlg::WaitDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(WaitDlg::IDD, pParent), 
-	m_nTimer(0), m_hThread(NULL),
-	m_nSize(0), m_nFlags(0), m_Boot(false)
+		: CDialog(WaitDlg::IDD, pParent),
+		m_nTimer(0), m_hThread(NULL),
+		m_nSize(0), m_nFlags(0), m_Boot(false)
 {
 }
 
@@ -46,14 +46,14 @@ END_MESSAGE_MAP()
 BOOL WaitDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	m_nTimer = SetTimer(EVENT_ID, 100, NULL);
 
 	ThreadParams *params = new ThreadParams;
 	params->size = m_nSize;
 	params->flags = m_nFlags;
 	params->boot = m_Boot;
-	
+
 	uint32_t pathlen = min(MAX_PATH, m_Path.GetLength());
 	strncpy(params->path, m_Path, pathlen);
 	params->path[pathlen] = '\0';
@@ -96,15 +96,15 @@ void WaitDlg::OnTimer(UINT_PTR nIDEvent)
 void WaitDlg::OnDestroy()
 {
 	CDialog::OnDestroy();
-	
+
 	if (m_hThread != NULL)
 		CloseHandle(m_hThread);
 
-	KillTimer(m_nTimer);	
+	KillTimer(m_nTimer);
 }
 
-void WaitDlg::SetCreateParams(uint32_t size, const CString &path, 
-	const CString &label, uint32_t flags, bool boot)
+void WaitDlg::SetCreateParams(uint32_t size, const CString &path,
+                              const CString &label, uint32_t flags, bool boot)
 {
 	m_nSize = size;
 	m_nFlags = flags;
@@ -128,12 +128,12 @@ DWORD WINAPI WaitDlg::CreateVolume(LPVOID pv)
 	try {
 		Volume *pVol;
 		if (size == FLOPDD_SIZE) {
-			disk = Disk::create(path, FLOPPY_CYLINDERS, 
-				FLOPPY_HEADS, FLOPDD_SECTORS);
+			disk = Disk::create(path, FLOPPY_CYLINDERS,
+			                    FLOPPY_HEADS, FLOPDD_SECTORS);
 			pVol = disk->createFloppy(label, flags);
 		} else if (size == FLOPHD_SIZE) {
-			disk = Disk::create(path, FLOPPY_CYLINDERS, 
-				FLOPPY_HEADS, FLOPHD_SECTORS);
+			disk = Disk::create(path, FLOPPY_CYLINDERS,
+			                    FLOPPY_HEADS, FLOPHD_SECTORS);
 			pVol = disk->createFloppy(label, flags);
 		} else {
 			disk = Disk::create(path, size, 1, 1);
@@ -150,7 +150,7 @@ DWORD WINAPI WaitDlg::CreateVolume(LPVOID pv)
 		AfxMessageBox(e.getDescription().c_str());
 		return -1;
 	}
-	
+
 	return 0;
 }
 

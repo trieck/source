@@ -63,8 +63,8 @@ LPCSTR ObjectDB::MakePool()
 	Lock();		// lock the pools map
 
 	// insert the pool into the map
-	std::pair <Pools::const_iterator, bool> pr = 
-		pools.insert (Pools::value_type(NewKey(), new Pool()));
+	std::pair <Pools::const_iterator, bool> pr =
+	    pools.insert (Pools::value_type(NewKey(), new Pool()));
 
 	Unlock();	// unlock the pools map
 
@@ -72,32 +72,32 @@ LPCSTR ObjectDB::MakePool()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-ObjectDB::Pool::Pool() 
+ObjectDB::Pool::Pool()
 {
 	InitializeCriticalSection(&cs);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-ObjectDB::Pool::~Pool() 
+ObjectDB::Pool::~Pool()
 {
 	DeleteCriticalSection(&cs);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void ObjectDB::Pool::Lock() 
+void ObjectDB::Pool::Lock()
 {
 	EnterCriticalSection(&cs);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void ObjectDB::Pool::Unlock() 
+void ObjectDB::Pool::Unlock()
 {
 	LeaveCriticalSection(&cs);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPCSTR ObjectDB::CreateObject(const string &poolid, int ntype, 
- LPSTRING pObjectID, LPBEOBJECT pValue)
+LPCSTR ObjectDB::CreateObject(const string &poolid, int ntype,
+                              LPSTRING pObjectID, LPBEOBJECT pValue)
 {
 	if (pValue == NULL) {	// create a new empty object
 		if ((pValue = MakeObject(ntype)) == NULL) {
@@ -111,8 +111,8 @@ LPCSTR ObjectDB::CreateObject(const string &poolid, int ntype,
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPBEOBJECT ObjectDB::GetObject(const string &poolid, 
- const string &objectid) const
+LPBEOBJECT ObjectDB::GetObject(const string &poolid,
+                               const string &objectid) const
 {
 	LPPOOL pPool = GetPool(poolid);
 	if (pPool == NULL) {
@@ -130,8 +130,8 @@ LPBEOBJECT ObjectDB::GetObject(const string &poolid,
 }
 
 /////////////////////////////////////////////////////////////////////////////
-BOOL ObjectDB::SetObject(const string &poolid, const string &objectid, 
- LPBEOBJECT pObject)
+BOOL ObjectDB::SetObject(const string &poolid, const string &objectid,
+                         LPBEOBJECT pObject)
 {
 	LPPOOL pPool = GetPool(poolid);
 	if (pPool == NULL) {
@@ -147,7 +147,7 @@ BOOL ObjectDB::SetObject(const string &poolid, const string &objectid,
 
 	pPool->Lock();		// lock the pool
 
-	// destroy current object 
+	// destroy current object
 	delete (*it).second;
 
 	// store a copy
@@ -206,8 +206,8 @@ LPCSTR ObjectDB::Insert(const string &poolid, LPBEOBJECT pObject, LPSTRING pKey)
 	pPool->Lock();		// lock the pool
 
 	// insert the object into the pool
-	std::pair <PoolMap::const_iterator, bool> pr = 
-		pPool->entries.insert (PoolMap::value_type(ObjectKey, pObject));
+	std::pair <PoolMap::const_iterator, bool> pr =
+	    pPool->entries.insert (PoolMap::value_type(ObjectKey, pObject));
 
 	pPool->Unlock();	// unlock the pool
 
@@ -242,17 +242,17 @@ string ObjectDB::NewKey()
 
 	char key[sizeof(GUID) * 2 + 1];
 	sprintf(key, "%.8x%.4x%.4x%.2x%.2x%.2x%.2x%.2x%.2x%.2x%.2x",
-		guid.Data1, guid.Data2,
-		guid.Data3, 
-		guid.Data4[0],
-		guid.Data4[1],
-		guid.Data4[2],
-		guid.Data4[3],
-		guid.Data4[4],
-		guid.Data4[5],
-		guid.Data4[6],
-		guid.Data4[7]
-		);
+	        guid.Data1, guid.Data2,
+	        guid.Data3,
+	        guid.Data4[0],
+	        guid.Data4[1],
+	        guid.Data4[2],
+	        guid.Data4[3],
+	        guid.Data4[4],
+	        guid.Data4[5],
+	        guid.Data4[6],
+	        guid.Data4[7]
+	       );
 
 	return key;
 }
@@ -266,7 +266,7 @@ LPBEOBJECT ObjectDB::MakeObject(int ntype)
 	case OT_INTEGER:
 		pObject = MakeInteger(0);
 		break;
-	case OT_STRING:			
+	case OT_STRING:
 		pObject = MakeString("");
 		break;
 	case OT_LIST:

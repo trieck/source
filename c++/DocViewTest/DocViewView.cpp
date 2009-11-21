@@ -7,7 +7,7 @@
 //////////////////////////////////////
 
 #include "MainFrame.h"
-#include "DocViewView.h" 
+#include "DocViewView.h"
 
 IMPLEMENT_DYNCREATE(CDocViewView, CView)
 
@@ -36,15 +36,14 @@ void CDocViewView::OnDraw(CDC* pDC)
 	CRect	rc;
 	CBrush	aBrush, *pBrushOld;
 	INT		x, y;
-	
+
 	pDC->GetClipBox(&rc);
 
-	if (pDC->RectVisible(&rc))
-	{
+	if (pDC->RectVisible(&rc)) {
 		// Paint the background
 		x		= rc.left;
 		y		= rc.top;
-		
+
 		aBrush.CreateSolidBrush(::GetSysColor(COLOR_WINDOW));
 
 		pBrushOld = pDC->SelectObject(&aBrush);

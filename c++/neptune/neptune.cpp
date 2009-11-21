@@ -33,8 +33,7 @@ bool gettok(LPCTSTR *ppin, LPTOKEN ptok);
 }	// anonymous
 
 /////////////////////////////////////////////////////////////////////////////
-class Neptune : public IStringUtil, public IComputer
-{
+class Neptune : public IStringUtil, public IComputer {
 public:
 	Neptune();
 	virtual ~Neptune();
@@ -46,7 +45,7 @@ public:
 
 // IStringUtil methods
 	STDMETHODIMP FormatString(/*[in]*/ BSTR fmt, /*[out] */ BSTR *output,
-		/*[in]*/ SAFEARRAY **args);
+	                                   /*[in]*/ SAFEARRAY **args);
 
 // IComputer methods
 	STDMETHODIMP get_Name(/*[out, retval]*/ BSTR *pVal);
@@ -56,8 +55,7 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class NeptuneClassFactory : public IClassFactory
-{
+class NeptuneClassFactory : public IClassFactory {
 public:
 	NeptuneClassFactory();
 	~NeptuneClassFactory();
@@ -69,7 +67,7 @@ public:
 
 // IClassFactory members
 	STDMETHODIMP CreateInstance(IUnknown *, REFIID iid, void **ppv);
-    STDMETHODIMP LockServer(BOOL);
+	STDMETHODIMP LockServer(BOOL);
 
 private:
 	ULONG m_cRef;
@@ -83,7 +81,7 @@ static TCHAR progId[] = _T("Neptune.Component.1");
 static TCHAR verIndProgId[] = _T("Neptune.Component");
 
 static HRESULT RegisterComponent(const CLSID& clsid, LPCTSTR progID,
-	LPCTSTR verIndProgID, UINT desc, DWORD flags);
+                                 LPCTSTR verIndProgID, UINT desc, DWORD flags);
 static HRESULT RegisterProgID(LPCSTR clsid, LPCTSTR progID, LPCTSTR desc);
 static HRESULT ModuleRegisterTypeLib();
 static HRESULT ModuleLoadTypeLib(BSTR* pbstrPath, ITypeLib** ppTypeLib);
@@ -94,7 +92,7 @@ static HRESULT ModuleLoadTypeLib(BSTR* pbstrPath, ITypeLib** ppTypeLib);
 
 /////////////////////////////////////////////////////////////////////////////
 Neptune::Neptune()
-: m_cRef(1)
+		: m_cRef(1)
 {
 	InterlockedIncrement(&g_cObjects);
 }
@@ -140,23 +138,23 @@ STDMETHODIMP Neptune::QueryInterface(REFIID iid, LPVOID *ppv)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-STDMETHODIMP Neptune::FormatString(/*[in]*/ BSTR fmt, /*[out] */ BSTR *output, 
- /*[in]*/ SAFEARRAY **args)
+STDMETHODIMP Neptune::FormatString(/*[in]*/ BSTR fmt, /*[out] */ BSTR *output,
+        /*[in]*/ SAFEARRAY **args)
 {
 	if (fmt == NULL || output == NULL)
 		return E_POINTER;
 
 	// initialize "output" parameter
 	*output = NULL;
-	
+
 	// determine number of dimensions, only 1 is supported
 	UINT dims = SafeArrayGetDim(*args);
-	if (dims != 1) 
+	if (dims != 1)
 		return E_INVALIDARG;
 
 	// determine the size of the array
 	long elements = (*args)->rgsabound->cElements;
-	
+
 	VARIANT *pargs;
 	HRESULT hr = SafeArrayAccessData(*args, (LPVOID*)&pargs);
 	if (FAILED(hr))
@@ -182,7 +180,7 @@ STDMETHODIMP Neptune::FormatString(/*[in]*/ BSTR fmt, /*[out] */ BSTR *output,
 			}
 
 			bstrOutput += V_BSTR(&pargs[index]);
-		}else bstrOutput += currTok.value.c_str();
+		} else bstrOutput += currTok.value.c_str();
 	}
 
 	hr = SafeArrayUnaccessData(*args);
@@ -229,7 +227,7 @@ STDMETHODIMP Neptune::get_SystemDirectory(/*[out, retval]*/ BSTR *pVal)
 
 /////////////////////////////////////////////////////////////////////////////
 NeptuneClassFactory::NeptuneClassFactory()
-: m_cRef(0)
+		: m_cRef(0)
 {
 }
 
@@ -251,8 +249,8 @@ STDMETHODIMP_(ULONG) NeptuneClassFactory::Release()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-STDMETHODIMP NeptuneClassFactory::QueryInterface(REFIID iid, 
- LPVOID *ppv)
+STDMETHODIMP NeptuneClassFactory::QueryInterface(REFIID iid,
+        LPVOID *ppv)
 {
 	*ppv = NULL;
 
@@ -261,13 +259,13 @@ STDMETHODIMP NeptuneClassFactory::QueryInterface(REFIID iid,
 		reinterpret_cast<LPUNKNOWN>(*ppv)->AddRef();
 		return S_OK;
 	}
-     
+
 	return E_NOINTERFACE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-STDMETHODIMP NeptuneClassFactory::CreateInstance(IUnknown *pUnkOuter, 
- REFIID iid, void **ppv)
+STDMETHODIMP NeptuneClassFactory::CreateInstance(IUnknown *pUnkOuter,
+        REFIID iid, void **ppv)
 {
 	*ppv = NULL;
 
@@ -286,17 +284,17 @@ STDMETHODIMP NeptuneClassFactory::CreateInstance(IUnknown *pUnkOuter,
 	// Delete object if interface not available.
 	// Assume the initial reference count was one
 	neptune->Release();
-	
+
 	return hr;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 STDMETHODIMP NeptuneClassFactory::LockServer(BOOL fLock)
 {
-   if (fLock)
-      InterlockedIncrement(&g_cLocks);
-   else
-      InterlockedDecrement(&g_cLocks);
+	if (fLock)
+		InterlockedIncrement(&g_cLocks);
+	else
+		InterlockedDecrement(&g_cLocks);
 
 	return NOERROR;
 }
@@ -320,24 +318,24 @@ STDAPI DllGetClassObject(REFCLSID clsid, REFIID iid, LPVOID *ppv)
 	if (clsid != CLSID_Neptune)
 		return CLASS_E_CLASSNOTAVAILABLE;
 
-   // get the interface from the global class factory object
-   return g_neptuneFactory.QueryInterface(iid, ppv);
+	// get the interface from the global class factory object
+	return g_neptuneFactory.QueryInterface(iid, ppv);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-STDAPI DllCanUnloadNow(void) 
+STDAPI DllCanUnloadNow(void)
 {
-   if (g_cObjects == 0 && g_cLocks == 0)
-     return S_OK;
+	if (g_cObjects == 0 && g_cLocks == 0)
+		return S_OK;
 
-   return S_FALSE;
+	return S_FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 STDAPI DllRegisterServer(void)
 {
-	return RegisterComponent(CLSID_Neptune, progId, verIndProgId, 
-		IDS_NEPTUNE_COMPONENT_NAME, THREADFLAGS_APARTMENT);
+	return RegisterComponent(CLSID_Neptune, progId, verIndProgId,
+	                         IDS_NEPTUNE_COMPONENT_NAME, THREADFLAGS_APARTMENT);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -348,7 +346,7 @@ STDAPI DllUnregisterServer(void)
 
 /////////////////////////////////////////////////////////////////////////////
 HRESULT RegisterComponent(const CLSID& clsid, LPCTSTR progID,
-	LPCTSTR verIndProgID, UINT desc, DWORD dwFlags)
+                          LPCTSTR verIndProgID, UINT desc, DWORD dwFlags)
 {
 	static const TCHAR szProgID[] = _T("ProgID");
 	static const TCHAR szVIProgID[] = _T("VersionIndependentProgID");
@@ -386,7 +384,7 @@ HRESULT RegisterComponent(const CLSID& clsid, LPCTSTR progID,
 
 				key.SetKeyValue(szIPS32, (dwFlags & AUTPRXFLAG) ? szAUTPRX32 : szModule);
 				LPCTSTR lpszModel = (dwFlags & THREADFLAGS_BOTH) ? szBoth :
-					(dwFlags & THREADFLAGS_APARTMENT) ? szApartment : NULL;
+				                    (dwFlags & THREADFLAGS_APARTMENT) ? szApartment : NULL;
 				if (lpszModel != NULL)
 					key.SetKeyValue(szIPS32, lpszModel, szThreadingModel);
 			}
@@ -396,7 +394,7 @@ HRESULT RegisterComponent(const CLSID& clsid, LPCTSTR progID,
 	CoTaskMemFree(lpOleStr);
 	if (lRes != ERROR_SUCCESS)
 		hRes = HRESULT_FROM_WIN32(lRes);
-	
+
 	if (SUCCEEDED(hRes))
 		return ModuleRegisterTypeLib();
 
@@ -442,13 +440,13 @@ HRESULT ModuleLoadTypeLib(BSTR* pbstrPath, ITypeLib** ppTypeLib)
 
 	TCHAR szModule[_MAX_PATH + _MAX_FNAME];
 	GetModuleFileName(g_hInstance, szModule, _MAX_PATH);
-	
+
 	LPOLESTR lpszModule = T2OLE(szModule);
 
 	HRESULT hr = LoadTypeLib(lpszModule, ppTypeLib);
 	if (SUCCEEDED(hr))
 		*pbstrPath = OLE2BSTR(lpszModule);
-	
+
 	return hr;
 }
 
@@ -479,11 +477,11 @@ bool gettok(LPCTSTR *ppin, LPTOKEN ptok)
 				*ppin = pin;
 				return true;
 			}
-			pin++; 
+			pin++;
 			(*ppin)++;
 
 			// eat characters up to first digit
-			while (!_istdigit(*pin) && *pin) 
+			while (!_istdigit(*pin) && *pin)
 				pin++;
 
 			// count the number of digits
@@ -495,7 +493,7 @@ bool gettok(LPCTSTR *ppin, LPTOKEN ptok)
 			// calculate the index value
 			pin -= digits;
 			for (i = 0; i < digits; i++) {
-			 	index += (*pin - '0') * pow(10, digits - i - 1);
+				index += (*pin - '0') * pow(10, digits - i - 1);
 				pin++;
 			}
 

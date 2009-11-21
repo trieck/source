@@ -1,55 +1,56 @@
-// musicDoc.h : interface of the MusicDoc class
-//
-/////////////////////////////////////////////////////////////////////////////
+// musicDoc.h : interface of the MusicDoc class
+//
+/////////////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_MUSICDOC_H__F7CFDC39_51AB_11D4_89F0_00E098787497__INCLUDED_)
-#define AFX_MUSICDOC_H__F7CFDC39_51AB_11D4_89F0_00E098787497__INCLUDED_
+#if !defined(AFX_MUSICDOC_H__F7CFDC39_51AB_11D4_89F0_00E098787497__INCLUDED_)
+#define AFX_MUSICDOC_H__F7CFDC39_51AB_11D4_89F0_00E098787497__INCLUDED_
 
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
 
 
-class MusicDoc : public CDocument
-{
-protected: // create from serialization only
-	MusicDoc();
-	DECLARE_DYNCREATE(MusicDoc)
+class MusicDoc : public CDocument
+{
+protected: // create from serialization only
+	MusicDoc();
+	DECLARE_DYNCREATE(MusicDoc)
 
-// Attributes
-public:
+// Attributes
+public:
 
-// Operations
-public:
+// Operations
+public:
 
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(MusicDoc)
-	public:
-	virtual BOOL OnNewDocument();
-	virtual void Serialize(CArchive& ar);
-	//}}AFX_VIRTUAL
+// Overrides
+	// ClassWizard generated virtual function overrides
+	//{{AFX_VIRTUAL(MusicDoc)
+public:
+	virtual BOOL OnNewDocument();
+	virtual void Serialize(CArchive& ar);
+	//}}AFX_VIRTUAL
 
-// Implementation
-public:
-	virtual ~MusicDoc();
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
-#endif
+// Implementation
+public:
+	virtual ~MusicDoc();
+#ifdef _DEBUG
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
+#endif
 
-protected:
+protected:
 
-// Generated message map functions
-protected:
-	//{{AFX_MSG(MusicDoc)
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-};
+// Generated message map functions
+protected:
+	//{{AFX_MSG(MusicDoc)
+	//}}AFX_MSG
+	DECLARE_MESSAGE_MAP()
+};
 
-/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-//{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ will insert additional declarations immediately before the previous line.
+//{{AFX_INSERT_LOCATION}}
+// Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-#endif // !defined(AFX_MUSICDOC_H__F7CFDC39_51AB_11D4_89F0_00E098787497__INCLUDED_)
+#endif // !defined(AFX_MUSICDOC_H__F7CFDC39_51AB_11D4_89F0_00E098787497__INCLUDED_)
+

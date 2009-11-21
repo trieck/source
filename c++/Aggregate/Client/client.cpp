@@ -17,17 +17,16 @@ int main()
 	HRESULT		hr;
 	IX*			pIX;
 	BOOL		fInitialize;
-	
-	fInitialize = SUCCEEDED(OleInitialize(NULL));
-	
-	hr = CoCreateInstance(CLSID_Component1,
-						NULL,
-						CLSCTX_INPROC_SERVER,
-						IID_IX,
-						(PPVOID)&pIX);
 
-	if (SUCCEEDED(hr))
-	{
+	fInitialize = SUCCEEDED(OleInitialize(NULL));
+
+	hr = CoCreateInstance(CLSID_Component1,
+	                      NULL,
+	                      CLSCTX_INPROC_SERVER,
+	                      IID_IX,
+	                      (PPVOID)&pIX);
+
+	if (SUCCEEDED(hr)) {
 		pIX->Fx();
 		pIX->Release();
 	}

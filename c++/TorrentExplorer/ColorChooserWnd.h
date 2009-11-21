@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // ColorChooserWnd window
 
-class ColorChooserWnd : public CWnd
-{
+class ColorChooserWnd : public CWnd {
 // Construction
 public:
 	ColorChooserWnd();
@@ -25,8 +24,8 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(ColorChooserWnd)
-	public:
-	protected:
+public:
+protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL
 

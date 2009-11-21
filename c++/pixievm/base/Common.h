@@ -36,9 +36,9 @@ typedef unsigned long dword;
 typedef vector<string> stringvec;
 
 struct stringless : std::binary_function <string, string, bool> {
-    bool operator () (const string & x, const string & y) const {
-        return (_stricmp(x.c_str(), y.c_str()) > 0);
-    }
+	bool operator () (const string & x, const string & y) const {
+		return (_stricmp(x.c_str(), y.c_str()) > 0);
+	}
 };
 
 #define HIBYTE(w)           ((w & 0xFF00) >> 8)

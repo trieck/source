@@ -7,8 +7,8 @@
 #include <process.h>
 #include <time.h>
 #include "resource.h"
-static INT_PTR CALLBACK DialogProc(HWND hWnd, UINT uMsg, 
- WPARAM wParam, LPARAM lParam);
+static INT_PTR CALLBACK DialogProc(HWND hWnd, UINT uMsg,
+                                   WPARAM wParam, LPARAM lParam);
 static BOOL onInit(HWND hWnd, HWND hWndFocus, LPARAM lParam);
 static void onCommand(HWND hWnd, int id, HWND hWndCtl, UINT codeNotify);
 static HBRUSH onColor(HWND hWnd, HDC hDC, HWND hWndChild, int type);
@@ -31,17 +31,17 @@ typedef struct {
 	HANDLE hEvent;		// event object
 } WNDDATA, *LPWNDDATA;
 /////////////////////////////////////////////////////////////////////////////
-int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
- LPTSTR lpCmdLine, int nShowCmd)
+int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+                     LPTSTR lpCmdLine, int nShowCmd)
 {
 	MSG msg;
 	HACCEL hAccel;
-	hAccel = LoadAccelerators(hInstance, 
-		MAKEINTRESOURCE(IDR_ACCELERATOR));
+	hAccel = LoadAccelerators(hInstance,
+	                          MAKEINTRESOURCE(IDR_ACCELERATOR));
 	if (hAccel == NULL)
 		return 1;
-	HWND hDlg = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_PROCDLG), 
-		NULL, (DLGPROC)DialogProc);
+	HWND hDlg = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_PROCDLG),
+	                         NULL, (DLGPROC)DialogProc);
 	if (hDlg == NULL)
 		return 1;
 	ShowWindow(hDlg, nShowCmd);
@@ -49,13 +49,13 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	while (GetMessage(&msg, NULL, 0, 0) > 0) {
 		if (!TranslateAccelerator(hDlg, hAccel, &msg))
 			TranslateMessage(&msg);
-		DispatchMessage(&msg);		
+		DispatchMessage(&msg);
 	}
 	return msg.wParam;
 }
 /////////////////////////////////////////////////////////////////////////////
-INT_PTR CALLBACK DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, 
- LPARAM lParam)
+INT_PTR CALLBACK DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam,
+                            LPARAM lParam)
 {
 	switch (uMsg) {
 	case WM_INITDIALOG:
@@ -104,13 +104,13 @@ BOOL onInit(HWND hWnd, HWND hWndFocus, LPARAM lParam)
 	if (!setMessageFont(GetDlgItem(hWnd, IDC_MESSAGE))) {
 		DestroyWindow(hWnd);
 		return FALSE;
-	}	
+	}
 	// set the output font
 	if (!setOutputFont(GetDlgItem(hWnd, IDC_OUTPUT))) {
 		DestroyWindow(hWnd);
 		return FALSE;
 	}
-	
+
 	centerWindow(hWnd, GetDesktopWindow());
 	// create the progress worker thread
 	if (!_beginthread(progressProc, 0, GetDlgItem(hWnd, IDC_PROGRESS))) {
@@ -129,7 +129,7 @@ HBRUSH onColor(HWND hWnd, HDC hDC, HWND hWndChild, int type)
 {
 	LPWNDDATA pdata = (LPWNDDATA)GetWindowLong(hWnd, GWL_USERDATA);
 	SetBkMode(hDC, TRANSPARENT);
-	
+
 	if (hWndChild == GetDlgItem(hWnd, IDC_OUTPUT)) {
 		SetTextColor(hDC, COLOR_GREEN);
 		return pdata->outBrush;
@@ -145,21 +145,21 @@ BOOL centerWindow(HWND hWnd, HWND hWndParent)
 	GetWindowRect(hWnd, &rc);
 	GetWindowRect(hWndParent, &rcParent);
 	int width = abs(rc.right - rc.left);
-    int height = abs(rc.bottom - rc.top);
+	int height = abs(rc.bottom - rc.top);
 	POINT pt;
 	pt.x = abs(rcParent.right - rcParent.left) / 2;
 	pt.y = abs(rcParent.bottom - rcParent.top) / 2;
-    ClientToScreen(hWndParent, &pt);
+	ClientToScreen(hWndParent, &pt);
 	pt.x -= width / 2;
-    pt.y -= height / 2;
-    return MoveWindow(hWnd, pt.x, pt.y, width, height, FALSE);
+	pt.y -= height / 2;
+	return MoveWindow(hWnd, pt.x, pt.y, width, height, FALSE);
 }
 /////////////////////////////////////////////////////////////////////////////
 void progressProc(LPVOID param)
 {
 	HWND hWnd = (HWND)param;
 	RECT rc, rcSegment;
-	GetClientRect(hWnd, &rc);	
+	GetClientRect(hWnd, &rc);
 	InflateRect(&rc, -1, -1);
 	int interval = (rc.right - rc.left) / 20;
 	rcSegment.left = rc.left;
@@ -178,7 +178,7 @@ void progressProc(LPVOID param)
 		if (time(NULL) >= old + 1) {
 			rcSegment.right += interval;
 			old = time(NULL);
-		}		
+		}
 		if (rcSegment.right > rc.right) {
 			rcSegment.right = rcSegment.left + interval;
 			InvalidateRect(hWnd, NULL, TRUE);
@@ -194,7 +194,7 @@ void outputProc(LPVOID param)
 {
 	HWND hWnd = (HWND)param;
 	RECT rc;
-	GetClientRect(hWnd, &rc);	
+	GetClientRect(hWnd, &rc);
 	TCHAR output[4096];
 	LoadString(GetModuleHandle(NULL), IDS_OUTPUT, output, sizeof(output));
 	HBRUSH hBrush = CreateSolidBrush(COLOR_WHITE);
@@ -216,10 +216,10 @@ void outputProc(LPVOID param)
 			poutput = _tcschr(poutput, _T('\n'));
 			if (!poutput) poutput = output;
 			else ++poutput;
-			InvalidateRect(hWnd, NULL, TRUE);			
-		}		
+			InvalidateRect(hWnd, NULL, TRUE);
+		}
 		DrawText(hDC, poutput, _tcslen(poutput) * sizeof(TCHAR),
-		&rc, DT_EDITCONTROL);
+		         &rc, DT_EDITCONTROL);
 	}
 	SelectObject(hDC, hOldFont);
 	ReleaseDC(hWnd, hDC);
@@ -239,13 +239,13 @@ void onDestroy(HWND hWnd)
 	DeleteObject(pdata->dlgBrush);
 	DeleteObject(pdata->outBrush);
 	LocalFree(pdata);
-	HFONT hFontMsg = (HFONT)SendMessage(GetDlgItem(hWnd, IDC_MESSAGE), 
-		WM_GETFONT, 0, 0);
+	HFONT hFontMsg = (HFONT)SendMessage(GetDlgItem(hWnd, IDC_MESSAGE),
+	                                    WM_GETFONT, 0, 0);
 	DeleteObject(hFontMsg);
-	HFONT hFontOut = (HFONT)SendMessage(GetDlgItem(hWnd, IDC_OUTPUT), 
-		WM_GETFONT, 0, 0);
+	HFONT hFontOut = (HFONT)SendMessage(GetDlgItem(hWnd, IDC_OUTPUT),
+	                                    WM_GETFONT, 0, 0);
 	DeleteObject(hFontOut);
-	
+
 	PostQuitMessage(0);
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -254,22 +254,22 @@ BOOL setMessageFont(HWND hWnd)
 	HDC hDC = GetDC(hWnd);
 	int height = -MulDiv(8, GetDeviceCaps(hDC, LOGPIXELSY), 72);
 	ReleaseDC(hWnd, hDC);
-	HFONT hFont = CreateFont(height, 
-		0,						/* width */
-		0,						/* escapement */
-		0,						/* orientation */
-		FW_BOLD,				/* weight */
-		0,						/* italic */
-		0,						/* underline */
-		0,						/* strikeout */
-		DEFAULT_CHARSET,		/* character set */
-		OUT_DEFAULT_PRECIS,		/* output precision */
-		CLIP_CHARACTER_PRECIS,	/* clip precision */
-		DEFAULT_QUALITY,		/* quality */
-		DEFAULT_PITCH | 
-		FF_DONTCARE,			/* pitch and family */
-		_T("Tahoma")			/* face name */
-	);
+	HFONT hFont = CreateFont(height,
+	                         0,						/* width */
+	                         0,						/* escapement */
+	                         0,						/* orientation */
+	                         FW_BOLD,				/* weight */
+	                         0,						/* italic */
+	                         0,						/* underline */
+	                         0,						/* strikeout */
+	                         DEFAULT_CHARSET,		/* character set */
+	                         OUT_DEFAULT_PRECIS,		/* output precision */
+	                         CLIP_CHARACTER_PRECIS,	/* clip precision */
+	                         DEFAULT_QUALITY,		/* quality */
+	                         DEFAULT_PITCH |
+	                         FF_DONTCARE,			/* pitch and family */
+	                         _T("Tahoma")			/* face name */
+	                        );
 	if (hFont == NULL)
 		return FALSE;
 	SendMessage(hWnd, WM_SETFONT, (WPARAM)hFont, (LPARAM)TRUE);
@@ -281,22 +281,22 @@ BOOL setOutputFont(HWND hWnd)
 	HDC hDC = GetDC(hWnd);
 	int height = -MulDiv(8, GetDeviceCaps(hDC, LOGPIXELSY), 72);
 	ReleaseDC(hWnd, hDC);
-	HFONT hFont = CreateFont(height, 
-		0,						/* width */
-		0,						/* escapement */
-		0,						/* orientation */
-		FW_DONTCARE,			/* weight */
-		0,						/* italic */
-		0,						/* underline */
-		0,						/* strikeout */
-		DEFAULT_CHARSET,		/* character set */
-		OUT_DEFAULT_PRECIS,		/* output precision */
-		CLIP_CHARACTER_PRECIS,	/* clip precision */
-		DEFAULT_QUALITY,		/* quality */
-		DEFAULT_PITCH | 
-		FF_DONTCARE,			/* pitch and family */
-		_T("Courier New")		/* face name */
-	);
+	HFONT hFont = CreateFont(height,
+	                         0,						/* width */
+	                         0,						/* escapement */
+	                         0,						/* orientation */
+	                         FW_DONTCARE,			/* weight */
+	                         0,						/* italic */
+	                         0,						/* underline */
+	                         0,						/* strikeout */
+	                         DEFAULT_CHARSET,		/* character set */
+	                         OUT_DEFAULT_PRECIS,		/* output precision */
+	                         CLIP_CHARACTER_PRECIS,	/* clip precision */
+	                         DEFAULT_QUALITY,		/* quality */
+	                         DEFAULT_PITCH |
+	                         FF_DONTCARE,			/* pitch and family */
+	                         _T("Courier New")		/* face name */
+	                        );
 	if (hFont == NULL)
 		return FALSE;
 	SendMessage(hWnd, WM_SETFONT, (WPARAM)hFont, (LPARAM)TRUE);
@@ -326,9 +326,9 @@ void onExpand(HWND hWnd)
 	AdjustWindowRectEx(&units, style, FALSE, exstyle);
 	units.right += GetSystemMetrics(SM_CXBORDER);
 	units.bottom += GetSystemMetrics(SM_CYBORDER);
-	SetWindowPos(hDlg, NULL, 0, 0, 
-		units.right - units.left, units.bottom - units.top, 
-		SWP_NOMOVE | SWP_SHOWWINDOW);
-	
+	SetWindowPos(hDlg, NULL, 0, 0,
+	             units.right - units.left, units.bottom - units.top,
+	             SWP_NOMOVE | SWP_SHOWWINDOW);
+
 	SetWindowText(hWnd, str);
 }

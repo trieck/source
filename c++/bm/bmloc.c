@@ -1,4 +1,4 @@
-//////////////////////////////////////////////////////	
+//////////////////////////////////////////////////////
 //	Module	:	BMLOC.C								//
 //	Purpose	:	custom bitmap functions	(local)		//
 //	Author	:	Thomas A. Rieck						//
@@ -12,7 +12,7 @@
 #include "resource.h"
 
 //////////////////////////
-// CreateBitmapFromFile		
+// CreateBitmapFromFile
 //
 // note:	*** BE SURE TO DELETE THE HANDLE THIS FUNCTION RETURNS AFTER USE ***
 HBITMAP CreateBitmapFromFile(HDC hDC, LPSTR szFileName)
@@ -29,7 +29,7 @@ HBITMAP CreateBitmapFromFile(HDC hDC, LPSTR szFileName)
 	if (hFile == HFILE_ERROR)
 		return (0);
 
-	// load BITMAPFILEHEADER structure 
+	// load BITMAPFILEHEADER structure
 	_lread(hFile, &bmfh, sizeof(BITMAPFILEHEADER));
 
 	// load BITMAPINFOHEADER structure
@@ -40,33 +40,31 @@ HBITMAP CreateBitmapFromFile(HDC hDC, LPSTR szFileName)
 		pBMI = malloc(sizeof(BITMAPINFOHEADER) + ((1<<bmih.biBitCount) * sizeof(RGBQUAD)));
 	else
 		pBMI = malloc(sizeof(BITMAPINFOHEADER));
-	
-	if (!pBMI)
-	{
+
+	if (!pBMI) {
 		_lclose(hFile);
 		return (0);
 	}
 
-	// load BITMAPINFOHEADER into the BITMAPINFO structure. 
-	pBMI->bmiHeader.biSize = bmih.biSize; 
-	pBMI->bmiHeader.biWidth = bmih.biWidth; 
-	pBMI->bmiHeader.biHeight = bmih.biHeight; 
-	pBMI->bmiHeader.biPlanes = bmih.biPlanes; 
-	pBMI->bmiHeader.biBitCount = bmih.biBitCount; 
-	pBMI->bmiHeader.biCompression = bmih.biCompression; 
-	pBMI->bmiHeader.biSizeImage = bmih.biSizeImage; 
-	pBMI->bmiHeader.biXPelsPerMeter = bmih.biXPelsPerMeter; 
-	pBMI->bmiHeader.biYPelsPerMeter = bmih.biYPelsPerMeter; 
-	pBMI->bmiHeader.biClrUsed = bmih.biClrUsed; 
+	// load BITMAPINFOHEADER into the BITMAPINFO structure.
+	pBMI->bmiHeader.biSize = bmih.biSize;
+	pBMI->bmiHeader.biWidth = bmih.biWidth;
+	pBMI->bmiHeader.biHeight = bmih.biHeight;
+	pBMI->bmiHeader.biPlanes = bmih.biPlanes;
+	pBMI->bmiHeader.biBitCount = bmih.biBitCount;
+	pBMI->bmiHeader.biCompression = bmih.biCompression;
+	pBMI->bmiHeader.biSizeImage = bmih.biSizeImage;
+	pBMI->bmiHeader.biXPelsPerMeter = bmih.biXPelsPerMeter;
+	pBMI->bmiHeader.biYPelsPerMeter = bmih.biYPelsPerMeter;
+	pBMI->bmiHeader.biClrUsed = bmih.biClrUsed;
 	pBMI->bmiHeader.biClrImportant = bmih.biClrImportant;
 
-	// retrieve the color table. 
+	// retrieve the color table.
 	if (bmih.biBitCount != 24)
 		_lread(hFile, pBMI->bmiColors, ((1<<bmih.biBitCount) * sizeof(RGBQUAD)));
-	
+
 	// allocate memory for bits
-	if (!(pBits = malloc (bmfh.bfSize - bmfh.bfOffBits)))
-	{
+	if (!(pBits = malloc (bmfh.bfSize - bmfh.bfOffBits))) {
 		free (pBMI);
 		_lclose(hFile);
 		return (0);
@@ -89,9 +87,9 @@ HBITMAP CreateBitmapFromFile(HDC hDC, LPSTR szFileName)
 ///////////////
 // DlgProc
 BOOL CALLBACK DlgProc(	HWND  hwndDlg,	// handle to dialog box
-						UINT  uMsg,		// message
-						WPARAM  wParam,	// first message parameter
-						LPARAM  lParam)
+                       UINT  uMsg,		// message
+                       WPARAM  wParam,	// first message parameter
+                       LPARAM  lParam)
 {
 	// bitmap filename
 	static char szFileName[_MAX_PATH + _MAX_FNAME + 1];
@@ -100,7 +98,7 @@ BOOL CALLBACK DlgProc(	HWND  hwndDlg,	// handle to dialog box
 	static LPBITMAPINFO		pBMI	= 0;
 	static LPVOID			pBits	= 0;
 	LPVOID pTemp;
-		
+
 	PAINTSTRUCT ps;
 	HDC hDC;
 	HWND hwndPct;
@@ -108,15 +106,13 @@ BOOL CALLBACK DlgProc(	HWND  hwndDlg,	// handle to dialog box
 	DWORD dwScanWidth;
 	DWORD dwTemp;
 	POINT pt = {0,0};
-			
-	switch (uMsg) 
-	{ 
+
+	switch (uMsg) {
 	case WM_INITDIALOG:
 		// make sure device is capable
 		hwndPct = GetDlgItem(hwndDlg, IDC_PICTURE);
-		
-		if (!(AssertDevCapable(hwndPct, RC_STRETCHDIB)))
-		{
+
+		if (!(AssertDevCapable(hwndPct, RC_STRETCHDIB))) {
 			EndDialog(hwndDlg, FALSE);
 			return (FALSE);
 		}
@@ -127,29 +123,25 @@ BOOL CALLBACK DlgProc(	HWND  hwndDlg,	// handle to dialog box
 			return (FALSE);
 
 		// check for 24 bit BM to enable stripping
-		if (pBMI->bmiHeader.biBitCount != 24)
-		{
+		if (pBMI->bmiHeader.biBitCount != 24) {
 			EnableWindow(GetDlgItem(hwndDlg, IDC_STRIPRED), FALSE);
 			EnableWindow(GetDlgItem(hwndDlg, IDC_STRIPGREEN), FALSE);
 			EnableWindow(GetDlgItem(hwndDlg, IDC_STRIPBLUE), FALSE);
 		}
-		
+
 		FillDlgInfo(hwndDlg, szFileName, bmfh, pBMI);
 
 		// set focus
 		SetFocus(GetDlgItem(hwndDlg, IDC_FILENAME));
-		
+
 		return (TRUE);
 		break;
 	case WM_COMMAND:
-		switch	(LOWORD(wParam))
-		{
+		switch	(LOWORD(wParam)) {
 		case IDC_FLIP:
-			
-			if (pBits != 0 && pBMI->bmiHeader.biHeight != 0)
-			{
-				switch (pBMI->bmiHeader.biBitCount)
-				{
+
+			if (pBits != 0 && pBMI->bmiHeader.biHeight != 0) {
+				switch (pBMI->bmiHeader.biBitCount) {
 				case 1:
 					dwScanWidth = ScanAlign((pBMI->bmiHeader.biWidth+7) / 8);
 					break;
@@ -163,17 +155,17 @@ BOOL CALLBACK DlgProc(	HWND  hwndDlg,	// handle to dialog box
 					dwScanWidth = ScanAlign(pBMI->bmiHeader.biWidth * 3);
 					break;
 				}
-				
-				dwBitSize = dwScanWidth * pBMI->bmiHeader.biHeight;					
+
+				dwBitSize = dwScanWidth * pBMI->bmiHeader.biHeight;
 
 				if (!(pTemp = malloc(dwBitSize)))
 					break;
 
 				memcpy(pTemp, pBits, dwBitSize);
-				
+
 				for (dwTemp = 0; dwTemp < dwBitSize; dwTemp += dwScanWidth)
 					memcpy((LPBYTE)pBits + dwTemp,(LPBYTE)pTemp + (dwBitSize - dwTemp), dwScanWidth);
-				
+
 				if (pTemp) free(pTemp);
 
 				InvalidateRect(GetDlgItem (hwndDlg, IDC_PICTURE), 0, FALSE);
@@ -195,7 +187,7 @@ BOOL CALLBACK DlgProc(	HWND  hwndDlg,	// handle to dialog box
 			// free allocated buffers
 			if (pBMI) free(pBMI);
 			if (pBits) free(pBits);
-			
+
 			pBMI = 0;
 			pBits = 0;
 
@@ -207,15 +199,15 @@ BOOL CALLBACK DlgProc(	HWND  hwndDlg,	// handle to dialog box
 
 		// get dialog picture handle
 		hwndPct = GetDlgItem (hwndDlg, IDC_PICTURE);
-							
+
 		if (pBMI != 0 && pBits != 0)
-			StretchBitmap(hwndPct, pBMI, pBits, &pt); 
-					
+			StretchBitmap(hwndPct, pBMI, pBits, &pt);
+
 		EndPaint(hwndDlg, &ps);
 		break;
-	default: 
-		return (FALSE); 
-    } 
+	default:
+		return (FALSE);
+	}
 }
 
 //////////////////
@@ -224,7 +216,7 @@ int ExtractBMInfo(LPSTR szFileName, LPBITMAPFILEHEADER pBMFH, LPBITMAPINFO* ppBM
 {
 	DWORD dwBMISize;
 	DWORD dwBitSize;
-		
+
 	// extract BITMAPFILEHEADER
 	if (!(ExtractBMFH(szFileName, pBMFH)))
 		return (0);
@@ -243,8 +235,7 @@ int ExtractBMInfo(LPSTR szFileName, LPBITMAPFILEHEADER pBMFH, LPBITMAPINFO* ppBM
 	dwBitSize = GetBitSize(szFileName);
 
 	// allocate buffer for bits
-	if (!(*ppBits = malloc(dwBitSize)))
-	{
+	if (!(*ppBits = malloc(dwBitSize))) {
 		free (*ppBMI);
 		return(0);
 	}
@@ -301,22 +292,21 @@ int AssertDevCapable(HWND hWnd, INT nFlags)
 {
 	HDC hDC;
 	char szBuff[255];
-		
+
 	hDC = GetDC(hWnd);
-	
+
 	// determine if device is capable
-	if (!(GetDeviceCaps(hDC, RASTERCAPS) & nFlags))
-	{
+	if (!(GetDeviceCaps(hDC, RASTERCAPS) & nFlags)) {
 		LoadString(hInstance, IDS_DEVNOTCAPABLE, szBuff, 255);
 		MessageBox(hWnd, szBuff, "Error", MB_ICONEXCLAMATION | MB_OK);
 		ReleaseDC(hWnd, hDC);
 		return (0);
-	}	
-	
+	}
+
 	ReleaseDC(hWnd, hDC);
 	return (1);
 }
-	
+
 ////////////////////
 // ScanAlign
 LONG ScanAlign (LONG pWidth)
@@ -334,26 +324,23 @@ void StripBits (LPBITMAPINFO pBMI, LPBYTE pBits, UINT nColor)
 	DWORD dwBitSize;
 	DWORD dwScanWidth;
 
-	if (pBits != 0 && pBMI->bmiHeader.biHeight != 0)
-	{
+	if (pBits != 0 && pBMI->bmiHeader.biHeight != 0) {
 		dwScanWidth = ScanAlign(pBMI->bmiHeader.biWidth * 3);
-								
-		dwBitSize = dwScanWidth * pBMI->bmiHeader.biHeight;					
-				
+
+		dwBitSize = dwScanWidth * pBMI->bmiHeader.biHeight;
+
 		pOffset = pBits;
 
-		for (lHeight = 0; lHeight < abs(pBMI->bmiHeader.biHeight); lHeight++)
-		{
+		for (lHeight = 0; lHeight < abs(pBMI->bmiHeader.biHeight); lHeight++) {
 			pAddr = pOffset + nColor;
-			for (lWidth = 0; lWidth < pBMI->bmiHeader.biWidth; lWidth++)
-			{
+			for (lWidth = 0; lWidth < pBMI->bmiHeader.biWidth; lWidth++) {
 				memmove(pAddr, zArray, 1);
 				pAddr += 3;
 			}
 			pOffset += dwScanWidth;
 		}
-			
+
 	}
 }
 
-	
+

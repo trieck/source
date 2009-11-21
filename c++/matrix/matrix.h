@@ -8,7 +8,7 @@ public:
 	Matrix(int m, int n);
 	Matrix(const Matrix &rhs);
 	~Matrix();
-	
+
 // Interface
 	Matrix& operator = (const Matrix &rhs);
 	void setElement(int i, int j, float f);

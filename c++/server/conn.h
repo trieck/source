@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //
 // CONN.H : TCP/IP connection class
-// 
+//
 // Copyright (c) 2001 KnowX.com, All Rights Reserved
 //
 
@@ -9,8 +9,7 @@
 #define __CONN_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Connection
-{
+class Connection {
 public:
 	// Construction / Destruction
 	Connection();
@@ -23,14 +22,16 @@ public:
 	bool connect(const char *host, int port);
 	bool send(const char *str) const;
 	int receive(char *buffer, size_t size) const;
-    bool bind();
-    bool listen(int port, int backlog = 5);
+	bool bind();
+	bool listen(int port, int backlog = 5);
 	int pendingBytes() const;
 
 	typedef auto_ptr<Connection> ConnectionPtr;
-    ConnectionPtr accept() const;
-	
-    inline operator SOCKET() const { return m_socket; }
+	ConnectionPtr accept() const;
+
+	inline operator SOCKET() const {
+		return m_socket;
+	}
 
 	static string getSocketError();
 

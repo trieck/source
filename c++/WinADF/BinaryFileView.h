@@ -4,8 +4,7 @@
 
 // BinaryFileView view
 
-class BinaryFileView : public HexView
-{
+class BinaryFileView : public HexView {
 	DECLARE_DYNCREATE(BinaryFileView)
 
 protected:
@@ -26,12 +25,13 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-protected:	
+protected:
 public:
 };
 
-#ifndef _DEBUG 
-inline WinADFDoc* BinaryFileView::GetDocument() const { 
-	return reinterpret_cast<WinADFDoc*>(m_pDocument); 
+#ifndef _DEBUG
+inline WinADFDoc* BinaryFileView::GetDocument() const
+{
+	return reinterpret_cast<WinADFDoc*>(m_pDocument);
 }
 #endif	// _DEBUG

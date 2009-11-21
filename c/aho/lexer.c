@@ -22,8 +22,7 @@ int lexan()		/* lexical analyzer */
 			ungetc(t, stdin);
 			scanf("%d", &tokenval);
 			return NUM;
-		}
-		else if (isalpha(t)) {		/* t is a letter */
+		} else if (isalpha(t)) {		/* t is a letter */
 			int p, b = 0;
 			while (isalnum(t)) {	/* t is alphanumeric */
 				lexbuf[b] = t;
@@ -36,12 +35,11 @@ int lexan()		/* lexical analyzer */
 			if (t != EOF)
 				ungetc(t, stdin);
 			p = lookup(lexbuf);
-			if (p == 0) 
+			if (p == 0)
 				p = insert(lexbuf, ID);
 			tokenval = p;
 			return symtable[p].token;
-		}
-		else if (t == EOF)
+		} else if (t == EOF)
 			return DONE;
 		else {
 			tokenval = NONE;

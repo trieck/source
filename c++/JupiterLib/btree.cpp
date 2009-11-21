@@ -92,16 +92,16 @@
 		p = NULL;									\
 	} while(0)
 
-/* 
+/*
  * Maximum number of cells on a page.
  * This MUST be even to split a page.
  *
- * NOTE: This has been hand tuned for maximum efficiency 
+ * NOTE: This has been hand tuned for maximum efficiency
  * in storing cells and cell data on a 4k page.
  */
 
 /* maximum number of cells on an internal page */
-#define MAX_INTERNAL_CELLS	(14)		
+#define MAX_INTERNAL_CELLS	(14)
 
 /* maximum number of cells on a leaf page */
 #define MAX_LEAF_CELLS		(8)
@@ -147,8 +147,8 @@
 #define MINSPILLCELLS		(2)
 
 /* file magic number */
-const uint8_t BTree::magic_no[] = { 
-	'E', 'N', 'H', 'B', 'T', 'R', 'E', 'E' 
+const uint8_t BTree::magic_no[] = {
+	'E', 'N', 'H', 'B', 'T', 'R', 'E', 'E'
 };
 
 /* version numbers */
@@ -157,7 +157,7 @@ const uint16_t BTree::minorVer = 0x0001;
 
 /////////////////////////////////////////////////////////////////////////////
 BTree::BTree()
- : io(PAGE_SIZE, sizeof(FileHeader))
+		: io(PAGE_SIZE, sizeof(FileHeader))
 {
 	memset(&header, 0, sizeof(FileHeader));
 	allocpages();
@@ -195,7 +195,7 @@ bool BTree::open(LPCSTR filename, OpenMode m)
 {
 	if (!io.open(filename, mode = m))
 		return false;
-		
+
 	uint64_t size = io.getFileSize();
 	if (size > 0) {
 		if (!readFH())				// read file header
@@ -223,7 +223,8 @@ void BTree::close()
 /////////////////////////////////////////////////////////////////////////////
 PITEM BTree::search(PITEM key)
 {
-	PPAGE h; uint16_t j;
+	PPAGE h;
+	uint16_t j;
 	if ((h = find(key, j)))
 		return value(h, j);
 
@@ -231,7 +232,7 @@ PITEM BTree::search(PITEM key)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-bool BTree::exists(PITEM key)	
+bool BTree::exists(PITEM key)
 {
 	uint16_t j;
 	return (find(key, j) != NULL);
@@ -251,13 +252,14 @@ PPAGE BTree::findR(PPAGE h, PITEM key, uint8_t level, uint16_t &cell)
 	if (ISLEAF(h)) { // leaf page
 		for (j = 0; j < CELLS(h); j++) {
 			if (compare(key, h, j) == 0) {
-				cell = j; return h;
+				cell = j;
+				return h;
 			}
 		}
 	} else { // internal page
 		for (j = 0; j < CELLS(h); j++) {
 			if ((j+1 == CELLS(h) || compare(key, h, j+1) < 0)) {
-				if (!readpage(NEXT(h, j), level+1)) 
+				if (!readpage(NEXT(h, j), level+1))
 					return NULL;
 				return findR(pages[level+1], key, level+1, cell);
 			}
@@ -322,8 +324,8 @@ PITEM BTree::largeval(PITEM pVal)
 
 	SpillCellPtr pcell;
 	LPCSTR pdata = DATA(pVal);
-	memcpy(&pcell, pdata+(MAX_VAL_LEN-SPILLCELL_PTR_LEN*2), 
-		sizeof(SpillCellPtr));
+	memcpy(&pcell, pdata+(MAX_VAL_LEN-SPILLCELL_PTR_LEN*2),
+	       sizeof(SpillCellPtr));
 
 	PPAGE t = frame[0];
 	PAGENO(t) = SPPAGENO(pcell);
@@ -333,16 +335,18 @@ PITEM BTree::largeval(PITEM pVal)
 	uint16_t offset = SPOFFSET(pcell);
 	PSPILLCELL cell = SPILLCELL(t, offset);
 
-	PITEM value = new Item(); ItemPtr u(value);
+	PITEM value = new Item();
+	ItemPtr u(value);
 	uint32_t n = LEN(pVal) - SPILLCELL_PTR_LEN*2;
 	LEN(value) = SCTOTALLEN(cell) + n;
 	LPSTR pbuf = DATA(value) = new char[LEN(value)];
 
-	// copy small value first	
+	// copy small value first
 	while (n--) *pbuf++ = *pdata++;
 
 	// copy data stored on this page
-	n = SCLEN(cell); pdata = SPDATA(t, offset);
+	n = SCLEN(cell);
+	pdata = SPDATA(t, offset);
 	while (n--) *pbuf++ = *pdata++;
 
 	// follow the page chain
@@ -351,10 +355,11 @@ PITEM BTree::largeval(PITEM pVal)
 		offset = SCNEXTOFF(cell);
 		if (!readpage(t))
 			return NULL;	// can't read
-		
+
 		cell = SPILLCELL(t, offset);
-		n = SCLEN(cell); pdata = SPDATA(t, offset);
-		while (n--) *pbuf++ = *pdata++;		
+		n = SCLEN(cell);
+		pdata = SPDATA(t, offset);
+		while (n--) *pbuf++ = *pdata++;
 	}
 
 	return u.release();
@@ -364,7 +369,8 @@ PITEM BTree::largeval(PITEM pVal)
 /////////////////////////////////////////////////////////////////////////////
 bool BTree::append(PENTRY entry)
 {
-	PPAGE h; uint16_t j;
+	PPAGE h;
+	uint16_t j;
 	if ((h = find(KEY(entry), j))) {
 		append(h, j, VAL(entry));
 		return true;
@@ -379,22 +385,25 @@ void BTree::append(PPAGE h, uint16_t item, PITEM val)
 	LPSTR p1, p2, p3, buf;
 
 	uint16_t vlen = VALLEN(h, item), offset = VALOFFSET(h, item);
-	uint32_t nlen = LEN(val), ntotal = nlen + vlen, m, n;	
+	uint32_t nlen = LEN(val), ntotal = nlen + vlen, m, n;
 
 	SpillCellPtr first, last;
 
 	if (ISLRGVAL(h, item)) {	// large value
 		p1 = PAGE_DATA(h, offset) - (MAX_VAL_LEN-SPILLCELL_PTR_LEN*2);
-		p2 = (LPSTR)&first; n = SPILLCELL_PTR_LEN;
+		p2 = (LPSTR)&first;
+		n = SPILLCELL_PTR_LEN;
 		while (n--) *p2++ = *p1--;
 
-		p2 = (LPSTR)&last; n = SPILLCELL_PTR_LEN;
+		p2 = (LPSTR)&last;
+		n = SPILLCELL_PTR_LEN;
 		while (n--) *p2++ = *p1--;
 
 		last = appendlarge(first, last, val);
 
 		p1 = PAGE_DATA(h, offset) - (MAX_VAL_LEN-SPILLCELL_PTR_LEN);
-		p2 = (LPSTR)&last; n = SPILLCELL_PTR_LEN;
+		p2 = (LPSTR)&last;
+		n = SPILLCELL_PTR_LEN;
 		while (n--) *p1-- = *p2++;
 	} else {	// small value
 		p1 = PAGE_DATA(h, offset) - vlen;
@@ -409,11 +418,13 @@ void BTree::append(PPAGE h, uint16_t item, PITEM val)
 				// Move n bytes off the cell area
 				// to make space for the spill cell pointers
 				m = n = SPILLCELL_PTR_LEN*2 - m;
-				p3 = buf = new char[n + nlen]; 
+				p3 = buf = new char[n + nlen];
 				for (p1 += n; n--; ) *p3++ = *p1--;
 				memcpy(p3, p2, nlen);
 				ATTACH(val, buf, m + nlen);
-				p1 += m; p2 = DATA(val); nlen = LEN(val);				
+				p1 += m;
+				p2 = DATA(val);
+				nlen = LEN(val);
 			} else {	// store what we can in the remaining space
 				n = m - SPILLCELL_PTR_LEN*2;
 				for ( ; n--; nlen--) *p1-- = *p2++;
@@ -421,12 +432,14 @@ void BTree::append(PPAGE h, uint16_t item, PITEM val)
 
 			VALLEN(h, item) = MAX_VAL_LEN;
 
-			SpillCellPtr ptr = nextspill(); LPSTR pp = (LPSTR)&ptr;
-			for (n = SPILLCELL_PTR_LEN; n--; ) *p1-- = *pp++; 
-			
-			ptr = spill(p2, nlen); pp = (LPSTR)&ptr;
+			SpillCellPtr ptr = nextspill();
+			LPSTR pp = (LPSTR)&ptr;
+			for (n = SPILLCELL_PTR_LEN; n--; ) *p1-- = *pp++;
 
-			for (n = SPILLCELL_PTR_LEN; n--; ) *p1-- = *pp++; 				
+			ptr = spill(p2, nlen);
+			pp = (LPSTR)&ptr;
+
+			for (n = SPILLCELL_PTR_LEN; n--; ) *p1-- = *pp++;
 		}
 	}
 
@@ -434,8 +447,8 @@ void BTree::append(PPAGE h, uint16_t item, PITEM val)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-SpillCellPtr BTree::appendlarge(SpillCellPtr first, SpillCellPtr last, 
- PITEM val)
+SpillCellPtr BTree::appendlarge(SpillCellPtr first, SpillCellPtr last,
+                                PITEM val)
 {
 	// read first spill cell
 	PPAGE t = frame[0], u = frame[1];
@@ -467,7 +480,7 @@ SpillCellPtr BTree::appendlarge(SpillCellPtr first, SpillCellPtr last,
 	if (extra > 0) {	// can append in current cell
 		n = min(extra, nlen);
 		SCLEN(cell) += n;
-		for ( ; n--; nlen--) *pdata++ = *data++;		
+		for ( ; n--; nlen--) *pdata++ = *data++;
 	}
 
 	if (nlen == 0) {	// done
@@ -475,7 +488,7 @@ SpillCellPtr BTree::appendlarge(SpillCellPtr first, SpillCellPtr last,
 		return last;
 	}
 
-	uint32_t req = CELLALIGN(nlen) / sizeof(Cell); 
+	uint32_t req = CELLALIGN(nlen) / sizeof(Cell);
 	uint32_t avail = TOTALCELLS - CELLS(t);
 
 	n = offset + SPILLCELLS(len);
@@ -525,10 +538,10 @@ void BTree::insert(PENTRY entry)
 	header.numitems++;
 	if (u == 0) return;
 
-	/* 
-	 * The basic idea with the root page split is that we create a new 
-	 * internal root page t with 2 links. The first link points to 
-	 * the old root page and the second link points to the page that caused 
+	/*
+	 * The basic idea with the root page split is that we create a new
+	 * internal root page t with 2 links. The first link points to
+	 * the old root page and the second link points to the page that caused
 	 * the split.  The height of the tree is increased by one.
 	 */
 	PPAGE t = frame[1];
@@ -539,13 +552,15 @@ void BTree::insert(PENTRY entry)
 	SETINTERNAL(t);
 	CELLS(t) = 2;
 
-	INDEX(t, 0) = 0; INDEX(t, 1) = 1;
+	INDEX(t, 0) = 0;
+	INDEX(t, 1) = 1;
 
 	xferK(t, 0, pages[0], 0);
 	xferK(t, 1, u, 0);
 
-	NEXT(t, 0) = PAGENO(pages[0]); NEXT(t, 1) = PAGENO(u);
-	 
+	NEXT(t, 0) = PAGENO(pages[0]);
+	NEXT(t, 1) = PAGENO(u);
+
 	// page zero always holds root page
 	memcpy(pages[0], t, PAGE_SIZE);
 	writepage(pages[0]);
@@ -588,10 +603,12 @@ void BTree::xferV(PPAGE dest, uint16_t m, PPAGE src, uint16_t n)
 /////////////////////////////////////////////////////////////////////////////
 PPAGE BTree::insertR(PPAGE h, PENTRY e, uint8_t level)
 {
-	PITEM v = KEY(e); ItemPtr pKey; uint64_t *pnext(NULL);
-	uint16_t i, j; 
+	PITEM v = KEY(e);
+	ItemPtr pKey;
+	uint64_t *pnext(NULL);
+	uint16_t i, j;
 
-  	if (ISLEAF(h)) {	// leaf page
+	if (ISLEAF(h)) {	// leaf page
 		for (j = 0; j < CELLS(h); j++) {
 			if (compare(v, h, j) < 0) break;
 		}
@@ -602,7 +619,8 @@ PPAGE BTree::insertR(PPAGE h, PENTRY e, uint8_t level)
 					return 0;
 				PPAGE u = insertR(pages[level+1], e, level+1);
 				if (u == 0) return 0;
-				pKey = ItemPtr(key(u, 0)); pnext = &PAGENO(u);
+				pKey = ItemPtr(key(u, 0));
+				pnext = &PAGENO(u);
 				break;
 			}
 		}
@@ -610,14 +628,14 @@ PPAGE BTree::insertR(PPAGE h, PENTRY e, uint8_t level)
 
 	for (i = CELLS(h); i > j; i--) CELL(h, i) = CELL(h, i-1);
 
-	store(h, j, e, pKey.get(), pnext);	
-	
+	store(h, j, e, pKey.get(), pnext);
+
 	if (++CELLS(h) < MAXCELLS(h)) {
 		writepage(h);		// write dirty page
 		return 0;			// don't split page
-	} 
+	}
 
-	return split(h);	
+	return split(h);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -630,30 +648,31 @@ int BTree::compare(PITEM key, PPAGE h, uint16_t item)
 	char *p2 = PAGE_DATA(h, offset);
 
 	uint32_t n = min(LEN(key), keylen);
-	
+
 	while (n--) {
 		if (*p1 != *p2)
 			return *p1 - *p2;
-		p1++; p2--;
+		p1++;
+		p2--;
 	}
 
 	return LEN(key) - keylen;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void BTree::store(PPAGE h, uint16_t item, PENTRY e, PITEM newKey, 
- uint64_t *next)
+void BTree::store(PPAGE h, uint16_t item, PENTRY e, PITEM newKey,
+                  uint64_t *next)
 {
 	INDEX(h, item) = CELLS(h);
-	
+
 	PITEM pKey = newKey == NULL ? KEY(e) : newKey;
 
 	if (next) NEXT(h, item) = *next;
 
-	storeK(h, item, pKey);	
+	storeK(h, item, pKey);
 	if (ISLEAF(h)) {
 		storeV(h, item, VAL(e));
-	}	
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -664,7 +683,7 @@ void BTree::storeK(PPAGE h, uint16_t item, PITEM key)
 
 	LPSTR pdata = PAGE_DATA(h, offset);
 	LPSTR pkey = DATA(key);
-	
+
 	while (n--) *pdata-- = *pkey++;
 }
 
@@ -679,18 +698,20 @@ void BTree::storeV(PPAGE h, uint16_t item, PITEM val)
 
 	// If the length of the value exceeds MAX_VAL_LEN,
 	// additional data is stored on the active spill page.
-	// In this case, we only store MAX_VAL_LEN - (SPILLCELL_PTR_LEN * 2) 
-	// bytes in the data area.  The last SPILLCELL_PTR_LEN * 2 bytes are 
-	// used to store the page numbers and offsets of the first and last 
+	// In this case, we only store MAX_VAL_LEN - (SPILLCELL_PTR_LEN * 2)
+	// bytes in the data area.  The last SPILLCELL_PTR_LEN * 2 bytes are
+	// used to store the page numbers and offsets of the first and last
 	// spill pages where additional data can be found.
 	if (LEN(val) > MAX_VAL_LEN) {
 		SETLRGVAL(h, item);
 		while (n-- > SPILLCELL_PTR_LEN*2) *pdata-- = *pval++;
-		SpillCellPtr ptr = nextspill(); LPSTR pp = (LPSTR)&ptr;
-		for (++n; n-- > SPILLCELL_PTR_LEN; ) *pdata-- = *pp++; 
+		SpillCellPtr ptr = nextspill();
+		LPSTR pp = (LPSTR)&ptr;
+		for (++n; n-- > SPILLCELL_PTR_LEN; ) *pdata-- = *pp++;
 		n = LEN(val) - (MAX_VAL_LEN - SPILLCELL_PTR_LEN*2);
-		ptr = spill(pval, n); pp = (LPSTR)&ptr;
-		for (n = SPILLCELL_PTR_LEN; n--; ) *pdata-- = *pp++; 
+		ptr = spill(pval, n);
+		pp = (LPSTR)&ptr;
+		for (n = SPILLCELL_PTR_LEN; n--; ) *pdata-- = *pp++;
 	} else {
 		SETSMLVAL(h, item);
 		while (n--) *pdata-- = *pval++;
@@ -702,7 +723,7 @@ bool BTree::readFH()
 {
 	uint32_t nread = io.readheader(&header);
 	if (nread != sizeof(FileHeader))
-		return false;		
+		return false;
 
 	if (memcmp(&header.magicno, magic_no, sizeof(uint64_t)) != 0)
 		return false;	// magic number mismatch
@@ -765,11 +786,11 @@ bool BTree::insertpage(PPAGE h)
 {
 	uint64_t off = io.getFileSize();
 	PAGENO(h) = (off - sizeof(FileHeader)) / PAGE_SIZE;
-	
+
 	uint32_t nwritten = io.insertblock(h);
 	if (nwritten != PAGE_SIZE)
 		return false;
-		
+
 	updateST(h);
 
 	return true;
@@ -805,7 +826,7 @@ PPAGE BTree::split(PPAGE h)
 		CELL(t, j) = CELL(h, n + j);
 		INDEX(t, j) = j;
 		xfer(t, j, h, n + j);
-	}	
+	}
 
 	reorder(h);
 	writepage(h);
@@ -817,11 +838,11 @@ PPAGE BTree::split(PPAGE h)
 /////////////////////////////////////////////////////////////////////////////
 void BTree::reorder(PPAGE h)
 {
-	/* 
-	 * Reorder a split page, so that the data offsets 
+	/*
+	 * Reorder a split page, so that the data offsets
 	 * correspond to the cells.  we need to do this
 	 * because a split page contains invalid indexes
-	 * with respect to the real number of cells on the 
+	 * with respect to the real number of cells on the
 	 * new split page.
 	 */
 
@@ -842,7 +863,7 @@ void BTree::reorder(PPAGE h)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-PPAGE BTree::mkpage() 
+PPAGE BTree::mkpage()
 {
 	PPAGE pPage = (PPAGE)malloc(PAGE_SIZE);
 	INITPAGE(pPage);
@@ -853,7 +874,7 @@ PPAGE BTree::mkpage()
 SpillCellPtr BTree::nextspill()
 {
 	// return address of next available spill location
-	SpillCellPtr ptr; 
+	SpillCellPtr ptr;
 	PPAGE t = frame[0];
 
 	/* check for no currently active page */
@@ -869,7 +890,7 @@ SpillCellPtr BTree::nextspill()
 		readpage(t);
 
 		// no space on current page
-		if (TOTALCELLS - CELLS(t) <= MINSPILLCELLS) {	
+		if (TOTALCELLS - CELLS(t) <= MINSPILLCELLS) {
 			CELLS(t) = TOTALCELLS;			// close page
 			writepage(t);					// write page
 			INITPAGE(t);
@@ -878,7 +899,7 @@ SpillCellPtr BTree::nextspill()
 			SPPAGENO(ptr) = CURRSPILL() = PAGENO(t);
 		};
 
-		SPOFFSET(ptr) = CELLS(t);		
+		SPOFFSET(ptr) = CELLS(t);
 	}
 
 	return ptr;
@@ -908,7 +929,8 @@ SpillCellPtr BTree::spill(PPAGE h, LPCSTR data, uint32_t len)
 	SPPAGENO(last) = PAGENO(t);
 
 	for (;;) {
-		req = SPILLCELLS(len); avail = TOTALCELLS - CELLS(t);
+		req = SPILLCELLS(len);
+		avail = TOTALCELLS - CELLS(t);
 		offset = SPOFFSET(last) = CELLS(t);
 		cell = SPILLCELL(t, offset);
 		SCTOTALLEN(cell) = ntotal;
@@ -935,7 +957,9 @@ SpillCellPtr BTree::spill(PPAGE h, LPCSTR data, uint32_t len)
 			writepage(t);
 
 			// swap page buffers
-			v = t; t = u; u = v;
+			v = t;
+			t = u;
+			u = v;
 		}
 	}
 
@@ -946,38 +970,38 @@ SpillCellPtr BTree::spill(PPAGE h, LPCSTR data, uint32_t len)
 void BTree::writeStats(std::ostream &os) const
 {
 	char buf[128], output[256];
-	strftime(buf, sizeof(buf), "%m/%d/%Y %I:%M:%S %p", 
-		localtime((time_t*)&header.createdt));
+	strftime(buf, sizeof(buf), "%m/%d/%Y %I:%M:%S %p",
+	         localtime((time_t*)&header.createdt));
 
 	sprintf(output, "\n   creation date:\t\t%s\n"
-		"   number of items:\t\t%s\n" 
-		"   number of blocks:\t\t%s\n"
-		"   number of internal pages:\t%s\n"
-		"   number of leaf pages:\t%s\n"
-		"   number of spill pages:\t%s\n"
-		"   current spill page:\t\t%s\n\n",
-		buf, 
-		comma(header.numitems).c_str(),
-		comma(header.numblocks).c_str(),
-		comma(header.numinternal).c_str(),
-		comma(header.numleaf).c_str(),
-		comma(header.numspill).c_str(),
-		comma(header.currspill).c_str());
+	        "   number of items:\t\t%s\n"
+	        "   number of blocks:\t\t%s\n"
+	        "   number of internal pages:\t%s\n"
+	        "   number of leaf pages:\t%s\n"
+	        "   number of spill pages:\t%s\n"
+	        "   current spill page:\t\t%s\n\n",
+	        buf,
+	        comma(header.numitems).c_str(),
+	        comma(header.numblocks).c_str(),
+	        comma(header.numinternal).c_str(),
+	        comma(header.numleaf).c_str(),
+	        comma(header.numspill).c_str(),
+	        comma(header.currspill).c_str());
 
 	os << output << std::flush;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void BTree::Walk(PITEMWALKER pWalker)
-{			  
+{
 	pageset.clear();
-	WalkR(pWalker, pages[0], 0);	
+	WalkR(pWalker, pages[0], 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void BTree::WalkR(PITEMWALKER pWalker, PPAGE h, uint8_t level)
 {
-	uint16_t j; 
+	uint16_t j;
 	if (ISLEAF(h)) { // leaf page
 		ItemPtr pKey;
 		for (j = 0; j < CELLS(h); j++) {
@@ -985,13 +1009,13 @@ void BTree::WalkR(PITEMWALKER pWalker, PPAGE h, uint8_t level)
 			pWalker->Call(pKey.get());
 		}
 	} else { // internal page
-		uint64_t nextpg; 
+		uint64_t nextpg;
 		for (j = 0; j < CELLS(h); j++) {
 			nextpg = NEXT(h, j);
 			if (pageset.find(nextpg) != pageset.end())
-				continue;		   
+				continue;
 			pageset.insert(nextpg);
-			if (!readpage(NEXT(h, j), level+1)) 
+			if (!readpage(NEXT(h, j), level+1))
 				continue;
 			WalkR(pWalker, pages[level+1], level+1);
 		}

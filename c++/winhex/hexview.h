@@ -11,8 +11,7 @@
 
 #include "HexEdit.h"
 
-class HexView : public CView
-{
+class HexView : public CView {
 protected: // create from serialization only
 	HexView();
 	DECLARE_DYNCREATE(HexView)
@@ -28,12 +27,12 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(HexView)
-	public:
+public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void OnInitialUpdate();
 	virtual void OnPrepareDC(CDC* pDC, CPrintInfo* pInfo = NULL);
-	protected:
+protected:
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
 	//}}AFX_VIRTUAL
 
@@ -108,7 +107,9 @@ private:
 
 #ifndef _DEBUG  // debug version in hexview.cpp
 inline HexDoc* HexView::GetDocument() const
-   { return (HexDoc*)m_pDocument; }
+{
+	return (HexDoc*)m_pDocument;
+}
 #endif
 
 //{{AFX_INSERT_LOCATION}}

@@ -1,6 +1,6 @@
 /*
  * LEX.H
- * 
+ *
  * Lexical analyzer
  * Copyright (c) 2008 Thomas A. Rieck
  */

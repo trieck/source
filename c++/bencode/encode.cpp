@@ -20,7 +20,7 @@ static char END_OBJECT[1] =    { 'e' };
 
 /////////////////////////////////////////////////////////////////////////////
 BEEncoder::BEEncoder(ISequentialStream *pStream)
- : m_pStream(pStream)
+		: m_pStream(pStream)
 {
 	// Copied pointer so AddRef it
 	m_pStream->AddRef();
@@ -72,7 +72,7 @@ BOOL BEEncoder::EncodeDict(LPDICTIONARY d)
 		EncodeObject(entry.second);
 	}
 
-	EndObject();			
+	EndObject();
 
 	return TRUE;
 }
@@ -84,7 +84,7 @@ BOOL BEEncoder::EncodeList(LPLIST l)
 
 	for (unsigned i = 0; i < l->size(); i++) {
 		EncodeObject(l->Get(i));
-	}	
+	}
 
 	EndObject();
 

@@ -7,8 +7,7 @@
 
 #include "player.h"
 /////////////////////////////////////////////////////////////////////////////
-class PlayerTwo : public Player
-{
+class PlayerTwo : public Player {
 // Construction / Destruction
 public:
 	PlayerTwo();

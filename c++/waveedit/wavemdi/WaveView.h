@@ -15,20 +15,19 @@
 /////////////////////////////////////////////////////////////////
 // The CWaveView view class
 
-class CWaveView : public CListView
-{
+class CWaveView : public CListView {
 protected:
 	CWaveView();
 	DECLARE_DYNCREATE(CWaveView)
-	
+
 	// message map entries
 	afx_msg	INT	OnCreate(LPCREATESTRUCT);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 
 // Attributes
 public:
-   CWaveDoc* GetDocument();
-   
+	CWaveDoc* GetDocument();
+
 // Overrides
 public:
 	virtual VOID OnInitialUpdate();
@@ -42,13 +41,13 @@ protected:
 	static LPCTSTR	m_lpszHeaders[];
 
 	DECLARE_MESSAGE_MAP()
-};       
+};
 
 inline CWaveDoc* CWaveView::GetDocument()
-{ 
-   return (CWaveDoc*)m_pDocument; 
+{
+	return (CWaveDoc*)m_pDocument;
 }
 
 ///////////////////////////////////////////////////////////////////
-  
+
 #endif	// __WAVEVIEW_H__

@@ -11,7 +11,7 @@
 IMPLEMENT_DYNAMIC(NewVolumeDlg, CDialog)
 
 NewVolumeDlg::NewVolumeDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(NewVolumeDlg::IDD, pParent)
+		: CDialog(NewVolumeDlg::IDD, pParent)
 {
 
 }
@@ -50,15 +50,15 @@ BEGIN_MESSAGE_MAP(NewVolumeDlg, CDialog)
 END_MESSAGE_MAP()
 
 void NewVolumeDlg::OnBrowse()
-{	
-	static TCHAR BASED_CODE szFilter[] = 
-		_T("All Supported Types|*.adf;*.hdf|")
-		_T("Amiga Disk Files (*.adf)|*.adf|")
-		_T("Hard Disk Files (*.hdf)|*.hdf|")
-		_T("All Files (*.*)|*.*||");
+{
+	static TCHAR BASED_CODE szFilter[] =
+	    _T("All Supported Types|*.adf;*.hdf|")
+	    _T("Amiga Disk Files (*.adf)|*.adf|")
+	    _T("Hard Disk Files (*.hdf)|*.hdf|")
+	    _T("All Files (*.*)|*.*||");
 
 	CFileDialog dlg(FALSE, _T("*.adf"), NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
-		szFilter, this);
+	                szFilter, this);
 
 	int result = dlg.DoModal();
 	if (result == IDOK) {
@@ -138,7 +138,7 @@ void NewVolumeDlg::OnOK()
 		return;
 	}
 
-	
+
 	bool bootable = (m_boot.GetCheck() == BST_CHECKED);
 
 	uint32_t flags = 0;
@@ -154,7 +154,7 @@ void NewVolumeDlg::OnOK()
 
 	WaitDlg dlg(this);
 	dlg.SetCreateParams(size, m_strPath, label, flags, bootable);
-	
+
 	if (dlg.DoModal() == IDOK)
 		CDialog::OnOK();
 }

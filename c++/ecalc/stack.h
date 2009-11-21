@@ -11,8 +11,7 @@
 #define NSTACK 1024
 
 /////////////////////////////////////////////////////////////////////////////
-class Stack
-{
+class Stack {
 public:
 // Construction / Destruction
 	Stack();

@@ -53,34 +53,34 @@ void SetChar(BYTE b, int offset)
 		CharStr[offset] = b;
 	} else {
 		CharStr[offset] = '.';
-	} 
+	}
 }
 
 void PrintSector(HANDLE hFile, DISK_GEOMETRY *geom, __int64 track, DWORD sector)
 {
 	DWORD read, index;
 
-	LPBYTE lpSector = (LPBYTE)VirtualAlloc (NULL, 
-		geom->BytesPerSector,
-		MEM_COMMIT|MEM_RESERVE, 
-		PAGE_READWRITE);
+	LPBYTE lpSector = (LPBYTE)VirtualAlloc (NULL,
+	                                        geom->BytesPerSector,
+	                                        MEM_COMMIT|MEM_RESERVE,
+	                                        PAGE_READWRITE);
 
 	LARGE_INTEGER offset;
 	offset.QuadPart = (geom->BytesPerSector * geom->SectorsPerTrack * track) +
-		(sector * geom->BytesPerSector);
+	                  (sector * geom->BytesPerSector);
 
 	offset.LowPart = SetFilePointer (hFile, offset.LowPart, &offset.HighPart, FILE_BEGIN);
-	if (offset.LowPart == -1 && GetLastError() != NO_ERROR) { 
+	if (offset.LowPart == -1 && GetLastError() != NO_ERROR) {
 		WriteErr("unable to set file pointer.");
 		VirtualFree(lpSector, 0, MEM_RELEASE);
 		return;
 	}
 
-	if (!ReadFile (hFile, 
-		lpSector, 
-		geom->BytesPerSector, 
-		&read, 
-		NULL)) {
+	if (!ReadFile (hFile,
+	               lpSector,
+	               geom->BytesPerSector,
+	               &read,
+	               NULL)) {
 		WriteErr("unable to read file.");
 		VirtualFree(lpSector, 0, MEM_RELEASE);
 		return;
@@ -92,8 +92,8 @@ void PrintSector(HANDLE hFile, DISK_GEOMETRY *geom, __int64 track, DWORD sector)
 	}
 
 	for (DWORD i = 0; i <= read; i++) {
-		index = i % 16;	
-		
+		index = i % 16;
+
 		if (i == read) {
 			WriteString(CharStr);
 			WriteString("\r\n");
@@ -102,15 +102,15 @@ void PrintSector(HANDLE hFile, DISK_GEOMETRY *geom, __int64 track, DWORD sector)
 			WriteString(CharStr);
 			WriteString("\r\n");
 		}
-		
+
 		if (index == 0) {
 			PrintDWord(i);
 			WriteString(": ");
-		} 
-		
+		}
+
 		PrintByte(lpSector[i]);
 		SetChar(lpSector[i], index);
-		WriteString(" ");				
+		WriteString(" ");
 	}
 
 	VirtualFree(lpSector, 0, MEM_RELEASE);
@@ -122,13 +122,13 @@ int ReadSector(char drive, __int64 track, DWORD sector)
 	wsprintf(buf, "\\\\.\\%c:", drive);
 
 	HANDLE hFile = CreateFile(
-		buf, 
-		GENERIC_READ,
-        FILE_SHARE_READ|FILE_SHARE_WRITE,
-		NULL,
-        OPEN_EXISTING,
-        0,
-        NULL);
+	                   buf,
+	                   GENERIC_READ,
+	                   FILE_SHARE_READ|FILE_SHARE_WRITE,
+	                   NULL,
+	                   OPEN_EXISTING,
+	                   0,
+	                   NULL);
 	if (hFile == INVALID_HANDLE_VALUE) {
 		WriteErr("open failed.\r\n");
 		return 1;
@@ -137,23 +137,23 @@ int ReadSector(char drive, __int64 track, DWORD sector)
 	DISK_GEOMETRY geom;
 	DWORD returned;
 	DeviceIoControl(
-		hFile,								/* device handle */
-		IOCTL_DISK_GET_DRIVE_GEOMETRY,		/* control code */
-		0,									/* input buffer ptr */
-		0,									/* input buffer size */
-		&geom,								/* output buffer ptr */
-		sizeof(DISK_GEOMETRY),				/* output buffer size */
-		&returned,							/* bytes returned ptr */
-		0);									/* overlapped ptr */
+	    hFile,								/* device handle */
+	    IOCTL_DISK_GET_DRIVE_GEOMETRY,		/* control code */
+	    0,									/* input buffer ptr */
+	    0,									/* input buffer size */
+	    &geom,								/* output buffer ptr */
+	    sizeof(DISK_GEOMETRY),				/* output buffer size */
+	    &returned,							/* bytes returned ptr */
+	    0);									/* overlapped ptr */
 
-	
-	__int64 tracks = geom.Cylinders.QuadPart * geom.TracksPerCylinder;	
+
+	__int64 tracks = geom.Cylinders.QuadPart * geom.TracksPerCylinder;
 
 	// ensure valid track, sector
 	if (track >= tracks ||
-		sector >= geom.SectorsPerTrack) {
-		wsprintf(buf, "invalid t/s#: %d,%d.\r\n", 
-			track, sector);
+	        sector >= geom.SectorsPerTrack) {
+		wsprintf(buf, "invalid t/s#: %d,%d.\r\n",
+		         track, sector);
 		WriteErr(buf);
 		CloseHandle(hFile);
 		return 1;

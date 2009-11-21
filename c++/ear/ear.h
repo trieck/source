@@ -9,7 +9,7 @@
 #endif // _MSC_VER > 1000
 
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+#error include 'stdafx.h' before including this file for PCH
 #endif
 
 #include "resource.h"		// main symbols
@@ -34,8 +34,7 @@
 // See ear.cpp for the implementation of this class
 //
 
-class EarApp : public CWinApp
-{
+class EarApp : public CWinApp {
 public:
 	EarApp();
 	~EarApp();
@@ -43,7 +42,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(EarApp)
-	public:
+public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
 	virtual int DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt);
@@ -72,15 +71,18 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
-inline int EarApp::GetIntervals() const {
+inline int EarApp::GetIntervals() const
+{
 	return m_Intervals;
 }
 
-inline void EarApp::SetIntervals(int intervals) {
+inline void EarApp::SetIntervals(int intervals)
+{
 	m_Intervals = intervals;
 }
 
-inline int EarApp::GetInstrument() const {
+inline int EarApp::GetInstrument() const
+{
 	return m_instrument;
 }
 

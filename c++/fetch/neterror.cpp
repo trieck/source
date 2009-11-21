@@ -39,12 +39,12 @@ void NetError::create()
 {
 	TCHAR provider[256] = "";
 	TCHAR description[256] = "";
-	
+
 	WNetGetLastError(&m_errorcode,
-		description, 
-		256,
-		provider,
-		256);
+	                 description,
+	                 256,
+	                 provider,
+	                 256);
 
 	m_description = description;
 	m_provider = provider;

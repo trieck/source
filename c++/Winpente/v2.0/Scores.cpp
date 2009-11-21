@@ -22,8 +22,7 @@ CScores::CScores()
 
 CScores::~CScores()
 {
-	if (m_pScoresArray) 
-	{
+	if (m_pScoresArray) {
 		m_pScoresArray->RemoveAll();
 		delete m_pScoresArray;
 	}
@@ -31,8 +30,7 @@ CScores::~CScores()
 
 BOOL CScores::Init()
 {
-	if (m_fInitialized)
-	{
+	if (m_fInitialized) {
 		return FALSE;
 	}
 
@@ -51,8 +49,7 @@ BOOL CScores::AddScore(const CString& strScore)
 {
 	BOOL fRtn = FALSE;
 
-	if (!m_fInitialized)
-	{
+	if (!m_fInitialized) {
 		return fRtn;
 	}
 
@@ -60,7 +57,7 @@ BOOL CScores::AddScore(const CString& strScore)
 	m_pScoresArray->Add(strScore);
 
 	fRtn = UpdateRegistry();
-	
+
 	return fRtn;
 }
 
@@ -73,14 +70,12 @@ VOID CScores::BuildScoresArray()
 
 	m_pScoresArray->RemoveAll();
 
-	if (CPenteApp::GetRegistryInformation(_T("bin"), _T("Scores"), &pData, REG_BINARY))
-	{
+	if (CPenteApp::GetRegistryInformation(_T("bin"), _T("Scores"), &pData, REG_BINARY)) {
 		CString strScores((LPCTSTR)pData);
 
 		delete pData;
 
-		while((nPos = strScores.Find('\n')) != -1)
-		{
+		while ((nPos = strScores.Find('\n')) != -1) {
 			CString strItem = strScores.Left(nPos);
 
 			VERIFY(!strItem.IsEmpty());
@@ -96,13 +91,11 @@ INT CScores::GetScoreCount()
 {
 	INT nItems = -1;
 
-	if (!m_fInitialized)
-	{
+	if (!m_fInitialized) {
 		return nItems;
 	}
 
-	if (m_pScoresArray)
-	{
+	if (m_pScoresArray) {
 		nItems = m_pScoresArray->GetSize();
 	}
 
@@ -114,37 +107,32 @@ BOOL CScores::GetScoreItem(INT nIndex, INT nItem, CString& strItem)
 	// Initialize out parameter
 	strItem = _T("");
 
-	if (!m_fInitialized)
-	{
+	if (!m_fInitialized) {
 		return FALSE;
 	}
 
 	ASSERT(m_pScoresArray);
 
-	if (nIndex < 0 || nIndex > m_pScoresArray->GetSize())
-	{
+	if (nIndex < 0 || nIndex > m_pScoresArray->GetSize()) {
 		return FALSE;
 	}
 
-	if (nItem < 0 || nItem > 4)
-	{
+	if (nItem < 0 || nItem > 4) {
 		return FALSE;
 	}
 
 	CString strScoreString;
-	
+
 	strScoreString = m_pScoresArray->GetAt(nIndex);
 
 	INT nPos;
 	INT nCount = 0;
 
-	while((nPos = strScoreString.Find('\t')) != -1)
-	{
+	while ((nPos = strScoreString.Find('\t')) != -1) {
 		CString strTemp = strScoreString.Left(nPos);
 		VERIFY(!strTemp.IsEmpty());
 
-		if (nCount == nItem)
-		{
+		if (nCount == nItem) {
 			strItem = strTemp;
 			break;
 		}
@@ -160,13 +148,12 @@ BOOL CScores::FlushScores()
 {
 	BOOL fRtn = FALSE;
 
-	if (!m_fInitialized)
-	{
+	if (!m_fInitialized) {
 		return fRtn;
 	}
 
 	m_pScoresArray->RemoveAll();
-		
+
 	UpdateRegistry();
 
 	fRtn = TRUE;
@@ -182,11 +169,10 @@ BOOL CScores::UpdateRegistry()
 
 	CString strScores;
 
-	for (INT i = 0; i < m_pScoresArray->GetSize(); i++)
-	{
+	for (INT i = 0; i < m_pScoresArray->GetSize(); i++) {
 		strScores += m_pScoresArray->GetAt(i) + '\n';
 	}
-	
+
 	// Update the scores in the registry
 	UINT nLength = strScores.GetLength() == 0 ? 1 : strScores.GetLength();
 

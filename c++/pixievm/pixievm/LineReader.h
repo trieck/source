@@ -14,7 +14,7 @@ class LineReader {
 // Construction / Destruction
 public:
 	LineReader(istream &s) : is(s) {}
-	~LineReader(){}
+	~LineReader() {}
 
 // Interface
 public:

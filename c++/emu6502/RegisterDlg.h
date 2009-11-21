@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // RegisterDlg dialog
 
-class RegisterDlg : public CDialog
-{
+class RegisterDlg : public CDialog {
 // Construction
 public:
 	RegisterDlg(CWnd* pParent = NULL);   // standard constructor
@@ -20,16 +19,16 @@ public:
 // Dialog Data
 	//{{AFX_DATA(RegisterDlg)
 	enum { IDD = IDD_REGISTERS };
-		// NOTE: the ClassWizard will add data members here
+	// NOTE: the ClassWizard will add data members here
 	//}}AFX_DATA
 
 
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(RegisterDlg)
-	public:
+public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	protected:
+protected:
 	virtual void OnCancel();
 	virtual void OnOK();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

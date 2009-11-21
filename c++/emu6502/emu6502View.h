@@ -10,8 +10,7 @@
 #endif // _MSC_VER > 1000
 
 
-class Emu6502View : public CEditView
-{
+class Emu6502View : public CEditView {
 protected: // create from serialization only
 	Emu6502View();
 	DECLARE_DYNCREATE(Emu6502View)
@@ -26,7 +25,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(Emu6502View)
-	public:
+public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void OnInitialUpdate();
@@ -54,7 +53,9 @@ private:
 
 #ifndef _DEBUG  // debug version in emu6502View.cpp
 inline Emu6502Doc* Emu6502View::GetDocument()
-   { return (Emu6502Doc*)m_pDocument; }
+{
+	return (Emu6502Doc*)m_pDocument;
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

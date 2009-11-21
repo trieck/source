@@ -14,18 +14,18 @@ static const char* usage = "usage: <service> -i -u";
 
 /////////////////////////////////////////////////////////////////////////////
 Service::Service(const char* name)
- : m_name(name)
+		: m_name(name)
 {
 	m_pThis = this;
 	m_ServiceThreadID = 0UL;
 	m_hServiceStatus = NULL;
-    m_Status.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
-    m_Status.dwCurrentState = SERVICE_STOPPED;
-    m_Status.dwControlsAccepted = SERVICE_ACCEPT_STOP;
-    m_Status.dwWin32ExitCode = 0UL;
-    m_Status.dwServiceSpecificExitCode = 0UL;
-    m_Status.dwCheckPoint = 0UL;
-    m_Status.dwWaitHint = 0UL;
+	m_Status.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
+	m_Status.dwCurrentState = SERVICE_STOPPED;
+	m_Status.dwControlsAccepted = SERVICE_ACCEPT_STOP;
+	m_Status.dwWin32ExitCode = 0UL;
+	m_Status.dwServiceSpecificExitCode = 0UL;
+	m_Status.dwCheckPoint = 0UL;
+	m_Status.dwWaitHint = 0UL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -54,12 +54,12 @@ BOOL Service::Execute(int argc, char **argv)
 
 		return FALSE;
 	}
-	
+
 	SERVICE_TABLE_ENTRY st[] = {
 		(LPSTR)m_name.c_str(), ServiceMain,
-        NULL, NULL
-    };
-	
+		NULL, NULL
+	};
+
 	if (!StartServiceCtrlDispatcher(st)) {
 		// Check to see if we are running as a console
 		if (GetLastError() == ERROR_FAILED_SERVICE_CONTROLLER_CONNECT) {
@@ -77,20 +77,20 @@ void Service::ServiceMain(DWORD argc, char **argv)
 {
 	m_pThis->m_ServiceThreadID = GetCurrentThreadId();
 	m_pThis->m_hServiceStatus = RegisterServiceCtrlHandler(
-		m_pThis->m_name.c_str(), Handler);
+	                                m_pThis->m_name.c_str(), Handler);
 
 	m_pThis->m_Status.dwWin32ExitCode = 0;
 	m_pThis->m_Status.dwCheckPoint = 0;
 	m_pThis->m_Status.dwWaitHint = 0;
 
-    m_pThis->SetStatus(SERVICE_START_PENDING);
+	m_pThis->SetStatus(SERVICE_START_PENDING);
 
 	if (m_pThis->OnInit()) {
 		m_pThis->SetStatus(SERVICE_RUNNING);
 		m_pThis->Run();
-	}	
+	}
 
-    m_pThis->SetStatus(SERVICE_STOPPED);
+	m_pThis->SetStatus(SERVICE_STOPPED);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -111,15 +111,15 @@ void Service::ConsoleMain(DWORD argc, char **argv)
 void Service::Handler(DWORD opcode)
 {
 	switch (opcode) {
-    case SERVICE_CONTROL_STOP:			// 1
-    case SERVICE_CONTROL_PAUSE:			// 2
-    case SERVICE_CONTROL_CONTINUE:		// 3
-    case SERVICE_CONTROL_INTERROGATE:	// 4
-    case SERVICE_CONTROL_SHUTDOWN:		// 5
+	case SERVICE_CONTROL_STOP:			// 1
+	case SERVICE_CONTROL_PAUSE:			// 2
+	case SERVICE_CONTROL_CONTINUE:		// 3
+	case SERVICE_CONTROL_INTERROGATE:	// 4
+	case SERVICE_CONTROL_SHUTDOWN:		// 5
 		::PostThreadMessage(m_pThis->m_ServiceThreadID, WM_USER, opcode, 0);
 	default:
-        break;
-    }
+		break;
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -192,89 +192,89 @@ void Service::OnShutdown()
 /////////////////////////////////////////////////////////////////////////////
 BOOL Service::InstallService() const
 {
-    // Open the Service Control Manager
-    SC_HANDLE hSCM = ::OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
-    if (hSCM == NULL) 
+	// Open the Service Control Manager
+	SC_HANDLE hSCM = ::OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
+	if (hSCM == NULL)
 		return FALSE;
 
-    // Get the executable file path
-    char path[_MAX_PATH + _MAX_FNAME + 1];
-    ::GetModuleFileName(NULL, path, sizeof(path));
+	// Get the executable file path
+	char path[_MAX_PATH + _MAX_FNAME + 1];
+	::GetModuleFileName(NULL, path, sizeof(path));
 
-    // Create the service
-    SC_HANDLE hService = ::CreateService(hSCM,
-		 m_name.c_str(),
-		 m_name.c_str(),
-		 SERVICE_ALL_ACCESS,
-		 SERVICE_WIN32_OWN_PROCESS,
-		 SERVICE_AUTO_START,        // start condition
-		 SERVICE_ERROR_NORMAL,
-		 path,
-		 NULL,
-		 NULL,
-		 NULL,
-		 NULL,
-		 NULL);
-    if (hService == NULL) {
-        ::CloseServiceHandle(hSCM);
-        return FALSE;
-    }
+	// Create the service
+	SC_HANDLE hService = ::CreateService(hSCM,
+	                                     m_name.c_str(),
+	                                     m_name.c_str(),
+	                                     SERVICE_ALL_ACCESS,
+	                                     SERVICE_WIN32_OWN_PROCESS,
+	                                     SERVICE_AUTO_START,        // start condition
+	                                     SERVICE_ERROR_NORMAL,
+	                                     path,
+	                                     NULL,
+	                                     NULL,
+	                                     NULL,
+	                                     NULL,
+	                                     NULL);
+	if (hService == NULL) {
+		::CloseServiceHandle(hSCM);
+		return FALSE;
+	}
 
 	EventLog::loginfo("The service was installed");
 
-    // tidy up
-    ::CloseServiceHandle(hService);
-    ::CloseServiceHandle(hSCM);
+	// tidy up
+	::CloseServiceHandle(hService);
+	::CloseServiceHandle(hSCM);
 
-    return TRUE;
+	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 BOOL Service::UninstallService() const
 {
 	// Open the Service Control Manager
-    SC_HANDLE hSCM = ::OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
-    if (hSCM == NULL) 
+	SC_HANDLE hSCM = ::OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
+	if (hSCM == NULL)
 		return FALSE;
 
-    BOOL bResult = FALSE;
-    SC_HANDLE hService = ::OpenService(hSCM,
-		m_name.c_str(),
-        DELETE);
+	BOOL bResult = FALSE;
+	SC_HANDLE hService = ::OpenService(hSCM,
+	                                   m_name.c_str(),
+	                                   DELETE);
 
-    if (hService != NULL) {
-        if (::DeleteService(hService)) {
+	if (hService != NULL) {
+		if (::DeleteService(hService)) {
 			EventLog::loginfo("The service was removed");
-            bResult = TRUE;
-        } else {
+			bResult = TRUE;
+		} else {
 			EventLog::logerr("The service could not be removed");
-        }
-        ::CloseServiceHandle(hService);
-    }
-    
-    ::CloseServiceHandle(hSCM);
+		}
+		::CloseServiceHandle(hService);
+	}
 
-    return bResult;
+	::CloseServiceHandle(hSCM);
+
+	return bResult;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 BOOL Service::IsInstalled() const
 {
-    BOOL bResult = FALSE;
+	BOOL bResult = FALSE;
 
-    // Open the Service Control Manager
-    SC_HANDLE hSCM = ::OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
-    if (hSCM != NULL) {
-        // Try to open the service
-        SC_HANDLE hService = ::OpenService(hSCM, m_name.c_str(), 
-			SERVICE_QUERY_CONFIG);
-        if (hService != NULL) {
-            bResult = TRUE;
-            ::CloseServiceHandle(hService);
+	// Open the Service Control Manager
+	SC_HANDLE hSCM = ::OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
+	if (hSCM != NULL) {
+		// Try to open the service
+		SC_HANDLE hService = ::OpenService(hSCM, m_name.c_str(),
+		                                   SERVICE_QUERY_CONFIG);
+		if (hService != NULL) {
+			bResult = TRUE;
+			::CloseServiceHandle(hService);
 		}
 
-        ::CloseServiceHandle(hSCM);
-    }
-    
-    return bResult;
+		::CloseServiceHandle(hSCM);
+	}
+
+	return bResult;
 }

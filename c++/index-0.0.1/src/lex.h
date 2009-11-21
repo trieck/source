@@ -9,18 +9,17 @@
 #define __LEX_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Lex
-{
+class Lex {
 // Construction / Destruction
 public:
 	Lex();
 	~Lex();
-	
+
 // Interface
 	bool open(const char *filename);
 	void close();
 	const char *gettok(void);
-	
+
 // Implementation
 private:
 	char buf[PATH_MAX];	// lexical buffer

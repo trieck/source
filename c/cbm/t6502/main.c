@@ -1,6 +1,6 @@
 /*
  * MAIN.C
- * 
+ *
  * a very teeny-tiny 6502 assembler
  *
  */
@@ -18,8 +18,8 @@ LabelTable labels;				/* symbol table for resolving labels */
 SymbolTable table;				/* symbol table of opcodes */
 const char *infile;				/* input file name */
 const char *log_file_name = NULL;	/* stderr */
-/* 
- * main entry point 
+/*
+ * main entry point
  */
 int main(int argc, char *argv[])
 {
@@ -81,7 +81,7 @@ void cleanup(void)
 }
 
 /*
- * print usage 
+ * print usage
  */
 void usage(void)
 {

@@ -2,8 +2,7 @@
 
 #include "RecolorableBitmap.h"
 
-class PieceBitmap : public RecolorableBitmap
-{
+class PieceBitmap : public RecolorableBitmap {
 public:
 	PieceBitmap();
 	virtual ~PieceBitmap();

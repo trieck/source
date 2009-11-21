@@ -52,7 +52,7 @@ typedef enum {
 	absl,	/* absolute */
 	abx,	/* absolute, x */
 	aby,	/* absolute, y */
-	imp,	/* implied */		
+	imp,	/* implied */
 	rel,	/* relative */
 	idx,	/* indirect x */
 	idy,	/* indirect y */

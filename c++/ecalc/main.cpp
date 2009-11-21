@@ -31,8 +31,9 @@ int main(int argc, char * argv[])
 		cout << usage << endl;
 		return 1;
 	}
-	
-	argc--; argv++;
+
+	argc--;
+	argv++;
 
 	if (strcmp(argv[0], "--stdin") == 0) {
 		while (cin) {
@@ -58,25 +59,25 @@ int main(int argc, char * argv[])
 //
 string load(const char* file)
 {
-    // read in a file into a string using the "big gulp" method
-    FILE * fp = fopen(file, "r");
+	// read in a file into a string using the "big gulp" method
+	FILE * fp = fopen(file, "r");
 	if (fp == NULL) {
 		cerr << "unable to open file " << file << '.' << endl;
 		exit (1);
 	}
 
-    struct stat status;
-    stat(file, &status);
+	struct stat status;
+	stat(file, &status);
 
-    char* pbuf = new char [status.st_size + 1];
+	char* pbuf = new char [status.st_size + 1];
 
-    size_t nitems = fread(pbuf, 1, status.st_size, fp);
-	
+	size_t nitems = fread(pbuf, 1, status.st_size, fp);
+
 	string output = string(pbuf, nitems);
 	delete [] pbuf;
 
-    fclose(fp);
+	fclose(fp);
 
-    return output;
+	return output;
 }
 

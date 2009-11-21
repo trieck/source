@@ -10,7 +10,7 @@
 #define _FIVEROW_H_
 
 #include "wpthk.h"
-			
+
 // Exported functions
 
 EXTERNC	int	DllExport CheckFiveInARow(int aBoard[][19], POINT pt, int nCurrentPlayer);

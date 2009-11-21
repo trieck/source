@@ -40,10 +40,11 @@ void load_torrent(const char *filename)
 		error("unable to open \"%s\".\n", filename);
 
 	torrent = getelement(fp);
-	if (torrent.type != ET_DICT) 
+	if (torrent.type != ET_DICT)
 		error("bad torrent file \"%s\".", filename);
 
-	fclose(fp); fp = NULL;
+	fclose(fp);
+	fp = NULL;
 }
 
 void display(void)
@@ -75,7 +76,7 @@ void enum_trackers(bt_list *trackers)
 	while (trackers) {
 		switch (trackers->e.type) {
 		case ET_STRING:
-			if (trackers->e.sval->data) 
+			if (trackers->e.sval->data)
 				output("\t\t%s\n", trackers->e.sval->data);
 			break;
 		case ET_LIST:
@@ -97,7 +98,7 @@ void display_info(bt_dict *info)
 	__int64 priv = bt_dict_int(info, "private");
 	__int64 piecelen = bt_dict_int(info, "piece length");
 	bt_string *pieces = bt_dict_string(info, "pieces");
-	
+
 	output("info:\n");
 	if (name) output("\t\tname:\t\t%s\n", name);
 	if (length) output("\t\tlength:\t\t%I64d bytes\n", length);
@@ -119,7 +120,7 @@ void display_files(bt_list *files)
 			const char *md5sum = bt_dict_cstring(files->e.dval, "md5sum");
 			if (path) display_path(path);
 			output(" (%I64d bytes)\n", length);
-			if (md5sum) output("\t\tmd5sum:\t\t%s\n", md5sum);			
+			if (md5sum) output("\t\tmd5sum:\t\t%s\n", md5sum);
 		}
 		files = files->next;
 	}
@@ -135,7 +136,7 @@ void display_path(bt_list *path)
 		if (i > 0) output("/");
 		output(path->e.sval->data);
 		path = path->next;
-	}		
+	}
 }
 
 void display_pieces(bt_string *pieces)
@@ -151,7 +152,7 @@ void display_pieces(bt_string *pieces)
 	for (i = 0; i < npieces; i++) {
 		output("\t\t(0x%.4X)  0x", i+1);
 		for (j = 0; j < SHA1_LEN; j++) {
-			output("%.2X", (unsigned char)*ppieces++);				
+			output("%.2X", (unsigned char)*ppieces++);
 		}
 		output("\n");
 	}
@@ -159,7 +160,10 @@ void display_pieces(bt_string *pieces)
 
 void cleanup(void)
 {
-	if (fp != NULL) { fclose(fp); fp = NULL; }
+	if (fp != NULL) {
+		fclose(fp);
+		fp = NULL;
+	}
 	free_element(torrent);
 }
 
@@ -171,10 +175,10 @@ void usage(void)
 void error(const char *fmt, ...)
 {
 	va_list arglist;
-    va_start(arglist, fmt);
+	va_start(arglist, fmt);
 
-    vfprintf(stderr, fmt, arglist);
-    va_end (arglist);
+	vfprintf(stderr, fmt, arglist);
+	va_end (arglist);
 
 	exit(1);
 }
@@ -182,9 +186,9 @@ void error(const char *fmt, ...)
 void output(const char *fmt, ...)
 {
 	va_list arglist;
-    va_start(arglist, fmt);
+	va_start(arglist, fmt);
 
-    vfprintf(stdout, fmt, arglist);
-    va_end (arglist);
+	vfprintf(stdout, fmt, arglist);
+	va_end (arglist);
 }
 

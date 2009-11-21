@@ -9,8 +9,7 @@
 #define BUFFSIZE 65535
 
 /////////////////////////////////////////////////////////////////////////////
-class String
-{
+class String {
 public:
 // Construction / Destruction
 	String();

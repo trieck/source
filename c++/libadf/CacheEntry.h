@@ -11,8 +11,7 @@
 #define __CACHEENTRY_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class CacheEntry
-{
+class CacheEntry {
 public:
 	CacheEntry();
 	CacheEntry(const CacheEntry &entry);

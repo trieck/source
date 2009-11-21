@@ -26,7 +26,7 @@ typedef struct Item {
 
 // Implementation
 	uint32_t nlen;	// length of data
-	LPSTR data;		// data for the item	
+	LPSTR data;		// data for the item
 } *PITEM;
 
 typedef auto_ptr<Item> ItemPtr;

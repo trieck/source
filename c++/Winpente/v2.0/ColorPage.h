@@ -1,6 +1,6 @@
 /*---------------------------------------
-	Module Name	:	ColorPage.h	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	ColorPage.h
+	Author		:	Thomas A. Rieck
 	Purpose		:	Color Preference
 					Property Page
 	Date		:	08/24/1997
@@ -12,16 +12,19 @@
 #include "PenteDoc.h"
 #include "ResDll\resource.h"
 
-class CColorPage : public CPropertyPage
-{
+class CColorPage : public CPropertyPage {
 	DECLARE_DYNCREATE(CColorPage);
 
 public:
 	CColorPage();
 	~CColorPage();
 
-	inline COLORREF GetBackColor(){return m_lBackColor;};
-	inline COLORREF GetGridColor(){return m_lGridColor;};
+	inline COLORREF GetBackColor() {
+		return m_lBackColor;
+	};
+	inline COLORREF GetGridColor() {
+		return m_lGridColor;
+	};
 protected:
 	virtual BOOL OnInitDialog();
 	virtual BOOL OnApply();
@@ -32,8 +35,12 @@ private:
 	CPenteDoc*	m_pDoc;
 	BOOL		m_fUseBackColor;
 private:
-	inline CStatic& BackColor() {return *(CStatic*) GetDlgItem(IDC_BACKCOLOR);};
-	inline CStatic& GridColor() {return *(CStatic*) GetDlgItem(IDC_GRIDCOLOR);};
+	inline CStatic& BackColor() {
+		return *(CStatic*) GetDlgItem(IDC_BACKCOLOR);
+	};
+	inline CStatic& GridColor() {
+		return *(CStatic*) GetDlgItem(IDC_GRIDCOLOR);
+	};
 
 	afx_msg VOID	OnPaint();
 	afx_msg INT		OnCreate(LPCREATESTRUCT lpCreateStruct);

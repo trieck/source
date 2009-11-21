@@ -1,6 +1,6 @@
 /*---------------------------------------
-	Module Name	:	PiecePage.h	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	PiecePage.h
+	Author		:	Thomas A. Rieck
 	Purpose		:	Pieces Preference
 					Property Page
 	Date		:	08/24/1997
@@ -13,8 +13,7 @@
 #include "ResDll\resource.h"
 #include "OurTypes.h"
 
-class CPiecePage : public CPropertyPage
-{
+class CPiecePage : public CPropertyPage {
 	DECLARE_DYNCREATE(CPiecePage);
 
 public:
@@ -32,7 +31,7 @@ protected:
 	VOID	RedrawPieces();
 private:
 	enum {IDD = IDD_PIECEPAGE};
-	
+
 	CPenteDoc*	m_pDoc;
 	CWnd*		m_pCurrentPlayerOne;
 	CWnd*		m_pCurrentPlayerTwo;

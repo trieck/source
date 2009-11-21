@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// ADFHANDLE.H : ADF handler 
+// ADFHANDLE.H : ADF handler
 //
 // LIBADF : A C++ Amiga Disk File Libary
 // Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
@@ -22,8 +22,7 @@ public:
 class HandlerRegistrar;
 typedef auto_ptr<HandlerRegistrar> HandlerRegistrarPtr;
 
-class HandlerRegistrar
-{
+class HandlerRegistrar {
 private:
 	HandlerRegistrar();
 public:
@@ -39,8 +38,8 @@ public:
 	IADFHandlerIterator end();
 private:
 	static HandlerRegistrarPtr instance;
-	
-	
+
+
 	IADFHandlerVec handlers;
 };
 

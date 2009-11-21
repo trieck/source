@@ -20,7 +20,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 ChargeService::ChargeService()
- : Service("Credit Card Charger Service"), config("backend.ini")  
+		: Service("Credit Card Charger Service"), config("backend.ini")
 {
 	Registrar::RegisterEventSource();
 	pool.Initialize(&config, 0);
@@ -29,7 +29,7 @@ ChargeService::ChargeService()
 
 /////////////////////////////////////////////////////////////////////////////
 ChargeService::~ChargeService()
-{	
+{
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -44,10 +44,10 @@ void ChargeService::OnStop()
 void ChargeService::Run()
 {
 	if (!conn.listen(DEFAULT_PORT, SOMAXCONN)) {
-		EventLog::logerr("ChargeService::Run() listen error : %s", 
-			lasterror().c_str());
+		EventLog::logerr("ChargeService::Run() listen error : %s",
+		                 lasterror().c_str());
 		return;
-    }	
+	}
 
 	WorkerThread worker(this);
 	worker.Start();
@@ -62,8 +62,8 @@ DWORD ChargeService::Execute(LPVOID pdata)
 	for (;;) {
 		Connection remote(conn.accept());
 		remote.release();	// ownership in another thread
-		pool.QueueRequest(&remote);		
-    }
+		pool.QueueRequest(&remote);
+	}
 
 	return 0;
 }

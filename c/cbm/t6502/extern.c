@@ -29,7 +29,7 @@ extern int lineno;				/* current line number */
 static Extern *extern_alloc(void);
 static Extern *extern_lookup(const char *name);
 
-/* 
+/*
  * initialize externals list
  */
 void extern_init(void)
@@ -47,7 +47,7 @@ Extern *extern_alloc(void)
 	return pextern;
 }
 
-/* 
+/*
  * free externals list
  */
 void extern_free(void)
@@ -73,7 +73,7 @@ void extern_insert(const char *name)
 	Extern *pextern = extern_lookup(name);
 	if (pextern != NULL) {
 		warning("external declaration %s already declared at line %d.\n",
-				name, lineno);
+		        name, lineno);
 		return;
 	}
 
@@ -84,7 +84,7 @@ void extern_insert(const char *name)
 	externals = pextern;
 }
 
-/* 
+/*
  * lookup external by name
  */
 Extern *extern_lookup(const char *name)

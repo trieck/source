@@ -1,7 +1,7 @@
 /*---------------------------------------
 
 	Module	:	IWAVELIB.H
-	Purpose	:	Wave Library 
+	Purpose	:	Wave Library
 				Interface Declarations
 	Date	:	11/22/1997
 
@@ -22,8 +22,8 @@
 //
 // IWaveLib
 //
-interface IWaveLib : IUnknown
-{
+interface IWaveLib :
+IUnknown {
 	// IUnknown Methods
 	virtual HRESULT __stdcall QueryInterface(REFIID, PPVOID)=0;
 	virtual ULONG	__stdcall AddRef()=0;

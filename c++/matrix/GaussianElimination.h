@@ -15,7 +15,7 @@ public:
 	static Matrix solve(const Matrix &A);
 
 // Implementation
-private:	
+private:
 };
 
 #endif // __GAUSSIANELIMINATION_H__

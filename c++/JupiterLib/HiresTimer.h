@@ -9,8 +9,7 @@
 #define __HIRESTIMER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class HiresTimer
-{
+class HiresTimer {
 public:
 	HiresTimer();
 	~HiresTimer();

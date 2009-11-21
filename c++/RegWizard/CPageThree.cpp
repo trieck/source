@@ -11,7 +11,7 @@ CPageThree::CPageThree() :CPropertyPage(CPageThree::IDD)
 
 // Message Map for CPageThree
 BEGIN_MESSAGE_MAP(CPageThree, CPropertyPage)
-    ON_WM_PAINT()
+	ON_WM_PAINT()
 END_MESSAGE_MAP()
 
 BOOL CPageThree::OnInitDialog()
@@ -63,14 +63,11 @@ BOOL CPageThree::OnWizardFinish()
 	// set wizard buttons
 	pWizard->SetWizardButtons(PSWIZB_DISABLEDFINISH);
 
-	if (pWizard->SetRegInfo() == -1)
-	{
+	if (pWizard->SetRegInfo() == -1) {
 		CString str;
 		str.LoadString(IDS_REGERROR);
 		AfxMessageBox (str, MB_OK | MB_ICONINFORMATION);
-	}
-	else
-	{
+	} else {
 		CString str;
 		str.LoadString(IDS_REGSUCCESS);
 		AfxMessageBox(str, MB_OK | MB_ICONINFORMATION);

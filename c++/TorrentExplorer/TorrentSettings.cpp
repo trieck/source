@@ -20,7 +20,7 @@ static char THIS_FILE[]=__FILE__;
 
 //////////////////////////////////////////////////////////////////////
 TorrentSettings::TorrentSettings()
- : m_pDict(NULL)
+		: m_pDict(NULL)
 {
 	m_pApp = AfxGetApp();
 	ReadSettings();
@@ -39,24 +39,24 @@ void TorrentSettings::Flush()
 
 	CMemFile file;
 	CArchive ar(&file, CArchive::store);
-	
+
 	try {
 		TorrentWriter::Write(m_pDict, ar);
 		file.SeekToBegin();
 
 		DWORD length = file.GetLength();
-	
+
 		CString buf;
 		LPSTR pbuf = buf.GetBufferSetLength(length);
 
 		file.Read(pbuf, length);
 
-		m_pApp->WriteProfileBinary("Settings", "Settings", 
-			(LPBYTE)pbuf, length);
+		m_pApp->WriteProfileBinary("Settings", "Settings",
+		                           (LPBYTE)pbuf, length);
 	} catch (CException *pException) {
 		pException->ReportError();
 		pException->Delete();
-	}	
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -72,10 +72,11 @@ void TorrentSettings::Delete()
 //////////////////////////////////////////////////////////////////////
 void TorrentSettings::ReadSettings()
 {
-	LPBYTE data; UINT size;
-	if (!m_pApp->GetProfileBinary("Settings", "Settings", &data, 
-		&size)) {
-			m_pDict = new Dictionary();
+	LPBYTE data;
+	UINT size;
+	if (!m_pApp->GetProfileBinary("Settings", "Settings", &data,
+	                              &size)) {
+		m_pDict = new Dictionary();
 	} else {
 		CMemFile file(data, size);
 		CArchive ar(&file, CArchive::load);
@@ -84,7 +85,7 @@ void TorrentSettings::ReadSettings()
 		} catch (CException *pException) {
 			pException->ReportError();
 			pException->Delete();
-		} 
+		}
 		delete []data;
 	}
 }

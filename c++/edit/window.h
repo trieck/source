@@ -17,8 +17,7 @@ typedef void(Window::*MsgFunc)(WPARAM, LPARAM);
 	m_messagemap[msg] = (MsgFunc)pfn;
 
 /////////////////////////////////////////////////////////////////////////////
-class Window
-{
+class Window {
 // Construction / Destruction
 public:
 	Window();
@@ -37,23 +36,26 @@ protected:
 
 	HWND m_hWnd;
 	map<UINT, MsgFunc> m_messagemap;
-	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, 
-		LPARAM lParam);
+	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam,
+	                                   LPARAM lParam);
 };
 /////////////////////////////////////////////////////////////////////////////
 
-inline Window::operator HWND () const {
+inline Window::operator HWND () const
+{
 	return m_hWnd;
 }
 
-inline BOOL Window::Show(int nCmdShow) {
+inline BOOL Window::Show(int nCmdShow)
+{
 	ASSERT(*this != NULL);
 	if (nCmdShow == 0)
 		nCmdShow = pApp->GetShow();
 	return ::ShowWindow(*this, nCmdShow);
 }
 
-inline BOOL Window::Update() {
+inline BOOL Window::Update()
+{
 	ASSERT(*this != NULL);
 	return ::UpdateWindow(*this);
 }

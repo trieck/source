@@ -1,6 +1,6 @@
 /*---------------------------------------------
-	Module Name	:	MiscPage.cpp	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	MiscPage.cpp
+	Author		:	Thomas A. Rieck
 	Purpose		:	Miscellaneous Preference
 					Property Page
 					implementation
@@ -51,14 +51,12 @@ VOID CMiscPage::OnEnableDebug()
 VOID CMiscPage::OnFlushPlayers()
 {
 	INT nRtn = AfxMessageBox(IDS_CLEARALLPLAYERS, MB_YESNO);
-	if (nRtn == IDYES)
-	{
+	if (nRtn == IDYES) {
 		CPlayers players;
 
 		players.Init();
 
-		if (players.FlushPlayers())
-		{
+		if (players.FlushPlayers()) {
 			GetDlgItem(IDC_FLUSHPLAYERS)->EnableWindow(FALSE);
 		}
 	}
@@ -67,14 +65,12 @@ VOID CMiscPage::OnFlushPlayers()
 VOID CMiscPage::OnFlushScores()
 {
 	INT nRtn = AfxMessageBox(IDS_CLEARALLSCORES, MB_YESNO);
-	if (nRtn == IDYES)
-	{
+	if (nRtn == IDYES) {
 		CScores scores;
 
 		scores.Init();
 
-		if (scores.FlushScores())
-		{
+		if (scores.FlushScores()) {
 			GetDlgItem(IDC_FLUSHSCORES)->EnableWindow(FALSE);
 		}
 	}
@@ -90,7 +86,7 @@ VOID CMiscPage::OnOK()
 	DWORD dwValue = pApp->m_fEnableDebug ? 1 : 0;
 
 	CPenteApp::UpdateRegistryInformation(_T("Option"), _T("EnableDebug"),
-		(LPBYTE)&dwValue, REG_DWORD);
+	                                     (LPBYTE)&dwValue, REG_DWORD);
 }
 
 BOOL CMiscPage::OnApply()

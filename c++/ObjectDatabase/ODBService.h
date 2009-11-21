@@ -9,8 +9,7 @@
 #define __ODBSERVICE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ODBService : public Service, IRunnable
-{
+class ODBService : public Service, IRunnable {
 public:
 	// Construction / Destruction
 	ODBService();
@@ -35,7 +34,8 @@ private:
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
-inline LPCSTR ODBService::GetServiceName() const {
+inline LPCSTR ODBService::GetServiceName() const
+{
 	return "Object Database Service";
 }
 

@@ -54,8 +54,7 @@ STDMETHODIMP CImpIPersistStream :: Load(LPSTREAM pIStream)
 
 	hr = pIStream->Read(m_pObj->m_pRender, sizeof(RENDERING), &cb);
 
-	if (FAILED(hr) || cb != sizeof(RENDERING))
-	{
+	if (FAILED(hr) || cb != sizeof(RENDERING)) {
 		pIStream->Release();
 		return (hr);
 	}
@@ -65,13 +64,13 @@ STDMETHODIMP CImpIPersistStream :: Load(LPSTREAM pIStream)
 	// inform advise sink of data change
 	if (m_pObj->m_pIDataAdviseHolder)
 		m_pObj->m_pIDataAdviseHolder->SendOnDataChange
-            (m_pObj->m_pImpIDataObject, DVASPECT_CONTENT, ADVF_NODATA);
+		(m_pObj->m_pImpIDataObject, DVASPECT_CONTENT, ADVF_NODATA);
 
 	return NOERROR;
 }
 
 STDMETHODIMP CImpIPersistStream :: Save(LPSTREAM pIStream, BOOL fClearDirty)
-{ 
+{
 	ULONG cb;
 	HRESULT hr;
 
@@ -79,7 +78,7 @@ STDMETHODIMP CImpIPersistStream :: Save(LPSTREAM pIStream, BOOL fClearDirty)
 		return ResultFromScode(E_POINTER);
 
 	hr = pIStream->Write(m_pObj->m_pRender, sizeof(RENDERING), &cb);
-	
+
 	if (FAILED(hr) || cb != sizeof(RENDERING))
 		return ResultFromScode(STG_E_WRITEFAULT);
 

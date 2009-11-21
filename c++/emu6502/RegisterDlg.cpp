@@ -13,7 +13,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 static UINT registers[] = {
-	IDC_E_REGA,	
+	IDC_E_REGA,
 	IDC_E_REGX,
 	IDC_E_REGY,
 	IDC_E_REGPCL,
@@ -34,7 +34,7 @@ RegisterDlg::RegisterDlg(CWnd* pParent /*=NULL*/)
 	pApp->RegisterConstruct(RegisterDlg::IDD, this);
 
 	//{{AFX_DATA_INIT(RegisterDlg)
-		// NOTE: the ClassWizard will add member initialization here
+	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
 
@@ -48,7 +48,7 @@ void RegisterDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(RegisterDlg)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	// NOTE: the ClassWizard will add DDX and DDV calls here
 	//}}AFX_DATA_MAP
 }
 
@@ -69,31 +69,31 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // RegisterDlg message handlers
 
-void RegisterDlg::PostNcDestroy() 
+void RegisterDlg::PostNcDestroy()
 {
-	delete this;	
+	delete this;
 	CDialog::PostNcDestroy();
 }
 
-BOOL RegisterDlg::OnInitDialog() 
+BOOL RegisterDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
 	textFont.CreatePointFont(110, _T("Courier New"));
-		
+
 	for (int i = 0; i < sizeof(registers) / sizeof(UINT); i++) {
 		CEdit *pWnd = (CEdit*)GetDlgItem(registers[i]);
 		pWnd->SendMessage(EM_LIMITTEXT, 2, 0);
-		pWnd->SetFont(&textFont);		
+		pWnd->SetFont(&textFont);
 	}
 
 	RefreshRegisters();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
-BOOL RegisterDlg::PreTranslateMessage(MSG* pMsg) 
+BOOL RegisterDlg::PreTranslateMessage(MSG* pMsg)
 {
 	if (pMsg->message == WM_CHAR) {
 		if (!IsHexChar(pMsg->wParam))
@@ -103,7 +103,7 @@ BOOL RegisterDlg::PreTranslateMessage(MSG* pMsg)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-BOOL RegisterDlg::OnCommand(WPARAM wParam, LPARAM lParam) 
+BOOL RegisterDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 {
 	LONG dirty;
 	HWND hWnd = (HWND)lParam;
@@ -132,7 +132,7 @@ BOOL RegisterDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	}
-	
+
 	return CDialog::OnCommand(wParam, lParam);
 }
 
@@ -140,13 +140,13 @@ BOOL RegisterDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 void RegisterDlg::UpdateRegister(int id)
 {
 	CEdit *pWnd = (CEdit*)GetDlgItem(id);
-	
+
 	CString value;
 	pWnd->GetWindowText(value);
 
 	int b = 0;
 	_stscanf(value, _T("%2hx"), &b);
-	
+
 	CPU *cpu = CPU::instance();
 
 	switch (id) {
@@ -265,9 +265,9 @@ void RegisterDlg::RefreshFlags()
 void RegisterDlg::UpdateFlags(int id)
 {
 	CPU *cpu = CPU::instance();
-	
+
 	CButton *btn = (CButton*)GetDlgItem(id);
-	
+
 	switch (id) {
 	case IDC_FLAGN:
 		btn->GetCheck() ? cpu->SetNeg() : cpu->ClearNeg();

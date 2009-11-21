@@ -7,69 +7,69 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-/*
- * Class:     com_knowx_kxtrieck_JDBLib
- * Method:    dblogin
- * Signature: ()I
- */
-JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dblogin
-  (JNIEnv *, jobject);
+	/*
+	 * Class:     com_knowx_kxtrieck_JDBLib
+	 * Method:    dblogin
+	 * Signature: ()I
+	 */
+	JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dblogin
+	(JNIEnv *, jobject);
 
-/*
- * Class:     com_knowx_kxtrieck_JDBLib
- * Method:    dbfreelogin
- * Signature: (I)V
- */
-JNIEXPORT void JNICALL Java_com_knowx_kxtrieck_JDBLib_dbfreelogin
-  (JNIEnv *, jobject, jint);
+	/*
+	 * Class:     com_knowx_kxtrieck_JDBLib
+	 * Method:    dbfreelogin
+	 * Signature: (I)V
+	 */
+	JNIEXPORT void JNICALL Java_com_knowx_kxtrieck_JDBLib_dbfreelogin
+	(JNIEnv *, jobject, jint);
 
-/*
- * Class:     com_knowx_kxtrieck_JDBLib
- * Method:    dbopen
- * Signature: (ILjava/lang/String;)I
- */
-JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbopen
-  (JNIEnv *, jobject, jint, jstring);
+	/*
+	 * Class:     com_knowx_kxtrieck_JDBLib
+	 * Method:    dbopen
+	 * Signature: (ILjava/lang/String;)I
+	 */
+	JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbopen
+	(JNIEnv *, jobject, jint, jstring);
 
-/*
- * Class:     com_knowx_kxtrieck_JDBLib
- * Method:    dbclose
- * Signature: (I)I
- */
-JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbclose
-  (JNIEnv *, jobject, jint);
+	/*
+	 * Class:     com_knowx_kxtrieck_JDBLib
+	 * Method:    dbclose
+	 * Signature: (I)I
+	 */
+	JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbclose
+	(JNIEnv *, jobject, jint);
 
-/*
- * Class:     com_knowx_kxtrieck_JDBLib
- * Method:    dbsetluser
- * Signature: (ILjava/lang/String;)I
- */
-JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsetluser
-  (JNIEnv *, jobject, jint, jstring);
+	/*
+	 * Class:     com_knowx_kxtrieck_JDBLib
+	 * Method:    dbsetluser
+	 * Signature: (ILjava/lang/String;)I
+	 */
+	JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsetluser
+	(JNIEnv *, jobject, jint, jstring);
 
-/*
- * Class:     com_knowx_kxtrieck_JDBLib
- * Method:    dbsetlpwd
- * Signature: (ILjava/lang/String;)I
- */
-JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsetlpwd
-  (JNIEnv *, jobject, jint, jstring);
+	/*
+	 * Class:     com_knowx_kxtrieck_JDBLib
+	 * Method:    dbsetlpwd
+	 * Signature: (ILjava/lang/String;)I
+	 */
+	JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsetlpwd
+	(JNIEnv *, jobject, jint, jstring);
 
-/*
- * Class:     com_knowx_kxtrieck_JDBLib
- * Method:    dbcmd
- * Signature: (ILjava/lang/String;)I
- */
-JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbcmd
-  (JNIEnv *, jobject, jint, jstring);
+	/*
+	 * Class:     com_knowx_kxtrieck_JDBLib
+	 * Method:    dbcmd
+	 * Signature: (ILjava/lang/String;)I
+	 */
+	JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbcmd
+	(JNIEnv *, jobject, jint, jstring);
 
-/*
- * Class:     com_knowx_kxtrieck_JDBLib
- * Method:    dbsqlexec
- * Signature: (I)I
- */
-JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsqlexec
-  (JNIEnv *, jobject, jint);
+	/*
+	 * Class:     com_knowx_kxtrieck_JDBLib
+	 * Method:    dbsqlexec
+	 * Signature: (I)I
+	 */
+	JNIEXPORT jint JNICALL Java_com_knowx_kxtrieck_JDBLib_dbsqlexec
+	(JNIEnv *, jobject, jint);
 
 #ifdef __cplusplus
 }

@@ -11,8 +11,7 @@
 
 #include "TorrentObject.h"
 
-class Integer : public TorrentObject  
-{
+class Integer : public TorrentObject {
 public:
 	Integer(__int64 val);
 	Integer(const Integer &rhs);
@@ -20,8 +19,12 @@ public:
 	virtual ~Integer();
 
 	Integer &operator =(const Integer &rhs);
-	virtual int GetElementType() const { return ET_INTEGER; }
-	operator __int64() const { return value; }
+	virtual int GetElementType() const {
+		return ET_INTEGER;
+	}
+	operator __int64() const {
+		return value;
+	}
 
 private:
 	__int64 value;

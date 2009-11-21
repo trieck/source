@@ -41,8 +41,8 @@ void TextView::DrawLines(CDC *pDC)
 	pDC->GetClipBox(rc);
 
 	uint32_t nstart = rc.top / m_szChar.cy;
-	uint32_t nend = min(m_nLinesTotal - 1, 
-		(rc.bottom + m_szChar.cy - 1) / m_szChar.cy);
+	uint32_t nend = min(m_nLinesTotal - 1,
+	                    (rc.bottom + m_szChar.cy - 1) / m_szChar.cy);
 
 	for (uint32_t n = nstart; n <= nend; n++) {
 		DrawLine(pDC, n);
@@ -54,7 +54,7 @@ void TextView::DrawLine(CDC *pDC, uint32_t line)
 	uint32_t offset = line * m_nLineLen;
 	LPCSTR pbuff = (LPCSTR)m_blockedText;
 	LPCSTR pline = &pbuff[offset];
-		
+
 	CRect rc;
 	rc.left = 0;	// TODO: BUGBUG
 	rc.top = line * m_szChar.cy;
@@ -97,7 +97,7 @@ int TextView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (BigScrollView::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
+
 	RecalcLayout();
 
 	return 0;
@@ -151,12 +151,12 @@ void TextView::RecalcLayout(void)
 void TextView::BlockText()
 {
 	m_blockedText.Empty();
-	
+
 	m_Text.Replace("\r\n", "\n");
 	m_Text.Replace("\r", "\n");
 
 	LPCSTR ptext = m_Text;
-		
+
 	uint32_t n = 0;
 	char c;
 	for (;;) {
@@ -170,7 +170,7 @@ void TextView::BlockText()
 		case '\n':
 			if (n < m_nLineLen)
 				m_blockedText += CString(' ', m_nLineLen-n);
-			n = 0;			
+			n = 0;
 			break;
 		default:
 			m_blockedText += c;

@@ -31,10 +31,10 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CLEDMeter message handlers
 
-void CLEDMeter::OnPaint() 
+void CLEDMeter::OnPaint()
 {
 	CPaintDC dc(this);
-	
+
 	// Paint the background
 	dc.FillSolidRect(&dc.m_ps.rcPaint, m_nBackColor);
 
@@ -42,7 +42,7 @@ void CLEDMeter::OnPaint()
 	DrawChunks(&dc);
 }
 
-int CLEDMeter::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CLEDMeter::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CProgressCtrl::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -81,7 +81,7 @@ UINT CLEDMeter :: SetStep(UINT nStep)
 	UINT nOldStep = m_nStep;
 
 	m_nStep = nStep;
-	
+
 	return nOldStep;
 }
 
@@ -101,7 +101,7 @@ VOID CLEDMeter :: DrawChunks(CDC * pDC)
 	CBitmap	aBitmap, *pOldBitmap;
 	CDC		dcMem;
 	CRect	aRect;
-	
+
 	ASSERT_VALID(pDC);
 
 	GetClientRect(&aRect);
@@ -111,8 +111,8 @@ VOID CLEDMeter :: DrawChunks(CDC * pDC)
 
 	// Create a compatible memory dc and bitmap.
 	dcMem.CreateCompatibleDC(pDC);
-	aBitmap.CreateCompatibleBitmap(pDC, 
-			aRect.Width(), aRect.Height());
+	aBitmap.CreateCompatibleBitmap(pDC,
+	                               aRect.Width(), aRect.Height());
 
 	pOldBitmap = dcMem.SelectObject(&aBitmap);
 
@@ -126,9 +126,8 @@ VOID CLEDMeter :: DrawChunks(CDC * pDC)
 	float	fPercent					= (float)m_nPosition / m_nUpperRange;
 	UINT	nNumberOfPossibleChunks		= aRect.Width() / (nChunkSize + m_nGapSize);
 	UINT	nChunks						= (UINT)((float)nNumberOfPossibleChunks * fPercent);
-	
-    for (UINT i = 0; i < nChunks; i++)
-	{
+
+	for (UINT i = 0; i < nChunks; i++) {
 		// Select the brush into our memory dc.
 		COLORREF lColor;
 		float f = (float) i / nNumberOfPossibleChunks;
@@ -144,18 +143,18 @@ VOID CLEDMeter :: DrawChunks(CDC * pDC)
 		pOldBrush = dcMem.SelectObject(&aBrush);
 
 		dcMem.PatBlt(nStartPos, 0, nChunkSize, aRect.Height(), PATCOPY);
-    	pDC->BitBlt(nStartPos, 0, nChunkSize + m_nGapSize, aRect.Height(), 
-						&dcMem, nStartPos, 0, SRCCOPY);
+		pDC->BitBlt(nStartPos, 0, nChunkSize + m_nGapSize, aRect.Height(),
+		            &dcMem, nStartPos, 0, SRCCOPY);
 
 		dcMem.SelectObject(pOldBrush);
 		aBrush.DeleteObject();
 
 		nStartPos += nChunkSize + m_nGapSize;
-    }
-	
+	}
+
 	dcMem.SelectObject(pOldBitmap);
 
-    aBitmap.DeleteObject();
-    dcMem.DeleteDC();
+	aBitmap.DeleteObject();
+	dcMem.DeleteDC();
 }
 

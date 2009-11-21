@@ -1,6 +1,6 @@
 /*
  * LEX.C
- * 
+ *
  * Lexical analyzer
  * Copyright (c) 2008 Thomas A. Rieck
  */
@@ -9,17 +9,17 @@
 #include "lex.h"
 
 /*
- * input file pointer 
+ * input file pointer
  */
 extern FILE *fpin;
 
 /*
- * lexical buffer 
+ * lexical buffer
  */
 static char lexbuf[BSIZE];
 
 /*
- * get next token from input 
+ * get next token from input
  */
 const char *gettok(void)
 {

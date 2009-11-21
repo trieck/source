@@ -9,8 +9,7 @@
 #include "DigitCtrl.h"
 ////////////////////////////////////////////////////////////////////////////
 // CDigitCtrlMgr window
-class CDigitCtrlMgr : public CObject
-{
+class CDigitCtrlMgr : public CObject {
 // Construction
 public:
 	CDigitCtrlMgr(CDialog*, const UINT Ctrls[], const RECT rcs[], UINT nCount);
@@ -37,7 +36,7 @@ public:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CDigitCtrlMgr)
-		// NOTE - the ClassWizard will add and remove member functions here.
+	// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 
 private:

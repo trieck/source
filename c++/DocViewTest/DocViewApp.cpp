@@ -7,7 +7,7 @@
 //////////////////////////////////////
 
 #include "DocViewApp.h"
-#include "MainFrame.h"     
+#include "MainFrame.h"
 #include "DocViewDoc.h"
 #include "DocViewView.h"
 #include "resource.h"
@@ -21,7 +21,7 @@ CDocViewApp::CDocViewApp()
 
 CDocViewApp::~CDocViewApp()
 {
-} 
+}
 
 ///////////////////////////////////////////////////////////////////
 // CDocViewApp initialization
@@ -29,18 +29,18 @@ CDocViewApp::~CDocViewApp()
 BOOL CDocViewApp::InitInstance()
 {
 	//
-   // Register the application's document template
+	// Register the application's document template
 	//
-   CSingleDocTemplate* pDocTemplate;
-	
-   pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CDocViewDoc),
-		RUNTIME_CLASS(CMainFrame),      // main SDI frame window
-		RUNTIME_CLASS(CDocViewView));
+	CSingleDocTemplate* pDocTemplate;
+
+	pDocTemplate = new CSingleDocTemplate(
+	    IDR_MAINFRAME,
+	    RUNTIME_CLASS(CDocViewDoc),
+	    RUNTIME_CLASS(CMainFrame),      // main SDI frame window
+	    RUNTIME_CLASS(CDocViewView));
 
 	AddDocTemplate(pDocTemplate);
-                           
+
 	// Parse command line (this is required by doc/view)
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
@@ -50,7 +50,7 @@ BOOL CDocViewApp::InitInstance()
 		return FALSE;
 
 	ASSERT_VALID(this->m_pMainWnd);
-	
+
 	return TRUE;
 }
 

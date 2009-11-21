@@ -9,17 +9,17 @@
 #include "capture.h"
 
 /*--------------------------------
-	CheckCapture Function 
+	CheckCapture Function
 --------------------------------*/
 
 // This function checks if the board index
 // passed in (pt) is capable of capturing a pair(s)
 // of pieces on the board.  If so, the pair(s)
-// are set to a value of FREE_FOR_ALL, and the 
-// return value is set to the number of pairs 
-// captured. Otherwise, the return value is zero.  
+// are set to a value of FREE_FOR_ALL, and the
+// return value is set to the number of pairs
+// captured. Otherwise, the return value is zero.
 // NOTE ** aBoard[] is the address of the first
-// entry into a 19 X 19 integer array holding 
+// entry into a 19 X 19 integer array holding
 // values for marked spaces on the board. 0 representing
 // empty space, 1 representing player one, and 2 representing
 // player two.  nCurrentPlayer is one of these values.
@@ -34,9 +34,8 @@ int DllExport CheckCapture(int aBoard[][19], LPPOINT ppt, int nCurrentPlayer)
 
 	i = ppt->x;
 	j = ppt->y;
-	
-	switch (nCurrentPlayer)
-	{
+
+	switch (nCurrentPlayer) {
 	case PLAYER_ONE:
 		opponent = PLAYER_TWO;
 		break;
@@ -49,25 +48,21 @@ int DllExport CheckCapture(int aBoard[][19], LPPOINT ppt, int nCurrentPlayer)
 	};
 
 	// Check for capturing from below
-	if (i >= 3)
-	{
+	if (i >= 3) {
 		if (aBoard[i-1][j] == opponent &&
-			aBoard[i-2][j] == opponent &&
-			aBoard[i-3][j] == nCurrentPlayer)
-		{
+		        aBoard[i-2][j] == opponent &&
+		        aBoard[i-3][j] == nCurrentPlayer) {
 			SetPointPair(dPoints, j, i-1, j, i-2);
 			ClearPair(aBoard, dPoints);
 			nRtn++;
 		}
 	}
 
-	// Check for capture from above 
-	if (i <= 15)
-	{
+	// Check for capture from above
+	if (i <= 15) {
 		if (aBoard[i+1][j] == opponent &&
-			aBoard[i+2][j] == opponent &&
-			aBoard[i+3][j] == nCurrentPlayer)
-		{
+		        aBoard[i+2][j] == opponent &&
+		        aBoard[i+3][j] == nCurrentPlayer) {
 			SetPointPair(dPoints, j, i+1, j, i+2);
 			ClearPair(aBoard, dPoints);
 			nRtn++;
@@ -75,12 +70,10 @@ int DllExport CheckCapture(int aBoard[][19], LPPOINT ppt, int nCurrentPlayer)
 	}
 
 	// Check for capture from right
-	if (j >= 3)
-	{
+	if (j >= 3) {
 		if (aBoard[i][j-1] == opponent &&
-			aBoard[i][j-2] == opponent &&
-			aBoard[i][j-3] == nCurrentPlayer)
-		{
+		        aBoard[i][j-2] == opponent &&
+		        aBoard[i][j-3] == nCurrentPlayer) {
 			SetPointPair(dPoints, j-1, i, j-2, i);
 			ClearPair(aBoard, dPoints);
 			nRtn++;
@@ -88,64 +81,54 @@ int DllExport CheckCapture(int aBoard[][19], LPPOINT ppt, int nCurrentPlayer)
 	}
 
 	// Check for Capture from left
-	if (j <= 15)
-	{
+	if (j <= 15) {
 		if (aBoard[i][j+1] == opponent &&
-			aBoard[i][j+2] == opponent &&
-			aBoard[i][j+3] == nCurrentPlayer)
-		{
+		        aBoard[i][j+2] == opponent &&
+		        aBoard[i][j+3] == nCurrentPlayer) {
 			SetPointPair(dPoints, j+1, i, j+2, i);
 			ClearPair(aBoard, dPoints);
 			nRtn++;
 		}
 	}
 
-	// Check for diagonal capture from bottom left 
-	if (i >= 3 && j <= 15)
-	{
+	// Check for diagonal capture from bottom left
+	if (i >= 3 && j <= 15) {
 		if (aBoard[i-1][j+1] == opponent &&
-			aBoard[i-2][j+2] == opponent &&
-			aBoard[i-3][j+3] == nCurrentPlayer)
-		{
+		        aBoard[i-2][j+2] == opponent &&
+		        aBoard[i-3][j+3] == nCurrentPlayer) {
 			SetPointPair(dPoints, j+1, i-1, j+2, i-2);
 			ClearPair(aBoard, dPoints);
 			nRtn++;
 		}
 	}
 
-	// Check for diagonal capture from bottom right 
-	if (i >= 3 && j >= 3)
-	{
+	// Check for diagonal capture from bottom right
+	if (i >= 3 && j >= 3) {
 		if (aBoard[i-1][j-1] == opponent &&
-			aBoard[i-2][j-2] == opponent &&
-			aBoard[i-3][j-3] == nCurrentPlayer)
-		{
+		        aBoard[i-2][j-2] == opponent &&
+		        aBoard[i-3][j-3] == nCurrentPlayer) {
 			SetPointPair(dPoints, j-1, i-1, j-2, i-2);
 			ClearPair(aBoard, dPoints);
 			nRtn++;
 		}
 	}
 
-	// Check for diagonal capture from top left 
-	if (i <=15 && j <= 15)
-	{
+	// Check for diagonal capture from top left
+	if (i <=15 && j <= 15) {
 		if (aBoard[i+1][j+1] == opponent &&
-			aBoard[i+2][j+2] == opponent &&
-			aBoard[i+3][j+3] == nCurrentPlayer)
-		{
+		        aBoard[i+2][j+2] == opponent &&
+		        aBoard[i+3][j+3] == nCurrentPlayer) {
 			SetPointPair(dPoints, j+1, i+1,j+2,i+2);
 			ClearPair(aBoard, dPoints);
 			nRtn++;
 		}
 	}
 
-	// Check for diagonal capture from top right 
-	if (i <= 15 && j >= 3)
-	{
+	// Check for diagonal capture from top right
+	if (i <= 15 && j >= 3) {
 		if (aBoard[i+1][j-1] == opponent &&
-			aBoard[i+2][j-2] == opponent &&
-			aBoard[i+3][j-3] == nCurrentPlayer)
-		{
+		        aBoard[i+2][j-2] == opponent &&
+		        aBoard[i+3][j-3] == nCurrentPlayer) {
 			SetPointPair(dPoints, j-1, i+1, j-2, i+2);
 			ClearPair(aBoard, dPoints);
 			nRtn++;
@@ -157,7 +140,7 @@ int DllExport CheckCapture(int aBoard[][19], LPPOINT ppt, int nCurrentPlayer)
 
 /*-----------------------------------------
 	Function	:	SetPointPair()
-	Purpose		:	Set integers into 
+	Purpose		:	Set integers into
 					POINT structure
 ------------------------------------------*/
 void SetPointPair(POINT pt[], int x1, int y1, int x2, int y2)
@@ -170,7 +153,7 @@ void SetPointPair(POINT pt[], int x1, int y1, int x2, int y2)
 
 /*-----------------------------------------
 	Function	:	ClearPair()
-	Purpose		:	Clears a pair of 
+	Purpose		:	Clears a pair of
 					pieces from the board
 ------------------------------------------*/
 void ClearPair(int aBoard[][19], POINT pt[])

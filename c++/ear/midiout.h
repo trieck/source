@@ -12,34 +12,35 @@
 #include "MidiMessage.h"
 
 ///////////////////////////////////////////////////////////////////////
-class MidiOutput : public OutputDevice
-{
-friend class OutputDevices;
+class MidiOutput : public OutputDevice {
+	friend class OutputDevices;
 
 protected:
 	// Construction / Destruction
-    MidiOutput(LPMIDIOUTCAPS, UINT);
+	MidiOutput(LPMIDIOUTCAPS, UINT);
 public:
-    virtual ~MidiOutput();
+	virtual ~MidiOutput();
 
-    virtual MMRESULT Open();
-    virtual MMRESULT Close();
-    MMRESULT ShortMessage(const MidiMessage &);
-    MMRESULT LongMessage(LPSTR, UINT);
-    MMRESULT GetVolume(LPDWORD);
-    MMRESULT SetVolume(DWORD);
+	virtual MMRESULT Open();
+	virtual MMRESULT Close();
+	MMRESULT ShortMessage(const MidiMessage &);
+	MMRESULT LongMessage(LPSTR, UINT);
+	MMRESULT GetVolume(LPDWORD);
+	MMRESULT SetVolume(DWORD);
 
-    inline operator HMIDIOUT() const { return (HMIDIOUT) m_handle; }
+	inline operator HMIDIOUT() const {
+		return (HMIDIOUT) m_handle;
+	}
 
 protected:
 	// Implementation
 
-    static void CALLBACK MidiOutProc(
-        HMIDIOUT hMidiOut,  
-        UINT wMsg,        
-        DWORD dwInstance, 
-        DWORD dwParam1,   
-        DWORD dwParam2);
+	static void CALLBACK MidiOutProc(
+	    HMIDIOUT hMidiOut,
+	    UINT wMsg,
+	    DWORD dwInstance,
+	    DWORD dwParam1,
+	    DWORD dwParam2);
 };
 ///////////////////////////////////////////////////////////////////////
 

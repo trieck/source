@@ -1,12 +1,12 @@
 ///////////////////////////////
-//	Module:	SOKCLIENT.H		 //	
+//	Module:	SOKCLIENT.H		 //
 //	Author:	Thomas A. Rieck	 //
 //	Date:	05/25/97		 //
 ///////////////////////////////
 
 #ifndef NO_FLAGS_SET
 #define	NO_FLAGS_SET	0
-       
+
 #define	SERVICE_NAME	"merlin"
 #define MAXTOOLBUTTONS  6
 

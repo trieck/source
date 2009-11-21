@@ -1,189 +1,190 @@
-// HexDoc.cpp : implementation file
-//
+// HexDoc.cpp : implementation file
+//
 
-#include "stdafx.h"
-#include "winhex.h"
-#include "HexDoc.h"
-#include "HexView.h"
-#include "global.h"
+#include "stdafx.h"
+#include "winhex.h"
+#include "HexDoc.h"
+#include "HexView.h"
+#include "global.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// HexDoc
+/////////////////////////////////////////////////////////////////////////////
+// HexDoc
 
-IMPLEMENT_DYNCREATE(HexDoc, CDocument)
+IMPLEMENT_DYNCREATE(HexDoc, CDocument)
 
-HexDoc::HexDoc()
-{
-	m_pdata = NULL;
-	m_nsize = 0UL;
-}
+HexDoc::HexDoc()
+{
+	m_pdata = NULL;
+	m_nsize = 0UL;
+}
 
-BOOL HexDoc::OnNewDocument()
-{
-	if (!CDocument::OnNewDocument())
-		return FALSE;
-	return TRUE;
-}
+BOOL HexDoc::OnNewDocument()
+{
+	if (!CDocument::OnNewDocument())
+		return FALSE;
+	return TRUE;
+}
 
-HexDoc::~HexDoc()
-{
-}
+HexDoc::~HexDoc()
+{
+}
 
-BEGIN_MESSAGE_MAP(HexDoc, CDocument)
-	//{{AFX_MSG_MAP(HexDoc)
-	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnUpdateFileSave)
-	ON_UPDATE_COMMAND_UI(IDS_DOCUMENTSIZE, OnUpdateDocumentSize)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+BEGIN_MESSAGE_MAP(HexDoc, CDocument)
+	//{{AFX_MSG_MAP(HexDoc)
+	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnUpdateFileSave)
+	ON_UPDATE_COMMAND_UI(IDS_DOCUMENTSIZE, OnUpdateDocumentSize)
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// HexDoc diagnostics
+/////////////////////////////////////////////////////////////////////////////
+// HexDoc diagnostics
 
-#ifdef _DEBUG
-void HexDoc::AssertValid() const
-{
-	CDocument::AssertValid();
-}
+#ifdef _DEBUG
+void HexDoc::AssertValid() const
+{
+	CDocument::AssertValid();
+}
 
-void HexDoc::Dump(CDumpContext& dc) const
-{
-	CDocument::Dump(dc);
-}
-#endif //_DEBUG
+void HexDoc::Dump(CDumpContext& dc) const
+{
+	CDocument::Dump(dc);
+}
+#endif //_DEBUG
 
-/////////////////////////////////////////////////////////////////////////////
-// HexDoc serialization
+/////////////////////////////////////////////////////////////////////////////
+// HexDoc serialization
 
-void HexDoc::Serialize(CArchive& ar)
-{
-	if (ar.IsLoading())
-		Load(ar);
-	else Save(ar);
-}
+void HexDoc::Serialize(CArchive& ar)
+{
+	if (ar.IsLoading())
+		Load(ar);
+	else Save(ar);
+}
 
-void HexDoc::Load(CArchive & ar)
-{
-	ASSERT(m_pdata == NULL);
-	ASSERT(m_nsize == 0);
+void HexDoc::Load(CArchive & ar)
+{
+	ASSERT(m_pdata == NULL);
+	ASSERT(m_nsize == 0);
 
-	CFile *pFile = ar.GetFile();
-	int nlen = pFile->GetLength();
+	CFile *pFile = ar.GetFile();
+	int nlen = pFile->GetLength();
 
-	m_pdata = new BYTE[nlen];
-	if (m_pdata == NULL)
-		AfxThrowMemoryException();
+	m_pdata = new BYTE[nlen];
+	if (m_pdata == NULL)
+		AfxThrowMemoryException();
 
-	try {
-		m_nsize = ar.Read(m_pdata, nlen);
-	} catch (CFileException *E) {
-		delete [] m_pdata;
-		m_pdata = NULL;
-		m_nsize = 0UL;
-		throw E;
-	}
-}
+	try {
+		m_nsize = ar.Read(m_pdata, nlen);
+	} catch (CFileException *E) {
+		delete [] m_pdata;
+		m_pdata = NULL;
+		m_nsize = 0UL;
+		throw E;
+	}
+}
 
-void HexDoc::Save(CArchive & ar)
-{
-	ASSERT(m_pdata != NULL);
+void HexDoc::Save(CArchive & ar)
+{
+	ASSERT(m_pdata != NULL);
 
-	try {
-		ar.Write(m_pdata, m_nsize);
-	} catch (CFileException *E) {
-		throw E;
-		return;
-	}
+	try {
+		ar.Write(m_pdata, m_nsize);
+	} catch (CFileException *E) {
+		throw E;
+		return;
+	}
 
-	SetModifiedFlag(FALSE);
-}
+	SetModifiedFlag(FALSE);
+}
 
-/////////////////////////////////////////////////////////////////////////////
-// HexDoc commands
+/////////////////////////////////////////////////////////////////////////////
+// HexDoc commands
 
-void HexDoc::DeleteContents() 
-{
-	if (m_pdata != NULL) {
-		delete [] m_pdata;
-		m_pdata = NULL;
-	}
+void HexDoc::DeleteContents()
+{
+	if (m_pdata != NULL) {
+		delete [] m_pdata;
+		m_pdata = NULL;
+	}
 
-	m_nsize = 0UL;
+	m_nsize = 0UL;
 
-	CDocument::DeleteContents();
-}
+	CDocument::DeleteContents();
+}
 
-void HexDoc::SetData(UINT offset, BYTE data)
-{
-	ASSERT(offset < m_nsize);
-	ASSERT(m_pdata != NULL);
+void HexDoc::SetData(UINT offset, BYTE data)
+{
+	ASSERT(offset < m_nsize);
+	ASSERT(m_pdata != NULL);
 
-	m_pdata[offset] = data;
+	m_pdata[offset] = data;
 
-	SetModifiedFlag();
+	SetModifiedFlag();
 
-	UpdateAllViews(NULL, offset, this);
-}
+	UpdateAllViews(NULL, offset, this);
+}
 
-void HexDoc::OnUpdateFileSave(CCmdUI* pCmdUI) 
-{
-	ASSERT(pCmdUI != NULL);
-	
-	pCmdUI->Enable(IsModified());
-}
+void HexDoc::OnUpdateFileSave(CCmdUI* pCmdUI)
+{
+	ASSERT(pCmdUI != NULL);
 
-void HexDoc::OnUpdateDocumentSize(CCmdUI* pCmdUI)
-{
-	ASSERT(pCmdUI != NULL);
+	pCmdUI->Enable(IsModified());
+}
 
-	CString str;
-	str.Format(IDS_DOCUMENTSIZE, Comma(m_nsize));
-	
-	pCmdUI->SetText(str);
+void HexDoc::OnUpdateDocumentSize(CCmdUI* pCmdUI)
+{
+	ASSERT(pCmdUI != NULL);
 
-	CStatusBar* pBar = (CStatusBar*)pCmdUI->m_pOther;
-	ASSERT_VALID(pBar);
+	CString str;
+	str.Format(IDS_DOCUMENTSIZE, Comma(m_nsize));
 
-	UINT id, style;
-	int width;
+	pCmdUI->SetText(str);
 
-	pBar->GetPaneInfo(1, id, style, width);
-	width = GetTextWidth(pBar, str);
-	pBar->SetPaneInfo(1, id, style, width);
-}
+	CStatusBar* pBar = (CStatusBar*)pCmdUI->m_pOther;
+	ASSERT_VALID(pBar);
 
-BOOL HexDoc::OnOpenDocument(LPCTSTR lpszPathName) 
-{
-	UpdateHexView();
+	UINT id, style;
+	int width;
 
-	if (!CDocument::OnOpenDocument(lpszPathName))
-		return FALSE;
-	
-	return TRUE;
-}
+	pBar->GetPaneInfo(1, id, style, width);
+	width = GetTextWidth(pBar, str);
+	pBar->SetPaneInfo(1, id, style, width);
+}
 
-BOOL HexDoc::OnSaveDocument(LPCTSTR lpszPathName) 
-{
-	UpdateHexView();
+BOOL HexDoc::OnOpenDocument(LPCTSTR lpszPathName)
+{
+	UpdateHexView();
 
-	return CDocument::OnSaveDocument(lpszPathName);
-}
+	if (!CDocument::OnOpenDocument(lpszPathName))
+		return FALSE;
 
-void HexDoc::UpdateHexView() 
-{
-	if (!IsModified())
-		return;
+	return TRUE;
+}
 
-	POSITION pos = GetFirstViewPosition();
-	if (pos != NULL) {
-		HexView * pView = (HexView*)GetNextView(pos);
-		if (pView != NULL)
-			pView->Update();
-	}
-}
+BOOL HexDoc::OnSaveDocument(LPCTSTR lpszPathName)
+{
+	UpdateHexView();
 
+	return CDocument::OnSaveDocument(lpszPathName);
+}
+
+void HexDoc::UpdateHexView()
+{
+	if (!IsModified())
+		return;
+
+	POSITION pos = GetFirstViewPosition();
+	if (pos != NULL) {
+		HexView * pView = (HexView*)GetNextView(pos);
+		if (pView != NULL)
+			pView->Update();
+	}
+}
+
+

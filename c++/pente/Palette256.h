@@ -3,8 +3,7 @@
 typedef CMap<COLORREF, COLORREF, uint8_t, uint8_t> ColorMap;
 
 /////////////////////////////////////////////////////////////////////////////
-class Palette256
-{
+class Palette256 {
 private:
 	Palette256();
 public:

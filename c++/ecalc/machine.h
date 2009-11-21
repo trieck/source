@@ -16,10 +16,9 @@
 class SymbolTable;
 
 /////////////////////////////////////////////////////////////////////////////
-class Machine
-{
-friend class Compile;
-friend class SymbolTable;
+class Machine {
+	friend class Compile;
+	friend class SymbolTable;
 
 public:
 // Construction / Destruction
@@ -78,7 +77,7 @@ protected:
 	void bitor();
 	void logand();
 	void logor();
-	void arg();		
+	void arg();
 	void argassign();
 	void call();
 	void funcret();

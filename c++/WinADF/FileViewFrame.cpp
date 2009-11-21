@@ -36,7 +36,7 @@ int FileViewFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create status bar\n");
 		return -1;      // fail to create
 	}
-	
+
 	return 0;
 }
 
@@ -55,7 +55,7 @@ BOOL FileViewFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle , CWnd* pPa
 		return FALSE;
 
 	ASSERT_VALID(pDoc);
-	
+
 	const Entry *pEntry = pDoc->GetEntry();
 	if (pEntry == NULL)
 		return FALSE;
@@ -69,5 +69,5 @@ BOOL FileViewFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle , CWnd* pPa
 
 void FileViewFrame::OnUpdateFrameTitle(BOOL bAddToTitle)
 {
-	SetWindowText(m_strTitle);	
+	SetWindowText(m_strTitle);
 }

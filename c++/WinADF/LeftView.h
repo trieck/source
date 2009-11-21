@@ -6,8 +6,7 @@
 
 class WinADFDoc;
 
-class LeftView : public CTreeView
-{
+class LeftView : public CTreeView {
 protected: // create from serialization only
 	LeftView();
 	DECLARE_DYNCREATE(LeftView)
@@ -21,12 +20,12 @@ public:
 	BOOL SelectFolder(const CString &name);
 
 // Overrides
-	public:
+public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	protected:
+protected:
 	virtual void OnInitialUpdate(); // called first time after construct
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
-	
+
 // Implementation
 public:
 	virtual ~LeftView();
@@ -57,6 +56,8 @@ public:
 
 #ifndef _DEBUG  // debug version in LeftView.cpp
 inline WinADFDoc* LeftView::GetDocument()
-   { return reinterpret_cast<WinADFDoc*>(m_pDocument); }
+{
+	return reinterpret_cast<WinADFDoc*>(m_pDocument);
+}
 #endif
 

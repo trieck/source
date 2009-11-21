@@ -2,7 +2,7 @@
 	Module	:	MISC.CPP
 	Date	:	10/26/1997
 	Purpose	:	Miscellaneous Function
-				Library 
+				Library
 ----------------------------------------*/
 
 #include "misc.h"
@@ -42,17 +42,15 @@ HRESULT CMiscellaneous :: Init(HMODULE hModule)
 	assert(hModule);
 
 	// Load TypeInfo on demand if we have not already loaded it.
-	if (!m_pITypeInfo)
-	{
+	if (!m_pITypeInfo) {
 		LPTYPELIB pITypeLib = NULL;
 
 		hr = ::LoadRegTypeLib(LIBID_MiscLib,
-							1, 0, // Version numbers
-							0x00,
-							&pITypeLib);
+		                      1, 0, // Version numbers
+		                      0x00,
+		                      &pITypeLib);
 
-		if (FAILED(hr))
-		{
+		if (FAILED(hr)) {
 			// Get the module's fullname.
 			TCHAR 	szModule[_MAX_PATH + _MAX_FNAME];
 			OLECHAR	wszModule[_MAX_PATH + _MAX_FNAME];
@@ -61,8 +59,8 @@ HRESULT CMiscellaneous :: Init(HMODULE hModule)
 
 			// Load and register the type library
 #ifndef _UNICODE
-			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szModule, 
-						-1 , wszModule, _MAX_PATH + _MAX_FNAME);
+			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szModule,
+			                    -1 , wszModule, _MAX_PATH + _MAX_FNAME);
 #else
 			wcscpy(wszModule, szModule);
 #endif // _UNICODE
@@ -78,7 +76,7 @@ HRESULT CMiscellaneous :: Init(HMODULE hModule)
 
 		}
 
-		// Get the type information for the interface 
+		// Get the type information for the interface
 		// of the  object.
 		hr = pITypeLib->GetTypeInfoOfGuid(IID_IMiscellaneous, &m_pITypeInfo);
 
@@ -122,25 +120,25 @@ HRESULT CMiscellaneous :: GetDate(BSTR* pbstrDate)
 	pszDate = (OLECHAR*)CoTaskMemAlloc(128);
 	if (!pszDate)
 		return E_OUTOFMEMORY;
-	
+
 #ifndef _UNICODE
 	TCHAR szTemp[128];
 
 	wsprintf(szTemp, _T("%s/%s/%d"), szMonth, szDay, st.wYear);
 
-	MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szTemp, 
-						-1 , pszDate, 128);
+	MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szTemp,
+	                    -1 , pszDate, 128);
 #else
 	wsprintf(pszDate, _T("%s/%s/%d"), szMonth, szDay, st.wYear);
 #endif // _UNICODE
-	
+
 	*pbstrDate = ::SysAllocString(pszDate);
-	
+
 	CoTaskMemFree(pszDate);
 
 	if (!*pbstrDate)
 		return E_OUTOFMEMORY;
-		
+
 	return NOERROR;
 }
 
@@ -181,14 +179,14 @@ HRESULT CMiscellaneous :: GetTime(BSTR* pbstrTime)
 
 	wsprintf(szTemp, _T("%s:%s %s"), szHour, szMinute, st.wHour >= 12 ? _T("PM") : _T("AM"));
 
-	MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szTemp, 
-						-1 , pszTime, 128);
+	MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szTemp,
+	                    -1 , pszTime, 128);
 #else
 	wsprintf(pszTime, _T("%s:%s %s"), szHour, szMinute, st.wHour >= 12 ? _T("PM") : _T("AM"));
 #endif // _UNICODE
 
 	*pbstrTime = ::SysAllocString(pszTime);
-	
+
 	CoTaskMemFree(pszTime);
 
 	if (!*pbstrTime)
@@ -207,23 +205,21 @@ HRESULT CMiscellaneous :: GetDateTime(BSTR* pbstrDateTime)
 	BSTR		bstrDate, bstrTime;
 	HRESULT		hr;
 
-	// Allocate memory	
+	// Allocate memory
 	lpszDateTime = (OLECHAR*)CoTaskMemAlloc(256);
 	if (!lpszDateTime)
 		return E_OUTOFMEMORY;
 
 	// GetDate
 	hr = GetDate(&bstrDate);
-	if (FAILED(hr))
-	{
+	if (FAILED(hr)) {
 		CoTaskMemFree(lpszDateTime);
 		return hr;
 	}
 
 	// GetTime
 	hr = GetTime(&bstrTime);
-	if (FAILED(hr))
-	{
+	if (FAILED(hr)) {
 		CoTaskMemFree(lpszDateTime);
 		::SysFreeString(bstrDate);
 		return hr;
@@ -239,8 +235,8 @@ HRESULT CMiscellaneous :: GetDateTime(BSTR* pbstrDateTime)
 
 	wsprintf(szTemp, _T("%s %s"), szDate, szTime);
 
-	MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szTemp, 
-						-1 , lpszDateTime, 256);
+	MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szTemp,
+	                    -1 , lpszDateTime, 256);
 #else
 	wsprintf(lpszDateTime, _T("%s %s"), bstrDate, bstrTime);
 #endif // _UNICODE
@@ -249,7 +245,7 @@ HRESULT CMiscellaneous :: GetDateTime(BSTR* pbstrDateTime)
 	::SysFreeString(bstrTime);
 
 	*pbstrDateTime = ::SysAllocString(lpszDateTime);
-	
+
 	CoTaskMemFree(lpszDateTime);
 
 	if (!*pbstrDateTime)
@@ -264,7 +260,7 @@ HRESULT CMiscellaneous :: GetDateTime(BSTR* pbstrDateTime)
 //
 HRESULT CMiscellaneous :: GetDriveSpace(const BSTR bstrDrive, __int64* pBytes)
 {
-	ULARGE_INTEGER free;		
+	ULARGE_INTEGER free;
 	if (!bstrDrive || !pBytes)
 		return E_POINTER;
 
@@ -272,15 +268,14 @@ HRESULT CMiscellaneous :: GetDriveSpace(const BSTR bstrDrive, __int64* pBytes)
 	TCHAR szDrive[8];
 
 #ifndef _UNICODE
-	WideCharToMultiByte(CP_ACP, 0, bstrDrive, - 1, 
-						szDrive, 8, NULL, NULL);
+	WideCharToMultiByte(CP_ACP, 0, bstrDrive, - 1,
+	                    szDrive, 8, NULL, NULL);
 #else
 	wcscpy(szDrive, bstrDrive);
 #endif // _UNICODE
 
 	BOOL fRtn = GetDiskFreeSpaceEx(szDrive, NULL, NULL, &free);
-	if (!fRtn)
-	{
+	if (!fRtn) {
 		GenerateError(_T("Error getting drive space."));
 		return E_FAIL;
 	}
@@ -302,15 +297,14 @@ HRESULT CMiscellaneous :: EnumDrives(BSTR* pbstrDrives)
 	INT			i, j;
 	HRESULT		hr;
 	LPMALLOC	pIMalloc;
-			
+
 	// Get an IMalloc Pointer
 	hr = CoGetMalloc(1, &pIMalloc);
 	if (FAILED(hr))
 		return E_FAIL;
 
 	pszDrives = (OLECHAR*)pIMalloc->Alloc(1024);
-	if (!pszDrives)
-	{
+	if (!pszDrives) {
 		pIMalloc->Release();
 		return E_OUTOFMEMORY;
 	}
@@ -318,21 +312,19 @@ HRESULT CMiscellaneous :: EnumDrives(BSTR* pbstrDrives)
 	ZeroMemory(pszDrives, pIMalloc->GetSize(pszDrives));
 
 	dwDrives = GetLogicalDrives();
-	
+
 	j = 1;
 
-	for (i = 0; i < 26; i++)
-	{
+	for (i = 0; i < 26; i++) {
 		if (i != 0) j <<= 1;
 
-		if (dwDrives & j)
-		{
+		if (dwDrives & j) {
 #ifndef _UNICODE
-			TCHAR szTemp[5];		
+			TCHAR szTemp[5];
 			wsprintf(szTemp, _T("%c:\\~"), i + 65);
-	
+
 			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szTemp,
-								-1, szDriveLetter, 5);
+			                    -1, szDriveLetter, 5);
 #else
 			wsprintf(szDriveLetter, _T("%c:\\~"), i + 65);
 #endif // _UNICODE
@@ -343,14 +335,14 @@ HRESULT CMiscellaneous :: EnumDrives(BSTR* pbstrDrives)
 	wcsncat(pszDrives, L"~", 1);
 
 	*pbstrDrives = ::SysAllocString(pszDrives);
-	
+
 	CoTaskMemFree(pszDrives);
 
 	pIMalloc->Release();
-	
+
 	if (!*pbstrDrives)
 		return E_OUTOFMEMORY;
-		
+
 	return NOERROR;
 }
 
@@ -367,14 +359,13 @@ HRESULT __stdcall CMiscellaneous :: QueryInterface(REFIID iid, PPVOID ppv)
 		*ppv = static_cast<LPMISCELLANEOUS>(this);
 	else if (iid == IID_ISupportErrorInfo)
 		*ppv = m_pISupportErrorInfo;
-	else
-	{
+	else {
 		*ppv = NULL;
 		return E_NOINTERFACE;
 	}
-	
+
 	reinterpret_cast<LPUNKNOWN>(*ppv)->AddRef();
-	
+
 	return S_OK;
 }
 
@@ -391,8 +382,7 @@ ULONG __stdcall CMiscellaneous :: AddRef()
 //
 ULONG __stdcall CMiscellaneous :: Release()
 {
-	if (InterlockedDecrement(&m_cRef) == 0)
-	{
+	if (InterlockedDecrement(&m_cRef) == 0) {
 		if (m_pfnDestroy)
 			m_pfnDestroy();
 
@@ -433,8 +423,8 @@ HRESULT __stdcall CMiscellaneous :: GetTypeInfo(UINT nTypeInfo, LCID, LPTYPEINFO
 	return NOERROR;
 }
 
-HRESULT __stdcall CMiscellaneous :: GetIDsOfNames(REFIID riid, LPOLESTR* arrayNames, 
-												UINT countNames, LCID, DISPID* arrayDispIDs)
+HRESULT __stdcall CMiscellaneous :: GetIDsOfNames(REFIID riid, LPOLESTR* arrayNames,
+        UINT countNames, LCID, DISPID* arrayDispIDs)
 {
 	if (riid != IID_NULL)
 		return DISP_E_UNKNOWNINTERFACE;
@@ -447,14 +437,14 @@ HRESULT __stdcall CMiscellaneous :: GetIDsOfNames(REFIID riid, LPOLESTR* arrayNa
 }
 
 HRESULT __stdcall CMiscellaneous :: Invoke(
-									DISPID dispidMember,
-									REFIID riid,
-									LCID,
-									WORD wFlags,
-									DISPPARAMS* pDispParams,
-									VARIANT* pVarResult,
-									EXCEPINFO* pExcepInfo,
-									UINT* pArgErr)
+    DISPID dispidMember,
+    REFIID riid,
+    LCID,
+    WORD wFlags,
+    DISPPARAMS* pDispParams,
+    VARIANT* pVarResult,
+    EXCEPINFO* pExcepInfo,
+    UINT* pArgErr)
 {
 	if (riid != IID_NULL)
 		return DISP_E_UNKNOWNINTERFACE;
@@ -462,9 +452,9 @@ HRESULT __stdcall CMiscellaneous :: Invoke(
 	::SetErrorInfo(0, NULL);
 
 	HRESULT hr = m_pITypeInfo->Invoke(
-				static_cast<LPDISPATCH>(this),
-				dispidMember, wFlags, pDispParams,
-				pVarResult, pExcepInfo, pArgErr);
+	                 static_cast<LPDISPATCH>(this),
+	                 dispidMember, wFlags, pDispParams,
+	                 pVarResult, pExcepInfo, pArgErr);
 
 	return hr;
 }
@@ -485,8 +475,8 @@ HRESULT CMiscellaneous :: GenerateError(LPCTSTR lpszErrDescription)
 	pICreateErr->SetSource(L"Miscellaneous.Component");
 
 #ifndef _UNICODE
-	MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, lpszErrDescription, 
-						-1 , wszDescription, 255);
+	MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, lpszErrDescription,
+	                    -1 , wszDescription, 255);
 #else
 	wcscpy(wszDescription, lpszErrDescription);
 #endif
@@ -496,17 +486,16 @@ HRESULT CMiscellaneous :: GenerateError(LPCTSTR lpszErrDescription)
 	pICreateErr->SetDescription(bstrDescription);
 
 	IErrorInfo* pIErrorInfo = NULL;
-	hr = pICreateErr->QueryInterface(IID_IErrorInfo, 
-						(PPVOID)&pIErrorInfo);
+	hr = pICreateErr->QueryInterface(IID_IErrorInfo,
+	                                 (PPVOID)&pIErrorInfo);
 
-	if (SUCCEEDED(hr))
-	{
+	if (SUCCEEDED(hr)) {
 		::SetErrorInfo(0L, pIErrorInfo);
 		pIErrorInfo->Release();
 	}
 
 	::SysFreeString(bstrDescription);
-	
+
 	pICreateErr->Release();
 
 	return NOERROR;

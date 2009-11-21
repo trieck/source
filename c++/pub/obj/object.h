@@ -1,7 +1,7 @@
 /*-----------------------------------
 	Module	:	OBJECT.H
 	Date	:	07/19/1997
-	Purpose	:	Implementation of the 
+	Purpose	:	Implementation of the
 				IDrawObject interface
 ------------------------------------*/
 
@@ -14,12 +14,11 @@
 #include "..\interfac.h"
 
 // object rendering
-typedef struct tagRendering
-{
+typedef struct tagRendering {
 	RECT		aRect;
 	RECT		aBoundsRect;
 	COLORREF	aColor;
-}RENDERING, *PRENDERING;
+} RENDERING, *PRENDERING;
 
 // function for destroying object
 typedef void (*PFNDESTROYED)(void);
@@ -35,8 +34,7 @@ typedef CImpIPersistStream	*PCImpIPersistStream;
 typedef CImpIDataObject		*PCImpIDataObject;
 typedef CImpIViewObject2	*PCImpIViewObject2;
 
-class CDrawObject : public IDrawObject
-{
+class CDrawObject : public IDrawObject {
 	friend CImpIPersistStream;
 	friend CImpIDataObject;
 	friend CImpIViewObject2;
@@ -52,11 +50,11 @@ protected:
 	CLSID				m_clsID;
 	BOOL				m_fDirty;
 	PRENDERING			m_pRender;				// Object rendering pointer
-	LPSTGMEDIUM			m_pSTM;	
+	LPSTGMEDIUM			m_pSTM;
 public:
 	CDrawObject(LPUNKNOWN, PFNDESTROYED);
-    ~CDrawObject();
-    BOOL		Init();
+	~CDrawObject();
+	BOOL		Init();
 
 protected:
 	HRESULT		RenderData();
@@ -64,22 +62,21 @@ protected:
 	VOID		Draw(HDC);
 
 public:
-    // IUnknown members
-    STDMETHODIMP         QueryInterface(REFIID, PPVOID);
-    STDMETHODIMP_(DWORD) AddRef();
-    STDMETHODIMP_(DWORD) Release();
+	// IUnknown members
+	STDMETHODIMP         QueryInterface(REFIID, PPVOID);
+	STDMETHODIMP_(DWORD) AddRef();
+	STDMETHODIMP_(DWORD) Release();
 
 	// IDrawObject members
 	STDMETHODIMP		Randomize();
 	STDMETHODIMP		SetBounds(LPRECT);
 	STDMETHODIMP		GetColor(LPCOLORREF);
-	STDMETHODIMP		SetColor(COLORREF);	
+	STDMETHODIMP		SetColor(COLORREF);
 };
 
 typedef CDrawObject *PCDrawObject;
 
-class CImpIPersistStream : public IPersistStream
-{
+class CImpIPersistStream : public IPersistStream {
 protected:
 	PCDrawObject	m_pObj;
 	DWORD			m_cRef;
@@ -90,7 +87,7 @@ public:
 	// IUnknown members
 	STDMETHODIMP         QueryInterface(REFIID, PPVOID);
 	STDMETHODIMP_(DWORD) AddRef();
-    STDMETHODIMP_(DWORD) Release();
+	STDMETHODIMP_(DWORD) Release();
 
 	// IPersist members
 	STDMETHODIMP GetClassID(LPCLSID);
@@ -102,8 +99,7 @@ public:
 	STDMETHODIMP GetSizeMax(ULARGE_INTEGER*);
 };
 
-class CImpIDataObject : public IDataObject
-{
+class CImpIDataObject : public IDataObject {
 protected:
 	PCDrawObject	m_pObj;			// back pointer to main object
 	DWORD			m_cRef;
@@ -114,7 +110,7 @@ public:
 	// IUnknown members
 	STDMETHODIMP			QueryInterface(REFIID, PPVOID);
 	STDMETHODIMP_(DWORD)	AddRef();
-    STDMETHODIMP_(DWORD)	Release();
+	STDMETHODIMP_(DWORD)	Release();
 
 	// IDataObject members
 	STDMETHODIMP			GetData(LPFORMATETC, LPSTGMEDIUM);
@@ -128,53 +124,51 @@ public:
 	STDMETHODIMP			EnumDAdvise(LPENUMSTATDATA*);
 };
 
-class CImpIViewObject2 : public IViewObject
-{
-	protected:
-		PCDrawObject	m_pObj;		// back pointer to main object
-		ULONG			m_cRef;
-	public:
-		CImpIViewObject2(PCDrawObject);
-		~CImpIViewObject2();
+class CImpIViewObject2 : public IViewObject {
+protected:
+	PCDrawObject	m_pObj;		// back pointer to main object
+	ULONG			m_cRef;
+public:
+	CImpIViewObject2(PCDrawObject);
+	~CImpIViewObject2();
 
-		// IUnknown members
-		STDMETHODIMP			QueryInterface(REFIID, PPVOID);
-		STDMETHODIMP_(DWORD)	AddRef();
-		STDMETHODIMP_(DWORD)	Release();
+	// IUnknown members
+	STDMETHODIMP			QueryInterface(REFIID, PPVOID);
+	STDMETHODIMP_(DWORD)	AddRef();
+	STDMETHODIMP_(DWORD)	Release();
 
-		// IViewObject members
-		STDMETHODIMP Draw (DWORD, LONG, LPVOID, DVTARGETDEVICE*,
-			HDC, HDC, LPCRECTL, LPCRECTL, BOOL (CALLBACK*)(DWORD),
-			DWORD);
-		STDMETHODIMP GetColorSet(DWORD, LONG, LPVOID, DVTARGETDEVICE*,
-			HDC, LPLOGPALETTE*);
-		STDMETHODIMP Freeze(DWORD, LONG, LPVOID, LPDWORD);
-		STDMETHODIMP Unfreeze(DWORD);
-		STDMETHODIMP SetAdvise(DWORD, DWORD, LPADVISESINK);
-		STDMETHODIMP GetAdvise(LPDWORD, LPDWORD, LPADVISESINK*);
+	// IViewObject members
+	STDMETHODIMP Draw (DWORD, LONG, LPVOID, DVTARGETDEVICE*,
+	                   HDC, HDC, LPCRECTL, LPCRECTL, BOOL (CALLBACK*)(DWORD),
+	                   DWORD);
+	STDMETHODIMP GetColorSet(DWORD, LONG, LPVOID, DVTARGETDEVICE*,
+	                         HDC, LPLOGPALETTE*);
+	STDMETHODIMP Freeze(DWORD, LONG, LPVOID, LPDWORD);
+	STDMETHODIMP Unfreeze(DWORD);
+	STDMETHODIMP SetAdvise(DWORD, DWORD, LPADVISESINK);
+	STDMETHODIMP GetAdvise(LPDWORD, LPDWORD, LPADVISESINK*);
 
-		// IViewObject2 members
-		STDMETHODIMP GetExtent(DWORD, LONG, DVTARGETDEVICE*, LPSIZEL);
+	// IViewObject2 members
+	STDMETHODIMP GetExtent(DWORD, LONG, DVTARGETDEVICE*, LPSIZEL);
 };
 
-class CDrawClassFactory : public IClassFactory
-{
-    protected:
-        ULONG           m_cRef;
+class CDrawClassFactory : public IClassFactory {
+protected:
+	ULONG           m_cRef;
 
-    public:
-        CDrawClassFactory();
-        ~CDrawClassFactory();
+public:
+	CDrawClassFactory();
+	~CDrawClassFactory();
 
-        // IUnknown members
-        STDMETHODIMP         QueryInterface(REFIID, PPVOID);
-        STDMETHODIMP_(ULONG) AddRef();
-        STDMETHODIMP_(ULONG) Release();
+	// IUnknown members
+	STDMETHODIMP         QueryInterface(REFIID, PPVOID);
+	STDMETHODIMP_(ULONG) AddRef();
+	STDMETHODIMP_(ULONG) Release();
 
-        // IClassFactory members
-        STDMETHODIMP         CreateInstance(LPUNKNOWN, REFIID
-                                 , PPVOID);
-        STDMETHODIMP         LockServer(BOOL);
+	// IClassFactory members
+	STDMETHODIMP         CreateInstance(LPUNKNOWN, REFIID
+	                                    , PPVOID);
+	STDMETHODIMP         LockServer(BOOL);
 };
 
 typedef CDrawClassFactory *PCDrawClassFactory;

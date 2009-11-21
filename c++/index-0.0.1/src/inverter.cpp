@@ -31,18 +31,18 @@
 /////////////////////////////////////////////////////////////////////////////
 Inverter::Inverter()
 {
-    maxcount = MEMORY_SIZE / AVERAGE_SIZE;
-    size = (uint32_t)prime(FILL_RATIO * maxcount);	
+	maxcount = MEMORY_SIZE / AVERAGE_SIZE;
+	size = (uint32_t)prime(FILL_RATIO * maxcount);
 
-    count = 0;
-    maxpool = 2 * MEMORY_SIZE;
+	count = 0;
+	maxpool = 2 * MEMORY_SIZE;
 
-    record = new char*[size];
-    memset(record, 0, size * sizeof(char*));
+	record = new char*[size];
+	memset(record, 0, size * sizeof(char*));
 
-    ppool = pool = new char[3 * MEMORY_SIZE];
+	ppool = pool = new char[3 * MEMORY_SIZE];
 }
-	
+
 /////////////////////////////////////////////////////////////////////////////
 Inverter::~Inverter()
 {
@@ -54,14 +54,14 @@ Inverter::~Inverter()
 void Inverter::insert(const char *term, uint32_t docid)
 {
 	uint32_t i = lookup(term);
-	
+
 	if (record[i] == NULL) {
 		alloc(i, term);
 		*PLIST(record[i])++ = docid;
 		count++;
 		return;
 	}
-	
+
 	if (docid > PLIST(record[i])[-1]) {
 		if (PLIST(record[i]) >= PEND(record[i]) - 1)
 			realloc(i);
@@ -108,24 +108,24 @@ void Inverter::realloc(uint32_t i)
 /////////////////////////////////////////////////////////////////////////////
 uint32_t Inverter::write(FILE *fp)
 {
-    compact();
-    radixsort(record, 0, count - 1, 0);
+	compact();
+	radixsort(record, 0, count - 1, 0);
 
-    for (uint32_t i = 0; i < count; i++) {
-	    *PLIST(record[i])++ = EMPTY;
-	
-	    uint32_t size = (char*)PLIST(record[i]) - record[i];
-	        
+	for (uint32_t i = 0; i < count; i++) {
+		*PLIST(record[i])++ = EMPTY;
+
+		uint32_t size = (char*)PLIST(record[i]) - record[i];
+
 		if (fwrite(&size, sizeof(uint32_t), 1, fp) != 1)
 			return 0;	// can't write
-	
+
 		if (fwrite(record[i], size, 1, fp) != 1)
 			return 0;	// can't write
-    }
-    
-    clear();
+	}
 
-    return 1;
+	clear();
+
+	return 1;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -143,30 +143,30 @@ uint32_t Inverter::lookup(const char *term)
 	while (record[i] && strcmp(record[i], term))
 		i = (i+1) % size;
 
-	return i;	
+	return i;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Inverter::clear()
 {
-    memset(record, 0, size * sizeof(char*));
-    ppool = pool;
-    count = 0;
+	memset(record, 0, size * sizeof(char*));
+	ppool = pool;
+	count = 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Inverter::compact()
 {
-    for (uint32_t i = 0, j = 0; i < size; i++) {
-        if (record[i])
-            continue;
-        for ( ; j < size; j++)
-            if (j > i && record[j])
-                break;
-        if (j >= size)
-            break;
-        record[i] = record[j];
-        record[j] = NULL;
-    }
+	for (uint32_t i = 0, j = 0; i < size; i++) {
+		if (record[i])
+			continue;
+		for ( ; j < size; j++)
+			if (j > i && record[j])
+				break;
+		if (j >= size)
+			break;
+		record[i] = record[j];
+		record[j] = NULL;
+	}
 }
 

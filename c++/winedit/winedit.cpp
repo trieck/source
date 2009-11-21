@@ -60,10 +60,10 @@ BOOL WinEditApp::InitInstance()
 
 	CSingleDocTemplate* pDocTemplate;
 	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(WinEditDoc),
-		RUNTIME_CLASS(MainFrame),       // main SDI frame window
-		RUNTIME_CLASS(WinEditView));
+	    IDR_MAINFRAME,
+	    RUNTIME_CLASS(WinEditDoc),
+	    RUNTIME_CLASS(MainFrame),       // main SDI frame window
+	    RUNTIME_CLASS(WinEditView));
 	AddDocTemplate(pDocTemplate);
 
 	// Parse command line for standard shell commands, DDE, file open
@@ -83,8 +83,7 @@ BOOL WinEditApp::InitInstance()
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
 
-class CAboutDlg : public CDialog
-{
+class CAboutDlg : public CDialog {
 public:
 	CAboutDlg();
 
@@ -95,14 +94,14 @@ public:
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
 	//{{AFX_MSG(CAboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -122,7 +121,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

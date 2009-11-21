@@ -15,7 +15,10 @@
 typedef void**		PPVOID;
 typedef IUnknown*	LPUNKNOWN;
 
-void trace(LPCSTR msg) { std::cout << "Component 1:\t" << msg << std::endl; }
+void trace(LPCSTR msg)
+{
+	std::cout << "Component 1:\t" << msg << std::endl;
+}
 
 ///////////////////////////////////
 //
@@ -40,8 +43,7 @@ const char g_szProgID[] 		= "Aggregation.Component1.1";
 //
 // Component A
 //
-class CA : public IX
-{
+class CA : public IX {
 public:
 	// IUnknown methods
 	virtual HRESULT 	__stdcall QueryInterface(REFIID iid, PPVOID ppv);
@@ -49,8 +51,10 @@ public:
 	virtual ULONG		__stdcall Release();
 
 	// IX Methods
-	virtual void __stdcall Fx() { trace ("Fx"); }
-	
+	virtual void __stdcall Fx() {
+		trace ("Fx");
+	}
+
 	// Constructor
 	CA();
 
@@ -119,25 +123,23 @@ HRESULT __stdcall CA :: Init()
 
 	trace ("Create inner component");
 
-	HRESULT hr = 
-		::CoCreateInstance(CLSID_Component2,
-						pUnknownOuter,			// Outer component's IUnknown
-						CLSCTX_INPROC_SERVER,
-						IID_IUnknown,				// IUnknown when aggregating
-						(PPVOID)&m_pUnknownInner);
+	HRESULT hr =
+	    ::CoCreateInstance(CLSID_Component2,
+	                       pUnknownOuter,			// Outer component's IUnknown
+	                       CLSCTX_INPROC_SERVER,
+	                       IID_IUnknown,				// IUnknown when aggregating
+	                       (PPVOID)&m_pUnknownInner);
 
-	if (FAILED(hr))
-	{
+	if (FAILED(hr)) {
 		trace("Could not create contained component.");
 		return E_FAIL;
 	}
 
 	// This call will increment the reference count on the outer component.
 	trace ("Get the IY interface from the inner component.");
-	
+
 	hr = m_pUnknownInner->QueryInterface(IID_IY, (PPVOID)&m_pIY);
-	if (FAILED(hr))
-	{
+	if (FAILED(hr)) {
 		trace ("Inner component does not support interface IY.");
 		m_pUnknownInner->Release();
 		m_pUnknownInner = NULL;
@@ -161,20 +163,17 @@ HRESULT __stdcall CA :: QueryInterface(REFIID iid, PPVOID ppv)
 		*ppv = static_cast<LPUNKNOWN>(this);
 	else if (iid == IID_IX)
 		*ppv = static_cast<IX*>(this);
-	else if (iid == IID_IY)
-	{
+	else if (iid == IID_IY) {
 		trace("Return inner component's IY interface.");
 #if 1
 		// You can query for the interface.
 		return m_pUnknownInner->QueryInterface(iid, ppv);
-#else	
+#else
 		// or you can retrieve a cached pointer
 		*ppv = m_pIY;
 		// Fall through so it will get AddRef'ed
-#endif	
-	}
-	else
-	{
+#endif
+	} else {
 		*ppv = NULL;
 		return E_NOINTERFACE;
 	}
@@ -189,8 +188,7 @@ ULONG __stdcall CA :: AddRef()
 
 ULONG __stdcall CA :: Release()
 {
-	if (InterlockedDecrement(&m_cRef) == 0)
-	{
+	if (InterlockedDecrement(&m_cRef) == 0) {
 		delete this;
 		return 0;
 	}
@@ -202,8 +200,7 @@ ULONG __stdcall CA :: Release()
 //
 // Class factory
 //
-class CFactory : public IClassFactory
-{
+class CFactory : public IClassFactory {
 public:
 	// IUnknown methods
 	virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv);
@@ -212,13 +209,13 @@ public:
 
 	// IClassFactory methods
 	virtual HRESULT __stdcall CreateInstance(LPUNKNOWN pUnknownOuter,
-									REFIID iid,
-									PPVOID ppv);
+	        REFIID iid,
+	        PPVOID ppv);
 	virtual HRESULT __stdcall LockServer(BOOL bLock);
 
 	// Constructor
 	CFactory () : m_cRef(1) {}
-	
+
 	// Destructor
 	~CFactory() {}
 
@@ -235,8 +232,7 @@ HRESULT __stdcall CFactory :: QueryInterface(REFIID iid, PPVOID ppv)
 
 	if ((iid == IID_IUnknown) || (iid == IID_IClassFactory))
 		pI = static_cast<LPCLASSFACTORY>(this);
-	else
-	{
+	else {
 		*ppv = NULL;
 		return E_NOINTERFACE;
 	}
@@ -252,8 +248,7 @@ ULONG CFactory :: AddRef()
 
 ULONG CFactory :: Release()
 {
-	if (InterlockedDecrement(&m_cRef) == 0)
-	{
+	if (InterlockedDecrement(&m_cRef) == 0) {
 		delete this;
 		return 0;
 	}
@@ -264,7 +259,7 @@ ULONG CFactory :: Release()
 // IClassFactory implementation
 //
 HRESULT __stdcall CFactory :: CreateInstance(LPUNKNOWN pUnknownOuter,
-									REFIID iid, PPVOID ppv)
+        REFIID iid, PPVOID ppv)
 {
 	HRESULT hr = E_FAIL;
 
@@ -279,8 +274,7 @@ HRESULT __stdcall CFactory :: CreateInstance(LPUNKNOWN pUnknownOuter,
 
 	// Initialize the component
 	hr = pA->Init();
-	if (FAILED(hr))
-	{
+	if (FAILED(hr)) {
 		// Initialization failed.  Delete component
 		pA->Release();
 		return hr;
@@ -321,8 +315,8 @@ STDAPI DllCanUnloadNow()
 // GetClassFactory
 //
 STDAPI DllGetClassObject(const CLSID& clsid,
-						REFIID iid,
-						PPVOID ppv)
+                         REFIID iid,
+                         PPVOID ppv)
 {
 	// Can we create this component
 	if (clsid != CLSID_Component1)
@@ -346,17 +340,17 @@ STDAPI DllGetClassObject(const CLSID& clsid,
 STDAPI DllRegisterServer()
 {
 	return RegisterServer(g_hModule,
-					CLSID_Component1,
-					g_szFriendlyName,
-					g_szVerIndProgID,
-					g_szProgID);
+	                      CLSID_Component1,
+	                      g_szFriendlyName,
+	                      g_szVerIndProgID,
+	                      g_szProgID);
 }
 
 STDAPI DllUnregisterServer()
 {
 	return UnregisterServer(CLSID_Component1,
-					g_szVerIndProgID,
-					g_szProgID);
+	                        g_szVerIndProgID,
+	                        g_szProgID);
 }
 
 //////////////////////////////////////////
@@ -364,8 +358,8 @@ STDAPI DllUnregisterServer()
 // DLL module information
 //
 BOOL APIENTRY DllMain(HINSTANCE hModule,
-					DWORD dwReason,
-					LPVOID lpReserved)
+                      DWORD dwReason,
+                      LPVOID lpReserved)
 {
 	if (dwReason == DLL_PROCESS_ATTACH)
 		g_hModule = hModule;
@@ -376,17 +370,17 @@ BOOL APIENTRY DllMain(HINSTANCE hModule,
 
 
 
-		
-
-	
-	
-
-		
-		
-	
-	
 
 
-	
+
+
+
+
+
+
+
+
+
+
 
 

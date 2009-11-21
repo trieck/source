@@ -56,7 +56,7 @@ END_MESSAGE_MAP()
 // DDrawView construction/destruction
 
 DDrawView::DDrawView()
- : pdds(NULL)
+		: pdds(NULL)
 {
 }
 
@@ -102,7 +102,7 @@ DDrawDoc* DDrawView::GetDocument() // non-debug version is inline
 /////////////////////////////////////////////////////////////////////////////
 // DDrawView message handlers
 
-int DDrawView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int DDrawView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -120,21 +120,21 @@ int DDrawView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
 	ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
 	ddsd.dwBackBufferCount = 1;
-	
-	// Create the primary surface with one back buffer 
+
+	// Create the primary surface with one back buffer
 	HRESULT hr = pdd->CreateSurface(&ddsd, &pdds, NULL);
 	if (hr != DD_OK) {
 		TRACE0("failed while creating direct draw surface.\n");
 		pdd->Release();
 		return -1;
-	}	
+	}
 
 	pdd->Release();
-	
+
 	return 0;
 }
 
-void DDrawView::OnDestroy() 
+void DDrawView::OnDestroy()
 {
 	CView::OnDestroy();
 
@@ -145,13 +145,13 @@ void DDrawView::OnDestroy()
 	}
 }
 
-void DDrawView::OnInitialUpdate() 
+void DDrawView::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
-	
+
 }
 
-BOOL DDrawView::OnEraseBkgnd(CDC* pDC) 
+BOOL DDrawView::OnEraseBkgnd(CDC* pDC)
 {
 	return CView::OnEraseBkgnd(pDC);
 }

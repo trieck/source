@@ -5,8 +5,7 @@
 
 #include "disk.h"
 
-class WinADFDoc : public CDocument
-{
+class WinADFDoc : public CDocument {
 protected: // create from serialization only
 	WinADFDoc();
 	DECLARE_DYNCREATE(WinADFDoc)

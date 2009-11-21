@@ -3,8 +3,7 @@
 
 // WinADFView view
 
-class WinADFView : public CListView
-{
+class WinADFView : public CListView {
 	DECLARE_DYNCREATE(WinADFView)
 
 protected:
@@ -65,7 +64,8 @@ public:
 };
 
 #ifndef _DEBUG  //debug version in WinADFView.cpp
-inline WinADFDoc* WinADFView::GetDocument() const { 
-	return reinterpret_cast<WinADFDoc*>(m_pDocument); 
+inline WinADFDoc* WinADFView::GetDocument() const
+{
+	return reinterpret_cast<WinADFDoc*>(m_pDocument);
 }
 #endif

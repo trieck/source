@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 // QUERY.H : Query class
 //
 // Copyright (c) 2006 Thomas A. Rieck, All Rights Reserved
@@ -17,8 +17,7 @@
 typedef vector<UINT64> DocVector;
 
 /////////////////////////////////////////////////////////////////////////////
-class Query
-{
+class Query {
 // Construction / Destruction
 public:
 	Query(BTree &t);
@@ -31,8 +30,8 @@ public:
 private:
 	DocVector expr();
 	DocVector lookup(const string &term);
-	DocVector conj(const DocVector &left, 
-		const DocVector &right, int distance) const;
+	DocVector conj(const DocVector &left,
+	               const DocVector &right, int distance) const;
 	int getc();
 	int lookahead();
 

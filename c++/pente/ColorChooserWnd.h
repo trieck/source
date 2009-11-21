@@ -3,8 +3,7 @@
 
 // CColorChooserWnd
 
-class CColorChooserWnd : public CWnd
-{
+class CColorChooserWnd : public CWnd {
 	DECLARE_DYNAMIC(CColorChooserWnd)
 
 public:

@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // TorrentDlg dialog
 
-class TorrentDlg : public CDialog, ICallable
-{
+class TorrentDlg : public CDialog, ICallable {
 // Construction
 public:
 	TorrentDlg(CWnd* pParent = NULL);   // standard constructor
@@ -35,7 +34,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(TorrentDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 

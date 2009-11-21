@@ -14,17 +14,16 @@
 ///////////////////////////////////////////////////////////////////
 // The CSplitterDoc document class
 
-class CSplitterDoc : public CDocument
-{
-protected: 
+class CSplitterDoc : public CDocument {
+protected:
 	DECLARE_DYNCREATE(CSplitterDoc)
 
 public:
 	CSplitterDoc();
-   virtual ~CSplitterDoc();
+	virtual ~CSplitterDoc();
 
-   // Overrides
-   virtual BOOL OnNewDocument();
+	// Overrides
+	virtual BOOL OnNewDocument();
 };
 
 ///////////////////////////////////////////////////////////////////

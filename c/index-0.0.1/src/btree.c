@@ -1,6 +1,6 @@
 /*
  * BTREE.C
- * 
+ *
  * B-tree
  * Copyright (c) 2008 Thomas A. Rieck
  */
@@ -10,12 +10,12 @@
 #include "blockio.h"
 
 /*
- * Page type flags 
+ * Page type flags
  */
 #define PTF_LEAF		(1 << 0)
 
 /*
- * Helper macros 
+ * Helper macros
  */
 #define ISLEAF(p)		(p->header.flags & PTF_LEAF)
 #define SETLEAF(p)		(p->header.flags |= PTF_LEAF)
@@ -24,13 +24,13 @@
 #define CELLS(p)		(p->header.cells)
 
 /*
- * Maximum number of cells on a page, must be even to split a page 
+ * Maximum number of cells on a page, must be even to split a page
  */
 #define MAXCELLS		\
 	((BLOCK_SIZE - sizeof(PageHeader_t)) / sizeof(Cell_t) & ~1)
 
 /*
- * Cell accessors 
+ * Cell accessors
  */
 #define CELL(p, n)		(p->data[n])
 #define KEY(p, n)		(p->data[n].key)
@@ -38,12 +38,12 @@
 #define NEXT(p, n)		(p->data[n].next)
 
 /*
- * Allocate a new page 
+ * Allocate a new page
  */
 #define MKPAGE()	((Page_t*)calloc(BLOCK_SIZE, sizeof(uint8_t)))
 
 /*
- * Free an allocated page 
+ * Free an allocated page
  */
 #define FREEPAGE(p)	\
 	do {			\
@@ -55,13 +55,13 @@ static int readpage(BTree_t * tree, uint64_t pageno, uint32_t level);
 static int writepage(BTree_t * tree, Page_t * page);
 static uint64_t insertpage(BTree_t * tree, Page_t * page);
 static uint64_t searchR(BTree_t * tree, Page_t * h, uint64_t k,
-			uint32_t level);
+                        uint32_t level);
 static Page_t *insertR(BTree_t * tree, Page_t * h, Item_t x,
-		       uint32_t level);
+                       uint32_t level);
 static Page_t *split(BTree_t * tree, Page_t * h);
 
 /*
- * open a file, returning a btree instance 
+ * open a file, returning a btree instance
  */
 BTree_t *btree_open(const char *filename, int mode)
 {
@@ -72,7 +72,7 @@ BTree_t *btree_open(const char *filename, int mode)
 	uint8_t i;
 
 	/*
-	 * check for valid open mode 
+	 * check for valid open mode
 	 */
 	switch (mode) {
 	case OM_READ_ONLY:
@@ -86,25 +86,25 @@ BTree_t *btree_open(const char *filename, int mode)
 	}
 
 	/*
-	 * open underlying file 
+	 * open underlying file
 	 */
 	if ((fp = fopen(filename, pm)) == NULL)
 		return NULL;	/* unable to open file */
 
 	/*
-	 * stat underlying file 
+	 * stat underlying file
 	 */
 	if (fstat(fileno(fp), &buf) == -1)
 		return NULL;	/* can't stat file */
 
 	/*
-	 * allocate tree struct 
+	 * allocate tree struct
 	 */
 	tree = (BTree_t *) malloc(sizeof(BTree_t));
 	tree->fp = fp;
 
 	/*
-	 * allocate pages 
+	 * allocate pages
 	 */
 	for (i = 0; i < MAXDEPTH; i++) {
 		tree->pages[i] = MKPAGE();
@@ -125,7 +125,7 @@ BTree_t *btree_open(const char *filename, int mode)
 }
 
 /*
- * close btree, freeing instance 
+ * close btree, freeing instance
  */
 void btree_close(BTree_t * tree)
 {
@@ -147,7 +147,7 @@ void btree_close(BTree_t * tree)
 }
 
 /*
- * read a page 
+ * read a page
  */
 int readpage(BTree_t * tree, uint64_t pageno, uint32_t level)
 {
@@ -155,7 +155,7 @@ int readpage(BTree_t * tree, uint64_t pageno, uint32_t level)
 }
 
 /*
- * write a page 
+ * write a page
  */
 int writepage(BTree_t * tree, Page_t * page)
 {
@@ -163,7 +163,7 @@ int writepage(BTree_t * tree, Page_t * page)
 }
 
 /*
- * insert a page 
+ * insert a page
  */
 uint64_t insertpage(BTree_t * tree, Page_t * h)
 {
@@ -176,7 +176,7 @@ uint64_t insertpage(BTree_t * tree, Page_t * h)
 }
 
 /*
- * search tree recursively 
+ * search tree recursively
  */
 uint64_t searchR(BTree_t * tree, Page_t * h, uint64_t k, uint32_t level)
 {
@@ -193,8 +193,8 @@ uint64_t searchR(BTree_t * tree, Page_t * h, uint64_t k, uint32_t level)
 				if (!readpage(tree, NEXT(h, j), level + 1))
 					return MAXV;
 				return searchR(tree,
-					       tree->pages[level + 1], k,
-					       level + 1);
+				               tree->pages[level + 1], k,
+				               level + 1);
 			}
 		}
 	}
@@ -203,7 +203,7 @@ uint64_t searchR(BTree_t * tree, Page_t * h, uint64_t k, uint32_t level)
 }
 
 /*
- * insert item recursively 
+ * insert item recursively
  */
 Page_t *insertR(BTree_t * tree, Page_t * h, Item_t x, uint32_t level)
 {
@@ -223,10 +223,10 @@ Page_t *insertR(BTree_t * tree, Page_t * h, Item_t x, uint32_t level)
 			if ((j + 1 == CELLS(h) || v < KEY(h, j + 1))) {
 				Page_t *u;
 				if (!readpage
-				    (tree, NEXT(h, j++), level + 1))
+				        (tree, NEXT(h, j++), level + 1))
 					return 0;
 				u = insertR(tree, tree->pages[level + 1],
-					    x, level + 1);
+				            x, level + 1);
 				if (u == 0)
 					return 0;
 				t.key = KEY(u, 0);
@@ -248,7 +248,7 @@ Page_t *insertR(BTree_t * tree, Page_t * h, Item_t x, uint32_t level)
 }
 
 /*
- * split a page 
+ * split a page
  */
 Page_t *split(BTree_t * tree, Page_t * h)
 {
@@ -272,7 +272,7 @@ Page_t *split(BTree_t * tree, Page_t * h)
 }
 
 /*
- * put item in tree 
+ * put item in tree
  */
 void btree_put(BTree_t * tree, Item_t item)
 {
@@ -281,9 +281,9 @@ void btree_put(BTree_t * tree, Item_t item)
 		return;
 
 	/*
-	 * The basic idea with the root page split is that we create a new 
-	 * internal root page t with 2 links. The first link points to 
-	 * the old root page and the second link points to the page that caused 
+	 * The basic idea with the root page split is that we create a new
+	 * internal root page t with 2 links. The first link points to
+	 * the old root page and the second link points to the page that caused
 	 * the split.  The height of the tree is increased by one.
 	 */
 	t = tree->frame[1];
@@ -303,7 +303,7 @@ void btree_put(BTree_t * tree, Item_t item)
 }
 
 /*
- * get item from tree 
+ * get item from tree
  */
 uint64_t btree_get(BTree_t * tree, uint64_t k)
 {

@@ -1,6 +1,6 @@
 /*
  *	DISASSEM.H
- *	
+ *
  *	code disassembly
  *
  *	Neptune64 Commodore 64 Emulator

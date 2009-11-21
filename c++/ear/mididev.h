@@ -11,23 +11,24 @@
 #include "midicommon.h"
 
 ///////////////////////////////////////////////////////////////////////
-class MidiDevice
-{
+class MidiDevice {
 protected:
 	// Construction / Destruction
-    MidiDevice();
+	MidiDevice();
 public:
-    virtual ~MidiDevice();
+	virtual ~MidiDevice();
 
 	// Interface
-    virtual MMRESULT Open() = 0;
-    virtual MMRESULT Close() = 0;
-    inline UINT GetDeviceID() const { return m_id; }
+	virtual MMRESULT Open() = 0;
+	virtual MMRESULT Close() = 0;
+	inline UINT GetDeviceID() const {
+		return m_id;
+	}
 
 protected:
 	// Implementation
-    HANDLE m_handle;
-    UINT m_id;
+	HANDLE m_handle;
+	UINT m_id;
 };
 ///////////////////////////////////////////////////////////////////////
 

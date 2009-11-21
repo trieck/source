@@ -1,24 +1,24 @@
 /*
  * MAIN.C
- * 
+ *
  * 6502 linker
  *
  */
 #include "common.h"
 static void usage(void);
-/* 
- * main entry point 
+/*
+ * main entry point
  */
 int main(int argc, char *argv[])
 {
 	if (argc < 3)
 		usage();
-		
+
 	return 0;
 }
 
 /*
- * print usage 
+ * print usage
  */
 void usage(void)
 {

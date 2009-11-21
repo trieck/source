@@ -17,11 +17,10 @@ static char THIS_FILE[] = __FILE__;
 #define CX_SEPARATOR	1
 #define CY_SEPARATOR	1
 
-#define CX_GRIPPER_SIZE (CX_BORDER_GRIPPER+CX_GRIPPER+CX_SEPARATOR+CX_GRIPPER) 
-#define CY_GRIPPER_SIZE (CY_BORDER_GRIPPER+CY_GRIPPER+CY_SEPARATOR+CY_GRIPPER) 
+#define CX_GRIPPER_SIZE (CX_BORDER_GRIPPER+CX_GRIPPER+CX_SEPARATOR+CX_GRIPPER)
+#define CY_GRIPPER_SIZE (CY_BORDER_GRIPPER+CY_GRIPPER+CY_SEPARATOR+CY_GRIPPER)
 
-struct AFX_DLLVERSIONINFO
-{
+struct AFX_DLLVERSIONINFO {
 	DWORD cbSize;
 	DWORD dwMajorVersion;                   // Major version
 	DWORD dwMinorVersion;                   // Minor version
@@ -44,11 +43,10 @@ int AFXAPI _AfxGetDropDownWidth()
 	ASSERT(hDC != NULL);
 	HFONT hFont;
 	if ((hFont = CreateFont(GetSystemMetrics(SM_CYMENUCHECK), 0, 0, 0,
-		FW_NORMAL, 0, 0, 0, SYMBOL_CHARSET, 0, 0, 0, 0, _T("Marlett"))) != NULL)
+	                        FW_NORMAL, 0, 0, 0, SYMBOL_CHARSET, 0, 0, 0, 0, _T("Marlett"))) != NULL)
 		hFont = (HFONT)SelectObject(hDC, hFont);
 	VERIFY(GetCharWidth(hDC, '6', '6', &_afxDropDownWidth));
-	if (hFont != NULL)
-	{
+	if (hFont != NULL) {
 		SelectObject(hDC, hFont);
 		DeleteObject(hFont);
 	}
@@ -68,14 +66,12 @@ DWORD AFXAPI _AfxGetComCtlVersion()
 	AFX_DLLGETVERSIONPROC pfn;
 	pfn = (AFX_DLLGETVERSIONPROC)GetProcAddress(hInst, "DllGetVersion");
 	DWORD dwVersion = VERSION_WIN4;
-	if (pfn != NULL)
-	{
+	if (pfn != NULL) {
 		AFX_DLLVERSIONINFO dvi;
 		memset(&dvi, 0, sizeof(dvi));
 		dvi.cbSize = sizeof(dvi);
 		HRESULT hr = (*pfn)(&dvi);
-		if (SUCCEEDED(hr))
-		{
+		if (SUCCEEDED(hr)) {
 			ASSERT(dvi.dwMajorVersion <= 0xFFFF);
 			ASSERT(dvi.dwMinorVersion <= 0xFFFF);
 			dwVersion = MAKELONG(dvi.dwMinorVersion, dvi.dwMajorVersion);
@@ -134,17 +130,14 @@ void GripperBar::CalcInsideRect(CRect& rect, BOOL bHorz) const
 	if (dwStyle & CBRS_BORDER_BOTTOM)
 		rect.bottom -= afxData.cyBorder2;
 	// inset the top and bottom.
-	if (bHorz)
-	{
+	if (bHorz) {
 		rect.left += m_cxLeftBorder;
 		rect.top += m_cyTopBorder;
 		rect.right -= m_cxRightBorder;
 		rect.bottom -= m_cyBottomBorder;
 		if ((m_dwStyle & (CBRS_GRIPPER|CBRS_FLOATING)) == CBRS_GRIPPER)
 			rect.left += CX_GRIPPER_SIZE;
-	}
-	else
-	{
+	} else {
 		rect.left += m_cyTopBorder;
 		rect.top += m_cxLeftBorder;
 		rect.right -= m_cyBottomBorder;
@@ -154,14 +147,14 @@ void GripperBar::CalcInsideRect(CRect& rect, BOOL bHorz) const
 	}
 }
 /////////////////////////////////////////////////////////////////////////////
-void GripperBar::OnPaint() 
+void GripperBar::OnPaint()
 {
 	if (m_bDelayedButtonLayout)
 		Layout();
 	Default();
 }
 /////////////////////////////////////////////////////////////////////////////
-void GripperBar::OnNcPaint() 
+void GripperBar::OnNcPaint()
 {
 	EraseNonClient();
 }
@@ -201,30 +194,26 @@ void GripperBar::EraseNonClient()
 void GripperBar::DrawGripper(CDC* pDC, const CRect& rect)
 {
 	// only draw the gripper if not floating and gripper is specified
-	if ((m_dwStyle & (CBRS_GRIPPER|CBRS_FLOATING)) == CBRS_GRIPPER)
-	{
+	if ((m_dwStyle & (CBRS_GRIPPER|CBRS_FLOATING)) == CBRS_GRIPPER) {
 		// draw the gripper in the border
-		if (m_dwStyle & CBRS_ORIENT_HORZ)
-		{
+		if (m_dwStyle & CBRS_ORIENT_HORZ) {
 			pDC->Draw3dRect(rect.left+CX_BORDER_GRIPPER,
-				rect.top+m_cyTopBorder + 1,
-				CX_GRIPPER, rect.Height()-m_cyTopBorder-m_cyBottomBorder - 2,
-				afxData.clrBtnHilite, afxData.clrBtnShadow);
+			                rect.top+m_cyTopBorder + 1,
+			                CX_GRIPPER, rect.Height()-m_cyTopBorder-m_cyBottomBorder - 2,
+			                afxData.clrBtnHilite, afxData.clrBtnShadow);
 			pDC->Draw3dRect(rect.left + CX_BORDER_GRIPPER + CX_GRIPPER + CX_SEPARATOR,
-				rect.top+m_cyTopBorder + 1,
-				CX_GRIPPER, rect.Height()-m_cyTopBorder-m_cyBottomBorder - 2,
-				afxData.clrBtnHilite, afxData.clrBtnShadow);
-		}
-		else
-		{
+			                rect.top+m_cyTopBorder + 1,
+			                CX_GRIPPER, rect.Height()-m_cyTopBorder-m_cyBottomBorder - 2,
+			                afxData.clrBtnHilite, afxData.clrBtnShadow);
+		} else {
 			pDC->Draw3dRect(rect.left+m_cyTopBorder + 1,
-				rect.top+CY_BORDER_GRIPPER,
-				rect.Width()-m_cyTopBorder-m_cyBottomBorder - 2, CY_GRIPPER,
-				afxData.clrBtnHilite, afxData.clrBtnShadow);
+			                rect.top+CY_BORDER_GRIPPER,
+			                rect.Width()-m_cyTopBorder-m_cyBottomBorder - 2, CY_GRIPPER,
+			                afxData.clrBtnHilite, afxData.clrBtnShadow);
 			pDC->Draw3dRect(rect.left+m_cyTopBorder + 1,
-				rect.top+CY_BORDER_GRIPPER + CY_GRIPPER + CY_SEPARATOR,
-				rect.Width()-m_cyTopBorder-m_cyBottomBorder - 2, CY_GRIPPER,
-				afxData.clrBtnHilite, afxData.clrBtnShadow);
+			                rect.top+CY_BORDER_GRIPPER + CY_GRIPPER + CY_SEPARATOR,
+			                rect.Width()-m_cyTopBorder-m_cyBottomBorder - 2, CY_GRIPPER,
+			                afxData.clrBtnHilite, afxData.clrBtnShadow);
 		}
 	}
 }
@@ -232,7 +221,8 @@ void GripperBar::DrawGripper(CDC* pDC, const CRect& rect)
 void GripperBar::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS* lpncsp)
 {
 	// calculate border space (will add to top/bottom, subtract from right/bottom)
-	CRect rect; rect.SetRectEmpty();
+	CRect rect;
+	rect.SetRectEmpty();
 	BOOL bHorz = (m_dwStyle & CBRS_ORIENT_HORZ) != 0;
 	CalcInsideRect(rect, bHorz);
 	ASSERT(_afxComCtlVersion != -1);
@@ -247,8 +237,7 @@ void GripperBar::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS* lpncsp)
 	lpncsp->rgrc[0].bottom += rect.bottom;
 }
 
-struct _AFX_CONTROLPOS
-{
+struct _AFX_CONTROLPOS {
 	int nIndex, nID;
 	CRect rectOldPos;
 };
@@ -265,18 +254,15 @@ CSize GripperBar::CalcLayout(DWORD dwMode, int nLength)
 	//BLOCK: Load Buttons
 	{
 		nCount = DefWindowProc(TB_BUTTONCOUNT, 0, 0);
-		if (nCount != 0)
-		{
+		if (nCount != 0) {
 			int i;
 			pData = new TBBUTTON[nCount];
 			for (i = 0; i < nCount; i++)
 				_GetButton(i, &pData[i]);
 		}
 	}
-	if (nCount > 0)
-	{
-		if (!(m_dwStyle & CBRS_SIZE_FIXED))
-		{
+	if (nCount > 0) {
+		if (!(m_dwStyle & CBRS_SIZE_FIXED)) {
 			BOOL bDynamic = m_dwStyle & CBRS_SIZE_DYNAMIC;
 			if (bDynamic && (dwMode & LM_MRUWIDTH))
 				SizeToolBar(pData, nCount, m_nMRUWidth);
@@ -284,22 +270,20 @@ CSize GripperBar::CalcLayout(DWORD dwMode, int nLength)
 				SizeToolBar(pData, nCount, 32767);
 			else if (bDynamic && (dwMode & LM_VERTDOCK))
 				SizeToolBar(pData, nCount, 0);
-			else if (bDynamic && (nLength != -1))
-			{
-				CRect rect; rect.SetRectEmpty();
+			else if (bDynamic && (nLength != -1)) {
+				CRect rect;
+				rect.SetRectEmpty();
 				CalcInsideRect(rect, (dwMode & LM_HORZ));
 				BOOL bVert = (dwMode & LM_LENGTHY);
 				int nLen = nLength + (bVert ? rect.Height() : rect.Width());
 				SizeToolBar(pData, nCount, nLen, bVert);
-			}
-			else if (bDynamic && (m_dwStyle & CBRS_FLOATING))
+			} else if (bDynamic && (m_dwStyle & CBRS_FLOATING))
 				SizeToolBar(pData, nCount, m_nMRUWidth);
 			else
 				SizeToolBar(pData, nCount, (dwMode & LM_HORZ) ? 32767 : 0);
 		}
 		sizeResult = CalcSize(pData, nCount);
-		if (dwMode & LM_COMMIT)
-		{
+		if (dwMode & LM_COMMIT) {
 			_AFX_CONTROLPOS* pControl = NULL;
 			int nControlCount = 0;
 			BOOL bIsDelayed = m_bDelayedButtonLayout;
@@ -308,14 +292,11 @@ CSize GripperBar::CalcLayout(DWORD dwMode, int nLength)
 			for (i = 0; i < nCount; i++)
 				if ((pData[i].fsStyle & TBSTYLE_SEP) && (pData[i].idCommand != 0))
 					nControlCount++;
-			if (nControlCount > 0)
-			{
+			if (nControlCount > 0) {
 				pControl = new _AFX_CONTROLPOS[nControlCount];
 				nControlCount = 0;
-				for(int i = 0; i < nCount; i++)
-				{
-					if ((pData[i].fsStyle & TBSTYLE_SEP) && (pData[i].idCommand != 0))
-					{
+				for (int i = 0; i < nCount; i++) {
+					if ((pData[i].fsStyle & TBSTYLE_SEP) && (pData[i].idCommand != 0)) {
 						pControl[nControlCount].nIndex = i;
 						pControl[nControlCount].nID = pData[i].idCommand;
 						CRect rect;
@@ -330,13 +311,10 @@ CSize GripperBar::CalcLayout(DWORD dwMode, int nLength)
 				m_nMRUWidth = sizeResult.cx;
 			for (i = 0; i < nCount; i++)
 				_SetButton(i, &pData[i]);
-			if (nControlCount > 0)
-			{
-				for (int i = 0; i < nControlCount; i++)
-				{
+			if (nControlCount > 0) {
+				for (int i = 0; i < nControlCount; i++) {
 					CWnd* pWnd = GetDlgItem(pControl[i].nID);
-					if (pWnd != NULL)
-					{
+					if (pWnd != NULL) {
 						CRect rect;
 						pWnd->GetWindowRect(&rect);
 						CPoint pt = rect.TopLeft() - pControl[i].rectOldPos.TopLeft();
@@ -353,7 +331,8 @@ CSize GripperBar::CalcLayout(DWORD dwMode, int nLength)
 	}
 	//BLOCK: Adjust Margins
 	{
-		CRect rect; rect.SetRectEmpty();
+		CRect rect;
+		rect.SetRectEmpty();
 		CalcInsideRect(rect, (dwMode & LM_HORZ));
 		sizeResult.cy -= rect.Height();
 		sizeResult.cx -= rect.Width();
@@ -385,8 +364,7 @@ void GripperBar::_SetButton(int nIndex, TBBUTTON* pButton)
 	pButton->bReserved[0] = 0;
 	pButton->bReserved[1] = 0;
 	// nothing to do if they are the same
-	if (memcmp(pButton, &button, sizeof(TBBUTTON)) != 0)
-	{
+	if (memcmp(pButton, &button, sizeof(TBBUTTON)) != 0) {
 		// don't redraw everything while setting the button
 		DWORD dwStyle = GetStyle();
 		ModifyStyle(WS_VISIBLE, 0);
@@ -395,13 +373,10 @@ void GripperBar::_SetButton(int nIndex, TBBUTTON* pButton)
 		ModifyStyle(0, dwStyle & WS_VISIBLE);
 		// invalidate appropriate parts
 		if (((pButton->fsStyle ^ button.fsStyle) & TBSTYLE_SEP) ||
-			((pButton->fsStyle & TBSTYLE_SEP) && pButton->iBitmap != button.iBitmap))
-		{
+		        ((pButton->fsStyle & TBSTYLE_SEP) && pButton->iBitmap != button.iBitmap)) {
 			// changing a separator
 			Invalidate();
-		}
-		else
-		{
+		} else {
 			// invalidate just the button
 			CRect rect;
 			if (DefWindowProc(TB_GETITEMRECT, nIndex, (LPARAM)&rect))
@@ -420,8 +395,7 @@ CSize GripperBar::CalcFixedLayout(BOOL bStretch, BOOL bHorz)
 CSize GripperBar::CalcDynamicLayout(int nLength, DWORD dwMode)
 {
 	if ((nLength == -1) && !(dwMode & LM_MRUWIDTH) && !(dwMode & LM_COMMIT) &&
-		((dwMode & LM_HORZDOCK) || (dwMode & LM_VERTDOCK)))
-	{
+	        ((dwMode & LM_HORZDOCK) || (dwMode & LM_VERTDOCK))) {
 		return CalcFixedLayout(dwMode & LM_STRETCH, dwMode & LM_HORZDOCK);
 	}
 	return CalcLayout(dwMode, nLength);

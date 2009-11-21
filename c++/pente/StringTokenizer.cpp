@@ -17,7 +17,7 @@ static char THIS_FILE[]=__FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 StringTokenizer::StringTokenizer(LPCSTR pinput, LPCSTR pdelim)
- : delim(pdelim), init(false), nextoken(0)
+		: delim(pdelim), init(false), nextoken(0)
 {
 	input = strdup(pinput);
 }
@@ -45,25 +45,25 @@ CString StringTokenizer::next()
 // adapted from MS C runtime library, doesn't support multiple threads
 //
 LPCSTR StringTokenizer::strtok(LPCSTR string)
-{	
+{
 	LPBYTE str;
 	LPCBYTE ctrl = (LPCBYTE)(LPCSTR)delim;
 
-    BYTE map[32];
-    int count;
+	BYTE map[32];
+	int count;
 
 	/* Clear control map */
 	for (count = 0; count < 32; count++)
 		map[count] = 0;
 
-    /* Set bits in delimiter table */
-    do {
+	/* Set bits in delimiter table */
+	do {
 		map[*ctrl >> 3] |= (1 << (*ctrl & 7));
-    } while (*ctrl++);
+	} while (*ctrl++);
 
 	/* Initialize str. If string is NULL, set str to the saved
 	 * pointer (i.e., continue breaking tokens out of the string
-     * from the last strtok call) 
+	 * from the last strtok call)
 	 */
 	if (string)
 		str = (LPBYTE)string;
@@ -71,8 +71,8 @@ LPCSTR StringTokenizer::strtok(LPCSTR string)
 		str = (LPBYTE)nextoken;
 
 	/* Find beginning of token (skip over leading delimiters). Note that
-     * there is no token if this loop sets str to point to the terminal
-     * null (*str == '\0')
+	 * there is no token if this loop sets str to point to the terminal
+	 * null (*str == '\0')
 	 */
 	while ((map[*str >> 3] & (1 << (*str & 7))) && *str)
 		str++;
@@ -85,7 +85,7 @@ LPCSTR StringTokenizer::strtok(LPCSTR string)
 	for ( ; *str; str++)
 		if (map[*str >> 3] & (1 << (*str & 7))) {
 			*str++ = '\0';
-            break;
+			break;
 		}
 
 	/* Update nextoken (or the corresponding field in the per-thread data
@@ -94,7 +94,7 @@ LPCSTR StringTokenizer::strtok(LPCSTR string)
 	nextoken = (PCHAR)str;
 
 	/* Determine if a token has been found. */
-    if (string == (PCHAR)str)
+	if (string == (PCHAR)str)
 		return NULL;
 	else
 		return string;

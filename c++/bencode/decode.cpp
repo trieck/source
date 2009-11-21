@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 BEDecoder::BEDecoder(IPeekableStream *pStream)
-: m_pStream(pStream)
+		: m_pStream(pStream)
 {
 	// Copied pointer so AddRef it
 	m_pStream->AddRef();
@@ -59,11 +59,17 @@ int BEDecoder::Gettok()
 	int c = Peek();
 
 	switch (c) {
-	case 'd': Getc(); return BEObject::BET_DICT;
-	case 'i': Getc(); return BEObject::BET_INTEGER;
-	case 'l': Getc(); return BEObject::BET_LIST;
+	case 'd':
+		Getc();
+		return BEObject::BET_DICT;
+	case 'i':
+		Getc();
+		return BEObject::BET_INTEGER;
+	case 'l':
+		Getc();
+		return BEObject::BET_LIST;
 	default:
-		if (isdigit(c) || c == '-') 
+		if (isdigit(c) || c == '-')
 			return BEObject::BET_STRING;
 	}
 
@@ -94,7 +100,7 @@ LPSTRING BEDecoder::LoadString()
 {
 	int c;
 	string slen;
-	
+
 	while ((c = Peek()) != ':' && c != EOF) {
 		slen += (char)Getc();
 	}
@@ -103,7 +109,7 @@ LPSTRING BEDecoder::LoadString()
 	LPBYTE buf = new BYTE[length];
 
 	Getc();	// ':'
-	
+
 	DWORD read;
 	m_pStream->Read(buf, length, &read);
 
@@ -118,7 +124,7 @@ LPSTRING BEDecoder::LoadString()
 LPLIST BEDecoder::LoadList()
 {
 	LPLIST list = MakeList();
-	
+
 	int c;
 	while ((c = Peek()) != 'e' && c != EOF) {
 		list->AddObject(LoadObject());
@@ -133,8 +139,9 @@ LPLIST BEDecoder::LoadList()
 LPDICTIONARY BEDecoder::LoadDictionary()
 {
 	LPDICTIONARY d = MakeDictionary();
-	LPSTRING k; LPBEOBJECT v; 
-	
+	LPSTRING k;
+	LPBEOBJECT v;
+
 	int c;
 	while ((c = Peek()) != 'e' && c != EOF) {
 		k = LoadString();

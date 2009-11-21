@@ -44,7 +44,7 @@ static void accumulator(const Instr *p);
 static void implied(const Instr *p);
 static void printpc(void);
 static void disassemble_machine(const word *pstart,
- const word *pend);
+                                const word *pend);
 #define getbyte() fetch_byte(pc++)
 #define getword() (fetch_byte(pc++) + fetch_byte(pc++) * 256)
 #define LINES 23
@@ -90,13 +90,13 @@ void disassemble_instr(const word addr)
 	p = instructions[N];
 	printf("%.2x", N);
 	instruction(p);
-	printf("\n");	
+	printf("\n");
 }
-/* 
+/*
  * disassemble machine
  */
 void disassemble_machine(const word *start,
- const word *end)
+                         const word *end)
 {
 	byte N;
 	const Instr *p;
@@ -110,7 +110,7 @@ void disassemble_machine(const word *start,
 		p = instructions[N];
 		printf("%.2x", N);
 		instruction(p);
-		printf("\n");	
+		printf("\n");
 	} while (!roll && (NULL == end ? ++i < LINES : pc <= *end));
 }
 /*
@@ -129,7 +129,7 @@ void instruction (const Instr *p)
 		printf("\t\t???");
 		return;
 	}
-	
+
 	switch (p->mode) {
 	case acc:
 		accumulator(p);
@@ -213,8 +213,8 @@ void zeropgy(const Instr *p)
 void absolute(const Instr *p)
 {
 	word A = getword();
-	printf(" %.2x %.2x\t%s\t$%.4hx", 
-		lobyte(A), hibyte(A), *p->name, A);
+	printf(" %.2x %.2x\t%s\t$%.4hx",
+	       lobyte(A), hibyte(A), *p->name, A);
 }
 /*
  * absolute, x instruction
@@ -222,8 +222,8 @@ void absolute(const Instr *p)
 void abslx(const Instr *p)
 {
 	word A = getword();
-	printf(" %.2x %.2x\t%s\t$%.4hx, x", 
-		lobyte(A), hibyte(A), *p->name, A);
+	printf(" %.2x %.2x\t%s\t$%.4hx, x",
+	       lobyte(A), hibyte(A), *p->name, A);
 }
 /*
  * absolute, y instruction
@@ -231,26 +231,26 @@ void abslx(const Instr *p)
 void absly(const Instr *p)
 {
 	word A = getword();
-	printf(" %.2x %.2x\t%s\t$%.4hx, y", 
-		lobyte(A), hibyte(A), *p->name, A);
+	printf(" %.2x %.2x\t%s\t$%.4hx, y",
+	       lobyte(A), hibyte(A), *p->name, A);
 }
 /*
  * relative instruction
  */
 void relative(const Instr *p)
 {
-	/* 
+	/*
 	 * we must convert the relative address
 	 * to an absolute address for disassembly
 	 */
 	byte b = getbyte();
 	word A;
-	
+
 	if (b < 0x80)
 		A = (word)(pc + b);
 	else A = (word)(pc - (0x100 - b));
-	printf(" %.2x \t\t%s\t$%.4hx", 
-		b, *p->name, A);
+	printf(" %.2x \t\t%s\t$%.4hx",
+	       b, *p->name, A);
 }
 /*
  * indirect instruction
@@ -258,8 +258,8 @@ void relative(const Instr *p)
 void indirect(const Instr *p)
 {
 	word A = getword();
-	printf(" %.2x %.2x\t%s\t($%.4hx)", 
-		lobyte(A), hibyte(A), *p->name, A);
+	printf(" %.2x %.2x\t%s\t($%.4hx)",
+	       lobyte(A), hibyte(A), *p->name, A);
 }
 /*
  * indirect, x instruction

@@ -32,7 +32,7 @@ END_MESSAGE_MAP()
 // WarningFrame message handlers
 
 /////////////////////////////////////////////////////////////////////////////
-void WarningFrame::PostNcDestroy() 
+void WarningFrame::PostNcDestroy()
 {
 	CMDIChildWnd::PostNcDestroy();
 }
@@ -44,36 +44,36 @@ void WarningFrame::OnNcDestroy()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-BOOL WarningFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext) 
+BOOL WarningFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 {
 	return CMDIChildWnd::OnCreateClient(lpcs, pContext);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-int WarningFrame::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int WarningFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CMDIChildWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	view = new CListView;
 	if (!view->Create(NULL, _T(""), WS_CHILD | WS_VISIBLE, CRect(0, 0, 0, 0),
-			this, AFX_IDW_PANE_FIRST, NULL))
-			return -1;
-	view->GetListCtrl().InsertColumn(0, NULL, LVCFMT_LEFT, 
-		lpCreateStruct->cx);
+	                  this, AFX_IDW_PANE_FIRST, NULL))
+		return -1;
+	view->GetListCtrl().InsertColumn(0, NULL, LVCFMT_LEFT,
+	                                 lpCreateStruct->cx);
 	view->ModifyStyle(0, LVS_REPORT | LVS_SINGLESEL | LVS_NOCOLUMNHEADER);
-	
+
 	view->GetListCtrl().SetTextColor(RGB(128, 0, 0));
 
 	// register ourselves as a warning handler
 	ADFWarningRegistrar::Register(this);
-	
+
 	SetWindowText(_T("Warnings"));
 
 	return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void WarningFrame::OnSize(UINT nType, int cx, int cy) 
+void WarningFrame::OnSize(UINT nType, int cx, int cy)
 {
 	CMDIChildWnd::OnSize(nType, cx, cy);
 	if (view && IsWindow(*view)) {
@@ -83,7 +83,7 @@ void WarningFrame::OnSize(UINT nType, int cx, int cy)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-BOOL WarningFrame::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL WarningFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.style |= WS_CHILD;
 	cs.cx = 250;
@@ -93,18 +93,18 @@ BOOL WarningFrame::PreCreateWindow(CREATESTRUCT& cs)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void WarningFrame::OnClose() 
+void WarningFrame::OnClose()
 {
 	ShowWindow(SW_HIDE);
 }
 
-void WarningFrame::OnDestroy() 
+void WarningFrame::OnDestroy()
 {
 	CMDIChildWnd::OnDestroy();
-	
+
 	if (view != NULL) {
 		view->DestroyWindow();
-	}	
+	}
 }
 
 void WarningFrame::handle(const string &s) const

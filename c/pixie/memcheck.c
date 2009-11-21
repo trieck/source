@@ -107,7 +107,7 @@ void cleanup(void)
 
 			dprint("\n**************************************************");
 			dprint("\tmemory block 0x%p of size 0x%x never freed!",
-				   blink->pv, blink->size);
+			       blink->pv, blink->size);
 			dprint("\tthe next %d bytes follow...", n);
 			putc('\t', stderr);
 			putc('[', stderr);

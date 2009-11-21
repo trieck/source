@@ -1,11 +1,11 @@
 /*
- * ERF.C 
+ * ERF.C
  *
- * The Encapsulated Resource File (ERF) format is one of BioWare's methods 
+ * The Encapsulated Resource File (ERF) format is one of BioWare's methods
  * of packing multiple files into a single file so that they may be treated
  * as a single unit. In this regard, it is similar to .zip, .tar, or .rar.
  *
- * BioWare Aurora Engine/Toolset files that use the ERF format include the 
+ * BioWare Aurora Engine/Toolset files that use the ERF format include the
  * following: .erf, .hak, .mod, and .nwm.
  *
  */
@@ -44,20 +44,20 @@ void usage(void)
 void print_header(void)
 {
 	printf("ERF HEADER\n__________\n\n"
-		"File Type: %.4s\nVersion: %.4s\nNumber of Strings: %d\nSize of String Table: %d\n"
-		"# of Files Packed: %d\nOffset to String List: %d\nOffset to Key List: %d\n"
-		"Offset to Resource List: %d\nBuild Year: %d\nBuild Day: %d\n\n"
-		,
-		header.FileType,
-		header.Version,
-		header.LanguageCount,
-		header.LocalizedStringSize,
-		header.EntryCount,
-		header.OffsetToLocalizedString,
-		header.OffsetToKeyList,
-		header.OffsetToResourceList,
-		1900+header.BuildYear,
-		header.BuildDay);
+	       "File Type: %.4s\nVersion: %.4s\nNumber of Strings: %d\nSize of String Table: %d\n"
+	       "# of Files Packed: %d\nOffset to String List: %d\nOffset to Key List: %d\n"
+	       "Offset to Resource List: %d\nBuild Year: %d\nBuild Day: %d\n\n"
+	       ,
+	       header.FileType,
+	       header.Version,
+	       header.LanguageCount,
+	       header.LocalizedStringSize,
+	       header.EntryCount,
+	       header.OffsetToLocalizedString,
+	       header.OffsetToKeyList,
+	       header.OffsetToResourceList,
+	       1900+header.BuildYear,
+	       header.BuildDay);
 }
 
 /* extract the next string */
@@ -111,7 +111,7 @@ const char *restype(short type)
 {
 	switch (type) {
 	case RESTYPE_BMP:
-		return "bmp";		
+		return "bmp";
 	case RESTYPE_TGA:
 		return "tga";
 	case RESTYPE_WAV:
@@ -217,11 +217,11 @@ void print_keylist(void)
 		if (!fread(&key, sizeof(Key), 1, fp)) {
 			error("unable to read key data.\n");
 		}
-		
+
 		if (n > 0) printf("\n");
-		
+
 		printf("Filename: %.16s\nResource ID: %d\nFile Type: %s\n",
-			key.ResRef, key.ResID, restype(key.ResType));			
+		       key.ResRef, key.ResID, restype(key.ResType));
 	}
 
 }
@@ -242,11 +242,11 @@ void print_reslist(void)
 		if (!fread(&res, sizeof(Resource), 1, fp)) {
 			error("unable to read resource data.\n");
 		}
-		
+
 		if (n > 0) printf("\n");
 
 		printf("Offset to Resource: %d\nResource Size: %d\n",
-			res.OffsetToResource, res.ResourceSize);
+		       res.OffsetToResource, res.ResourceSize);
 	}
 }
 
@@ -345,9 +345,9 @@ void error(const char *fmt, ...)
 	char buf[BUFSIZE];
 
 	va_list arglist;
-    va_start(arglist, fmt);
- 
-    vsprintf(buf, fmt, arglist);
+	va_start(arglist, fmt);
+
+	vsprintf(buf, fmt, arglist);
 
 	va_end (arglist);
 
@@ -367,7 +367,7 @@ int main(int argc, char *argv[])
 
 	if (argc > 2) {	/* extract resource */
 		extract(atoi(argv[2]));
-	} else {	/* display erf */		
+	} else {	/* display erf */
 		output();
 	}
 

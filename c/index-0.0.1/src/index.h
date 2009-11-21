@@ -1,6 +1,6 @@
 /*
  * INDEX.H
- * 
+ *
  * Index content
  * Copyright (c) 2008 Thomas A. Rieck
  */

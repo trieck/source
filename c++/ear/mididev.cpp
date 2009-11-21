@@ -13,8 +13,8 @@
 //
 MidiDevice :: MidiDevice()
 {
-    m_handle = NULL;
-    m_id = 0;
+	m_handle = NULL;
+	m_id = 0;
 }
 
 //

@@ -2,12 +2,12 @@
 //
 // SORT.CPP : radix sort function
 //
-// When sorting long strings, repetitive string comparison dominates the 
-// running time.  The radix sort visits each character in a string at most 
-// once, this gives algorithm sub-linear complexity in the number of 
+// When sorting long strings, repetitive string comparison dominates the
+// running time.  The radix sort visits each character in a string at most
+// once, this gives algorithm sub-linear complexity in the number of
 // characters processed.
 //
-// This sort uses a three-way radix sort algorithm taken from "Algorithms 
+// This sort uses a three-way radix sort algorithm taken from "Algorithms
 // in C++", third edition, Robert Sedgewick, pg 436, Addison Wesley, 1998.
 //
 // Copyright(c) 2008 Thomas A. Rieck, All Rights Reserved

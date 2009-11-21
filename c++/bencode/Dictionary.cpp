@@ -11,12 +11,12 @@
 #include "Integer.h"
 
 /////////////////////////////////////////////////////////////////////////////
-Dictionary::Dictionary() 
+Dictionary::Dictionary()
 {
 }
 
 /////////////////////////////////////////////////////////////////////////////
-Dictionary::Dictionary(const Dictionary &d) 
+Dictionary::Dictionary(const Dictionary &d)
 {
 	*this = d;
 }
@@ -33,7 +33,7 @@ Dictionary::~Dictionary()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-Dictionary &Dictionary::operator =(const Dictionary &rhs) 
+Dictionary &Dictionary::operator =(const Dictionary &rhs)
 {
 	if (this != &rhs) {
 		m = rhs.m;
@@ -61,7 +61,7 @@ void Dictionary::Set(LPSTRING k, LPBEOBJECT v)
 	if ((o = Get(k)) != NULL)
 		delete o;
 
-	m[k] = v; 
+	m[k] = v;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// ADFWARN.H : ADF warning handler 
+// ADFWARN.H : ADF warning handler
 //
 // LIBADF : A C++ Amiga Disk File Libary
 // Copyright(c) 2009 Thomas A. Rieck, All Rights Reserved
@@ -18,20 +18,18 @@ class IADFWarningHandler : public IADFHandler {
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class ADFWarningRegistrar 
-{
+class ADFWarningRegistrar {
 private:
 	ADFWarningRegistrar();
-public:	
+public:
 	static void Register(IADFWarningHandler *pHandler);
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class ADFWarningDispatcher
-{
+class ADFWarningDispatcher {
 private:
 	ADFWarningDispatcher();
-public:	
+public:
 	static void dispatch(const string &s);
 };
 

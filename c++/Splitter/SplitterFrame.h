@@ -15,9 +15,8 @@
 
 ///////////////////////////////////////////////////////////////////
 // The CMainFrame frame window class
-                  
-class CMainFrame : public CFrameWnd
-{
+
+class CMainFrame : public CFrameWnd {
 	friend CSplitterView;
 	friend CRootView;
 

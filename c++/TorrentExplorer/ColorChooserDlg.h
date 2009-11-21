@@ -12,8 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // ColorChooserDlg dialog
 
-class ColorChooserDlg : public CDialog
-{
+class ColorChooserDlg : public CDialog {
 // Construction
 public:
 	COLORREF GetSelectedColor() const;
@@ -22,14 +21,14 @@ public:
 // Dialog Data
 	//{{AFX_DATA(ColorChooserDlg)
 	enum { IDD = IDD_COLOR_CHOOSER };
-		// NOTE: the ClassWizard will add data members here
+	// NOTE: the ClassWizard will add data members here
 	//}}AFX_DATA
 
 
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(ColorChooserDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual void OnOK();
 	virtual void OnCancel();

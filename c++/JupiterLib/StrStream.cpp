@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 //	STRSTREAM.CPP : Peekable string stream
 //
 //	Copyright (c) 2006 Thomas A. Rieck, All Rights Reserved
@@ -7,10 +7,10 @@
 
 #include "stdafx.h"
 #include "StrStream.h"
-  
+
 /////////////////////////////////////////////////////////////////////////////
 StrStream::StrStream()
- : m_cRef(1), m_Pos(0), m_Size(0), m_Buf(0)	// new creation only
+		: m_cRef(1), m_Pos(0), m_Size(0), m_Buf(0)	// new creation only
 {
 	alloc();
 }
@@ -38,7 +38,7 @@ HRESULT StrStream::QueryInterface(REFIID riid, void **ppvObject)
 		return E_NOINTERFACE;
 	}
 }
-            
+
 /////////////////////////////////////////////////////////////////////////////
 ULONG StrStream::AddRef()
 {
@@ -54,7 +54,7 @@ ULONG StrStream::Release(void)
 	}
 	return m_cRef;
 }
-    	
+
 /////////////////////////////////////////////////////////////////////////////
 HRESULT StrStream::Read(void *pv, ULONG cb, ULONG *pcbRead)
 {
@@ -79,7 +79,7 @@ HRESULT StrStream::Write(const void *pv, ULONG cb, ULONG *pcbWritten)
 {
 	*pcbWritten = 0;
 
-	ULONG n = min(avail(), cb); 
+	ULONG n = min(avail(), cb);
 	if (n == 0 && !resize(m_Size + cb)) {
 		return E_OUTOFMEMORY;	// no space
 	}
@@ -104,7 +104,7 @@ HRESULT StrStream::Write(LPCSTR pstr)
 /////////////////////////////////////////////////////////////////////////////
 void StrStream::alloc()
 {
-	m_Buf = (LPBYTE)malloc(m_Size = 0);	
+	m_Buf = (LPBYTE)malloc(m_Size = 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////

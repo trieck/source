@@ -25,7 +25,7 @@
 /* Helper functions */
 static void freesymbol(PSYMBOL);
 static unsigned hash(const char *);
-/* 
+/*
  * allocate symbol table
  */
 SymbolTable symalloc()
@@ -36,7 +36,7 @@ SymbolTable symalloc()
 	return table;
 }
 
-/* 
+/*
  * initialize symbol table
  */
 void syminit(SymbolTable table)
@@ -139,7 +139,7 @@ void syminit(SymbolTable table)
 	kinsert(table, "vector", 0xff8d);
 }
 
-/* 
+/*
  * free symbol table
  */
 void symfree(SymbolTable table)
@@ -153,8 +153,8 @@ void symfree(SymbolTable table)
 	free(table);
 }
 
-/* 
- * insert opcode 
+/*
+ * insert opcode
  */
 PSYMBOL opinsert(SymbolTable table, const char *name, const Instr * instr)
 {
@@ -175,7 +175,7 @@ PSYMBOL opinsert(SymbolTable table, const char *name, const Instr * instr)
 }
 
 /*
- * insert kernel jump table entry 
+ * insert kernel jump table entry
  */
 PSYMBOL kinsert(SymbolTable table, const char *name, const word kjmp)
 {
@@ -216,8 +216,8 @@ PSYMBOL linsert(SymbolTable table, const char *name, word pmem)
 	return ps;
 }
 
-/* 
- * lookup entry in symbol table 
+/*
+ * lookup entry in symbol table
  */
 PSYMBOL symlookup(SymbolTable table, const char *name)
 {

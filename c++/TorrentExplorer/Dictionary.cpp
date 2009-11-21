@@ -70,7 +70,7 @@ KeyVec Dictionary::GetKeys() const
 	POSITION pos = map.GetStartPosition();
 	while (pos != NULL) {
 		map.GetNextAssoc(pos, key, val);
-		keys.push_back(key);		
+		keys.push_back(key);
 	}
 
 	return keys;

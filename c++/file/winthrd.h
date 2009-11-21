@@ -9,14 +9,13 @@
 #include "window.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class WinThread
-{
+class WinThread {
 public:
 // Construction / Destruction
 	WinThread();
 	virtual ~WinThread();
 
-// Interface 
+// Interface
 	virtual bool initInstance();
 	virtual bool run();
 	virtual int exitInstance();
@@ -36,7 +35,8 @@ private:
 };
 /////////////////////////////////////////////////////////////////////////////
 
-inline Window *WinThread::getMainWnd() const {
+inline Window *WinThread::getMainWnd() const
+{
 	return mainWnd;
 }
 

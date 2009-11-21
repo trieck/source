@@ -10,8 +10,7 @@
 #endif // _MSC_VER > 1000
 
 
-class WinEditView : public CEditView
-{
+class WinEditView : public CEditView {
 protected: // create from serialization only
 	WinEditView();
 	DECLARE_DYNCREATE(WinEditView)
@@ -26,11 +25,11 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(WinEditView)
-	public:
+public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void OnInitialUpdate();
-	protected:
+protected:
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
 	//}}AFX_VIRTUAL
 
@@ -56,7 +55,9 @@ private:
 
 #ifndef _DEBUG  // debug version in winview.cpp
 inline WinEditDoc* WinEditView::GetDocument()
-   { return (WinEditDoc*)m_pDocument; }
+{
+	return (WinEditDoc*)m_pDocument;
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

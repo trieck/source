@@ -24,8 +24,7 @@ typedef struct tagBlock {
 } Block;
 
 /////////////////////////////////////////////////////////////////////////////
-class BlockMgr 
-{
+class BlockMgr {
 // Construction / Destruction
 public:
 	BlockMgr();

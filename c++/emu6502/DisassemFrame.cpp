@@ -16,8 +16,8 @@ static UINT indicators[] = {
 
 DisassemFrame::DisassemFrame()
 {
-	Create(NULL, _T("Disassembly"), MFS_THICKFRAME | WS_OVERLAPPEDWINDOW, 
-		rectDefault, AfxGetMainWnd());
+	Create(NULL, _T("Disassembly"), MFS_THICKFRAME | WS_OVERLAPPEDWINDOW,
+	       rectDefault, AfxGetMainWnd());
 
 	Emu6502App *pApp = (Emu6502App*)AfxGetApp();
 	pApp->RegisterConstruct(DISASSEM_FRAME_ID, this);
@@ -47,9 +47,9 @@ BOOL DisassemFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext
 	CRuntimeClass* pRuntimeClass = RUNTIME_CLASS(DisassemView);
 	DisassemView *pView = (DisassemView*)pRuntimeClass->CreateObject();
 
-	if (!pView->CreateEx(WS_EX_CLIENTEDGE, NULL, _T(""), 
-		WS_CHILD | WS_VISIBLE, rectDefault, this, 
-		AFX_IDW_PANE_FIRST, NULL)) {
+	if (!pView->CreateEx(WS_EX_CLIENTEDGE, NULL, _T(""),
+	                     WS_CHILD | WS_VISIBLE, rectDefault, this,
+	                     AFX_IDW_PANE_FIRST, NULL)) {
 		TRACE0("Unable to create view.\n");
 		return -1;
 	}
@@ -65,8 +65,8 @@ int DisassemFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	if (!m_wndStatusBar.Create(this) ||
-		!m_wndStatusBar.SetIndicators(indicators,
-		  sizeof(indicators)/sizeof(UINT))) {
+	        !m_wndStatusBar.SetIndicators(indicators,
+	                                      sizeof(indicators)/sizeof(UINT))) {
 		TRACE0("Failed to create status bar\n");
 		return -1;      // fail to create
 	}

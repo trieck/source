@@ -17,8 +17,8 @@
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, fileheader_t *pheader)
- : volume(pVol), pos(0), blockpos(0), extentpos(0), nblocks(0), 
- currblock(0), data(&buffer[0]), writemode(false)
+		: volume(pVol), pos(0), blockpos(0), extentpos(0), nblocks(0),
+		currblock(0), data(&buffer[0]), writemode(false)
 {
 	memcpy(&header, pheader, sizeof(fileheader_t));
 	memset(buffer, 0, BSIZE);
@@ -27,8 +27,8 @@ File::File(Volume *pVol, fileheader_t *pheader)
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, entryblock_t *pEntry)
- : volume(pVol), pos(0), blockpos(0), extentpos(0), nblocks(0), currblock(0),
- data(&buffer[0]), writemode(false)
+		: volume(pVol), pos(0), blockpos(0), extentpos(0), nblocks(0), currblock(0),
+		data(&buffer[0]), writemode(false)
 {
 	memcpy(&header, pEntry, sizeof(fileheader_t));
 	memset(buffer, 0, BSIZE);
@@ -37,15 +37,15 @@ File::File(Volume *pVol, entryblock_t *pEntry)
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, const Entry &e)
- : volume(pVol), pos(0), blockpos(0), nblocks(0), currblock(0),
- data(&buffer[0]), writemode(false)
+		: volume(pVol), pos(0), blockpos(0), nblocks(0), currblock(0),
+		data(&buffer[0]), writemode(false)
 {
 	memset(buffer, 0, BSIZE);
 	memset(&extent, 0, sizeof(fileext_t));
-	volume->readblock(e.blockno, &header);	
+	volume->readblock(e.blockno, &header);
 #ifdef LITTLE_ENDIAN
 	swapfileblock(&header);
-#endif	
+#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ uint32_t File::read(uint32_t n, void *buf)
 	}
 
 	uint8_t *pdata = isOFS(volume->getType()) ?
-		data+(BSIZE-OFS_DBSIZE) : data;
+	                 data+(BSIZE-OFS_DBSIZE) : data;
 
 	uint8_t *pbuf = (uint8_t*)buf;
 	uint32_t read = 0, size;
@@ -123,10 +123,10 @@ uint32_t File::read(uint32_t n, void *buf)
 		pbuf += size;
 		pos += size;
 		read += size;
-		blockpos += size;		
+		blockpos += size;
 	}
-	
-    return read;
+
+	return read;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -171,9 +171,9 @@ void File::readnext()
 
 	uint32_t blockno;
 	if (nblocks == 0) {
-        blockno = header.firstblock;
-    } else if (isOFS(volume->getType())) {
-        blockno = block->next;
+		blockno = header.firstblock;
+	} else if (isOFS(volume->getType())) {
+		blockno = block->next;
 	} else {	// FFS
 		if (nblocks < MAX_DATABLK) {
 			blockno = header.datablocks[MAX_DATABLK-1-nblocks];
@@ -238,13 +238,13 @@ void File::createnext()
 
 			// initializes a file extension block
 			uint32_t i;
-            for (i = 0; i < MAX_DATABLK; i++)
-                extent.blocks[i] = 0;
+			for (i = 0; i < MAX_DATABLK; i++)
+				extent.blocks[i] = 0;
 
-            extent.key = extblock;
-            extent.parent = header.key;
-            extent.highseq = 0;
-            extent.extension = 0;
+			extent.key = extblock;
+			extent.parent = header.key;
+			extent.highseq = 0;
+			extent.extension = 0;
 			extentpos = 0;
 		}
 
@@ -254,7 +254,7 @@ void File::createnext()
 		extent.blocks[MAX_DATABLK-1-extentpos] = blockno;
 		extent.highseq++;
 		extentpos++;
-	}	
+	}
 
 	// build OFS header
 	if (isOFS(volume->getType())) {
@@ -264,18 +264,18 @@ void File::createnext()
 			volume->writedatablock(currblock, block);
 		}
 
-		// initialize a new data block 
+		// initialize a new data block
 		memset(block->data, 0, blocksize);
 
-        block->seqnum = nblocks+1;
-        block->size = blocksize;
-        block->next = 0;
-        block->key = header.key;
+		block->seqnum = nblocks+1;
+		block->size = blocksize;
+		block->next = 0;
+		block->key = header.key;
 	} else {
 		if (pos >= blocksize) {
 			volume->writedatablock(currblock, block);
 			memset(block, 0, BSIZE);
-        }
+		}
 	}
 
 	currblock = blockno;

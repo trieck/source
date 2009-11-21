@@ -1,11 +1,11 @@
 /*
  * ERF.H
  *
- * The Encapsulated Resource File (ERF) format is one of BioWare's methods 
+ * The Encapsulated Resource File (ERF) format is one of BioWare's methods
  * of packing multiple files into a single file so that they may be treated
  * as a single unit. In this regard, it is similar to .zip, .tar, or .rar.
  *
- * BioWare Aurora Engine/Toolset files that use the ERF format include the 
+ * BioWare Aurora Engine/Toolset files that use the ERF format include the
  * following: .erf, .hak, .mod, and .nwm.
  *
  */
@@ -46,7 +46,7 @@ typedef struct tagKey {
 
 /* Resource structure */
 typedef struct tagResource {
-	int OffsetToResource;	
+	int OffsetToResource;
 	int ResourceSize;
 } Resource;
 

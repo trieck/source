@@ -1,11 +1,11 @@
 ///////////////////////////////
-//	Module:	SOCKHOST.H		 //	
+//	Module:	SOCKHOST.H		 //
 //	Author:	Thomas A. Rieck	 //
 //	Date:	05/26/97		 //
 ///////////////////////////////
 
 #ifndef _WIN32_WINNT
-#define _WIN32_WINNT	0x0400 
+#define _WIN32_WINNT	0x0400
 
 #include <windows.h>
 #include <stdio.h>
@@ -41,28 +41,25 @@
 
 #define	SERVICE_NAME	"merlin"
 
-typedef struct // socket info structure
-{
-    SOCKET	sdVal;
-    INT		iState;
+typedef struct { // socket info structure
+	SOCKET	sdVal;
+	INT		iState;
 	CHAR	IPAddress[16];
 	REQUEST	Request;
 } SDSTRUCT, *LPSDSTRUCT ;
 
-typedef struct // screen line structure
-{
+typedef struct { // screen line structure
 	COLORREF	uColor;
 	CHAR		szText[255];
-}SCREENLINE, *LPSCREENLINE; 
+} SCREENLINE, *LPSCREENLINE;
 
-typedef struct	// logging structure
-{
+typedef struct {	// logging structure
 	BOOL		bIsLogging;
 	CHAR		szFileName[_MAX_PATH + _MAX_FNAME];
-}LOGSTRUCT, *LPLOGSTRUCT, **PPLOGSTRUCT;
+} LOGSTRUCT, *LPLOGSTRUCT, **PPLOGSTRUCT;
 
 typedef struct tm* LPTIME;
-	
+
 BOOL				InitApplication(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE hInstance, INT nCmdShow);
 LONG	APIENTRY	MainWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);

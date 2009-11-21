@@ -1,8 +1,8 @@
-#include "common.h" 
-#include "Queens.h" 
+#include "common.h"
+#include "Queens.h"
 
-int _tmain(int argc, _TCHAR* argv[]) 
-{ 
+int _tmain(int argc, _TCHAR* argv[])
+{
 	if (argc < 2) {
 		cerr << "usage: queens boardsize" << endl;
 		return 1;
@@ -10,8 +10,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	uint32_t size = _ttoi(argv[1]);
 
-	Queens queens(size); 
-	queens.solve(cout); 
-	
-	return 0; 
-} 
+	Queens queens(size);
+	queens.solve(cout);
+
+	return 0;
+}

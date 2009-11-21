@@ -10,8 +10,7 @@
 
 #include "game.h"
 
-class PenteDoc : public CDocument
-{
+class PenteDoc : public CDocument {
 protected: // create from serialization only
 	PenteDoc();
 	DECLARE_DYNCREATE(PenteDoc)
@@ -27,7 +26,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(PenteDoc)
-	public:
+public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 	virtual void DeleteContents();
@@ -60,7 +59,8 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline PenteGame* PenteDoc::getGame() {
+inline PenteGame* PenteDoc::getGame()
+{
 	return &game;
 }
 

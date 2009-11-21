@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	char *p;
 
 	struct queue *q = qalloc();
-	
+
 	while (argc--) qput(q, *argv++);
 
 	while ((p = qget(q))) printf("%s\n", p);

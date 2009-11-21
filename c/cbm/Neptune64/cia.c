@@ -33,7 +33,7 @@ typedef struct {
 	byte tblo;		/* timer b low byte */
 	byte tbhi;		/* timer b high byte */
 	byte tod_tenth;	/* time of day clock */
-	byte tod_sec;	
+	byte tod_sec;
 	byte tod_min;
 	byte tod_hr;
 	byte sdr;		/* serial data register */
@@ -42,7 +42,7 @@ typedef struct {
 	byte crb;		/* control register b */
 } CIA;
 static CIA cia1, cia2;
-/* 
+/*
  * initialize CIA's
  */
 void cia_init(void)

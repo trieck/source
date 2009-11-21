@@ -9,19 +9,18 @@
 #define __ODBMGRDATAOBJ_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ODBMgrDataObj : public IDataObject
-{
+class ODBMgrDataObj : public IDataObject {
 // Construction / Destruction
 public:
-	ODBMgrDataObj(LPUNKNOWN pUnknown);	
+	ODBMgrDataObj(LPUNKNOWN pUnknown);
 	virtual ~ODBMgrDataObj();
-    
+
 // Interface
 
-    // IUnknown members
-    STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
-    STDMETHODIMP_(ULONG) AddRef();
-    STDMETHODIMP_(ULONG) Release();
+	// IUnknown members
+	STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
+	STDMETHODIMP_(ULONG) AddRef();
+	STDMETHODIMP_(ULONG) Release();
 
 	// IDataObject members
 	STDMETHODIMP GetData(LPFORMATETC, LPSTGMEDIUM);

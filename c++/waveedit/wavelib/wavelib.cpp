@@ -1,7 +1,7 @@
 /*---------------------------------------
 
 	Module	:	WAVELIB.CPP
-	Purpose	:	Wave Library 
+	Purpose	:	Wave Library
 				Implementations
 	Date	:	11/22/1997
 
@@ -72,8 +72,7 @@ HRESULT __stdcall CWaveLib :: GetInputDevices(PPSAFEARRAY ppsa)
 	if (!psab)
 		return E_OUTOFMEMORY;
 
-	for (UINT i = 0; i < nNumDevs; i++)
-	{
+	for (UINT i = 0; i < nNumDevs; i++) {
 		psab[i].lLbound		= 0;
 		psab[i].cElements	= 1;
 	}
@@ -85,8 +84,7 @@ HRESULT __stdcall CWaveLib :: GetInputDevices(PPSAFEARRAY ppsa)
 	if (!*ppsa)
 		return E_OUTOFMEMORY;
 
-	for (i = 0; i < nNumDevs; i++)
-	{
+	for (i = 0; i < nNumDevs; i++) {
 		WAVEINCAPS	wic;
 		BSTR		bstrTemp;
 		LONG		ix[1];
@@ -94,24 +92,23 @@ HRESULT __stdcall CWaveLib :: GetInputDevices(PPSAFEARRAY ppsa)
 		::waveInGetDevCaps(i, &wic, sizeof(WAVEINCAPS));
 
 		OLECHAR wszPName[MAXPNAMELEN];
-		
-		MultiByteToWideChar(CP_ACP, 0, wic.szPname, 
-							-1, wszPName, MAXPNAMELEN);
+
+		MultiByteToWideChar(CP_ACP, 0, wic.szPname,
+		                    -1, wszPName, MAXPNAMELEN);
 
 		bstrTemp = ::SysAllocString(wszPName);
-		if (!bstrTemp)
-		{
+		if (!bstrTemp) {
 			SafeArrayDestroy(*ppsa);
 			*ppsa = NULL;
 			return E_OUTOFMEMORY;
 		}
-		
+
 		ix[0] = i;
 		SafeArrayPutElement(*ppsa, ix, bstrTemp);
 
 		::SysFreeString(bstrTemp);
 	}
-		
+
 	return S_OK;
 }
 
@@ -130,8 +127,7 @@ HRESULT __stdcall CWaveLib :: GetOutputDevices(PPSAFEARRAY ppsa)
 	if (!psab)
 		return E_OUTOFMEMORY;
 
-	for (UINT i = 0; i < nNumDevs; i++)
-	{
+	for (UINT i = 0; i < nNumDevs; i++) {
 		psab[i].lLbound		= 0;
 		psab[i].cElements	= 1;
 	}
@@ -143,8 +139,7 @@ HRESULT __stdcall CWaveLib :: GetOutputDevices(PPSAFEARRAY ppsa)
 	if (!*ppsa)
 		return E_OUTOFMEMORY;
 
-	for (i = 0; i < nNumDevs; i++)
-	{
+	for (i = 0; i < nNumDevs; i++) {
 		WAVEOUTCAPS	woc;
 		BSTR		bstrTemp;
 		LONG		ix[1];
@@ -152,24 +147,23 @@ HRESULT __stdcall CWaveLib :: GetOutputDevices(PPSAFEARRAY ppsa)
 		::waveOutGetDevCaps(i, &woc, sizeof(WAVEOUTCAPS));
 
 		OLECHAR wszPName[MAXPNAMELEN];
-		
-		MultiByteToWideChar(CP_ACP, 0, woc.szPname, 
-							-1, wszPName, MAXPNAMELEN);
+
+		MultiByteToWideChar(CP_ACP, 0, woc.szPname,
+		                    -1, wszPName, MAXPNAMELEN);
 
 		bstrTemp = ::SysAllocString(wszPName);
-		if (!bstrTemp)
-		{
+		if (!bstrTemp) {
 			SafeArrayDestroy(*ppsa);
 			*ppsa = NULL;
 			return E_OUTOFMEMORY;
 		}
-		
+
 		ix[0] = i;
 		SafeArrayPutElement(*ppsa, ix, bstrTemp);
 
 		::SysFreeString(bstrTemp);
 	}
-		
+
 	return S_OK;
 }
 
@@ -183,8 +177,7 @@ HRESULT __stdcall CWaveLib :: GetDeviceInCaps(UINT nIndex, WAVEINCAPS ** ppwic)
 		return E_OUTOFMEMORY;
 
 	MMRESULT rtn = ::waveInGetDevCaps(nIndex, *ppwic, sizeof(WAVEINCAPS));
-	if (rtn != MMSYSERR_NOERROR)
-	{
+	if (rtn != MMSYSERR_NOERROR) {
 		::CoTaskMemFree(*ppwic);
 		*ppwic = NULL;
 		return E_FAIL;
@@ -203,8 +196,7 @@ HRESULT __stdcall CWaveLib :: GetDeviceOutCaps(UINT nIndex, WAVEOUTCAPS ** ppwoc
 		return E_OUTOFMEMORY;
 
 	MMRESULT rtn = ::waveOutGetDevCaps(nIndex, *ppwoc, sizeof(WAVEOUTCAPS));
-	if (rtn != MMSYSERR_NOERROR)
-	{
+	if (rtn != MMSYSERR_NOERROR) {
 		::CoTaskMemFree(*ppwoc);
 		*ppwoc = NULL;
 		return E_FAIL;

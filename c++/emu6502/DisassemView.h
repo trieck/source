@@ -5,8 +5,7 @@
 
 // DisassemView view
 
-class DisassemView : public MultirowView
-{
+class DisassemView : public MultirowView {
 	DECLARE_DYNCREATE(DisassemView)
 
 protected:

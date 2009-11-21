@@ -32,12 +32,12 @@ void MidiBuffer::Alloc()
 {
 	Free();
 
-    // Determine the size of the buffer needed
-    UINT size = (sizeof(shortEvent) * 2 * 2)	// note data
-		+ sizeof(shortEvent);					// Tempo Data;
+	// Determine the size of the buffer needed
+	UINT size = (sizeof(shortEvent) * 2 * 2)	// note data
+	            + sizeof(shortEvent);					// Tempo Data;
 
-    m_header.dwBufferLength = m_header.dwBytesRecorded = size;
-    m_header.lpData = new CHAR[size];
+	m_header.dwBufferLength = m_header.dwBytesRecorded = size;
+	m_header.lpData = new CHAR[size];
 }
 
 void MidiBuffer::Free()
@@ -50,7 +50,7 @@ void MidiBuffer::Free()
 void MidiBuffer::Transform(BYTE note1, BYTE note2)
 {
 	LPSTR pdata = m_header.lpData;
-	
+
 	putevent(&pdata, Tempo(100));
 	putevent(&pdata, NoteOn(note1));
 	putevent(&pdata, NoteOff(note1));
@@ -63,49 +63,49 @@ void MidiBuffer::Transform(BYTE note1, BYTE note2)
 shortEvent* Tempo(int bpm)
 {
 	static shortEvent event;
-    memset(&event, 0, sizeof(shortEvent));
+	memset(&event, 0, sizeof(shortEvent));
 
-    DWORD microseconds = MidiTime::BPMToMicroseconds(bpm);
-    
-    event.delta = 0;
-    event.id = 0;
-    event.event = TEMPO_CHANGE(microseconds);
+	DWORD microseconds = MidiTime::BPMToMicroseconds(bpm);
+
+	event.delta = 0;
+	event.id = 0;
+	event.event = TEMPO_CHANGE(microseconds);
 
 	return &event;
 }
 
 shortEvent* NoteOn(BYTE data)
 {
-    static shortEvent event;
-    memset(&event, 0, sizeof(shortEvent));
+	static shortEvent event;
+	memset(&event, 0, sizeof(shortEvent));
 
-    MidiMessage message;
-    message.SetData(data);
-    message.SetStatus(NOTEON(defaultChannel));
-    message.SetVelocity(defaultVelocity);
+	MidiMessage message;
+	message.SetData(data);
+	message.SetStatus(NOTEON(defaultChannel));
+	message.SetVelocity(defaultVelocity);
 
-    event.delta = 0;
-    event.id = 0;
-    event.event = message;
+	event.delta = 0;
+	event.id = 0;
+	event.event = message;
 
-    return &event;
+	return &event;
 }
 
-shortEvent* NoteOff(BYTE data) 
+shortEvent* NoteOff(BYTE data)
 {
-    static shortEvent event;
-    memset(&event, 0, sizeof(shortEvent));
+	static shortEvent event;
+	memset(&event, 0, sizeof(shortEvent));
 
-    MidiMessage message;
-    message.SetData(data);
-    message.SetStatus(NOTEOFF(defaultChannel));
-    message.SetVelocity(defaultVelocity);
+	MidiMessage message;
+	message.SetData(data);
+	message.SetStatus(NOTEOFF(defaultChannel));
+	message.SetVelocity(defaultVelocity);
 
-    event.delta = 100;
-    event.id = 0;
-    event.event = message;
+	event.delta = 100;
+	event.id = 0;
+	event.event = message;
 
-    return &event;
+	return &event;
 }
 
 void putevent(LPSTR *ppdata, const shortEvent *event)

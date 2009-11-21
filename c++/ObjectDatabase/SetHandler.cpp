@@ -68,8 +68,8 @@ void SetHandler::Call(LPDICTIONARY request, LPDICTIONARY response)
 
 	// Set object value in the database
 	ObjectDB *pDB = ObjectDB::instance();
-	BOOL result = pDB->SetObject(poolid, 
-		objectid, pObject);
+	BOOL result = pDB->SetObject(poolid,
+	                             objectid, pObject);
 	if (!result) {
 		response->Set(KEY_RESPONSE_CD, E_CANT_SET);
 		response->Set(KEY_RESPONSE_MSG, lasterror());

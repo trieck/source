@@ -1,6 +1,6 @@
 /*
  * CONCORD.C
- * 
+ *
  * Concordance
  * Copyright (c) 2008 Thomas A. Rieck
  */
@@ -10,16 +10,16 @@
 #include "concord.h"
 
 /*
- * Page type flags 
+ * Page type flags
  */
 
 /*
- * file info page 
+ * file info page
  */
 #define PTF_FILE		(1 << 0)
 
 /*
- * Helper macros 
+ * Helper macros
  */
 #define ISFILE(p)		(p->header.flags & PTF_FILE)
 
@@ -43,14 +43,14 @@
 	((BLOCK_SIZE - sizeof(ConcordHeader_t)) / sizeof(TermInfo_t))
 
 /*
- * file info accessors 
+ * file info accessors
  */
 #define FILENO(p, n)	(p->files[n].fileno)
 #define FILENAME(p, n)	(p->files[n].filename)
 #define FILELEN(p, n)	(p->files[n].filelen)
 
 /*
- * term info accessors 
+ * term info accessors
  */
 #define HASH(p, n)		(p->terms[n].hash)
 #define TERM(p, n)		(p->terms[n].term)
@@ -61,7 +61,7 @@ static int writepage(Concord_t * concord, uint64_t pageno);
 static uint64_t insertpage(Concord_t * concord);
 
 /*
- * open concordance file returning instance 
+ * open concordance file returning instance
  */
 Concord_t *concord_open(const char *filename, int mode)
 {
@@ -70,7 +70,7 @@ Concord_t *concord_open(const char *filename, int mode)
 	const char *pm;
 
 	/*
-	 * check for valid open mode 
+	 * check for valid open mode
 	 */
 	switch (mode) {
 	case OM_READ_ONLY:
@@ -84,13 +84,13 @@ Concord_t *concord_open(const char *filename, int mode)
 	}
 
 	/*
-	 * open underlying file 
+	 * open underlying file
 	 */
 	if ((fp = fopen(filename, pm)) == NULL)
 		return NULL;	/* unable to open file */
 
 	/*
-	 * allocate concordance struct 
+	 * allocate concordance struct
 	 */
 	concord = (Concord_t *) malloc(sizeof(Concord_t));
 	concord->fp = fp;
@@ -101,7 +101,7 @@ Concord_t *concord_open(const char *filename, int mode)
 }
 
 /*
- * close concordance 
+ * close concordance
  */
 void concord_close(Concord_t * concord)
 {
@@ -113,7 +113,7 @@ void concord_close(Concord_t * concord)
 }
 
 /*
- * read a page 
+ * read a page
  */
 int readpage(Concord_t * concord, uint64_t pageno)
 {
@@ -121,7 +121,7 @@ int readpage(Concord_t * concord, uint64_t pageno)
 }
 
 /*
- * write a page 
+ * write a page
  */
 int writepage(Concord_t * concord, uint64_t pageno)
 {

@@ -29,7 +29,7 @@ BEGIN_MESSAGE_MAP(LeftView, CTreeView)
 END_MESSAGE_MAP()
 
 static uint32_t images[] = {
-	IDR_CLOSED,	
+	IDR_CLOSED,
 	IDR_OPEN
 };
 
@@ -45,18 +45,18 @@ LeftView::~LeftView()
 
 BOOL LeftView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style |= 
-		TVS_HASBUTTONS | TVS_HASLINES | TVS_FULLROWSELECT | TVS_INFOTIP
-		| TVS_LINESATROOT | TVS_SHOWSELALWAYS;
+	cs.style |=
+	    TVS_HASBUTTONS | TVS_HASLINES | TVS_FULLROWSELECT | TVS_INFOTIP
+	    | TVS_LINESATROOT | TVS_SHOWSELALWAYS;
 
 	return CTreeView::PreCreateWindow(cs);
 }
 
-int LeftView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int LeftView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CTreeView::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
+
 	if (!m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR8, 2, 0)) {
 		TRACE0("Could not create image list.\n");
 		return -1;
@@ -66,7 +66,7 @@ int LeftView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CTreeCtrl &tree = GetTreeCtrl();
 	tree.SetImageList(&m_ImageList, TVSIL_NORMAL);
-	
+
 	return 0;
 }
 
@@ -76,10 +76,10 @@ void LeftView::AddImages()
 
 	for (uint32_t i = 0; i < nimages; i++) {
 		HICON hIcon = (HICON)::LoadImage(AfxGetResourceHandle(),
-			MAKEINTRESOURCE(images[i]),
-			IMAGE_ICON,
-			16, 16,
-			LR_LOADTRANSPARENT | LR_SHARED);
+		                                 MAKEINTRESOURCE(images[i]),
+		                                 IMAGE_ICON,
+		                                 16, 16,
+		                                 LR_LOADTRANSPARENT | LR_SHARED);
 		ASSERT(hIcon != NULL);
 		m_ImageList.Add(hIcon);
 	}
@@ -97,14 +97,14 @@ void LeftView::OnUpdate(CView* pSender, LPARAM /*lHint*/, CObject* /*pHint*/)
 
 	CTreeCtrl &tree = GetTreeCtrl();
 	tree.DeleteAllItems();
-	
+
 	TV_INSERTSTRUCT tvis;
 	tvis.hParent = TVI_ROOT;
 	tvis.hInsertAfter = NULL;
-	tvis.itemex.mask = TVIF_CHILDREN | TVIF_TEXT | TVIF_IMAGE 
-		| TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvis.itemex.mask = TVIF_CHILDREN | TVIF_TEXT | TVIF_IMAGE
+	                   | TVIF_SELECTEDIMAGE | TVIF_PARAM;
 	tvis.itemex.iImage = 0;
-	tvis.itemex.iSelectedImage = 1;	
+	tvis.itemex.iSelectedImage = 1;
 	tvis.itemex.cChildren = 1;
 	tvis.itemex.pszText = _T("/");
 	tvis.itemex.lParam = NULL;
@@ -116,18 +116,18 @@ void LeftView::InsertDir(HTREEITEM hParent, const EntryList &entries)
 	TV_INSERTSTRUCT tvis;
 	tvis.hParent = hParent;
 	tvis.hInsertAfter = NULL;
-	tvis.itemex.mask = TVIF_CHILDREN | TVIF_TEXT | TVIF_IMAGE 
-		| TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvis.itemex.mask = TVIF_CHILDREN | TVIF_TEXT | TVIF_IMAGE
+	                   | TVIF_SELECTEDIMAGE | TVIF_PARAM;
 	tvis.itemex.iImage = 0;
-	tvis.itemex.iSelectedImage = 1;	
+	tvis.itemex.iSelectedImage = 1;
 	tvis.itemex.cChildren = 1;
 
 	CTreeCtrl &tree = GetTreeCtrl();
 
 	EntryList::const_iterator it = entries.begin();
 	for ( ; it != entries.end(); it++) {
-		const Entry &entry = *it;		
-		if (entry.type != ST_DIR) continue;		
+		const Entry &entry = *it;
+		if (entry.type != ST_DIR) continue;
 
 		tvis.itemex.pszText = (LPSTR)(LPCSTR)entry.name.c_str();
 		tvis.itemex.lParam = (LPARAM)new Entry(entry);
@@ -172,7 +172,7 @@ WinADFDoc* LeftView::GetDocument() // non-debug version is inline
 void LeftView::OnTvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
-	
+
 	Entry *pEntry = (Entry*)pNMTreeView->itemOld.lParam;
 	if (pEntry != NULL) {
 		delete pEntry;
@@ -187,7 +187,7 @@ void LeftView::OnTvnSelchanged(NMHDR *pNMHDR, LRESULT *pResult)
 
 	HTREEITEM hItem = pNMTreeView->itemNew.hItem;
 	Entry *pEntry = (Entry *)pNMTreeView->itemNew.lParam;
-		
+
 	WinADFDoc *pDoc = GetDocument();
 	pDoc->chdir(pEntry);
 	pDoc->UpdateAllViews(this, (LPARAM)pEntry, NULL);
@@ -208,7 +208,7 @@ void LeftView::OnTvnItemexpanding(NMHDR *pNMHDR, LRESULT *pResult)
 	CWaitCursor cursor;
 
 	Entry *pEntry = (Entry *)pNMTreeView->itemNew.lParam;
-	
+
 	WinADFDoc *pDoc = GetDocument();
 	pDoc->chdir(pEntry);
 
@@ -220,7 +220,7 @@ void LeftView::OnTvnItemexpanding(NMHDR *pNMHDR, LRESULT *pResult)
 void LeftView::OnTvnItemexpanded(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
-	
+
 	switch (pNMTreeView->action) {
 	case TVE_COLLAPSE:
 		break;
@@ -234,20 +234,20 @@ void LeftView::OnTvnItemexpanded(NMHDR *pNMHDR, LRESULT *pResult)
 BOOL LeftView::SelectFolder(const CString &name)
 {
 	// select a subfolder by name
-	
+
 	CTreeCtrl &tree = GetTreeCtrl();
 	HTREEITEM hItem = tree.GetSelectedItem();
 	if (hItem == NULL)
 		return FALSE;	// nothing selected
 
 	tree.Expand(hItem, TVE_EXPAND);
-	
+
 	CString text;
 	HTREEITEM hNext;
 	HTREEITEM hChild = tree.GetChildItem(hItem);
 	while (hChild != NULL) {
 		hNext = tree.GetNextItem(hChild, TVGN_NEXT);
-		
+
 		text = tree.GetItemText(hChild);
 		if (name == text) {	// found
 			tree.SelectItem(hChild);

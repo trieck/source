@@ -12,8 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // COleFont wrapper class
 
-class COleFont : public COleDispatchDriver
-{
+class COleFont : public COleDispatchDriver {
 public:
 	COleFont() {}		// Calls COleDispatchDriver default constructor
 	COleFont(LPDISPATCH pDispatch) : COleDispatchDriver(pDispatch) {}

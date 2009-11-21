@@ -11,8 +11,7 @@
 
 class WindumpDoc;
 
-class LeftView : public CTreeView
-{
+class LeftView : public CTreeView {
 protected: // create from serialization only
 	LeftView();
 	DECLARE_DYNCREATE(LeftView)
@@ -27,10 +26,10 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(LeftView)
-	public:
+public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	protected:
+protected:
 	virtual void OnInitialUpdate(); // called first time after construct
 	//}}AFX_VIRTUAL
 
@@ -53,7 +52,9 @@ protected:
 
 #ifndef _DEBUG  // debug version in LeftView.cpp
 inline WindumpDoc* LeftView::GetDocument()
-   { return (WindumpDoc*)m_pDocument; }
+{
+	return (WindumpDoc*)m_pDocument;
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

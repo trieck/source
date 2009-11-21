@@ -13,8 +13,7 @@
 class Volume;
 
 /////////////////////////////////////////////////////////////////////////////
-class File 
-{
+class File {
 // Construction / Destruction
 public:
 	File(Volume *pVol, fileheader_t *pheader);

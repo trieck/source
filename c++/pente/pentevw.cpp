@@ -35,7 +35,7 @@ END_MESSAGE_MAP()
 PenteView::PenteView()
 {
 	bkgColor = AfxGetApp()->GetProfileInt(_T("Settings"), _T("TableColor"),
-		PenteBoard::DEFAULT_TABLE_COLOR);
+	                                      PenteBoard::DEFAULT_TABLE_COLOR);
 	bkgBrush.CreateSolidBrush(bkgColor);
 }
 
@@ -106,7 +106,7 @@ PenteDoc* PenteView::GetDocument() // non-debug version is inline
 /////////////////////////////////////////////////////////////////////////////
 // PenteView message handlers
 
-BOOL PenteView::OnEraseBkgnd(CDC* pDC) 
+BOOL PenteView::OnEraseBkgnd(CDC* pDC)
 {
 	CRect rc;
 	pDC->SetBkMode(TRANSPARENT);
@@ -115,22 +115,22 @@ BOOL PenteView::OnEraseBkgnd(CDC* pDC)
 	return TRUE;
 }
 
-void PenteView::OnInitialUpdate() 
+void PenteView::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void PenteView::OnSettingChange(UINT uFlags, LPCTSTR lpszSection) 
+void PenteView::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
 	CView::OnSettingChange(uFlags, lpszSection);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void PenteView::OnLButtonDown(UINT nFlags, CPoint point) 
+void PenteView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	PenteDoc *pDoc = GetDocument();
-	
+
 	PenteGame *pGame = pDoc->getGame();
 	ASSERT_VALID(pGame);
 	PenteBoard *pBoard = pGame->getBoard();
@@ -143,12 +143,12 @@ void PenteView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->move(square);
 		}
 	}
-	
+
 	CView::OnLButtonDown(nFlags, point);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void PenteView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
+void PenteView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
 	if (pHint != NULL) {
 		PenteBoard *pBoard = (PenteBoard*)pHint;
@@ -165,13 +165,13 @@ void PenteView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	// update the status bar
 	PenteBar &bar = ((MainFrame*)GetParentFrame())->getPenteBar();
 	bar.SendMessage(WM_IDLEUPDATECMDUI);
-	bar.RedrawWindow();   
+	bar.RedrawWindow();
 }
 
 LRESULT PenteView::OnAppSettingChange(WPARAM wParam, LPARAM lParam)
 {
 	bkgColor = AfxGetApp()->GetProfileInt(_T("Settings"), _T("TableColor"),
-		GetSysColor(COLOR_APPWORKSPACE));
+	                                      GetSysColor(COLOR_APPWORKSPACE));
 	bkgBrush.DeleteObject();
 	bkgBrush.CreateSolidBrush(bkgColor);
 

@@ -15,8 +15,7 @@
 ///////////////////////////////////////////////////////////////////
 // The CWaveApp application class
 
-class CWaveApp : public CWinApp
-{
+class CWaveApp : public CWinApp {
 public:
 	CWaveApp();
 	virtual ~CWaveApp();

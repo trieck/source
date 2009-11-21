@@ -5,8 +5,7 @@
 
 // NewVolume dialog
 
-class NewVolumeDlg : public CDialog
-{
+class NewVolumeDlg : public CDialog {
 	DECLARE_DYNAMIC(NewVolumeDlg)
 
 public:
@@ -53,6 +52,7 @@ protected:
 	CString m_strPath;
 };
 
-inline CString NewVolumeDlg::GetPath() const {
+inline CString NewVolumeDlg::GetPath() const
+{
 	return m_strPath;
 }

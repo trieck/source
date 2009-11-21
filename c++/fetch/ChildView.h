@@ -14,8 +14,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // ChildView window
 
-class ChildView : public CListView
-{
+class ChildView : public CListView {
 // Construction
 public:
 	ChildView();
@@ -29,9 +28,9 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(ChildView)
-	public:
+public:
 	virtual void OnInitialUpdate();
-	protected:
+protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL
 

@@ -10,8 +10,7 @@
 #endif // _MSC_VER > 1000
 
 
-class WindumpDoc : public CDocument
-{
+class WindumpDoc : public CDocument {
 protected: // create from serialization only
 	WindumpDoc();
 	DECLARE_DYNCREATE(WindumpDoc)
@@ -25,7 +24,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(WindumpDoc)
-	public:
+public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 	//}}AFX_VIRTUAL

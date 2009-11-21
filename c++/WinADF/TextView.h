@@ -4,8 +4,7 @@
 
 // TextView view
 
-class TextView : public BigScrollView
-{
+class TextView : public BigScrollView {
 	DECLARE_DYNCREATE(TextView)
 
 protected:

@@ -18,7 +18,7 @@ static void fatalerror(const char* error);
 // Constructor
 //
 Program::Program()
-{ 
+{
 	memory[0] = STOP;
 	pbase = pmem = memory;
 }
@@ -41,7 +41,7 @@ Program::Program (const Program & prog)
 }
 
 //
-// operator = 
+// operator =
 //
 Program & Program::operator = (const Program & prog)
 {
@@ -96,7 +96,7 @@ const Instr * Program::set(const Instr * offset, Instr instruction)
 }
 
 //
-// setjumpat 
+// setjumpat
 //
 const Instr * Program::setjumpat (const Instr * offset)
 {

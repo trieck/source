@@ -19,11 +19,12 @@ const char *log_file_name = NULL;	/* stderr */
  */
 int main(int argc, char *argv[])
 {
-	if (argc < 2) 
+	if (argc < 2)
 		usage();
 	atexit(cleanup);
-	
-	argc--; argv++;
+
+	argc--;
+	argv++;
 	disassemble(argv[0]);
 	return 0;
 }
@@ -40,7 +41,7 @@ void disassemble(const char *filename)
 	/* first two bytes are the load address */
 	if (!fread(&pc, sizeof(word), 1, fp))
 		error("unable to retrieve load address.\n");
-	
+
 	while ((N = getc(fp)) != EOF) {
 		printpc();
 		p = instructions[N];

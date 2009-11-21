@@ -11,8 +11,7 @@
 #include <jni.h>
 
 /////////////////////////////////////////////////////////////////////////////
-class JavaNI
-{
+class JavaNI {
 // Construction / Destruction
 public:
 	JavaNI();

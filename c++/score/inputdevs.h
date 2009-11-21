@@ -1,29 +1,30 @@
-///////////////////////////////////////////////////////////////////////
-//
-//	INPUTDEVS.H
-//
-//	Copyright © 1999 Rieck Enterprises
-//
+///////////////////////////////////////////////////////////////////////
+//
+//	INPUTDEVS.H
+//
+//	Copyright © 1999 Rieck Enterprises
+//
 
-#ifndef __INPUTDEVS_H__
-#define __INPUTDEVS_H__
+#ifndef __INPUTDEVS_H__
+#define __INPUTDEVS_H__
 
-#include "mididevs.h"
+#include "mididevs.h"
 
-///////////////////////////////////////////////////////////////////////
-class InputDevices : public MidiDevices
-{
-public:
-	// Construction / Destruction
-    InputDevices();
-    virtual ~InputDevices();
+///////////////////////////////////////////////////////////////////////
+class InputDevices : public MidiDevices
+{
+public:
+	// Construction / Destruction
+	InputDevices();
+	virtual ~InputDevices();
 
-	// Interface
-    UINT Count() const;
-    MidiDevice * GetDevice(UINT) const;
-protected:
-	// Implementation
-};
-///////////////////////////////////////////////////////////////////////
+	// Interface
+	UINT Count() const;
+	MidiDevice * GetDevice(UINT) const;
+protected:
+	// Implementation
+};
+///////////////////////////////////////////////////////////////////////
 
+
 #endif // __INPUTDEVS_H__

@@ -16,7 +16,8 @@ void parse(void)	/* parse and translates expression list */
 {
 	lookahead = lexan();
 	while (lookahead != DONE) {
-		expr(); match(';');
+		expr();
+		match(';');
 	}
 }
 
@@ -25,10 +26,13 @@ void expr(void)
 	int t;
 	term();
 	while (1)
-		switch(lookahead) {
-		case '+': case '-':
+		switch (lookahead) {
+		case '+':
+		case '-':
 			t = lookahead;
-			match(lookahead); term(); emit(t, NONE);
+			match(lookahead);
+			term();
+			emit(t, NONE);
 			continue;
 		default:
 			return;
@@ -39,11 +43,16 @@ void term(void)
 {
 	int t;
 	factor();
-	while (1) 
-		switch(lookahead) {
-		case '*': case '/': case DIV: case MOD:
+	while (1)
+		switch (lookahead) {
+		case '*':
+		case '/':
+		case DIV:
+		case MOD:
 			t = lookahead;
-			match(lookahead); factor(); emit(t, NONE);
+			match(lookahead);
+			factor();
+			emit(t, NONE);
 			continue;
 		default:
 			return;
@@ -52,13 +61,20 @@ void term(void)
 
 void factor(void)
 {
-	switch(lookahead) {
+	switch (lookahead) {
 	case '(':
-		match('('); expr(); match(')'); break;
+		match('(');
+		expr();
+		match(')');
+		break;
 	case NUM:
-		emit(NUM, tokenval); match(NUM); break;
+		emit(NUM, tokenval);
+		match(NUM);
+		break;
 	case ID:
-		emit(ID, tokenval); match(ID); break;
+		emit(ID, tokenval);
+		match(ID);
+		break;
 	default:
 		error("syntax error");
 	}

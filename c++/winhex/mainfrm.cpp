@@ -1,98 +1,99 @@
-// mainfrm.cpp : implementation of the MainFrame class
-//
+// mainfrm.cpp : implementation of the MainFrame class
+//
 
-#include "stdafx.h"
-#include "winhex.h"
+#include "stdafx.h"
+#include "winhex.h"
 
-#include "mainfrm.h"
+#include "mainfrm.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// MainFrame
+/////////////////////////////////////////////////////////////////////////////
+// MainFrame
 
-IMPLEMENT_DYNCREATE(MainFrame, CFrameWnd)
+IMPLEMENT_DYNCREATE(MainFrame, CFrameWnd)
 
-BEGIN_MESSAGE_MAP(MainFrame, CFrameWnd)
-	//{{AFX_MSG_MAP(MainFrame)
-	ON_WM_CREATE()
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+BEGIN_MESSAGE_MAP(MainFrame, CFrameWnd)
+	//{{AFX_MSG_MAP(MainFrame)
+	ON_WM_CREATE()
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
 
-static UINT indicators[] = {
-	ID_SEPARATOR,           // status line indicator
-	IDS_DOCUMENTSIZE
-};
+static UINT indicators[] = {
+	ID_SEPARATOR,           // status line indicator
+	IDS_DOCUMENTSIZE
+};
 
-/////////////////////////////////////////////////////////////////////////////
-// MainFrame construction/destruction
+/////////////////////////////////////////////////////////////////////////////
+// MainFrame construction/destruction
 
-MainFrame::MainFrame()
-{
-}
+MainFrame::MainFrame()
+{
+}
 
-MainFrame::~MainFrame()
-{
-}
+MainFrame::~MainFrame()
+{
+}
 
-int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
-		return -1;
-	
-	if (!m_wndToolBar.Create(this) ||
-		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
-		TRACE0("Failed to create toolbar\n");
-		return -1;      // fail to create
-	}
+int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
+		return -1;
 
-	if (!m_wndStatusBar.Create(this) ||
-		!m_wndStatusBar.SetIndicators(indicators,
-		  sizeof(indicators)/sizeof(UINT))) {
-		TRACE0("Failed to create status bar\n");
-		return -1;      // fail to create
-	}
+	if (!m_wndToolBar.Create(this) ||
+	        !m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
+		TRACE0("Failed to create toolbar\n");
+		return -1;      // fail to create
+	}
 
-	m_wndStatusBar.SetPaneStyle(0, SBPS_STRETCH);
-	m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() |
-		CBRS_TOOLTIPS | CBRS_FLYBY);
+	if (!m_wndStatusBar.Create(this) ||
+	        !m_wndStatusBar.SetIndicators(indicators,
+	                                      sizeof(indicators)/sizeof(UINT))) {
+		TRACE0("Failed to create status bar\n");
+		return -1;      // fail to create
+	}
 
-	CenterWindow();
+	m_wndStatusBar.SetPaneStyle(0, SBPS_STRETCH);
+	m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() |
+	                         CBRS_TOOLTIPS | CBRS_FLYBY);
 
-	return 0;
-}
+	CenterWindow();
 
-BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
-{
-	if( !CFrameWnd::PreCreateWindow(cs) )
-		return FALSE;
+	return 0;
+}
 
-    cs.cx = 600;
-    cs.cy = 400;
+BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
+{
+	if ( !CFrameWnd::PreCreateWindow(cs) )
+		return FALSE;
 
-	return TRUE;
-}
+	cs.cx = 600;
+	cs.cy = 400;
 
-/////////////////////////////////////////////////////////////////////////////
-// MainFrame diagnostics
+	return TRUE;
+}
 
-#ifdef _DEBUG
-void MainFrame::AssertValid() const
-{
-	CFrameWnd::AssertValid();
-}
+/////////////////////////////////////////////////////////////////////////////
+// MainFrame diagnostics
 
-void MainFrame::Dump(CDumpContext& dc) const
-{
-	CFrameWnd::Dump(dc);
-}
+#ifdef _DEBUG
+void MainFrame::AssertValid() const
+{
+	CFrameWnd::AssertValid();
+}
 
-#endif //_DEBUG
+void MainFrame::Dump(CDumpContext& dc) const
+{
+	CFrameWnd::Dump(dc);
+}
 
-/////////////////////////////////////////////////////////////////////////////
-// MainFrame message handlers
+#endif //_DEBUG
 
+/////////////////////////////////////////////////////////////////////////////
+// MainFrame message handlers
+
+

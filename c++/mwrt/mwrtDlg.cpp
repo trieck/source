@@ -12,15 +12,14 @@
 
 // CAboutDlg dialog used for App About
 
-class CAboutDlg : public CDialog
-{
+class CAboutDlg : public CDialog {
 public:
 	CAboutDlg();
 
 // Dialog Data
 	enum { IDD = IDD_ABOUTBOX };
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 // Implementation
@@ -69,9 +68,9 @@ static uint32_t getRegType(LPCTSTR t)
 }
 
 CmwrtDlg::CmwrtDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CmwrtDlg::IDD, pParent)
-	, m_Status(_T(""))
-	, m_Detail(_T(""))
+		: CDialog(CmwrtDlg::IDD, pParent)
+		, m_Status(_T(""))
+		, m_Detail(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -104,12 +103,10 @@ BOOL CmwrtDlg::OnInitDialog()
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
-	if (pSysMenu != NULL)
-	{
+	if (pSysMenu != NULL) {
 		CString strAboutMenu;
 		strAboutMenu.LoadString(IDS_ABOUTBOX);
-		if (!strAboutMenu.IsEmpty())
-		{
+		if (!strAboutMenu.IsEmpty()) {
 			pSysMenu->AppendMenu(MF_SEPARATOR);
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
@@ -136,13 +133,10 @@ BOOL CmwrtDlg::OnInitDialog()
 
 void CmwrtDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
-	{
+	if ((nID & 0xFFF0) == IDM_ABOUTBOX) {
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();
-	}
-	else
-	{
+	} else {
 		CDialog::OnSysCommand(nID, lParam);
 	}
 }
@@ -153,8 +147,7 @@ void CmwrtDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CmwrtDlg::OnPaint()
 {
-	if (IsIconic())
-	{
+	if (IsIconic()) {
 		CPaintDC dc(this); // device context for painting
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
@@ -169,9 +162,7 @@ void CmwrtDlg::OnPaint()
 
 		// Draw the icon
 		dc.DrawIcon(x, y, m_hIcon);
-	}
-	else
-	{
+	} else {
 		CDialog::OnPaint();
 	}
 }
@@ -212,12 +203,12 @@ void CmwrtDlg::process() throw()
 	if (!m_logfile.open(logfile)) {
 		AfxMessageBox(LastError());
 		return;
-	}	
+	}
 
 	// open database connection
 	m_db.open(provider, connstr);
 	RecPtr results = m_db.execute(_T("select id, name from malware"));
-	
+
 	bstr_t bstrName;
 	uint32_t id;
 	while (!results->GetEndOfFile()) {
@@ -237,7 +228,7 @@ void CmwrtDlg::processFiles(uint32_t id) throw()
 {
 	CString query, filename;
 	query.Format(_T("select filename from [Files_Added] where ")
-		_T("[MalwareID] = %d"), id);
+	             _T("[MalwareID] = %d"), id);
 
 	RecPtr results = m_db.execute(query);
 
@@ -253,7 +244,7 @@ void CmwrtDlg::processFiles(uint32_t id) throw()
 CString CmwrtDlg::expandString(LPCTSTR input)
 {
 	DWORD len = _tcslen(input) * 2;
-	
+
 	CString output;
 	LPTSTR pbuf = output.GetBuffer(len);
 
@@ -273,11 +264,11 @@ bool CmwrtDlg::removeFile(LPCTSTR filename)
 		return false;	// no such file
 
 	m_logfile.log(_T("Attempting to delete file \"%s\"..."),
-		filename);
+	              filename);
 
 	if (!DeleteFile(filename)) {
 		m_logfile.log(_T("Unable to delete file \"%s\"."),
-			filename);
+		              filename);
 		return false;
 	}
 
@@ -290,8 +281,8 @@ void CmwrtDlg::processRegistry(uint32_t id)
 {
 	CString query, filename;
 	query.Format(_T("select RegKey, Type, ValName, Value from ")
-		_T("[qryRegValues_Added] where ")
-		_T("[MalwareID] = %d"), id);
+	             _T("[qryRegValues_Added] where ")
+	             _T("[MalwareID] = %d"), id);
 
 	RecPtr results = m_db.execute(query);
 
@@ -317,7 +308,8 @@ struct RegEntry {
 	{ HKEY_LOCAL_MACHINE, _T("HKLM") },
 };
 
-static HKEY getRegKey(LPCTSTR rep) {
+static HKEY getRegKey(LPCTSTR rep)
+{
 
 	uint32_t n = sizeof(entries) / sizeof(RegEntry);
 
@@ -329,17 +321,18 @@ static HKEY getRegKey(LPCTSTR rep) {
 	return NULL;
 }
 
-void CmwrtDlg::removeRegValue(LPCTSTR regKey, uint32_t type, LPCTSTR valName, 
-	LPCTSTR value)
+void CmwrtDlg::removeRegValue(LPCTSTR regKey, uint32_t type, LPCTSTR valName,
+                              LPCTSTR value)
 {
-	HKEY hKey; CString keyName;
+	HKEY hKey;
+	CString keyName;
 	if ((hKey = splitKey(regKey, keyName)) == NULL) {	// bad key
 		return;
 	}
 
 	CRegKey K;
 	if (K.Open(hKey, keyName, KEY_ALL_ACCESS) != ERROR_SUCCESS) {	// can't open
-		return;	
+		return;
 	}
 
 	if (K.DeleteValue(valName) != ERROR_SUCCESS) {	// no such value
@@ -347,7 +340,7 @@ void CmwrtDlg::removeRegValue(LPCTSTR regKey, uint32_t type, LPCTSTR valName,
 	}
 
 	m_logfile.log(_T("Deleted registry value \"%s\\%s\"."),
-		regKey, valName);
+	              regKey, valName);
 }
 
 HKEY CmwrtDlg::splitKey(LPCTSTR regKey, CString & path)
@@ -363,7 +356,7 @@ HKEY CmwrtDlg::splitKey(LPCTSTR regKey, CString & path)
 	HKEY hKey = getRegKey(rootKey);
 	if (hKey == NULL)
 		return NULL;	// unknown parent key
-	
+
 	path = ++pkey;		// key name
 
 	return hKey;

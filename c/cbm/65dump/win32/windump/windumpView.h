@@ -10,8 +10,7 @@
 #endif // _MSC_VER > 1000
 
 
-class WindumpView : public CListView
-{
+class WindumpView : public CListView {
 protected: // create from serialization only
 	WindumpView();
 	DECLARE_DYNCREATE(WindumpView)
@@ -26,10 +25,10 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(WindumpView)
-	public:
+public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	protected:
+protected:
 	virtual void OnInitialUpdate(); // called first time after construct
 	//}}AFX_VIRTUAL
 
@@ -54,7 +53,9 @@ protected:
 
 #ifndef _DEBUG  // debug version in windumpView.cpp
 inline WindumpDoc* WindumpView::GetDocument()
-   { return (WindumpDoc*)m_pDocument; }
+{
+	return (WindumpDoc*)m_pDocument;
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

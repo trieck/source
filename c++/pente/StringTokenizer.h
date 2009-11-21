@@ -9,22 +9,21 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class StringTokenizer  
-{
+class StringTokenizer {
 public:
 	StringTokenizer(LPCSTR pinput, LPCSTR pdelim);
 	~StringTokenizer();
 
 // Interface
 	CString next();
-	
+
 // Implementation
 private:
 	LPCSTR strtok(LPCSTR s);
 
 	CString delim;		// delimiter
 	char *input;		// input string
-	char *nextoken;		// next token 
+	char *nextoken;		// next token
 	bool init;			// has been initialized
 };
 

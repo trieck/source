@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Content::Content()
- : estimatedcount(0)
+		: estimatedcount(0)
 {
 }
 
@@ -26,14 +26,14 @@ void Content::index(const stringvec &infiles, const char *outfile)
 
 	stringvec::const_iterator it = infiles.begin();
 	for ( ; it != infiles.end(); it++) {
-		const string &infile = *it;		
+		const string &infile = *it;
 		if (!lexer.open(infile.c_str())) {
 			error("unable to open file \"%s\".", infile.c_str());
-		}		
-		
-		files.insert(infile.c_str());		
+		}
+
+		files.insert(infile.c_str());
 		parse();
-		
+
 		lexer.close();
 	}
 
@@ -44,13 +44,13 @@ void Content::index(const stringvec &infiles, const char *outfile)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// parse input stream 
+// parse input stream
 void Content::parse(void)
 {
 	uint16_t filenum;
 	const char *term;
-	
-	filenum = files.size();	
+
+	filenum = files.size();
 	while ((term = lexer.gettok()) != NULL) {
 		if (noise.isnoise(term))
 			continue;
@@ -58,7 +58,7 @@ void Content::parse(void)
 		if (block.isfull())
 			blocksave();
 
-		block.insert(term, filenum);		
+		block.insert(term, filenum);
 	}
 }
 
@@ -66,22 +66,22 @@ void Content::parse(void)
 void Content::blocksave()
 {
 	if (block.getcount() == 0)
-        return;
-        
+		return;
+
 	char *tempfile = tmpnam(NULL);
 	datfiles.push_back(tempfile);
-	
-    estimatedcount += block.getcount();
-    
-    FILE *fp;
-    if ((fp = fopen(tempfile, "wb")) == NULL) {
-    	error("can't create file %s.", tempfile);
-    }	
-    
-    if (!block.write(fp)) {
-    	error("can't write concordance block.");
-    }
-    
-    fclose(fp);
+
+	estimatedcount += block.getcount();
+
+	FILE *fp;
+	if ((fp = fopen(tempfile, "wb")) == NULL) {
+		error("can't create file %s.", tempfile);
+	}
+
+	if (!block.write(fp)) {
+		error("can't write concordance block.");
+	}
+
+	fclose(fp);
 }
 

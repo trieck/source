@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 //	NeptuneTest.cpp : test Neptune COM component
 //
 
@@ -9,8 +9,12 @@
 using namespace std;
 
 struct _coinit {
-	_coinit() { CoInitialize(NULL); }
-	~_coinit() { CoUninitialize(); }
+	_coinit() {
+		CoInitialize(NULL);
+	}
+	~_coinit() {
+		CoUninitialize();
+	}
 } coinit;
 
 /////////////////////////////////////////////////////////////////////////////

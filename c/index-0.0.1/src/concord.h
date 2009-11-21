@@ -1,6 +1,6 @@
 /*
  * CONCORD.H
- * 
+ *
  * Concordance
  * Copyright (c) 2008 Thomas A. Rieck
  */
@@ -11,7 +11,7 @@
 #include "inverter.h"
 
 /*
- * concordance page header 
+ * concordance page header
  */
 struct ConcordHeader {
 	uint8_t flags;		/* page flags */
@@ -23,7 +23,7 @@ struct ConcordHeader {
 typedef struct ConcordHeader ConcordHeader_t;
 
 /*
- * file info struct 
+ * file info struct
  */
 struct FileInfo {
 	uint16_t fileno;	/* file number */
@@ -34,7 +34,7 @@ struct FileInfo {
 typedef struct FileInfo FileInfo_t;
 
 /*
- * file info page 
+ * file info page
  */
 struct FileInfoPage {
 	ConcordHeader_t header;	/* page header */
@@ -44,7 +44,7 @@ struct FileInfoPage {
 typedef struct FileInfoPage FileInfoPage_t;
 
 /*
- * term info struct 
+ * term info struct
  */
 struct TermInfo {
 	uint64_t hash;		/* 64-bit hash of term */
@@ -55,7 +55,7 @@ struct TermInfo {
 typedef struct TermInfo TermInfo_t;
 
 /*
- * term info page 
+ * term info page
  */
 struct TermInfoPage {
 	ConcordHeader_t header;	/* page header */
@@ -65,7 +65,7 @@ struct TermInfoPage {
 typedef struct TermInfoPage TermInfoPage_t;
 
 /*
- * concordance definition 
+ * concordance definition
  */
 struct Concord {
 	uint64_t npages;			/* # of pages */

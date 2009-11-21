@@ -8,7 +8,7 @@
 #endif // _MSC_VER > 1000
 
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+#error include 'stdafx.h' before including this file for PCH
 #endif
 
 #include "resource.h"       // main symbols
@@ -18,15 +18,14 @@
 // See pente.cpp for the implementation of this class
 //
 
-class PenteApp : public CWinApp
-{
+class PenteApp : public CWinApp {
 public:
 	PenteApp();
 	virtual ~PenteApp();
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(PenteApp)
-	public:
+public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
 	//}}AFX_VIRTUAL
@@ -44,12 +43,14 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline bool PenteApp::isTwoPlayerGame() const {
+inline bool PenteApp::isTwoPlayerGame() const
+{
 	return twoPlayerGame;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void PenteApp::setTwoPlayerGame(bool bTwoPlayerGame) {
+inline void PenteApp::setTwoPlayerGame(bool bTwoPlayerGame)
+{
 	twoPlayerGame = bTwoPlayerGame;
 }
 

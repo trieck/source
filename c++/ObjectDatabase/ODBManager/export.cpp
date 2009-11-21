@@ -13,11 +13,13 @@
 
 HINSTANCE hInstance = NULL;
 
-namespace { BOOL SetKeyAndValue(LPCWSTR pKey, LPCWSTR pSubKey, LPCWSTR val); }
+namespace {
+BOOL SetKeyAndValue(LPCWSTR pKey, LPCWSTR pSubKey, LPCWSTR val);
+}
 
 /////////////////////////////////////////////////////////////////////////////
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call,
- LPVOID lpReserved)
+                      LPVOID lpReserved)
 {
 	switch (ul_reason_for_call) {
 	case DLL_PROCESS_ATTACH:
@@ -28,7 +30,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call,
 	case DLL_PROCESS_DETACH:
 		break;
 	}
-    return TRUE;
+	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -55,11 +57,11 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID *ppv)
 /////////////////////////////////////////////////////////////////////////////
 STDAPI DllCanUnloadNow()
 {
-	if (ODBMgrFactory::GetLockCount() == 0 && 
-		ODBManager::GetObjectCount() == 0) {
+	if (ODBMgrFactory::GetLockCount() == 0 &&
+	        ODBManager::GetObjectCount() == 0) {
 		return S_OK;
 	}
-	
+
 	return S_FALSE;
 }
 
@@ -75,16 +77,16 @@ STDAPI DllRegisterServer()
 	// Create ProgID keys
 	SetKeyAndValue(L"ODBManager1.0", NULL, L"Object Database Manager");
 	SetKeyAndValue(L"ODBManager1.0", L"CLSID", clsid);
-	
+
 	// Create VersionIndependentProgID keys
 	SetKeyAndValue(L"ODBManager", NULL, L"Object Database Manager");
-    SetKeyAndValue(L"ODBManager", L"CurVer", L"ODBManager1.0");
-    SetKeyAndValue(L"ODBManager", L"CLSID", clsid);
+	SetKeyAndValue(L"ODBManager", L"CurVer", L"ODBManager1.0");
+	SetKeyAndValue(L"ODBManager", L"CLSID", clsid);
 
 	// Create entries under CLSID
 	SetKeyAndValue(ws, NULL, L"Object Database Manager");
-    SetKeyAndValue(ws, L"ProgID", L"ODBManager1.0");
-    SetKeyAndValue(ws, L"VersionIndependentProgID", L"ODBManager");
+	SetKeyAndValue(ws, L"ProgID", L"ODBManager1.0");
+	SetKeyAndValue(ws, L"VersionIndependentProgID", L"ODBManager");
 
 	WCHAR module[MAX_PATH];
 	GetModuleFileName(hInstance, module, MAX_PATH);
@@ -102,19 +104,20 @@ STDAPI DllUnregisterServer()
 
 	ws.Format(L"CLSID\\%s", clsid);
 
-	CRegKey key; LONG lResult;
+	CRegKey key;
+	LONG lResult;
 	if ((lResult = key.Open(HKEY_CLASSES_ROOT, NULL)) != ERROR_SUCCESS)
 		return E_FAIL;
 
 	key.RecurseDeleteKey(ws);
 	key.RecurseDeleteKey(L"ODBManager");
-    key.RecurseDeleteKey(L"ODBManager1.0");
+	key.RecurseDeleteKey(L"ODBManager1.0");
 
 	return S_OK;
 }
 
 namespace {	// anonymous
-	
+
 /////////////////////////////////////////////////////////////////////////////
 BOOL SetKeyAndValue(LPCWSTR pKey, LPCWSTR pSubKey, LPCWSTR pVal)
 {

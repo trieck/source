@@ -12,8 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // StackView view
 
-class StackView : public MultirowView
-{
+class StackView : public MultirowView {
 protected:
 	StackView();           // protected constructor used by dynamic creation
 	DECLARE_DYNCREATE(StackView)
@@ -46,7 +45,7 @@ protected:
 private:
 	void DrawStack(CDC *pDC);
 	CString GetLine(USHORT i);
-	CFont m_Font;					// text font	
+	CFont m_Font;					// text font
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 };

@@ -15,8 +15,7 @@
 #include "DigitCtrlMgr.h"
 #include "LEDMeter.h"
 
-class CPlayDlg : public CDialog
-{
+class CPlayDlg : public CDialog {
 	DECLARE_DYNCREATE (CPlayDlg)
 
 // Construction
@@ -32,7 +31,7 @@ protected:
 	virtual VOID PostNcDestroy();
 
 	afx_msg void OnTimer(UINT nIDEvent);
-	
+
 	VOID			OnStopWave();
 	VOID			OnPlayWave();
 	VOID			OnPauseWave();

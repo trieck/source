@@ -12,7 +12,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 tagBlock::tagBlock()
- : blockno(0), dirty(false), pv(0), size(0), laccess(0)
+		: blockno(0), dirty(false), pv(0), size(0), laccess(0)
 {
 }
 
@@ -40,7 +40,7 @@ tagBlock &tagBlock::operator =(const tagBlock &rhs)
 
 	return *this;
 }
- 
+
 /////////////////////////////////////////////////////////////////////////////
 BlockMgr::BlockMgr()
 {
@@ -113,7 +113,7 @@ bool BlockMgr::getLastAccessed(uint64_t blockno, time_t *pt)
 
 	const Block &block = (*it).second;
 	*pt = block.laccess;
-	
+
 	return true;
 }
 
@@ -143,7 +143,7 @@ bool BlockMgr::getData(uint64_t blockno, void *pv)
 
 	const Block &block = (*it).second;
 	memcpy(pv, block.pv, block.size);
-	
+
 	return true;
 }
 
@@ -160,7 +160,7 @@ bool BlockMgr::remove(uint64_t &blockno)
 
 	free(block.pv);
 	if ((it = blocks.erase(it)) != blocks.end())
-		blockno = (*it).first;	
+		blockno = (*it).first;
 
 	return true;
 }
@@ -186,7 +186,7 @@ bool BlockMgr::getFirst(uint64_t &blockno)
 
 	CBlockIterator it = blocks.begin();
 	if (it == blocks.end())
-		return false;	
+		return false;
 
 	blockno = (*it).first;
 
@@ -201,8 +201,8 @@ bool BlockMgr::getNext(uint64_t &blockno)
 	CBlockIterator it = blocks.find(blockno);
 	if (it == blocks.end())
 		return false;
-		
-	if (++it == blocks.end())	
+
+	if (++it == blocks.end())
 		return false;	// last block
 
 	blockno = (*it).first;
@@ -222,7 +222,7 @@ Block *BlockMgr::Lock(uint64_t blockno)
 	}
 
 	Block *block = &(*it).second;
-		
+
 	// Keep Lock held
 
 	return block;

@@ -4,8 +4,7 @@
 
 // EntryPropertySheet
 
-class EntryPropertySheet : public CPropertySheet
-{
+class EntryPropertySheet : public CPropertySheet {
 	DECLARE_DYNAMIC(EntryPropertySheet)
 
 public:
@@ -26,6 +25,7 @@ protected:
 public:
 };
 
-inline Entry *EntryPropertySheet::GetEntry() const {
+inline Entry *EntryPropertySheet::GetEntry() const
+{
 	return m_pEntry;
 }

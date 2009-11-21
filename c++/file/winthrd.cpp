@@ -6,8 +6,8 @@
 #include "common.h"
 
 WinThread::WinThread()
- : thread(0),
- mainWnd(0)
+		: thread(0),
+		mainWnd(0)
 {
 	currentMessage.message = WM_NULL;
 }
@@ -67,6 +67,6 @@ bool WinThread::pumpMessage()
 
 bool WinThread::onIdle()
 {
-	return FALSE;	
+	return FALSE;
 }
 

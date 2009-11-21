@@ -11,8 +11,7 @@
 
 class BackendsDoc;
 
-class LeftView : public CTreeView
-{
+class LeftView : public CTreeView {
 protected: // create from serialization only
 	LeftView();
 	DECLARE_DYNCREATE(LeftView)
@@ -27,11 +26,11 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(LeftView)
-	public:
+public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext = NULL);
-	protected:
+protected:
 	virtual void OnInitialUpdate(); // called first time after construct
 	//}}AFX_VIRTUAL
 
@@ -58,7 +57,9 @@ private:
 
 #ifndef _DEBUG  // debug version in LeftView.cpp
 inline BackendsDoc* LeftView::GetDocument()
-   { return (BackendsDoc*)m_pDocument; }
+{
+	return (BackendsDoc*)m_pDocument;
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

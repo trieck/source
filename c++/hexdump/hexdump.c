@@ -18,7 +18,8 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	argc--; argv++;
+	argc--;
+	argv++;
 
 	dump(argv[0]);
 
@@ -30,7 +31,7 @@ void dump(const char *filename)
 	unsigned long charcount = 0;
 	int c;
 	FILE *fp;
-	
+
 	if (!(fp = fopen(filename, "rb"))) {
 		fprintf(stderr, "can't open file \"%s\".\n", filename);
 		return;

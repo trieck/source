@@ -24,7 +24,7 @@ static unsigned int hash(const char *p);
 SymbolTable maketab(void)
 {
 	SymbolTable symbols =
-		(SymbolTable) xmalloc(sizeof(Symbol *) * TBLSIZE);
+	    (SymbolTable) xmalloc(sizeof(Symbol *) * TBLSIZE);
 	memset(symbols, 0, sizeof(Symbol *) * TBLSIZE);
 	return symbols;
 }
@@ -71,7 +71,7 @@ Symbol *lookup(SymbolTable table, const char *s)
 
 /* install s in symbol table */
 Symbol *install(SymbolTable table, const char *s, int t, int sub,
-				double val)
+                double val)
 {
 	int i = hash(s);
 

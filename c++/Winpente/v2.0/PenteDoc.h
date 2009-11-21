@@ -1,6 +1,6 @@
 /*---------------------------------------
 	Module Name	:	PenteDoc.h
-	Author		:	Thomas A. Rieck 
+	Author		:	Thomas A. Rieck
 	Purpose		:	Pente Document
 					declarations
 	Date		:	08/21/1997
@@ -13,9 +13,8 @@
 
 ///////////////////////////////////////////////////////////////////
 // The CPenteDoc document class
-class CPenteDoc : public CDocument
-{
-protected: 
+class CPenteDoc : public CDocument {
+protected:
 	DECLARE_SERIAL(CPenteDoc)
 public:
 	CPenteDoc();
@@ -40,20 +39,48 @@ public:
 	BOOL	CheckWinByCapture();
 	VOID	ComputerMove();
 
-	inline	COLORREF	GetBackColor(){return m_lBackColor;}
-	inline	COLORREF	GetGridColor(){return m_lGridColor;}
-	inline	VOID		SetBackColor(COLORREF lColor){m_lBackColor = lColor;}
-	inline	VOID		SetGridColor(COLORREF lColor){m_lGridColor = lColor;}
-	inline	VOID		GetBoard(CRect *pRc){pRc->CopyRect(m_rcBoard);}
-	inline	INT			GetPlayerOneRes(){return m_nPlayerOneRes;}
-	inline	INT			GetPlayerTwoRes(){return m_nPlayerTwoRes;}
-	inline  UINT		GetCurrentTurn(){return m_nCurrentTurn;}
-	inline  UINT		GetPlayMode(){return m_nPlayMode;}
-	inline	VOID		SetPlayMode(UINT nPlayMode){m_nPlayMode = nPlayMode;}
-	inline	VOID		SetPlayerOneName(CString& strPlayerOneName) { m_strPlayerOneName = strPlayerOneName; }
-	inline	VOID		SetPlayerTwoName(CString& strPlayerTwoName) { m_strPlayerTwoName = strPlayerTwoName; }
-	inline	CString		GetPlayerOne() { return m_strPlayerOneName; }
-	inline	CString		GetPlayerTwo() { return m_strPlayerTwoName; }
+	inline	COLORREF	GetBackColor() {
+		return m_lBackColor;
+	}
+	inline	COLORREF	GetGridColor() {
+		return m_lGridColor;
+	}
+	inline	VOID		SetBackColor(COLORREF lColor) {
+		m_lBackColor = lColor;
+	}
+	inline	VOID		SetGridColor(COLORREF lColor) {
+		m_lGridColor = lColor;
+	}
+	inline	VOID		GetBoard(CRect *pRc) {
+		pRc->CopyRect(m_rcBoard);
+	}
+	inline	INT			GetPlayerOneRes() {
+		return m_nPlayerOneRes;
+	}
+	inline	INT			GetPlayerTwoRes() {
+		return m_nPlayerTwoRes;
+	}
+	inline  UINT		GetCurrentTurn() {
+		return m_nCurrentTurn;
+	}
+	inline  UINT		GetPlayMode() {
+		return m_nPlayMode;
+	}
+	inline	VOID		SetPlayMode(UINT nPlayMode) {
+		m_nPlayMode = nPlayMode;
+	}
+	inline	VOID		SetPlayerOneName(CString& strPlayerOneName) {
+		m_strPlayerOneName = strPlayerOneName;
+	}
+	inline	VOID		SetPlayerTwoName(CString& strPlayerTwoName) {
+		m_strPlayerTwoName = strPlayerTwoName;
+	}
+	inline	CString		GetPlayerOne() {
+		return m_strPlayerOneName;
+	}
+	inline	CString		GetPlayerTwo() {
+		return m_strPlayerTwoName;
+	}
 protected:
 	static short	m_nFileMarker;
 	UINT			m_nPlayMode;

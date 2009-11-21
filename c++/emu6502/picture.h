@@ -12,8 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CPicture wrapper class
 
-class CPicture : public COleDispatchDriver
-{
+class CPicture : public COleDispatchDriver {
 public:
 	CPicture() {}		// Calls COleDispatchDriver default constructor
 	CPicture(LPDISPATCH pDispatch) : COleDispatchDriver(pDispatch) {}

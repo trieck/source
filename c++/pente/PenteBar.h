@@ -5,8 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // PenteBar window
 
-class PenteBar : public CStatusBar
-{
+class PenteBar : public CStatusBar {
 // Construction
 public:
 	PenteBar();
@@ -14,7 +13,7 @@ public:
 public:
 // Operations
 public:
-	
+
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(PenteBar)

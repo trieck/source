@@ -5,14 +5,14 @@
 /* link this file in with the server and any clients */
 
 
- /* File created by MIDL compiler version 7.00.0499 */
+/* File created by MIDL compiler version 7.00.0499 */
 /* at Mon Oct 19 13:27:46 2009
  */
 /* Compiler settings for misc.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
     protocol : dce , ms_ext, c_ext, robust
-    error checks: allocation ref bounds_check enum stub_data 
-    VC __declspec() decoration level: 
+    error checks: allocation ref bounds_check enum stub_data
+    VC __declspec() decoration level:
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
@@ -22,8 +22,8 @@
 
 
 #ifdef __cplusplus
-extern "C"{
-#endif 
+extern "C" {
+#endif
 
 
 #include <rpc.h>
@@ -47,19 +47,18 @@ extern "C"{
 #ifndef __IID_DEFINED__
 #define __IID_DEFINED__
 
-typedef struct _IID
-{
-    unsigned long x;
-    unsigned short s1;
-    unsigned short s2;
-    unsigned char  c[8];
-} IID;
+	typedef struct _IID {
+		unsigned long x;
+		unsigned short s1;
+		unsigned short s2;
+		unsigned char  c[8];
+	} IID;
 
 #endif // __IID_DEFINED__
 
 #ifndef CLSID_DEFINED
 #define CLSID_DEFINED
-typedef IID CLSID;
+	typedef IID CLSID;
 #endif // CLSID_DEFINED
 
 #define MIDL_DEFINE_GUID(type,name,l,w1,w2,b1,b2,b3,b4,b5,b6,b7,b8) \
@@ -67,13 +66,13 @@ typedef IID CLSID;
 
 #endif !_MIDL_USE_GUIDDEF_
 
-MIDL_DEFINE_GUID(IID, IID_IMiscellaneous,0x813C3190,0x4E36,0x11d1,0xB1,0xD5,0x00,0x00,0x00,0x00,0x00,0x00);
+	MIDL_DEFINE_GUID(IID, IID_IMiscellaneous,0x813C3190,0x4E36,0x11d1,0xB1,0xD5,0x00,0x00,0x00,0x00,0x00,0x00);
 
 
-MIDL_DEFINE_GUID(IID, LIBID_MiscLib,0x73BC7900,0x5A3E,0x11d1,0x80,0xB5,0x00,0x20,0x78,0x12,0x12,0x0D);
+	MIDL_DEFINE_GUID(IID, LIBID_MiscLib,0x73BC7900,0x5A3E,0x11d1,0x80,0xB5,0x00,0x20,0x78,0x12,0x12,0x0D);
 
 
-MIDL_DEFINE_GUID(CLSID, CLSID_Miscellaneous,0x813C3191,0x4E36,0x11d1,0xB1,0xD5,0x00,0x00,0x00,0x00,0x00,0x00);
+	MIDL_DEFINE_GUID(CLSID, CLSID_Miscellaneous,0x813C3191,0x4E36,0x11d1,0xB1,0xD5,0x00,0x00,0x00,0x00,0x00,0x00);
 
 #undef MIDL_DEFINE_GUID
 

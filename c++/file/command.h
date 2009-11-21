@@ -10,8 +10,7 @@
 #define __COMMAND_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class CommandLine
-{
+class CommandLine {
 public:
 // Construction / Destruction
 	CommandLine();
@@ -28,7 +27,8 @@ private:
 };
 /////////////////////////////////////////////////////////////////////////////
 
-inline int CommandLine::size() const {
+inline int CommandLine::size() const
+{
 	return m_size;
 }
 

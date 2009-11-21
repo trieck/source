@@ -86,7 +86,7 @@ bool PenteDoc::addPiece(const CPoint & square)
 		UpdateAllViews(NULL, MAKELONG(pt1.x, pt1.y), game.getBoard());
 		UpdateAllViews(NULL, MAKELONG(pt2.x, pt2.y), game.getBoard());
 	}
-	
+
 	checkWinner();
 
 	return true;
@@ -97,13 +97,13 @@ bool PenteDoc::checkWinner()
 {
 	uint32_t winner;
 	const Vector *vector;
-	
+
 	uint32_t playerOneCaptures = game.getPlayerOne()->getCaptures();
 	uint32_t playerTwoCaptures = game.getPlayerTwo()->getCaptures();
 
 	if ((vector = game.winner(winner)) != NULL ||
-		playerOneCaptures == Player::MAX_CAPTURES ||
-		playerTwoCaptures == Player::MAX_CAPTURES) {
+	        playerOneCaptures == Player::MAX_CAPTURES ||
+	        playerTwoCaptures == Player::MAX_CAPTURES) {
 
 		if (vector == NULL && playerOneCaptures == Player::MAX_CAPTURES)
 			winner = ET_PLAYER_ONE;
@@ -112,11 +112,11 @@ bool PenteDoc::checkWinner()
 
 		SetModifiedFlag(FALSE);
 		CString message = (winner == ET_PLAYER_ONE) ?
-			_T("Player One Wins!") : _T("Player Two Wins!");
+		                  _T("Player One Wins!") : _T("Player Two Wins!");
 		message += _T("\nPlay Again?");
 
-		int nRtn = AfxMessageBox(message, 
-			MB_YESNO | MB_ICONQUESTION);
+		int nRtn = AfxMessageBox(message,
+		                         MB_YESNO | MB_ICONQUESTION);
 		if (nRtn == IDNO) {
 			AfxGetMainWnd()->PostMessage(WM_CLOSE);
 		} else {
@@ -154,20 +154,20 @@ bool PenteDoc::move(CPoint & square)
 	return true;
 }
 
-void PenteDoc::DeleteContents() 
+void PenteDoc::DeleteContents()
 {
 	game.clear();
 	CDocument::DeleteContents();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void PenteDoc::onUpdateTurn(CCmdUI *pCmdUI) 
+void PenteDoc::onUpdateTurn(CCmdUI *pCmdUI)
 {
 	CString str, strTurn;
 	ASSERT(pCmdUI != NULL);
 	uint32_t turn = game.getTurn();
-	str.Format(IDS_TURN, turn == ET_PLAYER_ONE ? 
-		_T("One") : _T("Two"));
+	str.Format(IDS_TURN, turn == ET_PLAYER_ONE ?
+	           _T("One") : _T("Two"));
 	pCmdUI->SetText(str);
 	CStatusBar* pBar = (CStatusBar*)pCmdUI->m_pOther;
 	ASSERT_VALID(pBar);
@@ -179,13 +179,13 @@ void PenteDoc::onUpdateTurn(CCmdUI *pCmdUI)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void PenteDoc::OnUpdateFileSave(CCmdUI* pCmdUI) 
+void PenteDoc::OnUpdateFileSave(CCmdUI* pCmdUI)
 {
 	ASSERT(pCmdUI != NULL);
 	pCmdUI->Enable(IsModified());
 }
 
-BOOL PenteDoc::OnOpenDocument(LPCTSTR lpszPathName) 
+BOOL PenteDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
 	WORD number;
 	try {
@@ -202,12 +202,12 @@ BOOL PenteDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		AfxMessageBox(IDS_INVALIDFILEFORMAT, MB_ICONINFORMATION | MB_OK);
 		return FALSE;
 	}
-		
+
 	return CDocument::OnOpenDocument(lpszPathName);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void PenteDoc::OnUpdateOptions(CCmdUI* pCmdUI) 
+void PenteDoc::OnUpdateOptions(CCmdUI* pCmdUI)
 {
 	ASSERT(pCmdUI != NULL);
 	pCmdUI->Enable(!IsModified());

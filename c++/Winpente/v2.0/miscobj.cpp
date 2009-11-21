@@ -40,9 +40,9 @@ long IMiscellaneous::GetDriveSpace(LPCTSTR bstrDrive)
 {
 	long result;
 	static BYTE parms[] =
-		VTS_BSTR;
+	    VTS_BSTR;
 	InvokeHelper(0x60020003, DISPATCH_METHOD, VT_I4, (void*)&result, parms,
-		bstrDrive);
+	             bstrDrive);
 	return result;
 }
 

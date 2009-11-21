@@ -9,10 +9,9 @@
 #include <stdio.h>
 #include <time.h>
 #include <windows.h>
-#include <mapi.h>	
+#include <mapi.h>
 
-typedef struct tagEVENTRECORD
-{
+typedef struct tagEVENTRECORD {
 	DWORD	EventID;
 	TCHAR	szEventDate[128];
 	TCHAR	szEventType[50];
@@ -21,7 +20,7 @@ typedef struct tagEVENTRECORD
 	WORD	numStrings;
 	LPCSTR	pStrings[255];
 	TCHAR	pMessage[1024];
-}EVENTRECORD;
+} EVENTRECORD;
 
 void	main (void);
 void	GetEventType(LPWORD pEventType, LPSTR szEventType);

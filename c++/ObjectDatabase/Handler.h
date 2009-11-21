@@ -10,15 +10,15 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // Handler interface
-DECLARE_INTERFACE(IHandler) {
+DECLARE_INTERFACE(IHandler)
+{
 public:
 	virtual void Call(LPDICTIONARY request, LPDICTIONARY response) PURE;
 };
 typedef IHandler *PHANDLER;
 
 /////////////////////////////////////////////////////////////////////////////
-class Handler
-{
+class Handler {
 public:
 	// Construction / Destruction
 	Handler();

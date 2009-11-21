@@ -10,8 +10,7 @@
 #endif // _MSC_VER > 1000
 
 
-class Emu6502Doc : public CDocument
-{
+class Emu6502Doc : public CDocument {
 protected: // create from serialization only
 	Emu6502Doc();
 	DECLARE_DYNCREATE(Emu6502Doc)
@@ -25,7 +24,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(Emu6502Doc)
-	public:
+public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 	//}}AFX_VIRTUAL

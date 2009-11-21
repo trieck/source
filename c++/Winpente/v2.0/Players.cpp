@@ -22,8 +22,7 @@ CPlayers::CPlayers()
 
 CPlayers::~CPlayers()
 {
-	if (m_pPlayersArray)
-	{
+	if (m_pPlayersArray) {
 		m_pPlayersArray->RemoveAll();
 		delete m_pPlayersArray;
 	}
@@ -31,8 +30,7 @@ CPlayers::~CPlayers()
 
 BOOL CPlayers::Init()
 {
-	if (m_fInitialized)
-	{
+	if (m_fInitialized) {
 		return FALSE;
 	}
 
@@ -50,13 +48,12 @@ BOOL CPlayers::FlushPlayers()
 {
 	BOOL fRtn = FALSE;
 
-	if (!m_fInitialized)
-	{
+	if (!m_fInitialized) {
 		return fRtn;
 	}
 
 	m_pPlayersArray->RemoveAll();
-		
+
 	UpdateRegistry();
 
 	fRtn = TRUE;
@@ -68,8 +65,7 @@ INT CPlayers::GetPlayerCount()
 {
 	INT nRtn = -1;
 
-	if (!m_fInitialized)
-	{
+	if (!m_fInitialized) {
 		return nRtn;
 	}
 
@@ -84,22 +80,20 @@ BOOL CPlayers::UpdateRegistry()
 {
 	BOOL fRtn = FALSE;
 
-	if (!m_fInitialized)
-	{
+	if (!m_fInitialized) {
 		return fRtn;
 	}
 
 	// Build a long delimited string of players
 	CString strPlayers;
-	for(INT i = 0; i < m_pPlayersArray->GetSize(); i++)
-	{
+	for (INT i = 0; i < m_pPlayersArray->GetSize(); i++) {
 		strPlayers += m_pPlayersArray->GetAt(i) + '\n';
 	}
 
 	UINT nLength = strPlayers.GetLength() == 0 ? 1 : strPlayers.GetLength();
 
 	fRtn = CPenteApp::UpdateRegistryInformation(_T("bin"), _T("Players"), (LPBYTE)(LPCTSTR)strPlayers, REG_BINARY, nLength);
-	
+
 	return fRtn;
 }
 
@@ -112,14 +106,12 @@ VOID CPlayers::BuildPlayersArray()
 
 	m_pPlayersArray->RemoveAll();
 
-	if (CPenteApp::GetRegistryInformation(_T("bin"), _T("Players"), &pData, REG_BINARY))
-	{
+	if (CPenteApp::GetRegistryInformation(_T("bin"), _T("Players"), &pData, REG_BINARY)) {
 		CString strPlayers((LPCTSTR)pData);
 
 		delete pData;
 
-		while((nPos = strPlayers.Find('\n')) != -1)
-		{
+		while ((nPos = strPlayers.Find('\n')) != -1) {
 			CString strItem = strPlayers.Left(nPos);
 
 			VERIFY(!strItem.IsEmpty());
@@ -135,8 +127,7 @@ BOOL CPlayers::AddPlayer(const CString& strNewPlayer)
 {
 	BOOL fRtn = FALSE;
 
-	if (!m_fInitialized)
-	{
+	if (!m_fInitialized) {
 		return fRtn;
 	}
 
@@ -146,17 +137,14 @@ BOOL CPlayers::AddPlayer(const CString& strNewPlayer)
 	BOOL fFound = FALSE;
 
 	// Only add the player if the don't yet exist
-	for (INT i = 0; i < m_pPlayersArray->GetSize(); i++)
-	{
-		if (strNewPlayer == m_pPlayersArray->GetAt(i))
-		{
+	for (INT i = 0; i < m_pPlayersArray->GetSize(); i++) {
+		if (strNewPlayer == m_pPlayersArray->GetAt(i)) {
 			fFound = TRUE;
 			break;
 		}
 	}
 
-	if (!fFound)
-	{
+	if (!fFound) {
 		m_pPlayersArray->Add(strNewPlayer);
 		fRtn = UpdateRegistry();
 	}
@@ -171,15 +159,13 @@ BOOL CPlayers::GetPlayer(INT nIndex, CString& strPlayer)
 	// Initialize 'out' parameter
 	strPlayer = _T("");
 
-	if (!m_fInitialized)
-	{
+	if (!m_fInitialized) {
 		return fRtn;
 	}
 
 	ASSERT(m_pPlayersArray);
 
-	if (nIndex < 0 || nIndex > m_pPlayersArray->GetSize())
-	{
+	if (nIndex < 0 || nIndex > m_pPlayersArray->GetSize()) {
 		return fRtn;
 	}
 

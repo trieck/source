@@ -1,6 +1,6 @@
 /*---------------------------------------
-	Module Name	:	PrefDlg.cpp	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	PrefDlg.cpp
+	Author		:	Thomas A. Rieck
 	Purpose		:	Preferences Dialog
 					implementations
 	Date		:	08/24/1997
@@ -12,14 +12,13 @@
 #include "OurMacros.h"
 
 CPrefDlg::CPrefDlg(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
-	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
+		: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 {
 	m_pColorPage	= NULL;
 	m_pPiecePage	= NULL;
 	m_pBkgndPage	= NULL;
 
-	for (int i = 0; i < 6; i++)
-	{
+	for (int i = 0; i < 6; i++) {
 		m_hBitmaps[i]	= NULL;
 		m_hPalettes[i]	= NULL;
 	}
@@ -33,17 +32,17 @@ BOOL CPrefDlg::OnInitDialog()
 VOID CPrefDlg::Init()
 {
 	int nResIDs[6] = {IDB_PSYCHADELIC, IDB_ROPE, IDB_GREENROPE,
-						IDB_GRAIN1, IDB_GRAIN2, IDB_GRAIN3};
+	                  IDB_GRAIN1, IDB_GRAIN2, IDB_GRAIN3
+	                 };
 
 	CCustomBitmap* pCustomBitmap = new CCustomBitmap();
 	ASSERT_VALID(pCustomBitmap);
-	
+
 	// Load the bitmaps used
 	// for the background page
-	for (int i = 0; i < 6; i++)
-	{
-		m_hBitmaps[i] = pCustomBitmap->LoadResourceBitmap(nResIDs[i], 
-						&m_hPalettes[i]);
+	for (int i = 0; i < 6; i++) {
+		m_hBitmaps[i] = pCustomBitmap->LoadResourceBitmap(nResIDs[i],
+		                &m_hPalettes[i]);
 
 		ASSERT(m_hBitmaps[i]);
 		ASSERT(m_hPalettes[i]);
@@ -61,7 +60,7 @@ VOID CPrefDlg::BuildPages()
 	// construct the property pages
 	m_pColorPage = new CColorPage();
 	ASSERT_VALID(m_pColorPage);
- 
+
 	m_pPiecePage = new CPiecePage();
 	ASSERT_VALID(m_pPiecePage);
 
@@ -84,8 +83,7 @@ CPrefDlg::~CPrefDlg()
 	if (m_pPiecePage)	delete m_pPiecePage;
 	if (m_pBkgndPage)	delete m_pBkgndPage;
 
-	for (int i = 0; i < 6; i++)
-	{
+	for (int i = 0; i < 6; i++) {
 		DELETEGDIOBJECT(m_hBitmaps[i]);
 		DELETEGDIOBJECT(m_hPalettes[i]);
 	}

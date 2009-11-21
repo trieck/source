@@ -16,8 +16,7 @@ enum EntryType {
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class Entry
-{
+class Entry {
 // Construction / Destruction
 public:
 	Entry();
@@ -37,12 +36,14 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline POINT Entry::where() const {
+inline POINT Entry::where() const
+{
 	return pt;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline uint32_t Entry::getType() const {
+inline uint32_t Entry::getType() const
+{
 	return type;
 }
 

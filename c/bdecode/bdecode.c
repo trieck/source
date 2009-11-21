@@ -60,12 +60,20 @@ void parse(void)
 void parsetok(int t)
 {
 	switch (t) {
-	case 'd': dict(); break;
-	case 'i': integer(); break;
-	case 'l': list(); break;
+	case 'd':
+		dict();
+		break;
+	case 'i':
+		integer();
+		break;
+	case 'l':
+		list();
+		break;
 	default:
-		if (isdigit(t)) { ungetc(t, fp); string(); }
-		else error("unexpected token 0x%.2x.\n", t);
+		if (isdigit(t)) {
+			ungetc(t, fp);
+			string();
+		} else error("unexpected token 0x%.2x.\n", t);
 		break;
 	}
 }
@@ -78,10 +86,10 @@ int lex(void)
 void error(const char *fmt, ...)
 {
 	va_list arglist;
-    va_start(arglist, fmt);
+	va_start(arglist, fmt);
 
-    vfprintf(stderr, fmt, arglist);
-    va_end (arglist);
+	vfprintf(stderr, fmt, arglist);
+	va_end (arglist);
 
 	exit(1);
 }
@@ -89,10 +97,10 @@ void error(const char *fmt, ...)
 void output(const char *fmt, ...)
 {
 	va_list arglist;
-    va_start(arglist, fmt);
+	va_start(arglist, fmt);
 
-    vfprintf(stdout, fmt, arglist);
-    va_end (arglist);
+	vfprintf(stdout, fmt, arglist);
+	va_end (arglist);
 }
 
 

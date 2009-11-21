@@ -9,7 +9,7 @@
 #include "index.h"
 
 /*
- * print usage message and exit 
+ * print usage message and exit
  */
 void usage(void)
 {
@@ -17,7 +17,7 @@ void usage(void)
 }
 
 /*
- * main entry point 
+ * main entry point
  */
 int main(int argc, char *argv[])
 {

@@ -9,7 +9,7 @@
 #endif // _MSC_VER > 1000
 
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+#error include 'stdafx.h' before including this file for PCH
 #endif
 
 #include "resource.h"       // main symbols
@@ -19,8 +19,7 @@
 // See emu6502.cpp for the implementation of this class
 //
 
-class Emu6502App : public CWinApp
-{
+class Emu6502App : public CWinApp {
 public:
 	Emu6502App();
 
@@ -32,7 +31,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(Emu6502App)
-	public:
+public:
 	virtual BOOL InitInstance();
 	//}}AFX_VIRTUAL
 

@@ -21,9 +21,9 @@ Entry::Entry(const Entry &rhs)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-Entry::Entry(const POINT &aPoint, uint32_t ntype)  
+Entry::Entry(const POINT &aPoint, uint32_t ntype)
 {
-	pt.x = aPoint.x % BOARD_SIZE; 
+	pt.x = aPoint.x % BOARD_SIZE;
 	pt.y = aPoint.y % BOARD_SIZE;
 	type = ntype % (ET_PLAYER_TWO+1);
 }

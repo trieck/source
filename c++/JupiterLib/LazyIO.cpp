@@ -16,7 +16,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 LazyIO::LazyIO(uint16_t bsize, uint16_t hsize)
- : io(bsize, hsize), blocksize(bsize), headersize(hsize), worker(this)
+		: io(bsize, hsize), blocksize(bsize), headersize(hsize), worker(this)
 {
 	hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
 }
@@ -31,7 +31,7 @@ LazyIO::~LazyIO()
 void LazyIO::close()
 {
 	if (hEvent != NULL) {
-		SetEvent(hEvent);		
+		SetEvent(hEvent);
 		CloseHandle(hEvent);
 		flushblocks();
 		hEvent = NULL;
@@ -105,7 +105,7 @@ uint32_t LazyIO::insertblock(const void *pv)
 	uint64_t blockno = (off - headersize) / blocksize;
 
 	uint32_t nwritten = io.insertblock(pv);
-	
+
 	cache(blockno, pv);
 
 	return nwritten;
@@ -130,7 +130,7 @@ void LazyIO::flushblocks()
 	uint64_t blockno;
 	if (!mgr.getFirst(blockno))
 		return;
-	
+
 	do {
 		flushblock(blockno);
 	} while (mgr.getNext(blockno));
@@ -170,7 +170,7 @@ bool LazyIO::remove(uint64_t &blockno)
 	Block *block;
 	if (block = mgr.Lock(blockno)) {
 		flushblock(block);
-		ret = mgr.remove(blockno); 
+		ret = mgr.remove(blockno);
 		mgr.Release();
 	}
 
@@ -180,7 +180,8 @@ bool LazyIO::remove(uint64_t &blockno)
 /////////////////////////////////////////////////////////////////////////////
 DWORD LazyIO::Execute(LPVOID pparam)
 {
-	uint64_t blockno; time_t laccess;
+	uint64_t blockno;
+	time_t laccess;
 
 	while (WaitForSingleObject(hEvent, 0) != WAIT_OBJECT_0) {
 		if (!mgr.getFirst(blockno))
@@ -191,11 +192,10 @@ DWORD LazyIO::Execute(LPVOID pparam)
 				if (!remove(blockno)) {
 					if (!mgr.getNext(blockno))
 						break;
-				} 
-			} else 
-				if (!mgr.getNext(blockno))
-					break;
-		}			 		
+				}
+			} else if (!mgr.getNext(blockno))
+				break;
+		}
 	}
 
 	return 0;

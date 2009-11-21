@@ -10,7 +10,7 @@ IMPLEMENT_DYNAMIC(Player, CObject)
 
 /////////////////////////////////////////////////////////////////////////////
 Player::Player()
-: captures(0)
+		: captures(0)
 {
 }
 
@@ -39,8 +39,8 @@ Player::~Player()
 void Player::Serialize(CArchive & ar)
 {
 	if (ar.IsStoring()) {
-		ar << captures;		
+		ar << captures;
 	} else {
-		ar >> captures;		
+		ar >> captures;
 	}
 }

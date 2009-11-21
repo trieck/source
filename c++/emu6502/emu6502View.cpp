@@ -76,18 +76,18 @@ Emu6502Doc* Emu6502View::GetDocument() // non-debug version is inline
 /////////////////////////////////////////////////////////////////////////////
 // Emu6502View message handlers
 
-void Emu6502View::OnInitialUpdate() 
+void Emu6502View::OnInitialUpdate()
 {
 	CEditView::OnInitialUpdate();
 }
 
-int Emu6502View::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int Emu6502View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CEditView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	m_Font.CreatePointFont(110, _T("Courier New"));	
-	SetFont(&m_Font);	
-	
+	m_Font.CreatePointFont(110, _T("Courier New"));
+	SetFont(&m_Font);
+
 	return 0;
 }

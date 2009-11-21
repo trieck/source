@@ -25,8 +25,7 @@ BEGIN_MESSAGE_MAP(MainFrame, CFrameWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-static UINT indicators[] =
-{
+static UINT indicators[] = {
 	ID_SEPARATOR           // status line indicator
 };
 
@@ -47,8 +46,8 @@ int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	if (!m_wndStatusBar.Create(this) ||
-		!m_wndStatusBar.SetIndicators(indicators,
-		  sizeof(indicators)/sizeof(UINT)))	{
+	        !m_wndStatusBar.SetIndicators(indicators,
+	                                      sizeof(indicators)/sizeof(UINT)))	{
 		TRACE0("Failed to create status bar\n");
 		return -1;      // fail to create
 	}
@@ -62,15 +61,14 @@ int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 }
 
 BOOL MainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
-	CCreateContext* pContext)
+                               CCreateContext* pContext)
 {
 	// create splitter window
 	if (!m_wndSplitter.CreateStatic(this, 1, 2))
 		return FALSE;
 
 	if (!m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(LeftView), CSize(100, 100), pContext) ||
-		!m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(BackendsView), CSize(100, 100), pContext))
-	{
+	        !m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(BackendsView), CSize(100, 100), pContext)) {
 		m_wndSplitter.DestroyWindow();
 		return FALSE;
 	}
@@ -84,7 +82,7 @@ BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	cs.cx = 530;
 	cs.cy = 500;
 
-	if( !CFrameWnd::PreCreateWindow(cs) )
+	if ( !CFrameWnd::PreCreateWindow(cs) )
 		return FALSE;
 	return TRUE;
 }

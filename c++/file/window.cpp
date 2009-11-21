@@ -17,7 +17,7 @@ const RECT Window::rectDefault = {
 };
 
 Window::Window()
- : hWnd(0)
+		: hWnd(0)
 {
 }
 
@@ -26,8 +26,8 @@ Window::~Window()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-bool Window::create(LPCTSTR className, LPCTSTR windowName, 
-	DWORD style, LPRECT rect, Window *parent, LPVOID param)
+bool Window::create(LPCTSTR className, LPCTSTR windowName,
+                    DWORD style, LPRECT rect, Window *parent, LPVOID param)
 {
 	ASSERT(className != NULL);
 	ASSERT(windowName != NULL);
@@ -50,8 +50,8 @@ bool Window::create(LPCTSTR className, LPCTSTR windowName,
 	hookWindowCreate(this);
 
 	HWND hWindow = ::CreateWindowEx(cs.dwExStyle, cs.lpszClass,
-			cs.lpszName, cs.style, cs.x, cs.y, cs.cx, cs.cy,
-			cs.hwndParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);
+	                                cs.lpszName, cs.style, cs.x, cs.y, cs.cx, cs.cy,
+	                                cs.hwndParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);
 
 	unhookWindowCreate();
 
@@ -134,7 +134,7 @@ bool Window::hookWindowCreate(Window *pWnd)
 		return FALSE;
 
 	oldCbtHook = ::SetWindowsHookEx(WH_CBT,
-			cbtFilterHook, NULL, ::GetCurrentThreadId());
+	                                cbtFilterHook, NULL, ::GetCurrentThreadId());
 
 	wndInit = pWnd;
 
@@ -174,7 +174,7 @@ LRESULT CALLBACK Window::cbtFilterHook(int code, WPARAM wParam, LPARAM lParam)
 		bool bWndProc = ((WNDPROC) GetWindowLong(hWnd, GWL_WNDPROC) == NeptuneWndProc);
 		if (!bWndProc) {
 			WNDPROC oldWndProc = (WNDPROC)SetWindowLong(hWnd, GWL_WNDPROC,
-						(DWORD)NeptuneWndProc);
+			                     (DWORD)NeptuneWndProc);
 			ASSERT(oldWndProc != NULL);
 		}
 
@@ -185,8 +185,8 @@ LRESULT CALLBACK Window::cbtFilterHook(int code, WPARAM wParam, LPARAM lParam)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LRESULT CALLBACK Window::NeptuneWndProc(HWND hWnd, UINT msg, WPARAM wParam, 
- LPARAM lParam)
+LRESULT CALLBACK Window::NeptuneWndProc(HWND hWnd, UINT msg, WPARAM wParam,
+                                        LPARAM lParam)
 {
 	return ::DefWindowProc(hWnd, msg, wParam, lParam);
 }

@@ -11,8 +11,7 @@
 #define __ENTRY_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Entry 
-{
+class Entry {
 // Construction / Destruction
 public:
 	Entry();
@@ -36,10 +35,10 @@ public:
 	uint32_t size;			// file size, 0 for directory
 	int32_t access;			// RWEDAPSH access flags
 	int32_t year;			// date
-	int32_t month;		
+	int32_t month;
 	int32_t days;
 	int32_t hour;			// time
-	int32_t mins;		
+	int32_t mins;
 	int32_t secs;
 };
 

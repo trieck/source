@@ -9,8 +9,7 @@
 #define __MAKEPOOLHANDLER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class MakePoolHandler : public IHandler
-{
+class MakePoolHandler : public IHandler {
 // Construction / Destruction
 public:
 	MakePoolHandler();

@@ -1,5 +1,5 @@
 
-/* books.c 
+/* books.c
  *
  * a book database
  *
@@ -9,10 +9,10 @@
 #include <stdlib.h>
 #include <string.h>
 
- /*
- * represents a book
- */
-typedef struct Book{
+/*
+* represents a book
+*/
+typedef struct Book {
 	char title[100];
 	char author[100];
 	char isbn[20];
@@ -26,10 +26,10 @@ typedef struct Book{
  */
 static Book *books = NULL;
 static const char *usage = "usage: books [-A | -l | -a][title][author][isbn][year]\n"
-	"\t-A, list all books.\n"
-	"\t-l, look up a book supplying title.\n"
-	"\t-a, add a book supplying title, author, isbn, year.\n";
-	
+                           "\t-A, list all books.\n"
+                           "\t-l, look up a book supplying title.\n"
+                           "\t-a, add a book supplying title, author, isbn, year.\n";
+
 static const char *filename = "books.db";
 
 static void cleanup(void);
@@ -46,8 +46,9 @@ static void viewBooks(Book *root);
 int main(int argc, char *argv[])
 {
 	const char **pargs = argv;
-	argv++; argc--;
-	
+	argv++;
+	argc--;
+
 	atexit(cleanup);
 
 	if (argc < 1) {
@@ -78,7 +79,7 @@ int main(int argc, char *argv[])
 				else printBook(B);
 				argc--;
 				argc--;
-			}else if (pargs[0][1] == 'a') {
+			} else if (pargs[0][1] == 'a') {
 				/* add a book */
 				Book book;
 				if (argc < 4) {
@@ -99,7 +100,7 @@ int main(int argc, char *argv[])
 			break;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -140,7 +141,7 @@ void addBook(Book **root, Book *book)
 	M = stricmp(book->title, B->title);
 	if (M < 0) {
 		addBook(&B->left, book);
-	}else if (M >= 1) {
+	} else if (M >= 1) {
 		addBook(&B->right, book);
 	} else {
 		// they're the same
@@ -192,7 +193,7 @@ Book * lookupBook(Book *root, const char *title)
 		return lookupBook(root->left, title);
 	else if (M >= 1)
 		return lookupBook(root->right, title);
-	
+
 	return root;
 }
 
@@ -202,15 +203,15 @@ Book * lookupBook(Book *root, const char *title)
 void writeDb(Book *book, FILE *fp)
 {
 	if (NULL != book) {
-		fprintf(fp, "%d\1%s%d\1%s%d\1%s%d\1", 
-			strlen(book->title),
-			book->title, 
-			strlen(book->author),
-			book->author, 
-			strlen(book->isbn),
-			book->isbn, 
-			book->year);
-		
+		fprintf(fp, "%d\1%s%d\1%s%d\1%s%d\1",
+		        strlen(book->title),
+		        book->title,
+		        strlen(book->author),
+		        book->author,
+		        strlen(book->isbn),
+		        book->isbn,
+		        book->year);
+
 		writeDb(book->left, fp);
 		writeDb(book->right, fp);
 	}
@@ -229,7 +230,7 @@ void readDb(void)
 		return;	// empty or not found
 	}
 
-	while(readRecord(fp))
+	while (readRecord(fp))
 		;
 
 	fclose(fp);
@@ -282,10 +283,10 @@ void printBook(Book *book)
 	printf("\nTitle:\t\t%s\n", book->title);
 	printf("Author:\t\t%s\n", book->author);
 	printf("ISBN:\t\t%s\n", book->isbn);
-	printf("Year Published:\t%d\n", book->year);	
+	printf("Year Published:\t%d\n", book->year);
 }
 
-/* 
+/*
  * view all the books
  */
 void viewBooks(Book *root)

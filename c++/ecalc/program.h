@@ -12,8 +12,7 @@
 #define STOP (Instr)NULL
 
 /////////////////////////////////////////////////////////////////////////////
-class Program
-{ 
+class Program {
 public:
 // Construction / Destruction
 	Program();
@@ -33,7 +32,7 @@ public:
 	const Instr * operator++(int);	// postfix
 private:
 // Implementation
-	
+
 	Instr memory[NPROG];
 	Instr * pmem;
 	Instr * pbase;
@@ -41,11 +40,13 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
-inline Program::operator const Instr * () const {
+inline Program::operator const Instr * () const
+{
 	return pbase;
 }
 
-inline const Instr * Program::operator++(int) {
+inline const Instr * Program::operator++(int)
+{
 	return pmem++;
 }
 

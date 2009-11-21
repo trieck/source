@@ -40,13 +40,10 @@ VOID CWaveDoc :: OnDevicePlayer()
 	// Check if the device player is
 	// already open; restore it if it is.
 	CWnd* pWnd = CWnd::FindWindow(NULL, _T("Device Player"));
-	if (pWnd)
-	{
+	if (pWnd) {
 		pWnd->ShowWindow(SW_RESTORE);
 		return;
-	}
-	else
-	{
+	} else {
 		CPlayDlg* pDlg = new CPlayDlg;
 		ASSERT_VALID(pDlg);
 
@@ -57,9 +54,9 @@ VOID CWaveDoc :: OnDevicePlayer()
 VOID CWaveDoc :: SetBuffer(LPDIRECTSOUNDBUFFER pDSBuffer)
 {
 	ReleaseInterface(m_pDSBuffer);
-	
+
 	m_pDSBuffer = pDSBuffer;
-	
+
 	m_pDSBuffer->AddRef();
 }
 
@@ -103,7 +100,7 @@ BOOL CWaveDoc :: GetCurrentPosition(LPDWORD lpdwPlayPosition, LPDWORD lpdwWriteP
 	if (!m_pDSBuffer)
 		return FALSE;
 
-	return SUCCEEDED(m_pDSBuffer->GetCurrentPosition(lpdwPlayPosition, lpdwWritePosition)); 
+	return SUCCEEDED(m_pDSBuffer->GetCurrentPosition(lpdwPlayPosition, lpdwWritePosition));
 }
 
 BOOL CWaveDoc :: IsPlaying()

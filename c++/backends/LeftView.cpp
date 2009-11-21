@@ -88,7 +88,7 @@ void LeftView::OnInitialUpdate()
 	memset(&tvInsert, 0, sizeof(TVINSERTSTRUCT));
 
 	tvInsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_PARAM;
-		
+
 	StringVector::const_iterator it = pDoc->getMachines();
 	for ( ; it != pDoc->getMachinesEnd(); it++) {
 		tvInsert.item.pszText = (LPTSTR)(LPCTSTR)*it;
@@ -121,7 +121,7 @@ BackendsDoc* LeftView::GetDocument() // non-debug version is inline
 /////////////////////////////////////////////////////////////////////////////
 // LeftView message handlers
 
-BOOL LeftView::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext) 
+BOOL LeftView::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext)
 {
 	// create the image list
 	if (!imageList.Create(16, 16, ILC_COLOR8 | ILC_MASK, 1, 8)) {
@@ -139,7 +139,7 @@ BOOL LeftView::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwSty
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void LeftView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult) 
+void LeftView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 
@@ -154,7 +154,7 @@ void LeftView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 		HTREEITEM hItem = pNMTreeView->itemNew.hItem;
 		CString server = GetTreeCtrl().GetItemText(hItem);
 
-		ReadFromRegistry(server, pconfig);		
+		ReadFromRegistry(server, pconfig);
 		pconfig->reposCount = GetReposCount(server);
 		pconfig->rawCount = GetRawCount(server);
 		GetProducts(server, pconfig);
@@ -176,7 +176,7 @@ bool ReadFromRegistry(LPCTSTR server, Config *config)
 		DisplayError(result);
 		return false;
 	}
-	
+
 	// read page pool settings
 	DWORD dwFileCache = ReadPagePool(hParentKey);
 	if (dwFileCache != (DWORD)-1)
@@ -184,14 +184,14 @@ bool ReadFromRegistry(LPCTSTR server, Config *config)
 
 	// read compiler settings
 	DWORD svcPack = ReadCompiler(hParentKey);
-	if (svcPack != (DWORD)-1) 
+	if (svcPack != (DWORD)-1)
 		config->servicePack = svcPack;
 
 	// read operating system version
 	CString version = ReadOSVersion(hParentKey);
 	_tcsncpy(config->osversion, version, MAX_PATH);
-	
-	::RegCloseKey(hParentKey);	
+
+	::RegCloseKey(hParentKey);
 
 	return true;
 }
@@ -200,14 +200,14 @@ bool ReadFromRegistry(LPCTSTR server, Config *config)
 DWORD ReadPagePool(const HKEY hParentKey)
 {
 	static LPCTSTR KeyName = _T("SYSTEM\\CurrentControlSet\\Control\\Session Manager")
-						_T("\\Memory Management");
+	                         _T("\\Memory Management");
 	static LPCTSTR ValueName = _T("UnusedFileCache");
 
 	HKEY hKey;
 
 	LONG result = ::RegOpenKeyEx(hParentKey, KeyName, 0, KEY_QUERY_VALUE, &hKey);
 	if (result != ERROR_SUCCESS) {
-		DisplayError(result); 
+		DisplayError(result);
 		return -1;
 	}
 
@@ -216,20 +216,20 @@ DWORD ReadPagePool(const HKEY hParentKey)
 	DWORD dwSize = sizeof(DWORD);
 
 	result = ::RegQueryValueEx(hKey,
-		ValueName, NULL,
-		&dwType,
-		(LPBYTE)&dwValue,
-		&dwSize);
-	
+	                           ValueName, NULL,
+	                           &dwType,
+	                           (LPBYTE)&dwValue,
+	                           &dwSize);
+
 	if (result != ERROR_SUCCESS) {
 		::RegCloseKey(hKey);
 		DisplayError(result);
-		return -1;		
+		return -1;
 	}
 
 	::RegCloseKey(hKey);
 
-	return dwValue;	
+	return dwValue;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -242,7 +242,7 @@ DWORD ReadCompiler(const HKEY hParentKey)
 
 	LONG result = ::RegOpenKeyEx(hParentKey, KeyName, 0, KEY_QUERY_VALUE, &hKey);
 	if (result != ERROR_SUCCESS) {
-		DisplayError(result); 
+		DisplayError(result);
 		return -1;
 	}
 
@@ -251,20 +251,20 @@ DWORD ReadCompiler(const HKEY hParentKey)
 	DWORD dwSize = sizeof(DWORD);
 
 	result = ::RegQueryValueEx(hKey,
-		ValueName, NULL,
-		&dwType,
-		(LPBYTE)&dwValue,
-		&dwSize);
-	
+	                           ValueName, NULL,
+	                           &dwType,
+	                           (LPBYTE)&dwValue,
+	                           &dwSize);
+
 	if (result != ERROR_SUCCESS) {
 		::RegCloseKey(hKey);
 		DisplayError(result);
-		return -1;		
+		return -1;
 	}
 
 	::RegCloseKey(hKey);
 
-	return dwValue;	
+	return dwValue;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -277,7 +277,7 @@ CString ReadOSVersion(const HKEY hParentKey)
 
 	LONG result = ::RegOpenKeyEx(hParentKey, KeyName, 0, KEY_QUERY_VALUE, &hKey);
 	if (result != ERROR_SUCCESS) {
-		DisplayError(result); 
+		DisplayError(result);
 		return _T("");
 	}
 
@@ -286,35 +286,35 @@ CString ReadOSVersion(const HKEY hParentKey)
 	DWORD dwSize = MAX_PATH;
 
 	result = ::RegQueryValueEx(hKey,
-		_T("CurrentVersion"), NULL,
-		&dwType,
-		(LPBYTE)currentVersion,
-		&dwSize);
+	                           _T("CurrentVersion"), NULL,
+	                           &dwType,
+	                           (LPBYTE)currentVersion,
+	                           &dwSize);
 	if (result != ERROR_SUCCESS) {
 		::RegCloseKey(hKey);
-		DisplayError(result); 
+		DisplayError(result);
 		return _T("");
 	}
 
 	dwSize = MAX_PATH;
 
 	result = ::RegQueryValueEx(hKey,
-		_T("CSDVersion"), NULL,
-		&dwType,
-		(LPBYTE)CSDVersion,
-		&dwSize);
+	                           _T("CSDVersion"), NULL,
+	                           &dwType,
+	                           (LPBYTE)CSDVersion,
+	                           &dwSize);
 	if (result != ERROR_SUCCESS) {
 		::RegCloseKey(hKey);
-		DisplayError(result); 
+		DisplayError(result);
 		output.Format(_T("Microsoft Windows NT %s"), currentVersion);
 		return output;
 	}
 
 	output.Format(_T("Microsoft Windows NT %s %s"), currentVersion,
-		CSDVersion);
+	              CSDVersion);
 
 	::RegCloseKey(hKey);
-	
+
 	return output;
 }
 
@@ -322,19 +322,19 @@ CString ReadOSVersion(const HKEY hParentKey)
 void DisplayError(DWORD error)
 {
 	LPVOID lpMsgBuf;
-	
-	FormatMessage( 
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-		FORMAT_MESSAGE_FROM_SYSTEM | 
-		FORMAT_MESSAGE_IGNORE_INSERTS,
-		NULL,
-		error,
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-		(LPTSTR) &lpMsgBuf,
-		0,
-		NULL 
+
+	FormatMessage(
+	    FORMAT_MESSAGE_ALLOCATE_BUFFER |
+	    FORMAT_MESSAGE_FROM_SYSTEM |
+	    FORMAT_MESSAGE_IGNORE_INSERTS,
+	    NULL,
+	    error,
+	    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+	    (LPTSTR) &lpMsgBuf,
+	    0,
+	    NULL
 	);
-	
+
 	TRACE0((LPCTSTR)lpMsgBuf);
 
 	// Free the buffer.
@@ -377,13 +377,13 @@ DWORD recurseRepos(LPCTSTR path)
 			CString dir;
 			dir.Format(_T("%s\\%s"), path, data.cFileName);
 			count += recurseRepos(dir);
-		}else {
+		} else {
 			TCHAR ext[_MAX_EXT];
 			_tsplitpath(data.cFileName, NULL, NULL, NULL, ext);
 			if (_tcsicmp(ext, _T(".xml")) == 0)
 				count++;
 		}
-	} while (FindNextFile(hFile, &data)); 
+	} while (FindNextFile(hFile, &data));
 
 	FindClose(hFile);
 
@@ -426,7 +426,7 @@ void recurseProducts(LPCTSTR path, Config *config)
 			dir.Format(_T("%s\\%s"), path, data.cFileName);
 			recurseProducts(dir, config);
 		}
-	} while (FindNextFile(hFile, &data)); 
+	} while (FindNextFile(hFile, &data));
 
 	FindClose(hFile);
 }
@@ -467,13 +467,13 @@ DWORD recurseRawContent(LPCTSTR path)
 			CString dir;
 			dir.Format(_T("%s\\%s"), path, data.cFileName);
 			count += recurseRawContent(dir);
-		}else {
+		} else {
 			TCHAR ext[_MAX_EXT];
 			_tsplitpath(data.cFileName, NULL, NULL, NULL, ext);
 			if (_tcsicmp(ext, _T(".seq")) == 0)
 				count++;
 		}
-	} while (FindNextFile(hFile, &data)); 
+	} while (FindNextFile(hFile, &data));
 
 	FindClose(hFile);
 
@@ -483,7 +483,7 @@ DWORD recurseRawContent(LPCTSTR path)
 
 } // anonymous
 
-void LeftView::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult) 
+void LeftView::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 

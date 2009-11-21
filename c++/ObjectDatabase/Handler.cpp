@@ -27,10 +27,10 @@
 Handler::Handler()
 {
 	handler_map[FNC_MKPOOL] = new MakePoolHandler();
-	handler_map[FNC_CREATE] = new CreateHandler();	
+	handler_map[FNC_CREATE] = new CreateHandler();
 	handler_map[FNC_GET] = new GetHandler();
 	handler_map[FNC_SET] = new SetHandler();
-	handler_map[FNC_DESTROY] = new DestroyHandler();	
+	handler_map[FNC_DESTROY] = new DestroyHandler();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -52,13 +52,13 @@ BOOL Handler::Initialize(void* pv)
 void Handler::Execute(RequestType pconn, void* pv, OVERLAPPED* pOverlapped)
 {
 	Connection conn = pconn->release(); // take ownership of the socket
-	
+
 	// Receive the request
 	BEObjectPtr request(Receive(conn));
 	if (request.get() == NULL) {
 		EventLog::logerr(
-			"Handler::Execute() unable to receive request : %s",
-				lasterror().c_str());
+		    "Handler::Execute() unable to receive request : %s",
+		    lasterror().c_str());
 		return;
 	}
 
@@ -68,8 +68,8 @@ void Handler::Execute(RequestType pconn, void* pv, OVERLAPPED* pOverlapped)
 	// Send the response
 	if (!Send(conn, response.get())) {
 		EventLog::logerr(
-			"Handler::Execute() unable to send response : %s",
-				lasterror().c_str());
+		    "Handler::Execute() unable to send response : %s",
+		    lasterror().c_str());
 	}
 }
 

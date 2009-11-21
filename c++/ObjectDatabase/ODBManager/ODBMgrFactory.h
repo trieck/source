@@ -9,26 +9,27 @@
 #define __ODBMGRFACTORY_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ODBMgrFactory : public IClassFactory
-{
+class ODBMgrFactory : public IClassFactory {
 // Construction / Destruction
 private:
 	ODBMgrFactory();	// new creation only
 public:
 	virtual ~ODBMgrFactory();
-    
+
 // Interface
 	static ODBMgrFactory *Create();
-	static LONG GetLockCount() { return m_cLock; }
+	static LONG GetLockCount() {
+		return m_cLock;
+	}
 
-    // IUnknown members
-    STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
-    STDMETHODIMP_(ULONG) AddRef();
-    STDMETHODIMP_(ULONG) Release();
+	// IUnknown members
+	STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
+	STDMETHODIMP_(ULONG) AddRef();
+	STDMETHODIMP_(ULONG) Release();
 
-    // IClassFactory members
-    STDMETHODIMP         CreateInstance(LPUNKNOWN, REFIID, LPVOID *);
-    STDMETHODIMP         LockServer(BOOL);
+	// IClassFactory members
+	STDMETHODIMP         CreateInstance(LPUNKNOWN, REFIID, LPVOID *);
+	STDMETHODIMP         LockServer(BOOL);
 
 // Implementation
 private:

@@ -9,31 +9,30 @@
 #define __ODBMGRDATA_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ODBMgrData : public IComponentData
-{
+class ODBMgrData : public IComponentData {
 // Construction / Destruction
 public:
-	ODBMgrData(LPUNKNOWN pUnknown);	
+	ODBMgrData(LPUNKNOWN pUnknown);
 	virtual ~ODBMgrData();
-    
+
 // Interface
 
-    // IUnknown members
-    STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
-    STDMETHODIMP_(ULONG) AddRef();
-    STDMETHODIMP_(ULONG) Release();
+	// IUnknown members
+	STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
+	STDMETHODIMP_(ULONG) AddRef();
+	STDMETHODIMP_(ULONG) Release();
 
 	// IComponentData members
 	STDMETHODIMP Initialize(LPUNKNOWN pUnknown);
-    STDMETHODIMP CreateComponent(LPCOMPONENT *ppComponent);
+	STDMETHODIMP CreateComponent(LPCOMPONENT *ppComponent);
 	STDMETHODIMP Notify(LPDATAOBJECT lpDataObject, MMC_NOTIFY_TYPE event,
-            LPARAM arg, LPARAM param);
+	                    LPARAM arg, LPARAM param);
 	STDMETHODIMP Destroy(void);
 	STDMETHODIMP QueryDataObject(MMC_COOKIE cookie, DATA_OBJECT_TYPES type,
-            LPDATAOBJECT *ppDataObject);
+	                             LPDATAOBJECT *ppDataObject);
 	STDMETHODIMP GetDisplayInfo(SCOPEDATAITEM *pScopeDataItem);
 	STDMETHODIMP CompareObjects(LPDATAOBJECT lpDataObjectA,
-            LPDATAOBJECT lpDataObjectB);
+	                            LPDATAOBJECT lpDataObjectB);
 
 private:
 	LONG m_cRef;								// reference count

@@ -19,8 +19,7 @@ class Volume;
 typedef auto_ptr<Volume> VolumePtr;
 
 /////////////////////////////////////////////////////////////////////////////
-class Volume
-{
+class Volume {
 // Construction / destruction
 private:
 	Volume();
@@ -55,7 +54,7 @@ public:
 	FilePtr openfile(const char *filename, const char *mode);
 	FilePtr openfile(const Entry &e);
 	void createFile(uint32_t parent, const char *name, fileheader_t *
-		header);
+	                header);
 	uint32_t createEntry(entryblock_t *dir, const char *name, uint32_t blockno);
 	void changedir(Entry *pEntry);
 	void changedir(const char *name);
@@ -76,29 +75,29 @@ public:
 
 	bool deleteentry(uint32_t blockno, const char *name);
 	void freefileblocks(fileheader_t *entry);
-	
+
 	void createbitmap();
 	void setBlockFree(uint32_t blockno);
 	void setBlockUsed(uint32_t blockno);
 	bool writenewbitmap();
 	void updatebitmap();
 	bool getFreeBlocks(uint32_t blockno, blocklist &blocks);
-	uint32_t getFreeBlock(); 
+	uint32_t getFreeBlock();
 	void createEmptyCache(entryblock_t *parent, uint32_t blockno);
 	void delFromCache(entryblock_t *parent, uint32_t blockno);
 	FileBlocks getFileBlocks(fileheader_t *block);
 
 // Implementation
 private:
-	uint32_t lookup(uint32_t blockno, const char *name, 
-		entryblock_t *eblock, uint32_t *pupblock);
+	uint32_t lookup(uint32_t blockno, const char *name,
+	                entryblock_t *eblock, uint32_t *pupblock);
 
 	void allocbitmap();
 	void freebitmap();
-	
+
 	uint32_t firstblock;	// first block of data area
-    uint32_t lastblock;		// last block of data area
-    uint32_t rootblock;		// root block from first block
+	uint32_t lastblock;		// last block of data area
+	uint32_t rootblock;		// root block from first block
 	uint32_t dblocksize;	// datablock size
 	uint32_t blocksize;		// block size
 	uint32_t bitmapsize;	// bitmap size in blocks
@@ -117,42 +116,50 @@ private:
 typedef vector<Volume*> VolumeList;
 
 /////////////////////////////////////////////////////////////////////////////
-inline bool Volume::isValidBlock(uint32_t blockno) {
+inline bool Volume::isValidBlock(uint32_t blockno)
+{
 	return (0 <= blockno && blockno <= (lastblock-firstblock));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline uint32_t Volume::getRootBlock() const {
+inline uint32_t Volume::getRootBlock() const
+{
 	return rootblock;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline uint32_t Volume::getFirstBlock() const {
+inline uint32_t Volume::getFirstBlock() const
+{
 	return firstblock;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline uint32_t Volume::getLastBlock() const {
+inline uint32_t Volume::getLastBlock() const
+{
 	return lastblock;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline uint32_t Volume::getCurrentDir() const {
+inline uint32_t Volume::getCurrentDir() const
+{
 	return currdir;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline uint32_t Volume::getDataBlockSize() const {
+inline uint32_t Volume::getDataBlockSize() const
+{
 	return dblocksize;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline int8_t Volume::getType() const {
+inline int8_t Volume::getType() const
+{
 	return type;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline string Volume::getName() const {
+inline string Volume::getName() const
+{
 	return name;
 }
 

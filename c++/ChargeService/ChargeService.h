@@ -11,8 +11,7 @@
 #include "service.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class ChargeService : public Service, IRunnable
-{
+class ChargeService : public Service, IRunnable {
 // Construction
 public:
 	ChargeService();

@@ -11,8 +11,7 @@
 #include "WysApp.h"
 #include "resource.h"
 
-class CPrefDlg : public CDialog
-{
+class CPrefDlg : public CDialog {
 private:
 	CButton*	m_pCheck;
 	CEdit*		m_pLogPath;

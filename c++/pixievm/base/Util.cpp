@@ -15,7 +15,7 @@ stringvec split(const string &s, const char *del)
 
 	char *p = new char[s.length()+1];
 	strcpy(p, s.c_str());
-	
+
 	char *tok = strtok(p, del);
 	while (tok != NULL) {
 		output.push_back(tok);
@@ -80,13 +80,13 @@ string trim(const string &s)
 
 	const char *pin = s.c_str();
 	for ( ; *pin; pin++) {
-		if (!isspace(*pin)) 
+		if (!isspace(*pin))
 			break;
 	}
 
 	const char *pend = s.c_str() + s.length();
 	for ( ; pend != pin; ) {
-		if (!isspace(*--pend)) 
+		if (!isspace(*--pend))
 			break;
 	}
 

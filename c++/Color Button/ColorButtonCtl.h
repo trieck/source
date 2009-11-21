@@ -3,8 +3,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CColorButtonCtrl : See ColorButtonCtl.cpp for implementation.
 
-class CColorButtonCtrl : public COleControl
-{
+class CColorButtonCtrl : public COleControl {
 	DECLARE_DYNCREATE(CColorButtonCtrl)
 
 // Constructor
@@ -33,7 +32,7 @@ protected:
 	void DrawBevelRaised(CDC* pDC, CRect& rc);
 	void DrawControl(CDC& dc, CRect& rc);
 	~CColorButtonCtrl();
-	
+
 	BOOL m_bDown;				// button down flag
 	COLORREF m_BackColor;		// button backcolor
 	COLORREF m_ForeColor;		// button forecolor
@@ -79,8 +78,8 @@ protected:
 // Dispatch and event IDs
 public:
 	enum {
-	//{{AFX_DISP_ID(CColorButtonCtrl)
-	dispidBevelWidth = 1L,
-	//}}AFX_DISP_ID
+		//{{AFX_DISP_ID(CColorButtonCtrl)
+		dispidBevelWidth = 1L,
+		//}}AFX_DISP_ID
 	};
 };

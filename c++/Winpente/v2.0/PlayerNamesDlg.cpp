@@ -17,10 +17,10 @@ static char THIS_FILE[] = __FILE__;
 
 
 CPlayerNamesDlg::CPlayerNamesDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CPlayerNamesDlg::IDD, pParent)
+		: CDialog(CPlayerNamesDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CPlayerNamesDlg)
-		// NOTE: the ClassWizard will add member initialization here
+	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 	m_pDoc				= NULL;
 	m_lpszComputerName	= NULL;
@@ -29,7 +29,7 @@ CPlayerNamesDlg::CPlayerNamesDlg(CWnd* pParent /*=NULL*/)
 }
 
 CPlayerNamesDlg::CPlayerNamesDlg(CPenteDoc* pDoc, CWnd* pParent /*=NULL*/)
-	: m_pDoc(pDoc), CDialog(CPlayerNamesDlg::IDD, pParent)
+		: m_pDoc(pDoc), CDialog(CPlayerNamesDlg::IDD, pParent)
 {
 	ASSERT_VALID(m_pDoc);
 
@@ -49,7 +49,7 @@ void CPlayerNamesDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPlayerNamesDlg)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	// NOTE: the ClassWizard will add DDX and DDV calls here
 	//}}AFX_DATA_MAP
 }
 
@@ -63,11 +63,11 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CPlayerNamesDlg message handlers
 
-BOOL CPlayerNamesDlg::OnInitDialog() 
+BOOL CPlayerNamesDlg::OnInitDialog()
 {
 	DWORD	dwSize = MAX_COMPUTERNAME_LENGTH + 1;
 	CString	strPlayers;
-	
+
 	CDialog::OnInitDialog();
 
 	ASSERT_VALID(m_pDoc);
@@ -84,16 +84,14 @@ BOOL CPlayerNamesDlg::OnInitDialog()
 	::SetClassLong(GetSafeHwnd(), GCL_HICON, (LONG)hIcon);
 
 	LPDWORD lpdwValue;
-	if (CPenteApp::GetRegistryInformation(_T("option"), _T("TwoPlayerGame"), (PPBYTE)&lpdwValue, REG_DWORD))
-	{
+	if (CPenteApp::GetRegistryInformation(_T("option"), _T("TwoPlayerGame"), (PPBYTE)&lpdwValue, REG_DWORD)) {
 		GetTwoPlayerGame().SetCheck(*lpdwValue ? 1 : 0);
 		delete lpdwValue;
 	}
 
 	// Get the Computer Name
 	m_lpszComputerName = new TCHAR[dwSize];
-	if (!m_lpszComputerName)
-	{
+	if (!m_lpszComputerName) {
 		return FALSE;
 	}
 
@@ -102,32 +100,27 @@ BOOL CPlayerNamesDlg::OnInitDialog()
 	// Get the User Name
 	dwSize = 255;
 	m_lpszUserName = new TCHAR[dwSize + 1];
-	if (!m_lpszUserName)
-	{
+	if (!m_lpszUserName) {
 		return FALSE;
 	}
 
 	::GetUserName(m_lpszUserName, &dwSize);
 
 	GetPlayerOneNameList().AddString(m_lpszUserName);
-	
+
 	// Fill the players list
-	for (INT i = 0; i < m_pPlayers->GetPlayerCount(); i++)
-	{
+	for (INT i = 0; i < m_pPlayers->GetPlayerCount(); i++) {
 		CString strPlayer;
 
 		m_pPlayers->GetPlayer(i, strPlayer);
-	
+
 		if ((strPlayer != m_lpszUserName) &&
-			(strPlayer != m_lpszComputerName))
-		{
-			if (GetPlayerOneNameList().FindStringExact(-1, strPlayer) == CB_ERR)
-			{
+		        (strPlayer != m_lpszComputerName)) {
+			if (GetPlayerOneNameList().FindStringExact(-1, strPlayer) == CB_ERR) {
 				GetPlayerOneNameList().AddString(strPlayer);
 			}
 
-			if (GetPlayerTwoNameList().FindStringExact(-1, strPlayer) == CB_ERR)
-			{
+			if (GetPlayerTwoNameList().FindStringExact(-1, strPlayer) == CB_ERR) {
 				GetPlayerTwoNameList().AddString(strPlayer);
 			}
 		}
@@ -138,17 +131,13 @@ BOOL CPlayerNamesDlg::OnInitDialog()
 	strPlayerOne = m_pDoc->GetPlayerOne();
 	strPlayerTwo = m_pDoc->GetPlayerTwo();
 
-	if (!strPlayerOne.IsEmpty())
-	{
+	if (!strPlayerOne.IsEmpty()) {
 		GetPlayerOneNameList().SetWindowText(strPlayerOne);
-	}
-	else
-	{
+	} else {
 		GetPlayerOneNameList().SetCurSel(0);
 	}
 
-	if (!strPlayerTwo.IsEmpty())
-	{
+	if (!strPlayerTwo.IsEmpty()) {
 		GetPlayerTwoNameList().SetWindowText(strPlayerTwo);
 	}
 
@@ -156,7 +145,7 @@ BOOL CPlayerNamesDlg::OnInitDialog()
 
 	OnTwoPlayerGame();
 
-	return FALSE;  
+	return FALSE;
 }
 
 VOID CPlayerNamesDlg::OnTwoPlayerGame()
@@ -168,12 +157,9 @@ VOID CPlayerNamesDlg::OnTwoPlayerGame()
 	GetPlayerTwoNameList().GetWindowText(strPlayerTwo);
 
 	BOOL fError = (strPlayerTwo == m_lpszComputerName);
-	if (fIsChecked && fError)
-	{
+	if (fIsChecked && fError) {
 		GetPlayerTwoNameList().SetCurSel(CB_ERR);
-	}
-	else if (!fIsChecked)
-	{
+	} else if (!fIsChecked) {
 		GetPlayerTwoNameList().SetWindowText(m_lpszComputerName);
 	}
 
@@ -183,7 +169,7 @@ VOID CPlayerNamesDlg::OnTwoPlayerGame()
 VOID CPlayerNamesDlg::OnOK()
 {
 	CString strPlayerOneName, strPlayerTwoName;
-	
+
 	GetPlayerOneNameList().GetWindowText(strPlayerOneName);
 	GetPlayerTwoNameList().GetWindowText(strPlayerTwoName);
 
@@ -191,26 +177,22 @@ VOID CPlayerNamesDlg::OnOK()
 	strPlayerOneName.TrimRight();
 	strPlayerTwoName.TrimLeft();
 	strPlayerTwoName.TrimRight();
-		
-	if (strPlayerOneName.IsEmpty() || strPlayerTwoName.IsEmpty())
-	{
+
+	if (strPlayerOneName.IsEmpty() || strPlayerTwoName.IsEmpty()) {
 		AfxMessageBox(_T("You must fill in both player names."));
 		return;
 	}
 
-	if (strPlayerOneName == strPlayerTwoName)
-	{
+	if (strPlayerOneName == strPlayerTwoName) {
 		AfxMessageBox(_T("Player One and Player Two names may not be identical."));
 		return;
 	}
-	
-	if (strPlayerOneName != m_lpszUserName && strPlayerOneName != m_lpszComputerName)
-	{
+
+	if (strPlayerOneName != m_lpszUserName && strPlayerOneName != m_lpszComputerName) {
 		m_pPlayers->AddPlayer(strPlayerOneName);
 	}
 
-	if (strPlayerTwoName != m_lpszUserName && strPlayerTwoName != m_lpszComputerName)
-	{
+	if (strPlayerTwoName != m_lpszUserName && strPlayerTwoName != m_lpszComputerName) {
 		m_pPlayers->AddPlayer(strPlayerTwoName);
 	}
 
@@ -223,7 +205,7 @@ VOID CPlayerNamesDlg::OnOK()
 	m_pDoc->SetPlayMode(dwValue == 1 ? PLAYER_VS_PLAYER : PLAYER_VS_COMPUTER);
 
 	CPenteApp::UpdateRegistryInformation(_T("option"), _T("TwoPlayerGame"), (LPBYTE)&dwValue, REG_DWORD);
-	
+
 	CDialog::OnOK();
 }
 

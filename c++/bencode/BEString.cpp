@@ -10,7 +10,7 @@
 #include "BEString.h"
 
 /////////////////////////////////////////////////////////////////////////////
-String::String(LPBYTE pdata, INT len) 
+String::String(LPBYTE pdata, INT len)
 {
 	nlen = len;
 	data = new BYTE[len + 1];	// for null terminator
@@ -20,7 +20,7 @@ String::String(LPBYTE pdata, INT len)
 
 /////////////////////////////////////////////////////////////////////////////
 String::String(const String &str)
- : data(NULL), nlen(0)
+		: data(NULL), nlen(0)
 {
 	*this = str;
 }

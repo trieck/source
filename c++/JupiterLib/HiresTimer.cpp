@@ -42,7 +42,7 @@ HiresTimer::operator string() const
 	if (ticksPerSecond) {
 		INT64 tstart = LI2INT64((PLARGE_INTEGER)&start);
 		INT64 tend = LI2INT64(&end);
-		INT64 ntime = (tend - tstart) / (ticksPerSecond / 100);		
+		INT64 ntime = (tend - tstart) / (ticksPerSecond / 100);
 
 		int hours = (ntime / 100) / 3600;
 		int minutes = ((ntime / 100) % 3600) / 60;
@@ -59,7 +59,7 @@ HiresTimer::operator string() const
 			sprintf(buf, "%2d.%02d seconds", seconds, hundreths);
 	}
 
-    return buf;
+	return buf;
 }
 
 /////////////////////////////////////////////////////////////////////////////

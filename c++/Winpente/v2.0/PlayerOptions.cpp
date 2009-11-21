@@ -1,6 +1,6 @@
 /*------------------------------------------
-	Module Name	:	PlayerOptions.cpp	
-	Author		:	Thomas A. Rieck 
+	Module Name	:	PlayerOptions.cpp
+	Author		:	Thomas A. Rieck
 	Purpose		:	Player Options Dialog
 					implementation
 	Date		:	09/01/1997
@@ -34,9 +34,9 @@ BOOL CPlayerOptionsDlg :: OnInitDialog()
 	CPenteDoc* pDoc = (CPenteDoc*)(pFrame->GetActiveDocument());
 	ASSERT_VALID(pDoc);
 
-	UINT nSelection = (pDoc->GetPlayMode() == PLAYER_VS_PLAYER ? 
-						IDC_PLAYERVSPLAYER : IDC_PLAYERVSCOMPUTER);
-	
+	UINT nSelection = (pDoc->GetPlayMode() == PLAYER_VS_PLAYER ?
+	                   IDC_PLAYERVSPLAYER : IDC_PLAYERVSCOMPUTER);
+
 	CheckDlgButton(nSelection, 1);
 
 	return CDialog::OnInitDialog();

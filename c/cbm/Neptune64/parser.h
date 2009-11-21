@@ -26,14 +26,14 @@
 /* lexical token types */
 typedef enum {
 	UNDEF = 0,
-	STR,			
+	STR,
 	NUM,
-	LPAREN = '(',	
-	RPAREN = ')',	
+	LPAREN = '(',
+	RPAREN = ')',
 	COMMA = ',',
-	POUND = '#'	
+	POUND = '#'
 } TokenType;
-#define MAXTOK 80 
+#define MAXTOK 80
 typedef struct {
 	TokenType type;
 	char value[MAXTOK];

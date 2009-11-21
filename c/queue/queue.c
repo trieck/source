@@ -12,14 +12,13 @@
  * allocate a queue
  *
  */
-struct queue* qalloc()
-{
+struct queue* qalloc() {
 	struct queue *q = (struct queue*)malloc(sizeof(struct queue));
 	q->head = 0;
 	return q;
 }
 
-/* 
+/*
  * put an item on the queue
  *
  */
@@ -71,7 +70,7 @@ void *qget(struct queue *q)
 	return pv;
 }
 
-/* 
+/*
  * free a queue
  *
  */

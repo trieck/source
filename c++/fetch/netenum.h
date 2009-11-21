@@ -17,8 +17,7 @@ class NetResourceEnum;
 typedef std::auto_ptr<NetResourceEnum> LPNETRESOURCEENUM;
 
 /////////////////////////////////////////////////////////////////////////////
-class NetResourceEnum : public NETRESOURCE
-{
+class NetResourceEnum : public NETRESOURCE {
 // Construction / Destruction
 protected:
 	NetResourceEnum(LPNETRESOURCE);
@@ -44,7 +43,8 @@ private:
 };
 /////////////////////////////////////////////////////////////////////////////
 
-inline DWORD NetResourceEnum::count() const {
+inline DWORD NetResourceEnum::count() const
+{
 	return m_buffers;
 }
 

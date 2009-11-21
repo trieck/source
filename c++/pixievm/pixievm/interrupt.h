@@ -11,12 +11,12 @@
 /////////////////////////////////////////////////////////////////////////////
 // Types of interrupt lines
 enum cpu_int {
-    IK_NONE		= 0,
-    IK_NMI		= 1 << 0,
-    IK_IRQ		= 1 << 1,
-    IK_RESET	= 1 << 2,
+	IK_NONE		= 0,
+	IK_NMI		= 1 << 0,
+	IK_IRQ		= 1 << 1,
+	IK_RESET	= 1 << 2,
 	IK_TRAP		= 1 << 3,
-    IK_MONITOR	= 1 << 4
+	IK_MONITOR	= 1 << 4
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -25,16 +25,22 @@ public:
 	interrupt_st();
 	virtual ~interrupt_st();
 
-	int getPending() const { return pending; }
-	void setPending(int p) { pending |= p; }
-	void clearPending(int p) { pending &= ~p; }
+	int getPending() const {
+		return pending;
+	}
+	void setPending(int p) {
+		pending |= p;
+	}
+	void clearPending(int p) {
+		pending &= ~p;
+	}
 	void setTrap(LPTRAPHANDLER handler, void *data);
 
 	void handleTrap();
 
 private:
 	/* pending interrupt */
-	int pending;	
+	int pending;
 
 	/* trap handler */
 	LPTRAPHANDLER trap;

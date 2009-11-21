@@ -46,9 +46,9 @@ typedef PPSYMBOL SymbolTable;
 SymbolTable mksymtab(void);
 void freesymtab(SymbolTable table);
 PSYMBOL syminsert(SymbolTable table, const char *name, int type,
-				  int subtype, const char *val);
+                  int subtype, const char *val);
 PSYMBOL syminsertf(SymbolTable table, const char *name, int type,
-				   int subtype, double val);
+                   int subtype, double val);
 PSYMBOL symlookup(SymbolTable table, const char *name);
 void symfree(PSYMBOL sym);
 PSYMBOL symcopy(PSYMBOL src);

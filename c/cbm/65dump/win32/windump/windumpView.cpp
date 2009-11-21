@@ -83,7 +83,7 @@ void WindumpView::OnStyleChanged(int nStyleType, LPSTYLESTRUCT lpStyleStruct)
 {
 }
 
-BOOL WindumpView::OnEraseBkgnd(CDC* pDC) 
+BOOL WindumpView::OnEraseBkgnd(CDC* pDC)
 {
 	CRect rc;
 	pDC->GetClipBox(rc);

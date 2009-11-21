@@ -21,7 +21,7 @@
 #include "common.h"
 #include "label.h"
 static LabelTable labelalloc(void);
-/* 
+/*
  * allocate a label
  */
 LabelTable labelalloc(void)
@@ -44,11 +44,11 @@ void labelfree(LabelTable table)
 	}
 }
 
-/* 
+/*
  * insert a label
  */
 label *labelinsert(LabelTable * table, const char *name,
-				   const byte * mem, int isrel)
+                   const byte * mem, int isrel)
 {
 	/* insert at front of list */
 	label *pthis = labelalloc();

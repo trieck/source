@@ -37,24 +37,24 @@ void MultirowView::OnDraw(CDC* pDC)
 	int end = min(m_nLines, (rc.bottom + m_szChar.cy - 1) / m_szChar.cy);
 
 	for (int i = begin; i < end; i++) {
-		int cy = m_szChar.cy * i;		
+		int cy = m_szChar.cy * i;
 		if (i == m_Highlight) {
-			pDC->FillSolidRect(0, cy, rc.right, m_szChar.cy, 
-				RGB(0xFF, 0xC0, 0xC0));
+			pDC->FillSolidRect(0, cy, rc.right, m_szChar.cy,
+			                   RGB(0xFF, 0xC0, 0xC0));
 
 			CPen *pOldPen2 = pDC->SelectObject(&m_HighlightPen);
 			pDC->MoveTo(0, cy);
-			pDC->LineTo(rc.right, cy);	
+			pDC->LineTo(rc.right, cy);
 			pDC->LineTo(rc.right, cy + m_szChar.cy - 1);
 			pDC->LineTo(0, cy + m_szChar.cy - 1);
 			pDC->LineTo(0, cy);
-            pDC->SelectObject(pOldPen2);
+			pDC->SelectObject(pOldPen2);
 		} else if (i != m_Highlight + 1) {
 			pDC->MoveTo(0, cy);
 			pDC->LineTo(rc.right, cy);
 		}
 	}
-	pDC->SelectObject(pOldPen);	
+	pDC->SelectObject(pOldPen);
 }
 
 // MultirowView diagnostics
@@ -93,9 +93,9 @@ void MultirowView::OnLButtonDown(UINT nFlags, CPoint point)
 	InvalidateHighlightRect(TRUE);	// erase old region
 
 	m_Highlight = point.y / m_szChar.cy;
-	
+
 	InvalidateHighlightRect();	// erase new region
-	
+
 	BigScrollView::OnLButtonDown(nFlags, point);
 }
 
@@ -109,10 +109,10 @@ void MultirowView::InvalidateHighlightRect(BOOL clear)
 		rcInvalid.top = m_szChar.cy * m_Highlight - m_ScrollPos.y;
 		rcInvalid.right = rcInvalid.left + rcClient.Width();
 		rcInvalid.bottom = rcInvalid.top + m_szChar.cy + 1;
-		
+
 		if (clear) m_Highlight = -1;	// erase
 
-        InvalidateRect(&rcInvalid);
+		InvalidateRect(&rcInvalid);
 		UpdateWindow();
 	}
 }

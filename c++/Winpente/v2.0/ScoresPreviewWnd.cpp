@@ -35,10 +35,10 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CScoresPreviewWnd message handlers
 
-void CScoresPreviewWnd::OnPaint() 
+void CScoresPreviewWnd::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
-	
+
 	CScoresPreviewFrame * pFrame= (CScoresPreviewFrame*)GetParentFrame();
 	ASSERT_VALID(pFrame);
 
@@ -74,7 +74,7 @@ VOID CScoresPreviewWnd::DrawPage(CDC * pDC, INT cxPage, INT cyPage)
 	// Create a brush using window color
 	CBrush aBrush(::GetSysColor(COLOR_WINDOW));
 	CBrush * pOldBrush = pDC->SelectObject(&aBrush);
-	
+
 	pDC->Rectangle(0, 0, cxPage, cyPage);
 
 	// Clean up
@@ -84,31 +84,30 @@ VOID CScoresPreviewWnd::DrawPage(CDC * pDC, INT cxPage, INT cyPage)
 	DrawData(pDC, cxPage, cyPage);
 }
 
-BOOL CScoresPreviewWnd::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL CScoresPreviewWnd::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.style		= WS_VISIBLE | WS_CHILD | WS_CLIPSIBLINGS | WS_BORDER;
 	cs.dwExStyle	= WS_EX_OVERLAPPEDWINDOW;
 
 	cs.lpszClass = AfxRegisterWndClass(
-					CS_HREDRAW | CS_VREDRAW | 
-					CS_SAVEBITS | CS_BYTEALIGNCLIENT | CS_BYTEALIGNWINDOW,		// Class Style
-					NULL,														// No Cursor
-					NULL,														// No background brush										
-					NULL);														// No Icon		
+	                   CS_HREDRAW | CS_VREDRAW |
+	                   CS_SAVEBITS | CS_BYTEALIGNCLIENT | CS_BYTEALIGNWINDOW,		// Class Style
+	                   NULL,														// No Cursor
+	                   NULL,														// No background brush
+	                   NULL);														// No Icon
 
 	ASSERT(cs.lpszClass);
 
 	return CWnd::PreCreateWindow(cs);
 }
 
-int CScoresPreviewWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CScoresPreviewWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
 	// Create the font
-	if (!(m_Font.CreatePointFont(80, _T("Tahoma"))))
-	{
+	if (!(m_Font.CreatePointFont(80, _T("Tahoma")))) {
 		return -1;
 	}
 

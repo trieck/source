@@ -17,7 +17,7 @@ int _tmain(int argc, TCHAR *argv[])
 		return 1;
 	}
 	len = GetShortPathName(argv[1], buff, sizeof(buff));
-	if (len == 0) 
+	if (len == 0)
 		return 1;
 	_tprintf(_T("%s\n"), buff);
 	return 0;

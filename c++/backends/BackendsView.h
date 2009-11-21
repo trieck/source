@@ -14,8 +14,7 @@
 #include <afxext.h>
 #endif
 
-class BackendsView : public CFormView
-{
+class BackendsView : public CFormView {
 protected:
 	BackendsView();           // protected constructor used by dynamic creation
 	DECLARE_DYNCREATE(BackendsView)
@@ -41,9 +40,9 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(BackendsView)
-	public:
+public:
 	virtual void OnInitialUpdate();
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
 	//}}AFX_VIRTUAL

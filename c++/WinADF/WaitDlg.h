@@ -3,8 +3,7 @@
 
 // WaitDlg dialog
 
-class WaitDlg : public CDialog
-{
+class WaitDlg : public CDialog {
 public:
 	DECLARE_DYNAMIC(WaitDlg)
 	WaitDlg(CWnd* pParent = NULL);   // standard constructor
@@ -14,18 +13,18 @@ public:
 // Dialog Data
 	enum { IDD = IDD_WAIT };
 
-	void SetCreateParams(uint32_t size, 
-		const CString &path, 
-		const CString &label, 
-		uint32_t flags,
-		bool boot);
+	void SetCreateParams(uint32_t size,
+	                     const CString &path,
+	                     const CString &label,
+	                     uint32_t flags,
+	                     bool boot);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
 private:
 	CProgressCtrl m_progress;
-protected:	
+protected:
 public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnNcDestroy();

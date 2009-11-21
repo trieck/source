@@ -51,7 +51,7 @@ END_MESSAGE_MAP()
 // TorrentView construction/destruction
 
 TorrentView::TorrentView()
- : m_BinaryView(FALSE), m_DateView(FALSE)
+		: m_BinaryView(FALSE), m_DateView(FALSE)
 {
 }
 
@@ -61,9 +61,9 @@ TorrentView::~TorrentView()
 
 BOOL TorrentView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style |= 
-		TVS_HASBUTTONS | TVS_HASLINES | TVS_FULLROWSELECT | TVS_INFOTIP
-		| TVS_LINESATROOT | TVS_SHOWSELALWAYS;
+	cs.style |=
+	    TVS_HASBUTTONS | TVS_HASLINES | TVS_FULLROWSELECT | TVS_INFOTIP
+	    | TVS_LINESATROOT | TVS_SHOWSELALWAYS;
 
 	return CTreeView::PreCreateWindow(cs);
 }
@@ -123,10 +123,10 @@ TorrentDoc* TorrentView::GetDocument() // non-debug version is inline
 /////////////////////////////////////////////////////////////////////////////
 // TorrentView message handlers
 
-void TorrentView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
+void TorrentView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
 	CTreeCtrl &tree = GetTreeCtrl();
-	tree.DeleteAllItems();	
+	tree.DeleteAllItems();
 
 	TorrentDoc *pdoc = GetDocument();
 	LPDICTIONARY torrent = pdoc->GetTorrent();
@@ -134,11 +134,11 @@ void TorrentView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		InsertDict(TVI_ROOT, torrent);
 }
 
-int TorrentView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int TorrentView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CTreeView::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
+
 	if (!m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR8, 0, 4)) {
 		TRACE0("Could not create image list.\n");
 		return -1;
@@ -150,14 +150,14 @@ int TorrentView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	tree.SetImageList(&m_ImageList, TVSIL_NORMAL);
 
 	OnSettingChange(0, 0);
-	
+
 	return 0;
 }
 
-void TorrentView::OnItemExpanding(NMHDR* pNMHDR, LRESULT* pResult) 
+void TorrentView::OnItemExpanding(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
-		
+
 	OnExpanding(&pNMTreeView->itemNew);
 
 	*pResult = 0;
@@ -171,7 +171,7 @@ void TorrentView::OnExpanding(LPTVITEM item)
 
 	CWaitCursor cursor;
 	LPTORRENTOBJECT pitem = (LPTORRENTOBJECT)item->lParam;
-	if (pitem != NULL) 
+	if (pitem != NULL)
 		InsertItem(item->hItem, pitem);
 }
 
@@ -196,14 +196,14 @@ void TorrentView::InsertItem(HTREEITEM hParent, LPTORRENTOBJECT Object)
 void TorrentView::InsertDict(HTREEITEM hParent, LPDICTIONARY d)
 {
 	CTreeCtrl &tree = GetTreeCtrl();
-	
+
 	TV_INSERTSTRUCT tvis;
 	LPTORRENTOBJECT element;
 	tvis.hParent = hParent;
 	tvis.hInsertAfter = hParent;
-	tvis.itemex.mask = TVIF_CHILDREN | TVIF_TEXT | TVIF_PARAM 
-		| TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-		
+	tvis.itemex.mask = TVIF_CHILDREN | TVIF_TEXT | TVIF_PARAM
+	                   | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+
 	KeyVec keys = d->GetKeys();
 	KeyVec::const_iterator it = keys.begin();
 	for ( ; it != keys.end(); it++) {
@@ -212,22 +212,22 @@ void TorrentView::InsertDict(HTREEITEM hParent, LPDICTIONARY d)
 
 		switch (element->GetElementType()) {
 		case ET_DICT:
-			tvis.itemex.iImage = tvis.itemex.iSelectedImage = 0;	
+			tvis.itemex.iImage = tvis.itemex.iSelectedImage = 0;
 			tvis.itemex.cChildren = 1;
 			break;
 		case ET_LIST:
-			tvis.itemex.iImage = tvis.itemex.iSelectedImage = 1;	
+			tvis.itemex.iImage = tvis.itemex.iSelectedImage = 1;
 			tvis.itemex.cChildren = 1;
 			break;
 		case ET_STRING:
-			tvis.itemex.iImage = tvis.itemex.iSelectedImage = 2;	
+			tvis.itemex.iImage = tvis.itemex.iSelectedImage = 2;
 			tvis.itemex.cChildren = 0;
 			break;
 		case ET_INTEGER:
-			tvis.itemex.iImage = tvis.itemex.iSelectedImage = 3;	
+			tvis.itemex.iImage = tvis.itemex.iSelectedImage = 3;
 			tvis.itemex.cChildren = 0;
 			break;
-		}		
+		}
 
 		tvis.itemex.pszText = (LPSTR)(LPCSTR)*it;
 		tvis.itemex.lParam = (LPARAM)element;
@@ -240,10 +240,10 @@ void TorrentView::InsertDict(HTREEITEM hParent, LPDICTIONARY d)
 void TorrentView::InsertList(HTREEITEM hParent, LPLIST l)
 {
 	CTreeCtrl &tree = GetTreeCtrl();
-	
+
 	for (int i = 0; i < l->size(); i++) {
 		InsertListItem(hParent, l->GetAt(i));
-	}		
+	}
 }
 
 void TorrentView::InsertListItem(HTREEITEM hParent, LPTORRENTOBJECT Object)
@@ -273,18 +273,18 @@ void TorrentView::InsertInt(HTREEITEM hParent, LPINTEGER i)
 	TV_INSERTSTRUCT tvis;
 	tvis.hParent = hParent;
 	tvis.hInsertAfter = hParent;
-	tvis.itemex.mask = TVIF_TEXT | TVIF_PARAM | TVIF_IMAGE 
-		| TVIF_SELECTEDIMAGE;
-	tvis.itemex.iImage = tvis.itemex.iSelectedImage = 3;	
+	tvis.itemex.mask = TVIF_TEXT | TVIF_PARAM | TVIF_IMAGE
+	                   | TVIF_SELECTEDIMAGE;
+	tvis.itemex.iImage = tvis.itemex.iSelectedImage = 3;
 
 	CTreeCtrl &tree = GetTreeCtrl();
-	
+
 	CString s;
 	s.Format("%I64d", (__int64)*i);
 
 	tvis.itemex.pszText = (LPSTR)(LPCSTR)s;
 	tvis.itemex.lParam = (LPARAM)i;
-	tree.InsertItem(&tvis);	
+	tree.InsertItem(&tvis);
 }
 
 void TorrentView::InsertString(HTREEITEM hParent, LPSTRING s)
@@ -292,14 +292,14 @@ void TorrentView::InsertString(HTREEITEM hParent, LPSTRING s)
 	TV_INSERTSTRUCT tvis;
 	tvis.hParent = hParent;
 	tvis.hInsertAfter = hParent;
-	tvis.itemex.mask = TVIF_TEXT | TVIF_PARAM | TVIF_IMAGE 
-		| TVIF_SELECTEDIMAGE;
-	tvis.itemex.iImage = tvis.itemex.iSelectedImage = 2;	
+	tvis.itemex.mask = TVIF_TEXT | TVIF_PARAM | TVIF_IMAGE
+	                   | TVIF_SELECTEDIMAGE;
+	tvis.itemex.iImage = tvis.itemex.iSelectedImage = 2;
 	tvis.itemex.pszText = (LPSTR)(LPCSTR)*s;
 	tvis.itemex.lParam = (LPARAM)s;
 
 	CTreeCtrl &tree = GetTreeCtrl();
-	tree.InsertItem(&tvis);	
+	tree.InsertItem(&tvis);
 }
 
 void TorrentView::AddImages()
@@ -307,15 +307,15 @@ void TorrentView::AddImages()
 	int nimages = sizeof(images) / sizeof(UINT);
 	for (int i = 0; i < nimages; i++) {
 		HICON hIcon = (HICON)::LoadImage(AfxGetResourceHandle(),
-			MAKEINTRESOURCE(images[i]),
-			IMAGE_ICON,
-			16, 16,
-			LR_LOADTRANSPARENT | LR_SHARED);
+		                                 MAKEINTRESOURCE(images[i]),
+		                                 IMAGE_ICON,
+		                                 16, 16,
+		                                 LR_LOADTRANSPARENT | LR_SHARED);
 		ASSERT(hIcon != NULL);
 		m_ImageList.Add(hIcon);
 	}
 }
-void TorrentView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult) 
+void TorrentView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 
@@ -323,11 +323,11 @@ void TorrentView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 		return;
 
 	HTREEITEM hItem = pNMTreeView->itemNew.hItem;
-	
+
 	CTreeCtrl &tree = GetTreeCtrl();
 	CString text = tree.GetItemText(hItem);
 
-	LPTORRENTOBJECT pitem = (LPTORRENTOBJECT)tree.GetItemData(hItem);	
+	LPTORRENTOBJECT pitem = (LPTORRENTOBJECT)tree.GetItemData(hItem);
 	AutoSwap(pitem);
 
 	GetDocument()->UpdateAllViews(this, m_DateView, pitem);
@@ -335,26 +335,26 @@ void TorrentView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void TorrentView::OnUpdateBinaryView(CCmdUI* pCmdUI) 
+void TorrentView::OnUpdateBinaryView(CCmdUI* pCmdUI)
 {
 	CTreeCtrl &tree = GetTreeCtrl();
 	HTREEITEM hItem = tree.GetSelectedItem();
 	if (hItem != NULL) {
 		LPTORRENTOBJECT pitem = (LPTORRENTOBJECT)tree.GetItemData(hItem);
 		if (pitem && pitem->GetElementType() == ET_STRING) {
-			pCmdUI->Enable(TRUE);			
+			pCmdUI->Enable(TRUE);
 			pCmdUI->SetRadio(m_BinaryView);
 		} else {
 			pCmdUI->Enable(FALSE);
 			pCmdUI->SetRadio(FALSE);
-		}		
+		}
 	} else {
 		pCmdUI->Enable(FALSE);
 		pCmdUI->SetRadio(FALSE);
-	}		
+	}
 }
 
-void TorrentView::OnBinaryView() 
+void TorrentView::OnBinaryView()
 {
 	m_BinaryView = !m_BinaryView;
 
@@ -364,26 +364,26 @@ void TorrentView::OnBinaryView()
 	Reselect();
 }
 
-void TorrentView::OnUpdateDateView(CCmdUI* pCmdUI) 
+void TorrentView::OnUpdateDateView(CCmdUI* pCmdUI)
 {
 	CTreeCtrl &tree = GetTreeCtrl();
 	HTREEITEM hItem = tree.GetSelectedItem();
 	if (hItem != NULL) {
 		LPTORRENTOBJECT pitem = (LPTORRENTOBJECT)tree.GetItemData(hItem);
 		if (pitem && pitem->GetElementType() == ET_INTEGER) {
-			pCmdUI->Enable(TRUE);			
+			pCmdUI->Enable(TRUE);
 			pCmdUI->SetRadio(m_DateView);
 		} else {
 			pCmdUI->Enable(FALSE);
 			pCmdUI->SetRadio(FALSE);
-		}		
+		}
 	} else {
 		pCmdUI->Enable(FALSE);
 		pCmdUI->SetRadio(FALSE);
-	}		
+	}
 }
 
-void TorrentView::OnDateView() 
+void TorrentView::OnDateView()
 {
 	m_DateView = !m_DateView;
 
@@ -397,7 +397,7 @@ void TorrentView::Reselect()
 	if (hItem == NULL) return;
 
 	LPTORRENTOBJECT pitem = (LPTORRENTOBJECT)tree.GetItemData(hItem);
-	
+
 	GetDocument()->UpdateAllViews(this, m_DateView, pitem);
 }
 
@@ -408,8 +408,8 @@ void TorrentView::AutoSwap(LPTORRENTOBJECT pitem)
 	// auto swap for non-string binary view
 	if (pitem != NULL && pitem->GetElementType() != ET_STRING) {
 		if (m_BinaryView) {
-			m_BinaryView = FALSE;			
-			pFrame->SwapViews();	
+			m_BinaryView = FALSE;
+			pFrame->SwapViews();
 		}
 	}
 
@@ -451,7 +451,7 @@ LRESULT TorrentView::OnSettingChange(WPARAM wParam, LPARAM lParam)
 		COLORREF textColor = pApp->GetIntSetting("ui_text_color");
 		tree.SetTextColor(textColor);
 	}
-	
+
 	tree.RedrawWindow();
 
 	return 0;

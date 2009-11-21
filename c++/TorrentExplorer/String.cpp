@@ -39,7 +39,7 @@ String::~String()
 {
 }
 
-String &String::operator =(const String &s) 
+String &String::operator =(const String &s)
 {
 	if (this != &s) {
 		data = s.data;

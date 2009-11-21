@@ -10,8 +10,7 @@
 #endif // _MSC_VER > 1000
 
 
-class TorrentDoc : public CDocument
-{
+class TorrentDoc : public CDocument {
 protected: // create from serialization only
 	TorrentDoc();
 	DECLARE_DYNCREATE(TorrentDoc)
@@ -25,13 +24,15 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(TorrentDoc)
-	public:
+public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 	virtual void DeleteContents();
 	//}}AFX_VIRTUAL
 
-	LPDICTIONARY GetTorrent() const { return m_pTorrent; }
+	LPDICTIONARY GetTorrent() const {
+		return m_pTorrent;
+	}
 
 // Implementation
 public:

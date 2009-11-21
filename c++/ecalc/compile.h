@@ -13,7 +13,7 @@
 //					expr '|' comp-expr
 //					comp-expr
 //
-//	comp-expr:		comp-expr '<' shift-expr 
+//	comp-expr:		comp-expr '<' shift-expr
 //					comp-expr '>' shift-expr
 //					comp-expr '<=' shift-expr
 //					comp-expr '>=' shift-expr
@@ -25,26 +25,26 @@
 //					shift-expr '>>' add-expr
 //					add-expr
 //
-//	add-expr :=		add-expr '+' mult-expr			
-//					add-expr '-' mult-expr				
+//	add-expr :=		add-expr '+' mult-expr
+//					add-expr '-' mult-expr
 //					mult-expr
-//					
+//
 //	mult-expr :=	mult-expr '/' primary
 //					mult-expr '*' primary
 //					mult-expr '%' primary
 //					primary
 //
-//	primary :=		number					 
-//					name					
-//					arg	 
+//	primary :=		number
+//					name
+//					arg
 //					name '=' expr
 //					arg '=' expr
-//					'-' primary	
-//					'!' primary			
+//					'-' primary
+//					'!' primary
 //					'"' characters '"'
 //					'(' expr ')'
 //					'{' compstmt '}'
-//	
+//
 //	Copyright (c) 1999 Thomas A. Rieck
 //
 
@@ -53,7 +53,7 @@
 
 #define MAXTOK 256
 
-enum TokenType{
+enum TokenType {
 	UNDEF = 0,		/* undefined token */
 	STR,			/* string literal */
 	NUM,			/* number */
@@ -84,8 +84,7 @@ typedef struct {
 } Token;
 
 /////////////////////////////////////////////////////////////////////////////
-class Compile
-{
+class Compile {
 public:
 // Construction / Destruction
 	Compile();
@@ -143,7 +142,7 @@ protected:
 	Token gettok(const char**);
 	Token lookahead();
 private:
-	const char** ppin;	// address of input pointer 
+	const char** ppin;	// address of input pointer
 	Token token;		// current token
 	bool indef;			// in a function / procedure definition
 };

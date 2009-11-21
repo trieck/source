@@ -25,12 +25,11 @@ typedef struct tagTRAJECTORYLIST**	PPTRAJECTORYLIST;
 
 struct tagTRAJECTORYLIST					// Linked list structure for
 {											// Trajectories for Success
-	INT					nOffset;			// Offset from beginning of path 
+	INT					nOffset;			// Offset from beginning of path
 	LPTRAJECTORYLIST	pNextTrajectory;
 };
 
-typedef struct	// Path structure for pieces
-{
+typedef struct {	// Path structure for pieces
 	POINT				ptStart;		// Starting point of the path (Relative to a piece)
 	POINT				ptEnd;			// Ending point of the path (Relative to a piece)
 	LPTRAJECTORYLIST	pTrajectories;
@@ -60,7 +59,7 @@ VOID	BuildPieces(int aBoard[][19], PPPIECELIST ppHead);
 VOID	BuildPaths(int aBoard[][19], LPPIECELIST pPieces);
 VOID	BuildTrajectories(int aBoard[][19], LPPIECELIST pPiece, UINT nPath);
 BOOL	FindPathExtent(LPPATH pPath, LPPOINT ptExtent);
-BOOL	RelativePointsToAbsolute(LPPIECELIST pPieces, POINT ptExtents[2], UINT nPath, UINT nOffset);	
+BOOL	RelativePointsToAbsolute(LPPIECELIST pPieces, POINT ptExtents[2], UINT nPath, UINT nOffset);
 UINT	CheckMoveCapture(INT aBoard[][19], LPPIECELIST pPieces, LPPOINT pPoint);
 
 // Local Debug Functions

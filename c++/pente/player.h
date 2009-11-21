@@ -6,8 +6,7 @@
 #define __PLAYER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Player : public CObject
-{
+class Player : public CObject {
 // Construction / Destruction
 public:
 	Player();
@@ -16,7 +15,7 @@ public:
 
 // Interface
 	Player & operator = (const Player &);
-	
+
 	unsigned getCaptures() const;
 	bool addCapture();
 	bool addCaptures(uint8_t ncaptures);
@@ -36,17 +35,20 @@ private:
 typedef std::auto_ptr<Player> PlayerPtr;
 
 /////////////////////////////////////////////////////////////////////////////
-inline bool Player::isWinner() const {
+inline bool Player::isWinner() const
+{
 	return captures == MAX_CAPTURES;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline unsigned Player::getCaptures() const {
+inline unsigned Player::getCaptures() const
+{
 	return captures;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline bool Player::addCapture() {
+inline bool Player::addCapture()
+{
 	if (captures == MAX_CAPTURES)
 		return false;
 	++captures;
@@ -54,10 +56,11 @@ inline bool Player::addCapture() {
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline bool Player::addCaptures(uint8_t ncaptures) {
+inline bool Player::addCaptures(uint8_t ncaptures)
+{
 	if (captures == MAX_CAPTURES)
 		return false;
-	
+
 	captures = (captures + ncaptures) % (MAX_CAPTURES+1);
 
 	return true;

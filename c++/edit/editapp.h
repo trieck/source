@@ -9,8 +9,7 @@
 #define __EDITAPP_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class EditApp : public WinApp
-{
+class EditApp : public WinApp {
 // Construction / Destruction
 public:
 	EditApp();

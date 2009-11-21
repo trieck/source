@@ -19,7 +19,7 @@ string tempname()
 	char filename[MAX_PATH] = { 0 };
 
 	GetTempPath(MAX_PATH, path);
-	GetTempFileName(path, "", 0, filename); 
+	GetTempFileName(path, "", 0, filename);
 
 	return filename;
 }
@@ -27,44 +27,44 @@ string tempname()
 /////////////////////////////////////////////////////////////////////////////
 stringvec expand(const char* arg)
 {
-    stringvec doclist;
-    string dir = dirname(arg);
+	stringvec doclist;
+	string dir = dirname(arg);
 
-    struct _finddata_t file;
-    long h = _findfirst(arg, &file);
+	struct _finddata_t file;
+	long h = _findfirst(arg, &file);
 
-    if (h == -1)
-        return doclist;
+	if (h == -1)
+		return doclist;
 
-    do {
+	do {
 		if (file.attrib & _A_SUBDIR)
 			continue;
 
-        doclist.push_back(lower(dir + file.name));
-    } while (_findnext(h, &file) == 0);
+		doclist.push_back(lower(dir + file.name));
+	} while (_findnext(h, &file) == 0);
 
-    _findclose(h);
+	_findclose(h);
 
-    return doclist;
+	return doclist;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 stringvec rexpand(const char* arg)
 {
-    char patt[MAX_PATH + _MAX_FNAME + 1];
+	char patt[MAX_PATH + _MAX_FNAME + 1];
 
 	stringvec doclist, tmplist;
-    string dir = dirname(arg);
+	string dir = dirname(arg);
 	string pattern = arg;
 
 	string::size_type N = pattern.find_last_of('\\');
 	if (N != string::npos)
 		pattern = pattern.substr(++N);
-	
-    struct _finddata_t file;
-    long h = _findfirst(arg, &file);
 
-    if (h == -1) { // no pattern match try subdirectories 
+	struct _finddata_t file;
+	long h = _findfirst(arg, &file);
+
+	if (h == -1) { // no pattern match try subdirectories
 		sprintf(patt, "%s*", dir.c_str());
 		h = _findfirst(patt, &file);
 		if (h == -1)
@@ -77,11 +77,11 @@ stringvec rexpand(const char* arg)
 				continue;
 
 			if (file.attrib & _A_SUBDIR) {
-				sprintf(patt, "%s%s\\%s", dir.c_str(), file.name, 
-					pattern.c_str());
+				sprintf(patt, "%s%s\\%s", dir.c_str(), file.name,
+				        pattern.c_str());
 				tmplist = rexpand(patt);
-				doclist.insert(doclist.end(), tmplist.begin(), 
-					tmplist.end());
+				doclist.insert(doclist.end(), tmplist.begin(),
+				               tmplist.end());
 			}
 
 		} while (_findnext(h, &file) == 0);
@@ -90,29 +90,29 @@ stringvec rexpand(const char* arg)
 
 		return doclist;
 	}
-    
-    do {
+
+	do {
 		if (strcmp(file.name, ".") == 0)
 			continue;
 		if (strcmp(file.name, "..") == 0)
 			continue;
 
 		if (file.attrib & _A_SUBDIR) {
-			sprintf(patt, "%s%s\\%s", dir.c_str(), file.name, 
-				pattern.c_str());
+			sprintf(patt, "%s%s\\%s", dir.c_str(), file.name,
+			        pattern.c_str());
 			tmplist = rexpand(patt);
-			doclist.insert(doclist.end(), tmplist.begin(), 
-				tmplist.end());
+			doclist.insert(doclist.end(), tmplist.begin(),
+			               tmplist.end());
 			continue;
 		}
 
-        doclist.push_back(lower(dir + file.name));
+		doclist.push_back(lower(dir + file.name));
 
-    } while (_findnext(h, &file) == 0);
+	} while (_findnext(h, &file) == 0);
 
-    _findclose(h);
+	_findclose(h);
 
-    return doclist;
+	return doclist;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -121,8 +121,8 @@ string dirname(const char* path)
 	char drive[_MAX_DRIVE] = { 0 };
 	char dir[_MAX_PATH] = { 0 };
 
-    _splitpath(path, drive, dir, NULL, NULL);
-	
+	_splitpath(path, drive, dir, NULL, NULL);
+
 	return string(drive) + dir;
 }
 
@@ -144,7 +144,7 @@ string filename(const char* path)
 	char ext[_MAX_EXT] = { 0 };
 	char output[_MAX_FNAME + _MAX_EXT + 1];
 
-    _splitpath(path, NULL, NULL, filename, ext);
+	_splitpath(path, NULL, NULL, filename, ext);
 
 	sprintf(output, "%s%s", filename, ext);
 
@@ -161,8 +161,8 @@ string basename(const char* path)
 
 	string name = filename(path);
 
-    _splitpath(name.c_str(), drive, dir, file, NULL);
-	
+	_splitpath(name.c_str(), drive, dir, file, NULL);
+
 	sprintf(output, "%s%s%s", drive, dir, file);
 
 	return output;
@@ -172,8 +172,8 @@ string basename(const char* path)
 string extname(const char* path)
 {
 	char ext[_MAX_EXT] = { 0 };
-	
-    _splitpath(path, NULL, NULL, NULL, ext);
+
+	_splitpath(path, NULL, NULL, NULL, ext);
 
 	return ext;
 }
@@ -181,13 +181,13 @@ string extname(const char* path)
 /////////////////////////////////////////////////////////////////////////////
 string modulename()
 {
-    char path[_MAX_PATH + _MAX_FNAME + 1] = { 0 };
+	char path[_MAX_PATH + _MAX_FNAME + 1] = { 0 };
 
-	MEMORY_BASIC_INFORMATION mbi;   
+	MEMORY_BASIC_INFORMATION mbi;
 	VirtualQuery(programdir, &mbi, sizeof(mbi));
 
-    GetModuleFileName((HINSTANCE)mbi.AllocationBase, 
-		path, _MAX_PATH + _MAX_FNAME);
+	GetModuleFileName((HINSTANCE)mbi.AllocationBase,
+	                  path, _MAX_PATH + _MAX_FNAME);
 
 	return path;
 }
@@ -225,7 +225,7 @@ string trim(const char *str)
 string trim_left(const char *str)
 {
 	size_t len, idx;
-	
+
 	len = strlen(str);
 
 	for (idx = 0; idx < len; idx++) {
@@ -255,27 +255,27 @@ string comma(INT64 i)
 {
 	string output;
 
-    char buff[MAX_PATH];
-    sprintf(buff,"%I64u", i);
+	char buff[MAX_PATH];
+	sprintf(buff,"%I64u", i);
 
-    int n = strlen(buff);
+	int n = strlen(buff);
 
-    for (int j = n - 1, k = 1; j >= 0; j--, k++) {
-        output += buff[j];
-        if (k % 3 == 0 && j > 0 && j < n - 1)
-            output += ',';
-    }
+	for (int j = n - 1, k = 1; j >= 0; j--, k++) {
+		output += buff[j];
+		if (k % 3 == 0 && j > 0 && j < n - 1)
+			output += ',';
+	}
 
 	std::reverse(output.begin(), output.end());
 
-    return output;
+	return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string lower(const string & input)
 {
 	string output;
-	
+
 	size_t N = input.length();
 	output.resize(N);
 
@@ -290,7 +290,7 @@ string lower(const string & input)
 string upper(const string & input)
 {
 	string output;
-	
+
 	size_t N = input.length();
 	output.resize(N);
 
@@ -308,15 +308,15 @@ string lasterror()
 
 	char *pmsg = NULL;
 
-    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&pmsg, 0, NULL);
-	
+	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
+	              NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+	              (LPTSTR)&pmsg, 0, NULL);
+
 	if (pmsg != NULL) {
 		int N = strlen(pmsg);
-        if (N > 1 && pmsg[N - 1] == '\n')
+		if (N > 1 && pmsg[N - 1] == '\n')
 			pmsg[N - 1] = '\0';
- 
+
 		if (N > 1 && pmsg[N - 2] == '\r')
 			pmsg[N - 2] = '\0';
 
@@ -325,60 +325,60 @@ string lasterror()
 		LocalFree(pmsg);
 	}
 
-    return output;                     
+	return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string fileload(const string &file)
 {
-    // read in a file into a string using the "big gulp" method
-    int fd = open(file.c_str(), _O_RDONLY | _O_BINARY | _O_SEQUENTIAL);
+	// read in a file into a string using the "big gulp" method
+	int fd = open(file.c_str(), _O_RDONLY | _O_BINARY | _O_SEQUENTIAL);
 
 	if (fd == -1)
 		return "";
 
-    struct stat status;
-    fstat(fd, &status);
+	struct stat status;
+	fstat(fd, &status);
 
-    char* pbuf = new char[status.st_size + 1];
+	char* pbuf = new char[status.st_size + 1];
 
-    int nread = read(fd, pbuf, status.st_size);
-	
+	int nread = read(fd, pbuf, status.st_size);
+
 	pbuf[nread] = '\0';
 
 	string output = pbuf;
 	delete [] pbuf;
 
-    close(fd);
+	close(fd);
 
-    return output;
+	return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string xmlescape(const string &input)
 {
-    string output;
+	string output;
 
 	const char *pin = input.c_str();
 
-    while (*pin) {
+	while (*pin) {
 		if (*pin == '"') {
 			output += "&quot;";
-            pin++;
-        } else if (*pin == '<') { 
+			pin++;
+		} else if (*pin == '<') {
 			output += "&lt;";
 			pin++;
-        } else if (*pin == '>') { 
+		} else if (*pin == '>') {
 			output += "&gt;";
-            pin++;
-        } else if (*pin == '&') {
+			pin++;
+		} else if (*pin == '&') {
 			output += "&amp;";
-            pin++;
-	    } else {
-            output += *pin++;
-        }	
-    }
-	
+			pin++;
+		} else {
+			output += *pin++;
+		}
+	}
+
 	return output;
 }
 
@@ -387,7 +387,7 @@ string machinename()
 {
 	DWORD len = MAX_COMPUTERNAME_LENGTH;
 	char cname[MAX_COMPUTERNAME_LENGTH + 1];
-    
+
 	GetComputerName(cname, &len);
 
 	return cname;
@@ -397,12 +397,12 @@ string machinename()
 string format(const char *fmt, ...)
 {
 	va_list arglist;
-    va_start(arglist, fmt);
+	va_start(arglist, fmt);
 
-    char buf[8000];
-    vsprintf(buf, fmt, arglist);
+	char buf[8000];
+	vsprintf(buf, fmt, arglist);
 
-    va_end (arglist);
+	va_end (arglist);
 
 	return buf;
 }
@@ -413,9 +413,9 @@ string uni2ansi(const wchar_t *pwstr)
 	size_t N = wcslen(pwstr);
 
 	char *pstr = new char[N + 1];
-	
-	int result = ::WideCharToMultiByte(CP_ACP, 0, pwstr, -1, pstr, 
-		N + 1, NULL, NULL);
+
+	int result = ::WideCharToMultiByte(CP_ACP, 0, pwstr, -1, pstr,
+	                                   N + 1, NULL, NULL);
 	if (result == 0) {
 		delete [] pstr;
 		return "";
@@ -430,15 +430,15 @@ string uni2ansi(const wchar_t *pwstr)
 /////////////////////////////////////////////////////////////////////////////
 string uni2utf8(const wchar_t *pwstr)
 {
-	int N = ::WideCharToMultiByte(CP_UTF8, 0, pwstr, -1, NULL, 
-		0, NULL, NULL);
+	int N = ::WideCharToMultiByte(CP_UTF8, 0, pwstr, -1, NULL,
+	                              0, NULL, NULL);
 	if (N == 0)
 		return "";
 
 	char *pstr = new char[N];
 
-	int result = ::WideCharToMultiByte(CP_UTF8, 0, pwstr, -1, pstr, N, NULL, 
-		NULL);
+	int result = ::WideCharToMultiByte(CP_UTF8, 0, pwstr, -1, pstr, N, NULL,
+	                                   NULL);
 	if (result == 0) {
 		delete [] pstr;
 		return "";

@@ -68,7 +68,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // block constants
 
-#define BM_VALID			-1	/* valid bitmap */				
+#define BM_VALID			-1	/* valid bitmap */
 #define BM_INVALID			0	/* invalid bitmap */
 
 #define HT_SIZE				72	/* hash table size */
@@ -223,14 +223,14 @@ struct dirblock_t {
 /////////////////////////////////////////////////////////////////////////////
 // old file system data block structure
 struct ofsblock_t {
-	int32_t type;				/* primary block type = T_DATA */ 
+	int32_t type;				/* primary block type = T_DATA */
 	int32_t key;				/* pointer to file header block */
 	int32_t seqnum;				/* file data block number (first is 1) */
 	int32_t size;				/* data size (<= BSIZE-24) */
 	int32_t next;				/* next data block (0 for last) */
 	uint32_t checksum;			/* checksum */
 	uint8_t data[OFS_DBSIZE];	/* file data  */
-};	
+};
 
 /////////////////////////////////////////////////////////////////////////////
 // bitmap block structure
@@ -296,7 +296,7 @@ struct entryblock_t {
 	int32_t r1[2];
 	int32_t firstblock;			/* pointer to first data block */
 	uint32_t checksum;
-	int32_t tbl[HT_SIZE];	
+	int32_t tbl[HT_SIZE];
 	int32_t r2[2];
 	int32_t access;				/* bit0=del, 1=modif, 2=write, 3=read */
 	int32_t bytesize;

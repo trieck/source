@@ -9,10 +9,9 @@
 
 /////////////////////////////////////////////////////////////////////////////
 template <typename T>
-class Enumerator
-{
+class Enumerator {
 public:
-	Enumerator(const T &t) {		
+	Enumerator(const T &t) {
 		current = begin = t.begin();
 		end = t.end();
 	}

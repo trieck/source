@@ -33,7 +33,7 @@ void instruction (const Instr *p)
 		++pc;
 		return;
 	}
-	
+
 	switch (p->mode) {
 	case acc:
 		accumulator(p);
@@ -131,8 +131,8 @@ void absolute(const Instr *p)
 	word A;
 	if (!getword(A))
 		return;	/* EOF */
-	printf(" %.2x %.2x\t%s\t$%.4hx", 
-		lobyte(A), hibyte(A), *p->name, A);
+	printf(" %.2x %.2x\t%s\t$%.4hx",
+	       lobyte(A), hibyte(A), *p->name, A);
 	pc += 3;	/* opcode, address */
 }
 /*
@@ -143,8 +143,8 @@ void abslx(const Instr *p)
 	word A;
 	if (!getword(A))
 		return;	/* EOF */
-	printf(" %.2x %.2x\t%s\t$%.4hx, x", 
-		lobyte(A), hibyte(A), *p->name, A);
+	printf(" %.2x %.2x\t%s\t$%.4hx, x",
+	       lobyte(A), hibyte(A), *p->name, A);
 	pc += 3;	/* opcode, address */
 }
 /*
@@ -155,8 +155,8 @@ void absly(const Instr *p)
 	word A;
 	if (!getword(A))
 		return;	/* EOF */
-	printf(" %.2x %.2x\t%s\t$%.4hx, y", 
-		lobyte(A), hibyte(A), *p->name, A);
+	printf(" %.2x %.2x\t%s\t$%.4hx, y",
+	       lobyte(A), hibyte(A), *p->name, A);
 	pc += 3;	/* opcode, address */
 }
 /*
@@ -164,7 +164,7 @@ void absly(const Instr *p)
  */
 void relative(const Instr *p)
 {
-	/* 
+	/*
 	 * we must convert the relative address
 	 * to an absolute address for disassembly
 	 */
@@ -175,8 +175,8 @@ void relative(const Instr *p)
 	if (b < 0x80)
 		A = (word)(pc + 2 + b);
 	else A = (word)(pc + 2 - (0x100 - b));
-	printf(" %.2x \t\t%s\t$%.4hx", 
-		b, *p->name, A);
+	printf(" %.2x \t\t%s\t$%.4hx",
+	       b, *p->name, A);
 	pc += 2;	/* opcode, relative address */
 }
 /*
@@ -187,8 +187,8 @@ void indirect(const Instr *p)
 	word A;
 	if (!getword(A))
 		return;	/* EOF */
-	printf(" %.2x %.2x\t%s\t($%.4hx)", 
-		lobyte(A), hibyte(A), *p->name, A);
+	printf(" %.2x %.2x\t%s\t($%.4hx)",
+	       lobyte(A), hibyte(A), *p->name, A);
 	pc += 3;	/* opcode, address */
 }
 /*

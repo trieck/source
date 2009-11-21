@@ -1,5 +1,5 @@
 /*
- *	ASSEM.C : assembler	
+ *	ASSEM.C : assembler
  *
  * 	Copyright (C) 2001 Thomas A. Rieck <trieck@bellsouth.net>
  *
@@ -54,7 +54,7 @@ static void pseudo(void);
 static void defbyte(void);
 static void extrn(void);
 static void escape(const char *in, char *out, size_t len);
-/* 
+/*
  * assemble input file
  */
 void assemble()
@@ -97,7 +97,7 @@ void parse(void)
 				op(psymbol);
 			else
 				error("unexpected token \"%s\""
-					  " found at line %d.\n", token.value, lineno);
+				      " found at line %d.\n", token.value, lineno);
 			break;
 		case PSEUDO:
 			pseudo();
@@ -106,7 +106,7 @@ void parse(void)
 			return;
 		case UNDEF:
 			error("undefined token \"%s\" found at line %d.\n",
-				  token.value, lineno);
+			      token.value, lineno);
 			return;
 		default:
 			break;
@@ -115,7 +115,7 @@ void parse(void)
 	}
 }
 
-/* 
+/*
  * determine current opcode and generate code
  */
 void op(const Symbol * psym)
@@ -133,8 +133,8 @@ void op(const Symbol * psym)
 	error("invalid addressing mode found at line %d.\n", lineno);
 }
 
-/* 
- * does the input match the specified mode 
+/*
+ * does the input match the specified mode
  */
 int ismode(addrmode mode)
 {
@@ -415,12 +415,12 @@ void pseudo(void)
 	/* don't allow the redefinition of labels */
 	if (symlookup(table, token.value))
 		error("redefinition of label \"%s\" encountered"
-			  " at line %d.\n", token.value, lineno);
+		      " at line %d.\n", token.value, lineno);
 	/* insert the label into the symbol table */
 	linsert(table, token.value, getmem());
 }
 
-/* 
+/*
  * assemble byte(s) inline
  */
 void defbyte(void)
@@ -441,7 +441,7 @@ void defbyte(void)
 		break;
 	default:
 		error("expected numeric at byte definition"
-			  " at line %d.\n", lineno);
+		      " at line %d.\n", lineno);
 	}
 }
 
@@ -454,7 +454,7 @@ void extrn(void)
 	for (;;) {
 		if (token.type != STR) {
 			error("expected string at extern declaration"
-				  " at line %d.\n", token.value, lineno);
+			      " at line %d.\n", token.value, lineno);
 		}
 
 		/* insert into external list */
@@ -584,7 +584,7 @@ void escape(const char *in, char *out, size_t len)
 				break;
 			default:
 				error("unrecognized escape sequence '%c' at line %d.\n",
-					  in[1], lineno);
+				      in[1], lineno);
 				break;
 			}
 			in++;				/* skip escaped character */

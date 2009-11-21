@@ -20,16 +20,16 @@
 #define BACK_COLOR_CHANGE 	0
 #define GRID_COLOR_CHANGE 	1
 
-#define SQUARE_WIDTH		21	
+#define SQUARE_WIDTH		21
 #define SQUARE_HEIGHT		21
 
 #define PIECE_WIDTH			18	// Icon Width
 #define PIECE_HEIGHT		18	// Icon Height
 
-#define PLAYER_VS_PLAYER	0	
+#define PLAYER_VS_PLAYER	0
 #define PLAYER_VS_COMPUTER	1
 
-#define PLAYER_ONE_TURN		1	
+#define PLAYER_ONE_TURN		1
 #define PLAYER_TWO_TURN 	2
 
 #define ICON_HOFFSET 		2	// Horizontal Pixel Offset

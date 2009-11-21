@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////
 //
-//	INTERVAL.H 
+//	INTERVAL.H
 //
 //	Copyright (c) 2000 Rieck Enterprises
 //
@@ -11,13 +11,13 @@
 ///////////////////////////////////////////////////////////////////////
 // Interval enumeration
 typedef enum {
-    Unison = 0,
-    MinorSecond = 1,
-    MajorSecond = 2,
+	Unison = 0,
+	MinorSecond = 1,
+	MajorSecond = 2,
 	MinorThird = 3,
-    MajorThird = 4,
+	MajorThird = 4,
 	PerfectFourth = 5,
-    DiminishedFifth = 6,
+	DiminishedFifth = 6,
 	PerfectFifth = 7,
 	MinorSixth = 8,
 	MajorSixth = 9,

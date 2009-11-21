@@ -10,8 +10,7 @@
 #include "PieceBitmap.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class PenteBoard : public CObject
-{
+class PenteBoard : public CObject {
 // Construction / Destruction
 public:
 	DECLARE_SERIAL(PenteBoard);
@@ -49,7 +48,7 @@ public:
 	static CPoint getBoardSize();
 	static void getDimensions(CRect & rc);
 	static void getBoundingRect(CRect & rc);
-	
+
 	enum { DEFAULT_TABLE_COLOR		= 0x00003250 };
 	enum { DEFAULT_BOARD_COLOR		= 0x00D4F0FF };
 	enum { DEFAULT_GRID_COLOR		= 0xC0C0C0 };
@@ -74,14 +73,14 @@ private:
 	enum { squareSize = 21 };
 	enum { cxOffset = 2 };
 	enum { cyOffset = 2 };
-	
+
 	PieceBitmap bmPlayerOne, bmPlayerTwo;
 
 	CBrush bkgBrush;
 	CPen pen;
 	COLORREF bkgColor, gridColor;
 	Board *board;
-	
+
 	CRgn m_Region;
 	CDC m_MemDC;
 	CBitmap m_Bitmap;
@@ -90,41 +89,48 @@ private:
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
-inline CPoint PenteBoard::getBorderSizes() {
+inline CPoint PenteBoard::getBorderSizes()
+{
 	return CPoint(cxBorder, cyBorder);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline int PenteBoard::getSquareSize() {
+inline int PenteBoard::getSquareSize()
+{
 	return squareSize;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline CPoint PenteBoard::getBoardSize() {
+inline CPoint PenteBoard::getBoardSize()
+{
 	return CPoint(cxSquares, cySquares);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void PenteBoard::getDimensions(CRect & rc) {
+inline void PenteBoard::getDimensions(CRect & rc)
+{
 	rc.SetRectEmpty();
 	rc.right = squareSize * cxSquares;
 	rc.bottom = squareSize * cySquares;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void PenteBoard::getBoundingRect(CRect & rc) {
+inline void PenteBoard::getBoundingRect(CRect & rc)
+{
 	getDimensions(rc);
 	rc.right += cxBorder * 2;
 	rc.bottom += cyBorder * 2;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline COLORREF PenteBoard::getBackgroundColor() const {
+inline COLORREF PenteBoard::getBackgroundColor() const
+{
 	return bkgColor;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void PenteBoard::setBackgroundColor(COLORREF rgb) {
+inline void PenteBoard::setBackgroundColor(COLORREF rgb)
+{
 	bkgColor = rgb;
 	bkgBrush.DeleteObject();
 	bkgBrush.CreateSolidBrush(bkgColor);
@@ -132,12 +138,14 @@ inline void PenteBoard::setBackgroundColor(COLORREF rgb) {
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline COLORREF PenteBoard::getGridColor() const {
+inline COLORREF PenteBoard::getGridColor() const
+{
 	return gridColor;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void PenteBoard::setGridColor(COLORREF rgb) {
+inline void PenteBoard::setGridColor(COLORREF rgb)
+{
 	gridColor = rgb;
 	pen.DeleteObject();
 	pen.CreatePen(PS_SOLID, 0, gridColor);
@@ -145,22 +153,26 @@ inline void PenteBoard::setGridColor(COLORREF rgb) {
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void PenteBoard::setPlayerOneColor(COLORREF rgb) {
+inline void PenteBoard::setPlayerOneColor(COLORREF rgb)
+{
 	bmPlayerOne.setColor(rgb);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline void PenteBoard::setPlayerTwoColor(COLORREF rgb) {
+inline void PenteBoard::setPlayerTwoColor(COLORREF rgb)
+{
 	bmPlayerTwo.setColor(rgb);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline COLORREF PenteBoard::getPlayerOneColor() const {
+inline COLORREF PenteBoard::getPlayerOneColor() const
+{
 	return bmPlayerOne.getColor();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline COLORREF PenteBoard::getPlayerTwoColor() const {
+inline COLORREF PenteBoard::getPlayerTwoColor() const
+{
 	return bmPlayerTwo.getColor();
 }
 

@@ -16,8 +16,8 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(GeneralPage, CPropertyPage)
 
-GeneralPage::GeneralPage() 
- : CPropertyPage(GeneralPage::IDD), m_Dirty(FALSE)
+GeneralPage::GeneralPage()
+		: CPropertyPage(GeneralPage::IDD), m_Dirty(FALSE)
 {
 	//{{AFX_DATA_INIT(GeneralPage)
 	m_SaveWin = FALSE;
@@ -46,13 +46,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // GeneralPage message handlers
 
-void GeneralPage::OnSaveWin() 
+void GeneralPage::OnSaveWin()
 {
 	m_Dirty = TRUE;
-	SetModified();	
+	SetModified();
 }
 
-void GeneralPage::OnOK() 
+void GeneralPage::OnOK()
 {
 	TorrentExplorer *pApp = (TorrentExplorer*)AfxGetApp();
 	if (m_Dirty) {
@@ -61,13 +61,13 @@ void GeneralPage::OnOK()
 	m_Dirty = FALSE;
 }
 
-BOOL GeneralPage::OnInitDialog() 
+BOOL GeneralPage::OnInitDialog()
 {
 	TorrentExplorer *pApp = (TorrentExplorer*)AfxGetApp();
 	m_SaveWin = pApp->GetBOOLSetting("ui_save_win");
 
 	CPropertyPage::OnInitDialog();
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	// EXCEPTION: OCX Property Pages should return FALSE
 }

@@ -7,7 +7,7 @@
 #ifndef __OPCODES_H__
 #define __OPCODES_H__
 #define INSTRUCTIONS 256
-/* 
+/*
  * instruction structure
  */
 typedef struct {

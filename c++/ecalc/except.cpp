@@ -7,7 +7,7 @@
 #include "common.h"
 #include "except.h"
 
-typedef struct{
+typedef struct {
 	int ncode;
 	const char* desc;
 } except;
@@ -56,7 +56,7 @@ Exception & Exception::operator = (const Exception & e)
 /////////////////////////////////////////////////////////////////////////////
 // Warning
 Warning::Warning(int code)
- : Exception(code)
+		: Exception(code)
 {
 	desc = "warning: (";
 	desc += lookup(code);
@@ -66,7 +66,7 @@ Warning::Warning(int code)
 /////////////////////////////////////////////////////////////////////////////
 // Error
 Error::Error(int code)
- : Exception(code)
+		: Exception(code)
 {
 	desc = "error: (";
 	desc += lookup(code);

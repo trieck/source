@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// 
+//
 // SEARCH.H : Search class
 //
 // Copyright (c) 2006 Thomas A. Rieck, All Rights Reserved
@@ -16,8 +16,7 @@
 #include "query.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class Search
-{
+class Search {
 // Construction / Destruction
 public:
 	Search(LPCSTR filename);

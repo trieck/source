@@ -24,8 +24,7 @@ typedef struct {
 	unsigned pcount;						// product count
 } Config;
 
-class BackendsDoc : public CDocument
-{
+class BackendsDoc : public CDocument {
 protected: // create from serialization only
 	BackendsDoc();
 	DECLARE_DYNCREATE(BackendsDoc)
@@ -39,7 +38,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(BackendsDoc)
-	public:
+public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 	virtual void DeleteContents();
@@ -66,13 +65,15 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline StringVector::const_iterator BackendsDoc::getMachines() const {
-	return machines.begin(); 
+inline StringVector::const_iterator BackendsDoc::getMachines() const
+{
+	return machines.begin();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline StringVector::const_iterator BackendsDoc::getMachinesEnd() const {
-	return machines.end(); 
+inline StringVector::const_iterator BackendsDoc::getMachinesEnd() const
+{
+	return machines.end();
 }
 
 //{{AFX_INSERT_LOCATION}}

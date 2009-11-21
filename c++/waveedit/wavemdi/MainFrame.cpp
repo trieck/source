@@ -37,12 +37,11 @@ BOOL CMainFrame :: PreCreateWindow(CREATESTRUCT& cs)
 }
 
 INT CMainFrame :: OnCreate(LPCREATESTRUCT lpCreateStruct)
-{	
+{
 	CMDIFrameWnd :: OnCreate(lpCreateStruct);
 
 	// Create the ToolBar
-	if (!m_ToolBar.Create(this))
-	{
+	if (!m_ToolBar.Create(this)) {
 		TRACE0(_T("Failed to create the toolbar."));
 		return -1;
 	}
@@ -50,14 +49,13 @@ INT CMainFrame :: OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_ToolBar.LoadToolBar(IDR_MAINFRAME);
 
 	// Create the Status Bar
-	if (!m_wndStatus.Create(this))
-	{
+	if (!m_wndStatus.Create(this)) {
 		TRACE0(_T("Failed to create status bar."));
 		return -1;
 	}
 
-	m_wndStatus.SetIndicators(CMainFrame::m_nIndicators, 
-		sizeof (CMainFrame::m_nIndicators) / sizeof(UINT));
+	m_wndStatus.SetIndicators(CMainFrame::m_nIndicators,
+	                          sizeof (CMainFrame::m_nIndicators) / sizeof(UINT));
 	m_wndStatus.SetPaneStyle(0, SBPS_STRETCH);
 
 	CenterWindow();

@@ -17,8 +17,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // TorrentObject command target
 
-class TorrentObject : public CObject
-{
+class TorrentObject : public CObject {
 public:
 	TorrentObject();
 	virtual ~TorrentObject();
@@ -33,7 +32,7 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(TorrentObject)
-	public:
+public:
 	//}}AFX_VIRTUAL
 	//}}AFX_VIRTUAL
 

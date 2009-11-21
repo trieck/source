@@ -12,10 +12,10 @@
 
 /////////////////////////////////////////////////////////////////////////////
 SockStream::SockStream(SOCKET s)
- : m_sock(s), m_cRef(0)
+		: m_sock(s), m_cRef(0)
 {
-    // The constructor AddRef's
-    AddRef();
+	// The constructor AddRef's
+	AddRef();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ SockStream * SockStream::Create(SOCKET s)
 /////////////////////////////////////////////////////////////////////////////
 ULONG SockStream::AddRef()
 {
-    return ++m_cRef;
+	return ++m_cRef;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -51,19 +51,19 @@ HRESULT SockStream::QueryInterface(REFIID riid, LPVOID *ppv)
 {
 	*ppv = NULL;
 
-    if (riid == IID_IUnknown)
-        *ppv = this;
-    if (riid == IID_ISequentialStream)
-        *ppv = this;
-    
-    if (*ppv) {
-        ((IUnknown*)*ppv)->AddRef();
-        return S_OK;
-    }
+	if (riid == IID_IUnknown)
+		*ppv = this;
+	if (riid == IID_ISequentialStream)
+		*ppv = this;
 
-    return E_NOINTERFACE;
+	if (*ppv) {
+		((IUnknown*)*ppv)->AddRef();
+		return S_OK;
+	}
+
+	return E_NOINTERFACE;
 }
-    
+
 /////////////////////////////////////////////////////////////////////////////
 HRESULT SockStream::Read(void *pv, ULONG cb, ULONG *pcbRead)
 {
@@ -81,11 +81,11 @@ HRESULT SockStream::Recv(void *pv, ULONG cb, ULONG *pcbRead, int flags)
 {
 	*pcbRead = 0;
 
-    if (!pv)
-        return STG_E_INVALIDPOINTER;
+	if (!pv)
+		return STG_E_INVALIDPOINTER;
 
-    if (cb == 0)
-        return S_OK;
+	if (cb == 0)
+		return S_OK;
 
 	*pcbRead = recv(m_sock, (LPSTR)pv, cb, flags);
 	if (*pcbRead == SOCKET_ERROR)
@@ -100,10 +100,10 @@ HRESULT SockStream::Write(const void *pv, ULONG cb, ULONG *pcbWritten)
 	*pcbWritten = 0;
 
 	if (!pv)
-        return STG_E_INVALIDPOINTER;
+		return STG_E_INVALIDPOINTER;
 
-    if (cb == 0)
-        return S_OK;
+	if (cb == 0)
+		return S_OK;
 
 	*pcbWritten = send(m_sock, (LPCSTR)pv, cb, 0);
 	if (*pcbWritten == SOCKET_ERROR)

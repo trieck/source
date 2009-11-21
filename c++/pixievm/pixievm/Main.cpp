@@ -18,11 +18,11 @@
 int main(int argc, char *argv[])
 {
 	Machine machine;
-	
+
 	try {
 		machine.init();
 		machine.run();
-	} catch(const Exception & e) {
+	} catch (const Exception & e) {
 		cerr << e.getDescription() << endl;
 		return 1;
 	}

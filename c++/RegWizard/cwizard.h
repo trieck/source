@@ -6,23 +6,21 @@
 #include "stdafx.h"
 
 // structure for holding data
-typedef struct tagREGINFO
-{
-   CString  sServerName;
-   CString  sDatabaseName;
-   CString  sReportPath;
+typedef struct tagREGINFO {
+	CString  sServerName;
+	CString  sDatabaseName;
+	CString  sReportPath;
 }
 REGINFO;
 
-class CWizard : public CPropertySheet
-{
+class CWizard : public CPropertySheet {
 public:
 	REGINFO m_rgi;
 	// Construction
-	CWizard(UINT nIDCaption, CWnd* pParentWnd = NULL, 
-      UINT iSelectPage = 0);
-	CWizard(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, 
-      UINT iSelectPage = 0);
+	CWizard(UINT nIDCaption, CWnd* pParentWnd = NULL,
+	        UINT iSelectPage = 0);
+	CWizard(LPCTSTR pszCaption, CWnd* pParentWnd = NULL,
+	        UINT iSelectPage = 0);
 	virtual ~CWizard();
 	int GetRegInfo();
 	int SetRegInfo();
