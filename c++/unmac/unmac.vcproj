@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				PreprocessorDefinitions=" _CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -85,6 +85,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="moving $(TargetFileName) to d:\bin..."
+				CommandLine="move $(TargetPath) d:\bin\$(TargetFileName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -114,7 +116,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions=" _CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -159,6 +161,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="moving $(TargetFileName) to d:\bin..."
+				CommandLine="move $(TargetPath) d:\bin\$(TargetFileName)"
 			/>
 		</Configuration>
 	</Configurations>
