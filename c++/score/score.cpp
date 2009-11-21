@@ -377,7 +377,7 @@ BOOL ScoreApp :: InitializeStream()
 	ASSERT(m_pStream == NULL);
 
 	// Set the output stream to the midi mapper
-	m_pStream = (MidiStream *)OutputDevices().GetStream(-1);
+	m_pStream = (MidiStream *)OutputDevices().GetStream(MIDI_MAPPER);
 	if (m_pStream == NULL) {
 		AfxMessageBox(IDS_COULDNOTOPENMIDIMAPPER);
 		return FALSE;
