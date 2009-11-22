@@ -2,7 +2,7 @@
 
 . ./exclude.sh
 
-find . -regextype posix-egrep -regex ".+\.(${EXCLUDE})$" -exec rm -f {} \;
+find . -regextype posix-egrep -regex ".+\.(${EXCLUDE})$" -print -exec rm -f {} \;
 
 
 
