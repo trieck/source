@@ -14,8 +14,8 @@ if [ $? -ne 0 ]; then
 	exit $?
 fi
 
-# clean MSVC build directories
-find . -type d \( -name "Debug" -o -name "Release" \) -print -exec rm -rf {} \;
+# clean MSVC directories
+find . -type d \( -iname "debug" -o -iname "release" -o -iname "*upgrade*" \) -print -exec rm -rf {} \;
 
 
 
