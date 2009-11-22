@@ -3,7 +3,8 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="pixie"
-	ProjectGUID="{43DBD797-DDAC-48D0-B08A-9826F41BA9FE}"
+	SccProjectName="&quot;$/Source/c/pixie&quot;, KKBAAAAA"
+	SccLocalPath="."
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -19,7 +20,7 @@
 			OutputDirectory=".\Debug"
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -44,10 +45,10 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Debug/pixie.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
@@ -71,7 +72,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="pixie.exe"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/pixie.pdb"
@@ -91,6 +92,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Debug/pixie.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -107,7 +110,7 @@
 			OutputDirectory=".\Release"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -133,11 +136,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Release/pixie.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
@@ -179,6 +181,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Release/pixie.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -206,9 +210,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -216,7 +218,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -229,9 +230,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -239,7 +238,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -252,9 +250,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -262,7 +258,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -275,9 +270,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -285,7 +278,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -298,9 +290,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -308,7 +298,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -321,9 +310,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -331,7 +318,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -344,9 +330,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -354,7 +338,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -367,9 +350,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -377,7 +358,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -390,9 +370,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -400,7 +378,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -413,9 +390,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -423,7 +398,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -436,9 +410,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -446,7 +418,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -459,9 +430,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -469,7 +438,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -482,9 +450,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -492,7 +458,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -505,9 +470,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -515,7 +478,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -528,9 +490,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -538,7 +498,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
@@ -610,7 +569,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Parser from $(InputPath)..."
-						CommandLine="if exist parse.c del parse.c&#x0D;&#x0A;if exist parse.h del parse.h&#x0D;&#x0A;bison -d  -y &quot;$(InputPath)&quot;&#x0D;&#x0A;rename y.tab.c parse.c&#x0D;&#x0A;rename y.tab.h parse.h&#x0D;&#x0A;"
+						CommandLine="if exist parse.c del parse.c&#x0D;&#x0A;if exist parse.h del parse.h&#x0D;&#x0A;bison -d  -y $(InputPath)&#x0D;&#x0A;rename y.tab.c parse.c&#x0D;&#x0A;rename y.tab.h parse.h&#x0D;&#x0A;"
 						Outputs="parse.c;parse.h"
 					/>
 				</FileConfiguration>
@@ -620,7 +579,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Parser from $(InputPath)..."
-						CommandLine="if exist parse.c del parse.c&#x0D;&#x0A;if exist parse.h del parse.h&#x0D;&#x0A;bison -d  -y &quot;$(InputPath)&quot;&#x0D;&#x0A;rename y.tab.c parse.c&#x0D;&#x0A;rename y.tab.h parse.h&#x0D;&#x0A;"
+						CommandLine="if exist parse.c del parse.c&#x0D;&#x0A;if exist parse.h del parse.h&#x0D;&#x0A;bison -d  -y $(InputPath)&#x0D;&#x0A;rename y.tab.c parse.c&#x0D;&#x0A;rename y.tab.h parse.h&#x0D;&#x0A;"
 						Outputs="parse.c;parse.h"
 					/>
 				</FileConfiguration>
@@ -648,7 +607,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Lexer from $(InputPath)..."
-						CommandLine="flex -olex.c &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						CommandLine="flex -olex.c $(InputPath)&#x0D;&#x0A;"
 						Outputs="lex.c"
 					/>
 				</FileConfiguration>
@@ -658,7 +617,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Lexer from $(InputPath)..."
-						CommandLine="flex -olex.c &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						CommandLine="flex -olex.c $(InputPath)&#x0D;&#x0A;"
 						Outputs="lex.c"
 					/>
 				</FileConfiguration>
@@ -675,6 +634,4 @@
 			>
 		</Filter>
 	</Files>
-	<Globals>
-	</Globals>
 </VisualStudioProject>

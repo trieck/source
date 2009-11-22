@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="client"
-	ProjectGUID="{ED598CD0-C080-4FE5-9628-66AEF7633FE3}"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -19,7 +18,7 @@
 			OutputDirectory=".\debug"
 			IntermediateDirectory=".\debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
@@ -48,10 +47,9 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\proxy,..\shared"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;UNICODE"
+				MinimalRebuild="true"
 				RuntimeLibrary="1"
-				BufferSecurityCheck="false"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\debug/client.pch"
 				AssemblerListingLocation=".\debug/"
 				ObjectFile=".\debug/"
@@ -59,7 +57,6 @@
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -75,10 +72,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="..\bin\client.exe"
-				LinkIncremental="1"
+				OutputFile="debug/misccli.exe"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\debug/misccli.pdb"
 				SubSystem="2"
@@ -97,6 +93,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\debug/client.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -113,7 +111,7 @@
 			OutputDirectory=".\Release"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
@@ -143,19 +141,16 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="..\proxy,..\shared"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;UNICODE"
 				StringPooling="true"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Release/client.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -171,10 +166,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="..\bin\client.exe"
+				OutputFile="Release/misccli.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
 				ProgramDatabaseFile=".\Release/misccli.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -192,6 +186,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Release/client.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -208,7 +204,7 @@
 			OutputDirectory=".\ANSI/Release"
 			IntermediateDirectory=".\ANSI/Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -238,12 +234,10 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="..\proxy,..\shared"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS"
 				StringPooling="true"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\ANSI/Release/client.pch"
 				AssemblerListingLocation=".\ANSI/Release/"
 				ObjectFile=".\ANSI/Release/"
@@ -251,7 +245,6 @@
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -266,10 +259,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="..\bin\client.exe"
-				LinkIncremental="1"
+				OutputFile="ANSI/Release/misccli.exe"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\ANSI/Release/misccli.pdb"
 				SubSystem="2"
@@ -288,6 +280,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\ANSI/Release/client.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -304,7 +298,7 @@
 			OutputDirectory=".\ANSI/debug"
 			IntermediateDirectory=".\ANSI/debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -334,10 +328,9 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\proxy,..\shared"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				MinimalRebuild="true"
 				RuntimeLibrary="1"
-				BufferSecurityCheck="false"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\ANSI/debug/client.pch"
 				AssemblerListingLocation=".\ANSI/debug/"
 				ObjectFile=".\ANSI/debug/"
@@ -345,7 +338,6 @@
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -361,10 +353,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="..\bin\client.exe"
-				LinkIncremental="1"
+				OutputFile="ANSI/debug/misccli.exe"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\ANSI/debug/misccli.pdb"
 				SubSystem="2"
@@ -383,6 +374,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\ANSI/debug/client.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -398,131 +391,129 @@
 	<References>
 	</References>
 	<Files>
-		<Filter
-			Name="Header Files"
+		<File
+			RelativePath="capp.h"
 			>
-			<File
-				RelativePath="capp.h"
-				>
-			</File>
-			<File
-				RelativePath="resource.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Source Files"
+		</File>
+		<File
+			RelativePath="client.cpp"
 			>
-			<File
-				RelativePath="client.cpp"
+			<FileConfiguration
+				Name="Debug|Win32"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\proxy\guids.c"
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release ANSI|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Debug ANSI|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="client.rc"
 			>
-			<File
-				RelativePath="client.rc"
+			<FileConfiguration
+				Name="Debug|Win32"
 				>
-			</File>
-			<File
-				RelativePath="main.ico"
+				<Tool
+					Name="VCResourceCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
 				>
-			</File>
-			<File
-				RelativePath="world.ico"
+				<Tool
+					Name="VCResourceCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Debug ANSI|Win32"
 				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Other Files"
+				<Tool
+					Name="VCResourceCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\proxy\guids.c"
 			>
-		</Filter>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release ANSI|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Debug ANSI|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="main.ico"
+			>
+		</File>
+		<File
+			RelativePath="resource.h"
+			>
+		</File>
+		<File
+			RelativePath="world.ico"
+			>
+		</File>
 	</Files>
-	<Globals>
-	</Globals>
 </VisualStudioProject>

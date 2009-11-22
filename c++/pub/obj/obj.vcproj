@@ -3,11 +3,9 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="obj"
-	ProjectGUID="{8794D734-1D1E-47C7-8EAD-46E5D6A9AEAC}"
-	RootNamespace="obj"
 	SccProjectName="&quot;$/source/c++/pub/obj&quot;, FCCAAAAA"
 	SccLocalPath="."
-	TargetFrameworkVersion="0"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -109,8 +107,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Registering Component..."
-				CommandLine="regsvr32 /s $(TargetDir)$(TargetFileName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -206,8 +202,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Registering Component..."
-				CommandLine="regsvr32 /s $(TargetDir)$(TargetFileName)"
 			/>
 		</Configuration>
 	</Configurations>
@@ -323,6 +317,4 @@
 			</FileConfiguration>
 		</File>
 	</Files>
-	<Globals>
-	</Globals>
 </VisualStudioProject>

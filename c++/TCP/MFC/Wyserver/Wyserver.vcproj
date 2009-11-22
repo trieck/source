@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="Wyserver"
-	ProjectGUID="{A8303F4A-A6EF-4ED3-9533-91169E9E2EC8}"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>
@@ -20,7 +19,7 @@
 			OutputDirectory=".\Release"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="2"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
@@ -53,7 +52,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Release/Wyserver.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
@@ -94,6 +92,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Release/Wyserver.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -110,7 +110,7 @@
 			OutputDirectory=".\Debug"
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="2"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
@@ -139,8 +139,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				MinimalRebuild="true"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Debug/Wyserver.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
@@ -163,7 +163,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile=".\Debug/Wyserver.exe"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/Wyserver.pdb"
@@ -183,6 +183,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Debug/Wyserver.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -206,7 +208,6 @@
 				>
 				<Tool
 					Name="VCCLCompilerTool"
-					Optimization="2"
 					PreprocessorDefinitions=""
 				/>
 			</FileConfiguration>
@@ -215,7 +216,6 @@
 				>
 				<Tool
 					Name="VCCLCompilerTool"
-					Optimization="0"
 					PreprocessorDefinitions=""
 				/>
 			</FileConfiguration>
@@ -236,7 +236,6 @@
 				>
 				<Tool
 					Name="VCCLCompilerTool"
-					Optimization="2"
 					PreprocessorDefinitions=""
 				/>
 			</FileConfiguration>
@@ -245,7 +244,6 @@
 				>
 				<Tool
 					Name="VCCLCompilerTool"
-					Optimization="0"
 					PreprocessorDefinitions=""
 				/>
 			</FileConfiguration>
@@ -270,7 +268,6 @@
 				>
 				<Tool
 					Name="VCCLCompilerTool"
-					Optimization="2"
 					PreprocessorDefinitions=""
 				/>
 			</FileConfiguration>
@@ -279,7 +276,6 @@
 				>
 				<Tool
 					Name="VCCLCompilerTool"
-					Optimization="0"
 					PreprocessorDefinitions=""
 				/>
 			</FileConfiguration>
@@ -291,6 +287,22 @@
 		<File
 			RelativePath="Wyserver.rc"
 			>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCResourceCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCResourceCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
 		</File>
 		<File
 			RelativePath="WySock.cpp"
@@ -300,7 +312,6 @@
 				>
 				<Tool
 					Name="VCCLCompilerTool"
-					Optimization="2"
 					PreprocessorDefinitions=""
 				/>
 			</FileConfiguration>
@@ -309,7 +320,6 @@
 				>
 				<Tool
 					Name="VCCLCompilerTool"
-					Optimization="0"
 					PreprocessorDefinitions=""
 				/>
 			</FileConfiguration>
@@ -326,7 +336,6 @@
 				>
 				<Tool
 					Name="VCCLCompilerTool"
-					Optimization="2"
 					PreprocessorDefinitions=""
 				/>
 			</FileConfiguration>
@@ -335,7 +344,6 @@
 				>
 				<Tool
 					Name="VCCLCompilerTool"
-					Optimization="0"
 					PreprocessorDefinitions=""
 				/>
 			</FileConfiguration>
@@ -345,6 +353,4 @@
 			>
 		</File>
 	</Files>
-	<Globals>
-	</Globals>
 </VisualStudioProject>

@@ -3,7 +3,8 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="Pub"
-	ProjectGUID="{AB62F5E9-DA6A-4916-8264-BE572D7CC22E}"
+	SccProjectName="&quot;$/source/c++/Pub&quot;, ACCAAAAA"
+	SccLocalPath="."
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -19,7 +20,7 @@
 			OutputDirectory=".\Debug"
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
@@ -47,10 +48,10 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="d:\Tom&apos;s Projects\library\reslib"
+				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS"
+				MinimalRebuild="true"
 				RuntimeLibrary="1"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Debug/Pub.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
@@ -58,7 +59,6 @@
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -73,12 +73,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="comctl32.lib"
+				AdditionalDependencies="libc.lib comctl32.lib"
 				OutputFile=".\Debug/Pub.exe"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=""
-				IgnoreAllDefaultLibraries="false"
+				AdditionalLibraryDirectories="d:\Tom&apos;s Projects\library\reslib\debug"
+				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/Pub.pdb"
 				SubSystem="2"
@@ -97,6 +97,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Debug/Pub.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -113,7 +115,7 @@
 			OutputDirectory=".\Release"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
@@ -142,11 +144,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Release/Pub.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
@@ -167,11 +168,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="comctl32.lib"
+				AdditionalDependencies="comctl32.lib libc.lib"
 				OutputFile=".\Release/Pub.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				IgnoreAllDefaultLibraries="false"
+				IgnoreAllDefaultLibraries="true"
 				ProgramDatabaseFile=".\Release/Pub.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -189,6 +190,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Release/Pub.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -204,69 +207,94 @@
 	<References>
 	</References>
 	<Files>
-		<File
-			RelativePath="capp.h"
+		<Filter
+			Name="Source Files"
+			Filter="cpp"
 			>
-		</File>
-		<File
-			RelativePath="iadvsink.cpp"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
+			<File
+				RelativePath="iadvsink.cpp"
 				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="0"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions=""
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="pub.cpp"
 				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="1"
-					PreprocessorDefinitions=""
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath="interfac.h"
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h"
 			>
-		</File>
-		<File
-			RelativePath="main.ico"
-			>
-		</File>
-		<File
-			RelativePath="pub.cpp"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
+			<File
+				RelativePath="capp.h"
 				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="0"
-					AdditionalIncludeDirectories=""
-					PreprocessorDefinitions=""
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
+			</File>
+			<File
+				RelativePath="interfac.h"
 				>
-				<Tool
-					Name="VCCLCompilerTool"
-					Optimization="1"
-					PreprocessorDefinitions=""
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath="pub.rc"
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="rc"
 			>
-		</File>
+			<File
+				RelativePath="main.ico"
+				>
+			</File>
+			<File
+				RelativePath="pub.rc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+		</Filter>
 	</Files>
-	<Globals>
-	</Globals>
 </VisualStudioProject>

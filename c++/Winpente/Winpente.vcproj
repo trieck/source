@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="Winpente"
-	ProjectGUID="{3E54E9B5-7BD9-4C4F-A302-4015243019B9}"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -19,7 +18,7 @@
 			OutputDirectory=".\Debug"
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
@@ -47,9 +46,9 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;_WIN32_WINNT=0x0600;WINVER=0x0501"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				MinimalRebuild="true"
 				RuntimeLibrary="1"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Debug/Winpente.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
@@ -73,9 +72,8 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib comctl32.lib"
 				OutputFile=".\Debug/Winpente.exe"
-				LinkIncremental="0"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/Winpente.pdb"
 				SubSystem="2"
@@ -94,6 +92,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Debug/Winpente.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -110,7 +110,7 @@
 			OutputDirectory=".\Release"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
@@ -139,11 +139,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;_WIN32_WINNT=0x0600;WINVER=0x0501"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Release/Winpente.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
@@ -166,9 +165,8 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib comctl32.lib"
 				OutputFile=".\Release/Winpente.exe"
-				LinkIncremental="0"
+				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
 				ProgramDatabaseFile=".\Release/Winpente.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -186,6 +184,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Release/Winpente.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -201,225 +201,213 @@
 	<References>
 	</References>
 	<Files>
-		<Filter
-			Name="Source Files"
+		<File
+			RelativePath="blip.wav"
 			>
-			<File
-				RelativePath="checkcap.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="comp.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="fileop.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="fiverow.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="regwin.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="winpente.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="wndproc.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
+		</File>
+		<File
+			RelativePath="blueball.ico"
 			>
-			<File
-				RelativePath="winpente.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
+		</File>
+		<File
+			RelativePath="checkcap.cpp"
 			>
-			<File
-				RelativePath="blip.wav"
+			<FileConfiguration
+				Name="Debug|Win32"
 				>
-			</File>
-			<File
-				RelativePath="blueball.ico"
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
 				>
-			</File>
-			<File
-				RelativePath="greenbal.ico"
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="comp.cpp"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
 				>
-			</File>
-			<File
-				RelativePath="ico00ste.ico"
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
 				>
-			</File>
-			<File
-				RelativePath="ltblueba.ico"
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="fileop.cpp"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
 				>
-			</File>
-			<File
-				RelativePath="mainicon.ico"
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
 				>
-			</File>
-			<File
-				RelativePath="piece.wav"
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="fiverow.cpp"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
 				>
-			</File>
-			<File
-				RelativePath="purpleba.ico"
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
 				>
-			</File>
-			<File
-				RelativePath="redball.ico"
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="greenbal.ico"
+			>
+		</File>
+		<File
+			RelativePath="ico00ste.ico"
+			>
+		</File>
+		<File
+			RelativePath="ltblueba.ico"
+			>
+		</File>
+		<File
+			RelativePath="mainicon.ico"
+			>
+		</File>
+		<File
+			RelativePath="piece.wav"
+			>
+		</File>
+		<File
+			RelativePath="purpleba.ico"
+			>
+		</File>
+		<File
+			RelativePath="redball.ico"
+			>
+		</File>
+		<File
+			RelativePath="regwin.cpp"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
 				>
-			</File>
-			<File
-				RelativePath="theme.wav"
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
 				>
-			</File>
-			<File
-				RelativePath="WINNER.WAV"
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="theme.wav"
+			>
+		</File>
+		<File
+			RelativePath="WINNER.WAV"
+			>
+		</File>
+		<File
+			RelativePath="winpente.cpp"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
 				>
-			</File>
-			<File
-				RelativePath="Winpente.rc"
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
 				>
-			</File>
-		</Filter>
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="winpente.h"
+			>
+		</File>
+		<File
+			RelativePath="Winpente.rc"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCResourceCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCResourceCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="wndproc.cpp"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
 	</Files>
-	<Globals>
-	</Globals>
 </VisualStudioProject>

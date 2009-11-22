@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="emu6502"
 	ProjectGUID="{F7BF5A1D-98BC-4B0E-A631-2569692D8A8C}"
 	SccProjectName="&quot;$/Source/c++/emu6502&quot;, FODAAAAA"
 	SccLocalPath="."
 	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
 	Keyword="MFCProj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -88,6 +89,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/emu6502.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -107,9 +110,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -187,6 +187,8 @@
 				AdditionalLibraryDirectories="..\NeptuneLib\Release"
 				ProgramDatabaseFile=".\Release/emu6502.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -206,9 +208,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -286,6 +285,8 @@
 				AdditionalLibraryDirectories="..\NeptuneLib\Release"
 				ProgramDatabaseFile=".\Release/emu6502.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -305,9 +306,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -384,6 +382,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/emu6502.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -405,9 +405,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -415,7 +412,6 @@
 	<References>
 		<ProjectReference
 			ReferencedProjectIdentifier="{95C0859E-DF55-4091-826B-6545C7B4ADC6}"
-			RelativePathToProject="..\NeptuneLib\NeptuneLib.vcproj"
 		/>
 	</References>
 	<Files>

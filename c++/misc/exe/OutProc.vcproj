@@ -3,8 +3,6 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="OutProc"
-	ProjectGUID="{52038D11-5C2A-4390-85F5-139D54910B86}"
-	RootNamespace="OutProc"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -20,7 +18,7 @@
 			OutputDirectory=".\Debug"
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
@@ -50,9 +48,8 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="..\proxy,..\shared"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;UNICODE;_OUTPROC_SERVER_"
+				MinimalRebuild="true"
 				RuntimeLibrary="1"
-				BufferSecurityCheck="false"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Debug/OutProc.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
@@ -60,7 +57,6 @@
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -76,10 +72,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="..\bin\miscobj.exe"
-				LinkIncremental="1"
+				OutputFile="Debug/miscobj.exe"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/miscobj.pdb"
 				SubSystem="2"
@@ -98,6 +93,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Debug/OutProc.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -107,8 +104,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Registering Component..."
-				CommandLine="$(TargetDir)\$(TargetFileName) /RegServer"
 			/>
 		</Configuration>
 		<Configuration
@@ -116,7 +111,7 @@
 			OutputDirectory=".\ANSI/Release"
 			IntermediateDirectory=".\ANSI/Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -149,9 +144,7 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_OUTPROC_SERVER_"
 				StringPooling="true"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\ANSI/Release/OutProc.pch"
 				AssemblerListingLocation=".\ANSI/Release/"
 				ObjectFile=".\ANSI/Release/"
@@ -159,7 +152,6 @@
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -174,10 +166,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="..\bin\miscobj.exe"
-				LinkIncremental="1"
+				OutputFile="ANSI/Release/miscobj.exe"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\ANSI/Release/miscobj.pdb"
 				SubSystem="2"
@@ -196,6 +187,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\ANSI/Release/OutProc.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -205,8 +198,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Registering Component..."
-				CommandLine="$(TargetDir)\$(TargetFileName) /RegServer"
 			/>
 		</Configuration>
 		<Configuration
@@ -214,7 +205,7 @@
 			OutputDirectory=".\Release"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
@@ -247,16 +238,13 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_OUTPROC_SERVER_;UNICODE"
 				StringPooling="true"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Release/OutProc.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -272,10 +260,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="..\bin\miscobj.exe"
+				OutputFile="Release/miscobj.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
 				ProgramDatabaseFile=".\Release/miscobj.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -293,6 +280,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Release/OutProc.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -302,8 +291,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Registering Component..."
-				CommandLine="$(TargetDir)\$(TargetFileName) /RegServer"
 			/>
 		</Configuration>
 		<Configuration
@@ -311,7 +298,7 @@
 			OutputDirectory=".\ANSI/debug"
 			IntermediateDirectory=".\ANSI/debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -342,9 +329,8 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="..\proxy,..\shared"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_OUTPROC_SERVER_"
+				MinimalRebuild="true"
 				RuntimeLibrary="1"
-				BufferSecurityCheck="false"
-				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\ANSI/debug/OutProc.pch"
 				AssemblerListingLocation=".\ANSI/debug/"
 				ObjectFile=".\ANSI/debug/"
@@ -352,7 +338,6 @@
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -368,10 +353,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="..\bin\miscobj.exe"
-				LinkIncremental="1"
+				OutputFile="ANSI/debug/miscobj.exe"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\ANSI/debug/miscobj.pdb"
 				SubSystem="2"
@@ -390,6 +374,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\ANSI/debug/OutProc.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -399,227 +385,219 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Registering Component..."
-				CommandLine="$(TargetDir)\$(TargetFileName) /RegServer"
 			/>
 		</Configuration>
 	</Configurations>
 	<References>
 	</References>
 	<Files>
-		<Filter
-			Name="Header Files"
+		<File
+			RelativePath="capp.h"
 			>
-			<File
-				RelativePath="capp.h"
-				>
-			</File>
-			<File
-				RelativePath="..\shared\misc.h"
-				>
-			</File>
-			<File
-				RelativePath="..\shared\REGISTRY.H"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Source Files"
+		</File>
+		<File
+			RelativePath="emisc.cpp"
 			>
-			<File
-				RelativePath="emisc.cpp"
+			<FileConfiguration
+				Name="Debug|Win32"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\proxy\guids.c"
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release ANSI|Win32"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\shared\misc.cpp"
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\shared\REGISTRY.CPP"
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Debug ANSI|Win32"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug ANSI|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
-					/>
-				</FileConfiguration>
-			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\proxy\guids.c"
 			>
-			<File
-				RelativePath="main.ico"
+			<FileConfiguration
+				Name="Debug|Win32"
 				>
-			</File>
-			<File
-				RelativePath="outproc.rc"
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release ANSI|Win32"
 				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Other Files"
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Debug ANSI|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="main.ico"
 			>
-		</Filter>
+		</File>
+		<File
+			RelativePath="..\shared\misc.cpp"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release ANSI|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Debug ANSI|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\shared\misc.h"
+			>
+		</File>
+		<File
+			RelativePath="misc.tlb"
+			>
+		</File>
+		<File
+			RelativePath="outproc.rc"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCResourceCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCResourceCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Debug ANSI|Win32"
+				>
+				<Tool
+					Name="VCResourceCompilerTool"
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\shared\REGISTRY.CPP"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release ANSI|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Debug ANSI|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					AdditionalIncludeDirectories=""
+					PreprocessorDefinitions=""
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\shared\REGISTRY.H"
+			>
+		</File>
 	</Files>
-	<Globals>
-	</Globals>
 </VisualStudioProject>

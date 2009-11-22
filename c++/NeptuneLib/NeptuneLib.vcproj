@@ -3,10 +3,8 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="NeptuneLib"
-	ProjectGUID="{95C0859E-DF55-4091-826B-6545C7B4ADC6}"
 	SccProjectName="&quot;$/Source/c++/NeptuneLib&quot;, CPDAAAAA"
 	SccLocalPath="."
-	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>
@@ -24,7 +22,7 @@
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
-			UseOfMFC="1"
+			UseOfMFC="2"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
 			>
@@ -49,7 +47,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Debug/NeptuneLib.pch"
@@ -199,7 +197,67 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="elog.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="exception.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="gripbar.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="service.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -240,6 +298,26 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="util.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -250,11 +328,31 @@
 				>
 			</File>
 			<File
+				RelativePath="elog.h"
+				>
+			</File>
+			<File
+				RelativePath="exception.h"
+				>
+			</File>
+			<File
 				RelativePath="gripbar.h"
 				>
 			</File>
 			<File
+				RelativePath="messages.h"
+				>
+			</File>
+			<File
+				RelativePath="service.h"
+				>
+			</File>
+			<File
 				RelativePath="StdAfx.h"
+				>
+			</File>
+			<File
+				RelativePath="util.h"
 				>
 			</File>
 		</Filter>
@@ -262,8 +360,52 @@
 			Name="Resource Files"
 			Filter="mc; rc"
 			>
+			<File
+				RelativePath="messages.mc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling Message File $(InputPath)..."
+						CommandLine="mc -r res $(InputPath)&#x0D;&#x0A;"
+						Outputs="res\messages.rc;res\MSG00001.bin;messages.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling Message File $(InputPath)..."
+						CommandLine="mc -r res $(InputPath)&#x0D;&#x0A;"
+						Outputs="res\messages.rc;res\MSG00001.bin;messages.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="res\messages.rc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+						AdditionalIncludeDirectories="res"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+						AdditionalIncludeDirectories="res"
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 	</Files>
-	<Globals>
-	</Globals>
 </VisualStudioProject>
