@@ -4,8 +4,11 @@
 #define __STDAFX_H__
 
 #pragma warning(disable:4786) // disable truncation warning
+#pragma warning(disable:4996) // disable POSIX name deprecation warning
 
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
+
+#include "targetver.h"
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
