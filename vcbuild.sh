@@ -7,6 +7,7 @@ fi
 
 winpath=`cygpath -a -w "$1"`
 
-vcbuild.exe /nologo /htmllog:BuildLog.htm "${winpath}" Release\|Win32
+vcbuild.exe /nologo /nocolor /errfile:./vcbuild.log /wrnfile:./vcbuild.log "${winpath}" Release\|Win32
+
 
 
