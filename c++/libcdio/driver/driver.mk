@@ -1,6 +1,8 @@
 ##
 ## Auto Generated makefile, please do not edit
 ##
+WXWIN:=D:\wxWidgets-2.8.10
+WXCFG:=gcc_dll\mswu
 ProjectName:=driver
 
 ## Debug
