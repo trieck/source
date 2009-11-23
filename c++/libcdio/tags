@@ -1,8 +1,0 @@
-__main__	D:\source\c++\libcdio\wxcdio\main.h	/^#define __main__$/;"	macro	line:15
-MainApp	D:\source\c++\libcdio\wxcdio\main.h	/^class MainApp : public wxApp$/;"	class	line:26	inherits:wxApp
-OnInit	D:\source\c++\libcdio\wxcdio\main.h	/^		virtual bool OnInit();$/;"	prototype	line:29	class:MainApp	access:public	implementation:virtual	signature:()
-MainFrame	D:\source\c++\libcdio\wxcdio\main.h	/^class MainFrame : public MainFrameBase$/;"	class	line:39	inherits:MainFrameBase
-MainFrame	D:\source\c++\libcdio\wxcdio\main.h	/^		MainFrame( wxWindow *parent );$/;"	prototype	line:42	class:MainFrame	access:public	signature:( wxWindowMSW *parent )
-~MainFrame	D:\source\c++\libcdio\wxcdio\main.h	/^		virtual ~MainFrame();$/;"	prototype	line:43	class:MainFrame	access:public	implementation:virtual	signature:()
-OnCloseFrame	D:\source\c++\libcdio\wxcdio\main.h	/^		virtual void OnCloseFrame( wxCloseEvent& event );$/;"	prototype	line:47	class:MainFrame	access:protected	implementation:virtual	signature:( wxCloseEvent& event )
-OnExitClick	D:\source\c++\libcdio\wxcdio\main.h	/^		virtual void OnExitClick( wxCommandEvent& event );$/;"	prototype	line:48	class:MainFrame	access:protected	implementation:virtual	signature:( wxCommandEvent& event )
