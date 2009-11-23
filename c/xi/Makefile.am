@@ -4,8 +4,8 @@ AM_CFLAGS = -Wall -Wstrict-prototypes
 bin_PROGRAMS = xi
 xi_SOURCES =		\
 	block.c		\
-	block.h		\ 
-	eval.c 		\	
+	block.h		\
+	eval.c 		\
 	eval.h		\
 	global.c	\
 	global.h	\
