@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Project Name="wxcdio" InternalType="GUI">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <Description></Description>
   <Dependencies/>
+  <VirtualDirectory Name="src">
+    <File Name="gui.cpp"/>
+    <File Name="main.cpp"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="include">
+    <File Name="gui.h"/>
+    <File Name="main.h"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="resources">
+    <File Name="gui.fbp"/>
+  </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="">
@@ -36,7 +52,9 @@
       </CustomBuild>
       <AdditionalRules>
         <CustomPostBuild></CustomPostBuild>
-        <CustomPreBuild></CustomPreBuild>
+        <CustomPreBuild>
+
+</CustomPreBuild>
       </AdditionalRules>
     </Configuration>
     <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
@@ -67,15 +85,5 @@
       </AdditionalRules>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="src">
-    <File Name="gui.cpp"/>
-    <File Name="main.cpp"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="include">
-    <File Name="gui.h"/>
-    <File Name="main.h"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="resources">
-    <File Name="gui.fbp"/>
-  </VirtualDirectory>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>

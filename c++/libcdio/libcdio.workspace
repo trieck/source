@@ -2,8 +2,8 @@
 <CodeLite_Workspace Name="libcdio" Database=".\libcdio.tags">
   <Project Name="iso9660" Path="iso9660\iso9660.project" Active="No"/>
   <Project Name="driver" Path="driver\driver.project" Active="No"/>
-  <Project Name="iso_read" Path="iso_read\iso_read.project" Active="Yes"/>
-  <Project Name="wxcdio" Path="wxcdio\wxcdio.project"/>
+  <Project Name="iso_read" Path="iso_read\iso_read.project" Active="No"/>
+  <Project Name="wxcdio" Path="wxcdio\wxcdio.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="iso9660" ConfigName="Debug"/>
