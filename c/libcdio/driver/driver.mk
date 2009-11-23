@@ -44,7 +44,8 @@ LibPath                :="$(LibraryPathSwitch)D:/MinGW/Lib"  "$(LibraryPathSwitc
 
 Objects=$(IntermediateDirectory)/_cdio_generic$(ObjectSuffix) $(IntermediateDirectory)/_cdio_stdio$(ObjectSuffix) $(IntermediateDirectory)/_cdio_stream$(ObjectSuffix) $(IntermediateDirectory)/aix$(ObjectSuffix) $(IntermediateDirectory)/audio$(ObjectSuffix) $(IntermediateDirectory)/bsdi$(ObjectSuffix) $(IntermediateDirectory)/cd_types$(ObjectSuffix) $(IntermediateDirectory)/cdio$(ObjectSuffix) $(IntermediateDirectory)/cdtext$(ObjectSuffix) $(IntermediateDirectory)/device$(ObjectSuffix) \
 	$(IntermediateDirectory)/disc$(ObjectSuffix) $(IntermediateDirectory)/ds$(ObjectSuffix) $(IntermediateDirectory)/gnu_linux$(ObjectSuffix) $(IntermediateDirectory)/image_common$(ObjectSuffix) $(IntermediateDirectory)/logging$(ObjectSuffix) $(IntermediateDirectory)/mmc$(ObjectSuffix) $(IntermediateDirectory)/netbsd$(ObjectSuffix) $(IntermediateDirectory)/os2$(ObjectSuffix) $(IntermediateDirectory)/osx$(ObjectSuffix) $(IntermediateDirectory)/read$(ObjectSuffix) \
-	$(IntermediateDirectory)/sector$(ObjectSuffix) $(IntermediateDirectory)/solaris$(ObjectSuffix) $(IntermediateDirectory)/track$(ObjectSuffix) $(IntermediateDirectory)/utf8$(ObjectSuffix) $(IntermediateDirectory)/util$(ObjectSuffix) 
+	$(IntermediateDirectory)/sector$(ObjectSuffix) $(IntermediateDirectory)/solaris$(ObjectSuffix) $(IntermediateDirectory)/track$(ObjectSuffix) $(IntermediateDirectory)/utf8$(ObjectSuffix) $(IntermediateDirectory)/util$(ObjectSuffix) $(IntermediateDirectory)/aspi32$(ObjectSuffix) $(IntermediateDirectory)/win32$(ObjectSuffix) $(IntermediateDirectory)/win32_ioctl$(ObjectSuffix) $(IntermediateDirectory)/freebsd$(ObjectSuffix) $(IntermediateDirectory)/freebsd_cam$(ObjectSuffix) \
+	$(IntermediateDirectory)/freebsd_ioctl$(ObjectSuffix) $(IntermediateDirectory)/bincue$(ObjectSuffix) $(IntermediateDirectory)/cdrdao$(ObjectSuffix) $(IntermediateDirectory)/nrg$(ObjectSuffix) 
 
 ##
 ## Main Build Tragets 
@@ -239,6 +240,69 @@ $(IntermediateDirectory)/util$(DependSuffix): ../../../../libcdio/lib/driver/uti
 	@makedir "./Debug"
 	@$(CompilerName) $(CmpOptions) $(IncludePath) -MT$(IntermediateDirectory)/util$(ObjectSuffix) -MF$(IntermediateDirectory)/util$(DependSuffix) -MM "D:/libcdio/lib/driver/util.c"
 
+$(IntermediateDirectory)/aspi32$(ObjectSuffix): ../../../../libcdio/lib/driver/MSWindows/aspi32.c $(IntermediateDirectory)/aspi32$(DependSuffix)
+	@makedir "./Debug"
+	$(CompilerName) $(SourceSwitch) "D:/libcdio/lib/driver/MSWindows/aspi32.c" $(CmpOptions) $(ObjectSwitch)$(IntermediateDirectory)/aspi32$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/aspi32$(DependSuffix): ../../../../libcdio/lib/driver/MSWindows/aspi32.c
+	@makedir "./Debug"
+	@$(CompilerName) $(CmpOptions) $(IncludePath) -MT$(IntermediateDirectory)/aspi32$(ObjectSuffix) -MF$(IntermediateDirectory)/aspi32$(DependSuffix) -MM "D:/libcdio/lib/driver/MSWindows/aspi32.c"
+
+$(IntermediateDirectory)/win32$(ObjectSuffix): ../../../../libcdio/lib/driver/MSWindows/win32.c $(IntermediateDirectory)/win32$(DependSuffix)
+	@makedir "./Debug"
+	$(CompilerName) $(SourceSwitch) "D:/libcdio/lib/driver/MSWindows/win32.c" $(CmpOptions) $(ObjectSwitch)$(IntermediateDirectory)/win32$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/win32$(DependSuffix): ../../../../libcdio/lib/driver/MSWindows/win32.c
+	@makedir "./Debug"
+	@$(CompilerName) $(CmpOptions) $(IncludePath) -MT$(IntermediateDirectory)/win32$(ObjectSuffix) -MF$(IntermediateDirectory)/win32$(DependSuffix) -MM "D:/libcdio/lib/driver/MSWindows/win32.c"
+
+$(IntermediateDirectory)/win32_ioctl$(ObjectSuffix): ../../../../libcdio/lib/driver/MSWindows/win32_ioctl.c $(IntermediateDirectory)/win32_ioctl$(DependSuffix)
+	@makedir "./Debug"
+	$(CompilerName) $(SourceSwitch) "D:/libcdio/lib/driver/MSWindows/win32_ioctl.c" $(CmpOptions) $(ObjectSwitch)$(IntermediateDirectory)/win32_ioctl$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/win32_ioctl$(DependSuffix): ../../../../libcdio/lib/driver/MSWindows/win32_ioctl.c
+	@makedir "./Debug"
+	@$(CompilerName) $(CmpOptions) $(IncludePath) -MT$(IntermediateDirectory)/win32_ioctl$(ObjectSuffix) -MF$(IntermediateDirectory)/win32_ioctl$(DependSuffix) -MM "D:/libcdio/lib/driver/MSWindows/win32_ioctl.c"
+
+$(IntermediateDirectory)/freebsd$(ObjectSuffix): ../../../../libcdio/lib/driver/FreeBSD/freebsd.c $(IntermediateDirectory)/freebsd$(DependSuffix)
+	@makedir "./Debug"
+	$(CompilerName) $(SourceSwitch) "D:/libcdio/lib/driver/FreeBSD/freebsd.c" $(CmpOptions) $(ObjectSwitch)$(IntermediateDirectory)/freebsd$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/freebsd$(DependSuffix): ../../../../libcdio/lib/driver/FreeBSD/freebsd.c
+	@makedir "./Debug"
+	@$(CompilerName) $(CmpOptions) $(IncludePath) -MT$(IntermediateDirectory)/freebsd$(ObjectSuffix) -MF$(IntermediateDirectory)/freebsd$(DependSuffix) -MM "D:/libcdio/lib/driver/FreeBSD/freebsd.c"
+
+$(IntermediateDirectory)/freebsd_cam$(ObjectSuffix): ../../../../libcdio/lib/driver/FreeBSD/freebsd_cam.c $(IntermediateDirectory)/freebsd_cam$(DependSuffix)
+	@makedir "./Debug"
+	$(CompilerName) $(SourceSwitch) "D:/libcdio/lib/driver/FreeBSD/freebsd_cam.c" $(CmpOptions) $(ObjectSwitch)$(IntermediateDirectory)/freebsd_cam$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/freebsd_cam$(DependSuffix): ../../../../libcdio/lib/driver/FreeBSD/freebsd_cam.c
+	@makedir "./Debug"
+	@$(CompilerName) $(CmpOptions) $(IncludePath) -MT$(IntermediateDirectory)/freebsd_cam$(ObjectSuffix) -MF$(IntermediateDirectory)/freebsd_cam$(DependSuffix) -MM "D:/libcdio/lib/driver/FreeBSD/freebsd_cam.c"
+
+$(IntermediateDirectory)/freebsd_ioctl$(ObjectSuffix): ../../../../libcdio/lib/driver/FreeBSD/freebsd_ioctl.c $(IntermediateDirectory)/freebsd_ioctl$(DependSuffix)
+	@makedir "./Debug"
+	$(CompilerName) $(SourceSwitch) "D:/libcdio/lib/driver/FreeBSD/freebsd_ioctl.c" $(CmpOptions) $(ObjectSwitch)$(IntermediateDirectory)/freebsd_ioctl$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/freebsd_ioctl$(DependSuffix): ../../../../libcdio/lib/driver/FreeBSD/freebsd_ioctl.c
+	@makedir "./Debug"
+	@$(CompilerName) $(CmpOptions) $(IncludePath) -MT$(IntermediateDirectory)/freebsd_ioctl$(ObjectSuffix) -MF$(IntermediateDirectory)/freebsd_ioctl$(DependSuffix) -MM "D:/libcdio/lib/driver/FreeBSD/freebsd_ioctl.c"
+
+$(IntermediateDirectory)/bincue$(ObjectSuffix): ../../../../libcdio/lib/driver/image/bincue.c $(IntermediateDirectory)/bincue$(DependSuffix)
+	@makedir "./Debug"
+	$(CompilerName) $(SourceSwitch) "D:/libcdio/lib/driver/image/bincue.c" $(CmpOptions) $(ObjectSwitch)$(IntermediateDirectory)/bincue$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/bincue$(DependSuffix): ../../../../libcdio/lib/driver/image/bincue.c
+	@makedir "./Debug"
+	@$(CompilerName) $(CmpOptions) $(IncludePath) -MT$(IntermediateDirectory)/bincue$(ObjectSuffix) -MF$(IntermediateDirectory)/bincue$(DependSuffix) -MM "D:/libcdio/lib/driver/image/bincue.c"
+
+$(IntermediateDirectory)/cdrdao$(ObjectSuffix): ../../../../libcdio/lib/driver/image/cdrdao.c $(IntermediateDirectory)/cdrdao$(DependSuffix)
+	@makedir "./Debug"
+	$(CompilerName) $(SourceSwitch) "D:/libcdio/lib/driver/image/cdrdao.c" $(CmpOptions) $(ObjectSwitch)$(IntermediateDirectory)/cdrdao$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/cdrdao$(DependSuffix): ../../../../libcdio/lib/driver/image/cdrdao.c
+	@makedir "./Debug"
+	@$(CompilerName) $(CmpOptions) $(IncludePath) -MT$(IntermediateDirectory)/cdrdao$(ObjectSuffix) -MF$(IntermediateDirectory)/cdrdao$(DependSuffix) -MM "D:/libcdio/lib/driver/image/cdrdao.c"
+
+$(IntermediateDirectory)/nrg$(ObjectSuffix): ../../../../libcdio/lib/driver/image/nrg.c $(IntermediateDirectory)/nrg$(DependSuffix)
+	@makedir "./Debug"
+	$(CompilerName) $(SourceSwitch) "D:/libcdio/lib/driver/image/nrg.c" $(CmpOptions) $(ObjectSwitch)$(IntermediateDirectory)/nrg$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/nrg$(DependSuffix): ../../../../libcdio/lib/driver/image/nrg.c
+	@makedir "./Debug"
+	@$(CompilerName) $(CmpOptions) $(IncludePath) -MT$(IntermediateDirectory)/nrg$(ObjectSuffix) -MF$(IntermediateDirectory)/nrg$(DependSuffix) -MM "D:/libcdio/lib/driver/image/nrg.c"
+
 ##
 ## Clean
 ##
@@ -318,6 +382,33 @@ clean:
 	$(RM) $(IntermediateDirectory)/util$(ObjectSuffix)
 	$(RM) $(IntermediateDirectory)/util$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/util$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/aspi32$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/aspi32$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/aspi32$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/win32$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/win32$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/win32$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/win32_ioctl$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/win32_ioctl$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/win32_ioctl$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/freebsd$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/freebsd$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/freebsd$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/freebsd_cam$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/freebsd_cam$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/freebsd_cam$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/freebsd_ioctl$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/freebsd_ioctl$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/freebsd_ioctl$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/bincue$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/bincue$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/bincue$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/cdrdao$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/cdrdao$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/cdrdao$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/nrg$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/nrg$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/nrg$(PreprocessSuffix)
 	$(RM) $(OutputFile)
 	$(RM) $(OutputFile)
 

@@ -1,50 +1,51 @@
-DEFAULT_CDIO_DEVICE	D:\libcdio\lib\driver\solaris.c	/^#define DEFAULT_CDIO_DEVICE "\/vol\/dev\/aliases\/cdrom0"$/;"	macro	line:36
-_rcsid	D:\libcdio\lib\driver\solaris.c	/^static const char _rcsid[] = "$Id: solaris.c,v 1.12 2008\/04\/22 15:29:12 karl Exp $";$/;"	variable	line:40
-DK_DVDRW	D:\libcdio\lib\driver\solaris.c	/^#define DK_DVDRW 0x13$/;"	macro	line:68
-_AM_NONE	D:\libcdio\lib\driver\solaris.c	/^    _AM_NONE,$/;"	enumerator	line:73	enum:__anon12
-_AM_SUN_CTRL_ATAPI	D:\libcdio\lib\driver\solaris.c	/^    _AM_SUN_CTRL_ATAPI,$/;"	enumerator	line:74	enum:__anon12
-_AM_SUN_CTRL_SCSI	D:\libcdio\lib\driver\solaris.c	/^    _AM_SUN_CTRL_SCSI$/;"	enumerator	line:75	enum:__anon12
-_AM_READ_CD	D:\libcdio\lib\driver\solaris.c	/^    _AM_READ_CD,$/;"	enumerator	line:77	enum:__anon12
-_AM_READ_10	D:\libcdio\lib\driver\solaris.c	/^    _AM_READ_10$/;"	enumerator	line:78	enum:__anon12
-access_mode_t	D:\libcdio\lib\driver\solaris.c	/^} access_mode_t;$/;"	typedef	line:80	typeref:enum:__anon12
-gen	D:\libcdio\lib\driver\solaris.c	/^  generic_img_private_t gen; $/;"	member	line:86	struct:__anon13	access:public
-access_mode	D:\libcdio\lib\driver\solaris.c	/^  access_mode_t access_mode;$/;"	member	line:88	struct:__anon13	access:public
-tocent	D:\libcdio\lib\driver\solaris.c	/^  struct cdrom_tocentry  tocent[CDIO_CD_MAX_TRACKS+1]; $/;"	member	line:92	struct:__anon13	typeref:struct:__anon13::cdrom_tocentry	access:public
-tochdr	D:\libcdio\lib\driver\solaris.c	/^  struct cdrom_tochdr    tochdr;$/;"	member	line:95	struct:__anon13	typeref:struct:__anon13::cdrom_tochdr	access:public
-_img_private_t	D:\libcdio\lib\driver\solaris.c	/^} _img_private_t;$/;"	typedef	line:96	typeref:struct:__anon13
-get_track_format_solaris	D:\libcdio\lib\driver\solaris.c	/^static track_format_t get_track_format_solaris(void *p_user_data, $/;"	prototype	line:98	signature:(void *p_user_data, track_t i_track)
-str_to_access_mode_solaris	D:\libcdio\lib\driver\solaris.c	/^str_to_access_mode_solaris(const char *psz_access_mode) $/;"	function	line:102	signature:(const char *psz_access_mode)
-audio_pause_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_pause_solaris (void *p_user_data) $/;"	function	line:126	signature:(void *p_user_data)
-audio_play_msf_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_play_msf_solaris (void *p_user_data, msf_t *p_start_msf, $/;"	function	line:139	signature:(void *p_user_data, msf_t *p_start_msf, msf_t *p_end_msf)
-audio_play_track_index_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_play_track_index_solaris (void *p_user_data, $/;"	function	line:163	signature:(void *p_user_data, cdio_track_index_t *p_track_index)
-audio_read_subchannel_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_read_subchannel_solaris (void *p_user_data, $/;"	function	line:178	signature:(void *p_user_data, cdio_subchannel_t *p_subchannel)
-audio_resume_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_resume_solaris (void *p_user_data)$/;"	function	line:219	signature:(void *p_user_data)
-audio_set_volume_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_set_volume_solaris (void *p_user_data, $/;"	function	line:233	signature:(void *p_user_data, cdio_audio_volume_t *p_volume)
-audio_stop_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_stop_solaris (void *p_user_data)$/;"	function	line:247	signature:(void *p_user_data)
-init_solaris	D:\libcdio\lib\driver\solaris.c	/^init_solaris (_img_private_t *p_env)$/;"	function	line:257	signature:(_img_private_t *p_env)
-run_mmc_cmd_solaris	D:\libcdio\lib\driver\solaris.c	/^run_mmc_cmd_solaris( void *p_user_data, unsigned int i_timeout_ms,$/;"	function	line:280	signature:( void *p_user_data, unsigned int i_timeout_ms, unsigned int i_cdb, const mmc_cdb_t *p_cdb, cdio_mmc_direction_t e_direction, unsigned int i_buf, void *p_buf )
-_read_audio_sectors_solaris	D:\libcdio\lib\driver\solaris.c	/^_read_audio_sectors_solaris (void *p_user_data, void *data, lsn_t i_lsn, $/;"	function	line:311	signature:(void *p_user_data, void *data, lsn_t i_lsn, unsigned int i_blocks)
-_read_mode1_sector_solaris	D:\libcdio\lib\driver\solaris.c	/^_read_mode1_sector_solaris (void *p_env, void *data, lsn_t i_lsn, $/;"	function	line:363	signature:(void *p_env, void *data, lsn_t i_lsn, bool b_form2)
-_read_mode1_sectors_solaris	D:\libcdio\lib\driver\solaris.c	/^_read_mode1_sectors_solaris (void *p_user_data, void *p_data, lsn_t i_lsn, $/;"	function	line:379	signature:(void *p_user_data, void *p_data, lsn_t i_lsn, bool b_form2, unsigned int i_blocks)
-_read_mode2_sector_solaris	D:\libcdio\lib\driver\solaris.c	/^_read_mode2_sector_solaris (void *p_user_data, void *p_data, lsn_t i_lsn, $/;"	function	line:400	signature:(void *p_user_data, void *p_data, lsn_t i_lsn, bool b_form2)
-_read_mode2_sectors_solaris	D:\libcdio\lib\driver\solaris.c	/^_read_mode2_sectors_solaris (void *p_user_data, void *data, lsn_t i_lsn, $/;"	function	line:459	signature:(void *p_user_data, void *data, lsn_t i_lsn, bool b_form2, unsigned int i_blocks)
-get_disc_last_lsn_solaris	D:\libcdio\lib\driver\solaris.c	/^get_disc_last_lsn_solaris (void *p_user_data)$/;"	function	line:482	signature:(void *p_user_data)
-_set_arg_solaris	D:\libcdio\lib\driver\solaris.c	/^_set_arg_solaris (void *p_user_data, const char key[], const char value[])$/;"	function	line:512	signature:(void *p_user_data, const char key[], const char value[])
-read_toc_solaris	D:\libcdio\lib\driver\solaris.c	/^read_toc_solaris (void *p_user_data) $/;"	function	line:536	signature:(void *p_user_data)
-eject_media_solaris	D:\libcdio\lib\driver\solaris.c	/^eject_media_solaris (void *p_user_data) {$/;"	function	line:589	signature:(void *p_user_data)
-get_arg_solaris	D:\libcdio\lib\driver\solaris.c	/^get_arg_solaris (void *p_user_data, const char key[])$/;"	function	line:612	signature:(void *p_user_data, const char key[])
-get_blocksize_solaris	D:\libcdio\lib\driver\solaris.c	/^get_blocksize_solaris (void *p_user_data) {$/;"	function	line:636	signature:(void *p_user_data)
-cdio_get_default_device_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_get_default_device_solaris(void)$/;"	function	line:655	signature:(void)
-get_discmode_solaris	D:\libcdio\lib\driver\solaris.c	/^get_discmode_solaris (void *p_user_data)$/;"	function	line:693	signature:(void *p_user_data)
-get_last_session_solaris	D:\libcdio\lib\driver\solaris.c	/^get_last_session_solaris (void *p_user_data, $/;"	function	line:812	signature:(void *p_user_data, lsn_t *i_last_session_lsn)
-get_track_format_solaris	D:\libcdio\lib\driver\solaris.c	/^get_track_format_solaris(void *p_user_data, track_t i_track) $/;"	function	line:831	signature:(void *p_user_data, track_t i_track)
-get_track_green_solaris	D:\libcdio\lib\driver\solaris.c	/^get_track_green_solaris(void *p_user_data, track_t i_track) $/;"	function	line:869	signature:(void *p_user_data, track_t i_track)
-get_track_msf_solaris	D:\libcdio\lib\driver\solaris.c	/^get_track_msf_solaris(void *p_user_data, track_t i_track, msf_t *msf)$/;"	function	line:899	signature:(void *p_user_data, track_t i_track, msf_t *msf)
-set_blocksize_solaris	D:\libcdio\lib\driver\solaris.c	/^set_blocksize_solaris (void *p_user_data, uint16_t i_blocksize) {$/;"	function	line:928	signature:(void *p_user_data, uint16_t i_blocksize)
-set_speed_solaris	D:\libcdio\lib\driver\solaris.c	/^set_speed_solaris (void *p_user_data, int i_speed)$/;"	function	line:944	signature:(void *p_user_data, int i_speed)
-cdio_get_default_device_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_get_default_device_solaris(void)$/;"	function	line:957	signature:(void)
-close_tray_solaris	D:\libcdio\lib\driver\solaris.c	/^close_tray_solaris (const char *psz_device)$/;"	function	line:971	signature:(const char *psz_device)
-cdio_get_devices_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_get_devices_solaris (void)$/;"	function	line:996	signature:(void)
-cdio_open_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_open_solaris (const char *psz_source_name)$/;"	function	line:1046	signature:(const char *psz_source_name)
-cdio_open_am_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_open_am_solaris (const char *psz_orig_source, const char *access_mode)$/;"	function	line:1057	signature:(const char *psz_orig_source, const char *access_mode)
-cdio_have_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_have_solaris (void)$/;"	function	line:1167	signature:(void)
+_rcsid	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^static const char _rcsid[] = "$Id: win32_ioctl.c,v 1.30 2008\/04\/21 18:30:21 karl Exp $";$/;"	variable	line:28
+FORMAT_ERROR	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^#define FORMAT_ERROR(i_err, psz_msg) \\$/;"	macro	line:36
+_TRACK_DATA_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^typedef struct _TRACK_DATA_FULL {$/;"	struct	line:68
+SessionNumber	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR SessionNumber;$/;"	member	line:69	struct:_TRACK_DATA_FULL	access:public
+Control	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Control : 4;$/;"	member	line:70	struct:_TRACK_DATA_FULL	access:public
+Adr	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Adr : 4;$/;"	member	line:71	struct:_TRACK_DATA_FULL	access:public
+TNO	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR TNO;$/;"	member	line:72	struct:_TRACK_DATA_FULL	access:public
+POINT	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR POINT;  \/* Tracknumber (of session?) or lead-out\/in (0xA0, 0xA1, 0xA2)  *\/ $/;"	member	line:73	struct:_TRACK_DATA_FULL	access:public
+Min	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Min;  \/* Only valid if disctype is CDDA ? *\/$/;"	member	line:74	struct:_TRACK_DATA_FULL	access:public
+Sec	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Sec;  \/* Only valid if disctype is CDDA ? *\/$/;"	member	line:75	struct:_TRACK_DATA_FULL	access:public
+Frame	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Frame;  \/* Only valid if disctype is CDDA ? *\/$/;"	member	line:76	struct:_TRACK_DATA_FULL	access:public
+Zero	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Zero;  \/* Always zero *\/$/;"	member	line:77	struct:_TRACK_DATA_FULL	access:public
+PMIN	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR PMIN;  \/* start min, if POINT is a track; if lead-out\/in 0xA0: First Track *\/$/;"	member	line:78	struct:_TRACK_DATA_FULL	access:public
+PSEC	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR PSEC;$/;"	member	line:79	struct:_TRACK_DATA_FULL	access:public
+PFRAME	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR PFRAME;$/;"	member	line:80	struct:_TRACK_DATA_FULL	access:public
+TRACK_DATA_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^} TRACK_DATA_FULL, *PTRACK_DATA_FULL;$/;"	typedef	line:81	typeref:struct:_TRACK_DATA_FULL
+PTRACK_DATA_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^} TRACK_DATA_FULL, *PTRACK_DATA_FULL;$/;"	typedef	line:81	typeref:struct:_TRACK_DATA_FULL
+_CDROM_TOC_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^typedef struct _CDROM_TOC_FULL {$/;"	struct	line:83
+Length	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Length[2];$/;"	member	line:84	struct:_CDROM_TOC_FULL	access:public
+FirstSession	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR FirstSession;$/;"	member	line:85	struct:_CDROM_TOC_FULL	access:public
+LastSession	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR LastSession;$/;"	member	line:86	struct:_CDROM_TOC_FULL	access:public
+TrackData	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    TRACK_DATA_FULL TrackData[CDIO_CD_MAX_TRACKS+3];$/;"	member	line:87	struct:_CDROM_TOC_FULL	access:public
+CDROM_TOC_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^} CDROM_TOC_FULL, *PCDROM_TOC_FULL;$/;"	typedef	line:88	typeref:struct:_CDROM_TOC_FULL
+PCDROM_TOC_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^} CDROM_TOC_FULL, *PCDROM_TOC_FULL;$/;"	typedef	line:88	typeref:struct:_CDROM_TOC_FULL
+Spt	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^   SCSI_PASS_THROUGH Spt;$/;"	member	line:91	struct:__anon35	access:public
+Filler	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^   ULONG Filler;$/;"	member	line:92	struct:__anon35	access:public
+SenseBuf	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^   UCHAR SenseBuf[32];$/;"	member	line:93	struct:__anon35	access:public
+DataBuf	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^   UCHAR DataBuf[512];$/;"	member	line:94	struct:__anon35	access:public
+SCSI_PASS_THROUGH_WITH_BUFFERS	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^} SCSI_PASS_THROUGH_WITH_BUFFERS;$/;"	typedef	line:95	typeref:struct:__anon35
+OP_TIMEOUT_MS	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^#define OP_TIMEOUT_MS 60 $/;"	macro	line:99
+audio_pause_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_pause_win32ioctl (void *p_user_data)$/;"	function	line:107	signature:(void *p_user_data)
+audio_play_msf_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_play_msf_win32ioctl (void *p_user_data, msf_t *p_start_msf, $/;"	function	line:136	signature:(void *p_user_data, msf_t *p_start_msf, msf_t *p_end_msf)
+audio_read_subchannel_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_read_subchannel_win32ioctl (void *p_user_data, $/;"	function	line:177	signature:(void *p_user_data, cdio_subchannel_t *p_subchannel)
+audio_resume_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_resume_win32ioctl (void *p_user_data)$/;"	function	line:240	signature:(void *p_user_data)
+audio_set_volume_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_set_volume_win32ioctl (void *p_user_data, $/;"	function	line:271	signature:(void *p_user_data, cdio_audio_volume_t *p_volume)
+audio_get_volume_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_get_volume_win32ioctl (void *p_user_data, $/;"	function	line:297	signature:(void *p_user_data, cdio_audio_volume_t *p_volume)
+audio_stop_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_stop_win32ioctl (void *p_user_data)$/;"	function	line:330	signature:(void *p_user_data)
+close_tray_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^close_tray_win32ioctl (const char *psz_win32_drive)$/;"	function	line:360	signature:(const char *psz_win32_drive)
+run_mmc_cmd_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^run_mmc_cmd_win32ioctl( void *p_user_data, $/;"	function	line:431	signature:( void *p_user_data, unsigned int i_timeout_ms, unsigned int i_cdb, const mmc_cdb_t * p_cdb, cdio_mmc_direction_t e_direction, unsigned int i_buf, void *p_buf )
+dvd_discmode_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^dvd_discmode_win32ioctl (_img_private_t *p_env)$/;"	function	line:484	signature:(_img_private_t *p_env)
+get_discmode_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^get_discmode_win32ioctl (_img_private_t *p_env)$/;"	function	line:517	signature:(_img_private_t *p_env)
+is_cdrom_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^is_cdrom_win32ioctl(const char c_drive_letter) $/;"	function	line:594	signature:(const char c_drive_letter)
+read_audio_sectors_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_audio_sectors_win32ioctl (_img_private_t *p_env, void *data, lsn_t lsn, $/;"	function	line:629	signature:(_img_private_t *p_env, void *data, lsn_t lsn, unsigned int nblocks)
+read_raw_sector	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_raw_sector (_img_private_t *p_env, void *p_buf, lsn_t lsn) $/;"	function	line:666	signature:(_img_private_t *p_env, void *p_buf, lsn_t lsn)
+read_mode2_sector_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_mode2_sector_win32ioctl (_img_private_t *p_env, void *p_data, $/;"	function	line:688	signature:(_img_private_t *p_env, void *p_data, lsn_t lsn, bool b_form2)
+read_mode1_sector_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_mode1_sector_win32ioctl (_img_private_t *env, void *data, $/;"	function	line:709	signature:(_img_private_t *env, void *data, lsn_t lsn, bool b_form2)
+init_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^init_win32ioctl (_img_private_t *env)$/;"	function	line:729	signature:(_img_private_t *env)
+read_fulltoc_win32mmc	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_fulltoc_win32mmc (_img_private_t *p_env) $/;"	function	line:821	signature:(_img_private_t *p_env)
+read_toc_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_toc_win32ioctl (_img_private_t *p_env) $/;"	function	line:924	signature:(_img_private_t *p_env)
+get_mcn_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^get_mcn_win32ioctl (const _img_private_t *p_env) {$/;"	function	line:1020	signature:(const _img_private_t *p_env)
+get_track_format_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^get_track_format_win32ioctl(const _img_private_t *env, track_t i_track) $/;"	function	line:1050	signature:(const _img_private_t *env, track_t i_track)

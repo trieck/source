@@ -38,7 +38,7 @@ CmpOptions             := -g $(Preprocessors)
 LinkOptions            :=  
 IncludePath            := "$(IncludeSwitch)D:/MinGW/include"  "$(IncludeSwitch)." "$(IncludeSwitch)../" "$(IncludeSwitch)D:/libcdio/include" "$(IncludeSwitch)D:/libcdio/lib/driver" "$(IncludeSwitch)." 
 RcIncludePath          :=
-Libs                   :=$(LibrarySwitch)iso9660 $(LibrarySwitch)driver 
+Libs                   :=$(LibrarySwitch)iso9660 $(LibrarySwitch)driver $(LibrarySwitch)winmm 
 LibPath                :="$(LibraryPathSwitch)D:/MinGW/Lib"  "$(LibraryPathSwitch)." "$(LibraryPathSwitch)../driver/./Debug" "$(LibraryPathSwitch)../iso9660/./Debug" 
 
 

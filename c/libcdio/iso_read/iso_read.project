@@ -68,10 +68,11 @@
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>
-        <LibraryPath Value="..\driver\$(IntermediateDirectory)"/>
-        <LibraryPath Value="..\iso9660\$(IntermediateDirectory)"/>
+        <LibraryPath Value="../driver/$(IntermediateDirectory)"/>
+        <LibraryPath Value="../iso9660/$(IntermediateDirectory)"/>
         <Library Value="libiso9660.a"/>
         <Library Value="libdriver.a"/>
+        <Library Value="winmm.a"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>

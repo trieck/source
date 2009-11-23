@@ -119,4 +119,23 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
+  <VirtualDirectory Name="MSWindows">
+    <File Name="..\..\..\..\libcdio\lib\driver\MSWindows\aspi32.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\MSWindows\aspi32.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\MSWindows\win32.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\MSWindows\win32.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\MSWindows\win32_ioctl.c"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="FreeBSD">
+    <File Name="..\..\..\..\libcdio\lib\driver\FreeBSD\freebsd.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\FreeBSD\freebsd.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\FreeBSD\freebsd_cam.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\FreeBSD\freebsd_ioctl.c"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="image">
+    <File Name="..\..\..\..\libcdio\lib\driver\image\bincue.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\image\cdrdao.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\image\nrg.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\image\nrg.h"/>
+  </VirtualDirectory>
 </CodeLite_Project>
