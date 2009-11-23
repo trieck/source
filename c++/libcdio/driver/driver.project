@@ -46,7 +46,6 @@
     <File Name="..\..\..\..\libcdio\lib\driver\_cdio_stream.h"/>
     <File Name="..\..\..\..\libcdio\lib\driver\_cdio_stdio.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug"/>
   <Settings Type="Static Library">
     <Configuration Name="Debug" CompilerType="gnu gcc" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
@@ -138,4 +137,5 @@
     <File Name="..\..\..\..\libcdio\lib\driver\image\nrg.c"/>
     <File Name="..\..\..\..\libcdio\lib\driver\image\nrg.h"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>

@@ -19,6 +19,7 @@
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
+#include <wx/treectrl.h>
 #include <wx/sizer.h>
 #include <wx/statusbr.h>
 #include <wx/frame.h>
@@ -36,6 +37,7 @@ class MainFrameBase : public wxFrame
 	protected:
 		wxMenuBar* m_menuBar;
 		wxMenu* m_menuFile;
+		wxTreeCtrl* m_treeCtrl1;
 		wxStatusBar* m_statusBar;
 		
 		// Virtual event handlers, overide them in your derived class

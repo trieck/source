@@ -76,9 +76,19 @@
     <GlobalSettings>
       <Compiler Options="">
         <IncludePath Value="."/>
+        <IncludePath Value="../"/>
+        <IncludePath Value="D:/libcdio/include"/>
+        <IncludePath Value="D:/libcdio/lib/driver"/>
+        <Preprocessor Value="HAVE_CONFIG_H"/>
+        <Preprocessor Value="EXTERNAL_LIBCDIO_CONFIG_H"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>
+        <LibraryPath Value="../driver/$(IntermediateDirectory)"/>
+        <LibraryPath Value="../iso9660/$(IntermediateDirectory)"/>
+        <Library Value="libiso9660.a"/>
+        <Library Value="libdriver.a"/>
+        <Library Value="winmm.a"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>

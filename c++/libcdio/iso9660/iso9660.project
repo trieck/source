@@ -17,7 +17,6 @@
     <File Name="d:\libcdio\lib\iso9660\iso9660_private.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
-  <Dependencies Name="Debug"/>
   <Settings Type="Static Library">
     <Configuration Name="Debug" CompilerType="gnu gcc" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
@@ -92,4 +91,5 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>

@@ -26,6 +26,9 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxBoxSizer* mainSizer;
 	mainSizer = new wxBoxSizer( wxVERTICAL );
 	
+	m_treeCtrl1 = new wxTreeCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_SINGLE );
+	mainSizer->Add( m_treeCtrl1, 1, wxALL|wxEXPAND, 5 );
+	
 	this->SetSizer( mainSizer );
 	this->Layout();
 	m_statusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
