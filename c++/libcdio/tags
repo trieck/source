@@ -1,51 +1,8 @@
-_rcsid	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^static const char _rcsid[] = "$Id: win32_ioctl.c,v 1.30 2008\/04\/21 18:30:21 karl Exp $";$/;"	variable	line:28
-FORMAT_ERROR	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^#define FORMAT_ERROR(i_err, psz_msg) \\$/;"	macro	line:36
-_TRACK_DATA_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^typedef struct _TRACK_DATA_FULL {$/;"	struct	line:68
-SessionNumber	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR SessionNumber;$/;"	member	line:69	struct:_TRACK_DATA_FULL	access:public
-Control	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Control : 4;$/;"	member	line:70	struct:_TRACK_DATA_FULL	access:public
-Adr	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Adr : 4;$/;"	member	line:71	struct:_TRACK_DATA_FULL	access:public
-TNO	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR TNO;$/;"	member	line:72	struct:_TRACK_DATA_FULL	access:public
-POINT	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR POINT;  \/* Tracknumber (of session?) or lead-out\/in (0xA0, 0xA1, 0xA2)  *\/ $/;"	member	line:73	struct:_TRACK_DATA_FULL	access:public
-Min	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Min;  \/* Only valid if disctype is CDDA ? *\/$/;"	member	line:74	struct:_TRACK_DATA_FULL	access:public
-Sec	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Sec;  \/* Only valid if disctype is CDDA ? *\/$/;"	member	line:75	struct:_TRACK_DATA_FULL	access:public
-Frame	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Frame;  \/* Only valid if disctype is CDDA ? *\/$/;"	member	line:76	struct:_TRACK_DATA_FULL	access:public
-Zero	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Zero;  \/* Always zero *\/$/;"	member	line:77	struct:_TRACK_DATA_FULL	access:public
-PMIN	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR PMIN;  \/* start min, if POINT is a track; if lead-out\/in 0xA0: First Track *\/$/;"	member	line:78	struct:_TRACK_DATA_FULL	access:public
-PSEC	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR PSEC;$/;"	member	line:79	struct:_TRACK_DATA_FULL	access:public
-PFRAME	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR PFRAME;$/;"	member	line:80	struct:_TRACK_DATA_FULL	access:public
-TRACK_DATA_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^} TRACK_DATA_FULL, *PTRACK_DATA_FULL;$/;"	typedef	line:81	typeref:struct:_TRACK_DATA_FULL
-PTRACK_DATA_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^} TRACK_DATA_FULL, *PTRACK_DATA_FULL;$/;"	typedef	line:81	typeref:struct:_TRACK_DATA_FULL
-_CDROM_TOC_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^typedef struct _CDROM_TOC_FULL {$/;"	struct	line:83
-Length	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR Length[2];$/;"	member	line:84	struct:_CDROM_TOC_FULL	access:public
-FirstSession	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR FirstSession;$/;"	member	line:85	struct:_CDROM_TOC_FULL	access:public
-LastSession	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    UCHAR LastSession;$/;"	member	line:86	struct:_CDROM_TOC_FULL	access:public
-TrackData	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^    TRACK_DATA_FULL TrackData[CDIO_CD_MAX_TRACKS+3];$/;"	member	line:87	struct:_CDROM_TOC_FULL	access:public
-CDROM_TOC_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^} CDROM_TOC_FULL, *PCDROM_TOC_FULL;$/;"	typedef	line:88	typeref:struct:_CDROM_TOC_FULL
-PCDROM_TOC_FULL	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^} CDROM_TOC_FULL, *PCDROM_TOC_FULL;$/;"	typedef	line:88	typeref:struct:_CDROM_TOC_FULL
-Spt	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^   SCSI_PASS_THROUGH Spt;$/;"	member	line:91	struct:__anon35	access:public
-Filler	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^   ULONG Filler;$/;"	member	line:92	struct:__anon35	access:public
-SenseBuf	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^   UCHAR SenseBuf[32];$/;"	member	line:93	struct:__anon35	access:public
-DataBuf	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^   UCHAR DataBuf[512];$/;"	member	line:94	struct:__anon35	access:public
-SCSI_PASS_THROUGH_WITH_BUFFERS	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^} SCSI_PASS_THROUGH_WITH_BUFFERS;$/;"	typedef	line:95	typeref:struct:__anon35
-OP_TIMEOUT_MS	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^#define OP_TIMEOUT_MS 60 $/;"	macro	line:99
-audio_pause_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_pause_win32ioctl (void *p_user_data)$/;"	function	line:107	signature:(void *p_user_data)
-audio_play_msf_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_play_msf_win32ioctl (void *p_user_data, msf_t *p_start_msf, $/;"	function	line:136	signature:(void *p_user_data, msf_t *p_start_msf, msf_t *p_end_msf)
-audio_read_subchannel_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_read_subchannel_win32ioctl (void *p_user_data, $/;"	function	line:177	signature:(void *p_user_data, cdio_subchannel_t *p_subchannel)
-audio_resume_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_resume_win32ioctl (void *p_user_data)$/;"	function	line:240	signature:(void *p_user_data)
-audio_set_volume_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_set_volume_win32ioctl (void *p_user_data, $/;"	function	line:271	signature:(void *p_user_data, cdio_audio_volume_t *p_volume)
-audio_get_volume_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_get_volume_win32ioctl (void *p_user_data, $/;"	function	line:297	signature:(void *p_user_data, cdio_audio_volume_t *p_volume)
-audio_stop_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^audio_stop_win32ioctl (void *p_user_data)$/;"	function	line:330	signature:(void *p_user_data)
-close_tray_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^close_tray_win32ioctl (const char *psz_win32_drive)$/;"	function	line:360	signature:(const char *psz_win32_drive)
-run_mmc_cmd_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^run_mmc_cmd_win32ioctl( void *p_user_data, $/;"	function	line:431	signature:( void *p_user_data, unsigned int i_timeout_ms, unsigned int i_cdb, const mmc_cdb_t * p_cdb, cdio_mmc_direction_t e_direction, unsigned int i_buf, void *p_buf )
-dvd_discmode_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^dvd_discmode_win32ioctl (_img_private_t *p_env)$/;"	function	line:484	signature:(_img_private_t *p_env)
-get_discmode_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^get_discmode_win32ioctl (_img_private_t *p_env)$/;"	function	line:517	signature:(_img_private_t *p_env)
-is_cdrom_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^is_cdrom_win32ioctl(const char c_drive_letter) $/;"	function	line:594	signature:(const char c_drive_letter)
-read_audio_sectors_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_audio_sectors_win32ioctl (_img_private_t *p_env, void *data, lsn_t lsn, $/;"	function	line:629	signature:(_img_private_t *p_env, void *data, lsn_t lsn, unsigned int nblocks)
-read_raw_sector	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_raw_sector (_img_private_t *p_env, void *p_buf, lsn_t lsn) $/;"	function	line:666	signature:(_img_private_t *p_env, void *p_buf, lsn_t lsn)
-read_mode2_sector_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_mode2_sector_win32ioctl (_img_private_t *p_env, void *p_data, $/;"	function	line:688	signature:(_img_private_t *p_env, void *p_data, lsn_t lsn, bool b_form2)
-read_mode1_sector_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_mode1_sector_win32ioctl (_img_private_t *env, void *data, $/;"	function	line:709	signature:(_img_private_t *env, void *data, lsn_t lsn, bool b_form2)
-init_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^init_win32ioctl (_img_private_t *env)$/;"	function	line:729	signature:(_img_private_t *env)
-read_fulltoc_win32mmc	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_fulltoc_win32mmc (_img_private_t *p_env) $/;"	function	line:821	signature:(_img_private_t *p_env)
-read_toc_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^read_toc_win32ioctl (_img_private_t *p_env) $/;"	function	line:924	signature:(_img_private_t *p_env)
-get_mcn_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^get_mcn_win32ioctl (const _img_private_t *p_env) {$/;"	function	line:1020	signature:(const _img_private_t *p_env)
-get_track_format_win32ioctl	D:\libcdio\lib\driver\MSWindows\win32_ioctl.c	/^get_track_format_win32ioctl(const _img_private_t *env, track_t i_track) $/;"	function	line:1050	signature:(const _img_private_t *env, track_t i_track)
+__main__	D:\source\c++\libcdio\wxcdio\main.h	/^#define __main__$/;"	macro	line:15
+MainApp	D:\source\c++\libcdio\wxcdio\main.h	/^class MainApp : public wxApp$/;"	class	line:26	inherits:wxApp
+OnInit	D:\source\c++\libcdio\wxcdio\main.h	/^		virtual bool OnInit();$/;"	prototype	line:29	class:MainApp	access:public	implementation:virtual	signature:()
+MainFrame	D:\source\c++\libcdio\wxcdio\main.h	/^class MainFrame : public MainFrameBase$/;"	class	line:39	inherits:MainFrameBase
+MainFrame	D:\source\c++\libcdio\wxcdio\main.h	/^		MainFrame( wxWindow *parent );$/;"	prototype	line:42	class:MainFrame	access:public	signature:( wxWindowMSW *parent )
+~MainFrame	D:\source\c++\libcdio\wxcdio\main.h	/^		virtual ~MainFrame();$/;"	prototype	line:43	class:MainFrame	access:public	implementation:virtual	signature:()
+OnCloseFrame	D:\source\c++\libcdio\wxcdio\main.h	/^		virtual void OnCloseFrame( wxCloseEvent& event );$/;"	prototype	line:47	class:MainFrame	access:protected	implementation:virtual	signature:( wxCloseEvent& event )
+OnExitClick	D:\source\c++\libcdio\wxcdio\main.h	/^		virtual void OnExitClick( wxCommandEvent& event );$/;"	prototype	line:48	class:MainFrame	access:protected	implementation:virtual	signature:( wxCommandEvent& event )
