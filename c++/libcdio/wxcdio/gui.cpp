@@ -23,15 +23,18 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	this->SetMenuBar( m_menuBar );
 	
-	wxBoxSizer* mainSizer;
-	mainSizer = new wxBoxSizer( wxVERTICAL );
-	
-	m_treeCtrl1 = new wxTreeCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_SINGLE );
-	mainSizer->Add( m_treeCtrl1, 1, wxALL|wxEXPAND, 5 );
-	
-	this->SetSizer( mainSizer );
-	this->Layout();
 	m_statusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
+	m_toolBar = this->CreateToolBar( wxTB_HORIZONTAL, wxID_ANY ); 
+	m_toolBar->Realize();
+	
+	wxBoxSizer* bSizer;
+	bSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_treeCtrl = new wxTreeCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
+	bSizer->Add( m_treeCtrl, 1, wxEXPAND, 5 );
+	
+	this->SetSizer( bSizer );
+	this->Layout();
 	
 	this->Centre( wxBOTH );
 	
