@@ -14,40 +14,7 @@
     <File Name="d:\libcdio\lib\iso9660\xa.c"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="config.h"/>
     <File Name="d:\libcdio\lib\iso9660\iso9660_private.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\audio.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\bytesex.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\bytesex_asm.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\cd_types.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\cdda.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\cdio.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\cdtext.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\device.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\disc.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\ds.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\dvd.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\ecma_167.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\iso9660.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\logging.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\Makefile.am"/>
-    <File Name="..\..\..\libcdio\include\cdio\mmc.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\paranoia.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\posix.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\read.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\rock.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\scsi_mmc.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\sector.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\track.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\types.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\udf.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\udf_file.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\udf_time.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\utf8.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\util.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\version.h"/>
-    <File Name="..\..\..\libcdio\include\cdio\version.h.in"/>
-    <File Name="..\..\..\libcdio\include\cdio\xa.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Dependencies Name="Debug"/>
@@ -64,25 +31,23 @@
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="./Debug" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
-        <PostConnectCommands></PostConnectCommands>
-        <StartupCommands></StartupCommands>
+        <PostConnectCommands/>
+        <StartupCommands/>
       </Debugger>
       <PreBuild/>
       <PostBuild/>
       <CustomBuild Enabled="no">
-        <CleanCommand></CleanCommand>
-        <BuildCommand></BuildCommand>
-        <PreprocessFileCommand></PreprocessFileCommand>
-        <SingleFileCommand></SingleFileCommand>
-        <MakefileGenerationCommand></MakefileGenerationCommand>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
         <ThirdPartyToolName>None</ThirdPartyToolName>
-        <WorkingDirectory></WorkingDirectory>
+        <WorkingDirectory/>
       </CustomBuild>
       <AdditionalRules>
-        <CustomPostBuild></CustomPostBuild>
-        <CustomPreBuild>
-
-</CustomPreBuild>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
     <Configuration Name="Release" CompilerType="gnu gcc" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
@@ -93,28 +58,29 @@
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="./Release" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
-        <PostConnectCommands></PostConnectCommands>
-        <StartupCommands></StartupCommands>
+        <PostConnectCommands/>
+        <StartupCommands/>
       </Debugger>
       <PreBuild/>
       <PostBuild/>
       <CustomBuild Enabled="no">
-        <CleanCommand></CleanCommand>
-        <BuildCommand></BuildCommand>
-        <PreprocessFileCommand></PreprocessFileCommand>
-        <SingleFileCommand></SingleFileCommand>
-        <MakefileGenerationCommand></MakefileGenerationCommand>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
         <ThirdPartyToolName>None</ThirdPartyToolName>
-        <WorkingDirectory></WorkingDirectory>
+        <WorkingDirectory/>
       </CustomBuild>
       <AdditionalRules>
-        <CustomPostBuild></CustomPostBuild>
-        <CustomPreBuild></CustomPreBuild>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
     <GlobalSettings>
       <Compiler Options="">
         <IncludePath Value="."/>
+        <IncludePath Value="..\"/>
         <IncludePath Value="D:/libcdio/include"/>
         <IncludePath Value="D:/libcdio/lib/driver"/>
         <Preprocessor Value="HAVE_CONFIG_H"/>

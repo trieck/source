@@ -1,27 +1,50 @@
-UTIL_H	D:\libcdio\src\util.h	/^#define UTIL_H$/;"	macro	line:23
-_	D:\libcdio\src\util.h	/^#    define _(String) dgettext ("cdinfo", String)$/;"	macro	line:58
-_	D:\libcdio\src\util.h	/^#    define _(String) (String)$/;"	macro	line:61
-EXIT_FAILURE	D:\libcdio\src\util.h	/^# undef EXIT_FAILURE$/;"	macro	line:68
-EXIT_FAILURE	D:\libcdio\src\util.h	/^# define EXIT_FAILURE 1$/;"	macro	line:69
-EXIT_SUCCESS	D:\libcdio\src\util.h	/^# define EXIT_SUCCESS 0$/;"	macro	line:73
-EXIT_INFO	D:\libcdio\src\util.h	/^# define EXIT_INFO 100$/;"	macro	line:77
-DEBUG	D:\libcdio\src\util.h	/^#define DEBUG 1$/;"	macro	line:80
-dbg_print	D:\libcdio\src\util.h	/^#define dbg_print(level, s, args...) \\$/;"	macro	line:82
-dbg_print	D:\libcdio\src\util.h	/^#define dbg_print(level, s, args...) $/;"	macro	line:86
-err_exit	D:\libcdio\src\util.h	/^#define err_exit(fmt, args...) \\$/;"	macro	line:89
-INPUT_AUTO	D:\libcdio\src\util.h	/^  INPUT_AUTO,$/;"	enumerator	line:95	enum:__anon54
-INPUT_DEVICE	D:\libcdio\src\util.h	/^  INPUT_DEVICE,$/;"	enumerator	line:96	enum:__anon54
-INPUT_BIN	D:\libcdio\src\util.h	/^  INPUT_BIN,$/;"	enumerator	line:97	enum:__anon54
-INPUT_CUE	D:\libcdio\src\util.h	/^  INPUT_CUE,$/;"	enumerator	line:98	enum:__anon54
-INPUT_NRG	D:\libcdio\src\util.h	/^  INPUT_NRG,$/;"	enumerator	line:99	enum:__anon54
-INPUT_CDRDAO	D:\libcdio\src\util.h	/^  INPUT_CDRDAO,$/;"	enumerator	line:100	enum:__anon54
-INPUT_UNKNOWN	D:\libcdio\src\util.h	/^  INPUT_UNKNOWN$/;"	enumerator	line:101	enum:__anon54
-source_image_t	D:\libcdio\src\util.h	/^} source_image_t;$/;"	typedef	line:102	typeref:enum:__anon54
-myexit	D:\libcdio\src\util.h	/^void myexit(CdIo_t *p_cdio, int rc);$/;"	prototype	line:111	signature:(CdIo_t *p_cdio, int rc)
-print_version	D:\libcdio\src\util.h	/^void print_version (char *psz_program, const char *psz_version,$/;"	prototype	line:114	signature:(char *psz_program, const char *psz_version, int no_header, bool version_only)
-open_input	D:\libcdio\src\util.h	/^open_input(const char *psz_source, source_image_t source_image, $/;"	prototype	line:121	signature:(const char *psz_source, source_image_t source_image, const char *psz_access_mode)
-fillout_device_name	D:\libcdio\src\util.h	/^char *fillout_device_name(const char *device_name);$/;"	prototype	line:127	signature:(const char *device_name)
-print_mmc_drive_features	D:\libcdio\src\util.h	/^void  print_mmc_drive_features(CdIo *p_cdio);$/;"	prototype	line:130	signature:(CdIo *p_cdio)
-print_drive_capabilities	D:\libcdio\src\util.h	/^void print_drive_capabilities(cdio_drive_read_cap_t  p_read_cap,$/;"	prototype	line:133	signature:(cdio_drive_read_cap_t p_read_cap, cdio_drive_write_cap_t p_write_cap, cdio_drive_misc_cap_t p_misc_cap)
-report	D:\libcdio\src\util.h	/^void report (FILE *stream, const char *psz_format, ...);$/;"	prototype	line:139	signature:(FILE *stream, const char *psz_format, ...)
-print_fs_attrs	D:\libcdio\src\util.h	/^void print_fs_attrs(iso9660_stat_t *p_statbuf, bool b_rock, bool b_xa, $/;"	prototype	line:142	signature:(iso9660_stat_t *p_statbuf, bool b_rock, bool b_xa, const char *psz_name_untranslated, const char *psz_name_translated)
+DEFAULT_CDIO_DEVICE	D:\libcdio\lib\driver\solaris.c	/^#define DEFAULT_CDIO_DEVICE "\/vol\/dev\/aliases\/cdrom0"$/;"	macro	line:36
+_rcsid	D:\libcdio\lib\driver\solaris.c	/^static const char _rcsid[] = "$Id: solaris.c,v 1.12 2008\/04\/22 15:29:12 karl Exp $";$/;"	variable	line:40
+DK_DVDRW	D:\libcdio\lib\driver\solaris.c	/^#define DK_DVDRW 0x13$/;"	macro	line:68
+_AM_NONE	D:\libcdio\lib\driver\solaris.c	/^    _AM_NONE,$/;"	enumerator	line:73	enum:__anon12
+_AM_SUN_CTRL_ATAPI	D:\libcdio\lib\driver\solaris.c	/^    _AM_SUN_CTRL_ATAPI,$/;"	enumerator	line:74	enum:__anon12
+_AM_SUN_CTRL_SCSI	D:\libcdio\lib\driver\solaris.c	/^    _AM_SUN_CTRL_SCSI$/;"	enumerator	line:75	enum:__anon12
+_AM_READ_CD	D:\libcdio\lib\driver\solaris.c	/^    _AM_READ_CD,$/;"	enumerator	line:77	enum:__anon12
+_AM_READ_10	D:\libcdio\lib\driver\solaris.c	/^    _AM_READ_10$/;"	enumerator	line:78	enum:__anon12
+access_mode_t	D:\libcdio\lib\driver\solaris.c	/^} access_mode_t;$/;"	typedef	line:80	typeref:enum:__anon12
+gen	D:\libcdio\lib\driver\solaris.c	/^  generic_img_private_t gen; $/;"	member	line:86	struct:__anon13	access:public
+access_mode	D:\libcdio\lib\driver\solaris.c	/^  access_mode_t access_mode;$/;"	member	line:88	struct:__anon13	access:public
+tocent	D:\libcdio\lib\driver\solaris.c	/^  struct cdrom_tocentry  tocent[CDIO_CD_MAX_TRACKS+1]; $/;"	member	line:92	struct:__anon13	typeref:struct:__anon13::cdrom_tocentry	access:public
+tochdr	D:\libcdio\lib\driver\solaris.c	/^  struct cdrom_tochdr    tochdr;$/;"	member	line:95	struct:__anon13	typeref:struct:__anon13::cdrom_tochdr	access:public
+_img_private_t	D:\libcdio\lib\driver\solaris.c	/^} _img_private_t;$/;"	typedef	line:96	typeref:struct:__anon13
+get_track_format_solaris	D:\libcdio\lib\driver\solaris.c	/^static track_format_t get_track_format_solaris(void *p_user_data, $/;"	prototype	line:98	signature:(void *p_user_data, track_t i_track)
+str_to_access_mode_solaris	D:\libcdio\lib\driver\solaris.c	/^str_to_access_mode_solaris(const char *psz_access_mode) $/;"	function	line:102	signature:(const char *psz_access_mode)
+audio_pause_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_pause_solaris (void *p_user_data) $/;"	function	line:126	signature:(void *p_user_data)
+audio_play_msf_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_play_msf_solaris (void *p_user_data, msf_t *p_start_msf, $/;"	function	line:139	signature:(void *p_user_data, msf_t *p_start_msf, msf_t *p_end_msf)
+audio_play_track_index_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_play_track_index_solaris (void *p_user_data, $/;"	function	line:163	signature:(void *p_user_data, cdio_track_index_t *p_track_index)
+audio_read_subchannel_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_read_subchannel_solaris (void *p_user_data, $/;"	function	line:178	signature:(void *p_user_data, cdio_subchannel_t *p_subchannel)
+audio_resume_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_resume_solaris (void *p_user_data)$/;"	function	line:219	signature:(void *p_user_data)
+audio_set_volume_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_set_volume_solaris (void *p_user_data, $/;"	function	line:233	signature:(void *p_user_data, cdio_audio_volume_t *p_volume)
+audio_stop_solaris	D:\libcdio\lib\driver\solaris.c	/^audio_stop_solaris (void *p_user_data)$/;"	function	line:247	signature:(void *p_user_data)
+init_solaris	D:\libcdio\lib\driver\solaris.c	/^init_solaris (_img_private_t *p_env)$/;"	function	line:257	signature:(_img_private_t *p_env)
+run_mmc_cmd_solaris	D:\libcdio\lib\driver\solaris.c	/^run_mmc_cmd_solaris( void *p_user_data, unsigned int i_timeout_ms,$/;"	function	line:280	signature:( void *p_user_data, unsigned int i_timeout_ms, unsigned int i_cdb, const mmc_cdb_t *p_cdb, cdio_mmc_direction_t e_direction, unsigned int i_buf, void *p_buf )
+_read_audio_sectors_solaris	D:\libcdio\lib\driver\solaris.c	/^_read_audio_sectors_solaris (void *p_user_data, void *data, lsn_t i_lsn, $/;"	function	line:311	signature:(void *p_user_data, void *data, lsn_t i_lsn, unsigned int i_blocks)
+_read_mode1_sector_solaris	D:\libcdio\lib\driver\solaris.c	/^_read_mode1_sector_solaris (void *p_env, void *data, lsn_t i_lsn, $/;"	function	line:363	signature:(void *p_env, void *data, lsn_t i_lsn, bool b_form2)
+_read_mode1_sectors_solaris	D:\libcdio\lib\driver\solaris.c	/^_read_mode1_sectors_solaris (void *p_user_data, void *p_data, lsn_t i_lsn, $/;"	function	line:379	signature:(void *p_user_data, void *p_data, lsn_t i_lsn, bool b_form2, unsigned int i_blocks)
+_read_mode2_sector_solaris	D:\libcdio\lib\driver\solaris.c	/^_read_mode2_sector_solaris (void *p_user_data, void *p_data, lsn_t i_lsn, $/;"	function	line:400	signature:(void *p_user_data, void *p_data, lsn_t i_lsn, bool b_form2)
+_read_mode2_sectors_solaris	D:\libcdio\lib\driver\solaris.c	/^_read_mode2_sectors_solaris (void *p_user_data, void *data, lsn_t i_lsn, $/;"	function	line:459	signature:(void *p_user_data, void *data, lsn_t i_lsn, bool b_form2, unsigned int i_blocks)
+get_disc_last_lsn_solaris	D:\libcdio\lib\driver\solaris.c	/^get_disc_last_lsn_solaris (void *p_user_data)$/;"	function	line:482	signature:(void *p_user_data)
+_set_arg_solaris	D:\libcdio\lib\driver\solaris.c	/^_set_arg_solaris (void *p_user_data, const char key[], const char value[])$/;"	function	line:512	signature:(void *p_user_data, const char key[], const char value[])
+read_toc_solaris	D:\libcdio\lib\driver\solaris.c	/^read_toc_solaris (void *p_user_data) $/;"	function	line:536	signature:(void *p_user_data)
+eject_media_solaris	D:\libcdio\lib\driver\solaris.c	/^eject_media_solaris (void *p_user_data) {$/;"	function	line:589	signature:(void *p_user_data)
+get_arg_solaris	D:\libcdio\lib\driver\solaris.c	/^get_arg_solaris (void *p_user_data, const char key[])$/;"	function	line:612	signature:(void *p_user_data, const char key[])
+get_blocksize_solaris	D:\libcdio\lib\driver\solaris.c	/^get_blocksize_solaris (void *p_user_data) {$/;"	function	line:636	signature:(void *p_user_data)
+cdio_get_default_device_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_get_default_device_solaris(void)$/;"	function	line:655	signature:(void)
+get_discmode_solaris	D:\libcdio\lib\driver\solaris.c	/^get_discmode_solaris (void *p_user_data)$/;"	function	line:693	signature:(void *p_user_data)
+get_last_session_solaris	D:\libcdio\lib\driver\solaris.c	/^get_last_session_solaris (void *p_user_data, $/;"	function	line:812	signature:(void *p_user_data, lsn_t *i_last_session_lsn)
+get_track_format_solaris	D:\libcdio\lib\driver\solaris.c	/^get_track_format_solaris(void *p_user_data, track_t i_track) $/;"	function	line:831	signature:(void *p_user_data, track_t i_track)
+get_track_green_solaris	D:\libcdio\lib\driver\solaris.c	/^get_track_green_solaris(void *p_user_data, track_t i_track) $/;"	function	line:869	signature:(void *p_user_data, track_t i_track)
+get_track_msf_solaris	D:\libcdio\lib\driver\solaris.c	/^get_track_msf_solaris(void *p_user_data, track_t i_track, msf_t *msf)$/;"	function	line:899	signature:(void *p_user_data, track_t i_track, msf_t *msf)
+set_blocksize_solaris	D:\libcdio\lib\driver\solaris.c	/^set_blocksize_solaris (void *p_user_data, uint16_t i_blocksize) {$/;"	function	line:928	signature:(void *p_user_data, uint16_t i_blocksize)
+set_speed_solaris	D:\libcdio\lib\driver\solaris.c	/^set_speed_solaris (void *p_user_data, int i_speed)$/;"	function	line:944	signature:(void *p_user_data, int i_speed)
+cdio_get_default_device_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_get_default_device_solaris(void)$/;"	function	line:957	signature:(void)
+close_tray_solaris	D:\libcdio\lib\driver\solaris.c	/^close_tray_solaris (const char *psz_device)$/;"	function	line:971	signature:(const char *psz_device)
+cdio_get_devices_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_get_devices_solaris (void)$/;"	function	line:996	signature:(void)
+cdio_open_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_open_solaris (const char *psz_source_name)$/;"	function	line:1046	signature:(const char *psz_source_name)
+cdio_open_am_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_open_am_solaris (const char *psz_orig_source, const char *access_mode)$/;"	function	line:1057	signature:(const char *psz_orig_source, const char *access_mode)
+cdio_have_solaris	D:\libcdio\lib\driver\solaris.c	/^cdio_have_solaris (void)$/;"	function	line:1167	signature:(void)

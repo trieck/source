@@ -8,38 +8,43 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="..\..\..\libcdio\lib\driver\util.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\utf8.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\track.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\sector.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\read.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\netbsd.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\mmc.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\logging.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\image_common.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\ds.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\disc.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\device.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\cdtext.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\cdio.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\cd_types.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\bsdi.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\audio.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\_cdio_stream.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\_cdio_stdio.c"/>
-    <File Name="..\..\..\libcdio\lib\driver\_cdio_generic.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\_cdio_generic.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\_cdio_stdio.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\_cdio_stream.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\aix.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\audio.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\bsdi.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\cd_types.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\cdio.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\cdtext.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\device.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\disc.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\ds.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\gnu_linux.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\image_common.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\logging.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\mmc.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\netbsd.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\os2.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\osx.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\read.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\sector.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\solaris.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\track.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\utf8.c"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\util.c"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="..\..\..\libcdio\lib\driver\portable.h"/>
-    <File Name="..\..\..\libcdio\lib\driver\mmc_private.h"/>
-    <File Name="..\..\..\libcdio\lib\driver\image_common.h"/>
-    <File Name="..\..\..\libcdio\lib\driver\image.h"/>
-    <File Name="..\..\..\libcdio\lib\driver\generic.h"/>
-    <File Name="..\..\..\libcdio\lib\driver\cdtext_private.h"/>
-    <File Name="..\..\..\libcdio\lib\driver\cdio_private.h"/>
-    <File Name="..\..\..\libcdio\lib\driver\cdio_assert.h"/>
-    <File Name="..\..\..\libcdio\lib\driver\_cdio_stream.h"/>
-    <File Name="..\..\..\libcdio\lib\driver\_cdio_stdio.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\portable.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\mmc_private.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\image_common.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\image.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\generic.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\cdtext_private.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\cdio_private.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\cdio_assert.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\_cdio_stream.h"/>
+    <File Name="..\..\..\..\libcdio\lib\driver\_cdio_stdio.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Settings Type="Static Library">
@@ -53,25 +58,23 @@
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="./Debug" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
-        <PostConnectCommands></PostConnectCommands>
-        <StartupCommands></StartupCommands>
+        <PostConnectCommands/>
+        <StartupCommands/>
       </Debugger>
       <PreBuild/>
       <PostBuild/>
       <CustomBuild Enabled="no">
-        <CleanCommand></CleanCommand>
-        <BuildCommand></BuildCommand>
-        <PreprocessFileCommand></PreprocessFileCommand>
-        <SingleFileCommand></SingleFileCommand>
-        <MakefileGenerationCommand></MakefileGenerationCommand>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
         <ThirdPartyToolName>None</ThirdPartyToolName>
-        <WorkingDirectory></WorkingDirectory>
+        <WorkingDirectory/>
       </CustomBuild>
       <AdditionalRules>
-        <CustomPostBuild></CustomPostBuild>
-        <CustomPreBuild>
-
-</CustomPreBuild>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
     <Configuration Name="Release" CompilerType="gnu gcc" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
@@ -82,30 +85,29 @@
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="./Release" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
-        <PostConnectCommands></PostConnectCommands>
-        <StartupCommands></StartupCommands>
+        <PostConnectCommands/>
+        <StartupCommands/>
       </Debugger>
       <PreBuild/>
       <PostBuild/>
       <CustomBuild Enabled="no">
-        <CleanCommand></CleanCommand>
-        <BuildCommand></BuildCommand>
-        <PreprocessFileCommand></PreprocessFileCommand>
-        <SingleFileCommand></SingleFileCommand>
-        <MakefileGenerationCommand></MakefileGenerationCommand>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
         <ThirdPartyToolName>None</ThirdPartyToolName>
-        <WorkingDirectory></WorkingDirectory>
+        <WorkingDirectory/>
       </CustomBuild>
       <AdditionalRules>
-        <CustomPostBuild></CustomPostBuild>
-        <CustomPreBuild>
-
-</CustomPreBuild>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
     <GlobalSettings>
       <Compiler Options="">
         <IncludePath Value="."/>
+        <IncludePath Value="..\"/>
         <IncludePath Value="D:/libcdio/include"/>
         <IncludePath Value="D:/libcdio/lib/driver"/>
         <Preprocessor Value="HAVE_CONFIG_H"/>
