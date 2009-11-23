@@ -1,8 +1,34 @@
-ISO_XA_MARKER_STRING	D:\libcdio\lib\iso9660\xa.c	/^const char ISO_XA_MARKER_STRING[] = {'C', 'D', '-', 'X', 'A', '0', '0', '1'};$/;"	variable	line:38
-debugger_xa_misc_enum	D:\libcdio\lib\iso9660\xa.c	/^xa_misc_enum_t debugger_xa_misc_enum;$/;"	variable	line:53
-BUF_COUNT	D:\libcdio\lib\iso9660\xa.c	/^#define BUF_COUNT 16$/;"	macro	line:55
-BUF_SIZE	D:\libcdio\lib\iso9660\xa.c	/^#define BUF_SIZE 80$/;"	macro	line:56
-_getbuf	D:\libcdio\lib\iso9660\xa.c	/^_getbuf (void)$/;"	function	line:60	signature:(void)
-iso9660_get_xa_attr_str	D:\libcdio\lib\iso9660\xa.c	/^iso9660_get_xa_attr_str (uint16_t xa_attr)$/;"	function	line:103	signature:(uint16_t xa_attr)
-iso9660_xa_init	D:\libcdio\lib\iso9660\xa.c	/^iso9660_xa_init (iso9660_xa_t *_xa, uint16_t uid, uint16_t gid, uint16_t attr, $/;"	function	line:131	signature:(iso9660_xa_t *_xa, uint16_t uid, uint16_t gid, uint16_t attr, uint8_t filenum)
-iso9660_get_posix_filemode_from_xa	D:\libcdio\lib\iso9660\xa.c	/^iso9660_get_posix_filemode_from_xa(uint16_t i_perms) $/;"	function	line:158	signature:(uint16_t i_perms)
+__CDIO_XA_H__	D:\libcdio\include\cdio\xa.h	/^#define __CDIO_XA_H__$/;"	macro	line:35
+ISO_XA_MARKER_OFFSET	D:\libcdio\include\cdio\xa.h	/^    ISO_XA_MARKER_OFFSET =   1024,$/;"	enumerator	line:47	enum:__anon53
+XA_PERM_RSYS	D:\libcdio\include\cdio\xa.h	/^    XA_PERM_RSYS =         0x0001,  \/**< System Group Read *\/$/;"	enumerator	line:48	enum:__anon53
+XA_PERM_XSYS	D:\libcdio\include\cdio\xa.h	/^    XA_PERM_XSYS =         0x0004,  \/**< System Group Execute *\/$/;"	enumerator	line:49	enum:__anon53
+XA_PERM_RUSR	D:\libcdio\include\cdio\xa.h	/^    XA_PERM_RUSR =         0x0010,  \/**< User (owner) Read *\/$/;"	enumerator	line:51	enum:__anon53
+XA_PERM_XUSR	D:\libcdio\include\cdio\xa.h	/^    XA_PERM_XUSR =         0x0040,  \/**< User (owner) Execute *\/$/;"	enumerator	line:52	enum:__anon53
+XA_PERM_RGRP	D:\libcdio\include\cdio\xa.h	/^    XA_PERM_RGRP =         0x0100,  \/**< Group Read *\/$/;"	enumerator	line:54	enum:__anon53
+XA_PERM_XGRP	D:\libcdio\include\cdio\xa.h	/^    XA_PERM_XGRP =         0x0400,  \/**< Group Execute *\/$/;"	enumerator	line:55	enum:__anon53
+XA_PERM_ROTH	D:\libcdio\include\cdio\xa.h	/^    XA_PERM_ROTH =         0x1000,  \/**< Other (world) Read *\/$/;"	enumerator	line:57	enum:__anon53
+XA_PERM_XOTH	D:\libcdio\include\cdio\xa.h	/^    XA_PERM_XOTH =         0x4000,  \/**< Other (world) Execute *\/$/;"	enumerator	line:58	enum:__anon53
+XA_ATTR_MODE2FORM1	D:\libcdio\include\cdio\xa.h	/^    XA_ATTR_MODE2FORM1  =   (1 << 11),$/;"	enumerator	line:60	enum:__anon53
+XA_ATTR_MODE2FORM2	D:\libcdio\include\cdio\xa.h	/^    XA_ATTR_MODE2FORM2  =   (1 << 12),$/;"	enumerator	line:61	enum:__anon53
+XA_ATTR_INTERLEAVED	D:\libcdio\include\cdio\xa.h	/^    XA_ATTR_INTERLEAVED =   (1 << 13),$/;"	enumerator	line:62	enum:__anon53
+XA_ATTR_CDDA	D:\libcdio\include\cdio\xa.h	/^    XA_ATTR_CDDA        =   (1 << 14),$/;"	enumerator	line:63	enum:__anon53
+XA_ATTR_DIRECTORY	D:\libcdio\include\cdio\xa.h	/^    XA_ATTR_DIRECTORY   =   (1 << 15),$/;"	enumerator	line:64	enum:__anon53
+XA_PERM_ALL_READ	D:\libcdio\include\cdio\xa.h	/^    XA_PERM_ALL_READ    =   (XA_PERM_RUSR | XA_PERM_RSYS | XA_PERM_RGRP),$/;"	enumerator	line:66	enum:__anon53
+XA_PERM_ALL_EXEC	D:\libcdio\include\cdio\xa.h	/^    XA_PERM_ALL_EXEC    =   (XA_PERM_XUSR | XA_PERM_XSYS | XA_PERM_XGRP),$/;"	enumerator	line:67	enum:__anon53
+XA_PERM_ALL_ALL	D:\libcdio\include\cdio\xa.h	/^    XA_PERM_ALL_ALL     =   (XA_PERM_ALL_READ | XA_PERM_ALL_EXEC),$/;"	enumerator	line:68	enum:__anon53
+XA_FORM1_DIR	D:\libcdio\include\cdio\xa.h	/^    XA_FORM1_DIR  = (XA_ATTR_DIRECTORY | XA_ATTR_MODE2FORM1 | XA_PERM_ALL_ALL),$/;"	enumerator	line:70	enum:__anon53
+XA_FORM1_FILE	D:\libcdio\include\cdio\xa.h	/^    XA_FORM1_FILE =  (XA_ATTR_MODE2FORM1 | XA_PERM_ALL_ALL),$/;"	enumerator	line:71	enum:__anon53
+XA_FORM2_FILE	D:\libcdio\include\cdio\xa.h	/^    XA_FORM2_FILE =  (XA_ATTR_MODE2FORM2 | XA_PERM_ALL_ALL)$/;"	enumerator	line:72	enum:__anon53
+xa_misc_enum_t	D:\libcdio\include\cdio\xa.h	/^  } xa_misc_enum_t;$/;"	typedef	line:73	typeref:enum:__anon53
+ISO_XA_MARKER_STRING	D:\libcdio\include\cdio\xa.h	/^#define ISO_XA_MARKER_STRING    "CD-XA001"$/;"	macro	line:77
+iso9660_xa_s	D:\libcdio\include\cdio\xa.h	/^typedef struct iso9660_xa_s$/;"	struct	line:101
+group_id	D:\libcdio\include\cdio\xa.h	/^  uint16_t group_id;      \/**< 0 *\/$/;"	member	line:103	struct:iso9660_xa_s	access:public
+user_id	D:\libcdio\include\cdio\xa.h	/^  uint16_t user_id;       \/**< 0 *\/$/;"	member	line:104	struct:iso9660_xa_s	access:public
+attributes	D:\libcdio\include\cdio\xa.h	/^  uint16_t attributes;    \/**< XA_ATTR_ *\/ $/;"	member	line:105	struct:iso9660_xa_s	access:public
+signature	D:\libcdio\include\cdio\xa.h	/^  char     signature[2];  \/**< { 'X', 'A' } *\/$/;"	member	line:106	struct:iso9660_xa_s	access:public
+filenum	D:\libcdio\include\cdio\xa.h	/^  uint8_t  filenum;       \/**< file number, see also XA subheader *\/$/;"	member	line:107	struct:iso9660_xa_s	access:public
+reserved	D:\libcdio\include\cdio\xa.h	/^  uint8_t  reserved[5];   \/**< zero *\/$/;"	member	line:108	struct:iso9660_xa_s	access:public
+iso9660_xa_t	D:\libcdio\include\cdio\xa.h	/^} GNUC_PACKED iso9660_xa_t;$/;"	typedef	line:109	typeref:struct:iso9660_xa_s
+iso9660_get_posix_filemode_from_xa	D:\libcdio\include\cdio\xa.h	/^  posix_mode_t iso9660_get_posix_filemode_from_xa(uint16_t i_perms);$/;"	prototype	line:115	signature:(uint16_t i_perms)
+iso9660_get_xa_attr_str	D:\libcdio\include\cdio\xa.h	/^iso9660_get_xa_attr_str (uint16_t xa_attr);$/;"	prototype	line:146	signature:(uint16_t xa_attr)
+iso9660_xa_init	D:\libcdio\include\cdio\xa.h	/^iso9660_xa_init (iso9660_xa_t *_xa, uint16_t uid, uint16_t gid, uint16_t attr, $/;"	prototype	line:155	signature:(iso9660_xa_t *_xa, uint16_t uid, uint16_t gid, uint16_t attr, uint8_t filenum)
