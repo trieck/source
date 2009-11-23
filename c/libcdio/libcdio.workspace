@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Workspace Name="libcdio" Database=".\libcdio.tags">
+  <Project Name="iso9660" Path="iso9660.project" Active="Yes"/>
+  <Project Name="driver" Path="driver.project" Active="No"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Project Name="iso9660" ConfigName="Debug"/>
+      <Project Name="driver" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Project Name="iso9660" ConfigName="Release"/>
+      <Project Name="driver" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>

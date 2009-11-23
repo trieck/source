@@ -1,0 +1,8 @@
+ISO_XA_MARKER_STRING	D:\libcdio\lib\iso9660\xa.c	/^const char ISO_XA_MARKER_STRING[] = {'C', 'D', '-', 'X', 'A', '0', '0', '1'};$/;"	variable	line:38
+debugger_xa_misc_enum	D:\libcdio\lib\iso9660\xa.c	/^xa_misc_enum_t debugger_xa_misc_enum;$/;"	variable	line:53
+BUF_COUNT	D:\libcdio\lib\iso9660\xa.c	/^#define BUF_COUNT 16$/;"	macro	line:55
+BUF_SIZE	D:\libcdio\lib\iso9660\xa.c	/^#define BUF_SIZE 80$/;"	macro	line:56
+_getbuf	D:\libcdio\lib\iso9660\xa.c	/^_getbuf (void)$/;"	function	line:60	signature:(void)
+iso9660_get_xa_attr_str	D:\libcdio\lib\iso9660\xa.c	/^iso9660_get_xa_attr_str (uint16_t xa_attr)$/;"	function	line:103	signature:(uint16_t xa_attr)
+iso9660_xa_init	D:\libcdio\lib\iso9660\xa.c	/^iso9660_xa_init (iso9660_xa_t *_xa, uint16_t uid, uint16_t gid, uint16_t attr, $/;"	function	line:131	signature:(iso9660_xa_t *_xa, uint16_t uid, uint16_t gid, uint16_t attr, uint8_t filenum)
+iso9660_get_posix_filemode_from_xa	D:\libcdio\lib\iso9660\xa.c	/^iso9660_get_posix_filemode_from_xa(uint16_t i_perms) $/;"	function	line:158	signature:(uint16_t i_perms)
