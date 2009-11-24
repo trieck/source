@@ -25,6 +25,13 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	m_menuBar->Append( m_menuFile, _("&File") );
 	
+	m_menuHelp = new wxMenu();
+	wxMenuItem* m_menuAbout;
+	m_menuAbout = new wxMenuItem( m_menuHelp, wxID_ANY, wxString( _("About") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuHelp->Append( m_menuAbout );
+	
+	m_menuBar->Append( m_menuHelp, _("Help") );
+	
 	this->SetMenuBar( m_menuBar );
 	
 	m_statusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
@@ -36,6 +43,8 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_toolBar->AddTool( wxID_SAVE, _("&Save"), wxBitmap( wxT("resources/save.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString );
 	m_toolBar->AddSeparator();
 	m_toolBar->AddTool( wxID_ANY, _("&Delete"), wxBitmap( wxT("resources/delete.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString );
+	m_toolBar->AddSeparator();
+	m_toolBar->AddTool( wxID_ABOUT, _("About"), wxBitmap( wxT("resources/help.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString );
 	m_toolBar->Realize();
 	
 	wxBoxSizer* bSizer;

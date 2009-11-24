@@ -24,8 +24,10 @@ bool MainApp::OnInit()
 {
 	wxImage::AddHandler(new wxPNGHandler());
 	
-	SetTopWindow( new MainFrame( NULL ) );
-	GetTopWindow()->Show();
+	wxFrame *pFrame = new MainFrame(NULL);
+	SetTopWindow(pFrame);
+	
+	pFrame->Show();
 	
 	// true = enter the main loop
 	return true;

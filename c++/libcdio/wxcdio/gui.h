@@ -38,6 +38,7 @@ class MainFrameBase : public wxFrame
 	protected:
 		wxMenuBar* m_menuBar;
 		wxMenu* m_menuFile;
+		wxMenu* m_menuHelp;
 		wxStatusBar* m_statusBar;
 		wxToolBar* m_toolBar;
 		wxTreeCtrl* m_treeCtrl;
