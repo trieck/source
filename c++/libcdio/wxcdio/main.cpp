@@ -22,6 +22,8 @@ IMPLEMENT_APP(MainApp);
 
 bool MainApp::OnInit()
 {
+	wxImage::AddHandler(new wxPNGHandler());
+	
 	SetTopWindow( new MainFrame( NULL ) );
 	GetTopWindow()->Show();
 	
