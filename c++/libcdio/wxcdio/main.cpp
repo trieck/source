@@ -12,7 +12,8 @@
  *********************************************************************/
 
 #include "main.h"
-#include "wxcdioframe.h"
+#include "wxcdiodoc.h"
+#include "wxcdioview.h"
 
 // initialize the application
 IMPLEMENT_APP(MainApp);
@@ -21,15 +22,42 @@ IMPLEMENT_APP(MainApp);
 // application class implementation 
 ////////////////////////////////////////////////////////////////////////////////
 
+MainApp::MainApp() : m_docManager(NULL)
+{
+}
+
 bool MainApp::OnInit()
 {
-	wxImage::AddHandler(new wxPNGHandler());
+	m_docManager = new wxDocManager;
+	m_docManager->SetMaxDocsOpen(1);
 	
-	wxFrame *pFrame = new wxcdioFrame(NULL);
+	// create a template relating drawing documents to their views
+    (void)new wxDocTemplate(m_docManager, _T("ISO image"), _T("*.iso"), 
+		_T(""), 
+		_T("iso"), 
+		_T("wxcdioDoc"), 
+		_T("wxcdioView"),
+        CLASSINFO(wxcdioDoc), 
+		CLASSINFO(wxcdioView));
+			
+	wxFrame *pFrame = new wxcdioFrame(m_docManager);
+	pFrame->Centre(wxBOTH);
+	
 	SetTopWindow(pFrame);
 	
 	pFrame->Show();
 	
 	// true = enter the main loop
 	return true;
+}
+
+wxcdioFrame *MainApp::GetFrame() const
+{
+	return (wxcdioFrame*)GetTopWindow();
+}
+
+int MainApp::OnExit(void)
+{
+    delete m_docManager;
+    return 0;
 }

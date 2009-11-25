@@ -16,6 +16,8 @@
 
 // main wxWidgets header file
 #include <wx/wx.h>
+#include <wx/docview.h>
+#include "wxcdioframe.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // application class declaration 
@@ -23,8 +25,16 @@
 
 class MainApp : public wxApp
 {
-	public:
-		virtual bool OnInit();
+public:
+	MainApp();
+	
+	bool OnInit();
+	int OnExit(void);
+	
+	wxcdioFrame *GetFrame() const;
+	
+private:
+	wxDocManager* m_docManager;		
 };
 
 // declare global static function wxGetApp()

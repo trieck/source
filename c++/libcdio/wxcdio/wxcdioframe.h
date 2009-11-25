@@ -2,7 +2,6 @@
 #define __wxcdioframe__
 
 #include <wx/docview.h>
-#include <wx/treectrl.h>
 
 class wxcdioFrame : public wxDocParentFrame {
 
@@ -23,7 +22,6 @@ private:
 	wxMenu* m_menuHelp;
 	wxStatusBar* m_statusBar;
 	wxToolBar* m_toolBar;
-	wxTreeCtrl* m_treeCtrl;
 		
 protected:
 	virtual void OnCloseFrame(wxCloseEvent& event); 	

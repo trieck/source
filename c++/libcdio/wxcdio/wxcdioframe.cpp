@@ -7,7 +7,13 @@ wxcdioFrame::wxcdioFrame(wxDocManager *manager, wxFrame *frame,
 	const wxSize& size, long style, const wxString& name) 
 	: wxDocParentFrame(manager, frame, id, title, pos, size, style, name)
 {
-	SetSizeHints( wxDefaultSize, wxDefaultSize );
+	wxImage::AddHandler(new wxPNGHandler());
+	
+	SetSizeHints(wxDefaultSize, wxDefaultSize);
+
+	#ifdef __WXMSW__
+		SetIcon(wxIcon(wxT("resources/app.png"), wxBITMAP_TYPE_PNG, 16, 16));
+	#endif
 	
 	m_menuBar = new wxMenuBar( 0 );
 	m_menuFile = new wxMenu();
@@ -43,21 +49,13 @@ wxcdioFrame::wxcdioFrame(wxDocManager *manager, wxFrame *frame,
 	m_toolBar->AddSeparator();
 	m_toolBar->AddTool( wxID_ABOUT, _("About"), wxBitmap( wxT("resources/help.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString );
 	m_toolBar->Realize();
-	
-	wxBoxSizer* bSizer;
-	bSizer = new wxBoxSizer( wxVERTICAL );
-	
-	m_treeCtrl = new wxTreeCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
-	bSizer->Add( m_treeCtrl, 1, wxEXPAND, 5 );
-	
-	SetSizer( bSizer );
+		
 	Layout();
-	
-	Centre( wxBOTH );
+	Centre(wxBOTH);
 	
 	// Connect Events
-	Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler(wxcdioFrame::OnCloseFrame));
-	Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(wxcdioFrame::OnExitClick));//
+	Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(wxcdioFrame::OnCloseFrame));
+	Connect(menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(wxcdioFrame::OnExitClick));
 }
 
 void wxcdioFrame::OnCloseFrame(wxCloseEvent& event)

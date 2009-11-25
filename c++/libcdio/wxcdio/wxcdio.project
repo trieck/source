@@ -10,10 +10,16 @@
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="wxcdioframe.cpp"/>
+    <File Name="wxcdiodoc.cpp"/>
+    <File Name="wxcdioview.cpp"/>
+    <File Name="wxcdiocanvas.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="main.h"/>
     <File Name="wxcdioframe.h"/>
+    <File Name="wxcdiodoc.h"/>
+    <File Name="wxcdioview.h"/>
+    <File Name="wxcdiocanvas.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
