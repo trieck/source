@@ -12,6 +12,7 @@ public:
 
 	void OnDraw(wxDC*);
 	bool OnCreate(wxDocument* doc, long flags);
+	void OnClosingDocument();
 	bool OnClose(bool deleteWindow);
 	
     DECLARE_EVENT_TABLE()

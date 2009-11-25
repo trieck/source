@@ -31,7 +31,13 @@ bool wxcdioView::OnCreate(wxDocument* doc, long flags)
 }
 
 bool wxcdioView::OnClose(bool deleteWindow)
+{
+	return wxView::OnClose(deleteWindow);
+}
+
+void wxcdioView::OnClosingDocument()
 {	
+	wxView::OnClosingDocument();
 }
 
 void wxcdioView::OnDraw(wxDC* pDC)
