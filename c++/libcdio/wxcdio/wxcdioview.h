@@ -15,10 +15,9 @@ public:
 	void OnClosingDocument();
 	bool OnClose(bool deleteWindow);
 	
-    DECLARE_EVENT_TABLE()
-	
 private:
 	wxcdioCanvas *m_canvas;
+	int m_canvasID;
 };
 
 #endif // __wxcdioview__

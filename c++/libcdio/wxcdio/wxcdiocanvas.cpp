@@ -1,5 +1,8 @@
 #include "wxcdiocanvas.h"
 
+BEGIN_EVENT_TABLE(wxcdioCanvas, wxScrolledWindow)
+END_EVENT_TABLE()
+	
 wxcdioCanvas::wxcdioCanvas(wxFrame *frame, const wxPoint& pos, 
 	const wxSize& size, const long style) : 
     wxScrolledWindow(frame, wxID_ANY, pos, size, style), m_treeCtrl(NULL)

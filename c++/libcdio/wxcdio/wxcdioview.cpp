@@ -4,10 +4,7 @@
 
 IMPLEMENT_DYNAMIC_CLASS(wxcdioView, wxView)
 
-BEGIN_EVENT_TABLE(wxcdioView, wxView)    
-END_EVENT_TABLE()
-
-wxcdioView::wxcdioView() : m_canvas(NULL)
+wxcdioView::wxcdioView() : m_canvas(NULL), m_canvasID(0)
 {
 }
 
@@ -26,13 +23,25 @@ bool wxcdioView::OnCreate(wxDocument* doc, long flags)
 	wxSize size = theFrame->GetClientSize();
 	
 	m_canvas = new wxcdioCanvas(theFrame, wxPoint(0, 0), size, 0);
-		 
+	m_canvasID = m_canvas->GetId();
+	
 	return true;
 }
 
 bool wxcdioView::OnClose(bool deleteWindow)
 {
-	return wxView::OnClose(deleteWindow);
+	if (!GetDocument()->Close())
+        return false;
+		
+	if (deleteWindow && m_canvas != NULL) {
+		wxWindow *pCanvas;
+		if ((pCanvas = wxWindow::FindWindowById(m_canvasID)) != NULL) {
+			pCanvas->Destroy();
+			m_canvas = NULL;
+		}
+	}
+	
+	return true;
 }
 
 void wxcdioView::OnClosingDocument()
