@@ -12,7 +12,7 @@ wxcdioFrame::wxcdioFrame(wxDocManager *manager, wxFrame *frame,
 	SetSizeHints(wxDefaultSize, wxDefaultSize);
 
 	#ifdef __WXMSW__
-		SetIcon(wxIcon(wxT("resources/app.png"), wxBITMAP_TYPE_PNG, 16, 16));
+		SetIcon(wxIcon(wxT("WXICON_AAA")));
 	#endif
 	
 	m_menuBar = new wxMenuBar( 0 );
