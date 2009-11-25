@@ -33,11 +33,14 @@ bool wxcdioView::OnClose(bool deleteWindow)
 	if (!GetDocument()->Close())
         return false;
 		
-	if (deleteWindow && m_canvas != NULL) {
+	// check whether the canvas window is still around
+	// and destroy it explicitly
+	if (m_canvasID != 0) {
 		wxWindow *pCanvas;
 		if ((pCanvas = wxWindow::FindWindowById(m_canvasID)) != NULL) {
 			pCanvas->Destroy();
 			m_canvas = NULL;
+			m_canvasID = 0;
 		}
 	}
 	
