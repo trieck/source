@@ -12,6 +12,7 @@
  *********************************************************************/
 
 #include "main.h"
+#include "wxcdioframe.h"
 
 // initialize the application
 IMPLEMENT_APP(MainApp);
@@ -24,33 +25,11 @@ bool MainApp::OnInit()
 {
 	wxImage::AddHandler(new wxPNGHandler());
 	
-	wxFrame *pFrame = new MainFrame(NULL);
+	wxFrame *pFrame = new wxcdioFrame(NULL);
 	SetTopWindow(pFrame);
 	
 	pFrame->Show();
 	
 	// true = enter the main loop
 	return true;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// main application frame implementation 
-////////////////////////////////////////////////////////////////////////////////
-
-MainFrame::MainFrame(wxWindow *parent) : MainFrameBase( parent )
-{
-}
-
-MainFrame::~MainFrame()
-{
-}
-
-void MainFrame::OnCloseFrame(wxCloseEvent& event)
-{
-	Destroy();
-}
-
-void MainFrame::OnExitClick(wxCommandEvent& event)
-{
-	Destroy();
 }
