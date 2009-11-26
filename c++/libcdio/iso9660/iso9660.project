@@ -79,7 +79,7 @@
     <GlobalSettings>
       <Compiler Options="">
         <IncludePath Value="."/>
-        <IncludePath Value="..\"/>
+        <IncludePath Value="../"/>
         <IncludePath Value="D:/libcdio/include"/>
         <IncludePath Value="D:/libcdio/lib/driver"/>
         <Preprocessor Value="HAVE_CONFIG_H"/>

@@ -15,7 +15,7 @@ wxcdioFrame::wxcdioFrame(wxDocManager *manager, wxFrame *frame,
 		SetIcon(wxIcon(wxT("WXICON_AAA")));
 	#endif
 	
-	m_menuBar = new wxMenuBar( 0 );
+	m_menuBar = new wxMenuBar();
 	m_menuFile = new wxMenu();
 	wxMenuItem* menuFileNew;
 	menuFileNew = new wxMenuItem( m_menuFile, wxID_NEW, wxString( _("&New") ) + wxT('\t') + wxT("Alt+N"), _("Create a new ISO image"), wxITEM_NORMAL );
@@ -36,10 +36,10 @@ wxcdioFrame::wxcdioFrame(wxDocManager *manager, wxFrame *frame,
 	
 	SetMenuBar( m_menuBar );
 	
-	m_statusBar = CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
+	m_statusBar = CreateStatusBar();
 	
-	m_toolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, wxID_ANY );
-	m_toolBar->SetToolBitmapSize( wxSize( 22,22 ) );
+	m_toolBar = CreateToolBar(wxTB_FLAT | wxTB_HORIZONTAL, wxID_ANY );
+	m_toolBar->SetToolBitmapSize(wxSize(CX_TB_BMP_SIZE, CY_TB_BMP_SIZE));
 	m_toolBar->AddSeparator();
 	m_toolBar->AddTool( wxID_NEW, _("&New"), wxBitmap( wxT("resources/new.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString );
 	m_toolBar->AddTool( wxID_OPEN, _("&Open"), wxBitmap( wxT("resources/open.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString );

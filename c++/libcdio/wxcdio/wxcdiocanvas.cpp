@@ -10,12 +10,13 @@ wxcdioCanvas::wxcdioCanvas(wxFrame *frame, const wxPoint& pos,
 	wxBoxSizer* bSizer;
 	bSizer = new wxBoxSizer(wxVERTICAL);
 		
-	m_treeCtrl = new wxTreeCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE);
+	m_treeCtrl = new wxTreeCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_HAS_BUTTONS);
 	
-	wxImageList *imageList = new wxImageList(16, 16, true, 0);
+	wxImageList *imageList = new wxImageList(CX_IMAGE, CY_IMAGE, true, 0);
+	imageList->Add(wxBitmap(wxT("resources/disk-cd.png"), wxBITMAP_TYPE_PNG));
 	imageList->Add(wxIcon(wxT("WXICON_SMALL_CLOSED_FOLDER"),  
-		wxBITMAP_TYPE_ICO_RESOURCE, 16, 16));
-	
+		wxBITMAP_TYPE_ICO_RESOURCE, CX_IMAGE, CY_IMAGE));
+		
 	m_treeCtrl->AssignImageList(imageList);	
 	m_treeCtrl->AddRoot(_T("root"), 0, 0);
 	

@@ -15,6 +15,10 @@ public:
 		
 private:
 	wxTreeCtrl* m_treeCtrl;	
+	
+	enum { CX_IMAGE = 16 };
+	enum { CY_IMAGE = 16 };
+	
 };
 
 #endif // __wxcdiocanvas__

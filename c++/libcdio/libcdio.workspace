@@ -3,19 +3,22 @@
   <Project Name="iso9660" Path="iso9660\iso9660.project" Active="No"/>
   <Project Name="driver" Path="driver\driver.project" Active="No"/>
   <Project Name="iso_read" Path="iso_read\iso_read.project" Active="No"/>
-  <Project Name="wxcdio" Path="wxcdio\wxcdio.project" Active="Yes"/>
+  <Project Name="wxcdio" Path="wxcdio\wxcdio.project" Active="No"/>
+  <Project Name="cdio++" Path="cdio++\cdio++.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="wxcdio" ConfigName="Debug"/>
       <Project Name="iso_read" ConfigName="Debug"/>
       <Project Name="iso9660" ConfigName="Debug"/>
       <Project Name="driver" ConfigName="Debug"/>
+      <Project Name="cdio++" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="iso9660" ConfigName="Release"/>
       <Project Name="driver" ConfigName="Release"/>
       <Project Name="iso_read" ConfigName="Release"/>
       <Project Name="wxcdio" ConfigName="Release"/>
+      <Project Name="cdio++" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

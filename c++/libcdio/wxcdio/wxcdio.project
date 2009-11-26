@@ -89,8 +89,10 @@
         <LibraryPath Value="."/>
         <LibraryPath Value="../driver/$(IntermediateDirectory)"/>
         <LibraryPath Value="../iso9660/$(IntermediateDirectory)"/>
+        <LibraryPath Value="../cdio++/$(IntermediateDirectory)"/>
         <Library Value="libiso9660.a"/>
         <Library Value="libdriver.a"/>
+        <Library Value="libcdio++.a"/>
         <Library Value="winmm.a"/>
       </Linker>
       <ResourceCompiler Options=""/>

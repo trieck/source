@@ -22,6 +22,9 @@ private:
 	wxMenu* m_menuHelp;
 	wxStatusBar* m_statusBar;
 	wxToolBar* m_toolBar;
+	
+	enum { CX_TB_BMP_SIZE = 22 };
+	enum { CY_TB_BMP_SIZE = 22 };
 		
 protected:
 	virtual void OnCloseFrame(wxCloseEvent& event); 	
