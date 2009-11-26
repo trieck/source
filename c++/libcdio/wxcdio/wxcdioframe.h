@@ -12,7 +12,7 @@ public:
         wxWindowID id = wxID_ANY,
         const wxString& title =  WXCDIO_APP_NAME,
         const wxPoint& pos = wxDefaultPosition,
-        const wxSize& size = wxDefaultSize,
+        const wxSize& size = wxSize(CX_FRAME, CY_FRAME),
         long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL,
         const wxString& name = wxFrameNameStr);
 	
@@ -24,12 +24,18 @@ private:
 	wxStatusBar* m_statusBar;
 	wxToolBar* m_toolBar;
 	
+	enum { CX_FRAME = 600 };
+	enum { CY_FRAME = 400 };
+	
 	enum { CX_TB_BMP_SIZE = 22 };
 	enum { CY_TB_BMP_SIZE = 22 };
 		
-protected:
-	virtual void OnCloseFrame(wxCloseEvent& event); 	
-	virtual void OnExitClick( wxCommandEvent& event );	
+	DECLARE_EVENT_TABLE()
+	
+	void OnCloseFrame(wxCloseEvent& event); 	
+	void OnExitClick(wxCommandEvent& event);	
+	
+	void OnAbout(wxCommandEvent& event);	
 };
 
 #endif // __wxcdioframe__

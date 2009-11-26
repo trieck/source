@@ -14,6 +14,7 @@
     <File Name="wxcdioview.cpp"/>
     <File Name="wxcdiocanvas.cpp"/>
     <File Name="isoimage.cpp"/>
+    <File Name="gui.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="main.h"/>
@@ -22,6 +23,7 @@
     <File Name="wxcdioview.h"/>
     <File Name="wxcdiocanvas.h"/>
     <File Name="isoimage.h"/>
+    <File Name="gui.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
@@ -102,6 +104,7 @@
   </Settings>
   <VirtualDirectory Name="resources">
     <File Name="wxcdio.rc"/>
+    <File Name="wxcdio.fbp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
 </CodeLite_Project>

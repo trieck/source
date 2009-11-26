@@ -37,7 +37,12 @@ bool wxcdioDoc::OnOpenDocument(const wxString& filename)
 
 bool wxcdioDoc::OnNewDocument()
 {
-	if (!wxDocument::OnNewDocument())
+	return wxDocument::OnNewDocument();
+}
+
+bool wxcdioDoc::OnCloseDocument()
+{
+	if (!wxDocument::OnCloseDocument())
 		return false;
 		
 	MainApp &theApp = wxGetApp();
@@ -46,11 +51,6 @@ bool wxcdioDoc::OnNewDocument()
 	frame->SetTitle(WXCDIO_APP_NAME);
 	
 	return true;
-}
-
-bool wxcdioDoc::OnCloseDocument()
-{
-	return wxDocument::OnCloseDocument();
 }
 
 wxOutputStream& wxcdioDoc::SaveObject(wxOutputStream& stream)
