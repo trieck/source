@@ -17,7 +17,8 @@
 // main wxWidgets header file
 #include <wx/wx.h>
 #include <wx/docview.h>
-#include "wxcdioframe.h"
+
+#define WXCDIO_APP_NAME	_T("wxCDIO")
 
 ////////////////////////////////////////////////////////////////////////////////
 // application class declaration 
@@ -31,7 +32,7 @@ public:
 	bool OnInit();
 	int OnExit(void);
 	
-	wxcdioFrame *GetFrame() const;
+	wxFrame *GetFrame() const;
 	
 private:
 	wxDocManager* m_docManager;		

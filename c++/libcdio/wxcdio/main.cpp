@@ -14,6 +14,7 @@
 #include "main.h"
 #include "wxcdiodoc.h"
 #include "wxcdioview.h"
+#include "wxcdioframe.h"
 
 // initialize the application
 IMPLEMENT_APP(MainApp);
@@ -51,9 +52,9 @@ bool MainApp::OnInit()
 	return true;
 }
 
-wxcdioFrame *MainApp::GetFrame() const
+wxFrame *MainApp::GetFrame() const
 {
-	return (wxcdioFrame*)GetTopWindow();
+	return (wxFrame*)GetTopWindow();
 }
 
 int MainApp::OnExit(void)

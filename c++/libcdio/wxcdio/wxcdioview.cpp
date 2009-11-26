@@ -16,7 +16,7 @@ bool wxcdioView::OnCreate(wxDocument* doc, long flags)
 {
 	MainApp &theApp = wxGetApp();
 	
-	wxcdioFrame *theFrame;
+	wxFrame *theFrame;
 	if ((theFrame = theApp.GetFrame()) == NULL)
 		return false;
 	

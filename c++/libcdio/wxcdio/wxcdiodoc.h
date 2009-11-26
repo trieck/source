@@ -2,6 +2,7 @@
 #define __wxcdiodoc__
 
 #include <wx/docview.h>
+#include "isoimage.h"
 
 class wxcdioDoc : public wxDocument {
 	DECLARE_DYNAMIC_CLASS(wxcdioDoc)
@@ -16,5 +17,8 @@ public:
 
 	wxOutputStream& SaveObject(wxOutputStream& stream);
     wxInputStream& LoadObject(wxInputStream& stream);
+	
+private:
+	isoimage m_image;	
 };
 #endif // __wxcdiodoc__

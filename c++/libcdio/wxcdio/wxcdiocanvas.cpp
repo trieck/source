@@ -16,10 +16,13 @@ wxcdioCanvas::wxcdioCanvas(wxFrame *frame, const wxPoint& pos,
 	imageList->Add(wxBitmap(wxT("resources/disk-cd.png"), wxBITMAP_TYPE_PNG));
 	imageList->Add(wxIcon(wxT("WXICON_SMALL_CLOSED_FOLDER"),  
 		wxBITMAP_TYPE_ICO_RESOURCE, CX_IMAGE, CY_IMAGE));
+	imageList->Add(wxIcon(wxT("WXICON_SMALL_OPEN_FOLDER"),  
+		wxBITMAP_TYPE_ICO_RESOURCE, CX_IMAGE, CY_IMAGE));
+	imageList->Add(wxIcon(wxT("WXICON_SMALL_FILE"),  
+		wxBITMAP_TYPE_ICO_RESOURCE, CX_IMAGE, CY_IMAGE));
 		
 	m_treeCtrl->AssignImageList(imageList);	
-	m_treeCtrl->AddRoot(_T("root"), 0, 0);
-	
+		
 	bSizer->Add(m_treeCtrl, 1, wxEXPAND, 5);
 	
 	SetSizer(bSizer);	

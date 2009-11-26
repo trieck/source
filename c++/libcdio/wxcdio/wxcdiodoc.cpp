@@ -1,4 +1,5 @@
 #include "wxcdiodoc.h"
+#include "main.h"
 
 IMPLEMENT_DYNAMIC_CLASS(wxcdioDoc, wxDocument)
 
@@ -17,12 +18,34 @@ bool wxcdioDoc::OnSaveDocument(const wxString& filename)
 
 bool wxcdioDoc::OnOpenDocument(const wxString& filename)
 {
-	return wxDocument::OnOpenDocument(filename);
+	if (!wxDocument::OnOpenDocument(filename))
+		return false;
+		
+	if (!m_image.OpenImage(filename))
+		return false;
+		
+	MainApp &theApp = wxGetApp();
+	wxString title;
+	title.Printf(_T("%s : %s"), WXCDIO_APP_NAME,
+		filename.c_str());
+		
+	wxFrame *frame = theApp.GetFrame();
+	frame->SetTitle(title);
+	
+	return true;	
 }
 
 bool wxcdioDoc::OnNewDocument()
 {
-	return wxDocument::OnNewDocument();
+	if (!wxDocument::OnNewDocument())
+		return false;
+		
+	MainApp &theApp = wxGetApp();
+	
+	wxFrame *frame = theApp.GetFrame();
+	frame->SetTitle(WXCDIO_APP_NAME);
+	
+	return true;
 }
 
 bool wxcdioDoc::OnCloseDocument()
@@ -37,5 +60,8 @@ wxOutputStream& wxcdioDoc::SaveObject(wxOutputStream& stream)
 
 wxInputStream& wxcdioDoc::LoadObject(wxInputStream& stream)
 {
-	return stream;
+	wxDocument::LoadObject(stream);
+
+	return m_image.LoadObject(stream);
 }
+

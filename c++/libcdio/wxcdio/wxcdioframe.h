@@ -1,6 +1,7 @@
 #ifndef __wxcdioframe__
 #define __wxcdioframe__
 
+#include "main.h"
 #include <wx/docview.h>
 
 class wxcdioFrame : public wxDocParentFrame {
@@ -9,7 +10,7 @@ public:
 	wxcdioFrame(wxDocManager *manager,
 		wxFrame *frame = NULL,
         wxWindowID id = wxID_ANY,
-        const wxString& title =  _("wxCDIO"),
+        const wxString& title =  WXCDIO_APP_NAME,
         const wxPoint& pos = wxDefaultPosition,
         const wxSize& size = wxDefaultSize,
         long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL,
