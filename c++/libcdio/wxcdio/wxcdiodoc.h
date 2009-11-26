@@ -8,6 +8,13 @@ class wxcdioDoc : public wxDocument {
 public:
 	wxcdioDoc();
 	~wxcdioDoc();
+	
+	bool OnSaveDocument(const wxString& filename);
+    bool OnOpenDocument(const wxString& filename);
+    bool OnNewDocument();
+    bool OnCloseDocument();
 
+	wxOutputStream& SaveObject(wxOutputStream& stream);
+    wxInputStream& LoadObject(wxInputStream& stream);
 };
 #endif // __wxcdiodoc__

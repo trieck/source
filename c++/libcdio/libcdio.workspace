@@ -3,8 +3,8 @@
   <Project Name="iso9660" Path="iso9660\iso9660.project" Active="No"/>
   <Project Name="driver" Path="driver\driver.project" Active="No"/>
   <Project Name="iso_read" Path="iso_read\iso_read.project" Active="No"/>
-  <Project Name="wxcdio" Path="wxcdio\wxcdio.project" Active="No"/>
-  <Project Name="cdio++" Path="cdio++\cdio++.project" Active="Yes"/>
+  <Project Name="wxcdio" Path="wxcdio\wxcdio.project" Active="Yes"/>
+  <Project Name="cdio++" Path="cdio++\cdio++.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="wxcdio" ConfigName="Debug"/>
