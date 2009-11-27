@@ -52,6 +52,10 @@ void wxcdioView::OnClosingDocument()
 	wxView::OnClosingDocument();
 }
 
+void wxcdioView::OnUpdate(wxView *sender, wxObject *hint)
+{	 
+}
+ 
 void wxcdioView::OnDraw(wxDC* pDC)
 {
 }

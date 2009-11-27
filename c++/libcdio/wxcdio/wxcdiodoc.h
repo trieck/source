@@ -14,9 +14,6 @@ public:
     bool OnOpenDocument(const wxString& filename);
     bool OnNewDocument();
     bool OnCloseDocument();
-
-	wxOutputStream& SaveObject(wxOutputStream& stream);
-    wxInputStream& LoadObject(wxInputStream& stream);
 	
 private:
 	isoimage m_image;	

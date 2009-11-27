@@ -12,9 +12,6 @@ public:
 
 	bool OpenImage(const wxString &filename);
 	
-	wxOutputStream& SaveObject(wxOutputStream& stream);
-    wxInputStream& LoadObject(wxInputStream& stream);
-	
 private:
 	ISO9660::IFS m_image;	
 };

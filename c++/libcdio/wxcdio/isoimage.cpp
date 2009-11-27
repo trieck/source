@@ -15,8 +15,3 @@ bool isoimage::OpenImage(const wxString &filename)
 
 	return m_image.open(path);
 }
-
-wxInputStream& isoimage::LoadObject(wxInputStream& stream)
-{
-	return stream;
-}

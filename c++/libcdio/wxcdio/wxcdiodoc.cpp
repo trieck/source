@@ -21,8 +21,10 @@ bool wxcdioDoc::OnOpenDocument(const wxString& filename)
 	if (!wxDocument::OnOpenDocument(filename))
 		return false;
 		
-	if (!m_image.OpenImage(filename))
-		return false;
+	if (!m_image.OpenImage(filename)) {
+		wxLogError(_T("Unable to open image."));
+		return false;		
+	}
 		
 	MainApp &theApp = wxGetApp();
 	wxString title;
@@ -53,15 +55,4 @@ bool wxcdioDoc::OnCloseDocument()
 	return true;
 }
 
-wxOutputStream& wxcdioDoc::SaveObject(wxOutputStream& stream)
-{
-	return stream;
-}
-
-wxInputStream& wxcdioDoc::LoadObject(wxInputStream& stream)
-{
-	wxDocument::LoadObject(stream);
-
-	return m_image.LoadObject(stream);
-}
 

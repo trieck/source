@@ -46,6 +46,8 @@ wxcdioFrame::wxcdioFrame(wxDocManager *manager, wxFrame *frame,
 	wxMenuItem* menuFileExit;
 	menuFileExit = new wxMenuItem( m_menuFile, wxID_EXIT, wxString( _("E&xit") ) + wxT('\t') + wxT("Alt+X"), wxEmptyString, wxITEM_NORMAL );
 	m_menuFile->Append( menuFileExit );
+
+    manager->FileHistoryUseMenu(m_menuFile);
 	
 	m_menuBar->Append( m_menuFile, _("&File") );
 	

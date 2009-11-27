@@ -14,6 +14,7 @@ public:
 	bool OnCreate(wxDocument* doc, long flags);
 	void OnClosingDocument();
 	bool OnClose(bool deleteWindow);
+	void OnUpdate(wxView *sender, wxObject *hint);
 	
 private:
 	wxcdioCanvas *m_canvas;
