@@ -15,6 +15,7 @@ public:
     bool OnNewDocument();
     bool OnCloseDocument();
 	
+	isoimage *GetImage() { return &m_image; }
 private:
 	isoimage m_image;	
 };

@@ -3,6 +3,7 @@
 
 #include <wx/wx.h>
 #include <wx/treectrl.h>
+#include "wxcdiodoc.h"
 
 class wxcdioCanvas : public wxScrolledWindow 
 {
@@ -12,7 +13,10 @@ public:
 	~wxcdioCanvas();
 			
     DECLARE_EVENT_TABLE()
-		
+	
+public:		
+	void rebuildTree(isoimage* doc);
+	
 private:
 	wxTreeCtrl* m_treeCtrl;	
 	

@@ -54,6 +54,9 @@ void wxcdioView::OnClosingDocument()
 
 void wxcdioView::OnUpdate(wxView *sender, wxObject *hint)
 {	 
+	if (hint != NULL && m_canvas != NULL) {
+		m_canvas->rebuildTree((isoimage*)hint);
+	}
 }
  
 void wxcdioView::OnDraw(wxDC* pDC)

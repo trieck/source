@@ -34,6 +34,8 @@ bool wxcdioDoc::OnOpenDocument(const wxString& filename)
 	wxFrame *frame = theApp.GetFrame();
 	frame->SetTitle(title);
 	
+	UpdateAllViews(NULL, &m_image);
+	
 	return true;	
 }
 
