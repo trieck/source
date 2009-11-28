@@ -1,6 +1,6 @@
 
 #include "wxcdiocanvas.h"
-#include <cdio/iso9660.h>
+#include "wxcdionode.h"
 
 BEGIN_EVENT_TABLE(wxcdioCanvas, wxScrolledWindow)
 END_EVENT_TABLE()
@@ -56,9 +56,10 @@ void wxcdioCanvas::rebuildTree(isoimage* image)
 				filename = wxString::FromAscii(tfilename);			
 				nimage = (iso9660_stat_s::_STAT_DIR == stat->p_stat->type) ?
 					1 : 3;			
-				m_treeCtrl->AppendItem(root, filename, nimage, nimage);					
-			}	
-			delete stat;			
+				m_treeCtrl->AppendItem(root, filename, nimage, nimage, new wxcdioNode(stat));					
+			} else {
+				delete stat;				
+			}
 		}		
 	}
 	
