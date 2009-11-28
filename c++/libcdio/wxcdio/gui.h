@@ -23,6 +23,7 @@
 #include <wx/button.h>
 #include <wx/sizer.h>
 #include <wx/dialog.h>
+#include <wx/radiobut.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -42,6 +43,34 @@ class AboutDlg : public wxDialog
 	public:
 		AboutDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("About wxCDIO"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 278,197 ), long style = wxDEFAULT_DIALOG_STYLE );
 		~AboutDlg();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class PropertiesDlg
+///////////////////////////////////////////////////////////////////////////////
+class PropertiesDlg : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxStaticText* m_staticText5;
+		wxStaticText* m_stCreated;
+		wxStaticText* m_staticText7;
+		wxStaticText* m_stLSN;
+		wxStaticText* m_staticText9;
+		wxStaticText* m_stSize;
+		wxStaticText* m_staticText11;
+		wxStaticText* m_stSectors;
+		wxStaticText* m_staticText15;
+		wxRadioButton* m_rbDirectory;
+		wxRadioButton* m_rbFile;
+		wxButton* m_OK;
+		wxButton* m_Cancel;
+	
+	public:
+		PropertiesDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 299,267 ), long style = wxDEFAULT_DIALOG_STYLE );
+		~PropertiesDlg();
 	
 };
 

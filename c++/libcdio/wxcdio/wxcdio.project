@@ -17,6 +17,7 @@
     <File Name="gui.cpp"/>
     <File Name="wxcdionode.cpp"/>
     <File Name="wxcdiotreectrl.cpp"/>
+    <File Name="guiPropertiesDlg.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="main.h"/>
@@ -28,6 +29,7 @@
     <File Name="gui.h"/>
     <File Name="wxcdionode.h"/>
     <File Name="wxcdiotreectrl.h"/>
+    <File Name="guiPropertiesDlg.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">

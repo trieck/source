@@ -1,8 +1,11 @@
 
 #include "wxcdiotreectrl.h"
+#include "guiPropertiesDlg.h"
+#include "main.h"
 
 BEGIN_EVENT_TABLE(wxcdioTreeCtrl, wxTreeCtrl)
 	EVT_TREE_ITEM_MENU(wxID_ANY, wxcdioTreeCtrl::OnItemMenu)
+	EVT_MENU(MENU_ID_PROPERTIES, wxcdioTreeCtrl::OnProperties)
 END_EVENT_TABLE()
 
 wxcdioTreeCtrl::wxcdioTreeCtrl(wxWindow *parent) 
@@ -37,7 +40,15 @@ void wxcdioTreeCtrl::OnItemMenu(wxTreeEvent& event)
 void wxcdioTreeCtrl::ShowMenu(wxcdioNode *item, const wxPoint &pt)
 {
     wxMenu menu;
-    menu.Append(wxID_ANY, _T("Properties"));
+    menu.Append(MENU_ID_PROPERTIES, _T("Properties"));
 
-    PopupMenu(&menu, pt);
+    PopupMenu(&menu, pt);	
+}
+
+void wxcdioTreeCtrl::OnProperties(wxCommandEvent& WXUNUSED(event))
+{
+	MainApp &theApp = wxGetApp();
+	
+	guiPropertiesDlg dlg(theApp.GetFrame());
+    dlg.ShowModal();
 }

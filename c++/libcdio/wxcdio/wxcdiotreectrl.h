@@ -17,9 +17,12 @@ public:
 
 private:
 	void ShowMenu(wxcdioNode *item, const wxPoint &pt);
+	void OnProperties(wxCommandEvent&);
 	
 	enum { CX_IMAGE = 16 };
-	enum { CY_IMAGE = 16 };	
+	enum { CY_IMAGE = 16 };
+	
+	enum { MENU_ID_PROPERTIES = 1001 };
 };
 
 
