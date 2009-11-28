@@ -1,6 +1,7 @@
 
 #include "main.h"
 #include "wxcdioview.h"
+#include <wx/utils.h>
 
 IMPLEMENT_DYNAMIC_CLASS(wxcdioView, wxView)
 
@@ -55,6 +56,7 @@ void wxcdioView::OnClosingDocument()
 void wxcdioView::OnUpdate(wxView *sender, wxObject *hint)
 {	 
 	if (hint != NULL && m_canvas != NULL) {
+		wxBusyCursor wait;
 		m_canvas->rebuildTree((isoimage*)hint);
 	}
 }

@@ -39,18 +39,25 @@ void wxcdioCanvas::rebuildTree(isoimage* image)
 {
 	m_treeCtrl->DeleteAllItems();
 	
-	wxTreeItemId root = m_treeCtrl->AddRoot(_T("root"), 0, 0);
+	wxString volumeId = image->GetVolumeId();
+	
+	wxTreeItemId root = m_treeCtrl->AddRoot(volumeId, 0, 0);
 	
 	wxString filename;
+	wxCharBuffer buffer;
+	char *tfilename;
 	stat_vector_t stat_vector;
-	int nimage;
-	char tfilename[4096];
+	int nimage;	
 		
 	if (image->ReadDir(_T("/"), stat_vector)) {
 		stat_vector_t::const_iterator it = stat_vector.begin();
 		for ( ; it != stat_vector.end(); it++) {
 			ISO9660::Stat *stat = *it;
-			iso9660_name_translate(stat->p_stat->filename, tfilename);
+			buffer = wxCharBuffer(strlen(stat->p_stat->filename));
+			tfilename = buffer.data();
+			tfilename[0] = '\0';
+			
+			iso9660_name_translate_ext(stat->p_stat->filename, tfilename, 1);
 			
 			if (strcmp(tfilename, ".") != 0 && strcmp(tfilename, "..") != 0) {
 				filename = wxString::FromAscii(tfilename);			
