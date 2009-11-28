@@ -2,8 +2,8 @@
 #define __wxcdiocanvas__
 
 #include <wx/wx.h>
-#include <wx/treectrl.h>
 #include "wxcdiodoc.h"
+#include "wxcdioTreeCtrl.h"
 
 class wxcdioCanvas : public wxScrolledWindow 
 {
@@ -18,11 +18,7 @@ public:
 	void rebuildTree(isoimage* doc);
 	
 private:
-	wxTreeCtrl* m_treeCtrl;	
-	
-	enum { CX_IMAGE = 16 };
-	enum { CY_IMAGE = 16 };
-	
+	wxcdioTreeCtrl *m_treeCtrl;		
 };
 
 #endif // __wxcdiocanvas__

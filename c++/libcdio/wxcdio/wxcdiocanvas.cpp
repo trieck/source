@@ -9,21 +9,9 @@ wxcdioCanvas::wxcdioCanvas(wxFrame *frame, const wxPoint& pos,
 	const wxSize& size, const long style) : 
     wxScrolledWindow(frame, wxID_ANY, pos, size, style), m_treeCtrl(NULL)
 {
-	wxBoxSizer* bSizer;
-	bSizer = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 		
-	m_treeCtrl = new wxTreeCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_HAS_BUTTONS);
-	
-	wxImageList *imageList = new wxImageList(CX_IMAGE, CY_IMAGE, true, 0);
-	imageList->Add(wxBitmap(wxT("resources/disk-cd.png"), wxBITMAP_TYPE_PNG));
-	imageList->Add(wxIcon(wxT("WXICON_SMALL_CLOSED_FOLDER"),  
-		wxBITMAP_TYPE_ICO_RESOURCE, CX_IMAGE, CY_IMAGE));
-	imageList->Add(wxIcon(wxT("WXICON_SMALL_OPEN_FOLDER"),  
-		wxBITMAP_TYPE_ICO_RESOURCE, CX_IMAGE, CY_IMAGE));
-	imageList->Add(wxIcon(wxT("WXICON_SMALL_FILE"),  
-		wxBITMAP_TYPE_ICO_RESOURCE, CX_IMAGE, CY_IMAGE));
-		
-	m_treeCtrl->AssignImageList(imageList);	
+	m_treeCtrl = new wxcdioTreeCtrl(this);
 		
 	bSizer->Add(m_treeCtrl, 1, wxEXPAND, 5);
 	

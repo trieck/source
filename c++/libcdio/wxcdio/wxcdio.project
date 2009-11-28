@@ -16,6 +16,7 @@
     <File Name="isoimage.cpp"/>
     <File Name="gui.cpp"/>
     <File Name="wxcdionode.cpp"/>
+    <File Name="wxcdiotreectrl.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="main.h"/>
@@ -26,6 +27,7 @@
     <File Name="isoimage.h"/>
     <File Name="gui.h"/>
     <File Name="wxcdionode.h"/>
+    <File Name="wxcdiotreectrl.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
@@ -108,6 +110,6 @@
     <File Name="wxcdio.rc"/>
     <File Name="wxcdio.fbp"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>
