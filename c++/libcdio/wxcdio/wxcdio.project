@@ -107,4 +107,5 @@
     <File Name="wxcdio.fbp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

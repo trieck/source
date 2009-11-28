@@ -85,4 +85,5 @@
     <File Name="..\..\..\..\libcdio\src\util.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

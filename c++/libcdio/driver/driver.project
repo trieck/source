@@ -138,4 +138,5 @@
     <File Name="..\..\..\..\libcdio\lib\driver\image\nrg.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>
