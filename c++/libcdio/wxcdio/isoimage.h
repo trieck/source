@@ -4,19 +4,18 @@
 #include <wx/wx.h>
 #include <cdio++/iso9660.hpp>
 
-class isoimage : public wxObject
-{
+class isoimage : public wxObject {
 public:
 	isoimage();
 	~isoimage();
 
 	bool OpenImage(const wxString &filename);
 	bool ReadDir(const wxString &path, stat_vector_t& stat_vector);
-	
+
 	wxString GetVolumeId();
-	
+
 private:
-	ISO9660::IFS m_image;	
+	ISO9660::IFS m_image;
 };
 
 #endif // __isoimage__

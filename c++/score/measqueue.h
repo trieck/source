@@ -15,8 +15,7 @@
 #include <queue>
 
 ///////////////////////////////////////////////////////////////////////
-class MeasureQueue : public std::queue<Measure *>
-{
+class MeasureQueue : public std::queue<Measure *> {
 public:
 	// Construction / Destruction
 	MeasureQueue();

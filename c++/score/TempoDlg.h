@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // TempoDlg dialog
 
-class TempoDlg : public CDialog
-{
+class TempoDlg : public CDialog {
 // Construction
 public:
 	TempoDlg(Measure * pMeasure, CWnd* pParent = NULL);

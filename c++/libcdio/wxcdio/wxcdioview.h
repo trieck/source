@@ -15,7 +15,7 @@ public:
 	void OnClosingDocument();
 	bool OnClose(bool deleteWindow);
 	void OnUpdate(wxView *sender, wxObject *hint);
-	
+
 private:
 	wxcdioCanvas *m_canvas;
 	int m_canvasID;

@@ -499,8 +499,7 @@ void ScoreView :: OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		default:
 			break;
 		}
-	}
-	else CScrollView :: OnUpdate(pSender, lHint, pHint);
+	} else CScrollView :: OnUpdate(pSender, lHint, pHint);
 }
 
 //

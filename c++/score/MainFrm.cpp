@@ -28,8 +28,7 @@ BEGIN_MESSAGE_MAP(MainFrame, CFrameWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-static UINT indicators[] =
-{
+static UINT indicators[] = {
 	ID_SEPARATOR,           // status line indicator
 };
 

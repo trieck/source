@@ -10,8 +10,7 @@
 
 typedef CByteArray * LPBYTEARRAY;
 
-class CRegKey
-{
+class CRegKey {
 public:
 	CRegKey();
 	virtual ~CRegKey();

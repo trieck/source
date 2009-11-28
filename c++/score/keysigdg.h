@@ -10,8 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // KeySignatureDlg dialog
 
-class KeySignatureDlg : public CDialog
-{
+class KeySignatureDlg : public CDialog {
 // Construction
 public:
 	KeySignatureDlg(Measure * pMeasure, CWnd* pParent = NULL);   // standard constructor

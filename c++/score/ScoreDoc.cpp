@@ -74,8 +74,7 @@ void ScoreDoc::Serialize(CArchive& ar)
 		ar << scoreMarker[0];   // 's'
 		ar << scoreMarker[1];   // 'c'
 		ar << scoreMarker[2];   // 'r'
-	}
-	else {
+	} else {
 		// Is this a valid score archive
 		ar.Read(buffer, MARKER_SIZE);
 		if (memcmp(buffer, scoreMarker, MARKER_SIZE) != 0)

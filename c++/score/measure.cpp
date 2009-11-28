@@ -381,8 +381,7 @@ BOOL Measure :: IsBetween(const Note * pNote, NoteList ** ppLeft, NoteList ** pp
 		if (pNoteList->GetX() >= pNote->GetX()) {
 			pos = prev;
 			break;
-		}
-		else *ppLeft = pNoteList;
+		} else *ppLeft = pNoteList;
 	}
 
 	// Determine the note list adjacent to the right
@@ -406,8 +405,7 @@ void Measure :: Serialize(CArchive & ar)
 {
 	if (ar.IsStoring()) {
 		ar << m_Tempo;
-	}
-	else {
+	} else {
 		ar >> m_Tempo;
 	}
 

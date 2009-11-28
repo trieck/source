@@ -19,8 +19,7 @@
 // See score.cpp for the implementation of this class
 //
 
-class ScoreApp : public CWinApp
-{
+class ScoreApp : public CWinApp {
 public:
 	ScoreApp();
 	~ScoreApp();
@@ -45,7 +44,9 @@ public:
 	BOOL ReleaseNote(const Note *) const;
 	void PumpMessages();
 	BOOL SetInstrument (BYTE b);
-	BYTE GetInstrument() const {		return m_instrument;	}
+	BYTE GetInstrument() const {
+		return m_instrument;
+	}
 	BOOL IsPlaying() const;
 
 protected:

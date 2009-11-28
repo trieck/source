@@ -18,8 +18,7 @@ typedef enum {
 
 /////////////////////////////////////////////////////////////////////////////
 // ScoreDoc document
-class ScoreDoc : public CDocument
-{
+class ScoreDoc : public CDocument {
 protected:
 	ScoreDoc();           // protected constructor used by dynamic creation
 	DECLARE_DYNCREATE(ScoreDoc)
@@ -33,7 +32,9 @@ public:
 
 // Operations
 public:
-	inline const Staff * GetStaff() const {		return &m_Staff;	}
+	inline const Staff * GetStaff() const {
+		return &m_Staff;
+	}
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(ScoreDoc)

@@ -12,8 +12,7 @@
 #include "MidiMessage.h"
 
 ///////////////////////////////////////////////////////////////////////
-class MidiOutput : public OutputDevice
-{
+class MidiOutput : public OutputDevice {
 	friend class OutputDevices;
 
 protected:
@@ -29,7 +28,9 @@ public:
 	MMRESULT GetVolume(LPDWORD);
 	MMRESULT SetVolume(DWORD);
 
-	inline operator HMIDIOUT() const {		return (HMIDIOUT) m_handle;	}
+	inline operator HMIDIOUT() const {
+		return (HMIDIOUT) m_handle;
+	}
 
 protected:
 	// Implementation

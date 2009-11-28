@@ -9,14 +9,16 @@ class wxcdioDoc : public wxDocument {
 public:
 	wxcdioDoc();
 	~wxcdioDoc();
-	
+
 	bool OnSaveDocument(const wxString& filename);
-    bool OnOpenDocument(const wxString& filename);
-    bool OnNewDocument();
-    bool OnCloseDocument();
-	
-	isoimage *GetImage() { return &m_image; }
+	bool OnOpenDocument(const wxString& filename);
+	bool OnNewDocument();
+	bool OnCloseDocument();
+
+	isoimage *GetImage() {
+		return &m_image;
+	}
 private:
-	isoimage m_image;	
+	isoimage m_image;
 };
 #endif // __wxcdiodoc__

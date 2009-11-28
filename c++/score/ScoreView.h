@@ -12,8 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // ScoreView window
 
-class ScoreView : public CScrollView
-{
+class ScoreView : public CScrollView {
 // Construction
 protected:
 	ScoreView();
@@ -26,7 +25,9 @@ public:
 // Operations
 public:
 	void SetTool(Tool * pTool);
-	inline const Tool * GetTool() const {		return &m_Tool;	}
+	inline const Tool * GetTool() const {
+		return &m_Tool;
+	}
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -83,7 +84,9 @@ protected:
 
 #ifndef _DEBUG  // debug version in Compound ScoreView.cpp
 inline ScoreDoc* ScoreView::GetDocument()
-{	return (ScoreDoc*)m_pDocument;}
+{
+	return (ScoreDoc*)m_pDocument;
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

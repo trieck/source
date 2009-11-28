@@ -144,8 +144,7 @@ void Beats :: Serialize(CArchive & ar)
 			ASSERT(AfxIsValidAddress(pNode, sizeof(CNode)));
 			SerializeElements<NoteList *>(ar, &pNode->data, 1);
 		}
-	}
-	else {
+	} else {
 		DWORD nNewCount = ar.ReadCount();
 		while (nNewCount--) {
 			NoteList * newData;

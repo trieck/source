@@ -175,8 +175,7 @@ void Sequencer :: StreamProc(
 	if (This->m_nCurrentBuffer++ % 2 == 0) {
 		This->m_Buffers.SetFront(DataEngine(pNextMeasure));
 		This->m_pStream->Out(This->m_Buffers.GetFront());
-	}
-	else  {
+	} else  {
 		This->m_Buffers.SetBack(DataEngine(pNextMeasure));
 		This->m_pStream->Out(This->m_Buffers.GetBack());
 	}

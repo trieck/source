@@ -9,8 +9,7 @@
 #define __BEATS_H__
 
 ///////////////////////////////////////////////////////////////////////
-class Beats : public CList<NoteList *, NoteList *>
-{
+class Beats : public CList<NoteList *, NoteList *> {
 public:
 	// Construction / Destruction
 	Beats();

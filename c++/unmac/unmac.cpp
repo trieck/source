@@ -5,7 +5,7 @@
  * and are NOT followed by '\n'.  In this case, we do
  * NOT want to turn them into Windows \r\n or UNIX \n.
  * We want to remove them entirely from the output stream.
- * 
+ *
  */
 #include <stdio.h>
 #include <string.h>

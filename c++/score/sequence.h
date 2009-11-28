@@ -18,8 +18,7 @@ typedef enum {
 } SequencerState;
 
 ///////////////////////////////////////////////////////////////////////
-class Sequencer
-{
+class Sequencer {
 public:
 	// Construction / Destruction
 	Sequencer(MidiStream *);
@@ -30,7 +29,9 @@ public:
 	BOOL PlayMeasure(const Measure *);
 	BOOL Stop();
 
-	inline BOOL IsPlaying() const {		return m_state == Playing;	}
+	inline BOOL IsPlaying() const {
+		return m_state == Playing;
+	}
 
 	// Implementation
 protected:

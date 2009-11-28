@@ -9,8 +9,7 @@
 #define __NEPTUNE_H__
 
 ///////////////////////////////////////////////////////////////////////
-namespace Neptune
-{
+namespace Neptune {
 // Image functions
 void DrawBitmap (CBitmap * pBitmap, CDC * pDC, int x, int y);
 void DrawTransparentBitmap (CBitmap * pBitmap, CDC * pDC, int x, int y, COLORREF transparent);

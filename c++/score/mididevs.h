@@ -12,8 +12,7 @@
 #include "mididev.h"
 
 ///////////////////////////////////////////////////////////////////////
-class MidiDevices
-{
+class MidiDevices {
 public:
 	// Construction / Destruction
 	MidiDevices();

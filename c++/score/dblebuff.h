@@ -14,8 +14,7 @@
 #define BUFFERS 2
 
 ///////////////////////////////////////////////////////////////////////
-class DoubleBuffer
-{
+class DoubleBuffer {
 public:
 	// Construction / Destruction
 	DoubleBuffer();
@@ -25,8 +24,12 @@ public:
 	BOOL SetFront(MIDIHDR*);
 	BOOL SetBack(MIDIHDR*);
 
-	inline MIDIHDR* GetFront() {		return &m_Buffers[0];	}
-	inline MIDIHDR* GetBack() {		return &m_Buffers[1];	}
+	inline MIDIHDR* GetFront() {
+		return &m_Buffers[0];
+	}
+	inline MIDIHDR* GetBack() {
+		return &m_Buffers[1];
+	}
 
 	// Implementation
 protected:

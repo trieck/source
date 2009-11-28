@@ -191,8 +191,7 @@ void NoteList :: Serialize(CArchive & ar)
 			ASSERT(AfxIsValidAddress(pNode, sizeof(CNode)));
 			SerializeElements<Note *>(ar, &pNode->data, 1);
 		}
-	}
-	else {
+	} else {
 		DWORD nNewCount = ar.ReadCount();
 		while (nNewCount--) {
 			Note * newData;

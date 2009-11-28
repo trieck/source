@@ -152,7 +152,7 @@
 #define HAVE_WIN32_CDROM 1
 
 /* Define as const if the declaration of iconv() needs const. */
-#undef ICONV_CONST 
+#undef ICONV_CONST
 
 /* Define 1 if you are compiling using MinGW */
 #define MINGW32 1

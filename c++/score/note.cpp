@@ -223,8 +223,7 @@ void Note :: Serialize(CArchive & ar)
 
 	if (ar.IsStoring()) {
 		ar << m_data << (int)m_duration << m_pos.x << m_pos.y;
-	}
-	else {
+	} else {
 		ar >> m_data >> (int &)m_duration >> m_pos.x >> m_pos.y;
 		m_hIcon = DurationToIcon(m_duration);
 	}
@@ -241,8 +240,7 @@ void Note :: SetModifier(const Tool * pTool)
 		mod = (Modifier)pTool->user;
 		m_hModifier = (HICON)Neptune::LoadImage(pTool->icon, IMAGE_ICON);
 		ASSERT(m_hModifier != NULL);
-	}
-	else {
+	} else {
 		mod = NATURAL;
 		m_hModifier = NULL;
 	}

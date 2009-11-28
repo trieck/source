@@ -31,8 +31,7 @@ LONG CRegKey :: Close()
 {
 	LONG lRtn = ERROR_SUCCESS;
 
-	if (m_hKey != NULL)
-	{
+	if (m_hKey != NULL) {
 		lRtn = ::RegCloseKey(m_hKey);
 		m_hKey = NULL;
 	}
@@ -50,8 +49,7 @@ LONG CRegKey :: Open(HKEY hKeyParent, LPCTSTR lpszKeyName, REGSAM samDesired)
 
 	HKEY hKey = NULL;
 	lRtn = ::RegOpenKeyEx(hKeyParent, lpszKeyName, 0, samDesired, &hKey);
-	if (lRtn == ERROR_SUCCESS)
-	{
+	if (lRtn == ERROR_SUCCESS) {
 		lRtn = Close();
 		ASSERT(lRtn == ERROR_SUCCESS);
 		m_hKey = hKey;
