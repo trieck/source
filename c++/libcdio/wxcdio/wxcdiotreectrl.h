@@ -2,16 +2,18 @@
 #define __wxcdiotreectrl__
 
 #include "wxcdionode.h"
+#include "isoimage.h"
 
 class wxcdioTreeCtrl : public wxTreeCtrl {
 public:
-	wxcdioTreeCtrl(wxWindow *parent);
+	wxcdioTreeCtrl(wxView *view, wxWindow *parent);
 	~wxcdioTreeCtrl();
 
-	DECLARE_EVENT_TABLE()
-
 	void OnItemMenu(wxTreeEvent& event);
-
+	void OnItemExpanding(wxTreeEvent &event);
+		
+	void rebuild(isoimage *image);
+	
 private:
 	void ShowMenu(wxcdioNode *item, const wxPoint &pt);
 	void OnProperties(wxCommandEvent&);
@@ -20,6 +22,10 @@ private:
 	enum { CY_IMAGE = 16 };
 
 	enum { MENU_ID_PROPERTIES = 1001 };
+
+	DECLARE_EVENT_TABLE()
+	
+	wxView *m_view;
 };
 
 

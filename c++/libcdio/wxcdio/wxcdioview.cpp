@@ -23,7 +23,7 @@ bool wxcdioView::OnCreate(wxDocument* doc, long flags)
 
 	wxSize size = theFrame->GetClientSize();
 
-	m_canvas = new wxcdioCanvas(theFrame, wxPoint(0, 0), size, 0);
+	m_canvas = new wxcdioCanvas(this, theFrame, wxPoint(0, 0), size, 0);
 	m_canvasID = m_canvas->GetId();
 
 	return true;
