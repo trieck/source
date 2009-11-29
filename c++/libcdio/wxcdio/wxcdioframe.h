@@ -2,7 +2,6 @@
 #define __wxcdioframe__
 
 #include "main.h"
-#include <wx/docview.h>
 
 class wxcdioFrame : public wxDocParentFrame {
 

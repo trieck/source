@@ -1,4 +1,5 @@
 
+#include "common.h"
 #include "wxcdiotreectrl.h"
 #include "guiPropertiesDlg.h"
 #include "main.h"

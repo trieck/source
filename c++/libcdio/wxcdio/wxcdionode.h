@@ -1,9 +1,6 @@
 #ifndef __wxcdionode__
 #define __wxcdionode__
 
-#include <wx/treectrl.h>
-#include <cdio++/iso9660.hpp>
-
 class wxcdioNode : public wxTreeItemData {
 
 public:

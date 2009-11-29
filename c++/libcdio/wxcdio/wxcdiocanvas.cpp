@@ -1,4 +1,5 @@
 
+#include "common.h"
 #include "wxcdiocanvas.h"
 #include "wxcdionode.h"
 

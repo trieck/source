@@ -14,10 +14,6 @@
 #ifndef __main__
 #define __main__
 
-// main wxWidgets header file
-#include <wx/wx.h>
-#include <wx/docview.h>
-
 #define WXCDIO_APP_NAME	_T("wxCDIO")
 
 ////////////////////////////////////////////////////////////////////////////////

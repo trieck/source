@@ -1,7 +1,7 @@
 
+#include "common.h"
 #include "main.h"
 #include "wxcdioview.h"
-#include <wx/utils.h>
 
 IMPLEMENT_DYNAMIC_CLASS(wxcdioView, wxView)
 

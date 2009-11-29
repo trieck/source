@@ -1,8 +1,6 @@
 #ifndef __wxcdiotreectrl__
 #define __wxcdiotreectrl__
 
-#include <wx/wx.h>
-#include <wx/treectrl.h>
 #include "wxcdionode.h"
 
 class wxcdioTreeCtrl : public wxTreeCtrl {

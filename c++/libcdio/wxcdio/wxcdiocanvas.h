@@ -1,7 +1,6 @@
 #ifndef __wxcdiocanvas__
 #define __wxcdiocanvas__
 
-#include <wx/wx.h>
 #include "wxcdiodoc.h"
 #include "wxcdioTreeCtrl.h"
 

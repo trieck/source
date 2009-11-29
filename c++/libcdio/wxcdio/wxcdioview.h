@@ -1,7 +1,6 @@
 #ifndef __wxcdioview__
 #define __wxcdioview__
 
-#include <wx/docview.h>
 #include "wxcdiocanvas.h"
 
 class wxcdioView : public wxView {

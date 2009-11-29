@@ -1,3 +1,5 @@
+
+#include "common.h"
 #include "wxcdiodoc.h"
 #include "main.h"
 

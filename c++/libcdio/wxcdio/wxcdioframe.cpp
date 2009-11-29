@@ -1,5 +1,5 @@
 
-#include <wx/wx.h>
+#include "common.h"
 #include "wxcdioframe.h"
 #include "gui.h"
 

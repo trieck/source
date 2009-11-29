@@ -1,7 +1,6 @@
 #ifndef __wxcdiodoc__
 #define __wxcdiodoc__
 
-#include <wx/docview.h>
 #include "isoimage.h"
 
 class wxcdioDoc : public wxDocument {

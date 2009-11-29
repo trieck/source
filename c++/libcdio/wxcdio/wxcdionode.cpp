@@ -1,4 +1,5 @@
 
+#include "common.h"
 #include "wxcdionode.h"
 
 wxcdioNode::wxcdioNode(ISO9660::Stat *stat) : m_stat(stat)

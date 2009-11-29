@@ -1,9 +1,6 @@
 #ifndef __isoimage__
 #define __isoimage__
 
-#include <wx/wx.h>
-#include <cdio++/iso9660.hpp>
-
 class isoimage : public wxObject {
 public:
 	isoimage();
