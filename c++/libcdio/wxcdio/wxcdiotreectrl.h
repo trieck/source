@@ -15,6 +15,9 @@ public:
 	void rebuild(isoimage *image);
 	
 private:
+	void buildChildren(isoimage *image, const wxTreeItemId &item);
+	wxString GetAbsolutePath(const wxTreeItemId &item);
+	
 	void ShowMenu(wxcdioNode *item, const wxPoint &pt);
 	void OnProperties(wxCommandEvent&);
 

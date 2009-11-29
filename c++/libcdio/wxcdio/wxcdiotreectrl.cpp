@@ -64,7 +64,8 @@ void wxcdioTreeCtrl::OnItemExpanding(wxTreeEvent& event)
 	isoimage *image = pDoc->GetImage();
 	
 	wxASSERT(image != NULL);
-	
+			
+	buildChildren(image, itemId);
 }
 
 void wxcdioTreeCtrl::ShowMenu(wxcdioNode *item, const wxPoint &pt)
@@ -87,11 +88,20 @@ void wxcdioTreeCtrl::rebuild(isoimage *image)
 {
 	DeleteAllItems();
 
-	wxTreeItemId root = AddRoot(_T(""));
-stat_vector_t stat_vector;
-	image->ReadDir(_T("/"), stat_vector);
+	wxTreeItemId root = AddRoot(_T("/"));
 	
+	buildChildren(image, root);	
+}
 
+void wxcdioTreeCtrl::buildChildren(isoimage *image, const wxTreeItemId &item)
+{
+	stat_vector_t stat_vector;
+	
+	wxString path = GetAbsolutePath(item);
+	
+	if (!(image->ReadDir(path, stat_vector)))
+		return;
+	
 	wxString filename;
 	wxCharBuffer buffer;
 	wxTreeItemId id;
@@ -109,14 +119,42 @@ stat_vector_t stat_vector;
 		if (strcmp(tfilename, ".") != 0 && strcmp(tfilename, "..") != 0) {
 			filename = wxString::FromAscii(tfilename);
 			if (iso9660_stat_s::_STAT_DIR == stat->p_stat->type) {
-				id = AppendItem(root, filename, 0, 1, new wxcdioNode(stat));
+				id = AppendItem(item, filename, 0, 1, new wxcdioNode(stat));
 				SetItemHasChildren(id, true);
 			} else {
-				id = AppendItem(root, filename, 2, 2, new wxcdioNode(stat));
+				id = AppendItem(item, filename, 2, 2, new wxcdioNode(stat));
 				SetItemHasChildren(id, false);
 			}
 		} else {
 			delete stat;
 		}
 	}
+}
+
+wxString wxcdioTreeCtrl::GetAbsolutePath(const wxTreeItemId &item)
+{
+	wxTreeItemId next = item, parent;	
+	
+	if (item == GetRootItem()) {	// virtual root
+		return _T("/");
+	}
+	
+	wxString path = GetItemText(item);
+	
+	for (;;) {
+		parent = GetItemParent(next);
+		if (!parent.IsOk())
+			break;
+			
+		if (parent == GetRootItem()) {	// virtual root
+			path = _T("/") + path;
+			break;
+		}
+		
+		path = GetItemText(parent) + _T("/") + path;
+		
+		next = parent;
+	}
+		
+	return path;
 }
