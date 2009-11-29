@@ -7,6 +7,8 @@
 
 BEGIN_EVENT_TABLE(wxcdioTreeCtrl, wxTreeCtrl)
 	EVT_TREE_ITEM_MENU(wxID_ANY, wxcdioTreeCtrl::OnItemMenu)
+	EVT_TREE_ITEM_COLLAPSED(wxID_ANY, wxcdioTreeCtrl::OnItemCollapsed)
+	EVT_TREE_ITEM_EXPANDED(wxID_ANY, wxcdioTreeCtrl::OnItemExpanded)
 	EVT_TREE_ITEM_EXPANDING(wxID_ANY, wxcdioTreeCtrl::OnItemExpanding)
 	EVT_MENU(MENU_ID_PROPERTIES, wxcdioTreeCtrl::OnProperties)
 END_EVENT_TABLE()
@@ -43,6 +45,24 @@ void wxcdioTreeCtrl::OnItemMenu(wxTreeEvent& event)
 	}
 }
 
+void wxcdioTreeCtrl::OnItemCollapsed(wxTreeEvent &event)
+{
+	wxTreeItemId itemId = event.GetItem();
+	if (!itemId.IsOk())
+		return;
+		
+	SetItemImage(itemId, 0);
+}
+
+void wxcdioTreeCtrl::OnItemExpanded(wxTreeEvent &event)
+{
+	wxTreeItemId itemId = event.GetItem();
+	if (!itemId.IsOk())
+		return;
+		
+	SetItemImage(itemId, 1);
+}
+
 void wxcdioTreeCtrl::OnItemExpanding(wxTreeEvent& event)
 {
 	wxTreeItemId itemId = event.GetItem();
@@ -50,7 +70,7 @@ void wxcdioTreeCtrl::OnItemExpanding(wxTreeEvent& event)
 		return;
 		
 	if (GetChildrenCount(itemId) > 0)
-		return;	// alrady expanded
+		return;	// already built
 		
 	wxcdioNode *item;
 	if ((item = (wxcdioNode *)GetItemData(itemId)) == NULL)
@@ -80,7 +100,22 @@ void wxcdioTreeCtrl::OnProperties(wxCommandEvent& WXUNUSED(event))
 {
 	MainApp &theApp = wxGetApp();
 
-	guiPropertiesDlg dlg(theApp.GetFrame());
+	wxTreeItemId id = GetSelection();
+	if (!id.IsOk())
+		return;
+	
+	wxcdioNode *item;
+	if ((item = (wxcdioNode *)GetItemData(id)) == NULL)
+		return;	// no node
+	
+	iso9660_stat_t *stat;
+	if ((stat = item->GetStat()) == NULL)
+		return;	// no stat
+	
+	wxString name = GetItemText(id);
+	
+	guiPropertiesDlg dlg(theApp.GetFrame(), stat);	
+	dlg.SetTitle(name);	
 	dlg.ShowModal();
 }
 
@@ -118,8 +153,9 @@ void wxcdioTreeCtrl::buildChildren(isoimage *image, const wxTreeItemId &item)
 
 		if (strcmp(tfilename, ".") != 0 && strcmp(tfilename, "..") != 0) {
 			filename = wxString::FromAscii(tfilename);
+			
 			if (iso9660_stat_s::_STAT_DIR == stat->p_stat->type) {
-				id = AppendItem(item, filename, 0, 1, new wxcdioNode(stat));
+				id = AppendItem(item, filename, 0, 0, new wxcdioNode(stat));
 				SetItemHasChildren(id, true);
 			} else {
 				id = AppendItem(item, filename, 2, 2, new wxcdioNode(stat));

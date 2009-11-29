@@ -18,6 +18,7 @@
     <File Name="wxcdionode.cpp"/>
     <File Name="wxcdiotreectrl.cpp"/>
     <File Name="guiPropertiesDlg.cpp"/>
+    <File Name="util.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="main.h"/>
@@ -31,6 +32,7 @@
     <File Name="wxcdiotreectrl.h"/>
     <File Name="guiPropertiesDlg.h"/>
     <File Name="common.h"/>
+    <File Name="util.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="wxcdio.rc"/>
@@ -113,6 +115,6 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
-  <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>

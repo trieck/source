@@ -11,7 +11,9 @@ public:
 
 	void OnItemMenu(wxTreeEvent& event);
 	void OnItemExpanding(wxTreeEvent &event);
-		
+	void OnItemExpanded(wxTreeEvent &event);
+	void OnItemCollapsed(wxTreeEvent &event);
+	
 	void rebuild(isoimage *image);
 	
 private:

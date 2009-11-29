@@ -17,6 +17,8 @@ wxcdioCanvas::wxcdioCanvas(wxView *view, wxFrame *frame, const wxPoint& pos,
 	bSizer->Add(m_treeCtrl, 1, wxEXPAND, 5);
 
 	SetSizer(bSizer);
+	
+	SetTargetWindow(m_treeCtrl);
 	Layout();
 }
 
