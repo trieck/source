@@ -115,6 +115,14 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
-  <Dependencies Name="Release"/>
-  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release">
+    <Project Name="driver"/>
+    <Project Name="iso9660"/>
+    <Project Name="cdio++"/>
+  </Dependencies>
+  <Dependencies Name="Debug">
+    <Project Name="driver"/>
+    <Project Name="iso9660"/>
+    <Project Name="cdio++"/>
+  </Dependencies>
 </CodeLite_Project>

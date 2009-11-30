@@ -89,6 +89,6 @@
     <File Name="..\..\..\..\libcdio\include\cdio++\read.hpp"/>
     <File Name="..\..\..\..\libcdio\include\cdio++\track.hpp"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>
