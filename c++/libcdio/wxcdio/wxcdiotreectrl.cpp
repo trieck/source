@@ -149,7 +149,7 @@ void wxcdioTreeCtrl::buildChildren(isoimage *image, const wxTreeItemId &item)
 		tfilename = buffer.data();
 		tfilename[0] = '\0';
 
-		iso9660_name_translate_ext(stat->p_stat->filename, tfilename, 1);
+		iso9660_name_translate(stat->p_stat->filename, tfilename);
 
 		if (strcmp(tfilename, ".") != 0 && strcmp(tfilename, "..") != 0) {
 			filename = wxString::FromAscii(tfilename);

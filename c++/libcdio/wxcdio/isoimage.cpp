@@ -14,14 +14,14 @@ bool isoimage::OpenImage(const wxString &filename)
 	const wxCharBuffer buffer = filename.ToAscii();
 	const char *path = buffer.data();
 
-	return m_image.open(path);
+	return m_image.open(path, ISO_EXTENSION_ALL);	
 }
 
 bool isoimage::ReadDir(const wxString &path, stat_vector_t& stat_vector)
 {
 	const wxCharBuffer buffer = path.ToAscii();
 	const char *spath = buffer.data();
-
+	
 	return m_image.readdir(spath, stat_vector);
 }
 

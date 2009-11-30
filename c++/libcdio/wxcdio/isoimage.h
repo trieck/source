@@ -8,7 +8,6 @@ public:
 
 	bool OpenImage(const wxString &filename);
 	bool ReadDir(const wxString &path, stat_vector_t &stat_vector);
-	
 	wxString GetVolumeId();
 
 private:

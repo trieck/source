@@ -15,4 +15,10 @@ guiPropertiesDlg::guiPropertiesDlg(wxWindow* parent, iso9660_stat_t *stat)
 	m_stLSN->SetLabel(Comma(m_stat->lsn));
 	m_stSize->SetLabel(Comma(m_stat->size));	
 	m_stSectors->SetLabel(Comma(m_stat->secsize));
+	
+	if (iso9660_stat_s::_STAT_DIR == m_stat->type) {
+		m_rbDirectory->SetValue(true);
+	} else {
+		m_rbFile->SetValue(true);
+	}
 }

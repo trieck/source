@@ -50,7 +50,7 @@ PropertiesDlg::PropertiesDlg( wxWindow* parent, wxWindowID id, const wxString& t
 	m_staticText5->Wrap( -1 );
 	fgSizer->Add( m_staticText5, 0, wxALL, 5 );
 	
-	m_stCreated = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 175,-1 ), 0|wxSTATIC_BORDER );
+	m_stCreated = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 175,-1 ), 0 );
 	m_stCreated->Wrap( -1 );
 	fgSizer->Add( m_stCreated, 0, wxALL, 5 );
 	
@@ -58,7 +58,7 @@ PropertiesDlg::PropertiesDlg( wxWindow* parent, wxWindowID id, const wxString& t
 	m_staticText7->Wrap( -1 );
 	fgSizer->Add( m_staticText7, 0, wxALL, 5 );
 	
-	m_stLSN = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 175,-1 ), 0|wxSTATIC_BORDER );
+	m_stLSN = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 175,-1 ), 0 );
 	m_stLSN->Wrap( -1 );
 	fgSizer->Add( m_stLSN, 0, wxALL, 5 );
 	
@@ -66,7 +66,7 @@ PropertiesDlg::PropertiesDlg( wxWindow* parent, wxWindowID id, const wxString& t
 	m_staticText9->Wrap( -1 );
 	fgSizer->Add( m_staticText9, 0, wxALL, 5 );
 	
-	m_stSize = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 175,-1 ), 0|wxSTATIC_BORDER );
+	m_stSize = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 175,-1 ), 0 );
 	m_stSize->Wrap( -1 );
 	fgSizer->Add( m_stSize, 0, wxALL, 5 );
 	
@@ -74,7 +74,7 @@ PropertiesDlg::PropertiesDlg( wxWindow* parent, wxWindowID id, const wxString& t
 	m_staticText11->Wrap( -1 );
 	fgSizer->Add( m_staticText11, 0, wxALL, 5 );
 	
-	m_stSectors = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 175,-1 ), 0|wxSTATIC_BORDER );
+	m_stSectors = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 175,-1 ), 0 );
 	m_stSectors->Wrap( -1 );
 	fgSizer->Add( m_stSectors, 0, wxALL, 5 );
 	
