@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class DAG {
 
-	private class Vertex {
+	class Vertex {
 		private List<Vertex> edges;
 		private String label;
 
@@ -51,6 +51,10 @@ public class DAG {
 		@Override
 		public int hashCode() {
 			return label.hashCode();
+		}
+		
+		public String toString() {
+			return label;
 		}
 	}
 	
@@ -101,8 +105,8 @@ public class DAG {
 	 * Topological sort of DAG
 	 * @return sorted list of vertices
 	 */
-	public Iterator<String> sort() {
-		List<String> output = new ArrayList<String>();
+	public Iterator<Vertex> sort() {
+		List<Vertex> output = new ArrayList<Vertex>();
 		Set<Vertex> visited = new HashSet<Vertex>();
 		
 		for (Vertex v : vertices) {
@@ -118,7 +122,7 @@ public class DAG {
 	 * @param L list to append to during sorting
 	 * @param visited set of vertices seen
 	 */
-	private void visit(Vertex v, List<String> L, Set<Vertex> visited) {
+	private void visit(Vertex v, List<Vertex> L, Set<Vertex> visited) {
 		
 		if (visited.contains(v))
 			return;
@@ -129,8 +133,7 @@ public class DAG {
 			visit(m, L, visited);
 		}
 		
-		L.add(v.getLabel());
-		
+		L.add(v);		
 	}
 }
 

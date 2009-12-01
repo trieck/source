@@ -21,7 +21,7 @@ public class TSort {
 		graph.makeEdge(tokens[0], tokens[1]);
 	}
 	
-	public Iterator<String> sort() {
+	public Iterator<DAG.Vertex> sort() {
 		return graph.sort();
 	}
 	
@@ -49,9 +49,9 @@ public class TSort {
 			System.exit(1);
 		}
 		
-		Iterator<String> strings = tsort.sort();
-		while (strings.hasNext()) {
-			System.out.println(strings.next()); 
+		Iterator<DAG.Vertex> vertices = tsort.sort();
+		while (vertices.hasNext()) {
+			System.out.println(vertices.next()); 
 		}
 	}
 }
