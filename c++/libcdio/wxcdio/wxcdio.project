@@ -43,11 +43,6 @@
     <Project Name="iso9660"/>
     <Project Name="cdio++"/>
   </Dependencies>
-  <Dependencies Name="Debug">
-    <Project Name="driver"/>
-    <Project Name="iso9660"/>
-    <Project Name="cdio++"/>
-  </Dependencies>
   <Settings Type="Executable">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;$(shell wx-config wx-config --cxxflags --unicode=yes --debug=yes)" Required="yes" PreCompiledHeader="D:\source\c++\libcdio\wxcdio\common.h">
@@ -127,4 +122,9 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="driver"/>
+    <Project Name="iso9660"/>
+    <Project Name="cdio++"/>
+  </Dependencies>
 </CodeLite_Project>

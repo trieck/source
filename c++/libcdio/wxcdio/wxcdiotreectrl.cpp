@@ -90,6 +90,8 @@ void wxcdioTreeCtrl::OnItemExpanding(wxTreeEvent& event)
 
 void wxcdioTreeCtrl::ShowMenu(wxcdioNode *item, const wxPoint &pt)
 {
+	iso9660_stat_t *stat = item->GetStat();
+		
 	wxMenu menu;
 	menu.Append(MENU_ID_PROPERTIES, _T("Properties"));
 
