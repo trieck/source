@@ -23,6 +23,8 @@ private:
 	void ShowMenu(wxcdioNode *item, const wxPoint &pt);
 	void OnExport(wxCommandEvent&);
 	void OnProperties(wxCommandEvent&);
+	
+	void ExportEntry(iso9660_stat_t *stat, const wxString &filename);
 
 	enum { CX_IMAGE = 16 };
 	enum { CY_IMAGE = 16 };

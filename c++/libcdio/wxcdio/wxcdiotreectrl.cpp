@@ -122,14 +122,66 @@ void wxcdioTreeCtrl::OnExport(wxCommandEvent& WXUNUSED(event))
 	if ((stat = item->GetStat()) == NULL)
 		return;	// no stat
 	
-	wxString path = GetAbsolutePath(item);
-	
+	wxString filename = GetItemText(id);
+	wxFileDialog dlg(theApp.GetFrame(), _T("Export file"), _T(""), filename, _T("*.*"), wxFD_SAVE);
+	if (wxID_OK == dlg.ShowModal()) {
+		ExportEntry(stat, dlg.GetPath());
+	}
+}
+
+void wxcdioTreeCtrl::ExportEntry(iso9660_stat_t *stat, const wxString &filename) 
+{
 	wxcdioDoc *pDoc = (wxcdioDoc*)m_view->GetDocument();
 	isoimage *image = pDoc->GetImage();
-	
 	wxASSERT(image != NULL);	
 	
-	wxLogError(path);
+/*
+ * if (!(p_outfd = fopen (psz_fname, "wb")))
+    {
+      perror ("fopen()");
+      free(p_statbuf);
+      iso9660_close(p_iso);
+      return 3;
+    }
+
+  //Copy the blocks from the ISO-9660 filesystem to the local filesystem.
+  {
+    const unsigned int i_blocks = CEILING(p_statbuf->size, ISO_BLOCKSIZE);
+    for (i = 0; i < i_blocks ; i++) 
+    {
+      char buf[ISO_BLOCKSIZE];
+      const lsn_t lsn = p_statbuf->lsn + i;
+
+      memset (buf, 0, ISO_BLOCKSIZE);
+      
+      if ( ISO_BLOCKSIZE != iso9660_iso_seek_read (p_iso, buf, lsn, 1) )
+      {
+	fprintf(stderr, "Error reading ISO 9660 file %s at LSN %lu\n",
+		psz_fname, (long unsigned int) lsn);
+	my_exit(4);
+      }
+      
+      fwrite (buf, ISO_BLOCKSIZE, 1, p_outfd);
+      
+      if (ferror (p_outfd))
+	{
+	  perror ("fwrite()");
+	  my_exit(5);
+	}
+    }
+  }
+  
+  fflush (p_outfd);
+
+  //Make sure the file size has the exact same byte size. Without the
+  //   truncate below, the file will a multiple of ISO_BLOCKSIZE.
+  //
+  if (ftruncate (fileno (p_outfd), p_statbuf->size))
+    perror ("ftruncate()");
+
+  printf("Extraction of file '%s' from %s successful.\n", 
+	 psz_fname, psz_image);
+*/
 }
 
 void wxcdioTreeCtrl::OnProperties(wxCommandEvent& WXUNUSED(event))
@@ -205,13 +257,13 @@ void wxcdioTreeCtrl::buildChildren(isoimage *image, const wxTreeItemId &item)
 
 wxString wxcdioTreeCtrl::GetAbsolutePath(const wxTreeItemId &item) const
 {
-	wxTreeItemId next = item, parent;	
-	
 	if (item == GetRootItem()) {	// virtual root
 		return _T("/");
 	}
 	
 	wxString path = GetItemText(item);
+	
+	wxTreeItemId next = item, parent;	
 	
 	for (;;) {
 		parent = GetItemParent(next);
