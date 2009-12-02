@@ -18,15 +18,19 @@ public:
 	
 private:
 	void buildChildren(isoimage *image, const wxTreeItemId &item);
-	wxString GetAbsolutePath(const wxTreeItemId &item);
+	wxString GetAbsolutePath(const wxTreeItemId &item) const;
 	
 	void ShowMenu(wxcdioNode *item, const wxPoint &pt);
+	void OnExport(wxCommandEvent&);
 	void OnProperties(wxCommandEvent&);
 
 	enum { CX_IMAGE = 16 };
 	enum { CY_IMAGE = 16 };
 
-	enum { MENU_ID_PROPERTIES = 1001 };
+	enum { 
+		MENU_ID_EXPORT = 1001,
+		MENU_ID_PROPERTIES
+	};
 
 	DECLARE_EVENT_TABLE()
 	

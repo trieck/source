@@ -10,6 +10,7 @@ BEGIN_EVENT_TABLE(wxcdioTreeCtrl, wxTreeCtrl)
 	EVT_TREE_ITEM_COLLAPSED(wxID_ANY, wxcdioTreeCtrl::OnItemCollapsed)
 	EVT_TREE_ITEM_EXPANDED(wxID_ANY, wxcdioTreeCtrl::OnItemExpanded)
 	EVT_TREE_ITEM_EXPANDING(wxID_ANY, wxcdioTreeCtrl::OnItemExpanding)
+	EVT_MENU(MENU_ID_EXPORT, wxcdioTreeCtrl::OnExport)
 	EVT_MENU(MENU_ID_PROPERTIES, wxcdioTreeCtrl::OnProperties)
 END_EVENT_TABLE()
 
@@ -90,12 +91,45 @@ void wxcdioTreeCtrl::OnItemExpanding(wxTreeEvent& event)
 
 void wxcdioTreeCtrl::ShowMenu(wxcdioNode *item, const wxPoint &pt)
 {
-	iso9660_stat_t *stat = item->GetStat();
+	iso9660_stat_t *stat;
+	if ((stat = item->GetStat()) == NULL)
+		return;	// no stat
 		
-	wxMenu menu;
+	wxMenu menu;	
+	if (iso9660_stat_s::_STAT_DIR != stat->type) {
+		menu.Append(MENU_ID_EXPORT, _T("Export"));
+		menu.AppendSeparator();
+	}
+	
 	menu.Append(MENU_ID_PROPERTIES, _T("Properties"));
 
 	PopupMenu(&menu, pt);
+}
+
+void wxcdioTreeCtrl::OnExport(wxCommandEvent& WXUNUSED(event))
+{
+	MainApp &theApp = wxGetApp();
+
+	wxTreeItemId id = GetSelection();
+	if (!id.IsOk())
+		return;
+	
+	wxcdioNode *item;
+	if ((item = (wxcdioNode *)GetItemData(id)) == NULL)
+		return;	// no node
+	
+	iso9660_stat_t *stat;
+	if ((stat = item->GetStat()) == NULL)
+		return;	// no stat
+	
+	wxString path = GetAbsolutePath(item);
+	
+	wxcdioDoc *pDoc = (wxcdioDoc*)m_view->GetDocument();
+	isoimage *image = pDoc->GetImage();
+	
+	wxASSERT(image != NULL);	
+	
+	wxLogError(path);
 }
 
 void wxcdioTreeCtrl::OnProperties(wxCommandEvent& WXUNUSED(event))
@@ -169,7 +203,7 @@ void wxcdioTreeCtrl::buildChildren(isoimage *image, const wxTreeItemId &item)
 	}
 }
 
-wxString wxcdioTreeCtrl::GetAbsolutePath(const wxTreeItemId &item)
+wxString wxcdioTreeCtrl::GetAbsolutePath(const wxTreeItemId &item) const
 {
 	wxTreeItemId next = item, parent;	
 	
