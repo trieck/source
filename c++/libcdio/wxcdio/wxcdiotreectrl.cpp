@@ -1,9 +1,12 @@
 
 #include "common.h"
+#include <wx/file.h>
 #include "wxcdiotreectrl.h"
 #include "wxcdiodoc.h"
 #include "guiPropertiesDlg.h"
 #include "main.h"
+
+#define CEILING(x, y) ((x+(y-1))/y)
 
 BEGIN_EVENT_TABLE(wxcdioTreeCtrl, wxTreeCtrl)
 	EVT_TREE_ITEM_MENU(wxID_ANY, wxcdioTreeCtrl::OnItemMenu)
@@ -131,57 +134,41 @@ void wxcdioTreeCtrl::OnExport(wxCommandEvent& WXUNUSED(event))
 
 void wxcdioTreeCtrl::ExportEntry(iso9660_stat_t *stat, const wxString &filename) 
 {
+	wxBusyCursor wait;
 	wxcdioDoc *pDoc = (wxcdioDoc*)m_view->GetDocument();
 	isoimage *image = pDoc->GetImage();
 	wxASSERT(image != NULL);	
 	
-/*
- * if (!(p_outfd = fopen (psz_fname, "wb")))
-    {
-      perror ("fopen()");
-      free(p_statbuf);
-      iso9660_close(p_iso);
-      return 3;
-    }
-
-  //Copy the blocks from the ISO-9660 filesystem to the local filesystem.
-  {
-    const unsigned int i_blocks = CEILING(p_statbuf->size, ISO_BLOCKSIZE);
-    for (i = 0; i < i_blocks ; i++) 
-    {
-      char buf[ISO_BLOCKSIZE];
-      const lsn_t lsn = p_statbuf->lsn + i;
-
-      memset (buf, 0, ISO_BLOCKSIZE);
-      
-      if ( ISO_BLOCKSIZE != iso9660_iso_seek_read (p_iso, buf, lsn, 1) )
-      {
-	fprintf(stderr, "Error reading ISO 9660 file %s at LSN %lu\n",
-		psz_fname, (long unsigned int) lsn);
-	my_exit(4);
-      }
-      
-      fwrite (buf, ISO_BLOCKSIZE, 1, p_outfd);
-      
-      if (ferror (p_outfd))
-	{
-	  perror ("fwrite()");
-	  my_exit(5);
+	wxFile file;
+	if (!file.Open(filename, wxFile::write)) {
+		wxLogError(_T("unable to open file \"%s\""), filename.c_str());
+		return;
 	}
-    }
-  }
-  
-  fflush (p_outfd);
-
-  //Make sure the file size has the exact same byte size. Without the
-  //   truncate below, the file will a multiple of ISO_BLOCKSIZE.
-  //
-  if (ftruncate (fileno (p_outfd), p_statbuf->size))
-    perror ("ftruncate()");
-
-  printf("Extraction of file '%s' from %s successful.\n", 
-	 psz_fname, psz_image);
-*/
+	
+	uint32_t nblocks = CEILING(stat->size, ISO_BLOCKSIZE);
+	uint32_t blocksize, written, remaining = stat->size;
+	
+	char block[ISO_BLOCKSIZE];
+	
+	for (uint32_t i = 0; i < nblocks; i++) {
+		if (ISO_BLOCKSIZE != image->SeekRead(block, stat->lsn + i)) {
+			wxLogError(_T("error reading ISO 9660 file at LSN %lu."),
+				stat->lsn + i);
+			return;
+		}
+		
+		blocksize = min(uint32_t(ISO_BLOCKSIZE), remaining);
+		if (blocksize != file.Write(block, blocksize)) {
+			wxLogError(_T("error writing file."));
+			return;
+		}
+		
+		remaining -= blocksize;
+	}
+	
+	file.Flush();
+	file.Close();	
+	
 }
 
 void wxcdioTreeCtrl::OnProperties(wxCommandEvent& WXUNUSED(event))

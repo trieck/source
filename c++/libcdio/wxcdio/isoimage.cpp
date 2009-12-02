@@ -25,6 +25,11 @@ bool isoimage::ReadDir(const wxString &path, stat_vector_t& stat_vector)
 	return m_image.readdir(spath, stat_vector);
 }
 
+uint32_t isoimage::SeekRead(void *ptr, lsn_t start, uint32_t size) 
+{
+	return m_image.seek_read(ptr, start, size);
+}
+
 wxString isoimage::GetVolumeId()
 {
 	char *id;

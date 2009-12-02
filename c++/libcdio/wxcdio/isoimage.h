@@ -8,7 +8,8 @@ public:
 
 	bool OpenImage(const wxString &filename);
 	bool ReadDir(const wxString &path, stat_vector_t &stat_vector);
-		
+	uint32_t SeekRead(void *ptr, lsn_t start, uint32_t size=1);		
+	
 	wxString GetVolumeId();
 
 private:
