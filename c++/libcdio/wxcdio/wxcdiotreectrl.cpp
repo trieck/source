@@ -14,7 +14,7 @@ BEGIN_EVENT_TABLE(wxcdioTreeCtrl, wxTreeCtrl)
 	EVT_TREE_ITEM_COLLAPSED(wxID_ANY, wxcdioTreeCtrl::OnItemCollapsed)
 	EVT_TREE_ITEM_EXPANDED(wxID_ANY, wxcdioTreeCtrl::OnItemExpanded)
 	EVT_TREE_ITEM_EXPANDING(wxID_ANY, wxcdioTreeCtrl::OnItemExpanding)
-	EVT_MENU(MENU_ID_EXPORT, wxcdioTreeCtrl::OnExport)
+	EVT_MENU(MENU_ID_EXTRACT, wxcdioTreeCtrl::OnExtract)
 	EVT_MENU(MENU_ID_PROPERTIES, wxcdioTreeCtrl::OnProperties)
 END_EVENT_TABLE()
 
@@ -24,12 +24,10 @@ wxcdioTreeCtrl::wxcdioTreeCtrl(wxView *view, wxWindow *parent)
 		m_view(view)
 {
 	wxImageList *imageList = new wxImageList(CX_IMAGE, CY_IMAGE, true, 0);
-	imageList->Add(wxIcon(wxT("WXICON_SMALL_CLOSED_FOLDER"),
-	                      wxBITMAP_TYPE_ICO_RESOURCE, CX_IMAGE, CY_IMAGE));
-	imageList->Add(wxIcon(wxT("WXICON_SMALL_OPEN_FOLDER"),
-	                      wxBITMAP_TYPE_ICO_RESOURCE, CX_IMAGE, CY_IMAGE));
-	imageList->Add(wxIcon(wxT("WXICON_SMALL_FILE"),
-	                      wxBITMAP_TYPE_ICO_RESOURCE, CX_IMAGE, CY_IMAGE));
+	
+	imageList->Add(wxBitmap( wxT("resources/folder-closed.png"), wxBITMAP_TYPE_ANY));						
+	imageList->Add(wxBitmap(wxT("resources/folder-open.png"), wxBITMAP_TYPE_ANY));
+	imageList->Add(wxBitmap(wxT("resources/file.png"), wxBITMAP_TYPE_ANY));
 
 	AssignImageList(imageList);
 }
@@ -101,7 +99,7 @@ void wxcdioTreeCtrl::ShowMenu(wxcdioNode *item, const wxPoint &pt)
 		
 	wxMenu menu;	
 	if (iso9660_stat_s::_STAT_DIR != stat->type) {
-		menu.Append(MENU_ID_EXPORT, _T("Export"));
+		menu.Append(MENU_ID_EXTRACT, _T("Extract"));
 		menu.AppendSeparator();
 	}
 	
@@ -110,7 +108,7 @@ void wxcdioTreeCtrl::ShowMenu(wxcdioNode *item, const wxPoint &pt)
 	PopupMenu(&menu, pt);
 }
 
-void wxcdioTreeCtrl::OnExport(wxCommandEvent& WXUNUSED(event))
+void wxcdioTreeCtrl::OnExtract(wxCommandEvent& WXUNUSED(event))
 {
 	MainApp &theApp = wxGetApp();
 
@@ -127,13 +125,13 @@ void wxcdioTreeCtrl::OnExport(wxCommandEvent& WXUNUSED(event))
 		return;	// no stat
 	
 	wxString filename = GetItemText(id);
-	wxFileDialog dlg(theApp.GetFrame(), _T("Export file"), _T(""), filename, _T("*.*"), wxFD_SAVE);
+	wxFileDialog dlg(theApp.GetFrame(), _T("Extract file"), _T(""), filename, _T("*.*"), wxFD_SAVE);
 	if (wxID_OK == dlg.ShowModal()) {
-		ExportEntry(stat, dlg.GetPath());
+		ExtractEntry(stat, dlg.GetPath());
 	}
 }
 
-void wxcdioTreeCtrl::ExportEntry(iso9660_stat_t *stat, const wxString &filename) 
+void wxcdioTreeCtrl::ExtractEntry(iso9660_stat_t *stat, const wxString &filename) 
 {
 	wxBusyCursor wait;
 	wxcdioDoc *pDoc = (wxcdioDoc*)m_view->GetDocument();

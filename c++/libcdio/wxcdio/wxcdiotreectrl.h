@@ -21,16 +21,16 @@ private:
 	wxString GetAbsolutePath(const wxTreeItemId &item) const;
 	
 	void ShowMenu(wxcdioNode *item, const wxPoint &pt);
-	void OnExport(wxCommandEvent&);
+	void OnExtract(wxCommandEvent&);
 	void OnProperties(wxCommandEvent&);
 	
-	void ExportEntry(iso9660_stat_t *stat, const wxString &filename);
+	void ExtractEntry(iso9660_stat_t *stat, const wxString &filename);
 
 	enum { CX_IMAGE = 16 };
 	enum { CY_IMAGE = 16 };
 
 	enum { 
-		MENU_ID_EXPORT = 1001,
+		MENU_ID_EXTRACT = 1001,
 		MENU_ID_PROPERTIES
 	};
 

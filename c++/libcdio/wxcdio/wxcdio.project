@@ -115,12 +115,12 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
-  <Dependencies Name="Debug">
+  <Dependencies Name="Release">
     <Project Name="driver"/>
     <Project Name="iso9660"/>
     <Project Name="cdio++"/>
   </Dependencies>
-  <Dependencies Name="Release">
+  <Dependencies Name="Debug">
     <Project Name="driver"/>
     <Project Name="iso9660"/>
     <Project Name="cdio++"/>
