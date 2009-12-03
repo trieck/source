@@ -1,7 +1,7 @@
 #ifndef __wxcdiocanvas__
 #define __wxcdiocanvas__
 
-#include "wxcdioTreeCtrl.h"
+#include "wxcdiotreectrl.h"
 
 class wxcdioCanvas : public wxScrolledWindow {
 public:

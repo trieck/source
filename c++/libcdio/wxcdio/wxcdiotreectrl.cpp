@@ -1,6 +1,7 @@
 
 #include "common.h"
 #include <wx/file.h>
+#include <wx/imaglist.h>
 #include "wxcdiotreectrl.h"
 #include "wxcdiodoc.h"
 #include "guiPropertiesDlg.h"
@@ -168,7 +169,6 @@ void wxcdioTreeCtrl::ExportEntry(iso9660_stat_t *stat, const wxString &filename)
 	
 	file.Flush();
 	file.Close();	
-	
 }
 
 void wxcdioTreeCtrl::OnProperties(wxCommandEvent& WXUNUSED(event))
