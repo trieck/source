@@ -5,7 +5,7 @@
   <Project Name="wxcdio" Path="wxcdio\wxcdio.project" Active="Yes"/>
   <Project Name="cdio++" Path="cdio++\cdio++.project" Active="No"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="wxcdio" ConfigName="Debug"/>
       <Project Name="iso9660" ConfigName="Debug"/>
       <Project Name="driver" ConfigName="Debug"/>
