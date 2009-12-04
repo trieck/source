@@ -16,6 +16,8 @@ public:
 	            const wxString& name = wxFrameNameStr);
 
 	~wxcdioFrame();
+	
+	DECLARE_EVENT_TABLE()
 private:
 	wxMenuBar* m_menuBar;
 	wxMenu* m_menuFile;
@@ -29,12 +31,11 @@ private:
 	enum { CX_TB_BMP_SIZE = 22 };
 	enum { CY_TB_BMP_SIZE = 22 };
 
-	DECLARE_EVENT_TABLE()
-
 	void OnCloseFrame(wxCloseEvent& event);
 	void OnExitClick(wxCommandEvent& event);
 
 	void OnAbout(wxCommandEvent& event);
+	void OnVolInfo(wxCommandEvent& event);
 };
 
 #endif // __wxcdioframe__

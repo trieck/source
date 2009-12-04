@@ -40,3 +40,8 @@ wxString isoimage::GetVolumeId()
 
 	return wxString::FromAscii(id);
 }
+
+ISO9660::PVD *isoimage::ReadPVD()
+{
+	return m_image.read_pvd();
+}

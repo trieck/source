@@ -17,7 +17,9 @@ public:
 	isoimage *GetImage() {
 		return &m_image;
 	}
+	
 private:
 	isoimage m_image;
 };
+
 #endif // __wxcdiodoc__

@@ -29,11 +29,6 @@ private:
 	enum { CX_IMAGE = 16 };
 	enum { CY_IMAGE = 16 };
 
-	enum { 
-		MENU_ID_EXTRACT = 1001,
-		MENU_ID_PROPERTIES
-	};
-
 	DECLARE_EVENT_TABLE()
 	
 	wxView *m_view;

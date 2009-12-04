@@ -61,4 +61,3 @@ bool wxcdioDoc::OnCloseDocument()
 	return true;
 }
 
-

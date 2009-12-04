@@ -20,6 +20,10 @@
 // initialize the application
 IMPLEMENT_APP(MainApp);
 
+BEGIN_EVENT_TABLE(MainApp, wxApp)
+	EVT_UPDATE_UI(ID_VOL_INFO, MainApp::OnUpdateVolInfo) 
+END_EVENT_TABLE()
+	
 ////////////////////////////////////////////////////////////////////////////////
 // application class implementation
 ////////////////////////////////////////////////////////////////////////////////
@@ -62,4 +66,13 @@ int MainApp::OnExit(void)
 {
 	delete m_docManager;
 	return 0;
+}
+
+void MainApp::OnUpdateVolInfo(wxUpdateUIEvent &event)
+{
+	bool bEnable =
+		((m_docManager != NULL) &&
+		(m_docManager->GetCurrentDocument() != NULL));
+	
+	event.Enable(bEnable);
 }

@@ -6,6 +6,7 @@
 BEGIN_EVENT_TABLE(wxcdioFrame, wxDocParentFrame)
 	EVT_MENU(wxID_EXIT, wxcdioFrame::OnExitClick)
 	EVT_MENU(wxID_ABOUT, wxcdioFrame::OnAbout)
+	EVT_MENU(ID_VOL_INFO, wxcdioFrame::OnVolInfo)
 	EVT_CLOSE(wxcdioFrame::OnCloseFrame)
 END_EVENT_TABLE()
 
@@ -43,8 +44,15 @@ wxcdioFrame::wxcdioFrame(wxDocManager *manager, wxFrame *frame,
 
 	m_menuFile->AppendSeparator();
 
+	wxMenuItem* menuFileInfo;
+	menuFileInfo = new wxMenuItem(m_menuFile, ID_VOL_INFO, wxString( _("&Volume information") ) + wxT('\t') + wxT("Alt+V"), _T(
+		"Volume Information"), wxITEM_NORMAL );
+	m_menuFile->Append( menuFileInfo );
+	
+	m_menuFile->AppendSeparator();
+
 	wxMenuItem* menuFileExit;
-	menuFileExit = new wxMenuItem( m_menuFile, wxID_EXIT, wxString( _("E&xit") ) + wxT('\t') + wxT("Alt+X"), wxEmptyString, wxITEM_NORMAL );
+	menuFileExit = new wxMenuItem( m_menuFile, wxID_EXIT, wxString( _("E&xit") ) + wxT('\t') + wxT("Alt+X"), _T("Exit application"), wxITEM_NORMAL );
 	m_menuFile->Append( menuFileExit );
 
 	manager->FileHistoryUseMenu(m_menuFile);
@@ -70,6 +78,8 @@ wxcdioFrame::wxcdioFrame(wxDocManager *manager, wxFrame *frame,
 	m_toolBar->AddTool( wxID_CLOSE, _("&Close"), wxBitmap( wxT("resources/close.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, _T("Close image"), _T("Close ISO image"));
 	m_toolBar->AddTool( wxID_SAVE, _("&Save"), wxBitmap( wxT("resources/save.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, _T("Save image"), _T("Save image to disc"));
 	m_toolBar->AddSeparator();
+	m_toolBar->AddTool(ID_VOL_INFO, _("Volume"), wxBitmap( wxT("resources/info.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, _T("Volume information"), _T("Volume information"));
+	m_toolBar->AddSeparator();
 	m_toolBar->AddTool( wxID_ABOUT, _("About"), wxBitmap( wxT("resources/help.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, _T("About wxCDIO"), _T("About wxCDIO"));
 	m_toolBar->Realize();
 
@@ -91,6 +101,10 @@ void wxcdioFrame::OnAbout(wxCommandEvent& event)
 {
 	AboutDlg dlg(this);
 	dlg.ShowModal();
+}
+
+void wxcdioFrame::OnVolInfo(wxCommandEvent& event)
+{
 }
 
 wxcdioFrame::~wxcdioFrame()
