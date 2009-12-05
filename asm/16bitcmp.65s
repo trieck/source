@@ -1,0 +1,39 @@
+		.org $0334			
+	
+		lda #$0			; store lsb 
+		sta $fb
+		lda #$20		; store msb
+		sta $fc
+		ldy #0			; initialization
+loop	lda #0
+		sta ($fb), y	; store zeros
+		iny				; next address
+		beq npage		; y = 0 ?
+		bne loop		; keep looping
+npage	clc
+		lda $fb
+		adc #1
+		sta $fb
+		lda $fc
+		adc #0
+		sta $fc   
+
+compare sec				; compare to $3f3f
+		lda $fb		
+		sbc #$3f
+		sta $02
+		lda $fc
+		sbc #$3f
+		ora $02
+		beq end			; are we done?
+		bne loop		; keep looping
+
+end 	rts				; done.
+
+
+
+	
+		
+	
+	
+	
