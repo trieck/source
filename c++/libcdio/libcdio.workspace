@@ -5,13 +5,13 @@
   <Project Name="wxcdio" Path="wxcdio\wxcdio.project" Active="Yes"/>
   <Project Name="cdio++" Path="cdio++\cdio++.project" Active="No"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="wxcdio" ConfigName="Debug"/>
       <Project Name="iso9660" ConfigName="Debug"/>
       <Project Name="driver" ConfigName="Debug"/>
       <Project Name="cdio++" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="no">
+    <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="wxcdio" ConfigName="Release"/>
       <Project Name="iso9660" ConfigName="Release"/>
       <Project Name="driver" ConfigName="Release"/>
