@@ -280,7 +280,7 @@ sub write_opinfo_h {
 
 	print FH "/* opcode info structure */\n";
 	print FH "typedef struct Opinfo {\n";
-	print FH "\tconst char **mnemonic;\t/* pointer to mnemonic */\n";
+	print FH "\tconst char *mnemonic;\t/* pointer to mnemonic */\n";
 	print FH "\tbyte mode;\t\t\t/* addressing mode */\n";
 	print FH "} *LPOPINFO;\n\n";
 
@@ -315,7 +315,7 @@ sub write_opinfo_cpp {
 
 	$n = 0;
 	foreach $key (sort keys %instr) {
-		print FH "#define $key (&mnemonics[$n])\n";
+		print FH "#define $key (mnemonics[$n])\n";
 		$n++;
 	}
 	

@@ -186,7 +186,7 @@ void MiniDisassembler::RR8(LPOPINFO m)
 	byte rp = fetch();
 	char *hi = r8_tbl[HIREG8(rp)];
 	char *lo = r8_tbl[LOREG8(rp)];
-	printf(" %.2x          %s %s, %s\n", rp, *m->mnemonic, hi, lo);
+	printf(" %.2x          %s %s, %s\n", rp, m->mnemonic, hi, lo);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -195,7 +195,7 @@ void MiniDisassembler::RR16(LPOPINFO m)
 	byte rp = fetch();
 	char *hi = r16_tbl[HIREG16(rp)];
 	char *lo = r16_tbl[LOREG16(rp)];
-	printf(" %.2x          %s %s, %s\n", rp, *m->mnemonic, hi, lo);
+	printf(" %.2x          %s %s, %s\n", rp, m->mnemonic, hi, lo);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -204,7 +204,7 @@ void MiniDisassembler::RM8(LPOPINFO m)
 	byte rp = fetch();
 	char *hi = r8_tbl[HIREG8(rp)];
 	char *lo = R16STR(LONYBBLE(rp));
-	printf(" %.2x          %s %s, [%s]\n", rp, *m->mnemonic, hi, lo);
+	printf(" %.2x          %s %s, [%s]\n", rp, m->mnemonic, hi, lo);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -213,7 +213,7 @@ void MiniDisassembler::RM16(LPOPINFO m)
 	byte rp = fetch();
 	char *hi = r16_tbl[HIREG16(rp)];
 	char *lo = R16STR(LONYBBLE(rp));
-	printf(" %.2x          %s %s, [%s]\n", rp, *m->mnemonic, hi, lo);
+	printf(" %.2x          %s %s, [%s]\n", rp, m->mnemonic, hi, lo);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -223,7 +223,7 @@ void MiniDisassembler::RA8(LPOPINFO m)
 	word a16 = fetchWord();
 	char *r = r8_tbl[LOREG8(b)];
 	printf(" %.2x %.2x %.2x    %s %s, [$%.4x]\n",
-	       b, HIBYTE(a16), LOBYTE(a16), *m->mnemonic, r, a16);
+	       b, HIBYTE(a16), LOBYTE(a16), m->mnemonic, r, a16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -233,7 +233,7 @@ void MiniDisassembler::RA16(LPOPINFO m)
 	word a16 = fetchWord();
 	char *r = r16_tbl[LOREG16(b)];
 	printf(" %.2x %.2x %.2x    %s %s, [$%.4x]\n",
-	       b, HIBYTE(a16), LOBYTE(a16), *m->mnemonic, r, a16);
+	       b, HIBYTE(a16), LOBYTE(a16), m->mnemonic, r, a16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -243,7 +243,7 @@ void MiniDisassembler::RI8(LPOPINFO m)
 	byte imm8 = fetch();
 	char *r = r8_tbl[LOREG8(b)];
 	printf(" %.2x %.2x       %s %s, $%.2x\n",
-	       b, imm8, *m->mnemonic, r, imm8);
+	       b, imm8, m->mnemonic, r, imm8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -253,7 +253,7 @@ void MiniDisassembler::RI16(LPOPINFO m)
 	word imm16 = fetchWord();
 	char *r = r16_tbl[LOREG16(b)];
 	printf(" %.2x %.2x %.2x    %s %s, $%.4x\n",
-	       b, HIBYTE(imm16), LOBYTE(imm16), *m->mnemonic, r, imm16);
+	       b, HIBYTE(imm16), LOBYTE(imm16), m->mnemonic, r, imm16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -262,7 +262,7 @@ void MiniDisassembler::MR8(LPOPINFO m)
 	byte rp = fetch();
 	char *hi = R16STR(HINYBBLE(rp));
 	char *lo = r8_tbl[LOREG8(rp)];
-	printf(" %.2x          %s [%s], %s\n", rp, *m->mnemonic, hi, lo);
+	printf(" %.2x          %s [%s], %s\n", rp, m->mnemonic, hi, lo);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -271,7 +271,7 @@ void MiniDisassembler::MR16(LPOPINFO m)
 	byte rp = fetch();
 	char *hi = R16STR(HINYBBLE(rp));
 	char *lo = r16_tbl[LOREG16(rp)];
-	printf(" %.2x          %s [%s], %s\n", rp, *m->mnemonic, hi, lo);
+	printf(" %.2x          %s [%s], %s\n", rp, m->mnemonic, hi, lo);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -280,7 +280,7 @@ void MiniDisassembler::M8I8(LPOPINFO m)
 	byte b = fetch();
 	byte imm8 = fetch();
 	char *r = R16STR(LONYBBLE(b));
-	printf(" %.2x %.2x       %s byte [%s], $%.2x\n", b, imm8, *m->mnemonic, r, imm8);
+	printf(" %.2x %.2x       %s byte [%s], $%.2x\n", b, imm8, m->mnemonic, r, imm8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -289,7 +289,7 @@ void MiniDisassembler::M16I8(LPOPINFO m)
 	byte b = fetch();
 	byte imm8 = fetch();
 	char *r = R16STR(LONYBBLE(b));
-	printf(" %.2x %.2x       %s word [%s], $%.2x\n", b, imm8, *m->mnemonic, r, imm8);
+	printf(" %.2x %.2x       %s word [%s], $%.2x\n", b, imm8, m->mnemonic, r, imm8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -299,7 +299,7 @@ void MiniDisassembler::MI16(LPOPINFO m)
 	word imm16 = fetchWord();
 	char *r = R16STR(LONYBBLE(b));
 	printf(" %.2x %.2x %.2x    %s [%s], $%.4x\n", b, HIBYTE(imm16),
-	       LOBYTE(imm16), *m->mnemonic, r, imm16);
+	       LOBYTE(imm16), m->mnemonic, r, imm16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -309,7 +309,7 @@ void MiniDisassembler::AR8(LPOPINFO m)
 	word a16 = fetchWord();
 	char *r = r8_tbl[LOREG8(b)];
 	printf(" %.2x %.2x %.2x    %s [$%.4x], %s\n", b, HIBYTE(a16),
-	       LOBYTE(a16), *m->mnemonic, a16, r);
+	       LOBYTE(a16), m->mnemonic, a16, r);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -319,7 +319,7 @@ void MiniDisassembler::AR16(LPOPINFO m)
 	word a16 = fetchWord();
 	char *r = r16_tbl[LOREG16(b)];
 	printf(" %.2x %.2x %.2x    %s [$%.4x], %s\n", b, HIBYTE(a16),
-	       LOBYTE(a16), *m->mnemonic, a16, r);
+	       LOBYTE(a16), m->mnemonic, a16, r);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -328,7 +328,7 @@ void MiniDisassembler::A8I8(LPOPINFO m)
 	byte imm8 = fetch();
 	word a16 = fetchWord();
 	printf(" %.2x %.2x %.2x    %s byte [$%.4x], $%.2x\n", imm8, HIBYTE(a16),
-	       LOBYTE(a16), *m->mnemonic, a16, imm8);
+	       LOBYTE(a16), m->mnemonic, a16, imm8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -337,7 +337,7 @@ void MiniDisassembler::A16I8(LPOPINFO m)
 	byte imm8 = fetch();
 	word a16 = fetchWord();
 	printf(" %.2x %.2x %.2x    %s word [$%.4x], $%.2x\n", imm8, HIBYTE(a16),
-	       LOBYTE(a16), *m->mnemonic, a16, imm8);
+	       LOBYTE(a16), m->mnemonic, a16, imm8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -347,7 +347,7 @@ void MiniDisassembler::AI16(LPOPINFO m)
 	word a16 = fetchWord();
 	printf(" %.2x %.2x %.2x %.2x %s [$%.4x], $%.4x\n",
 	       HIBYTE(imm16), LOBYTE(imm16), HIBYTE(a16), LOBYTE(a16),
-	       *m->mnemonic, a16, imm16);
+	       m->mnemonic, a16, imm16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -355,7 +355,7 @@ void MiniDisassembler::R8(LPOPINFO m)
 {
 	byte b = fetch();
 	char *r = r8_tbl[LOREG8(b)];
-	printf(" %.2x          %s %s\n", b, *m->mnemonic, r);
+	printf(" %.2x          %s %s\n", b, m->mnemonic, r);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -363,7 +363,7 @@ void MiniDisassembler::R16(LPOPINFO m)
 {
 	byte b = fetch();
 	char *r = r16_tbl[LOREG16(b)];
-	printf(" %.2x          %s %s\n", b, *m->mnemonic, r);
+	printf(" %.2x          %s %s\n", b, m->mnemonic, r);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -371,7 +371,7 @@ void MiniDisassembler::M8(LPOPINFO m)
 {
 	byte b = fetch();
 	char *r = R16STR(LONYBBLE(b));
-	printf(" %.2x          %s byte [%s]\n", b, *m->mnemonic, r);
+	printf(" %.2x          %s byte [%s]\n", b, m->mnemonic, r);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -379,10 +379,10 @@ void MiniDisassembler::M16(LPOPINFO m)
 {
 	byte b = fetch();
 	char *r = R16STR(LONYBBLE(b));
-	if (strcmp(*m->mnemonic, "call") == 0 || strcmp(*m->mnemonic, "jmp") == 0) {
-		printf(" %.2x          %s [%s]\n", b, *m->mnemonic, r);
+	if (strcmp(m->mnemonic, "call") == 0 || strcmp(m->mnemonic, "jmp") == 0) {
+		printf(" %.2x          %s [%s]\n", b, m->mnemonic, r);
 	} else {
-		printf(" %.2x          %s word [%s]\n", b, *m->mnemonic, r);
+		printf(" %.2x          %s word [%s]\n", b, m->mnemonic, r);
 	}
 }
 
@@ -391,33 +391,33 @@ void MiniDisassembler::A8(LPOPINFO m)
 {
 	word a16 = fetchWord();
 	printf(" %.2x %.2x       %s byte [$%.4x]\n",
-	       HIBYTE(a16), LOBYTE(a16), *m->mnemonic, a16);
+	       HIBYTE(a16), LOBYTE(a16), m->mnemonic, a16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void MiniDisassembler::A16(LPOPINFO m)
 {
 	word a16 = fetchWord();
-	if (strcmp(*m->mnemonic, "call") == 0 || strcmp(*m->mnemonic, "jmp") == 0) {
+	if (strcmp(m->mnemonic, "call") == 0 || strcmp(m->mnemonic, "jmp") == 0) {
 		printf(" %.2x %.2x       %s [$%.4x]\n",
-		       HIBYTE(a16), LOBYTE(a16), *m->mnemonic, a16);
+		       HIBYTE(a16), LOBYTE(a16), m->mnemonic, a16);
 	} else {
 		printf(" %.2x %.2x       %s word [$%.4x]\n",
-		       HIBYTE(a16), LOBYTE(a16), *m->mnemonic, a16);
+		       HIBYTE(a16), LOBYTE(a16), m->mnemonic, a16);
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void MiniDisassembler::IMPLIED(LPOPINFO m)
 {
-	printf("             %s\n", *m->mnemonic);
+	printf("             %s\n", m->mnemonic);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void MiniDisassembler::I8(LPOPINFO m)
 {
 	byte imm8 = fetch();
-	printf(" %.2x          %s $%.2x\n", imm8, *m->mnemonic, imm8);
+	printf(" %.2x          %s $%.2x\n", imm8, m->mnemonic, imm8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -425,5 +425,5 @@ void MiniDisassembler::I16(LPOPINFO m)
 {
 	word imm16 = fetchWord();
 	printf(" %.2x %.2x       %s $%.4x\n", HIBYTE(imm16),
-	       LOBYTE(imm16), *m->mnemonic, imm16);
+	       LOBYTE(imm16), m->mnemonic, imm16);
 }
