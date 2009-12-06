@@ -50,6 +50,8 @@ private:
 	void I8(LPOPINFO m);
 	void I16(LPOPINFO m);
 
+	enum { NLINES = 16 };
+
 	void printip();
 	byte fetch();
 	word fetchWord();

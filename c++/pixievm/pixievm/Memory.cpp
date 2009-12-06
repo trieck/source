@@ -14,12 +14,13 @@ MemoryPtr Memory::instance(Memory::getInstance());
 Memory::Memory()
 {
 	memory = new byte[MEM_SIZE];
+	memset(memory, 0, MEM_SIZE * sizeof(byte));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Memory::~Memory()
 {
-	delete[]memory;
+	delete[] memory;
 }
 
 /////////////////////////////////////////////////////////////////////////////

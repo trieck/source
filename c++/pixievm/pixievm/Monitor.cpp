@@ -266,9 +266,9 @@ void Monitor::run(void *data)
 void Monitor::notice()
 {
 	if (show_notice) {
-		cout << endl
-		     << "PixieVM version 0.0.1, Copyright (c) 2006 Thomas A. Rieck"
-		     << endl;
+		cout << endl << "PixieVM version 0.0.1" << endl
+			<< "Copyright(c) 2006-2009 Thomas A. Rieck" << endl
+			<< "type '?' for help" << endl;
 	}
 }
 

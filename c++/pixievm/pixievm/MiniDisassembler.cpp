@@ -63,7 +63,7 @@ void MiniDisassembler::disassemble(word *start, word *end)
 		init = true;
 	}
 
-	for (int i = 0; ip >= lastip && (end ? ip <= *end : i < 16); i++) {
+	for (int i = 0; ip >= lastip && (end ? ip <= *end : i < NLINES); i++) {
 		printip();
 		lastip = ip;
 		byte b = fetch();
