@@ -251,7 +251,7 @@
 			Name="Perl Files"
 			>
 			<File
-				RelativePath=".\Instr.pl"
+				RelativePath=".\autogen.pl"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
