@@ -3,7 +3,6 @@
 # automatically generate source and header files
 
 use strict 'vars';
-use Time::Local;
 
 # addressing modes 
 use constant RR8 		=> 0;	
