@@ -8,27 +8,6 @@
 #ifndef __CPU_H__
 #define __CPU_H__
 
-/*
- * The PixieVM CPU is a 16-bit Big Endian CPU
- * with 4 16-bit general purpose registers A, B, C, D,
- * one 16-bit index register X, a 16-bit stack pointer SP,
- * a 16-bit instruction pointer IP and a 16-bit flags register
- * FLAGS. FLAGS holds various CPU state flags ie. negative, 
- * overflow, break,  interrupt disable, zero and carry 
- * in the following format:
- *  
- * ---- ----  NV-- BIZC
- *
- * Each general purpose register can be referred to by it's high and 
- * low byte:
- *
- * ----------- ----------- ----------- -----------
- * |   AX    | |   BX    | |   CX    | |   DX    |
- * ----------- ----------- ----------- -----------
- * | AH | AL | | BH | BL | | CH | CL | | DH | DL |
- * ----------- ----------- ----------- -----------
- */
-
 #define HIREG8(n)           (LOREG8((n >> 4)))
 #define LOREG8(n)           (n & 7)
 
