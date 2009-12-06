@@ -688,7 +688,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Fast Lexical Analyzer from $(InputPath)..."
-						CommandLine="flex -oScanner.cpp $(InputPath)&#x0D;&#x0A; "
+						CommandLine="flex -oScanner.cpp $(InputPath)&#x0D;&#x0A;&#x0D;&#x0A;"
 						Outputs="Scanner.cpp"
 					/>
 				</FileConfiguration>
@@ -698,7 +698,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Fast Lexical Analyzer from $(InputPath)..."
-						CommandLine="flex -oScanner.cpp $(InputPath)&#x0D;&#x0A; "
+						CommandLine="flex -oScanner.cpp $(InputPath)&#x0D;&#x0A;&#x0D;&#x0A;"
 						Outputs="Scanner.cpp"
 					/>
 				</FileConfiguration>
