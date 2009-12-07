@@ -2557,7 +2557,7 @@
 CPUPtr CPU::instance(CPU::getInstance());
 
 /////////////////////////////////////////////////////////////////////////////
-CPU::CPU()
+CPU::CPU() : m_shutdown(false)
 {
 	memory = Memory::getInstance();
 	REG_A = REG_B = REG_C = REG_D = REG_X = REG_SP = REG_IP = REG_FL = 0;
@@ -2631,6 +2631,11 @@ void CPU::setIP(word address)
 	REG_IP = address;
 }
 
+void CPU::setShutdown(bool fShutdown) 
+{
+	m_shutdown = fShutdown;
+}
+
 #define DO_INTERRUPT()										\
 	do {													\
 		int pending_interrupt = g_interrupt.getPending();	\
@@ -2662,12 +2667,15 @@ void CPU::run()
 
 	reset();
 
-	for (;;) {
+	while (!m_shutdown) {
 
 		pending_interrupt = g_interrupt.getPending();
 		if (pending_interrupt != IK_NONE) {
 			DO_INTERRUPT();
 		}
+
+		if (m_shutdown)
+			break;
 
 		b = FETCH(REG_IP);
 		switch (b) {

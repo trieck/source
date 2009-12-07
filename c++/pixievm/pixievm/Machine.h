@@ -13,7 +13,7 @@ class Machine {
 // Construction / Destruction
 public:
 	Machine();
-	~Machine() {}
+	~Machine();
 
 // Interface
 	void init();

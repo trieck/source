@@ -22,7 +22,7 @@
 /////////////////////////////////////////////////////////////////////////////
 Monitor::Monitor() : exit_mon(false), show_notice(true)
 {
-	commands["?"] = new HelpCmd(this);
+	commands["?"] = commands["help"] = (new HelpCmd(this))->CopyRef();
 	commands["a"] = new AssemCmd(this);
 	commands["d"] = new DisassemCmd(this);
 	commands["l"] = new LoadCmd(this);
@@ -39,7 +39,7 @@ Monitor::~Monitor()
 	CommandMap::const_iterator it = commands.begin();
 	for (; it != commands.end(); it++) {
 		LPCOMMAND cmd = (*it).second;
-		delete cmd;	// Release!
+		cmd->DecRef();
 	}
 }
 
@@ -92,11 +92,12 @@ void Monitor::dispatch(const string & line)
 	if (v.size() == 0) {
 		cerr << '?' << endl;
 	} else {
-		LPCOMMAND command = commands[v[0]];
-		if (command == NULL) {
+		CommandMap::const_iterator it = commands.find(v[0]);
+		if (it == commands.end()) {
 			cerr << '?' << endl;
 		} else {
 			v.erase(v.begin());
+			LPCOMMAND command = (*it).second;
 			command->exec(v);
 		}
 	}

@@ -52,6 +52,7 @@ public:
 	word getFL() const;
 
 	void setIP(word address);
+	void setShutdown(bool f);
 
 // Implementation
 private:
@@ -59,6 +60,7 @@ private:
 	static CPUPtr instance;	// singleton instance
     word regs[NREGS];		// registers
 	Memory *memory;			// memory
+	bool m_shutdown;		// shut down flag
 };
 /////////////////////////////////////////////////////////////////////////////
 

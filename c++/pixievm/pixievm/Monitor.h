@@ -17,19 +17,34 @@ class Monitor;
 
 /////////////////////////////////////////////////////////////////////////////
 // Monitor command
-class Command {
+class Command : public RefObj {
+protected:
+	Command(Monitor *pmon) : m_mon(pmon), m_ref(1) {}
 public:
-	Command(Monitor *pmon) : mon(pmon) {}
 	virtual ~Command() {}
+
+	Command *CopyRef() { 
+		IncRef();
+		return this;
+	}
 
 	virtual void exec(const stringvec &v) = 0;
 
+	uint32_t IncRef() { return ++m_ref; }
+	uint32_t DecRef() {
+		if (--m_ref == 0) {
+			delete this;
+			return 0;
+		}
+		return m_ref;
+	}
 protected:
 	Monitor *getMonitor() {
-		return mon;
+		return m_mon;
 	}
 private:
-	Monitor *mon;	/* back pointer to the monitor */
+	Monitor *m_mon;	// back pointer to the monitor 
+	uint32_t m_ref;	// reference count on the object
 };
 /////////////////////////////////////////////////////////////////////////////
 

@@ -7,6 +7,7 @@
 
 #include "common.h"
 #include "QuitCmd.h"
+#include "CPU.h"
 
 /////////////////////////////////////////////////////////////////////////////
 QuitCmd::QuitCmd(Monitor *mon) : Command(mon)
@@ -21,5 +22,9 @@ QuitCmd::~QuitCmd()
 /////////////////////////////////////////////////////////////////////////////
 void QuitCmd::exec(const stringvec &v) 
 {
-	exit(0);
+	CPU *cpu = CPU::getInstance();
+	cpu->setShutdown(true);
+
+	Monitor *mon = getMonitor();
+	mon->setExit(true);
 }
