@@ -2,11 +2,13 @@
 //
 // CPU.H : Pixie VM CPU
 //
-// Copyright (c) 2006, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __CPU_H__
 #define __CPU_H__
+
+#include "Memory.h"
 
 #define HIREG8(n)           (LOREG8((n >> 4)))
 #define LOREG8(n)           (n & 7)

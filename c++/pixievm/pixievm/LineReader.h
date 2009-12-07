@@ -2,7 +2,7 @@
 //
 // LINEREADER.H : Read lines from input stream
 //
-// Copyright (c) 2006, Thomas A. Rieck
+// Copyright (c) 2006-2009, Thomas A. Rieck
 //
 
 #ifndef __LINEREADER_H__

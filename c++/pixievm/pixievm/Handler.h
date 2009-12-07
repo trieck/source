@@ -2,7 +2,7 @@
 //
 // HANDLER.H : Handler interface
 //
-// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2009-2009, Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __HANDLER_H__

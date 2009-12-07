@@ -2,7 +2,7 @@
 //
 // TRAP.H : Implementation of traps
 //
-// Copyright (c) 2006, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __TRAP_H__

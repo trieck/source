@@ -2,11 +2,14 @@
 //
 // SYMBOLTABLE.H : Symbol table
 //
-// Copyright(c) 2006, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __SYMBOLTABLE_H__
 #define __SYMBOLTABLE_H__
+
+#include "Modes.h"
+#include "Instructions.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // Symbol type

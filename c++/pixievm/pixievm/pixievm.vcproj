@@ -212,6 +212,10 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
+				RelativePath=".\AssemCmd.cpp"
+				>
+			</File>
+			<File
 				RelativePath="Code.cpp"
 				>
 				<FileConfiguration
@@ -289,7 +293,19 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\DisassemCmd.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DumpCmd.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Handler.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\HelpCmd.cpp"
 				>
 			</File>
 			<File
@@ -341,6 +357,10 @@
 						PrecompiledHeaderThrough="common.h"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\LoadCmd.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\Machine.cpp"
@@ -522,6 +542,18 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\QuitCmd.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\RegistersCmd.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SaveCmd.cpp"
+				>
+			</File>
+			<File
 				RelativePath="Scanner.cpp"
 				>
 				<FileConfiguration
@@ -547,6 +579,10 @@
 						WarningLevel="0"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\StepCmd.cpp"
+				>
 			</File>
 			<File
 				RelativePath="SymbolTable.cpp"
@@ -629,7 +665,12 @@
 		</Filter>
 		<Filter
 			Name="Header Files"
+			Filter="h"
 			>
+			<File
+				RelativePath=".\AssemCmd.h"
+				>
+			</File>
 			<File
 				RelativePath=".\Code.h"
 				>
@@ -639,7 +680,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DisassemCmd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DumpCmd.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HelpCmd.h"
 				>
 			</File>
 			<File
@@ -648,6 +701,10 @@
 			</File>
 			<File
 				RelativePath=".\LineReader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LoadCmd.h"
 				>
 			</File>
 			<File
@@ -672,6 +729,26 @@
 			</File>
 			<File
 				RelativePath=".\Parser.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\QuitCmd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\refobj.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RegistersCmd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SaveCmd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StepCmd.h"
 				>
 			</File>
 			<File
@@ -713,7 +790,7 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\MonitorHandler.h"
+			RelativePath="..\doc\TODO.txt"
 			>
 		</File>
 	</Files>

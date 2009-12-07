@@ -2,11 +2,13 @@
 //
 // MINIASSEMBLER.H : Mini Assembler
 //
-// Copyright (c) 2006, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __MINIASSEMBLER_H__
 #define __MINIASSEMBLER_H__
+
+#include "SymbolTable.h"
 
 /////////////////////////////////////////////////////////////////////////////
 class MiniAssembler {

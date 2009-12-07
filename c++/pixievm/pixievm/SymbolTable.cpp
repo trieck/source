@@ -2,7 +2,7 @@
 //
 // SYMBOLTABLE.CPP : Symbol table
 //
-// Copyright(c) 2006, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
 //
 
 #include "Common.h"

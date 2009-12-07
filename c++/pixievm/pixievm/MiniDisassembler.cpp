@@ -2,7 +2,7 @@
 //
 // MINIDISASSEMBLER.CPP : Mini Disassembler
 //
-// Copyright (c) 2006, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
 //
 
 #include "Common.h"
@@ -35,7 +35,7 @@ char *r16ex_tbl[] = {
 	((n & 8) ? r16ex_tbl[LOREG16(n)] : r16_tbl[LOREG16(n)])
 
 /////////////////////////////////////////////////////////////////////////////
-MiniDisassembler::MiniDisassembler() : init(false)
+MiniDisassembler::MiniDisassembler() : init(false), ip(0)
 {
 	mem = Memory::getInstance();
 }

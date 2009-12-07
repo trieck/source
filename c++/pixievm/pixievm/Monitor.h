@@ -2,11 +2,15 @@
 //
 // MONITOR.H : Pixie Virtual Machine Monitor
 //
-// Copyright (c) 2006, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __MONITOR_H__
 #define __MONITOR_H__
+
+#include "Trap.h"
+#include "Handler.h"
+#include "RefObj.h"
 
 // Forward declarations
 class Monitor;

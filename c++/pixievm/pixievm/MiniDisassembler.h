@@ -2,14 +2,18 @@
 //
 // MINIDISASSEMBLER.H : Mini Disassembler
 //
-// Copyright (c) 2006, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __MINIDISASSEMBLER_H__
 #define __MINIDISASSEMBLER_H__
 
+#include "opinfo.h"
+#include "memory.h"
+
 /////////////////////////////////////////////////////////////////////////////
-class MiniDisassembler {
+class MiniDisassembler 
+{
 // Construction / Destruction
 public:
 	MiniDisassembler();

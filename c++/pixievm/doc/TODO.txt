@@ -1,0 +1,2 @@
+* Implement memory dump in monitor.
+* Break commands into modules.
