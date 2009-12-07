@@ -58,12 +58,14 @@ void DumpCmd::exec(const stringvec &v)
 
 	Memory *mem = Memory::getInstance();
 	ip = start;
-	uint32_t nlines = CEILING((end+1)-start, LINESIZE);
 
-	for (uint32_t i = 0; i < nlines; i++) {
+	word ndiff = (end+1)-start;
+	word nlines = MAX(1, CEILING(ndiff, LINESIZE));
+
+	for (word i = 0; i < nlines; i++) {
 		printf("$%.4x\t", ip);
 
-		uint32_t j;
+		word j;
 		for (j = 0; j < LINESIZE; j++) {
 			if (j > 0) putchar(' ');
 			byte b = mem->fetch(ip+j);
