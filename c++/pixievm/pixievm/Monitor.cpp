@@ -8,6 +8,7 @@
 #include "Common.h"
 #include "Memory.h"
 #include "Trap.h"
+#include "Handler.h"
 #include "Interrupt.h"
 #include "CPU.h"
 #include "Util.h"
@@ -36,7 +37,7 @@ public:
 		cout << "q   quit" << endl;
 		cout << "r   print registers" << endl;
 		cout << "s   save range file" << endl;
-		cout << "z   step" << endl;
+		cout << "z   step [address]" << endl;
 	}
 };
 
@@ -67,6 +68,11 @@ private:
 	MiniDisassembler disassembler;
 public:
 	Disassemble(Monitor *mon) : Command(mon) {}
+
+	void disassemble(word address) {
+		disassembler.disassemble(&address, &address);
+	}
+
 	void exec(const stringvec &v) {
 		word start, end;
 		if (v.size() == 0) {
@@ -206,7 +212,7 @@ public:
 		       " X: $%.4hX"
 		       " SP: $%.4hX"
 		       " IP: $%.4hX"
-		       " FL: %s\n",
+		       " FL: %s (NV--BIZC)\n",
 		       cpu->getA(), cpu->getB(), cpu->getC(), cpu->getD(),
 		       cpu->getX(), cpu->getSP(), cpu->getIP(), sr);
 	}
@@ -218,8 +224,25 @@ public:
 	Step(Monitor *mon) : Command(mon) {}
 
 	void exec(const stringvec &v) {
-		g_interrupt.setPending(IK_MONITOR);
-		getMonitor()->setExit(true);
+		CPU *cpu = CPU::getInstance();
+
+		word ip = cpu->getIP();
+		if (v.size() > 0) {
+			int n = sscanf(v[0].c_str(), "%hx", &ip);
+			if (n != 1) {
+				cerr << "? z [address]" << endl;
+				return;
+			}
+			
+			// set instruction pointer
+			cpu->setIP(ip);
+		}
+
+		Monitor *mon = getMonitor();
+		mon->disassemble(ip);
+
+		g_interrupt.setPending(IK_TRAP);
+		mon->setExit(true);
 	}
 };
 
@@ -247,13 +270,29 @@ Monitor::~Monitor()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Monitor::run(void *data)
+void Monitor::disassemble(word address)
+{
+	// this is a single line convenience method used by the stepper
+
+	Disassemble *disassemble = static_cast<Disassemble*>(commands["d"]);
+	if (disassemble != NULL) {
+		disassemble->disassemble(address);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Monitor::run()
+{
+	notice();
+	runLoop(NULL);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Monitor::runLoop(void *data)
 {
 	LineReader reader(cin);
 	string line;
-
-	notice();
-
+	
 	for (exit_mon = false; !exit_mon; ) {
 		prompt();
 		line = reader.readLine();
@@ -263,7 +302,7 @@ void Monitor::run(void *data)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Monitor::notice()
+void Monitor::notice() const
 {
 	if (show_notice) {
 		cout << endl << "PixieVM version 0.0.1" << endl
@@ -290,14 +329,20 @@ void Monitor::dispatch(const string & line)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Monitor::prompt()
+void Monitor::prompt() const
 {
 	cout << "> ";
 }
 
 ////////////////////////////////////////////////////////////////////////////
+void Monitor::handle()
+{
+	run();
+}
+
+////////////////////////////////////////////////////////////////////////////
 void Monitor::trap(void *data)
 {
-	run(data);
+	runLoop(data);
 }
 

@@ -7,7 +7,6 @@
 
 #include "Common.h"
 #include "Trap.h"
-#include "Interrupt.h"
 
 /////////////////////////////////////////////////////////////////////////////
 TrapHandler::TrapHandler()

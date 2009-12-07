@@ -8,6 +8,7 @@
 #include "Common.h"
 #include "Memory.h"
 #include "Trap.h"
+#include "Handler.h"
 #include "Interrupt.h"
 #include "CPU.h"
 #include "Monitor.h"
@@ -50,8 +51,10 @@ void Machine::loadROM(const char *filename, word base, word size)
 /////////////////////////////////////////////////////////////////////////////
 void Machine::run()
 {
-	/* set monitor trap */
+	// setup global interrupt
+	g_interrupt.setMonitor(&monitor);
 	g_interrupt.setTrap(&monitor, NULL);
+	g_interrupt.clearPending(IK_TRAP);
 
 	cpu->run();
 }

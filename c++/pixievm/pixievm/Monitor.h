@@ -33,26 +33,28 @@ typedef Command *LPCOMMAND;
 typedef map<string, LPCOMMAND, stringless> CommandMap;
 
 /////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////
 // Monitor class
-class Monitor : public TrapHandler {
+class Monitor : public TrapHandler, public Handler {
 // Construction / Destruction
 public:
 	Monitor();
 	virtual ~Monitor();
 
 // Interface
+	virtual void trap(void *data);
+	virtual void handle();
 
-	void trap(void *data);
 	void setExit(bool f);
+	void disassemble(word address);
 
 // Implementation
 private:
-	void run(void *data);
+	void run();
+	void runLoop(void *data);
+
 	void dispatch(const string &line);
-	void prompt();
-	void notice();
+	void prompt() const;
+	void notice() const;
 
 	CommandMap commands;	/* map of commands */
 	bool exit_mon;			/* exit flag */

@@ -20,36 +20,43 @@ enum cpu_int {
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class interrupt_st {
+class Interrupt {
 public:
-	interrupt_st();
-	virtual ~interrupt_st();
+	Interrupt();
+	virtual ~Interrupt();
 
 	int getPending() const {
-		return pending;
+		return m_pending;
 	}
 	void setPending(int p) {
-		pending |= p;
+		m_pending |= p;
 	}
 	void clearPending(int p) {
-		pending &= ~p;
+		m_pending &= ~p;
 	}
-	void setTrap(LPTRAPHANDLER handler, void *data);
 
+	void setTrap(LPTRAPHANDLER handler, void *data);
 	void handleTrap();
 
+	void setMonitor(LPHANDLER handler);
+	void handleMonitor();
+
 private:
-	/* pending interrupt */
-	int pending;
+	// pending interrupt
+	int m_pending;
 
-	/* trap handler */
-	LPTRAPHANDLER trap;
+	// trap handler
+	LPTRAPHANDLER m_trapHandler;
+	
+	// monitor handler
+	LPHANDLER m_monHandler;
 
-	/* trap data */
-	void *trap_data;
+	// trap data 
+	void *m_trapData;
 };
 
-extern interrupt_st g_interrupt;
+// global interrupt declaration
+extern Interrupt g_interrupt;
 
 /////////////////////////////////////////////////////////////////////////////
 #endif // __INTERRUPT_H__

@@ -289,6 +289,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Handler.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\interrupt.cpp"
 				>
 				<FileConfiguration
@@ -635,6 +639,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Handler.h"
+				>
+			</File>
+			<File
 				RelativePath=".\interrupt.h"
 				>
 			</File>
@@ -704,6 +712,10 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\MonitorHandler.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

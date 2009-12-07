@@ -9,6 +9,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 #include <stdarg.h>
+#include <stdint.h>
 #include <iostream>
 #include <string>
 #include <map>
@@ -29,9 +30,9 @@ using std::map;
 using std::vector;
 using std::auto_ptr;
 
-typedef unsigned char byte;
-typedef unsigned short word;
-typedef unsigned long dword;
+typedef uint8_t byte;
+typedef uint16_t word;
+typedef uint32_t dword;
 
 typedef vector<string> stringvec;
 

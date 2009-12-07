@@ -8,6 +8,7 @@
 #include "Common.h"
 #include "Memory.h"
 #include "Trap.h"
+#include "Handler.h"
 #include "Interrupt.h"
 #include "CPU.h"
 #include "Opcodes.h"
@@ -2577,51 +2578,57 @@ CPU *CPU::getInstance()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-word CPU::getA()
+word CPU::getA() const
 {
 	return REG_A;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-word CPU::getB()
+word CPU::getB() const
 {
 	return REG_B;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-word CPU::getC()
+word CPU::getC() const
 {
 	return REG_C;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-word CPU::getD()
+word CPU::getD() const
 {
 	return REG_D;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-word CPU::getX()
+word CPU::getX() const
 {
 	return REG_X;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-word CPU::getSP()
+word CPU::getSP() const
 {
 	return REG_SP;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-word CPU::getIP()
+word CPU::getIP() const
 {
 	return REG_IP;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-word CPU::getFL()
+word CPU::getFL() const
 {
 	return REG_FL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setIP(word address) 
+{
+	REG_IP = address;
 }
 
 #define DO_INTERRUPT()										\
@@ -2643,7 +2650,7 @@ word CPU::getFL()
 		/* monitor */										\
 		if (pending_interrupt & IK_MONITOR) {				\
 			g_interrupt.clearPending(IK_MONITOR);			\
-			;												\
+			g_interrupt.handleMonitor();					\
 		}													\
 	} while (0)
 

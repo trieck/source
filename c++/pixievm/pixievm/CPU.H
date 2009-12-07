@@ -40,14 +40,16 @@ public:
 	void run();
 	void reset();
 
-	word getA();
-	word getB();
-	word getC();
-	word getD();
-	word getX();
-	word getSP();
-	word getIP();
-	word getFL();
+	word getA() const;
+	word getB() const;
+	word getC() const;
+	word getD() const;
+	word getX() const;
+	word getSP() const;
+	word getIP() const;
+	word getFL() const;
+
+	void setIP(word address);
 
 // Implementation
 private:

@@ -7,35 +7,51 @@
 
 #include "Common.h"
 #include "Trap.h"
+#include "Handler.h"
 #include "Interrupt.h"
 
-/* global interrupt */
-interrupt_st g_interrupt;
+// global interrupt
+Interrupt g_interrupt;
 
 /////////////////////////////////////////////////////////////////////////////
-interrupt_st::interrupt_st()
+Interrupt::Interrupt()
 {
-	memset(this, 0, sizeof(interrupt_st));
-}
-
-
-/////////////////////////////////////////////////////////////////////////////
-interrupt_st::~interrupt_st()
-{
+	memset(this, 0, sizeof(Interrupt));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void interrupt_st::handleTrap()
+Interrupt::~Interrupt()
 {
-	if (trap) {
-		trap->trap(trap_data);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Interrupt::handleTrap()
+{
+	if (m_trapHandler != NULL) {
+		m_trapHandler->trap(m_trapData);
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void interrupt_st::setTrap(LPTRAPHANDLER handler, void *data)
+void Interrupt::setTrap(LPTRAPHANDLER handler, void *data)
 {
-	pending |= IK_TRAP;
-	trap = handler;
-	trap_data = data;
+	m_pending |= IK_TRAP;
+	m_trapHandler = handler;
+	m_trapData = data;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+void Interrupt::setMonitor(LPHANDLER handler)
+{
+	m_pending |= IK_MONITOR;
+	m_monHandler = handler;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Interrupt::handleMonitor()
+{
+	if (m_monHandler != NULL) {
+		m_monHandler->handle();
+	}
+}
+
