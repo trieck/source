@@ -31,7 +31,6 @@ void DumpCmd::exec(const stringvec &v)
 	if (v.size() == 0) {
 		if (!init) {
 			start = CPU::getInstance()->getIP();
-			init = true;
 		} else {
 			start = ip + 1;
 		}
@@ -89,5 +88,7 @@ void DumpCmd::exec(const stringvec &v)
 
 		putchar('\n');
 		ip += j;
-	} 
+	}
+
+	init = true;
 };
