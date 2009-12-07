@@ -60,9 +60,9 @@ private:
 	byte fetch();
 	word fetchWord();
 
-	word ip;		/* instruction pointer used during disassembly */
-	bool init;		/* have we been entered ? */
-	Memory *mem;	/* pointer to memory */
+	word ip;		// instruction pointer used during disassembly 
+	bool init;		// have we been entered ? 
+	Memory *mem;	// pointer to memory 
 };
 /////////////////////////////////////////////////////////////////////////////
 

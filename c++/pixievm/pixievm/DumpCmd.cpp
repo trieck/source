@@ -15,7 +15,7 @@
 #define MAX(a,b)  (((a) > (b)) ? (a) : (b))
 
 /////////////////////////////////////////////////////////////////////////////
-DumpCmd::DumpCmd(Monitor *mon) : Command(mon)
+DumpCmd::DumpCmd(Monitor *mon) : Command(mon), init(false), ip(0)
 {
 }
 
@@ -29,7 +29,12 @@ void DumpCmd::exec(const stringvec &v)
 {
 	word start, end;
 	if (v.size() == 0) {
-		start = CPU::getInstance()->getIP();
+		if (!init) {
+			start = CPU::getInstance()->getIP();
+			init = true;
+		} else {
+			start = ip + 1;
+		}
 		end = start + (LINESIZE * DEFLINES) - 1;
 	} else if (v.size() == 1) {
 		int n = sscanf(v[0].c_str(), "%hx", &start);
@@ -52,18 +57,18 @@ void DumpCmd::exec(const stringvec &v)
 	}
 
 	Memory *mem = Memory::getInstance();
-	word pc = start;
+	ip = start;
 	uint32_t nlines = CEILING((end+1)-start, LINESIZE);
 
 	for (uint32_t i = 0; i < nlines; i++) {
-		printf("$%.4x\t", pc);
+		printf("$%.4x\t", ip);
 
 		uint32_t j;
 		for (j = 0; j < LINESIZE; j++) {
 			if (j > 0) putchar(' ');
-			byte b = mem->fetch(pc+j);
+			byte b = mem->fetch(ip+j);
 			printf("%.2x", b);
-			if (pc+j == end) break;
+			if (ip+j == end) break;
 		}
 
 		do {
@@ -73,14 +78,14 @@ void DumpCmd::exec(const stringvec &v)
 		} while (++j < LINESIZE);
 
 		for (j = 0; j < LINESIZE; j++) {
-			byte b = mem->fetch(pc+j);
+			byte b = mem->fetch(ip+j);
 			if (isprint(b))
 				putchar(b);
 			else putchar('.');
-			if (pc+j == end) break;
+			if (ip+j == end) break;
 		}
 
 		putchar('\n');
-		pc += j;
+		ip += j;
 	} 
 };

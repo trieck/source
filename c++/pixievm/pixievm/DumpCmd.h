@@ -21,6 +21,9 @@ public:
 private:
 	enum { LINESIZE = 16 };	// number of bytes per line to dump
 	enum { DEFLINES = 9 };	// default number of lines
+
+	bool init;	// have we been initialized
+	word ip;	// instruction pointer used during dump
 };
 
 #endif // __DUMPCMD_H__
