@@ -19,7 +19,8 @@ public:
 
 	virtual void exec(const stringvec &v);
 private:
-	enum { NBYTES = 16 };	// default number of bytes to dump
+	enum { LINESIZE = 16 };	// number of bytes per line to dump
+	enum { DEFLINES = 9 };	// default number of lines
 };
 
 #endif // __DUMPCMD_H__

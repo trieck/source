@@ -22,7 +22,8 @@
 /////////////////////////////////////////////////////////////////////////////
 Monitor::Monitor() : exit_mon(false), show_notice(true)
 {
-	commands["?"] = commands["help"] = (new HelpCmd(this))->CopyRef();
+	commands["?"] = new HelpCmd(this);
+	commands["help"] = commands["?"]->CopyRef();
 	commands["a"] = new AssemCmd(this);
 	commands["d"] = new DisassemCmd(this);
 	commands["l"] = new LoadCmd(this);
