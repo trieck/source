@@ -13,8 +13,8 @@ class Handler {
 
 // Construction / Destruction
 public:
-	Handler();
-	virtual ~Handler();
+	Handler() {};
+	virtual ~Handler() {};
 
 // Interface
 	virtual void handle() = 0;
