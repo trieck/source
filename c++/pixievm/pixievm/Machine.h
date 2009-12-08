@@ -8,6 +8,10 @@
 #ifndef __MACHINE_H__
 #define __MACHINE_H__
 
+#include "CPU.h"
+#include "Memory.h"
+#include "Monitor.h"
+
 /////////////////////////////////////////////////////////////////////////////
 class Machine {
 // Construction / Destruction

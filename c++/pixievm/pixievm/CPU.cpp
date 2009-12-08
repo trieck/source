@@ -7,8 +7,6 @@
 
 #include "Common.h"
 #include "Memory.h"
-#include "Trap.h"
-#include "Handler.h"
 #include "Interrupt.h"
 #include "CPU.h"
 #include "Opcodes.h"

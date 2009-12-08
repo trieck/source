@@ -8,6 +8,9 @@
 #ifndef __INTERRUPT_H__
 #define __INTERRUPT_H__
 
+#include "Trap.h"
+#include "Handler.h"
+
 /////////////////////////////////////////////////////////////////////////////
 // Types of interrupt lines
 enum cpu_int {

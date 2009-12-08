@@ -1,2 +1,3 @@
-* Implement memory dump in monitor.
-* Break commands into modules.
+* develop pxasm
+- Implement memory dump in monitor.
+- Break commands into modules.

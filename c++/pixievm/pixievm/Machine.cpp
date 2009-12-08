@@ -6,12 +6,7 @@
 //
 
 #include "Common.h"
-#include "Memory.h"
-#include "Trap.h"
-#include "Handler.h"
 #include "Interrupt.h"
-#include "CPU.h"
-#include "Monitor.h"
 #include "Machine.h"
 #include "Exception.h"
 #include "Opcodes.h"

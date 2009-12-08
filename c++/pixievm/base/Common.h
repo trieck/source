@@ -7,6 +7,10 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
+#ifdef _MSC_VER
+#pragma warning(disable:4996)	// disable deprecation warnings
+#endif // _MSC_VER 
+
 /////////////////////////////////////////////////////////////////////////////
 #include <stdarg.h>
 #include <stdint.h>

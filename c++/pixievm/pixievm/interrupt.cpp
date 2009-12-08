@@ -6,8 +6,6 @@
 //
 
 #include "Common.h"
-#include "Trap.h"
-#include "Handler.h"
 #include "Interrupt.h"
 
 // global interrupt

@@ -251,6 +251,10 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\SymbolTable.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -259,6 +263,10 @@
 			>
 			<File
 				RelativePath=".\Parser.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SymbolTable.h"
 				>
 			</File>
 		</Filter>
@@ -280,7 +288,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Parser from $(InputPath)..."
-						CommandLine="bison -d -y $(InputPath) -o Parser.cpp"
+						CommandLine="bison -d -y $(InputPath) -o Parser.cpp&#x0D;&#x0A;"
 						Outputs="Parser.hpp;Parser.cpp"
 					/>
 				</FileConfiguration>
@@ -290,7 +298,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Parser from $(InputPath)..."
-						CommandLine="bison -d -y $(InputPath) -o Parser.cpp"
+						CommandLine="bison -d -y $(InputPath) -o Parser.cpp&#x0D;&#x0A;"
 						Outputs="Parser.hpp;Parser.cpp"
 					/>
 				</FileConfiguration>
@@ -309,7 +317,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Fast Lexical Analyzer from $(InputPath)..."
-						CommandLine="flex -oScanner.cpp $(InputPath)"
+						CommandLine="flex -oScanner.cpp $(InputPath)&#x0D;&#x0A;"
 						Outputs="Scanner.cpp"
 					/>
 				</FileConfiguration>
@@ -319,7 +327,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Fast Lexical Analyzer from $(InputPath)..."
-						CommandLine="flex -oScanner.cpp $(InputPath)"
+						CommandLine="flex -oScanner.cpp $(InputPath)&#x0D;&#x0A;"
 						Outputs="Scanner.cpp"
 					/>
 				</FileConfiguration>
