@@ -17,7 +17,6 @@
 #define ST_INSTRUCTION	(1 << 0)	// machine instruction 
 #define ST_ID			(1 << 1)	// identifier 
 #define ST_CONST		(1 << 2)	// constant 
-#define ST_TEMP			(1 << 3)	// temporary 
 
 /////////////////////////////////////////////////////////////////////////////
 // Symbol struct
@@ -48,7 +47,6 @@ public:
 	LPSYMBOL installw(const string &s, int type, int sub, word w);
 	LPSYMBOL installb(const string &s, int type, int sub, byte b);
 	LPSYMBOL lookup(const string &s) const;
-	void flushtmp();
 
 // Implementation
 private:

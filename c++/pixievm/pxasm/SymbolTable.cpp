@@ -151,7 +151,7 @@ LPSYMBOL SymbolTable::installw(const string &s, int type, int sub, word w)
 	if ((sym = lookup(s)) == NULL) {
 		sym = new Symbol;
 		sym->name = s;
-		sym->type = type | ST_TEMP;
+		sym->type = type;
 		sym->sub = sub;
 		sym->val16 = w;
 		table[s] = sym;
@@ -166,7 +166,7 @@ LPSYMBOL SymbolTable::installb(const string &s, int type, int sub, byte b)
 	if ((sym = lookup(s)) == NULL) {
 		sym = new Symbol;
 		sym->name = s;
-		sym->type = type | ST_TEMP;
+		sym->type = type;
 		sym->sub = sub;
 		sym->val8 = b;
 		table[s] = sym;
@@ -184,16 +184,3 @@ LPSYMBOL SymbolTable::lookup(const string &s) const
 	return (*it).second;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// flush temporary symbols
-void SymbolTable::flushtmp()
-{
-	symmap::iterator it = table.begin();
-	for ( ; it != table.end(); it++) {
-		if ((*it).second->type & ST_TEMP) {
-			delete (*it).second;
-			table.erase(it);
-			it = table.begin();
-		}
-	}
-}
