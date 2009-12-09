@@ -13,10 +13,12 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // Symbol type
-#define ST_REG			(0)			// cpu register 
-#define ST_INSTRUCTION	(1 << 0)	// machine instruction 
-#define ST_ID			(1 << 1)	// identifier 
-#define ST_CONST		(1 << 2)	// constant 
+#define ST_UNDEF		(0)			// undefined
+#define ST_REG			(1 << 0)	// cpu register 
+#define ST_INSTRUCTION	(1 << 1)	// machine instruction 
+#define ST_ID			(1 << 2)	// identifier 
+#define ST_CONST		(1 << 3)	// constant 
+#define ST_STRING		(1 << 4)	// string literal
 
 /////////////////////////////////////////////////////////////////////////////
 // Symbol struct
@@ -44,6 +46,8 @@ public:
 
 // Interface
 	static SymbolTable *getInstance();
+	LPSYMBOL install(const string &s);	// undefined
+	LPSYMBOL installs(const string &s);	// string literal
 	LPSYMBOL installw(const string &s, int type, int sub, word w);
 	LPSYMBOL installb(const string &s, int type, int sub, byte b);
 	LPSYMBOL lookup(const string &s) const;

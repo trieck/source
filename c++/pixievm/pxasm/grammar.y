@@ -2,11 +2,17 @@
 
 #include "Common.h"
 #include "SymbolTable.h"
+#include "Code.h"
 #include "Exception.h"
 
+extern int lineno;
 extern int yylex(void);
 extern int yyterminate(void);
 static int yyerror(const char *s);
+
+ANON_BEGIN
+Code *code = Code::getInstance();
+ANON_END
 
 %}
 
@@ -17,13 +23,15 @@ static int yyerror(const char *s);
 
 %token	<n>		BYTE WORD EOL EQ COLON
 
+%token	<sym>	DECL_ORG DECL_BYTE DECL_WORD DECL_TEXT
+%token	<sym>	STRING
+
 %token	<sym>	I1 I2 I3 I4 I5 I6 I7
 %token	<sym>	R8 R16 RX16
 %token	<sym>	IM8 IM16
-
 %token	<sym>	ID
 
-// %type	<sym>	M16	A16
+%type	<sym>	immediate
 
 %%	/* begin grammar */
 
@@ -32,7 +40,7 @@ prog:	stmts			{ YYACCEPT; }
 		;
 
 stmts:	stmt
-		| stmts stmt	{ ; }
+		| stmts stmt
 		;
 
 stmt:	definition 
@@ -41,8 +49,7 @@ stmt:	definition
 		| pseudo_op
 		;
 
-definition:	ID EQ IM8
-		| ID EQ IM16
+definition:	ID EQ immediate
 		;
 		
 label:	ID COLON
@@ -51,7 +58,19 @@ label:	ID COLON
 instr:	I1 R8 ',' R8 		{ ; }	
 		;
 		
-pseudo_op: '.' ID
+pseudo_op:	
+		DECL_ORG immediate	{ 
+				if (code->isOriginSet()) {
+					throw new Exception("origin already declared at line %d.", lineno);
+				}
+				code->setOrigin($2->val16); 
+			}
+		| DECL_BYTE IM8		{ code->putByte($2->val8); }
+		| DECL_WORD IM16	{ code->putWord($2->val16); }
+		| DECL_TEXT STRING	{ code->putString($2->name); }
+		;
+
+immediate: IM8	| IM16	
 		;
 
 %%	
@@ -59,5 +78,6 @@ pseudo_op: '.' ID
 
 int yyerror(const char *s)
 {
+	throw Exception(s);	
 	return 0;
 }

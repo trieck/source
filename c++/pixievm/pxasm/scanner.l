@@ -9,6 +9,20 @@
 #endif /* _MSC_VER */
 
 extern "C" int yywrap(void) { return 1; }
+char backslash(const char **pp)
+{
+	static char transtab[] = "b\bf\fn\nr\rt\t";
+	char c;
+
+	if (**pp != '\\')
+		return **pp;
+	c = *++(*pp);
+	if (c == '\0')
+		return *--(*pp);
+	if (strchr(transtab, c))
+		return strchr(transtab, c)[1];
+	return c;
+}
 
 int lineno = 1;	/* current line number */
 SymbolTable *table = SymbolTable::getInstance();
@@ -21,6 +35,8 @@ hexnum			\$[a-fA-F0-9]+
 identifier		[a-zA-Z][a-zA-Z0-9_]*
 whitespace		[\t\r ]+
 colon			:
+quotedstr		\"[^"\n]+\"
+pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
 
 %%
 {whitespace}	;
@@ -32,7 +48,7 @@ colon			:
 		throw Exception("invalid hex number \"%s\".", yytext);
 	}		
 	if (d < 0x100) {
-		yylval.sym = table->installw(yytext, ST_CONST, IM8, d); 
+		yylval.sym = table->installb(yytext, ST_CONST, IM8, (byte)d); 
 		return IM8;
 	} else {
 		yylval.sym = table->installw(yytext, ST_CONST, IM16, d); 
@@ -43,7 +59,7 @@ colon			:
 {identifier}				{
 	LPSYMBOL sym;
 	if ((sym = table->lookup(yytext)) == NULL) {
-		/*yylval.sym = table->idinsert(yytext, 0);*/
+		yylval.sym = table->install(yytext);
 		return ID;
 	}
 	
@@ -60,6 +76,32 @@ colon			:
 	}
 	
 	return 0;
+}
+{pseudo_op}					{ 
+	LPSYMBOL sym;
+	if ((sym = table->lookup(yytext)) == NULL) {
+		throw Exception("unrecognized pseudo-op \"%s\" near line %d",
+			yytext, lineno);
+	}
+	
+	return sym->sub;
+ }
+
+{quotedstr}					{
+	const char *ptext = yytext+1;	// eat '"' 
+	string str;
+
+	for ( ; *ptext != '"'; ptext++) {
+		if (ptext[0] == '\0' || ptext[0] == '\n') {			
+			throw Exception("unterminated string literal near line %d.", lineno);
+		}
+		
+		str += backslash(&ptext);
+	}
+
+	yylval.sym = table->installs(str);
+	
+	return STRING;
 }
 .							{ return yytext[0]; }
 %%

@@ -70,7 +70,7 @@ SymbolTable::SymbolTable()
 	/* Group #7 instructions */
 	iinsert("PUSH", I7, &INS_PUSH);
 
-	/* 8-bit registers */
+	// 8-bit registers */
 	rinsert("AL", R8, 0x00);
 	rinsert("AH", R8, 0x01);
 	rinsert("BL", R8, 0x02);
@@ -80,7 +80,7 @@ SymbolTable::SymbolTable()
 	rinsert("DL", R8, 0x06);
 	rinsert("DH", R8, 0x07);
 
-	/* 16-bit registers */
+	// 16-bit registers 
 	rinsert("A", R16, 0x00);
 	rinsert("B", R16, 0x01);
 	rinsert("C", R16, 0x02);
@@ -88,9 +88,16 @@ SymbolTable::SymbolTable()
 	rinsert("X", R16, 0x04);
 	rinsert("SP", R16, 0x05);
 
-	/* Identifiers */
+	// Identifiers 
 	idinsert("BYTE", BYTE);
 	idinsert("WORD", WORD);
+
+	/* pseudo operations */
+	idinsert(".ORG", DECL_ORG);
+	idinsert(".BYTE", DECL_BYTE);
+	idinsert(".WORD", DECL_WORD);
+	idinsert(".TEXT", DECL_TEXT);
+
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -142,6 +149,36 @@ void SymbolTable::idinsert(const string &s, int id)
 	sym->type = ST_ID;
 	sym->sub = id;
 	table[s] = sym;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+LPSYMBOL SymbolTable::install(const string &s)
+{
+	LPSYMBOL sym;
+	if ((sym = lookup(s)) == NULL) {
+		sym = new Symbol;
+		sym->name = s;
+		sym->type = ST_UNDEF;
+		sym->sub = 0;
+		table[s] = sym;
+	}
+
+	return sym;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+LPSYMBOL SymbolTable::installs(const string &s)
+{
+	LPSYMBOL sym;
+	if ((sym = lookup(s)) == NULL) {
+		sym = new Symbol;
+		sym->name = s;
+		sym->type = ST_STRING;
+		sym->sub = 0;
+		table[s] = sym;
+	}
+
+	return sym;
 }
 
 /////////////////////////////////////////////////////////////////////////////

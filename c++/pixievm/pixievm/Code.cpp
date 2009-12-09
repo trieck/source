@@ -16,91 +16,39 @@
 #define LOBYTE(w)		(w & 0xFF)
 
 extern word address;
-namespace {
-void RR8(const Instr *instr, byte dest, byte src);
-}
-namespace {
-void RI8(const Instr *instr, byte r8, byte i8);
-}
-namespace {
-void RM8(const Instr *instr, byte r8, byte m16);
-}
-namespace {
-void RA8(const Instr *instr, byte r8, word a16);
-}
-namespace {
-void RR16(const Instr *instr, byte dest, byte src);
-}
-namespace {
-void RI16(const Instr *instr, byte r16, word i16);
-}
-namespace {
-void RM16(const Instr *instr, byte r16, byte m16);
-}
-namespace {
-void RA16(const Instr *instr, byte r16, word a16);
-}
-namespace {
-void MR8(const Instr *instr, byte m16, byte r8);
-}
-namespace {
-void MR16(const Instr *instr, byte m16, byte r16);
-}
-namespace {
-void M8I8(const Instr *instr, byte m16, byte i8);
-}
-namespace {
-void M16I8(const Instr *instr, byte m16, byte i8);
-}
-namespace {
-void MI16(const Instr *instr, byte m16, word i16);
-}
-namespace {
-void AR8(const Instr *instr, word a16, byte r8);
-}
-namespace {
-void AR16(const Instr *instr, word a16, byte r16);
-}
-namespace {
-void A8I8(const Instr *instr, word a16, byte i8);
-}
-namespace {
-void A16I8(const Instr *instr, word a16, byte i8);
-}
-namespace {
-void AI16(const Instr *instr, word a16, word i16);
-}
-namespace {
-void R8(const Instr *instr, byte r8);
-}
-namespace {
-void R16(const Instr *instr, byte r16);
-}
-namespace {
-void M8(const Instr *instr, byte m16);
-}
-namespace {
-void M16(const Instr *instr, byte m16);
-}
-namespace {
-void A8(const Instr *instr, word a16);
-}
-namespace {
-void A16(const Instr *instr, word a16);
-}
-namespace {
-void IMPLIED(const Instr *instr);
-}
-namespace {
-void I16(const Instr *instr, word i16);
-}
-namespace {
-void I8(const Instr *instr, byte i8);
-}
 
-namespace {
+ANON_BEGIN
+void RR8(const Instr *instr, byte dest, byte src);
+void RI8(const Instr *instr, byte r8, byte i8);
+void RM8(const Instr *instr, byte r8, byte m16);
+void RA8(const Instr *instr, byte r8, word a16);
+void RR16(const Instr *instr, byte dest, byte src);
+void RI16(const Instr *instr, byte r16, word i16);
+void RM16(const Instr *instr, byte r16, byte m16);
+void RA16(const Instr *instr, byte r16, word a16);
+void MR8(const Instr *instr, byte m16, byte r8);
+void MR16(const Instr *instr, byte m16, byte r16);
+void M8I8(const Instr *instr, byte m16, byte i8);
+void M16I8(const Instr *instr, byte m16, byte i8);
+void MI16(const Instr *instr, byte m16, word i16);
+void AR8(const Instr *instr, word a16, byte r8);
+void AR16(const Instr *instr, word a16, byte r16);
+void A8I8(const Instr *instr, word a16, byte i8);
+void A16I8(const Instr *instr, word a16, byte i8);
+void AI16(const Instr *instr, word a16, word i16);
+void R8(const Instr *instr, byte r8);
+void R16(const Instr *instr, byte r16);
+void M8(const Instr *instr, byte m16);
+void M16(const Instr *instr, byte m16);
+void A8(const Instr *instr, word a16);
+void A16(const Instr *instr, word a16);
+void IMPLIED(const Instr *instr);
+void I16(const Instr *instr, word i16);
+void I8(const Instr *instr, byte i8);
+
 Memory *memory = Memory::getInstance();
-}
+
+ANON_END
 
 /////////////////////////////////////////////////////////////////////////////
 void code1(int mode, LPSYMBOL s1)
@@ -211,7 +159,7 @@ void code3(int mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-namespace {	// anonymous
+ANON_BEGIN
 
 /////////////////////////////////////////////////////////////////////////////
 void RR8(const Instr *instr, byte dest, byte src)
@@ -427,4 +375,4 @@ void I8(const Instr *instr, byte i8)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-}	// anonymous
+ANON_END
