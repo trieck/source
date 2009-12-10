@@ -1,3 +1,5 @@
+%option yylineno
+
 %{
 #include "Common.h"
 #include "SymbolTable.h"
@@ -24,7 +26,6 @@ char backslash(const char **pp)
 	return c;
 }
 
-int lineno = 1;	/* current line number */
 SymbolTable *table = SymbolTable::getInstance();
 
 %}
@@ -55,7 +56,7 @@ pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
 		return IM16;
 	}
 }
-{newline}					{ lineno++; }
+{newline}					;
 {identifier}				{
 	LPSYMBOL sym;
 	if ((sym = table->lookup(yytext)) == NULL) {
@@ -81,7 +82,7 @@ pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
 	LPSYMBOL sym;
 	if ((sym = table->lookup(yytext)) == NULL) {
 		throw Exception("unrecognized pseudo-op \"%s\" near line %d",
-			yytext, lineno);
+			yytext, yylineno);
 	}
 	
 	return sym->sub;
@@ -93,7 +94,7 @@ pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
 
 	for ( ; *ptext != '"'; ptext++) {
 		if (ptext[0] == '\0' || ptext[0] == '\n') {			
-			throw Exception("unterminated string literal near line %d.", lineno);
+			throw Exception("unterminated string literal near line %d.", yylineno);
 		}
 		
 		str += backslash(&ptext);

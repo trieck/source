@@ -5,7 +5,8 @@
 #include "Code.h"
 #include "Exception.h"
 
-extern int lineno;
+extern char *yytext;
+extern int yylineno;
 extern int yylex(void);
 extern int yyterminate(void);
 static int yyerror(const char *s);
@@ -36,8 +37,7 @@ ANON_END
 
 %%	/* begin grammar */
 
-prog:	stmts			{ YYACCEPT; }
-		| prog error	{ yyclearin; yyerrok; }
+prog:	stmts			{ YYACCEPT; }		
 		;
 
 stmts:	stmt
@@ -48,12 +48,16 @@ stmt:	definition
 		| label
 		| instr
 		| pseudo_op
+		| error { 
+			yyclearin; 
+			yyerrok; 
+		}
 		;
 
 definition:	ID EQ IM8 {
 				if ($1->type != ST_UNDEF) {
 					throw Exception("\"%s\" already defined near line %d.",
-						$1->name.c_str(), lineno);
+						$1->name.c_str(), yylineno);
 				}
 				
 				$1->type = ST_ID;
@@ -63,7 +67,7 @@ definition:	ID EQ IM8 {
 		|	ID EQ IM16 {
 				if ($1->type != ST_UNDEF) {
 					throw Exception("\"%s\" already defined near line %d.",
-						$1->name.c_str(), lineno);
+						$1->name.c_str(), yylineno);
 				}
 				
 				$1->type = ST_ID;
@@ -75,7 +79,7 @@ definition:	ID EQ IM8 {
 label:	ID COLON	{ 
 			if ($1->type != ST_UNDEF) {
 				throw Exception("label \"%s\" already defined near line %d.",
-					$1->name.c_str(), lineno);
+					$1->name.c_str(), yylineno);
 			}			
 			code->setLabel($1);
 		}
@@ -140,10 +144,10 @@ A16:		'[' IM8 ']'			{ $$ = $2; }
 pseudo_op:	
 		DECL_ORG immediate	{ 
 				if (code->isGenerated()) {
-					throw Exception("improper origin declaration at line %d.", lineno);
+					throw Exception("improper origin declaration at line %d.", yylineno);
 				}
 				if (code->isOriginSet()) {
-					throw Exception("origin already declared at line %d.", lineno);
+					throw Exception("origin already declared at line %d.", yylineno);
 				}
 				code->setOrigin($2->val16); 
 			}
@@ -161,6 +165,6 @@ immediate:	IM8		{ $$ = $1; }
 
 int yyerror(const char *s)
 {
-	throw Exception(s);	
+	fprintf(stderr, "error: %s '%s' near line %d.\n", s, yytext, yylineno);	
 	return 0;
 }
