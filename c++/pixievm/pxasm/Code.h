@@ -27,6 +27,8 @@ public:
 	void code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2);
 	void code3(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3);
 	
+	bool isGenerated() const;
+
 	word getOrigin() const;
 	void setOrigin(word origin);
 	bool isOriginSet() const;
@@ -35,34 +37,36 @@ public:
 	void putByte(byte b);
 	void putString(const string &str);
 
+	void setLabel(LPSYMBOL sym);
+
 private:
-	void RR8(const Instr *instr, byte dest, byte src);
-	void RI8(const Instr *instr, byte r8, byte i8);
-	void RM8(const Instr *instr, byte r8, byte m16);
-	void RA8(const Instr *instr, byte r8, word a16);
-	void RR16(const Instr *instr, byte dest, byte src);
-	void RI16(const Instr *instr, byte r16, word i16);
-	void RM16(const Instr *instr, byte r16, byte m16);
-	void RA16(const Instr *instr, byte r16, word a16);
-	void MR8(const Instr *instr, byte m16, byte r8);
-	void MR16(const Instr *instr, byte m16, byte r16);
-	void M8I8(const Instr *instr, byte m16, byte i8);
-	void M16I8(const Instr *instr, byte m16, byte i8);
-	void MI16(const Instr *instr, byte m16, word i16);
-	void AR8(const Instr *instr, word a16, byte r8);
-	void AR16(const Instr *instr, word a16, byte r16);
-	void A8I8(const Instr *instr, word a16, byte i8);
-	void A16I8(const Instr *instr, word a16, byte i8);
-	void AI16(const Instr *instr, word a16, word i16);
-	void R8(const Instr *instr, byte r8);
-	void R16(const Instr *instr, byte r16);
-	void M8(const Instr *instr, byte m16);
-	void M16(const Instr *instr, byte m16);
-	void A8(const Instr *instr, word a16);
-	void A16(const Instr *instr, word a16);
-	void IMPLIED(const Instr *instr);
-	void I16(const Instr *instr, word i16);
-	void I8(const Instr *instr, byte i8);
+	void rr8(const Instr *instr, byte dest, byte src);
+	void ri8(const Instr *instr, byte r8, byte i8);
+	void rm8(const Instr *instr, byte r8, byte m16);
+	void ra8(const Instr *instr, byte r8, word a16);
+	void rr16(const Instr *instr, byte dest, byte src);
+	void ri16(const Instr *instr, byte r16, word i16);
+	void rm16(const Instr *instr, byte r16, byte m16);
+	void ra16(const Instr *instr, byte r16, word a16);
+	void mr8(const Instr *instr, byte m16, byte r8);
+	void mr16(const Instr *instr, byte m16, byte r16);
+	void m8i8(const Instr *instr, byte m16, byte i8);
+	void m16i8(const Instr *instr, byte m16, byte i8);
+	void mi16(const Instr *instr, byte m16, word i16);
+	void ar8(const Instr *instr, word a16, byte r8);
+	void ar16(const Instr *instr, word a16, byte r16);
+	void a8i8(const Instr *instr, word a16, byte i8);
+	void a16i8(const Instr *instr, word a16, byte i8);
+	void ai16(const Instr *instr, word a16, word i16);
+	void r8(const Instr *instr, byte r8);
+	void r16(const Instr *instr, byte r16);
+	void m8(const Instr *instr, byte m16);
+	void m16(const Instr *instr, byte m16);
+	void a8(const Instr *instr, word a16);
+	void a16(const Instr *instr, word a16);
+	void implied(const Instr *instr);
+	void i16(const Instr *instr, word i16);
+	void i8(const Instr *instr, byte i8);
 
 	static CodePtr instance;	// singleton instance
 
@@ -88,6 +92,11 @@ inline void Code::setOrigin(word origin) {
 /////////////////////////////////////////////////////////////////////////////
 inline bool Code::isOriginSet() const {
 	return m_bOrigin;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline bool Code::isGenerated() const {	// has code generation begun?
+	return ((m_pmem - m_memory) > 0);
 }
 
 #endif // __CODE_H__

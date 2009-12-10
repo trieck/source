@@ -24,7 +24,7 @@ ANON_END
 %token	<n>		BYTE WORD EOL EQ COLON
 
 %token	<sym>	DECL_ORG DECL_BYTE DECL_WORD DECL_TEXT
-%token	<sym>	STRING
+%token	<sym>	STRING LABEL
 
 %token	<sym>	I1 I2 I3 I4 I5 I6 I7
 %token	<sym>	R8 R16 RX16
@@ -50,10 +50,35 @@ stmt:	definition
 		| pseudo_op
 		;
 
-definition:	ID EQ immediate
+definition:	ID EQ IM8 {
+				if ($1->type != ST_UNDEF) {
+					throw Exception("\"%s\" already defined near line %d.",
+						$1->name.c_str(), lineno);
+				}
+				
+				$1->type = ST_ID;
+				$1->sub = IM8;
+				$1->val8 = $3->val8;
+			}
+		|	ID EQ IM16 {
+				if ($1->type != ST_UNDEF) {
+					throw Exception("\"%s\" already defined near line %d.",
+						$1->name.c_str(), lineno);
+				}
+				
+				$1->type = ST_ID;
+				$1->sub = IM16;
+				$1->val16 = $3->val16;
+			}
 		;
 		
-label:	ID COLON
+label:	ID COLON	{ 
+			if ($1->type != ST_UNDEF) {
+				throw Exception("label \"%s\" already defined near line %d.",
+					$1->name.c_str(), lineno);
+			}			
+			code->setLabel($1);
+		}
 		;
 
 instr:		I1 R8  ',' R8 		{ code->code3(AM_RR8, $1, $2, $4); }	
@@ -114,8 +139,11 @@ A16:		'[' IM8 ']'			{ $$ = $2; }
 		
 pseudo_op:	
 		DECL_ORG immediate	{ 
+				if (code->isGenerated()) {
+					throw Exception("improper origin declaration at line %d.", lineno);
+				}
 				if (code->isOriginSet()) {
-					throw new Exception("origin already declared at line %d.", lineno);
+					throw Exception("origin already declared at line %d.", lineno);
 				}
 				code->setOrigin($2->val16); 
 			}
@@ -124,7 +152,8 @@ pseudo_op:
 		| DECL_TEXT STRING	{ code->putString($2->name); }
 		;
 
-immediate: IM8	| IM16	
+immediate:	IM8		{ $$ = $1; }
+		|	IM16	{ $$ = $1; }
 		;
 
 %%	

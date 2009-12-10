@@ -243,7 +243,7 @@
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="2"
 						PrecompiledHeaderThrough="common.h"
 					/>
@@ -270,7 +270,7 @@
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="1"
 						PrecompiledHeaderThrough="common.h"
 					/>
@@ -295,7 +295,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="2"
 						PrecompiledHeaderThrough="common.h"
 					/>
@@ -384,7 +384,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="2"
 						PrecompiledHeaderThrough="common.h"
 					/>
@@ -409,7 +409,7 @@
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="2"
 						PrecompiledHeaderThrough="common.h"
 					/>
@@ -456,7 +456,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="2"
 						PrecompiledHeaderThrough="common.h"
 					/>
@@ -479,7 +479,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="2"
 						PrecompiledHeaderThrough="common.h"
 					/>
@@ -502,7 +502,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="2"
 						PrecompiledHeaderThrough="common.h"
 					/>
@@ -527,7 +527,7 @@
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="2"
 						PrecompiledHeaderThrough="common.h"
 					/>
@@ -554,7 +554,7 @@
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="2"
 						PrecompiledHeaderThrough="common.h"
 					/>
@@ -581,7 +581,7 @@
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="2"
 						PrecompiledHeaderThrough="common.h"
 					/>
@@ -608,7 +608,7 @@
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="0"
 						PrecompiledHeaderThrough="common.h"
 						WarningLevel="0"
@@ -702,7 +702,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories=""
-						BufferSecurityCheck="false"
+						BufferSecurityCheck="true"
 						UsePrecompiledHeader="0"
 						PrecompiledHeaderThrough="common.h"
 						WarningLevel="0"

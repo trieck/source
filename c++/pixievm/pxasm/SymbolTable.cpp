@@ -97,7 +97,6 @@ SymbolTable::SymbolTable()
 	idinsert(".BYTE", DECL_BYTE);
 	idinsert(".WORD", DECL_WORD);
 	idinsert(".TEXT", DECL_TEXT);
-
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -120,7 +119,7 @@ SymbolTable *SymbolTable::getInstance()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void SymbolTable::iinsert(const string &s, int t, const Instr *i)
+void SymbolTable::iinsert(const string &s, uint32_t t, const Instr *i)
 {
 	LPSYMBOL sym = new Symbol;
 	sym->name = s;
@@ -131,7 +130,7 @@ void SymbolTable::iinsert(const string &s, int t, const Instr *i)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void SymbolTable::rinsert(const string &s, int t, byte r)
+void SymbolTable::rinsert(const string &s, uint32_t t, byte r)
 {
 	LPSYMBOL sym = new Symbol;
 	sym->name = s;
@@ -142,7 +141,7 @@ void SymbolTable::rinsert(const string &s, int t, byte r)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void SymbolTable::idinsert(const string &s, int id)
+void SymbolTable::idinsert(const string &s, uint32_t id)
 {
 	LPSYMBOL sym = new Symbol;
 	sym->name = s;
@@ -182,7 +181,8 @@ LPSYMBOL SymbolTable::installs(const string &s)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installw(const string &s, int type, int sub, word w)
+LPSYMBOL SymbolTable::installw(const string &s, uint32_t type, uint32_t sub, 
+	word w)
 {
 	LPSYMBOL sym;
 	if ((sym = lookup(s)) == NULL) {
@@ -197,7 +197,8 @@ LPSYMBOL SymbolTable::installw(const string &s, int type, int sub, word w)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installb(const string &s, int type, int sub, byte b)
+LPSYMBOL SymbolTable::installb(const string &s, uint32_t type, uint32_t sub, 
+	byte b)
 {
 	LPSYMBOL sym;
 	if ((sym = lookup(s)) == NULL) {

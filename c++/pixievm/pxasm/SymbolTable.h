@@ -13,18 +13,18 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // Symbol type
-#define ST_UNDEF		(0)			// undefined
-#define ST_REG			(1 << 0)	// cpu register 
-#define ST_INSTRUCTION	(1 << 1)	// machine instruction 
-#define ST_ID			(1 << 2)	// identifier 
-#define ST_CONST		(1 << 3)	// constant 
-#define ST_STRING		(1 << 4)	// string literal
+#define ST_UNDEF		(0)		// undefined
+#define ST_REG			(1)		// cpu register 
+#define ST_INSTRUCTION	(2)		// machine instruction 
+#define ST_ID			(3)		// identifier 
+#define ST_CONST		(4)		// numeric constant 
+#define ST_STRING		(5)		// string literal
 
 /////////////////////////////////////////////////////////////////////////////
 // Symbol struct
 typedef struct Symbol {
-	int type;				// symbol type 
-	int sub;				// sub-type 
+	uint32_t type;			// symbol type 
+	uint32_t sub;			// sub-type 
 	string name;			// symbol name 
 	union {
 		const Instr *instr;	// instruction 
@@ -48,15 +48,15 @@ public:
 	static SymbolTable *getInstance();
 	LPSYMBOL install(const string &s);	// undefined
 	LPSYMBOL installs(const string &s);	// string literal
-	LPSYMBOL installw(const string &s, int type, int sub, word w);
-	LPSYMBOL installb(const string &s, int type, int sub, byte b);
+	LPSYMBOL installw(const string &s, uint32_t type, uint32_t sub, word w);
+	LPSYMBOL installb(const string &s, uint32_t type, uint32_t sub, byte b);
 	LPSYMBOL lookup(const string &s) const;
 
 // Implementation
 private:
-	void iinsert(const string &s, int t, const Instr *i);
-	void rinsert(const string &s, int t, byte r);
-	void idinsert(const string &s, int id);
+	void iinsert(const string &s, uint32_t t, const Instr *i);
+	void rinsert(const string &s, uint32_t t, byte r);
+	void idinsert(const string &s, uint32_t id);
 
 	static SymbolTablePtr instance;	// singleton instance
 
