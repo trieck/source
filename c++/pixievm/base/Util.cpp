@@ -96,3 +96,17 @@ string trim(const string &s)
 
 	return output;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+string format(const char *fmt, ...)
+{
+	va_list arglist;
+	va_start(arglist, fmt);
+
+	char buf[8000];
+	vsprintf(buf, fmt, arglist);
+
+	va_end (arglist);
+
+	return buf;
+}

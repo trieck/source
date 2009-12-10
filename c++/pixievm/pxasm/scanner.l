@@ -5,12 +5,15 @@
 #include "SymbolTable.h"
 #include "Parser.hpp"
 #include "Exception.h"
+#include "Util.h"
 
 #ifdef _MSC_VER
 #include <io.h>
-#endif /* _MSC_VER */
+#endif	// _MSC_VER 
 
 extern "C" int yywrap(void) { return 1; }
+extern int yyerror(const char *s);
+
 char backslash(const char **pp)
 {
 	static char transtab[] = "b\bf\fn\nr\rt\t";
@@ -38,15 +41,17 @@ whitespace		[\t\r ]+
 colon			:
 quotedstr		\"[^"\n]+\"
 pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
+offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 
 %%
 {whitespace}	;
 {comment}		;
 {colon}			{ return COLON; }
 {hexnum}		{
-	word d;	
+	string error;
+	word d;		
 	if (!sscanf(&yytext[1], "%hx", &d)) {
-		throw Exception("invalid hex number \"%s\".", yytext);
+		yyerror("invalid hex number");
 	}		
 	if (d < 0x100) {
 		yylval.sym = table->installb(yytext, ST_CONST, IM8, (byte)d); 
@@ -55,6 +60,21 @@ pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
 		yylval.sym = table->installw(yytext, ST_CONST, IM16, d); 
 		return IM16;
 	}
+}
+{offset-reg}						{
+	string error;
+	string reg = trim(string(yytext, strchr(yytext, '+') - yytext));
+	LPSYMBOL sym;
+	if ((sym = table->lookup(reg)) == NULL) {
+		yyerror("unexpected token");
+	}
+	if (sym->type != ST_REG) {
+		yyerror("unsupported symbol");
+	}
+
+	// encode offset bit in register
+	yylval.sym = table->installb(yytext, sym->type, sym->sub, sym->val8 | 0x08);
+	return RX16;
 }
 {newline}					;
 {identifier}				{
@@ -73,7 +93,7 @@ pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
 		yylval.n = sym->sub;
 		return yylval.n;
 	default:
-		throw Exception("unsupported symbol \"%s\".", yytext);
+		yyerror("unsupported symbol");
 	}
 	
 	return 0;
@@ -81,8 +101,7 @@ pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
 {pseudo_op}					{ 
 	LPSYMBOL sym;
 	if ((sym = table->lookup(yytext)) == NULL) {
-		throw Exception("unrecognized pseudo-op \"%s\" near line %d",
-			yytext, yylineno);
+		yyerror("unrecognized pseudo-op");
 	}
 	
 	return sym->sub;
@@ -93,8 +112,8 @@ pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
 	string str;
 
 	for ( ; *ptext != '"'; ptext++) {
-		if (ptext[0] == '\0' || ptext[0] == '\n') {			
-			throw Exception("unterminated string literal near line %d.", yylineno);
+		if (ptext[0] == '\0' || ptext[0] == '\n') {
+			yyerror("unterminated string literal");
 		}
 		
 		str += backslash(&ptext);

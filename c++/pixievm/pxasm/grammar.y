@@ -1,15 +1,15 @@
 %{
-
 #include "Common.h"
 #include "SymbolTable.h"
 #include "Code.h"
 #include "Exception.h"
+#include "Util.h"
 
 extern char *yytext;
 extern int yylineno;
 extern int yylex(void);
 extern int yyterminate(void);
-static int yyerror(const char *s);
+int yyerror(const char *s);
 
 ANON_BEGIN
 Code *code = Code::getInstance();
@@ -56,8 +56,8 @@ stmt:	definition
 
 definition:	ID EQ IM8 {
 				if ($1->type != ST_UNDEF) {
-					throw Exception("\"%s\" already defined near line %d.",
-						$1->name.c_str(), yylineno);
+					string error = format("\"%s\" already defined", $1->name.c_str());
+					yyerror(error.c_str());
 				}
 				
 				$1->type = ST_ID;
@@ -66,8 +66,8 @@ definition:	ID EQ IM8 {
 			}
 		|	ID EQ IM16 {
 				if ($1->type != ST_UNDEF) {
-					throw Exception("\"%s\" already defined near line %d.",
-						$1->name.c_str(), yylineno);
+					string error = format("\"%s\" already defined", $1->name.c_str());
+					yyerror(error.c_str());
 				}
 				
 				$1->type = ST_ID;
@@ -78,8 +78,8 @@ definition:	ID EQ IM8 {
 		
 label:	ID COLON	{ 
 			if ($1->type != ST_UNDEF) {
-				throw Exception("label \"%s\" already defined near line %d.",
-					$1->name.c_str(), yylineno);
+				string error = format("label \"%s\" already defined", $1->name.c_str());
+				yyerror(error.c_str());
 			}			
 			code->setLabel($1);
 		}
@@ -144,10 +144,10 @@ A16:		'[' IM8 ']'			{ $$ = $2; }
 pseudo_op:	
 		DECL_ORG immediate	{ 
 				if (code->isGenerated()) {
-					throw Exception("improper origin declaration at line %d.", yylineno);
+					yyerror("improper origin declaration");
 				}
 				if (code->isOriginSet()) {
-					throw Exception("origin already declared at line %d.", yylineno);
+					yyerror("origin already declared");
 				}
 				code->setOrigin($2->val16); 
 			}
