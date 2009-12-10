@@ -6,6 +6,8 @@
 #include "Util.h"
 
 extern char *yytext;
+extern string line;
+
 extern int yylineno;
 extern int yylex(void);
 extern int yyterminate(void);
@@ -144,7 +146,7 @@ A16:		'[' IM8 ']'			{ $$ = $2; }
 pseudo_op:	
 		DECL_ORG immediate	{ 
 				if (code->isGenerated()) {
-					yyerror("improper origin declaration");
+					yyerror("origin must appear before any instructions");
 				}
 				if (code->isOriginSet()) {
 					yyerror("origin already declared");
@@ -165,6 +167,8 @@ immediate:	IM8		{ $$ = $1; }
 
 int yyerror(const char *s)
 {
-	fprintf(stderr, "error: %s '%s' near line %d.\n", s, yytext, yylineno);	
+	fprintf(stderr, "(%d): %s \"%s\" in: [%s]\n",
+		yylineno, s, yytext, line.c_str());
+	
 	return 0;
 }

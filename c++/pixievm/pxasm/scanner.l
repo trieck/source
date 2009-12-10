@@ -13,6 +13,7 @@
 
 extern "C" int yywrap(void) { return 1; }
 extern int yyerror(const char *s);
+string line;
 
 char backslash(const char **pp)
 {
@@ -76,7 +77,10 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 	yylval.sym = table->installb(yytext, sym->type, sym->sub, sym->val8 | 0x08);
 	return RX16;
 }
-{newline}					;
+{newline}.*		{ 
+		line = trim(yytext + 1);
+		yyless(1); 
+	}
 {identifier}				{
 	LPSYMBOL sym;
 	if ((sym = table->lookup(yytext)) == NULL) {

@@ -52,6 +52,9 @@ struct stringless : std::binary_function <string, string, bool> {
 #define HINYBBLE(b)			((b & 0xF0) >> 4)
 #define LONYBBLE(b)			(b & 0x0F)
 
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 #define ANON_BEGIN			namespace {
 #define ANON_END			}
 
