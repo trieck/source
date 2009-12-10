@@ -12,8 +12,6 @@
 
 #define MAKEREG(hi, lo)	((hi << 4) | lo)
 #define OPCODE(i, m)	(*(*i)[m])
-#define HIBYTE(w)		((w & 0xFF00) >> 8)
-#define LOBYTE(w)		(w & 0xFF)
 
 extern word address;
 
