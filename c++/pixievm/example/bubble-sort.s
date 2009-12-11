@@ -7,10 +7,10 @@
 
 .org $8800
 
-sort8   
+sort8:
 		xor ch, ch		; turn exchange flag off
         xor x, x		; initialize index register
-nxtel   
+nxtel:   
 		mov al, [d+x]	; fetch element
         inx
         cmp al, [d+x]	; is it larger than the next element ?
@@ -22,7 +22,7 @@ nxtel
 		mov [d+x], ah
 		inx
 		mov ch, $ff		; turn on exchange flag
-chkend
+chkend:
 		dec cl			; end of list ?
 		jnz nxtel		; no, fetch next element
 		bit ch, ch		; exchange flag still off ?
