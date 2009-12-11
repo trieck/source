@@ -15,6 +15,7 @@ int yyerror(const char *s);
 
 ANON_BEGIN
 Code *code = Code::getInstance();
+SymbolTable *table = SymbolTable::getInstance();
 ANON_END
 
 %}
@@ -24,66 +25,62 @@ ANON_END
 	LPSYMBOL sym;	// symbol 
 }
 
-%token	<n>		BYTE WORD EOL EQ COLON
+%token	<n>		BYTE WORD
 
 %token	<sym>	DECL_ORG DECL_BYTE DECL_WORD DECL_TEXT
-%token	<sym>	STRING LABEL
+%token	<sym>	STRING
 
 %token	<sym>	I1 I2 I3 I4 I5 I6 I7
 %token	<sym>	R8 R16 RX16
 %token	<sym>	IM8 IM16
 %token	<sym>	ID
 
-%type	<sym>	immediate
-%type	<sym>	M16	A16
+%type	<sym>	IMMEDIATE M16 A16
 
 %%	/* begin grammar */
 
-prog:	stmts			{ YYACCEPT; }		
+prog:	stmts
 		;
 
 stmts:	stmt
 		| stmts stmt
 		;
 
-stmt:	definition 
-		| label
+stmt:	  def8
+		| def16
+		| deflabel
 		| instr
 		| pseudo_op
-		| error { 
-			yyclearin; 
-			yyerrok; 
-		}
 		;
-
-definition:	ID EQ IM8 {
+		
+def8:	ID '=' IM8 {
 				if ($1->type != ST_UNDEF) {
 					string error = format("\"%s\" already defined", $1->name.c_str());
-					yyerror(error.c_str());
+					return yyerror(error.c_str());
 				}
-				
 				$1->type = ST_ID;
 				$1->sub = IM8;
 				$1->val8 = $3->val8;
 			}
-		|	ID EQ IM16 {
+def16:	ID '=' IM16 {
 				if ($1->type != ST_UNDEF) {
 					string error = format("\"%s\" already defined", $1->name.c_str());
-					yyerror(error.c_str());
+					return yyerror(error.c_str());
 				}
-				
 				$1->type = ST_ID;
 				$1->sub = IM16;
 				$1->val16 = $3->val16;
 			}
 		;
 		
-label:	ID COLON	{ 
+deflabel:	ID ':'	{ 
 			if ($1->type != ST_UNDEF) {
 				string error = format("label \"%s\" already defined", $1->name.c_str());
-				yyerror(error.c_str());
+				return yyerror(error.c_str());
 			}			
-			code->setLabel($1);
+			$1->type = ST_ID;
+			$1->sub = IM16;
+			$1->val16 = code->location();
 		}
 		;
 
@@ -119,6 +116,7 @@ instr:		I1 R8  ',' R8 		{ code->code3(AM_RR8, $1, $2, $4); }
 		|	I4 IM8				{ code->code2(AM_I16, $1, $2); }
         |	I4 IM16				{ code->code2(AM_I16, $1, $2); }
         |	I5 IM8				{ code->code2(AM_I8, $1, $2); }
+		|	I5 IM16				{ code->relcode($1, $2); }
         |	I6 R8				{ code->code2(AM_R8, $1, $2); }
         |	I6 R16				{ code->code2(AM_R16, $1, $2); }
         |	I6 BYTE M16			{ code->code2(AM_M8, $1, $3); }
@@ -141,25 +139,26 @@ M16:		'[' R16 ']'			{ $$ = $2; }
 
 A16:		'[' IM8 ']'			{ $$ = $2; }
 		|	'[' IM16 ']'		{ $$ = $2; }
+		/* TODO: forward reference */
 		;
-		
+
 pseudo_op:	
-		DECL_ORG immediate	{ 
-				if (code->isGenerated()) {
-					yyerror("origin must appear before any instructions");
+		DECL_ORG IMMEDIATE	{ 
+				if (code->isGenerating()) {
+					return yyerror("origin must appear before any instructions");
 				}
 				if (code->isOriginSet()) {
-					yyerror("origin already declared");
+					return yyerror("origin already declared");
 				}
 				code->setOrigin($2->val16); 
 			}
 		| DECL_BYTE IM8		{ code->putByte($2->val8); }
+		| DECL_WORD IM8		{ code->putWord($2->val8); }
 		| DECL_WORD IM16	{ code->putWord($2->val16); }
 		| DECL_TEXT STRING	{ code->putString($2->name); }
 		;
 
-immediate:	IM8		{ $$ = $1; }
-		|	IM16	{ $$ = $1; }
+IMMEDIATE:	IM8	| IM16	
 		;
 
 %%	
@@ -167,8 +166,7 @@ immediate:	IM8		{ $$ = $1; }
 
 int yyerror(const char *s)
 {
-	fprintf(stderr, "(%d): %s \"%s\" in: [%s]\n",
+	fprintf(stderr, "(%d): %s \"%s\" in \"%s\".\n",
 		yylineno, s, yytext, line.c_str());
-	
-	return 0;
+	return 1;
 }

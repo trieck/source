@@ -15,6 +15,8 @@
 
 CodePtr Code::instance(Code::getInstance());
 
+extern int yyerror(const char *s);
+
 /////////////////////////////////////////////////////////////////////////////
 Code::Code() : m_origin(0), m_bOrigin(false), m_pmem(m_memory)
 {
@@ -57,16 +59,6 @@ void Code::putByte(byte b)
 		throw Exception("memory overflow.");
 
 	*m_pmem++ = b;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Code::setLabel(LPSYMBOL sym)
-{
-	ASSERT(sym->type == ST_UNDEF);
-
-	sym->type = ST_ID;
-	sym->sub = LABEL;
-	sym->val16 = m_origin + (m_pmem - m_memory);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -175,6 +167,26 @@ void Code::code3(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3)
 	default:
 		break;
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::relcode(LPSYMBOL s1, LPSYMBOL s2)
+{
+	// calculate and encode relative branches
+
+	// TODO: this doesn't work for undefined forward references yet
+
+	// check whether target is in range for relative branch
+	word diff = abs(s2->val16 - (location() + 2));
+	if (diff >= 0x100) {
+		yyerror("address out of range");
+		return;
+	}
+
+	int8_t offset = (s2->val16 - (location() + 2));
+	
+	putByte(OPCODE(s1->instr, AM_I8));
+	putByte(offset);
 }
 
 /////////////////////////////////////////////////////////////////////////////

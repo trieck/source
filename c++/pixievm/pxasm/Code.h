@@ -26,8 +26,9 @@ public:
 	void code1(uint32_t mode, LPSYMBOL s1);
 	void code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2);
 	void code3(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3);
-	
-	bool isGenerated() const;
+	void relcode(LPSYMBOL s1, LPSYMBOL s2);
+
+	bool isGenerating() const;
 
 	word getOrigin() const;
 	void setOrigin(word origin);
@@ -37,7 +38,7 @@ public:
 	void putByte(byte b);
 	void putString(const string &str);
 
-	void setLabel(LPSYMBOL sym);
+	word location() const;
 
 private:
 	void rr8(const Instr *instr, byte dest, byte src);
@@ -95,8 +96,13 @@ inline bool Code::isOriginSet() const {
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline bool Code::isGenerated() const {	// has code generation begun?
+inline bool Code::isGenerating() const {	// has code generation begun?
 	return ((m_pmem - m_memory) > 0);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+inline word Code::location() const {
+	return m_origin + (m_pmem - m_memory);
 }
 
 #endif // __CODE_H__

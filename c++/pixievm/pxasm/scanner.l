@@ -39,7 +39,6 @@ newline			[\n]
 hexnum			\$[a-fA-F0-9]+
 identifier		[a-zA-Z][a-zA-Z0-9_]*
 whitespace		[\t\r ]+
-colon			:
 quotedstr		\"[^"\n]+\"
 pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
 offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
@@ -47,7 +46,6 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 %%
 {whitespace}	;
 {comment}		;
-{colon}			{ return COLON; }
 {hexnum}		{
 	string error;
 	word d;		
@@ -91,11 +89,10 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 	switch (sym->type) {
 	case ST_REG:
 	case ST_INSTRUCTION:
+	case ST_ID:
 		yylval.sym = sym;
 		return sym->sub;
-	case ST_ID:
-		yylval.n = sym->sub;
-		return yylval.n;
+		break;
 	default:
 		yyerror("unsupported symbol");
 	}
