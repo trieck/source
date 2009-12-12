@@ -10,18 +10,20 @@
 
 /////////////////////////////////////////////////////////////////////////////
 struct FixUp {
-	FixUp() : name(NULL), location(0) {}
+	FixUp() : name(NULL), location(0), isrel(false) {}
 	FixUp(const FixUp &rhs) { *this = rhs; }
 	FixUp & operator = (const FixUp &rhs) {
 		if (this != &rhs) {
 			name = rhs.name;	// shared
 			location = rhs.location;
+			isrel = rhs.isrel;
 		}
 		return *this;
 	}
 
 	const char *name;	// symbol name
 	word location;		// code location
+	bool isrel;			// is this a relative branch fix-up?
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -33,7 +35,7 @@ public:
 	~FixUps();
 
 // Interface
-	void add(const char *name, word location);
+	void add(const char *name, word location, bool bRel);
 
 // Implementation
 private:

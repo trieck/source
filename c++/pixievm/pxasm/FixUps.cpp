@@ -19,11 +19,12 @@ FixUps::~FixUps()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void FixUps::add(const char *name, word location)
+void FixUps::add(const char *name, word location, bool bRel)
 {
 	FixUp fixup;
 	fixup.name = name;
 	fixup.location = location;
+	fixup.isrel = bRel;
 
 	m_fixups.push_back(fixup);
 }

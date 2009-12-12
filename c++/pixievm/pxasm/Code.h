@@ -35,10 +35,10 @@ public:
 	void setOrigin(word origin);
 	bool isOriginSet() const;
 
+	void putSym(LPSYMBOL s);
 	void putWord(word w);
 	void putByte(byte b);
 	void putString(const string &str);
-
 	word location() const;
 
 private:
@@ -69,6 +69,8 @@ private:
 	void implied(const Instr *instr);
 	void i16(const Instr *instr, LPSYMBOL s);
 	void i8(const Instr *instr, LPSYMBOL s);
+
+	void makeFixup(LPSYMBOL s, bool bRel = false);
 
 	static CodePtr instance;	// singleton instance
 

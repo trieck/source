@@ -53,6 +53,25 @@ void Code::putWord(word w)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+void Code::putSym(LPSYMBOL s)
+{
+	if (s == ST_UNDEF) {	// forward reference
+		makeFixup(s);
+	}
+
+	switch (s->sub) {
+	case IM8:
+		putByte(s->val8);
+		break;
+	case IM16:
+		putWord(s->val16);
+		break;
+	default:
+		throw Exception("unsupported symbol.");
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
 void Code::putByte(byte b)
 {
 	if ((m_pmem - m_memory) >= MEMSIZE)
@@ -174,17 +193,22 @@ void Code::relcode(LPSYMBOL s1, LPSYMBOL s2)
 {
 	// calculate and encode relative branches
 
-	// check whether target is in range for relative branch
-	word diff = abs(s2->val16 - (location() + 2));
-	if (diff >= 0x100) {
-		yyerror("address out of range");
-		return;
+	putByte(OPCODE(s1->instr, AM_I8));
+
+	int8_t offset = 0;
+	if (s2->type == ST_UNDEF) {	// forward reference branch
+		makeFixup(s2, true);
+	} else {
+		// check whether target is in range for relative branch
+		word diff = abs(s2->val16 - (location() + sizeof(byte)));
+		if (diff >= 0x100) {
+			yyerror("address out of range");
+			return;
+		}
+		offset = (s2->val16 - (location() + sizeof(byte)));
 	}
 
-	int8_t offset = (s2->val16 - (location() + 2));
-	
-	putByte(OPCODE(s1->instr, AM_I8));
-	putByte(offset);
+	putByte(offset);	
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -194,7 +218,7 @@ void Code::rr8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 	putByte(MAKEREG(s1->val8, s2->val8));
 }
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 void Code::ri8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RI8));
@@ -214,7 +238,7 @@ void Code::ra8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RA8));
 	putByte(s1->val8);
-	putWord(s2->val16);
+	putSym(s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -229,7 +253,7 @@ void Code::ri16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RI16));
 	putByte(s1->val8);
-	putWord(s2->val16);
+	putSym(s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -244,7 +268,7 @@ void Code::ra16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RA16));
 	putByte(s1->val8);
-	putWord(s2->val16);
+	putSym(s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -282,7 +306,7 @@ void Code::mi16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_MI16));
 	putByte(s1->val8);
-	putWord(s2->val16);
+	putSym(s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -290,7 +314,7 @@ void Code::ar8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AR8));
 	putByte(s2->val8);
-	putWord(s1->val16);
+	putSym(s1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -298,7 +322,7 @@ void Code::ar16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AR16));
 	putByte(s2->val8);
-	putWord(s1->val16);
+	putSym(s1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -306,7 +330,7 @@ void Code::a8i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_A8I8));
 	putByte(s2->val8);
-	putWord(s1->val16);
+	putSym(s1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -314,15 +338,15 @@ void Code::a16i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_A16I8));
 	putByte(s2->val8);
-	putWord(s1->val16);
+	putSym(s1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::ai16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AI16));
-	putWord(s2->val16);
-	putWord(s1->val16);
+	putSym(s2);
+	putSym(s1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -357,14 +381,14 @@ void Code::m16(const Instr *instr, LPSYMBOL s)
 void Code::a8(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_A8));
-	putWord(s->val16);
+	putSym(s);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::a16(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_A16));
-	putWord(s->val16);
+	putSym(s);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -377,7 +401,7 @@ void Code::implied(const Instr *instr)
 void Code::i16(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_I16));
-	putWord(s->val16);
+	putSym(s);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -387,3 +411,16 @@ void Code::i8(const Instr *instr, LPSYMBOL s)
 	putByte(s->val8);
 }
 
+/////////////////////////////////////////////////////////////////////////////
+void Code::makeFixup(LPSYMBOL s, bool bRel)
+{
+	// if s is of type ST_UNDEF, we may be forward referencing a label.
+	// In this case, generate a fixup that will be resolved during
+	// the second pass of the assembler
+	if (s->type != ST_UNDEF)
+		return;
+
+	// bRel is true if this is a relative branch fix-up, otherwise, 
+	// it's false.
+	m_fixups.add(s->name.c_str(), location(), bRel);
+}
