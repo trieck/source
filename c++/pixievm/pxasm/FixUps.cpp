@@ -1,0 +1,40 @@
+/////////////////////////////////////////////////////////////////////////////
+//
+// FIXUPS.CPP : Forward reference fix-ups
+//
+// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
+//
+
+#include "common.h"
+#include "FixUps.h"
+
+FixUpsPtr FixUps::instance(FixUps::getInstance());
+
+/////////////////////////////////////////////////////////////////////////////
+FixUps::FixUps()
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
+FixUps::~FixUps()
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
+FixUps *FixUps::getInstance()
+{
+	if (instance.get() == NULL) {
+		instance = FixUpsPtr(new FixUps);
+	}
+	return instance.get();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void FixUps::add(const char *name, word location)
+{
+	FixUp fixup;
+	fixup.name = name;
+	fixup.location = location;
+
+	m_fixups.push_back(fixup);
+}

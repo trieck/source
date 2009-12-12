@@ -83,7 +83,7 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 	LPSYMBOL sym;
 	if ((sym = table->lookup(yytext)) == NULL) {
 		yylval.sym = table->install(yytext);
-		return ID;
+		return UNDEF;
 	}
 	
 	switch (sym->type) {
@@ -92,7 +92,9 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 	case ST_ID:
 		yylval.sym = sym;
 		return sym->sub;
-		break;
+	case ST_UNDEF:
+		yylval.sym = sym;
+		return UNDEF;
 	default:
 		yyerror("unsupported symbol");
 	}
