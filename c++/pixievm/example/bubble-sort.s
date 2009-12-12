@@ -26,5 +26,5 @@ chkend:
 		dec cl			; end of list ?
 		jnz nxtel		; no, fetch next element
 		bit ch, ch		; exchange flag still off ?
-		bmi sort8		; no, go through list again
+		jmi sort8		; no, go through list again
 		ret				; yes, list is now ordered
