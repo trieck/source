@@ -436,3 +436,23 @@ void Code::resolve(const FixUp &fixup)
 		/* TODO: */
 	}
 }
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::write(FILE *fp) const
+{
+	const byte *pmem = &m_memory[0];
+	
+	if (fwrite(&m_origin, sizeof(word), 1, fp) != 1) {
+		throw Exception("can't write to file: %s.",
+				strerror(errno));
+	}
+
+	for ( ; pmem < m_pmem; pmem++) {
+		if (fputc(*pmem, fp) == EOF) {
+			throw Exception("can't write to file: %s.",
+				strerror(errno));
+		}
+	}
+
+	fflush(fp);
+}

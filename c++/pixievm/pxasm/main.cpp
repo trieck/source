@@ -12,7 +12,7 @@
 ANON_BEGIN
 void usage()
 {
-	cerr << "usage: pxasm file" << endl;
+	cerr << "usage: pxasm source-file" << endl;
 	exit(EXIT_FAILURE);
 }
 ANON_END

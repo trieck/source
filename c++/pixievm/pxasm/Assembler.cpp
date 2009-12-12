@@ -9,13 +9,13 @@
 #include "Assembler.h"
 #include "Exception.h"
 #include "Code.h"
+#include "Util.h"
 
 extern int yyparse(void);	// bison parser routine
 extern FILE *yyin;			// input file pointer
-extern FILE *yyout;			// output file pointer
 
 /////////////////////////////////////////////////////////////////////////////
-Assembler::Assembler()
+Assembler::Assembler() : m_pOut(NULL)
 {
 }
 
@@ -43,9 +43,9 @@ void Assembler::close()
 		yyin = NULL;
 	}
 
-	if (yyout != NULL && yyout != stdout) {
-		fclose(yyout);
-		yyout = NULL;
+	if (m_pOut != NULL) {
+		fclose(m_pOut);
+		m_pOut = NULL;
 	}
 }
 
@@ -61,6 +61,17 @@ int Assembler::assemble(const char *filename)
 	// second pass, resolve any fix-up locations
 	Code *code = Code::getInstance();
 	code->resolve();
+
+	// write code to output file
+	string output = format("%s.o", basename(filename).c_str());
+	if ((m_pOut = fopen(output.c_str(), "wb")) == NULL) {
+		throw Exception("can't open file \"%s\": %s.", output.c_str(),
+			strerror(errno));
+	}
+
+	code->write(m_pOut);
+
+	close();
 
 	return 0;
 }

@@ -41,6 +41,7 @@ public:
 	word location() const;
 
 	void resolve();
+	void write(FILE *fp) const;
 
 private:
 	void initialize();

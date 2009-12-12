@@ -18,6 +18,8 @@ public:
 private:
 	void open(const char *filename);
 	void close();
+
+	FILE *m_pOut;	// output file pointer
 };
 
 #endif // __ASSEMBLER_H__
