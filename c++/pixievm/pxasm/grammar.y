@@ -4,7 +4,6 @@
 #include "Code.h"
 #include "Exception.h"
 #include "Util.h"
-#include "FixUps.h"
 
 extern char *yytext;
 extern string line;
@@ -17,7 +16,6 @@ int yyerror(const char *s);
 ANON_BEGIN
 Code *code = Code::getInstance();
 SymbolTable *table = SymbolTable::getInstance();
-FixUps *fixups = FixUps::getInstance();
 ANON_END
 
 %}
@@ -132,18 +130,13 @@ A16:		'[' IM8 ']'			{ $$ = $2; }
 		;
 		
 I16:	  IM16
-		| UNDEF	{
-			// TODO: make this work
-			fixups->add($1->name.c_str(), code->location());
-			
-			$$ = $1;
-		}
+		| UNDEF
 		;
 
 pseudo_op:	
 		DECL_ORG IVAL	{ 
 				if (code->isGenerating()) {
-					return yyerror("origin must appear before any instructions");
+					return yyerror("origin must appear before any instructions or data");
 				}
 				if (code->isOriginSet()) {
 					return yyerror("origin already declared");

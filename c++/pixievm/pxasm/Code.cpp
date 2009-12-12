@@ -78,28 +78,28 @@ void Code::code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2)
 {
 	switch (mode) {
 	case AM_R8:
-		r8(s1->instr, s2->val8);
+		r8(s1->instr, s2);
 		break;
 	case AM_R16:
-		r16(s1->instr, s2->val8);
+		r16(s1->instr, s2);
 		break;
 	case AM_M8:
-		m8(s1->instr, s2->val8);
+		m8(s1->instr, s2);
 		break;
 	case AM_M16:
-		m16(s1->instr, s2->val8);
+		m16(s1->instr, s2);
 		break;
 	case AM_A8:
-		a8(s1->instr, s2->val16);
+		a8(s1->instr, s2);
 		break;
 	case AM_A16:
-		a16(s1->instr, s2->val16);
+		a16(s1->instr, s2);
 		break;
 	case AM_I16:
-		i16(s1->instr, s2->val16);
+		i16(s1->instr, s2);
 		break;
 	case AM_I8:
-		i8(s1->instr, s2->val8);
+		i8(s1->instr, s2);
 		break;
 	default:
 		break;
@@ -111,58 +111,58 @@ void Code::code3(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3)
 {
 	switch (mode) {
 	case AM_RR8:
-		rr8(s1->instr, s2->val8, s3->val8);
+		rr8(s1->instr, s2, s3);
 		break;
 	case AM_RI8:
-		ri8(s1->instr, s2->val8, s3->val8);
+		ri8(s1->instr, s2, s3);
 		break;
 	case AM_RM8:
-		rm8(s1->instr, s2->val8, s3->val8);
+		rm8(s1->instr, s2, s3);
 		break;
 	case AM_RA8:
-		ra8(s1->instr, s2->val8, s3->val16);
+		ra8(s1->instr, s2, s3);
 		break;
 	case AM_RR16:
-		rr16(s1->instr, s2->val8, s3->val8);
+		rr16(s1->instr, s2, s3);
 		break;
 	case AM_RI16:
-		ri16(s1->instr, s2->val8, s3->val16);
+		ri16(s1->instr, s2, s3);
 		break;
 	case AM_RM16:
-		rm16(s1->instr, s2->val8, s3->val8);
+		rm16(s1->instr, s2, s3);
 		break;
 	case AM_RA16:
-		ra16(s1->instr, s2->val8, s3->val16);
+		ra16(s1->instr, s2, s3);
 		break;
 	case AM_MR8:
-		mr8(s1->instr, s2->val8, s3->val8);
+		mr8(s1->instr, s2, s3);
 		break;
 	case AM_MR16:
-		mr16(s1->instr, s2->val8, s3->val8);
+		mr16(s1->instr, s2, s3);
 		break;
 	case AM_M8I8:
-		m8i8(s1->instr, s2->val8, s3->val8);
+		m8i8(s1->instr, s2, s3);
 		break;
 	case AM_M16I8:
-		m16i8(s1->instr, s2->val8, s3->val8);
+		m16i8(s1->instr, s2, s3);
 		break;
 	case AM_MI16:
-		mi16(s1->instr, s2->val8, s3->val16);
+		mi16(s1->instr, s2, s3);
 		break;
 	case AM_AR8:
-		ar8(s1->instr, s2->val16, s3->val8);
+		ar8(s1->instr, s2, s3);
 		break;
 	case AM_AR16:
-		ar16(s1->instr, s2->val16, s3->val8);
+		ar16(s1->instr, s2, s3);
 		break;
 	case AM_A8I8:
-		a8i8(s1->instr, s2->val16, s3->val8);
+		a8i8(s1->instr, s2, s3);
 		break;
 	case AM_A16I8:
-		a16i8(s1->instr, s2->val16, s3->val8);
+		a16i8(s1->instr, s2, s3);
 		break;
 	case AM_AI16:
-		ai16(s1->instr, s2->val16, s3->val16);
+		ai16(s1->instr, s2, s3);
 		break;
 	default:
 		break;
@@ -173,8 +173,6 @@ void Code::code3(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3)
 void Code::relcode(LPSYMBOL s1, LPSYMBOL s2)
 {
 	// calculate and encode relative branches
-
-	// TODO: this doesn't work for undefined forward references yet
 
 	// check whether target is in range for relative branch
 	word diff = abs(s2->val16 - (location() + 2));
@@ -190,195 +188,183 @@ void Code::relcode(LPSYMBOL s1, LPSYMBOL s2)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::rr8(const Instr *instr, byte dest, byte src)
+void Code::rr8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RR8));
-	putByte(MAKEREG(dest, src));
+	putByte(MAKEREG(s1->val8, s2->val8));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::ri8(const Instr *instr, byte r8, byte i8)
+void Code::ri8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RI8));
-	putByte(r8);
-	putByte(i8);
+	putByte(s1->val8);
+	putByte(s2->val8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::rm8(const Instr *instr, byte r8, byte m16)
+void Code::rm8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RM8));
-	putByte(MAKEREG(r8, m16));
+	putByte(MAKEREG(s1->val8, s2->val8));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::ra8(const Instr *instr, byte r8, word a16)
+void Code::ra8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RA8));
-	putByte(r8);
-	putByte(HIBYTE(a16));
-	putByte(LOBYTE(a16));
+	putByte(s1->val8);
+	putWord(s2->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::rr16(const Instr *instr, byte dest, byte src)
+void Code::rr16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RR16));
-	putByte(MAKEREG(dest, src));
+	putByte(MAKEREG(s1->val8, s2->val8));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::ri16(const Instr *instr, byte r16, word i16)
+void Code::ri16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RI16));
-	putByte(r16);
-	putByte(HIBYTE(i16));
-	putByte(LOBYTE(i16));
+	putByte(s1->val8);
+	putWord(s2->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::rm16(const Instr *instr, byte r16, byte m16)
+void Code::rm16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RM16));
-	putByte(MAKEREG(r16, m16));
+	putByte(MAKEREG(s1->val8, s2->val8));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::ra16(const Instr *instr, byte r16, word a16)
+void Code::ra16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RA16));
-	putByte(r16);
-	putByte(HIBYTE(a16));
-	putByte(LOBYTE(a16));
+	putByte(s1->val8);
+	putWord(s2->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::mr8(const Instr *instr, byte m16, byte r8)
+void Code::mr8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_MR8));
-	putByte(MAKEREG(m16, r8));
+	putByte(MAKEREG(s1->val8, s2->val8));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::mr16(const Instr *instr, byte m16, byte r16)
+void Code::mr16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_MR16));
-	putByte(MAKEREG(m16, r16));
+	putByte(MAKEREG(s1->val8, s2->val8));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::m8i8(const Instr *instr, byte m16, byte i8)
+void Code::m8i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_M8I8));
-	putByte(m16);
-	putByte(i8);
+	putByte(s1->val8);
+	putByte(s2->val8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::m16i8(const Instr *instr, byte m16, byte i8)
+void Code::m16i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_M16I8));
-	putByte(m16);
-	putByte(i8);
+	putByte(s1->val8);
+	putByte(s2->val8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::mi16(const Instr *instr, byte m16, word i16)
+void Code::mi16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_MI16));
-	putByte(m16);
-	putByte(HIBYTE(i16));
-	putByte(LOBYTE(i16));
+	putByte(s1->val8);
+	putWord(s2->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::ar8(const Instr *instr, word a16, byte r8)
+void Code::ar8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AR8));
-	putByte(r8);
-	putByte(HIBYTE(a16));
-	putByte(LOBYTE(a16));
+	putByte(s2->val8);
+	putWord(s1->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::ar16(const Instr *instr, word a16, byte r16)
+void Code::ar16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AR16));
-	putByte(r16);
-	putByte(HIBYTE(a16));
-	putByte(LOBYTE(a16));
+	putByte(s2->val8);
+	putWord(s1->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::a8i8(const Instr *instr, word a16, byte i8)
+void Code::a8i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_A8I8));
-	putByte(i8);
-	putByte(HIBYTE(a16));
-	putByte(LOBYTE(a16));
+	putByte(s2->val8);
+	putWord(s1->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::a16i8(const Instr *instr, word a16, byte i8)
+void Code::a16i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_A16I8));
-	putByte(i8);
-	putByte(HIBYTE(a16));
-	putByte(LOBYTE(a16));
+	putByte(s2->val8);
+	putWord(s1->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::ai16(const Instr *instr, word a16, word i16)
+void Code::ai16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AI16));
-	putByte(HIBYTE(i16));
-	putByte(LOBYTE(i16));
-	putByte(HIBYTE(a16));
-	putByte(LOBYTE(a16));
+	putWord(s2->val16);
+	putWord(s1->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::r8(const Instr *instr, byte r8)
+void Code::r8(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_R8));
-	putByte(r8);
+	putByte(s->val8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::r16(const Instr *instr, byte r16)
+void Code::r16(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_R16));
-	putByte(r16);
+	putByte(s->val8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::m8(const Instr *instr, byte m16)
+void Code::m8(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_M8));
-	putByte(m16);
+	putByte(s->val8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::m16(const Instr *instr, byte m16)
+void Code::m16(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_M16));
-	putByte(m16);
+	putByte(s->val8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::a8(const Instr *instr, word a16)
+void Code::a8(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_A8));
-	putByte(HIBYTE(a16));
-	putByte(LOBYTE(a16));
+	putWord(s->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::a16(const Instr *instr, word a16)
+void Code::a16(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_A16));
-	putByte(HIBYTE(a16));
-	putByte(LOBYTE(a16));
+	putWord(s->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -388,17 +374,16 @@ void Code::implied(const Instr *instr)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::i16(const Instr *instr, word i16)
+void Code::i16(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_I16));
-	putByte(HIBYTE(i16));
-	putByte(LOBYTE(i16));
+	putWord(s->val16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::i8(const Instr *instr, byte i8)
+void Code::i8(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_I8));
-	putByte(i8);
+	putByte(s->val8);
 }
 

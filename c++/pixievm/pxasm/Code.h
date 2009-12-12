@@ -9,6 +9,7 @@
 #define __CODE_H__
 
 #include "SymbolTable.h"
+#include "FixUps.h"
 
 class Code;
 typedef auto_ptr<Code> CodePtr;
@@ -41,33 +42,33 @@ public:
 	word location() const;
 
 private:
-	void rr8(const Instr *instr, byte dest, byte src);
-	void ri8(const Instr *instr, byte r8, byte i8);
-	void rm8(const Instr *instr, byte r8, byte m16);
-	void ra8(const Instr *instr, byte r8, word a16);
-	void rr16(const Instr *instr, byte dest, byte src);
-	void ri16(const Instr *instr, byte r16, word i16);
-	void rm16(const Instr *instr, byte r16, byte m16);
-	void ra16(const Instr *instr, byte r16, word a16);
-	void mr8(const Instr *instr, byte m16, byte r8);
-	void mr16(const Instr *instr, byte m16, byte r16);
-	void m8i8(const Instr *instr, byte m16, byte i8);
-	void m16i8(const Instr *instr, byte m16, byte i8);
-	void mi16(const Instr *instr, byte m16, word i16);
-	void ar8(const Instr *instr, word a16, byte r8);
-	void ar16(const Instr *instr, word a16, byte r16);
-	void a8i8(const Instr *instr, word a16, byte i8);
-	void a16i8(const Instr *instr, word a16, byte i8);
-	void ai16(const Instr *instr, word a16, word i16);
-	void r8(const Instr *instr, byte r8);
-	void r16(const Instr *instr, byte r16);
-	void m8(const Instr *instr, byte m16);
-	void m16(const Instr *instr, byte m16);
-	void a8(const Instr *instr, word a16);
-	void a16(const Instr *instr, word a16);
+	void rr8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void ri8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void rm8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void ra8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void rr16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void ri16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void rm16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void ra16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void mr8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void mr16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void m8i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void m16i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void mi16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void ar8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void ar16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void a8i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void a16i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void ai16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
+	void r8(const Instr *instr, LPSYMBOL s);
+	void r16(const Instr *instr, LPSYMBOL s);
+	void m8(const Instr *instr, LPSYMBOL s);
+	void m16(const Instr *instr, LPSYMBOL s);
+	void a8(const Instr *instr, LPSYMBOL s);
+	void a16(const Instr *instr, LPSYMBOL s);
 	void implied(const Instr *instr);
-	void i16(const Instr *instr, word i16);
-	void i8(const Instr *instr, byte i8);
+	void i16(const Instr *instr, LPSYMBOL s);
+	void i8(const Instr *instr, LPSYMBOL s);
 
 	static CodePtr instance;	// singleton instance
 
@@ -77,6 +78,7 @@ private:
 	bool m_bOrigin;				// origin has been declared
 	byte m_memory[MEMSIZE];		// memory
 	byte *m_pmem;				// current memory pointer
+	FixUps m_fixups;			// fix ups 
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -24,27 +24,19 @@ struct FixUp {
 	word location;		// code location
 };
 
-class FixUps;
-typedef auto_ptr<FixUps> FixUpsPtr;
-
 /////////////////////////////////////////////////////////////////////////////
 class FixUps
 {
 // Construction / Destruction
-private:
-	FixUps();
 public:
+	FixUps();
 	~FixUps();
 
 // Interface
-	static FixUps *getInstance();
-
 	void add(const char *name, word location);
 
 // Implementation
 private:
-	static FixUpsPtr instance;	// singleton instance
-
 	typedef vector<FixUp> FixUpVector;
 	FixUpVector m_fixups;
 };
