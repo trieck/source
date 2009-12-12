@@ -14,6 +14,7 @@
 #define OPCODE(i, m)	(*(*i)[m])
 
 CodePtr Code::instance(Code::getInstance());
+extern SymbolTable *table;
 
 extern int yyerror(const char *s);
 
@@ -21,6 +22,7 @@ extern int yyerror(const char *s);
 Code::Code() : m_origin(0), m_bOrigin(false), m_pmem(m_memory)
 {
 	memset(m_memory, 0, sizeof(byte) * MEMSIZE);
+	initialize();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -35,6 +37,43 @@ Code *Code::getInstance()
 		instance = CodePtr(new Code);
 	}
 	return instance.get();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::initialize()
+{
+	// code1 
+	m_code1Map[AM_IMPLIED] = &Code::implied;
+
+	// code2
+	m_code2Map[AM_R8] = &Code::r8;
+	m_code2Map[AM_R16] = &Code::r16;
+	m_code2Map[AM_M8] = &Code::m8;
+	m_code2Map[AM_M16] = &Code::m16;
+	m_code2Map[AM_A8] = &Code::a8;
+	m_code2Map[AM_A16] = &Code::a16;
+	m_code2Map[AM_I16] = &Code::i16;
+	m_code2Map[AM_I8] = &Code::i8;
+	
+	// code3
+	m_code3Map[AM_RR8] = &Code::rr8;
+	m_code3Map[AM_RI8] = &Code::ri8;
+	m_code3Map[AM_RM8] = &Code::rm8;
+	m_code3Map[AM_RA8] = &Code::ra8;
+	m_code3Map[AM_RR16] = &Code::rr16;
+	m_code3Map[AM_RI16] = &Code::ri16;
+	m_code3Map[AM_RM16] = &Code::rm16;
+	m_code3Map[AM_RA16] = &Code::ra16;
+	m_code3Map[AM_MR8] = &Code::mr8;
+	m_code3Map[AM_MR16] = &Code::mr16;
+	m_code3Map[AM_M8I8] = &Code::m8i8;
+	m_code3Map[AM_M16I8] = &Code::m16i8;
+	m_code3Map[AM_MI16] = &Code::mi16;
+	m_code3Map[AM_AR8] = &Code::ar8;
+	m_code3Map[AM_AR16] = &Code::ar16;
+	m_code3Map[AM_A8I8] = &Code::a8i8;
+	m_code3Map[AM_A16I8] = &Code::a16i8;
+	m_code3Map[AM_AI16] = &Code::ai16;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -83,109 +122,40 @@ void Code::putByte(byte b)
 /////////////////////////////////////////////////////////////////////////////
 void Code::code1(uint32_t mode, LPSYMBOL s1)
 {
-	switch (mode) {
-	case AM_IMPLIED:
-		implied(s1->instr);
-		break;
-	default:
-		break;
+	Code1FncMap::const_iterator it = m_code1Map.find(mode);
+	if (it == m_code1Map.end()) {
+		throw Exception("unexpected addressing mode %d.", mode);
 	}
+
+	Code1Ptr pfnc = (*it).second;
+
+	(this->*(pfnc))(s1->instr);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2)
 {
-	switch (mode) {
-	case AM_R8:
-		r8(s1->instr, s2);
-		break;
-	case AM_R16:
-		r16(s1->instr, s2);
-		break;
-	case AM_M8:
-		m8(s1->instr, s2);
-		break;
-	case AM_M16:
-		m16(s1->instr, s2);
-		break;
-	case AM_A8:
-		a8(s1->instr, s2);
-		break;
-	case AM_A16:
-		a16(s1->instr, s2);
-		break;
-	case AM_I16:
-		i16(s1->instr, s2);
-		break;
-	case AM_I8:
-		i8(s1->instr, s2);
-		break;
-	default:
-		break;
+	Code2FncMap::const_iterator it = m_code2Map.find(mode);
+	if (it == m_code2Map.end()) {
+		throw Exception("unexpected addressing mode %d.", mode);
 	}
+
+	Code2Ptr pfnc = (*it).second;
+
+	(this->*(pfnc))(s1->instr, s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::code3(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3)
 {
-	switch (mode) {
-	case AM_RR8:
-		rr8(s1->instr, s2, s3);
-		break;
-	case AM_RI8:
-		ri8(s1->instr, s2, s3);
-		break;
-	case AM_RM8:
-		rm8(s1->instr, s2, s3);
-		break;
-	case AM_RA8:
-		ra8(s1->instr, s2, s3);
-		break;
-	case AM_RR16:
-		rr16(s1->instr, s2, s3);
-		break;
-	case AM_RI16:
-		ri16(s1->instr, s2, s3);
-		break;
-	case AM_RM16:
-		rm16(s1->instr, s2, s3);
-		break;
-	case AM_RA16:
-		ra16(s1->instr, s2, s3);
-		break;
-	case AM_MR8:
-		mr8(s1->instr, s2, s3);
-		break;
-	case AM_MR16:
-		mr16(s1->instr, s2, s3);
-		break;
-	case AM_M8I8:
-		m8i8(s1->instr, s2, s3);
-		break;
-	case AM_M16I8:
-		m16i8(s1->instr, s2, s3);
-		break;
-	case AM_MI16:
-		mi16(s1->instr, s2, s3);
-		break;
-	case AM_AR8:
-		ar8(s1->instr, s2, s3);
-		break;
-	case AM_AR16:
-		ar16(s1->instr, s2, s3);
-		break;
-	case AM_A8I8:
-		a8i8(s1->instr, s2, s3);
-		break;
-	case AM_A16I8:
-		a16i8(s1->instr, s2, s3);
-		break;
-	case AM_AI16:
-		ai16(s1->instr, s2, s3);
-		break;
-	default:
-		break;
+	Code3FncMap::const_iterator it = m_code3Map.find(mode);
+	if (it == m_code3Map.end()) {
+		throw Exception("unexpected addressing mode %d.", mode);
 	}
+
+	Code3Ptr pfnc = (*it).second;
+
+	(this->*(pfnc))(s1->instr, s2, s3);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -423,4 +393,46 @@ void Code::makeFixup(LPSYMBOL s, bool bRel)
 	// bRel is true if this is a relative branch fix-up, otherwise, 
 	// it's false.
 	m_fixups.add(s->name.c_str(), location(), bRel);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::resolve()
+{
+	// resolve any fix-up locations
+
+	uint32_t nfixups = m_fixups.size();
+
+	for (uint32_t i = 0; i < nfixups; i++) {
+		resolve(m_fixups[i]);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::resolve(const FixUp &fixup)
+{
+	LPSYMBOL sym;
+	if (((sym = table->lookup(fixup.name)) == NULL) ||
+		(sym->type == ST_UNDEF)) {
+		throw Exception("%s never defined.", fixup.name);
+	}
+
+	ASSERT(sym->type == ST_ID);
+	ASSERT(sym->sub = IM16);
+
+	word symloc = sym->val16;
+	word fixloc = fixup.location;
+	word diff = symloc - fixloc; 
+
+	if (fixup.isrel) {	// relative branch fix-up
+		if (diff > 0x7F) {
+			throw Exception("branch out of range for label \"%s\".", 
+				fixup.name);
+		}
+
+		word offset = fixloc - m_origin;
+		ASSERT(m_memory[offset] == 0);
+		m_memory[offset] = (byte)diff;		
+	} else {
+		/* TODO: */
+	}
 }

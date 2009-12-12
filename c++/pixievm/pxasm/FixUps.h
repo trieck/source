@@ -36,6 +36,11 @@ public:
 
 // Interface
 	void add(const char *name, word location, bool bRel);
+	uint32_t size() const { return m_fixups.size(); }
+
+	FixUp & operator[](uint32_t index) {
+		return m_fixups[index];
+	}
 
 // Implementation
 private:

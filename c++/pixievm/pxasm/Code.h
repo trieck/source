@@ -23,7 +23,7 @@ public:
 	~Code();
 
 	static Code *getInstance();
-
+	
 	void code1(uint32_t mode, LPSYMBOL s1);
 	void code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2);
 	void code3(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3);
@@ -41,7 +41,11 @@ public:
 	void putString(const string &str);
 	word location() const;
 
+	void resolve();
+
 private:
+	void initialize();
+
 	void rr8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
 	void ri8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
 	void rm8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2);
@@ -71,6 +75,15 @@ private:
 	void i8(const Instr *instr, LPSYMBOL s);
 
 	void makeFixup(LPSYMBOL s, bool bRel = false);
+	void resolve(const FixUp &fixup);
+
+	typedef void (Code::*Code1Ptr)(const Instr *);
+	typedef void (Code::*Code2Ptr)(const Instr *, LPSYMBOL);
+	typedef void (Code::*Code3Ptr)(const Instr *, LPSYMBOL, LPSYMBOL);
+
+	typedef map<uint32_t, Code1Ptr> Code1FncMap;
+	typedef map<uint32_t, Code2Ptr> Code2FncMap;
+	typedef map<uint32_t, Code3Ptr> Code3FncMap;
 
 	static CodePtr instance;	// singleton instance
 
@@ -81,6 +94,9 @@ private:
 	byte m_memory[MEMSIZE];		// memory
 	byte *m_pmem;				// current memory pointer
 	FixUps m_fixups;			// fix ups 
+	Code1FncMap	m_code1Map;		// code1 function map
+	Code2FncMap m_code2Map;		// code2 function map
+	Code3FncMap m_code3Map;		// code3 function map
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -8,7 +8,7 @@
 #include "common.h"
 #include "Assembler.h"
 #include "Exception.h"
-#include <string.h>
+#include "Code.h"
 
 extern int yyparse(void);	// bison parser routine
 extern FILE *yyin;			// input file pointer 
@@ -57,6 +57,10 @@ int Assembler::assemble(const char *filename)
 	int nret;
 	if ((nret = yyparse()) != 0)
 		return nret;
+
+	// second pass, resolve any fix-up locations
+	Code *code = Code::getInstance();
+	code->resolve();
 
 	return 0;
 }
