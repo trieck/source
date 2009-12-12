@@ -8,6 +8,14 @@
 #include "Common.h"
 #include "Util.h"
 
+#ifdef _MSC_VER
+#define PATH_SEP '\\'
+#else
+#define PATH_SEP '/'
+#endif	// _MSC_VER
+
+#define SUFFIX_SEP '.'
+
 /////////////////////////////////////////////////////////////////////////////
 stringvec split(const string &s, const char *del)
 {
@@ -109,4 +117,25 @@ string format(const char *fmt, ...)
 	va_end (arglist);
 
 	return buf;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+string basename(const string &filename)
+{
+	string output;
+
+	const char *fname = filename.c_str();
+	const char *p;
+	if ((p = strrchr(fname, PATH_SEP)) != NULL) {
+		fname = p + 1;
+	} 
+
+	for ( ; *fname != '\0'; fname++) {
+		if (*fname == SUFFIX_SEP)
+			break;
+
+		output += *fname;
+	}
+
+	return output;
 }
