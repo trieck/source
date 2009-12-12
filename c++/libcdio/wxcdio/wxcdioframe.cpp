@@ -46,9 +46,9 @@ wxcdioFrame::wxcdioFrame(wxDocManager *manager, wxFrame *frame,
 
 	wxMenuItem* menuFileInfo;
 	menuFileInfo = new wxMenuItem(m_menuFile, ID_VOL_INFO, wxString( _("&Volume information") ) + wxT('\t') + wxT("Alt+V"), _T(
-		"Volume Information"), wxITEM_NORMAL );
+	                                  "Volume Information"), wxITEM_NORMAL );
 	m_menuFile->Append( menuFileInfo );
-	
+
 	m_menuFile->AppendSeparator();
 
 	wxMenuItem* menuFileExit;

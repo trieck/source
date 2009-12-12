@@ -13,24 +13,24 @@ public:
 	void OnItemExpanding(wxTreeEvent &event);
 	void OnItemExpanded(wxTreeEvent &event);
 	void OnItemCollapsed(wxTreeEvent &event);
-	
+
 	void rebuild(isoimage *image);
-	
+
 private:
 	void buildChildren(isoimage *image, const wxTreeItemId &item);
 	wxString GetAbsolutePath(const wxTreeItemId &item) const;
-	
+
 	void ShowMenu(wxcdioNode *item, const wxPoint &pt);
 	void OnExtract(wxCommandEvent&);
 	void OnProperties(wxCommandEvent&);
-	
+
 	void ExtractEntry(iso9660_stat_t *stat, const wxString &filename);
 
 	enum { CX_IMAGE = 16 };
 	enum { CY_IMAGE = 16 };
 
 	DECLARE_EVENT_TABLE()
-	
+
 	wxView *m_view;
 };
 

@@ -11,7 +11,9 @@
 /////////////////////////////////////////////////////////////////////////////
 struct FixUp {
 	FixUp() : name(NULL), location(0), isrel(false) {}
-	FixUp(const FixUp &rhs) { *this = rhs; }
+	FixUp(const FixUp &rhs) {
+		*this = rhs;
+	}
 	FixUp & operator = (const FixUp &rhs) {
 		if (this != &rhs) {
 			name = rhs.name;	// shared
@@ -27,8 +29,7 @@ struct FixUp {
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class FixUps
-{
+class FixUps {
 // Construction / Destruction
 public:
 	FixUps();
@@ -36,7 +37,9 @@ public:
 
 // Interface
 	void add(const char *name, word location, bool bRel);
-	uint32_t size() const { return m_fixups.size(); }
+	uint32_t size() const {
+		return m_fixups.size();
+	}
 
 	FixUp & operator[](uint32_t index) {
 		return m_fixups[index];

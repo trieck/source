@@ -80,7 +80,7 @@ SymbolTable::SymbolTable()
 	rinsert("DL", R8, 0x06);
 	rinsert("DH", R8, 0x07);
 
-	// 16-bit registers 
+	// 16-bit registers
 	rinsert("A", R16, 0x00);
 	rinsert("B", R16, 0x01);
 	rinsert("C", R16, 0x02);
@@ -88,7 +88,7 @@ SymbolTable::SymbolTable()
 	rinsert("X", R16, 0x04);
 	rinsert("SP", R16, 0x05);
 
-	// Identifiers 
+	// Identifiers
 	idinsert("BYTE", BYTE);
 	idinsert("WORD", WORD);
 
@@ -181,8 +181,8 @@ LPSYMBOL SymbolTable::installs(const string &s)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installw(const string &s, uint32_t type, uint32_t sub, 
-	word w)
+LPSYMBOL SymbolTable::installw(const string &s, uint32_t type, uint32_t sub,
+                               word w)
 {
 	LPSYMBOL sym;
 	if ((sym = lookup(s)) == NULL) {
@@ -197,8 +197,8 @@ LPSYMBOL SymbolTable::installw(const string &s, uint32_t type, uint32_t sub,
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installb(const string &s, uint32_t type, uint32_t sub, 
-	byte b)
+LPSYMBOL SymbolTable::installb(const string &s, uint32_t type, uint32_t sub,
+                               byte b)
 {
 	LPSYMBOL sym;
 	if ((sym = lookup(s)) == NULL) {

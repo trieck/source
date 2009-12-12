@@ -19,7 +19,7 @@ AssemCmd::~AssemCmd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void AssemCmd::exec(const stringvec &v) 
+void AssemCmd::exec(const stringvec &v)
 {
 	word address;
 	if (v.size()) {

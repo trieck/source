@@ -20,7 +20,7 @@ RegistersCmd::~RegistersCmd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void RegistersCmd::exec(const stringvec &v) 
+void RegistersCmd::exec(const stringvec &v)
 {
 	CPU *cpu = CPU::getInstance();
 

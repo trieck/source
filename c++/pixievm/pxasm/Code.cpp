@@ -42,7 +42,7 @@ Code *Code::getInstance()
 /////////////////////////////////////////////////////////////////////////////
 void Code::initialize()
 {
-	// code1 
+	// code1
 	m_code1Map[AM_IMPLIED] = &Code::implied;
 
 	// code2
@@ -54,7 +54,7 @@ void Code::initialize()
 	m_code2Map[AM_A16] = &Code::a16;
 	m_code2Map[AM_I16] = &Code::i16;
 	m_code2Map[AM_I8] = &Code::i8;
-	
+
 	// code3
 	m_code3Map[AM_RR8] = &Code::rr8;
 	m_code3Map[AM_RI8] = &Code::ri8;
@@ -178,7 +178,7 @@ void Code::relcode(LPSYMBOL s1, LPSYMBOL s2)
 		offset = (s2->val16 - (location() + sizeof(byte)));
 	}
 
-	putByte(offset);	
+	putByte(offset);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -390,7 +390,7 @@ void Code::makeFixup(LPSYMBOL s, bool bRel)
 	if (s->type != ST_UNDEF)
 		return;
 
-	// bRel is true if this is a relative branch fix-up, otherwise, 
+	// bRel is true if this is a relative branch fix-up, otherwise,
 	// it's false.
 	m_fixups.add(s->name.c_str(), location(), bRel);
 }
@@ -412,7 +412,7 @@ void Code::resolve(const FixUp &fixup)
 {
 	LPSYMBOL sym;
 	if (((sym = table->lookup(fixup.name)) == NULL) ||
-		(sym->type == ST_UNDEF)) {
+	        (sym->type == ST_UNDEF)) {
 		throw Exception("%s never defined.", fixup.name);
 	}
 
@@ -421,17 +421,17 @@ void Code::resolve(const FixUp &fixup)
 
 	word symloc = sym->val16;
 	word fixloc = fixup.location;
-	word diff = symloc - fixloc; 
+	word diff = symloc - fixloc;
 
 	if (fixup.isrel) {	// relative branch fix-up
 		if (diff > 0x7F) {
-			throw Exception("branch out of range for label \"%s\".", 
-				fixup.name);
+			throw Exception("branch out of range for label \"%s\".",
+			                fixup.name);
 		}
 
 		word offset = fixloc - m_origin;
 		ASSERT(m_memory[offset] == 0);
-		m_memory[offset] = (byte)diff;		
+		m_memory[offset] = (byte)diff;
 	} else {
 		/* TODO: */
 	}

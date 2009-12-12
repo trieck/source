@@ -11,8 +11,7 @@
 #include "monitor.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class LoadCmd : public Command
-{
+class LoadCmd : public Command {
 public:
 	LoadCmd(Monitor *mon);
 	~LoadCmd();

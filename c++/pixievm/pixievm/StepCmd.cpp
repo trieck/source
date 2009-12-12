@@ -21,7 +21,7 @@ StepCmd::~StepCmd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void StepCmd::exec(const stringvec &v) 
+void StepCmd::exec(const stringvec &v)
 {
 	CPU *cpu = CPU::getInstance();
 
@@ -32,7 +32,7 @@ void StepCmd::exec(const stringvec &v)
 			cerr << "? z [address]" << endl;
 			return;
 		}
-		
+
 		// set instruction pointer
 		cpu->setIP(ip);
 	}

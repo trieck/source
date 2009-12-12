@@ -9,8 +9,7 @@
 #define __ASSEMBLER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Assembler
-{
+class Assembler {
 public:
 	Assembler();
 	~Assembler();

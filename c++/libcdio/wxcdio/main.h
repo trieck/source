@@ -30,7 +30,7 @@ public:
 	wxFrame *GetFrame() const;
 
 	DECLARE_EVENT_TABLE()
-		
+
 private:
 	void OnUpdateVolInfo(wxUpdateUIEvent &event);
 	wxDocManager* m_docManager;

@@ -15,7 +15,7 @@ public:
 	guiPropertiesDlg(wxWindow* parent, iso9660_stat_t *stat);
 
 private:
-	iso9660_stat_t *m_stat;	
+	iso9660_stat_t *m_stat;
 };
 
 #endif // __guiPropertiesDlg__

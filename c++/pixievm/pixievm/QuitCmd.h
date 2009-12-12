@@ -11,13 +11,12 @@
 #include "monitor.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class QuitCmd : public Command
-{
+class QuitCmd : public Command {
 public:
 	QuitCmd(Monitor *mon);
 	~QuitCmd();
 
-	virtual void exec(const stringvec &v); 
+	virtual void exec(const stringvec &v);
 };
 
 #endif // __QUITCMD_H__

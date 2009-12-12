@@ -50,11 +50,11 @@ private:
 
 	// trap handler
 	LPTRAPHANDLER m_trapHandler;
-	
+
 	// monitor handler
 	LPHANDLER m_monHandler;
 
-	// trap data 
+	// trap data
 	void *m_trapData;
 };
 

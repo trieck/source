@@ -16,7 +16,7 @@ public:
 	            const wxString& name = wxFrameNameStr);
 
 	~wxcdioFrame();
-	
+
 	DECLARE_EVENT_TABLE()
 private:
 	wxMenuBar* m_menuBar;

@@ -23,13 +23,13 @@
 /////////////////////////////////////////////////////////////////////////////
 // Symbol struct
 typedef struct Symbol {
-	uint32_t type;			// symbol type 
-	uint32_t sub;			// sub-type 
-	string name;			// symbol name 
+	uint32_t type;			// symbol type
+	uint32_t sub;			// sub-type
+	string name;			// symbol name
 	union {
-		const Instr *instr;	// instruction 
-		word val16;			// word value 
-		byte val8;			// byte value 
+		const Instr *instr;	// instruction
+		word val16;			// word value
+		byte val8;			// byte value
 	};
 } Symbol, *LPSYMBOL;
 

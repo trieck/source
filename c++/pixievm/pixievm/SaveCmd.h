@@ -11,8 +11,7 @@
 #include "monitor.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class SaveCmd : public Command
-{
+class SaveCmd : public Command {
 public:
 	SaveCmd(Monitor *mon);
 	~SaveCmd();

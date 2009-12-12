@@ -9,7 +9,7 @@
 
 #include <cdio++/iso9660.hpp>
 
-enum { 
+enum {
 	ID_VOL_INFO = wxID_HIGHEST+1,
 	MENU_ID_EXTRACT = wxID_HIGHEST,
 	MENU_ID_PROPERTIES

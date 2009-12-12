@@ -11,7 +11,7 @@
 #include "Code.h"
 
 extern int yyparse(void);	// bison parser routine
-extern FILE *yyin;			// input file pointer 
+extern FILE *yyin;			// input file pointer
 extern FILE *yyout;			// output file pointer
 
 /////////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ void Assembler::open(const char *filename)
 
 	if ((yyin = fopen(filename, "r")) == NULL) {
 		throw Exception("can't open file \"%s\": %s.", filename,
-			strerror(errno));
+		                strerror(errno));
 	}
 }
 
@@ -53,7 +53,7 @@ void Assembler::close()
 int Assembler::assemble(const char *filename)
 {
 	open(filename);
-	
+
 	int nret;
 	if ((nret = yyparse()) != 0)
 		return nret;

@@ -10,8 +10,7 @@
 
 #include "monitor.h"
 
-class StepCmd : public Command
-{
+class StepCmd : public Command {
 public:
 	StepCmd(Monitor *mon);
 	~StepCmd();

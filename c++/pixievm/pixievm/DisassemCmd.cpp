@@ -19,13 +19,13 @@ DisassemCmd::~DisassemCmd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void DisassemCmd::disassemble(word address) 
+void DisassemCmd::disassemble(word address)
 {
 	disassembler.disassemble(&address, &address);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void DisassemCmd::exec(const stringvec &v) 
+void DisassemCmd::exec(const stringvec &v)
 {
 	word start, end;
 	if (v.size() == 0) {

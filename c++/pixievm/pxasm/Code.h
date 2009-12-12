@@ -15,15 +15,14 @@ class Code;
 typedef auto_ptr<Code> CodePtr;
 
 /////////////////////////////////////////////////////////////////////////////
-class Code
-{
+class Code {
 private:
 	Code();
 public:
 	~Code();
 
 	static Code *getInstance();
-	
+
 	void code1(uint32_t mode, LPSYMBOL s1);
 	void code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2);
 	void code3(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3);
@@ -88,40 +87,45 @@ private:
 	static CodePtr instance;	// singleton instance
 
 	enum { MEMSIZE = 4096 };	// maximum code size
-	
+
 	word m_origin;				// assembly origin
 	bool m_bOrigin;				// origin has been declared
 	byte m_memory[MEMSIZE];		// memory
 	byte *m_pmem;				// current memory pointer
-	FixUps m_fixups;			// fix ups 
+	FixUps m_fixups;			// fix ups
 	Code1FncMap	m_code1Map;		// code1 function map
 	Code2FncMap m_code2Map;		// code2 function map
 	Code3FncMap m_code3Map;		// code3 function map
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline word Code::getOrigin() const { 
-	return m_origin; 
+inline word Code::getOrigin() const
+{
+	return m_origin;
 }
-	
+
 /////////////////////////////////////////////////////////////////////////////
-inline void Code::setOrigin(word origin) { 
-	m_origin = origin; 
+inline void Code::setOrigin(word origin)
+{
+	m_origin = origin;
 	m_bOrigin = true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline bool Code::isOriginSet() const {
+inline bool Code::isOriginSet() const
+{
 	return m_bOrigin;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline bool Code::isGenerating() const {	// has code generation begun?
+inline bool Code::isGenerating() const  	// has code generation begun?
+{
 	return ((m_pmem - m_memory) > 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline word Code::location() const {
+inline word Code::location() const
+{
 	return m_origin + (m_pmem - m_memory);
 }
 

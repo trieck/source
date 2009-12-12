@@ -11,8 +11,7 @@
 #include "monitor.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class HelpCmd : public Command
-{
+class HelpCmd : public Command {
 public:
 	HelpCmd(Monitor *mon);
 	~HelpCmd();

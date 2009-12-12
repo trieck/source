@@ -20,7 +20,7 @@ QuitCmd::~QuitCmd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void QuitCmd::exec(const stringvec &v) 
+void QuitCmd::exec(const stringvec &v)
 {
 	CPU *cpu = CPU::getInstance();
 	cpu->setShutdown(true);

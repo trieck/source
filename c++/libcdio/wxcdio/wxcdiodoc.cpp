@@ -55,7 +55,7 @@ bool wxcdioDoc::OnCloseDocument()
 
 	wxFrame *frame;
 	if ((frame = theApp.GetFrame()) != NULL) {
-		frame->SetTitle(WXCDIO_APP_NAME);	
+		frame->SetTitle(WXCDIO_APP_NAME);
 	}
 
 	return true;

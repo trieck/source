@@ -23,14 +23,16 @@ protected:
 public:
 	virtual ~Command() {}
 
-	Command *CopyRef() { 
+	Command *CopyRef() {
 		IncRef();
 		return this;
 	}
 
 	virtual void exec(const stringvec &v) = 0;
 
-	uint32_t IncRef() { return ++m_ref; }
+	uint32_t IncRef() {
+		return ++m_ref;
+	}
 	uint32_t DecRef() {
 		if (--m_ref == 0) {
 			delete this;
@@ -43,7 +45,7 @@ protected:
 		return m_mon;
 	}
 private:
-	Monitor *m_mon;	// back pointer to the monitor 
+	Monitor *m_mon;	// back pointer to the monitor
 	uint32_t m_ref;	// reference count on the object
 };
 /////////////////////////////////////////////////////////////////////////////

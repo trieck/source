@@ -19,7 +19,7 @@ HelpCmd::~HelpCmd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void HelpCmd::exec(const stringvec &v) 
+void HelpCmd::exec(const stringvec &v)
 {
 	cout << "?   print help screen" << endl;
 	cout << "a   assemble [address]" << endl;

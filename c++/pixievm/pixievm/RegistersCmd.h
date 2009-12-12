@@ -11,8 +11,7 @@
 #include "monitor.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class RegistersCmd : public Command
-{
+class RegistersCmd : public Command {
 public:
 	RegistersCmd(Monitor *mon);
 	~RegistersCmd();

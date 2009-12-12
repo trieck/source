@@ -9,12 +9,11 @@
 #define __REFOBJ_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class RefObj
-{
+class RefObj {
 public:
 	RefObj() {}
 	virtual ~RefObj() {};
-	
+
 	virtual uint32_t IncRef() = 0;
 	virtual uint32_t DecRef() = 0;
 };

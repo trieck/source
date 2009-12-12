@@ -11,8 +11,7 @@
 #include "monitor.h"
 #include "MiniAssembler.h"
 
-class AssemCmd : public Command
-{
+class AssemCmd : public Command {
 public:
 	AssemCmd(Monitor *mon);
 	~AssemCmd();

@@ -11,8 +11,7 @@
 #include "monitor.h"
 #include "MiniDisassembler.h"
 
-class DisassemCmd : public Command
-{
+class DisassemCmd : public Command {
 public:
 	DisassemCmd(Monitor *mon);
 	~DisassemCmd();

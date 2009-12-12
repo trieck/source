@@ -25,7 +25,7 @@ DumpCmd::~DumpCmd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void DumpCmd::exec(const stringvec &v) 
+void DumpCmd::exec(const stringvec &v)
 {
 	word start, end;
 	if (v.size() == 0) {

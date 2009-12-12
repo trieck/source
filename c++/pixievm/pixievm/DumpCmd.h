@@ -11,8 +11,7 @@
 #include "monitor.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class DumpCmd : public Command
-{
+class DumpCmd : public Command {
 public:
 	DumpCmd(Monitor *mon);
 	~DumpCmd();

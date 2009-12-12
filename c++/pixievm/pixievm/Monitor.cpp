@@ -67,7 +67,7 @@ void Monitor::runLoop(void *data)
 {
 	LineReader reader(cin);
 	string line;
-	
+
 	for (exit_mon = false; !exit_mon; ) {
 		prompt();
 		line = reader.readLine();
@@ -81,8 +81,8 @@ void Monitor::notice() const
 {
 	if (show_notice) {
 		cout << endl << "PixieVM version 0.0.1" << endl
-			<< "Copyright (c) 2006-2009 Thomas A. Rieck" << endl
-			<< "type '?' for help" << endl;
+		     << "Copyright (c) 2006-2009 Thomas A. Rieck" << endl
+		     << "type '?' for help" << endl;
 	}
 }
 

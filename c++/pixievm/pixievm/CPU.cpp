@@ -2624,12 +2624,12 @@ word CPU::getFL() const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void CPU::setIP(word address) 
+void CPU::setIP(word address)
 {
 	REG_IP = address;
 }
 
-void CPU::setShutdown(bool fShutdown) 
+void CPU::setShutdown(bool fShutdown)
 {
 	m_shutdown = fShutdown;
 }

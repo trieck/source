@@ -21,7 +21,7 @@ LoadCmd::~LoadCmd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void LoadCmd::exec(const stringvec &v) 
+void LoadCmd::exec(const stringvec &v)
 {
 	word start;
 	if (v.size() < 2) {
