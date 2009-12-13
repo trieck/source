@@ -51,7 +51,9 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 	word d;		
 	if (!sscanf(&yytext[1], "%hx", &d)) {
 		yyerror("invalid hex number");
+		return 0;
 	}		
+	
 	if (d < 0x100) {
 		yylval.sym = table->installb(yytext, ST_CONST, IM8, (byte)d); 
 		return IM8;
@@ -66,9 +68,11 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 	LPSYMBOL sym;
 	if ((sym = table->lookup(reg)) == NULL) {
 		yyerror("unexpected token");
+		return 0;
 	}
 	if (sym->type != ST_REG) {
 		yyerror("unsupported symbol");
+		return 0;
 	}
 
 	// encode offset bit in register
@@ -105,6 +109,7 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 	LPSYMBOL sym;
 	if ((sym = table->lookup(yytext)) == NULL) {
 		yyerror("unrecognized pseudo-op");
+		return 0;
 	}
 	
 	return sym->sub;
@@ -117,6 +122,7 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 	for ( ; *ptext != '"'; ptext++) {
 		if (ptext[0] == '\0' || ptext[0] == '\n') {
 			yyerror("unterminated string literal");
+			return 0;
 		}
 		
 		str += backslash(&ptext);

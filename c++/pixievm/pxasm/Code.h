@@ -74,7 +74,7 @@ private:
 	void i16(const Instr *instr, LPSYMBOL s);
 	void i8(const Instr *instr, LPSYMBOL s);
 
-	void makeFixup(LPSYMBOL s, uint32_t type = FT_UNKNOWN);
+	void makeFixup(LPSYMBOL s, uint32_t type = FT_STD);
 	void resolve(const FixUp &fixup);
 
 	typedef void (Code::*Code1Ptr)(const Instr *);

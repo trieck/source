@@ -94,8 +94,10 @@ void Code::putWord(word w)
 /////////////////////////////////////////////////////////////////////////////
 void Code::putSym(LPSYMBOL s)
 {
-	if (s == ST_UNDEF) {	// forward reference
+	if (s->type == ST_UNDEF) {	// forward reference
 		makeFixup(s);
+		putWord(0);
+		return;
 	}
 
 	switch (s->sub) {
@@ -390,8 +392,6 @@ void Code::makeFixup(LPSYMBOL s, uint32_t type)
 	if (s->type != ST_UNDEF)
 		return;
 
-	// bRel is true if this is a relative branch fix-up, otherwise,
-	// it's false.
 	m_fixups.add(s->name.c_str(), location(), type);
 }
 
@@ -421,21 +421,22 @@ void Code::resolve(const FixUp &fixup)
 
 	word symloc = sym->val16;
 	word fixloc = fixup.location;
-	word diff = symloc - fixloc;
+	word offset = fixloc - m_origin;
 
-	if (fixup.type == FT_REL) {	// relative branch fix-up
+	if (fixup.type == FT_STD) {	// standard fixup
+		ASSERT(m_memory[offset] == 0);
+		ASSERT(m_memory[offset+1] == 0);
+		m_memory[offset] = HIBYTE(symloc);
+		m_memory[offset+1] = LOBYTE(symloc);
+	} else if (fixup.type == FT_REL) {	// relative branch fix-up
+		word diff = symloc - fixloc;
 		if (diff > 0x7F) {
 			throw Exception("branch out of range for label \"%s\".",
 			                fixup.name);
-		}
-
-		word offset = fixloc - m_origin;
+		}		
 		ASSERT(m_memory[offset] == 0);
 		m_memory[offset] = (byte)diff;
-	} else {
-		/* TODO: */
-		ASSERT(0);
-	}
+	} 
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -9,12 +9,12 @@
 #define __FIXUPS_H__
 
 // fix-up types
-#define FT_UNKNOWN	(0)
-#define FT_REL		(1)
+#define FT_STD		(0)
+#define FT_REL		(1)	/* relative branch fix-up */
 
 /////////////////////////////////////////////////////////////////////////////
 struct FixUp {
-	FixUp() : name(NULL), location(0), type(FT_UNKNOWN) {}
+	FixUp() : name(NULL), location(0), type(FT_STD) {}
 	FixUp(const FixUp &rhs) {
 		*this = rhs;
 	}

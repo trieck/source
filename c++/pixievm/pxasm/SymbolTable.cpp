@@ -16,7 +16,7 @@ SymbolTablePtr SymbolTable::instance(SymbolTable::getInstance());
 /////////////////////////////////////////////////////////////////////////////
 SymbolTable::SymbolTable()
 {
-	/* Group #1 instructions */
+	// Group #1 instructions 
 	iinsert("ADC", I1, &INS_ADC);
 	iinsert("AND", I1, &INS_AND);
 	iinsert("BIT", I1, &INS_BIT);
@@ -26,7 +26,7 @@ SymbolTable::SymbolTable()
 	iinsert("SBB", I1, &INS_SBB);
 	iinsert("XOR", I1, &INS_XOR);
 
-	/* Group #2 instructions */
+	// Group #2 instructions
 	iinsert("DEC", I2, &INS_DEC);
 	iinsert("INC", I2, &INS_INC);
 	iinsert("ROL", I2, &INS_ROL);
@@ -34,7 +34,7 @@ SymbolTable::SymbolTable()
 	iinsert("SHL", I2, &INS_SHL);
 	iinsert("SHR", I2, &INS_SHR);
 
-	/* Group #3 instructions */
+	// Group #3 instructions 
 	iinsert("BRK", I3, &INS_BRK);
 	iinsert("CLC", I3, &INS_CLC);
 	iinsert("CLI", I3, &INS_CLI);
@@ -50,11 +50,11 @@ SymbolTable::SymbolTable()
 	iinsert("PUSHA", I3, &INS_PUSHA);
 	iinsert("PUSHF", I3, &INS_PUSHF);
 
-	/* Group #4 instructions */
+	// Group #4 instructions 
 	iinsert("CALL", I4, &INS_CALL);
 	iinsert("JMP", I4, &INS_JMP);
 
-	/* Group #5 instructions */
+	// Group #5 instructions 
 	iinsert("JCC", I5, &INS_JCC);
 	iinsert("JCS", I5, &INS_JCS);
 	iinsert("JMI", I5, &INS_JMI);
@@ -64,13 +64,13 @@ SymbolTable::SymbolTable()
 	iinsert("JVS", I5, &INS_JVS);
 	iinsert("JZ", I5, &INS_JZ);
 
-	/* Group #6 instructions */
+	// Group #6 instructions 
 	iinsert("POP", I6, &INS_POP);
 
-	/* Group #7 instructions */
+	// Group #7 instructions 
 	iinsert("PUSH", I7, &INS_PUSH);
 
-	// 8-bit registers */
+	// 8-bit registers 
 	rinsert("AL", R8, 0x00);
 	rinsert("AH", R8, 0x01);
 	rinsert("BL", R8, 0x02);
@@ -92,7 +92,7 @@ SymbolTable::SymbolTable()
 	idinsert("BYTE", BYTE);
 	idinsert("WORD", WORD);
 
-	/* pseudo operations */
+	// pseudo operations 
 	idinsert(".ORG", DECL_ORG);
 	idinsert(".BYTE", DECL_BYTE);
 	idinsert(".WORD", DECL_WORD);
