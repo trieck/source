@@ -58,6 +58,7 @@ void MiniDisassembler::disassemble(word *start, word *end)
 	word lastip = 0;
 	if (start) {		/* start address supplied */
 		ip = *start;
+		init = true;
 	} else if (!init) { /* not entered */
 		ip = CPU::getInstance()->getIP();
 		init = true;

@@ -48,8 +48,15 @@ void SaveCmd::exec(const stringvec &v)
 		return;
 	}
 
+	ofs.write((char*)&start, sizeof(word));
+	if (ofs.bad()) {
+		fprintf(stderr, "unable to write to file \"%s\".\n",
+		        filename.c_str());
+		return;
+	}
+
 	Memory *mem = Memory::getInstance();
-	if (!mem->save(ofs, start, (end - start) + 1)) {
+	if (!mem->save(ofs, start, (end-start)+1)) {
 		fprintf(stderr, "unable to save to file \"%s\".\n",
 		        filename.c_str());
 	}

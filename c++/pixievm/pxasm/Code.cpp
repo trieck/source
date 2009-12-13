@@ -167,7 +167,7 @@ void Code::relcode(LPSYMBOL s1, LPSYMBOL s2)
 
 	int8_t offset = 0;
 	if (s2->type == ST_UNDEF) {	// forward reference branch
-		makeFixup(s2, true);
+		makeFixup(s2, FT_REL);
 	} else {
 		// check whether target is in range for relative branch
 		word diff = abs(s2->val16 - (location() + sizeof(byte)));
@@ -382,7 +382,7 @@ void Code::i8(const Instr *instr, LPSYMBOL s)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::makeFixup(LPSYMBOL s, bool bRel)
+void Code::makeFixup(LPSYMBOL s, uint32_t type)
 {
 	// if s is of type ST_UNDEF, we may be forward referencing a label.
 	// In this case, generate a fixup that will be resolved during
@@ -392,7 +392,7 @@ void Code::makeFixup(LPSYMBOL s, bool bRel)
 
 	// bRel is true if this is a relative branch fix-up, otherwise,
 	// it's false.
-	m_fixups.add(s->name.c_str(), location(), bRel);
+	m_fixups.add(s->name.c_str(), location(), type);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -423,7 +423,7 @@ void Code::resolve(const FixUp &fixup)
 	word fixloc = fixup.location;
 	word diff = symloc - fixloc;
 
-	if (fixup.isrel) {	// relative branch fix-up
+	if (fixup.type == FT_REL) {	// relative branch fix-up
 		if (diff > 0x7F) {
 			throw Exception("branch out of range for label \"%s\".",
 			                fixup.name);
@@ -434,6 +434,7 @@ void Code::resolve(const FixUp &fixup)
 		m_memory[offset] = (byte)diff;
 	} else {
 		/* TODO: */
+		ASSERT(0);
 	}
 }
 

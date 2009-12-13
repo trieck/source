@@ -24,7 +24,7 @@ void HelpCmd::exec(const stringvec &v)
 	cout << "?   print help screen" << endl;
 	cout << "a   assemble [address]" << endl;
 	cout << "d   disassemble [range]" << endl;
-	cout << "l   load address file" << endl;
+	cout << "l   load file" << endl;
 	cout << "q   quit" << endl;
 	cout << "r   print registers" << endl;
 	cout << "s   save range file" << endl;

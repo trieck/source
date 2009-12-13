@@ -19,12 +19,12 @@ FixUps::~FixUps()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void FixUps::add(const char *name, word location, bool bRel)
+void FixUps::add(const char *name, word location, uint32_t type)
 {
 	FixUp fixup;
 	fixup.name = name;
 	fixup.location = location;
-	fixup.isrel = bRel;
+	fixup.type = type;
 
 	m_fixups.push_back(fixup);
 }

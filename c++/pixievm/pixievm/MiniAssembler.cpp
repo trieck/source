@@ -40,6 +40,7 @@ void MiniAssembler::assemble(word *start)
 {
 	if (start) {		/* start address supplied */
 		address = *start;
+		init = true;
 	} else if (!init) {	/* not entered */
 		address = CPU::getInstance()->getIP();
 		init = true;

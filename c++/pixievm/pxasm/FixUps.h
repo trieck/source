@@ -8,9 +8,13 @@
 #ifndef __FIXUPS_H__
 #define __FIXUPS_H__
 
+// fix-up types
+#define FT_UNKNOWN	(0)
+#define FT_REL		(1)
+
 /////////////////////////////////////////////////////////////////////////////
 struct FixUp {
-	FixUp() : name(NULL), location(0), isrel(false) {}
+	FixUp() : name(NULL), location(0), type(FT_UNKNOWN) {}
 	FixUp(const FixUp &rhs) {
 		*this = rhs;
 	}
@@ -18,14 +22,14 @@ struct FixUp {
 		if (this != &rhs) {
 			name = rhs.name;	// shared
 			location = rhs.location;
-			isrel = rhs.isrel;
+			type = rhs.type;
 		}
 		return *this;
 	}
 
 	const char *name;	// symbol name
 	word location;		// code location
-	bool isrel;			// is this a relative branch fix-up?
+	uint32_t type;		// type of fixup
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -36,7 +40,7 @@ public:
 	~FixUps();
 
 // Interface
-	void add(const char *name, word location, bool bRel);
+	void add(const char *name, word location, uint32_t type);
 	uint32_t size() const {
 		return m_fixups.size();
 	}

@@ -23,20 +23,15 @@ LoadCmd::~LoadCmd()
 /////////////////////////////////////////////////////////////////////////////
 void LoadCmd::exec(const stringvec &v)
 {
-	word start;
-	if (v.size() < 2) {
-		cerr << "? l address file" << endl;
+	if (v.size() < 1) {
+		cerr << "? l file" << endl;
 		return;
 	}
-	int n = sscanf(v[0].c_str(), "%hx", &start);
-	if (n != 1) {
-		cerr << "? l address file" << endl;
-		return;
-	}
-	string filename = v[1];
+	
+	string filename = v[0];
 
 	struct _stat buf;
-	n = stat(filename.c_str(), (struct stat*)&buf);
+	int n = stat(filename.c_str(), (struct stat*)&buf);
 	if (n) {
 		fprintf(stderr, "unable to stat file \"%s\".\n", filename.c_str());
 		return;
@@ -49,9 +44,20 @@ void LoadCmd::exec(const stringvec &v)
 		return;
 	}
 
+	word start;
+	ifs.read((char*)&start, sizeof(word));
+	if (ifs.bad()) {
+		fprintf(stderr, "unable to read from file \"%s\".\n",
+			filename.c_str());
+		return;
+	}
+
 	Memory *mem = Memory::getInstance();
-	if (!mem->load(ifs, start, buf.st_size)) {
+	if (!mem->load(ifs, start, buf.st_size - sizeof(word))) {
 		fprintf(stderr, "unable to load file \"%s\".\n",
 		        filename.c_str());
 	}
+
+	printf("file \"%s\" loaded at $%.4x.\n", filename.c_str(),
+		start);
 }
