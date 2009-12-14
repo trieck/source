@@ -139,3 +139,33 @@ string basename(const string &filename)
 
 	return output;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+string itoa(int n)
+{
+	static const int len = 20;
+	char buffer[len] = { 0 };
+
+	_itoa(n, buffer, 10);
+
+	return buffer;
+}
+
+#ifdef _MSC_VER
+
+/////////////////////////////////////////////////////////////////////////////
+string uniq()
+{
+	GUID guid;
+	HRESULT hr = CoCreateGuid(&guid);
+	if (FAILED(hr))
+		return "";
+
+	CComBSTR bstrGuid(guid);
+
+	USES_CONVERSION;
+
+	return OLE2A(bstrGuid);
+}
+
+#endif // _MSC_VER

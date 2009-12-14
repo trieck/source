@@ -9,6 +9,7 @@
 
 #ifdef _MSC_VER
 #pragma warning(disable:4996)	// disable deprecation warnings
+#include <atlbase.h>
 #endif // _MSC_VER 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -20,11 +21,13 @@
 #include <vector>
 #include <memory>
 #include <fstream>
+#include <sstream>
 
 using std::istream;
 using std::ifstream;
 using std::ostream;
 using std::ofstream;
+using std::ostringstream;
 using std::string;
 using std::cout;
 using std::cerr;
@@ -46,8 +49,13 @@ struct stringless : std::binary_function <string, string, bool> {
 	}
 };
 
+#ifndef HIBYTE
 #define HIBYTE(w)           ((w & 0xFF00) >> 8)
+#endif // HIBYTE
+
+#ifndef LOBYTE
 #define LOBYTE(w)           (w & 0xFF)
+#endif // LOBYTE
 
 #define HINYBBLE(b)			((b & 0xF0) >> 4)
 #define LONYBBLE(b)			(b & 0x0F)

@@ -42,7 +42,8 @@ whitespace		[\t\r ]+
 quotedstr		\"[^"\n]+\"
 pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
 offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
-
+lt				<
+gt				>
 %%
 {whitespace}	;
 {comment}		;
@@ -55,7 +56,7 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 	}		
 	
 	if (d < 0x100) {
-		yylval.sym = table->installb(yytext, ST_CONST, IM8, (byte)d); 
+		yylval.sym = table->installw(yytext, ST_CONST, IM8, d); 
 		return IM8;
 	} else {
 		yylval.sym = table->installw(yytext, ST_CONST, IM16, d); 
@@ -76,11 +77,12 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 	}
 
 	// encode offset bit in register
-	yylval.sym = table->installb(yytext, sym->type, sym->sub, sym->val8 | 0x08);
+	yylval.sym = table->installw(yytext, sym->type, sym->sub, sym->val8 | 0x08);
 	return RX16;
 }
 {newline}.*		{ 
 		line = trim(yytext + 1);
+		table->flush();	// flush symbol table		
 		yyless(1); 
 	}
 {identifier}				{
@@ -132,5 +134,7 @@ offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 	
 	return STRING;
 }
-.							{ return yytext[0]; }
+{lt}	{ return LO_BYTE; }
+{gt}	{ return HI_BYTE; }
+.		{ return yytext[0]; }
 %%

@@ -9,12 +9,17 @@
 #define __FIXUPS_H__
 
 // fix-up types
-#define FT_STD		(0)
-#define FT_REL		(1)	/* relative branch fix-up */
+enum FixUpType {
+	FT_UNDEF = 0,	// undefined
+	FT_STD,			// standard fix-up
+	FT_REL,			// relative branch fix-up
+	FT_HIBYTE,		// hi-byte of word
+	FT_LOBYTE		// lo-byte of word
+};
 
 /////////////////////////////////////////////////////////////////////////////
 struct FixUp {
-	FixUp() : name(NULL), location(0), type(FT_STD) {}
+	FixUp() : name(NULL), location(0), type(FT_UNDEF) {}
 	FixUp(const FixUp &rhs) {
 		*this = rhs;
 	}
@@ -29,7 +34,7 @@ struct FixUp {
 
 	const char *name;	// symbol name
 	word location;		// code location
-	uint32_t type;		// type of fixup
+	FixUpType type;		// type of fixup
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -40,7 +45,7 @@ public:
 	~FixUps();
 
 // Interface
-	void add(const char *name, word location, uint32_t type);
+	void add(const char *name, word location, FixUpType type);
 	uint32_t size() const {
 		return m_fixups.size();
 	}

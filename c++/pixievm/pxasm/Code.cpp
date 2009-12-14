@@ -42,38 +42,38 @@ Code *Code::getInstance()
 /////////////////////////////////////////////////////////////////////////////
 void Code::initialize()
 {
+	// code0
+	m_code0Map[AM_IMPLIED] = &Code::implied;
+
 	// code1
-	m_code1Map[AM_IMPLIED] = &Code::implied;
+	m_code1Map[AM_R8] = &Code::r8;
+	m_code1Map[AM_R16] = &Code::r16;
+	m_code1Map[AM_M8] = &Code::m8;
+	m_code1Map[AM_M16] = &Code::m16;
+	m_code1Map[AM_A8] = &Code::a8;
+	m_code1Map[AM_A16] = &Code::a16;
+	m_code1Map[AM_I16] = &Code::i16;
+	m_code1Map[AM_I8] = &Code::i8;
 
 	// code2
-	m_code2Map[AM_R8] = &Code::r8;
-	m_code2Map[AM_R16] = &Code::r16;
-	m_code2Map[AM_M8] = &Code::m8;
-	m_code2Map[AM_M16] = &Code::m16;
-	m_code2Map[AM_A8] = &Code::a8;
-	m_code2Map[AM_A16] = &Code::a16;
-	m_code2Map[AM_I16] = &Code::i16;
-	m_code2Map[AM_I8] = &Code::i8;
-
-	// code3
-	m_code3Map[AM_RR8] = &Code::rr8;
-	m_code3Map[AM_RI8] = &Code::ri8;
-	m_code3Map[AM_RM8] = &Code::rm8;
-	m_code3Map[AM_RA8] = &Code::ra8;
-	m_code3Map[AM_RR16] = &Code::rr16;
-	m_code3Map[AM_RI16] = &Code::ri16;
-	m_code3Map[AM_RM16] = &Code::rm16;
-	m_code3Map[AM_RA16] = &Code::ra16;
-	m_code3Map[AM_MR8] = &Code::mr8;
-	m_code3Map[AM_MR16] = &Code::mr16;
-	m_code3Map[AM_M8I8] = &Code::m8i8;
-	m_code3Map[AM_M16I8] = &Code::m16i8;
-	m_code3Map[AM_MI16] = &Code::mi16;
-	m_code3Map[AM_AR8] = &Code::ar8;
-	m_code3Map[AM_AR16] = &Code::ar16;
-	m_code3Map[AM_A8I8] = &Code::a8i8;
-	m_code3Map[AM_A16I8] = &Code::a16i8;
-	m_code3Map[AM_AI16] = &Code::ai16;
+	m_code2Map[AM_RR8] = &Code::rr8;
+	m_code2Map[AM_RI8] = &Code::ri8;
+	m_code2Map[AM_RM8] = &Code::rm8;
+	m_code2Map[AM_RA8] = &Code::ra8;
+	m_code2Map[AM_RR16] = &Code::rr16;
+	m_code2Map[AM_RI16] = &Code::ri16;
+	m_code2Map[AM_RM16] = &Code::rm16;
+	m_code2Map[AM_RA16] = &Code::ra16;
+	m_code2Map[AM_MR8] = &Code::mr8;
+	m_code2Map[AM_MR16] = &Code::mr16;
+	m_code2Map[AM_M8I8] = &Code::m8i8;
+	m_code2Map[AM_M16I8] = &Code::m16i8;
+	m_code2Map[AM_MI16] = &Code::mi16;
+	m_code2Map[AM_AR8] = &Code::ar8;
+	m_code2Map[AM_AR16] = &Code::ar16;
+	m_code2Map[AM_A8I8] = &Code::a8i8;
+	m_code2Map[AM_A16I8] = &Code::a16i8;
+	m_code2Map[AM_AI16] = &Code::ai16;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -92,23 +92,29 @@ void Code::putWord(word w)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::putSym(LPSYMBOL s)
+void Code::putSym8(LPSYMBOL s)
+{
+	if (s->type == ST_UNDEF) {	
+		// an 8-bit undefined symbol is a forward reference
+		// s must be a symbol reference to a 16-bit symbol
+		if (s->ref == NULL) {
+			throw Exception("undefined symbol reference.");
+		}	
+		makeFixup(s->ref, s->ftype);
+		putByte(0);
+	} else {
+		putByte(s->val8);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::putSym16(LPSYMBOL s)
 {
 	if (s->type == ST_UNDEF) {	// forward reference
 		makeFixup(s);
 		putWord(0);
-		return;
-	}
-
-	switch (s->sub) {
-	case IM8:
-		putByte(s->val8);
-		break;
-	case IM16:
+	} else {
 		putWord(s->val16);
-		break;
-	default:
-		throw Exception("unsupported symbol.");
 	}
 }
 
@@ -122,7 +128,20 @@ void Code::putByte(byte b)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::code1(uint32_t mode, LPSYMBOL s1)
+void Code::code0(uint32_t mode, LPSYMBOL s1)
+{
+	Code0FncMap::const_iterator it = m_code0Map.find(mode);
+	if (it == m_code0Map.end()) {
+		throw Exception("unexpected addressing mode %d.", mode);
+	}
+
+	Code0Ptr pfnc = (*it).second;
+
+	(this->*(pfnc))(s1->instr);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::code1(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2)
 {
 	Code1FncMap::const_iterator it = m_code1Map.find(mode);
 	if (it == m_code1Map.end()) {
@@ -131,11 +150,11 @@ void Code::code1(uint32_t mode, LPSYMBOL s1)
 
 	Code1Ptr pfnc = (*it).second;
 
-	(this->*(pfnc))(s1->instr);
+	(this->*(pfnc))(s1->instr, s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2)
+void Code::code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3)
 {
 	Code2FncMap::const_iterator it = m_code2Map.find(mode);
 	if (it == m_code2Map.end()) {
@@ -143,19 +162,6 @@ void Code::code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2)
 	}
 
 	Code2Ptr pfnc = (*it).second;
-
-	(this->*(pfnc))(s1->instr, s2);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Code::code3(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3)
-{
-	Code3FncMap::const_iterator it = m_code3Map.find(mode);
-	if (it == m_code3Map.end()) {
-		throw Exception("unexpected addressing mode %d.", mode);
-	}
-
-	Code3Ptr pfnc = (*it).second;
 
 	(this->*(pfnc))(s1->instr, s2, s3);
 }
@@ -195,7 +201,7 @@ void Code::ri8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RI8));
 	putByte(s1->val8);
-	putByte(s2->val8);
+	putSym8(s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -210,7 +216,7 @@ void Code::ra8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RA8));
 	putByte(s1->val8);
-	putSym(s2);
+	putSym16(s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -225,7 +231,7 @@ void Code::ri16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RI16));
 	putByte(s1->val8);
-	putSym(s2);
+	putSym16(s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -240,7 +246,7 @@ void Code::ra16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RA16));
 	putByte(s1->val8);
-	putSym(s2);
+	putSym16(s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -262,7 +268,7 @@ void Code::m8i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_M8I8));
 	putByte(s1->val8);
-	putByte(s2->val8);
+	putSym8(s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -270,7 +276,7 @@ void Code::m16i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_M16I8));
 	putByte(s1->val8);
-	putByte(s2->val8);
+	putSym8(s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -278,7 +284,7 @@ void Code::mi16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_MI16));
 	putByte(s1->val8);
-	putSym(s2);
+	putSym16(s2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -286,7 +292,7 @@ void Code::ar8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AR8));
 	putByte(s2->val8);
-	putSym(s1);
+	putSym16(s1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -294,31 +300,31 @@ void Code::ar16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AR16));
 	putByte(s2->val8);
-	putSym(s1);
+	putSym16(s1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::a8i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_A8I8));
-	putByte(s2->val8);
-	putSym(s1);
+	putSym8(s2);
+	putSym16(s1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::a16i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_A16I8));
-	putByte(s2->val8);
-	putSym(s1);
+	putSym8(s2);
+	putSym16(s1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::ai16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AI16));
-	putSym(s2);
-	putSym(s1);
+	putSym16(s2);
+	putSym16(s1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -353,14 +359,14 @@ void Code::m16(const Instr *instr, LPSYMBOL s)
 void Code::a8(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_A8));
-	putSym(s);
+	putSym16(s);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::a16(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_A16));
-	putSym(s);
+	putSym16(s);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -373,18 +379,18 @@ void Code::implied(const Instr *instr)
 void Code::i16(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_I16));
-	putSym(s);
+	putSym16(s);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::i8(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_I8));
-	putByte(s->val8);
+	putSym8(s);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::makeFixup(LPSYMBOL s, uint32_t type)
+void Code::makeFixup(LPSYMBOL s, FixUpType type)
 {
 	// if s is of type ST_UNDEF, we may be forward referencing a label.
 	// In this case, generate a fixup that will be resolved during
@@ -436,7 +442,16 @@ void Code::resolve(const FixUp &fixup)
 		}		
 		ASSERT(m_memory[offset] == 0);
 		m_memory[offset] = (byte)diff;
-	} 
+	} else if (fixup.type == FT_HIBYTE) {	// hi-byte
+		ASSERT(m_memory[offset] == 0);
+		m_memory[offset] = HIBYTE(symloc);
+	} else if (fixup.type == FT_LOBYTE) {	// lo-byte
+		ASSERT(m_memory[offset] == 0);
+		m_memory[offset] = LOBYTE(symloc);
+	} else {
+		throw Exception("can't resolve unknown fix-up type %d.",
+			fixup.type);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

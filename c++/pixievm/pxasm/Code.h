@@ -23,9 +23,9 @@ public:
 
 	static Code *getInstance();
 
-	void code1(uint32_t mode, LPSYMBOL s1);
-	void code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2);
-	void code3(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3);
+	void code0(uint32_t mode, LPSYMBOL s1);
+	void code1(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2);
+	void code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3);
 	void relcode(LPSYMBOL s1, LPSYMBOL s2);
 
 	bool isGenerating() const;
@@ -34,7 +34,9 @@ public:
 	void setOrigin(word origin);
 	bool isOriginSet() const;
 
-	void putSym(LPSYMBOL s);
+	void putSym8(LPSYMBOL s);
+	void putSym16(LPSYMBOL s);
+
 	void putWord(word w);
 	void putByte(byte b);
 	void putString(const string &str);
@@ -74,16 +76,16 @@ private:
 	void i16(const Instr *instr, LPSYMBOL s);
 	void i8(const Instr *instr, LPSYMBOL s);
 
-	void makeFixup(LPSYMBOL s, uint32_t type = FT_STD);
+	void makeFixup(LPSYMBOL s, FixUpType type = FT_STD);
 	void resolve(const FixUp &fixup);
 
-	typedef void (Code::*Code1Ptr)(const Instr *);
-	typedef void (Code::*Code2Ptr)(const Instr *, LPSYMBOL);
-	typedef void (Code::*Code3Ptr)(const Instr *, LPSYMBOL, LPSYMBOL);
+	typedef void (Code::*Code0Ptr)(const Instr *);
+	typedef void (Code::*Code1Ptr)(const Instr *, LPSYMBOL);
+	typedef void (Code::*Code2Ptr)(const Instr *, LPSYMBOL, LPSYMBOL);
 
+	typedef map<uint32_t, Code0Ptr> Code0FncMap;
 	typedef map<uint32_t, Code1Ptr> Code1FncMap;
 	typedef map<uint32_t, Code2Ptr> Code2FncMap;
-	typedef map<uint32_t, Code3Ptr> Code3FncMap;
 
 	static CodePtr instance;	// singleton instance
 
@@ -94,9 +96,9 @@ private:
 	byte m_memory[MEMSIZE];		// memory
 	byte *m_pmem;				// current memory pointer
 	FixUps m_fixups;			// fix ups
-	Code1FncMap	m_code1Map;		// code1 function map
+	Code0FncMap	m_code0Map;		// code0 function map
+	Code1FncMap m_code1Map;		// code1 function map
 	Code2FncMap m_code2Map;		// code2 function map
-	Code3FncMap m_code3Map;		// code3 function map
 };
 
 /////////////////////////////////////////////////////////////////////////////

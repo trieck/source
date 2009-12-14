@@ -19,7 +19,7 @@ FixUps::~FixUps()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void FixUps::add(const char *name, word location, uint32_t type)
+void FixUps::add(const char *name, word location, FixUpType type)
 {
 	FixUp fixup;
 	fixup.name = name;

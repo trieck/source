@@ -87,8 +87,8 @@ SymbolTable::SymbolTable()
 	rinsert("SP", R16, 0x05);
 
 	/* Identifiers */
-	idinsert("BYTE", BYTE);
-	idinsert("WORD", WORD);
+	idinsert("BYTE", BYTE_PTR);
+	idinsert("WORD", WORD_PTR);
 }
 
 /////////////////////////////////////////////////////////////////////////////

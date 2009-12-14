@@ -10,6 +10,7 @@
 #include "Instructions.h"
 #include "SymbolTable.h"
 #include "Parser.hpp"
+#include "Util.h"
 
 SymbolTablePtr SymbolTable::instance(SymbolTable::getInstance());
 
@@ -89,8 +90,8 @@ SymbolTable::SymbolTable()
 	rinsert("SP", R16, 0x05);
 
 	// Identifiers
-	idinsert("BYTE", BYTE);
-	idinsert("WORD", WORD);
+	idinsert("BYTE", BYTE_PTR);
+	idinsert("WORD", WORD_PTR);
 
 	// pseudo operations 
 	idinsert(".ORG", DECL_ORG);
@@ -181,32 +182,19 @@ LPSYMBOL SymbolTable::installs(const string &s)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installw(const string &s, uint32_t type, uint32_t sub,
-                               word w)
+LPSYMBOL SymbolTable::installw(const string &s, SymbolType type, 
+	uint32_t sub, word w, LPSYMBOL ref, FixUpType ftype)
 {
 	LPSYMBOL sym;
 	if ((sym = lookup(s)) == NULL) {
 		sym = new Symbol;
 		sym->name = s;
-		sym->type = type;
+		sym->type = type == ST_UNDEF ? ST_UNDEF : ST_CONST;
 		sym->sub = sub;
+		sym->weak = true;	// temporary 
+		sym->ref = ref;		// reference
+		sym->ftype = ftype;	// fix-up type for references
 		sym->val16 = w;
-		table[s] = sym;
-	}
-	return sym;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installb(const string &s, uint32_t type, uint32_t sub,
-                               byte b)
-{
-	LPSYMBOL sym;
-	if ((sym = lookup(s)) == NULL) {
-		sym = new Symbol;
-		sym->name = s;
-		sym->type = type;
-		sym->sub = sub;
-		sym->val8 = b;
 		table[s] = sym;
 	}
 	return sym;
@@ -222,3 +210,17 @@ LPSYMBOL SymbolTable::lookup(const string &s) const
 	return (*it).second;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+void SymbolTable::flush()
+{
+	// flush weak symbols
+
+	symmap::iterator it = table.begin();
+	for ( ; it != table.end(); it++) {
+		if ((*it).second->weak) {
+			delete (*it).second;
+			table.erase(it);
+			it = table.begin();
+		}
+	}
+}
