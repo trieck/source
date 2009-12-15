@@ -105,8 +105,7 @@ SymbolTable::~SymbolTable()
 {
 	symmap::const_iterator it = table.begin();
 	for ( ; it != table.end(); it++) {
-		LPSYMBOL sym = (*it).second;
-		delete sym;
+		delete (*it).second;
 	}
 }
 
@@ -183,21 +182,41 @@ LPSYMBOL SymbolTable::installs(const string &s)
 
 /////////////////////////////////////////////////////////////////////////////
 LPSYMBOL SymbolTable::installw(const string &s, SymbolType type, 
-	uint32_t sub, word w, LPSYMBOL ref, FixUpType ftype)
+	uint32_t sub, word w)
 {
 	LPSYMBOL sym;
 	if ((sym = lookup(s)) == NULL) {
 		sym = new Symbol;
 		sym->name = s;
-		sym->type = type == ST_UNDEF ? ST_UNDEF : ST_CONST;
+		sym->type = ST_CONST;
 		sym->sub = sub;
-		sym->weak = true;	// temporary 
-		sym->ref = ref;		// reference
-		sym->ftype = ftype;	// fix-up type for references
 		sym->val16 = w;
 		table[s] = sym;
 	}
 	return sym;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *arg1)
+{
+	LPSYMBOL sym = new Symbol;
+
+	sym->name = uniq();
+	sym->type = ST_OP;	
+	sym->sub = sub;
+	sym->next = arg1;		// argument
+	sym->opcode = op;		// operator code
+	table[sym->name] = sym;
+
+	return sym;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *arg1, 
+	Symbol *arg2)
+{
+	// TODO: 
+	return NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -210,17 +229,3 @@ LPSYMBOL SymbolTable::lookup(const string &s) const
 	return (*it).second;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-void SymbolTable::flush()
-{
-	// flush weak symbols
-
-	symmap::iterator it = table.begin();
-	for ( ; it != table.end(); it++) {
-		if ((*it).second->weak) {
-			delete (*it).second;
-			table.erase(it);
-			it = table.begin();
-		}
-	}
-}

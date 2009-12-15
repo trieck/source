@@ -7,6 +7,8 @@
 
 #include "common.h"
 #include "Code.h"
+#include "Machine.h"
+#include "Program.h"
 #include "Parser.hpp"
 #include "Exception.h"
 
@@ -15,6 +17,9 @@
 
 CodePtr Code::instance(Code::getInstance());
 extern SymbolTable *table;
+
+Machine *machine = Machine::getInstance();
+Program program;
 
 extern int yyerror(const char *s);
 
@@ -94,15 +99,29 @@ void Code::putWord(word w)
 /////////////////////////////////////////////////////////////////////////////
 void Code::putSym8(LPSYMBOL s)
 {
-	if (s->type == ST_UNDEF) {	
-		// an 8-bit undefined symbol is a forward reference
-		// s must be a symbol reference to a 16-bit symbol
-		if (s->ref == NULL) {
-			throw Exception("undefined symbol reference.");
-		}	
-		makeFixup(s->ref, s->ftype);
+	LPSYMBOL next;
+
+	switch (s->type) {
+	case ST_OP:		// operator
+		// operator arguments
+		next = s->next;
+		while (next != NULL) {
+			sympush(next);
+			next = next->next;
+		}
+
+		// TODO: push code location()
+		
+		// instruction opcode
+		program.code(s->opcode);
+
 		putByte(0);
-	} else {
+		break;
+	case ST_UNDEF:	// forward reference
+		makeFixup(s);
+		putByte(0);
+		break;
+	default:
 		putByte(s->val8);
 	}
 }
@@ -402,15 +421,16 @@ void Code::makeFixup(LPSYMBOL s, FixUpType type)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::resolve()
+void Code::pass2()
 {
 	// resolve any fix-up locations
-
 	uint32_t nfixups = m_fixups.size();
-
 	for (uint32_t i = 0; i < nfixups; i++) {
 		resolve(m_fixups[i]);
 	}
+
+	// execute expression machine on fixed-up code
+	machine->execute();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -442,12 +462,6 @@ void Code::resolve(const FixUp &fixup)
 		}		
 		ASSERT(m_memory[offset] == 0);
 		m_memory[offset] = (byte)diff;
-	} else if (fixup.type == FT_HIBYTE) {	// hi-byte
-		ASSERT(m_memory[offset] == 0);
-		m_memory[offset] = HIBYTE(symloc);
-	} else if (fixup.type == FT_LOBYTE) {	// lo-byte
-		ASSERT(m_memory[offset] == 0);
-		m_memory[offset] = LOBYTE(symloc);
 	} else {
 		throw Exception("can't resolve unknown fix-up type %d.",
 			fixup.type);
@@ -472,4 +486,10 @@ void Code::write(FILE *fp) const
 	}
 
 	fflush(fp);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::sympush(LPSYMBOL s)
+{
+	program.code(&Machine::sympush);	program.code(s);
 }

@@ -9,6 +9,7 @@
 #define __CODE_H__
 
 #include "SymbolTable.h"
+#include "Machine.h"
 #include "FixUps.h"
 
 class Code;
@@ -42,7 +43,7 @@ public:
 	void putString(const string &str);
 	word location() const;
 
-	void resolve();
+	void pass2();
 	void write(FILE *fp) const;
 
 private:
@@ -78,6 +79,7 @@ private:
 
 	void makeFixup(LPSYMBOL s, FixUpType type = FT_STD);
 	void resolve(const FixUp &fixup);
+	void sympush(LPSYMBOL s);
 
 	typedef void (Code::*Code0Ptr)(const Instr *);
 	typedef void (Code::*Code1Ptr)(const Instr *, LPSYMBOL);

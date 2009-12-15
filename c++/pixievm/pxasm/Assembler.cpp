@@ -58,9 +58,9 @@ int Assembler::assemble(const char *filename)
 	if ((nret = yyparse()) != 0)
 		return nret;
 
-	// second pass, resolve any fix-up locations
+	// second pass
 	Code *code = Code::getInstance();
-	code->resolve();
+	code->pass2();
 
 	// write code to output file
 	string output = format("%s.o", basename(filename).c_str());

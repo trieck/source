@@ -82,7 +82,6 @@ gt				>
 }
 {newline}.*		{ 
 		line = trim(yytext + 1);
-		table->flush();	// flush symbol table		
 		yyless(1); 
 	}
 {identifier}				{

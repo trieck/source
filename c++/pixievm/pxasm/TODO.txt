@@ -1,2 +1,4 @@
 Implement .byte b1, b2, b3, ... and .word w1, w2, w3, ...
 Implement < and > for LOBYTE, HIBYTE as in Turbo Asssembler
+
+Redesign <, > to use an operator machine; implement +, - *, / as well

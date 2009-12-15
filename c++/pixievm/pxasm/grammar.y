@@ -26,6 +26,7 @@ ANON_END
 }
 
 %token	<n>		BYTE_PTR WORD_PTR LO_BYTE HI_BYTE
+%token	<n>		PLUS MINUS MULT DIV
 
 %token	<sym>	DECL_ORG DECL_BYTE DECL_WORD DECL_TEXT
 %token	<sym>	STRING
@@ -133,14 +134,10 @@ A16:		'[' I8 ']'			{ $$ = $2; }
 		
 I8:		  IM8
 		| LO_BYTE I16	{ 
-				byte b = LOBYTE($2->val16);
-				string s = uniq();
-				$$ = table->installw(s, $2->type, IM8, b, $2, FT_LOBYTE);
+				$$ = table->installo(LO_BYTE, IM8, $2);
 			}
 		| HI_BYTE I16	{
-				byte b = HIBYTE($2->val16);
-				string s = uniq();
-				$$ = table->installw(s, $2->type, IM8, b, $2, FT_HIBYTE);
+				$$ = table->installo(HI_BYTE, IM8, $2);
 			}
 		;
 		

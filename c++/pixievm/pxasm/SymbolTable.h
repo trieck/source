@@ -20,26 +20,25 @@ enum SymbolType {
 	ST_INSTRUCTION,		// machine instruction 
 	ST_ID, 				// identifier 
 	ST_CONST,			// numeric constant 
-	ST_STRING			// string literal
+	ST_STRING,			// string literal
+	ST_OP				// operator
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // Symbol struct
 typedef struct Symbol {
-	Symbol() : type(ST_UNDEF), ftype(FT_STD), sub(0), instr(0), 
-		weak(false), ref(0) {}
+	Symbol() : type(ST_UNDEF), sub(0), instr(0), next(0) {}
 	
 	string name;			// symbol name
 	SymbolType type;		// symbol type
-	FixUpType ftype;		// fix-up type
 	uint32_t sub;			// sub-type
-	bool weak;				// can flush?
-	Symbol *ref;			// symbol references another
 	union {
 		const Instr *instr;	// instruction
+		uint32_t opcode;	// operator code
 		word val16;			// word value
 		byte val8;			// byte value
 	};
+	Symbol *next;			// next symbol in list
 } Symbol, *LPSYMBOL;
 
 class SymbolTable;
@@ -58,17 +57,21 @@ public:
 	LPSYMBOL install(const string &s);	// undefined
 	LPSYMBOL installs(const string &s);	// string literal
 	LPSYMBOL installw(const string &s, SymbolType type, 
-		uint32_t sub, word value, LPSYMBOL ref = 0, 
-		FixUpType ftype = FT_UNDEF);
-	LPSYMBOL lookup(const string &s) const;
+		uint32_t sub, word value);	// constant
 
-	void flush();
+	// operators
+	LPSYMBOL installo(uint32_t op, uint32_t sub, Symbol *arg1); 
+	LPSYMBOL installo(uint32_t op, uint32_t sub, Symbol *arg1, Symbol *arg2); 
+
+	LPSYMBOL lookup(const string &s) const;
 
 // Implementation
 private:
 	void iinsert(const string &s, uint32_t t, const Instr *i);
 	void rinsert(const string &s, uint32_t t, byte r);
 	void idinsert(const string &s, uint32_t id);
+
+	void freeSym(LPSYMBOL s);
 
 	static SymbolTablePtr instance;	// singleton instance
 

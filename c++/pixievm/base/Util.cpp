@@ -156,16 +156,14 @@ string itoa(int n)
 /////////////////////////////////////////////////////////////////////////////
 string uniq()
 {
-	GUID guid;
-	HRESULT hr = CoCreateGuid(&guid);
-	if (FAILED(hr))
-		return "";
+	uint64_t count = GetTickCount64();
+	uint64_t extra = GetCurrentThreadId() + GetCurrentProcessId();
 
-	CComBSTR bstrGuid(guid);
+	count ^= ~extra;
 
-	USES_CONVERSION;
+	string u = format("%I64u", count);
 
-	return OLE2A(bstrGuid);
+	return u;
 }
 
 #endif // _MSC_VER

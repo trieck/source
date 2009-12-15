@@ -13,8 +13,6 @@ enum FixUpType {
 	FT_UNDEF = 0,	// undefined
 	FT_STD,			// standard fix-up
 	FT_REL,			// relative branch fix-up
-	FT_HIBYTE,		// hi-byte of word
-	FT_LOBYTE		// lo-byte of word
 };
 
 /////////////////////////////////////////////////////////////////////////////
