@@ -252,9 +252,8 @@ void Code::relcode(LPSYMBOL s1, LPSYMBOL s2)
 			return;
 		}
 		offset = (s2->val16 - (location() + sizeof(byte)));
+		putByte(offset);
 	}
-
-	putByte(offset);
 }
 
 /////////////////////////////////////////////////////////////////////////////
