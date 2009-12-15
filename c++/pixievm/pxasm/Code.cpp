@@ -110,10 +110,11 @@ void Code::putSym8(LPSYMBOL s)
 			next = next->next;
 		}
 
-		// TODO: push code location()
+		// program location
+		locpush();		
 		
 		// instruction opcode
-		program.code(s->opcode);
+		program.opcode(s->opcode);
 
 		putByte(0);
 		break;
@@ -144,6 +145,23 @@ void Code::putByte(byte b)
 		throw Exception("memory overflow.");
 
 	*m_pmem++ = b;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::putWordAt(word location, word w)
+{
+	putByteAt(location, HIBYTE(w));
+	putByteAt(location+1, LOBYTE(w));
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::putByteAt(word location, byte b)
+{
+	word offset = location - m_origin;
+
+	ASSERT(m_memory[offset] == 0);
+	
+	m_memory[offset] = b;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -429,11 +447,12 @@ void Code::pass2()
 		resolve(m_fixups[i]);
 	}
 
-	// execute expression machine on fixed-up code
+	// execute machine on fixed-up code
 	machine->execute();
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// Can this move to machine?
 void Code::resolve(const FixUp &fixup)
 {
 	LPSYMBOL sym;
@@ -492,4 +511,10 @@ void Code::write(FILE *fp) const
 void Code::sympush(LPSYMBOL s)
 {
 	program.code(&Machine::sympush);	program.code(s);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::locpush()
+{
+	program.code(&Machine::constpush);	program.code(location());
 }

@@ -40,6 +40,10 @@ public:
 
 	void putWord(word w);
 	void putByte(byte b);
+
+	void putWordAt(word location, word w);
+	void putByteAt(word location, byte b);
+
 	void putString(const string &str);
 	word location() const;
 
@@ -80,6 +84,7 @@ private:
 	void makeFixup(LPSYMBOL s, FixUpType type = FT_STD);
 	void resolve(const FixUp &fixup);
 	void sympush(LPSYMBOL s);
+	void locpush();
 
 	typedef void (Code::*Code0Ptr)(const Instr *);
 	typedef void (Code::*Code1Ptr)(const Instr *, LPSYMBOL);
