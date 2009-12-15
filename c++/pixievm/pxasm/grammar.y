@@ -155,9 +155,9 @@ pseudo_op:
 			}
 			code->setOrigin($2->val16); 
 		}
-		| DECL_BYTE I8		{ code->putSym8($2); }
-		| DECL_WORD I8		{ code->putSym16($2); }
-		| DECL_WORD I16		{ code->putSym16($2); }
+		| DECL_BYTE I8		{ code->putSym($2, IM8); }
+		| DECL_WORD I8		{ code->putSym($2, IM16); }
+		| DECL_WORD I16		{ code->putSym($2, IM16); }
 		| DECL_TEXT STRING	{ code->putString($2->name); }
 		;
 

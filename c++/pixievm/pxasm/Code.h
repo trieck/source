@@ -10,7 +10,6 @@
 
 #include "SymbolTable.h"
 #include "Machine.h"
-#include "FixUps.h"
 
 class Code;
 typedef auto_ptr<Code> CodePtr;
@@ -35,9 +34,7 @@ public:
 	void setOrigin(word origin);
 	bool isOriginSet() const;
 
-	void putSym8(LPSYMBOL s);
-	void putSym16(LPSYMBOL s);
-
+	void putSym(LPSYMBOL s, uint32_t ctxt);
 	void putWord(word w);
 	void putByte(byte b);
 
@@ -81,10 +78,10 @@ private:
 	void i16(const Instr *instr, LPSYMBOL s);
 	void i8(const Instr *instr, LPSYMBOL s);
 
-	void makeFixup(LPSYMBOL s, FixUpType type = FT_STD);
-	void resolve(const FixUp &fixup);
 	void sympush(LPSYMBOL s);
-	void locpush();
+	void constpush(word w);
+	void putOp(LPSYMBOL s, uint32_t ctxt);
+	void putFixup(LPSYMBOL s, uint32_t ctxt);
 
 	typedef void (Code::*Code0Ptr)(const Instr *);
 	typedef void (Code::*Code1Ptr)(const Instr *, LPSYMBOL);
@@ -102,7 +99,6 @@ private:
 	bool m_bOrigin;				// origin has been declared
 	byte m_memory[MEMSIZE];		// memory
 	byte *m_pmem;				// current memory pointer
-	FixUps m_fixups;			// fix ups
 	Code0FncMap	m_code0Map;		// code0 function map
 	Code1FncMap m_code1Map;		// code1 function map
 	Code2FncMap m_code2Map;		// code2 function map

@@ -216,10 +216,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\FixUps.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Machine.cpp"
 				>
 			</File>
@@ -295,10 +291,6 @@
 			</File>
 			<File
 				RelativePath=".\Code.h"
-				>
-			</File>
-			<File
-				RelativePath=".\FixUps.h"
 				>
 			</File>
 			<File

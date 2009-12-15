@@ -97,44 +97,73 @@ void Code::putWord(word w)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::putSym8(LPSYMBOL s)
+void Code::putSym(LPSYMBOL s, uint32_t ctxt)
 {
-	LPSYMBOL next;
-
 	switch (s->type) {
 	case ST_OP:		// operator
-		// operator arguments
-		next = s->next;
-		while (next != NULL) {
-			sympush(next);
-			next = next->next;
-		}
-
-		// program location
-		locpush();		
-		
-		// instruction opcode
-		program.opcode(s->opcode);
-
-		putByte(0);
+		putOp(s, ctxt);
 		break;
 	case ST_UNDEF:	// forward reference
-		makeFixup(s);
-		putByte(0);
+		putFixup(s, ctxt);
+		break;
+	case ST_ID:
+	case ST_CONST:
+		if (ctxt == IM8) {
+			putByte(s->val8);
+		} else {
+			putWord(s->val16);
+		}
 		break;
 	default:
-		putByte(s->val8);
+		throw Exception("unexpected symbol type.");
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::putSym16(LPSYMBOL s)
+void Code::putOp(LPSYMBOL s, uint32_t ctxt)
 {
-	if (s->type == ST_UNDEF) {	// forward reference
-		makeFixup(s);
-		putWord(0);
+	// push operator arguments
+	LPSYMBOL next = s->next;
+	while (next != NULL) {
+		sympush(next);
+		next = next->next;
+	}
+
+	// push program location
+	constpush(location());		
+	
+	// push context
+	constpush(ctxt);
+
+	// instruction opcode
+	program.opcode(s->opcode);
+
+	if (ctxt == IM8) {
+		putByte(0);
 	} else {
-		putWord(s->val16);
+		putWord(0);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Code::putFixup(LPSYMBOL s, uint32_t ctxt)
+{
+	// push symbol
+	sympush(s);
+
+	// push program location
+	constpush(location());		
+	
+	// push context
+	constpush(ctxt);
+
+	// push instruction 
+	program.code(&Machine::fixup);
+
+	if (ctxt == IM8) {
+		putByte(0);
+	} else {
+		putWord(0);
 	}
 }
 
@@ -210,9 +239,11 @@ void Code::relcode(LPSYMBOL s1, LPSYMBOL s2)
 
 	putByte(OPCODE(s1->instr, AM_I8));
 
+	// TODO: replace with relbranch machine instruction
+
 	int8_t offset = 0;
 	if (s2->type == ST_UNDEF) {	// forward reference branch
-		makeFixup(s2, FT_REL);
+		putSym(s2, IM8);
 	} else {
 		// check whether target is in range for relative branch
 		word diff = abs(s2->val16 - (location() + sizeof(byte)));
@@ -238,7 +269,7 @@ void Code::ri8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RI8));
 	putByte(s1->val8);
-	putSym8(s2);
+	putSym(s2, IM8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -253,7 +284,7 @@ void Code::ra8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RA8));
 	putByte(s1->val8);
-	putSym16(s2);
+	putSym(s2, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -268,7 +299,7 @@ void Code::ri16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RI16));
 	putByte(s1->val8);
-	putSym16(s2);
+	putSym(s2, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -283,7 +314,7 @@ void Code::ra16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_RA16));
 	putByte(s1->val8);
-	putSym16(s2);
+	putSym(s2, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -305,7 +336,7 @@ void Code::m8i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_M8I8));
 	putByte(s1->val8);
-	putSym8(s2);
+	putSym(s2, IM8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -313,7 +344,7 @@ void Code::m16i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_M16I8));
 	putByte(s1->val8);
-	putSym8(s2);
+	putSym(s2, IM8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -321,7 +352,7 @@ void Code::mi16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_MI16));
 	putByte(s1->val8);
-	putSym16(s2);
+	putSym(s2, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -329,7 +360,7 @@ void Code::ar8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AR8));
 	putByte(s2->val8);
-	putSym16(s1);
+	putSym(s1, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -337,31 +368,31 @@ void Code::ar16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AR16));
 	putByte(s2->val8);
-	putSym16(s1);
+	putSym(s1, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::a8i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_A8I8));
-	putSym8(s2);
-	putSym16(s1);
+	putSym(s2, IM8);
+	putSym(s1, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::a16i8(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_A16I8));
-	putSym8(s2);
-	putSym16(s1);
+	putSym(s2, IM8);
+	putSym(s1, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::ai16(const Instr *instr, LPSYMBOL s1, LPSYMBOL s2)
 {
 	putByte(OPCODE(instr, AM_AI16));
-	putSym16(s2);
-	putSym16(s1);
+	putSym(s2, IM16);
+	putSym(s1, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -396,14 +427,14 @@ void Code::m16(const Instr *instr, LPSYMBOL s)
 void Code::a8(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_A8));
-	putSym16(s);
+	putSym(s, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::a16(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_A16));
-	putSym16(s);
+	putSym(s, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -416,75 +447,21 @@ void Code::implied(const Instr *instr)
 void Code::i16(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_I16));
-	putSym16(s);
+	putSym(s, IM16);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::i8(const Instr *instr, LPSYMBOL s)
 {
 	putByte(OPCODE(instr, AM_I8));
-	putSym8(s);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Code::makeFixup(LPSYMBOL s, FixUpType type)
-{
-	// if s is of type ST_UNDEF, we may be forward referencing a label.
-	// In this case, generate a fixup that will be resolved during
-	// the second pass of the assembler
-	if (s->type != ST_UNDEF)
-		return;
-
-	m_fixups.add(s->name.c_str(), location(), type);
+	putSym(s, IM8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::pass2()
 {
-	// resolve any fix-up locations
-	uint32_t nfixups = m_fixups.size();
-	for (uint32_t i = 0; i < nfixups; i++) {
-		resolve(m_fixups[i]);
-	}
-
-	// execute machine on fixed-up code
+	// execute machine program
 	machine->execute();
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Can this move to machine?
-void Code::resolve(const FixUp &fixup)
-{
-	LPSYMBOL sym;
-	if (((sym = table->lookup(fixup.name)) == NULL) ||
-	        (sym->type == ST_UNDEF)) {
-		throw Exception("%s never defined.", fixup.name);
-	}
-
-	ASSERT(sym->type == ST_ID);
-	ASSERT(sym->sub = IM16);
-
-	word symloc = sym->val16;
-	word fixloc = fixup.location;
-	word offset = fixloc - m_origin;
-
-	if (fixup.type == FT_STD) {	// standard fixup
-		ASSERT(m_memory[offset] == 0);
-		ASSERT(m_memory[offset+1] == 0);
-		m_memory[offset] = HIBYTE(symloc);
-		m_memory[offset+1] = LOBYTE(symloc);
-	} else if (fixup.type == FT_REL) {	// relative branch fix-up
-		word diff = symloc - fixloc;
-		if (diff > 0x7F) {
-			throw Exception("branch out of range for label \"%s\".",
-			                fixup.name);
-		}		
-		ASSERT(m_memory[offset] == 0);
-		m_memory[offset] = (byte)diff;
-	} else {
-		throw Exception("can't resolve unknown fix-up type %d.",
-			fixup.type);
-	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -514,7 +491,7 @@ void Code::sympush(LPSYMBOL s)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::locpush()
+void Code::constpush(word w)
 {
-	program.code(&Machine::constpush);	program.code(location());
+	program.code(&Machine::constpush);	program.code(w);
 }
