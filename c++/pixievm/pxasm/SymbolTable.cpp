@@ -186,19 +186,26 @@ LPSYMBOL SymbolTable::installs(const string &s)
 
 /////////////////////////////////////////////////////////////////////////////
 LPSYMBOL SymbolTable::installw(const string &s, SymbolType type, 
-	uint32_t sub, word w)
+	uint32_t sub, word value)
 {
 	LPSYMBOL sym;
 	if ((sym = lookup(s)) == NULL) {
 		sym = new Symbol;
 		sym->name = s;
-		sym->type = ST_CONST;
+		sym->type = type;
 		sym->sub = sub;
 		sym->lineno = yylineno;
-		sym->val16 = w;
-		table[s] = sym;
+		sym->val16 = value;
+		table[s] = sym;		
 	}
+
 	return sym;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+LPSYMBOL SymbolTable::installw(SymbolType type, uint32_t sub, word value)
+{
+	return installw(constname(value), type, sub, value);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -206,7 +213,7 @@ LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *args)
 {
 	LPSYMBOL sym = new Symbol;
 
-	sym->name = mkname(op);
+	sym->name = opname(op);
 	sym->type = ST_OP;	
 	sym->sub = sub;
 	sym->lineno = yylineno;
@@ -238,6 +245,9 @@ LPSYMBOL SymbolTable::link(LPSYMBOL s1, LPSYMBOL s2)
 	if (s2 == NULL)
 		return s1;
 
+	if (s1 == s2)
+		return s1;
+
 	/* put at end of list */
 	for (s = s1; s->next; s = s->next);
 
@@ -247,7 +257,20 @@ LPSYMBOL SymbolTable::link(LPSYMBOL s1, LPSYMBOL s2)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string SymbolTable::mkname(uint32_t opcode)
+string SymbolTable::constname(word value)
+{
+	string name;
+	string opname;
+
+	uint32_t counter = counter32();
+
+	name = format("const(0x%.4x):0x%.8X", value, counter);
+
+	return name;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+string SymbolTable::opname(uint32_t opcode)
 {
 	string name;
 	string opname;

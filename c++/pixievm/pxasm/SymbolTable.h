@@ -56,8 +56,10 @@ public:
 	static SymbolTable *getInstance();
 	LPSYMBOL install(const string &s);	// undefined
 	LPSYMBOL installs(const string &s);	// string literal
+
 	LPSYMBOL installw(const string &s, SymbolType type, 
-		uint32_t sub, word value);	// constant
+		uint32_t sub, word value);	
+	LPSYMBOL installw(SymbolType type, uint32_t sub, word value);	
 
 	// operators
 	LPSYMBOL installo(uint32_t op, uint32_t sub, Symbol *args); 
@@ -73,7 +75,8 @@ private:
 	void idinsert(const string &s, uint32_t id);
 	void freeSym(LPSYMBOL s);
 
-	static string mkname(uint32_t opcode);
+	static string opname(uint32_t opcode);
+	static string constname(word value);
 
 	static SymbolTablePtr instance;	// singleton instance
 

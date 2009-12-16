@@ -56,10 +56,10 @@ gt				>
 	}		
 	
 	if (d < 0x100) {
-		yylval.sym = table->installw(yytext, ST_CONST, IM8, d); 
+		yylval.sym = table->installw(ST_CONST, IM8, d); 
 		return IM8;
 	} else {
-		yylval.sym = table->installw(yytext, ST_CONST, IM16, d); 
+		yylval.sym = table->installw(ST_CONST, IM16, d); 
 		return IM16;
 	}
 }
