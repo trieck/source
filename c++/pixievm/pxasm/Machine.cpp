@@ -191,7 +191,7 @@ Datum Machine::fixup()
 	
 	if (ctxt.value == IM8) {	// relative branch fix-up
 		word diff = symloc - fixloc;
-		if (diff > 0xFF) {
+		if (diff > 0x7F) {
 			throw Exception("branch out of range.");
 		}		
 		m_code->putByteAt(fixloc, (byte)diff);
