@@ -255,6 +255,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\random.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Util.h"
 				>
 			</File>

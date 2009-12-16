@@ -151,19 +151,48 @@ string itoa(int n)
 	return buffer;
 }
 
+////////////////////////////////////////////////////////////////////////////
+// 32-bit Fowler/Noll/Vo hash
+uint32_t hash32(const void *key, uint32_t len)
+{
+	uint32_t i;
+	uint32_t hash;
+	const uint8_t *k = (const uint8_t*)key;
+
+	for (hash=0, i = 0; i < len; ++i) {
+		hash *= 16777619;
+		hash ^= k[i];
+	}
+  
+	return hash;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// 64-bit Fowler/Noll/Vo hash
+uint64_t hash64(const void *key, uint64_t len)
+{
+	uint32_t i;
+	uint64_t hash;
+	const uint8_t *k = (const uint8_t*)key;
+
+	for (hash=0, i = 0; i < len; ++i) {
+		hash *= 1099511628211;
+		hash ^= k[i];
+	}
+  
+	return hash;
+}
+
 #ifdef _MSC_VER
 
 /////////////////////////////////////////////////////////////////////////////
-string uniq()
+uint32_t counter32()
 {
-	uint64_t count = GetTickCount64();
-	uint64_t extra = GetCurrentThreadId() + GetCurrentProcessId();
+	LARGE_INTEGER counter;
+	QueryPerformanceCounter(&counter);
 
-	count ^= ~extra;
-
-	string u = format("%I64u", count);
-
-	return u;
+	// avalanche 
+	return hash32(&counter.QuadPart, sizeof(uint64_t));
 }
 
 #endif // _MSC_VER
