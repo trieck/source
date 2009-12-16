@@ -78,8 +78,6 @@ private:
 	void i16(const Instr *instr, LPSYMBOL s);
 	void i8(const Instr *instr, LPSYMBOL s);
 
-	void sympush(LPSYMBOL s);
-	void constpush(word w);
 	void putOp(LPSYMBOL s, uint32_t ctxt);
 	void putFixup(LPSYMBOL s, uint32_t ctxt);
 
@@ -99,6 +97,7 @@ private:
 	bool m_bOrigin;				// origin has been declared
 	byte m_memory[MEMSIZE];		// memory
 	byte *m_pmem;				// current memory pointer
+	Program program;			// program for runtime machine
 	Code0FncMap	m_code0Map;		// code0 function map
 	Code1FncMap m_code1Map;		// code1 function map
 	Code2FncMap m_code2Map;		// code2 function map

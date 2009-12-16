@@ -13,7 +13,7 @@
 /////////////////////////////////////////////////////////////////////////////
 Program::Program() : m_pmem(m_memory)
 {
-	memset(m_memory, 0, sizeof(Instruction) * NPROG);
+	memset(m_memory, 0, sizeof(Datum) * NPROG);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -28,43 +28,49 @@ void Program::init()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Program::opcode(uint32_t opcode)
+void Program::pushop(uint32_t opcode)
 {
-	Machine *machine = Machine::getInstance();
 	Instruction i;
 	
-	if ((i = machine->lookup(opcode)) == NULL) {
+	if ((i = Machine::lookup(opcode)) == NULL) {
 		throw Exception("unrecognized opcode %d.", opcode);
 	}
 
-	code(i);
+	push(i);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Program::code(word location)
+void Program::push(word w)
 {
-	Instruction i = *reinterpret_cast<Instruction*>(&location);
-	put(i);
+	Datum d;
+	d.type = DT_CONST;
+	d.value = w;
+	push(d);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Program::code(Instruction i)
+void Program::push(Instruction i)
 {
-	put(i);	
+	Datum d;
+	d.type = DT_INSTR;
+	d.instr = i;
+	push(d);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Program::code(LPSYMBOL s)
+void Program::push(LPSYMBOL s)
 {
-	Instruction i = *reinterpret_cast<Instruction*>(&s);
-	put(i);
+	Datum d;
+	d.type = DT_SYM;
+	d.sym = s;
+	push(d);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Program::put(Instruction i)
+void Program::push(const Datum &d)
 {
 	if (m_pmem >= &m_memory[NPROG])
 		throw Exception("memory overflow.");
 
-	*m_pmem++ = i;
+	*m_pmem++ = d;
 }

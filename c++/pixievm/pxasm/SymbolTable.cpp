@@ -201,7 +201,7 @@ LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *args)
 {
 	LPSYMBOL sym = new Symbol;
 
-	sym->name = uniq();
+	sym->name = mkname(op);
 	sym->type = ST_OP;	
 	sym->sub = sub;
 	sym->next = args;		// arguments
@@ -238,4 +238,42 @@ LPSYMBOL SymbolTable::link(LPSYMBOL s1, LPSYMBOL s2)
 	s->next = s2;
 
 	return s1;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+string SymbolTable::mkname(uint32_t opcode)
+{
+	string name;
+	string opname;
+
+	uint32_t counter = counter32();
+
+	switch (opcode) {
+	case PLUS:
+		opname = "+";
+		break;
+	case MINUS:
+		opname = "-";
+		break;
+	case MULT:
+		opname = "*";
+		break;
+	case DIV:
+		opname = "/";
+		break;
+	case LO_BYTE:
+		opname = "lobyte";
+		break;
+	case HI_BYTE:
+		opname = "hibyte";
+		break;
+	default:
+		opname = "unknown";
+	}
+
+	name = format("operator(%s):0x%.8X", 
+		opname.c_str(),
+		counter);
+
+	return name;
 }

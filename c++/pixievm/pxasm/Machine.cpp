@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// MACHINE.CPP : simple stack based machine
+// MACHINE.CPP : simple runtime machine
 //
 // Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
 //
@@ -45,136 +45,139 @@ Machine *Machine::getInstance()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-Instruction Machine::lookup(uint32_t opcode) const
+Instruction Machine::lookup(uint32_t opcode)
 {
-	InstrMap::const_iterator it = m_instr.find(opcode);
-	if (it == m_instr.end())
+	Machine *machine = Machine::getInstance();
+
+	InstrMap::const_iterator it = machine->m_instr.find(opcode);
+	if (it == machine->m_instr.end())
 		return NULL;
 
 	return (*it).second;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Machine::initialize()
-{
-	program.init();
-	m_stack.reset();
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Machine::execute()
+void Machine::exec(const Program &program)
 {
 	m_pc = program;
 	
-	while (*m_pc != NULL) {
-		(this->*(*m_pc++))();
-	}
-
+	while (m_pc->type != DT_UNDEF)
+		eval();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Machine::plus()
+Datum Machine::eval()
 {
-	Datum ctxt = m_stack.pop();
-	Datum loc = m_stack.pop();
-	Datum arg1 = m_stack.pop();
-	Datum arg2 = m_stack.pop();
+	Datum d;
+	switch (m_pc->type) {
+	case DT_UNDEF:
+		return d;
+	case DT_SYM:
+		return evalsym(m_pc++->sym);
+	case DT_INSTR:
+		return (this->*m_pc++->instr)();
+	default:
+		return *m_pc++; 
+	};
+}
 
-	checkSym(arg1.sym);
-	checkSym(arg2.sym);
+/////////////////////////////////////////////////////////////////////////////
+Datum Machine::evalsym(LPSYMBOL s)
+{
+	Datum d;
+	Instruction i;
+
+	switch (s->type) {
+	case ST_UNDEF:
+		throw Exception("identifier \"%s\" was undefined.", 
+			s->name.c_str());
+	case ST_OP:
+		if ((i = lookup(s->opcode)) == NULL) {
+			throw Exception("unrecognized opcode %d.", s->opcode);
+		}
+		return (this->*i)();
+	default:
+		d.type = DT_CONST;
+		d.value = s->val16;
+		return d;
+	};
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Datum Machine::plus()
+{
+	Datum d1 = eval();
+	Datum d2 = eval();
+
+	Datum result;
+	result.type = DT_CONST;
+	result.value = d1.value + d2.value;
+
+	return result;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Datum Machine::minus()
+{
+	Datum d;
+	return d;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Datum Machine::mult()
+{
+	Datum d;
+	return d;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Datum Machine::div()
+{
+	Datum d;
+	return d;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Datum Machine::hibyte()
+{
+	Datum arg = eval();
+
+	Datum result;
+	
+	return result;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Datum Machine::lobyte()
+{
+	Datum arg = eval();
+
+	Datum result;
+	
+	return result;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Datum Machine::fixup()
+{
+	Datum result;
+
+	return result;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Datum Machine::memstore()
+{
+	Datum ctxt = eval();
+	Datum loc = eval();
+	Datum value = eval();
 
 	if (ctxt.value == IM16) {
-		word result = arg1.sym->val16 + arg2.sym->val16;
-		m_code->putWordAt(loc.value, result);
+		m_code->putWordAt(loc.value, value.value);
 	} else {
-		byte result = arg1.sym->val8 + arg2.sym->val8;
-		m_code->putByteAt(loc.value, result);
+		m_code->putByteAt(loc.value, (byte)value.value);
 	}
+
+	return value;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-void Machine::minus()
-{
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Machine::mult()
-{
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Machine::div()
-{
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Machine::hibyte()
-{
-	Datum ctxt = m_stack.pop();
-	Datum loc = m_stack.pop();
-	Datum dsym = m_stack.pop();
-
-	checkSym(dsym.sym);
-
-	m_code->putByteAt(loc.value, HIBYTE(dsym.sym->val16));
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Machine::lobyte()
-{
-	Datum ctxt = m_stack.pop();
-	Datum loc = m_stack.pop();
-	Datum dsym = m_stack.pop();
-
-	checkSym(dsym.sym);
-
-	m_code->putByteAt(loc.value, LOBYTE(dsym.sym->val16));	
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Machine::fixup()
-{
-	Datum ctxt = m_stack.pop();
-	Datum loc = m_stack.pop();
-	Datum dsym = m_stack.pop();
-
-	checkSym(dsym.sym);
-
-	word symloc = dsym.sym->val16;
-	word fixloc = loc.value;
-	
-	if (ctxt.value == IM8) {	// relative branch fix-up
-		word diff = symloc - fixloc;
-		if (diff > 0x7F) {
-			throw Exception("branch out of range for label \"%s\".",
-				dsym.sym->name.c_str());
-		}		
-		m_code->putByteAt(fixloc, (byte)diff);
-	} else {	// forward reference
-		m_code->putWordAt(fixloc, symloc);
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Machine::sympush()
-{
-	LPSYMBOL sym = *(LPSYMBOL*)++m_pc;
-	m_stack.push(sym);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Machine::constpush()
-{
-	word w = *(word*)++m_pc;
-	m_stack.push(w);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Machine::checkSym(LPSYMBOL s)
-{
-	// ensure symbol has been defined
-	if (s->type == ST_UNDEF) {
-		throw Exception("identifier \"%s\" was never defined.", 
-			s->name.c_str());
-	}
-}

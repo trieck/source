@@ -272,10 +272,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Stack.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\SymbolTable.cpp"
 				>
 			</File>
@@ -303,10 +299,6 @@
 			</File>
 			<File
 				RelativePath=".\Program.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Stack.h"
 				>
 			</File>
 			<File

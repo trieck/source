@@ -19,7 +19,6 @@ CodePtr Code::instance(Code::getInstance());
 extern SymbolTable *table;
 
 Machine *machine = Machine::getInstance();
-Program program;
 
 extern int yyerror(const char *s);
 
@@ -122,21 +121,21 @@ void Code::putSym(LPSYMBOL s, uint32_t ctxt)
 /////////////////////////////////////////////////////////////////////////////
 void Code::putOp(LPSYMBOL s, uint32_t ctxt)
 {
+	// push program location, context
+	// and memory store instruction
+	program.push(&Machine::memstore);
+	program.push(ctxt);
+	program.push(location());		
+	
+	// push instruction opcode
+	program.pushop(s->opcode);
+
 	// push operator arguments
 	LPSYMBOL next = s->next;
 	while (next != NULL) {
-		sympush(next);
+		program.push(next);
 		next = next->next;
 	}
-
-	// push program location
-	constpush(location());		
-	
-	// push context
-	constpush(ctxt);
-
-	// instruction opcode
-	program.opcode(s->opcode);
 
 	if (ctxt == IM8) {
 		putByte(0);
@@ -148,18 +147,16 @@ void Code::putOp(LPSYMBOL s, uint32_t ctxt)
 /////////////////////////////////////////////////////////////////////////////
 void Code::putFixup(LPSYMBOL s, uint32_t ctxt)
 {
-	// push symbol
-	sympush(s);
-
-	// push program location
-	constpush(location());		
+	// push program location, context
+	// and memory store instruction
+	program.push(&Machine::memstore);
+	program.push(ctxt);
+	program.push(location());		
+		
+	// push arg and fixup
+	program.push(&Machine::fixup);
+	program.push(s);
 	
-	// push context
-	constpush(ctxt);
-
-	// push instruction 
-	program.code(&Machine::fixup);
-
 	if (ctxt == IM8) {
 		putByte(0);
 	} else {
@@ -459,8 +456,8 @@ void Code::i8(const Instr *instr, LPSYMBOL s)
 /////////////////////////////////////////////////////////////////////////////
 void Code::pass2()
 {
-	// execute machine program
-	machine->execute();
+	// evaluate machine program
+	machine->exec(program);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -483,14 +480,3 @@ void Code::write(FILE *fp) const
 	fflush(fp);
 }
 
-/////////////////////////////////////////////////////////////////////////////
-void Code::sympush(LPSYMBOL s)
-{
-	program.code(&Machine::sympush);	program.code(s);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void Code::constpush(word w)
-{
-	program.code(&Machine::constpush);	program.code(w);
-}

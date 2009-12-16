@@ -8,8 +8,30 @@
 #ifndef __PROGRAM_H__
 #define __PROGRAM_H__
 
-#include "Machine.h"
 #include "SymbolTable.h"
+
+enum DatumType {
+	DT_UNDEF,
+	DT_CONST,
+	DT_SYM,
+	DT_INSTR,
+};
+
+class Machine;
+struct Datum;
+
+typedef Datum (Machine::*Instruction)(void);
+
+/////////////////////////////////////////////////////////////////////////////
+struct Datum {
+	Datum() : type(DT_UNDEF), instr(NULL) {}
+	DatumType type;	
+	union {
+		word value;		
+		LPSYMBOL sym;
+		Instruction instr;
+	};
+};
 
 /////////////////////////////////////////////////////////////////////////////
 class Program
@@ -19,23 +41,22 @@ public:
 	~Program();
 
 	void init();
-	void opcode(uint32_t opcode);
-	void code(word location);
-	void code(Instruction i);
-	void code(LPSYMBOL s);
-
-	operator const Instruction*() const;
+	void pushop(uint32_t opcode);
+	void push(word w);
+	void push(Instruction i);
+	void push(LPSYMBOL s);
+	void push(const Datum &d);
+	
+	operator const Datum*() const;
 private:
-	void put(Instruction i);
-
 	enum { NPROG = 4096 };
 
-	Instruction m_memory[NPROG];
-	Instruction *m_pmem;
+	Datum m_memory[NPROG];
+	Datum *m_pmem;
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline Program::operator const Instruction*() const {
+inline Program::operator const Datum*() const {
 	return m_memory;
 }
 

@@ -16,7 +16,7 @@
 enum SymbolType {
 	ST_UNDEF = 0,		// undefined
 	ST_REG,				// cpu register 
-	ST_INSTRUCTION,		// machine instruction 
+	ST_INSTRUCTION,		// CPU instruction 
 	ST_ID, 				// identifier 
 	ST_CONST,			// numeric constant 
 	ST_STRING,			// string literal
@@ -70,8 +70,9 @@ private:
 	void iinsert(const string &s, uint32_t t, const Instr *i);
 	void rinsert(const string &s, uint32_t t, byte r);
 	void idinsert(const string &s, uint32_t id);
-
 	void freeSym(LPSYMBOL s);
+
+	static string mkname(uint32_t opcode);
 
 	static SymbolTablePtr instance;	// singleton instance
 
