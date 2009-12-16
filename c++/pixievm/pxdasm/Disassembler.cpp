@@ -56,8 +56,9 @@ void Disassembler::disassemble(const char *filename)
 
 	int c;
 	while ((c = fgetc(m_fp)) != EOF) {
+		ungetc(c, m_fp);
 		printip();
-		PxDisassembler::disassemble(c);
+		PxDisassembler::disassemble(fetch());
 	}
 
 	close();
@@ -66,5 +67,11 @@ void Disassembler::disassemble(const char *filename)
 /////////////////////////////////////////////////////////////////////////////
 byte Disassembler::fetch()
 {
-	return fgetc(m_fp);
+	int c;
+	if ((c = fgetc(m_fp)) == EOF)
+		return 0;
+
+	++ip;
+
+	return c;
 }
