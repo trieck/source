@@ -10,12 +10,6 @@
 
 #include "Memory.h"
 
-#define HIREG8(n)           (LOREG8((n >> 4)))
-#define LOREG8(n)           (n & 7)
-
-#define HIREG16(n)          (LOREG16((n >> 4)))
-#define LOREG16(n)          (n & ((n&5) | ((~n&4) >> 1)))
-
 #define NEG_FLAG            (0x80)
 #define OVERFLOW_FLAG       (0x40)
 #define BRK_FLAG            (0x08)

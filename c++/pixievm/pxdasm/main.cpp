@@ -6,6 +6,7 @@
 //
 
 #include "common.h"
+#include "Disassembler.h"
 #include "Exception.h"
 
 ANON_BEGIN
@@ -19,11 +20,10 @@ ANON_END
 /////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		usage();
+	Disassembler disassembler;
 
 	try {
-		;
+		disassembler.disassemble(argv[1]);
 	} catch (const Exception &e) {
 		cerr << e.getDescription() << endl;
 		exit(EXIT_FAILURE);

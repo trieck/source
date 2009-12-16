@@ -199,6 +199,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\PxDisassembler.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Util.cpp"
 				>
 				<FileConfiguration
@@ -240,6 +244,14 @@
 			</File>
 			<File
 				RelativePath=".\Opinfo.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PixieVM.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PxDisassembler.h"
 				>
 			</File>
 			<File

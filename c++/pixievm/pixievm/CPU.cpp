@@ -6,6 +6,7 @@
 //
 
 #include "Common.h"
+#include "PixieVM.h"
 #include "Memory.h"
 #include "Interrupt.h"
 #include "CPU.h"

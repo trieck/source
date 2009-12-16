@@ -4,6 +4,7 @@
 //
 // Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
 //
+
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
