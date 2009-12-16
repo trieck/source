@@ -12,6 +12,8 @@
 #include "Parser.hpp"
 #include "Util.h"
 
+extern int yylineno;
+
 SymbolTablePtr SymbolTable::instance(SymbolTable::getInstance());
 
 /////////////////////////////////////////////////////////////////////////////
@@ -159,6 +161,7 @@ LPSYMBOL SymbolTable::install(const string &s)
 		sym->name = s;
 		sym->type = ST_UNDEF;
 		sym->sub = 0;
+		sym->lineno = yylineno;
 		table[s] = sym;
 	}
 
@@ -174,6 +177,7 @@ LPSYMBOL SymbolTable::installs(const string &s)
 		sym->name = s;
 		sym->type = ST_STRING;
 		sym->sub = 0;
+		sym->lineno = yylineno;
 		table[s] = sym;
 	}
 
@@ -190,6 +194,7 @@ LPSYMBOL SymbolTable::installw(const string &s, SymbolType type,
 		sym->name = s;
 		sym->type = ST_CONST;
 		sym->sub = sub;
+		sym->lineno = yylineno;
 		sym->val16 = w;
 		table[s] = sym;
 	}
@@ -204,6 +209,7 @@ LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *args)
 	sym->name = mkname(op);
 	sym->type = ST_OP;	
 	sym->sub = sub;
+	sym->lineno = yylineno;
 	sym->next = args;		// arguments
 	sym->opcode = op;		// operator code
 	table[sym->name] = sym;

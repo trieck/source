@@ -26,11 +26,12 @@ enum SymbolType {
 /////////////////////////////////////////////////////////////////////////////
 // Symbol struct
 typedef struct Symbol {
-	Symbol() : type(ST_UNDEF), sub(0), instr(0), next(0) {}
+	Symbol() : type(ST_UNDEF), sub(0), lineno(0), instr(0), next(0) {}
 	
 	string name;			// symbol name
 	SymbolType type;		// symbol type
 	uint32_t sub;			// sub-type
+	uint32_t lineno;		// line number where first seen
 	union {
 		const Instr *instr;	// instruction
 		uint32_t opcode;	// operator code

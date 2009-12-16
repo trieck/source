@@ -146,15 +146,11 @@ void Code::putOp(LPSYMBOL s, uint32_t ctxt)
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::putFixup(LPSYMBOL s, uint32_t ctxt)
-{
-	// push program location, context
-	// and memory store instruction
-	program.push(&Machine::memstore);
-	program.push(ctxt);
-	program.push(location());		
-		
-	// push arg and fixup
+{		
+	// push args and fixup instruction
 	program.push(&Machine::fixup);
+	program.push(ctxt);
+	program.push(location());	
 	program.push(s);
 	
 	if (ctxt == IM8) {

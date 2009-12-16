@@ -89,8 +89,8 @@ Datum Machine::evalsym(LPSYMBOL s)
 
 	switch (s->type) {
 	case ST_UNDEF:
-		throw Exception("identifier \"%s\" was undefined.", 
-			s->name.c_str());
+		throw Exception("identifier \"%s\" was undefined near line %d.", 
+			s->name.c_str(), s->lineno);
 	case ST_OP:
 		if ((i = lookup(s->opcode)) == NULL) {
 			throw Exception("unrecognized opcode %d.", s->opcode);
@@ -119,22 +119,40 @@ Datum Machine::plus()
 /////////////////////////////////////////////////////////////////////////////
 Datum Machine::minus()
 {
-	Datum d;
-	return d;
+	Datum d1 = eval();
+	Datum d2 = eval();
+
+	Datum result;
+	result.type = DT_CONST;
+	result.value = d1.value - d2.value;
+
+	return result;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Datum Machine::mult()
 {
-	Datum d;
-	return d;
+	Datum d1 = eval();
+	Datum d2 = eval();
+
+	Datum result;
+	result.type = DT_CONST;
+	result.value = d1.value * d2.value;
+
+	return result;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Datum Machine::div()
 {
-	Datum d;
-	return d;
+	Datum d1 = eval();
+	Datum d2 = eval();
+
+	Datum result;
+	result.type = DT_CONST;
+	result.value = d1.value / d2.value;
+
+	return result;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -143,6 +161,8 @@ Datum Machine::hibyte()
 	Datum arg = eval();
 
 	Datum result;
+	result.type = DT_CONST;
+	result.value = HIBYTE(arg.value);
 	
 	return result;
 }
@@ -153,6 +173,8 @@ Datum Machine::lobyte()
 	Datum arg = eval();
 
 	Datum result;
+	result.type = DT_CONST;
+	result.value = LOBYTE(arg.value);
 	
 	return result;
 }
@@ -160,9 +182,24 @@ Datum Machine::lobyte()
 /////////////////////////////////////////////////////////////////////////////
 Datum Machine::fixup()
 {
-	Datum result;
+	Datum ctxt = eval();
+	Datum loc = eval();
+	Datum dsym = eval();
 
-	return result;
+	word symloc = dsym.value;
+	word fixloc = loc.value;
+	
+	if (ctxt.value == IM8) {	// relative branch fix-up
+		word diff = symloc - fixloc;
+		if (diff > 0x7F) {
+			throw Exception("branch out of range.");
+		}		
+		m_code->putByteAt(fixloc, (byte)diff);
+	} else {	// forward reference
+		m_code->putWordAt(fixloc, symloc);
+	}
+
+	return dsym;
 }
 
 /////////////////////////////////////////////////////////////////////////////

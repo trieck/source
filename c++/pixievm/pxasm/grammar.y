@@ -149,6 +149,15 @@ expr16:	IM16
 		| expr16 '+' expr16 {
 				$$ = table->installo(PLUS, IM16, SymbolTable::link($1, $3));
 			}
+		| expr16 '-' expr16 {
+				$$ = table->installo(MINUS, IM16, SymbolTable::link($1, $3));
+			}
+		| expr16 '*' expr16 {
+				$$ = table->installo(MULT, IM16, SymbolTable::link($1, $3));
+			}
+		| expr16 '/' expr16 {
+				$$ = table->installo(DIV, IM16, SymbolTable::link($1, $3));
+			}
 		| UNDEF	/* forward reference */
 		;
 
