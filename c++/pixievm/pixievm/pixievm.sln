@@ -8,10 +8,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pixievm", "pixievm.vcproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "..\base\base.vcproj", "{18677942-167D-438E-9A64-8C675E4F885B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PxAsm", "..\pxasm\PxAsm.vcproj", "{7000E879-FEDC-4BE5-98B3-3EEE21B8C78F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pxasm", "..\pxasm\PxAsm.vcproj", "{7000E879-FEDC-4BE5-98B3-3EEE21B8C78F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{18677942-167D-438E-9A64-8C675E4F885B} = {18677942-167D-438E-9A64-8C675E4F885B}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pxdasm", "..\pxdasm\pxdasm.vcproj", "{0B4E35F6-8A3C-44F2-AC2F-A529F8BB976F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{7000E879-FEDC-4BE5-98B3-3EEE21B8C78F}.Debug|Win32.Build.0 = Debug|Win32
 		{7000E879-FEDC-4BE5-98B3-3EEE21B8C78F}.Release|Win32.ActiveCfg = Release|Win32
 		{7000E879-FEDC-4BE5-98B3-3EEE21B8C78F}.Release|Win32.Build.0 = Release|Win32
+		{0B4E35F6-8A3C-44F2-AC2F-A529F8BB976F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0B4E35F6-8A3C-44F2-AC2F-A529F8BB976F}.Debug|Win32.Build.0 = Debug|Win32
+		{0B4E35F6-8A3C-44F2-AC2F-A529F8BB976F}.Release|Win32.ActiveCfg = Release|Win32
+		{0B4E35F6-8A3C-44F2-AC2F-A529F8BB976F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -59,10 +59,11 @@ public:
 		uint32_t sub, word value);	// constant
 
 	// operators
-	LPSYMBOL installo(uint32_t op, uint32_t sub, Symbol *arg1); 
-	LPSYMBOL installo(uint32_t op, uint32_t sub, Symbol *arg1, Symbol *arg2); 
+	LPSYMBOL installo(uint32_t op, uint32_t sub, Symbol *args); 
 
 	LPSYMBOL lookup(const string &s) const;
+
+	static LPSYMBOL link(LPSYMBOL s1, LPSYMBOL s2);
 
 // Implementation
 private:

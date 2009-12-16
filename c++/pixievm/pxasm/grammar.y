@@ -36,7 +36,11 @@ ANON_END
 %token	<sym>	IM8 IM16
 %token	<sym>	UNDEF
 
-%type	<sym>	NVAL M16 A16 I8 I16
+%type	<sym>	NVAL M16 A16 expr8 expr16
+
+%right		'='
+%left		'+' '-'
+%left		'*' '/' '%'
 
 %%	/* begin grammar */
 
@@ -75,73 +79,76 @@ deflabel:	UNDEF ':'	{
 		}
 		;
 
-instr:		I1 R8  ',' R8 		{ code->code2(AM_RR8, $1, $2, $4); }	
-		|	I1 R8  ',' I8		{ code->code2(AM_RI8, $1, $2, $4); }	
-		|	I1 R8  ',' M16		{ code->code2(AM_RM8, $1, $2, $4); }	
-		|	I1 R8  ',' A16      { code->code2(AM_RA8, $1, $2, $4); }	
-        |	I1 R16 ',' R16		{ code->code2(AM_RR16, $1, $2, $4); }	
-        |	I1 R16 ',' I8		{ code->code2(AM_RI16, $1, $2, $4); }	
-		|	I1 R16 ',' I16		{ code->code2(AM_RI16, $1, $2, $4); }	
-        |	I1 R16 ',' M16		{ code->code2(AM_RM16, $1, $2, $4); }	
-        |	I1 R16 ',' A16		{ code->code2(AM_RA16, $1, $2, $4); }	
-        |	I1 M16 ',' R8		{ code->code2(AM_MR8, $1, $2, $4); }	
-        |	I1 M16 ',' R16		{ code->code2(AM_MR16, $1, $2, $4); }	
-		|	I1 BYTE_PTR M16 ',' I8	{ code->code2(AM_M8I8, $1, $3, $5); }
-		|	I1 WORD_PTR M16 ',' I8	{ code->code2(AM_M16I8, $1, $3, $5); }
-		|	I1 M16 ',' I16		{ code->code2(AM_MI16, $1, $2, $4); }		
-        |	I1 A16 ',' R8		{ code->code2(AM_AR8, $1, $2, $4); }	
-        |	I1 A16 ',' R16		{ code->code2(AM_AR16, $1, $2, $4); }	
-        |	I1 BYTE_PTR A16 ',' I8	{ code->code2(AM_A8I8, $1, $3, $5); }	
-        |	I1 WORD_PTR A16 ',' I8	{ code->code2(AM_A16I8, $1, $3, $5); }	
-        |	I1 A16 ',' I16		{ code->code2(AM_AI16, $1, $2, $4); }	
-        |	I2 R8				{ code->code1(AM_R8, $1, $2); }	
-        |	I2 R16				{ code->code1(AM_R16, $1, $2); }
-        |	I2 BYTE_PTR M16		{ code->code1(AM_M8, $1, $3); }
-        |	I2 WORD_PTR M16		{ code->code1(AM_M16, $1, $3); }
-        |	I2 BYTE_PTR A16		{ code->code1(AM_A8, $1, $3); }
-        |	I2 WORD_PTR A16		{ code->code1(AM_A16, $1, $3); }
-        |	I3					{ code->code0(AM_IMPLIED, $1); }
-        |	I4 R16				{ code->code1(AM_R16, $1, $2); }
-        |	I4 M16				{ code->code1(AM_M16, $1, $2); }
-        |	I4 A16				{ code->code1(AM_A16, $1, $2); }
-		|	I4 I8				{ code->code1(AM_I16, $1, $2); }
-        |	I4 I16				{ code->code1(AM_I16, $1, $2); }
-        |	I5 I8				{ code->code1(AM_I8, $1, $2); }
-		|	I5 I16				{ code->relcode($1, $2); }
-        |	I6 R8				{ code->code1(AM_R8, $1, $2); }
-        |	I6 R16				{ code->code1(AM_R16, $1, $2); }
-        |	I6 BYTE_PTR M16		{ code->code1(AM_M8, $1, $3); }
-        |	I6 WORD_PTR M16		{ code->code1(AM_M16, $1, $3); }
-        |	I6 BYTE_PTR A16		{ code->code1(AM_A8, $1, $3); }
-        |	I6 WORD_PTR A16		{ code->code1(AM_A16, $1, $3); }
-        |	I7 R8				{ code->code1(AM_R8, $1, $2); }
-        |	I7 R16				{ code->code1(AM_R16, $1, $2); }
-        |	I7 BYTE_PTR M16		{ code->code1(AM_M8, $1, $3); }
-        |	I7 WORD_PTR M16		{ code->code1(AM_M16, $1, $3); }
-        |	I7 BYTE_PTR A16		{ code->code1(AM_A8, $1, $3); }
-        |	I7 WORD_PTR A16		{ code->code1(AM_A16, $1, $3); }
-		|	I7 I8				{ code->code1(AM_I8, $1, $2); }	
-        |	I7 I16				{ code->code1(AM_I16, $1, $2); }	
+instr:		I1 R8  ',' R8 				{ code->code2(AM_RR8, $1, $2, $4); }	
+		|	I1 R8  ',' expr8			{ code->code2(AM_RI8, $1, $2, $4); }	
+		|	I1 R8  ',' M16				{ code->code2(AM_RM8, $1, $2, $4); }	
+		|	I1 R8  ',' A16				{ code->code2(AM_RA8, $1, $2, $4); }	
+        |	I1 R16 ',' R16				{ code->code2(AM_RR16, $1, $2, $4); }	
+        |	I1 R16 ',' expr8			{ code->code2(AM_RI16, $1, $2, $4); }	
+		|	I1 R16 ',' expr16			{ code->code2(AM_RI16, $1, $2, $4); }	
+        |	I1 R16 ',' M16				{ code->code2(AM_RM16, $1, $2, $4); }	
+        |	I1 R16 ',' A16				{ code->code2(AM_RA16, $1, $2, $4); }	
+        |	I1 M16 ',' R8				{ code->code2(AM_MR8, $1, $2, $4); }	
+        |	I1 M16 ',' R16				{ code->code2(AM_MR16, $1, $2, $4); }	
+		|	I1 BYTE_PTR M16 ',' expr8	{ code->code2(AM_M8I8, $1, $3, $5); }
+		|	I1 WORD_PTR M16 ',' expr8	{ code->code2(AM_M16I8, $1, $3, $5); }
+		|	I1 M16 ',' expr16			{ code->code2(AM_MI16, $1, $2, $4); }		
+        |	I1 A16 ',' R8				{ code->code2(AM_AR8, $1, $2, $4); }	
+        |	I1 A16 ',' R16				{ code->code2(AM_AR16, $1, $2, $4); }	
+        |	I1 BYTE_PTR A16 ',' expr8	{ code->code2(AM_A8I8, $1, $3, $5); }	
+        |	I1 WORD_PTR A16 ',' expr8	{ code->code2(AM_A16I8, $1, $3, $5); }	
+        |	I1 A16 ',' expr16			{ code->code2(AM_AI16, $1, $2, $4); }	
+        |	I2 R8						{ code->code1(AM_R8, $1, $2); }	
+        |	I2 R16						{ code->code1(AM_R16, $1, $2); }
+        |	I2 BYTE_PTR M16				{ code->code1(AM_M8, $1, $3); }
+        |	I2 WORD_PTR M16				{ code->code1(AM_M16, $1, $3); }
+        |	I2 BYTE_PTR A16				{ code->code1(AM_A8, $1, $3); }
+        |	I2 WORD_PTR A16				{ code->code1(AM_A16, $1, $3); }
+        |	I3							{ code->code0(AM_IMPLIED, $1); }
+        |	I4 R16						{ code->code1(AM_R16, $1, $2); }
+        |	I4 M16						{ code->code1(AM_M16, $1, $2); }
+        |	I4 A16						{ code->code1(AM_A16, $1, $2); }
+		|	I4 expr8					{ code->code1(AM_I16, $1, $2); }
+        |	I4 expr16					{ code->code1(AM_I16, $1, $2); }
+        |	I5 expr8					{ code->code1(AM_I8, $1, $2); }
+		|	I5 expr16					{ code->relcode($1, $2); }
+        |	I6 R8						{ code->code1(AM_R8, $1, $2); }
+        |	I6 R16						{ code->code1(AM_R16, $1, $2); }
+        |	I6 BYTE_PTR M16				{ code->code1(AM_M8, $1, $3); }
+        |	I6 WORD_PTR M16				{ code->code1(AM_M16, $1, $3); }
+        |	I6 BYTE_PTR A16				{ code->code1(AM_A8, $1, $3); }
+        |	I6 WORD_PTR A16				{ code->code1(AM_A16, $1, $3); }
+        |	I7 R8						{ code->code1(AM_R8, $1, $2); }
+        |	I7 R16						{ code->code1(AM_R16, $1, $2); }
+        |	I7 BYTE_PTR M16				{ code->code1(AM_M8, $1, $3); }
+        |	I7 WORD_PTR M16				{ code->code1(AM_M16, $1, $3); }
+        |	I7 BYTE_PTR A16				{ code->code1(AM_A8, $1, $3); }
+        |	I7 WORD_PTR A16				{ code->code1(AM_A16, $1, $3); }
+		|	I7 expr8					{ code->code1(AM_I8, $1, $2); }	
+        |	I7 expr16					{ code->code1(AM_I16, $1, $2); }	
 		;
 		
 M16:		'[' R16 ']'			{ $$ = $2; }
 		|	'[' RX16 ']'		{ $$ = $2; }
 		;
 
-A16:		'[' I8 ']'			{ $$ = $2; }
-		|	'[' I16 ']'			{ $$ = $2; }
+A16:		'[' expr8 ']'			{ $$ = $2; }
+		|	'[' expr16 ']'			{ $$ = $2; }
 		;
 		
-I8:		  IM8
-		| LO_BYTE I16	{ 
+expr8:	IM8
+		| LO_BYTE expr16	{ 
 				$$ = table->installo(LO_BYTE, IM8, $2);
 			}
-		| HI_BYTE I16	{
+		| HI_BYTE expr16	{
 				$$ = table->installo(HI_BYTE, IM8, $2);
 			}
 		;
 		
-I16:	  IM16
+expr16:	IM16
+		| expr16 '+' expr16 {
+				$$ = table->installo(PLUS, IM16, SymbolTable::link($1, $3));
+			}
 		| UNDEF	/* forward reference */
 		;
 
@@ -155,9 +162,9 @@ pseudo_op:
 			}
 			code->setOrigin($2->val16); 
 		}
-		| DECL_BYTE I8		{ code->putSym($2, IM8); }
-		| DECL_WORD I8		{ code->putSym($2, IM16); }
-		| DECL_WORD I16		{ code->putSym($2, IM16); }
+		| DECL_BYTE expr8		{ code->putSym($2, IM8); }
+		| DECL_WORD expr8		{ code->putSym($2, IM16); }
+		| DECL_WORD expr16		{ code->putSym($2, IM16); }
 		| DECL_TEXT STRING	{ code->putString($2->name); }
 		;
 

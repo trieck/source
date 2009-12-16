@@ -75,6 +75,21 @@ void Machine::execute()
 /////////////////////////////////////////////////////////////////////////////
 void Machine::plus()
 {
+	Datum ctxt = m_stack.pop();
+	Datum loc = m_stack.pop();
+	Datum arg1 = m_stack.pop();
+	Datum arg2 = m_stack.pop();
+
+	checkSym(arg1.sym);
+	checkSym(arg2.sym);
+
+	if (ctxt.value == IM16) {
+		word result = arg1.sym->val16 + arg2.sym->val16;
+		m_code->putWordAt(loc.value, result);
+	} else {
+		byte result = arg1.sym->val8 + arg2.sym->val8;
+		m_code->putByteAt(loc.value, result);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -157,7 +172,7 @@ void Machine::constpush()
 /////////////////////////////////////////////////////////////////////////////
 void Machine::checkSym(LPSYMBOL s)
 {
-	// ensure symbol value has been defined
+	// ensure symbol has been defined
 	if (s->type == ST_UNDEF) {
 		throw Exception("identifier \"%s\" was never defined.", 
 			s->name.c_str());

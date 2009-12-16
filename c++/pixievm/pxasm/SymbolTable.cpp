@@ -197,26 +197,18 @@ LPSYMBOL SymbolTable::installw(const string &s, SymbolType type,
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *arg1)
+LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *args)
 {
 	LPSYMBOL sym = new Symbol;
 
 	sym->name = uniq();
 	sym->type = ST_OP;	
 	sym->sub = sub;
-	sym->next = arg1;		// argument
+	sym->next = args;		// arguments
 	sym->opcode = op;		// operator code
 	table[sym->name] = sym;
 
 	return sym;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *arg1, 
-	Symbol *arg2)
-{
-	// TODO: 
-	return NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -229,3 +221,21 @@ LPSYMBOL SymbolTable::lookup(const string &s) const
 	return (*it).second;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+LPSYMBOL SymbolTable::link(LPSYMBOL s1, LPSYMBOL s2)
+{
+	LPSYMBOL s;
+
+	if (s1 == NULL)
+		return s2;
+
+	if (s2 == NULL)
+		return s1;
+
+	/* put at end of list */
+	for (s = s1; s->next; s = s->next);
+
+	s->next = s2;
+
+	return s1;
+}
