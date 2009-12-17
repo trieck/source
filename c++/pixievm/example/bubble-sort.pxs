@@ -1,5 +1,5 @@
 
-; PixieVM bubble sort
+; PixieVM 8-bit bubble sort
 ;
 ; the starting address of the list is in .d
 ; the length of the list is in .cl
@@ -7,6 +7,21 @@
 
 .org $8800
 
+start:
+		; if we had an address-of-assembly
+		; operator here, we could programmatically
+		; determine the length of the list
+		mov cl, 8
+		mov d, data
+		call sort8
+		ret
+
+data:
+		; data elements to be sorted
+		
+		.byte $ff, $a0, $c8, $c9
+		.byte $80, $ee, $08, $fe
+		
 sort8:
 		xor ch, ch		; turn exchange flag off
         xor x, x		; initialize index register
