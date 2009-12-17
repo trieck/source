@@ -44,8 +44,9 @@ public:
 		const Instr *instr;	// instruction
 		uint32_t opcode;	// operator code
 		word val16;			// word value
-		byte val8;			// byte value
+		byte val8;			// byte value		
 	};
+	string sval;			// string value
 	Symbol *args;			// operator arguments
 	SymbolVec vsyms;		// list values
 	friend class SymbolTable;
@@ -66,10 +67,9 @@ public:
 	LPSYMBOL install(const string &s);	// undefined
 	LPSYMBOL installs(const string &s);	// string literal
 	LPSYMBOL installw(const string &s, SymbolType type, 
-		uint32_t sub, word value);	
-
-	// operator
-	LPSYMBOL installo(uint32_t op, uint32_t sub, Symbol *args); 
+		uint32_t sub, word value);	// numeric
+	LPSYMBOL installo(uint32_t op, uint32_t sub, 
+		Symbol *args);	// operator
 
 	LPSYMBOL lookup(const string &s) const;
 	LPSYMBOL mklist(LPSYMBOL s1, LPSYMBOL s2);

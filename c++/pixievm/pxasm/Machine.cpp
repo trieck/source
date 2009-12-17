@@ -182,22 +182,22 @@ Datum Machine::fixup()
 {
 	Datum ctxt = eval();
 	Datum loc = eval();
-	Datum dsym = eval();
-
-	word symloc = dsym.value;
-	word fixloc = loc.value;
+	Datum target = eval();
 
 	if (ctxt.value == IM8) {	// relative branch fix-up
-		word diff = symloc - fixloc;
-		if (diff > 0x7F) {
-			throw Exception("branch out of range.");
+		int16_t diff = target.value - loc.value;
+		
+		if (diff < (int8_t)0x80) {	// backward branch
+			throw Exception("backward branch out of range.");
+		} else if (diff > 0x7F) {	// forward branch
+			throw Exception("forward branch out of range.");
 		}
-		m_code->putByteAt(fixloc, (byte)diff);
+		m_code->putByteAt(loc.value, (byte)diff);
 	} else {	// forward reference
-		m_code->putWordAt(fixloc, symloc);
+		m_code->putWordAt(loc.value, target.value);
 	}
 
-	return dsym;
+	return target;
 }
 
 /////////////////////////////////////////////////////////////////////////////

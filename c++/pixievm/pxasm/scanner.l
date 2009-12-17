@@ -149,10 +149,7 @@ whitespace		[\t\r ]+
 		str += backslash(&ptext);
 	}
 	
-	// TODO: fix this, symbol name may conflict
-
 	yylval.sym = table->installs(str);
-	
 	return STRING;
 }
 {lt}	{ return LO_BYTE; }

@@ -176,6 +176,9 @@ expr16:	  prim16
 		| expr16 MINUS expr16 { 
 				$$ = table->installo(MINUS, IM16, table->mklist($1, $3));
 			}
+		| expr8 MULT expr8 { 
+				$$ = table->installo(MULT, IM16, table->mklist($1, $3));
+			}
 		| expr8 MULT expr16 { 
 				$$ = table->installo(MULT, IM16, table->mklist($1, $3));
 			}
@@ -184,6 +187,9 @@ expr16:	  prim16
 			}
 		| expr16 MULT expr16 { 
 				$$ = table->installo(MULT, IM16, table->mklist($1, $3));
+			}
+		| expr8 DIV expr8 { 
+				$$ = table->installo(DIV, IM16, table->mklist($1, $3));
 			}
 		| expr8 DIV expr16 { 
 				$$ = table->installo(DIV, IM16, table->mklist($1, $3));
@@ -214,7 +220,7 @@ pseudo_op:
 		| DECL_BYTE decl8_list	{ code->putSym($2, IM8); }
 		| DECL_WORD decl8_list	{ code->putSym($2, IM16); }
 		| DECL_WORD decl16_list	{ code->putSym($2, IM16); }
-		| DECL_TEXT STRING	{ code->putString($2->name); }
+		| DECL_TEXT STRING		{ code->putString($2->sval); }
 		;
 
 NVAL:	IM8	| IM16	

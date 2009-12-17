@@ -125,6 +125,8 @@ SymbolTable *SymbolTable::getInstance()
 /////////////////////////////////////////////////////////////////////////////
 void SymbolTable::iinsert(const string &s, uint32_t t, const Instr *i)
 {
+	// instruction
+
 	LPSYMBOL sym = new Symbol;
 	sym->name = s;
 	sym->type = ST_INSTRUCTION;
@@ -136,6 +138,8 @@ void SymbolTable::iinsert(const string &s, uint32_t t, const Instr *i)
 /////////////////////////////////////////////////////////////////////////////
 void SymbolTable::rinsert(const string &s, uint32_t t, byte r)
 {
+	// register
+
 	LPSYMBOL sym = new Symbol;
 	sym->name = s;
 	sym->type = ST_REG;
@@ -147,6 +151,8 @@ void SymbolTable::rinsert(const string &s, uint32_t t, byte r)
 /////////////////////////////////////////////////////////////////////////////
 void SymbolTable::idinsert(const string &s, uint32_t id)
 {
+	// identifier
+
 	LPSYMBOL sym = new Symbol;
 	sym->name = s;
 	sym->type = ST_ID;
@@ -157,6 +163,8 @@ void SymbolTable::idinsert(const string &s, uint32_t id)
 /////////////////////////////////////////////////////////////////////////////
 LPSYMBOL SymbolTable::install(const string &s)
 {
+	// undefined symbol
+
 	LPSYMBOL sym;
 	if ((sym = lookup(s)) == NULL) {
 		sym = new Symbol;
@@ -173,16 +181,16 @@ LPSYMBOL SymbolTable::install(const string &s)
 /////////////////////////////////////////////////////////////////////////////
 LPSYMBOL SymbolTable::installs(const string &s)
 {
-	LPSYMBOL sym;
-	if ((sym = lookup(s)) == NULL) {
-		sym = new Symbol;
-		sym->name = s;
-		sym->type = ST_STRING;
-		sym->sub = 0;
-		sym->lineno = yylineno;
-		table[s] = sym;
-	}
+	// string literal
 
+	LPSYMBOL sym = new Symbol;
+	sym->name = format("STRING:0x%.8X", counter32());
+	sym->sval = s;
+	sym->type = ST_STRING;
+	sym->sub = 0;
+	sym->lineno = yylineno;
+	table[sym->name] = sym;
+	
 	return sym;
 }
 
@@ -190,6 +198,8 @@ LPSYMBOL SymbolTable::installs(const string &s)
 LPSYMBOL SymbolTable::installw(const string &s, SymbolType type, 
 	uint32_t sub, word value)
 {
+	// numeric
+
 	LPSYMBOL sym;
 	if ((sym = lookup(s)) == NULL) {
 		sym = new Symbol;
@@ -207,6 +217,8 @@ LPSYMBOL SymbolTable::installw(const string &s, SymbolType type,
 /////////////////////////////////////////////////////////////////////////////
 LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *args)
 {
+	// operator
+
 	LPSYMBOL sym = new Symbol;
 
 	sym->name = opname(op);
@@ -236,16 +248,13 @@ LPSYMBOL SymbolTable::mklist(LPSYMBOL s1, LPSYMBOL s2)
 	LPSYMBOL list = NULL;
 
 	if (!ISLIST(s1) && !ISLIST(s2)) {	// make a new list
-		uint32_t counter = counter32();
-		string name = format("LIST:0x%.8X", counter);
-		
 		list = new Symbol;
-		list->name = name;
+		list->name = format("LIST:0x%.8X", counter32());
 		list->type = ST_LIST;	
 		list->lineno = yylineno;
 		list->vsyms.push_back(s1);
 		list->vsyms.push_back(s2);
-		table[name] = list;
+		table[list->name] = list;
 	} else if (ISLIST(s1) && !ISLIST(s2)) {	// s1 is an existing list
 		list = s1;
 		list->vsyms.push_back(s2);

@@ -35,13 +35,13 @@ public:
 	bool isOriginSet() const;
 
 	void putSym(LPSYMBOL s, uint32_t ctxt);
+	void putString(const string &s);
 	void putWord(word w);
 	void putByte(byte b);
 
 	void putWordAt(word location, word w);
 	void putByteAt(word location, byte b);
-
-	void putString(const string &str);
+	
 	word location() const;
 
 	void pass2();

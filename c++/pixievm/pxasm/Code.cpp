@@ -233,25 +233,9 @@ void Code::code2(uint32_t mode, LPSYMBOL s1, LPSYMBOL s2, LPSYMBOL s3)
 /////////////////////////////////////////////////////////////////////////////
 void Code::relcode(LPSYMBOL s1, LPSYMBOL s2)
 {
-	// calculate and encode relative branches
-
+	// relative branching
 	putByte(OPCODE(s1->instr, AM_I8));
-
-	// TODO: replace with relbranch machine instruction
-
-	int8_t offset = 0;
-	if (s2->type == ST_UNDEF) {	// forward reference branch
-		putSym(s2, IM8);
-	} else {
-		// check whether target is in range for relative branch
-		word diff = abs(s2->val16 - (location() + sizeof(byte)));
-		if (diff >= 0x100) {
-			yyerror("address out of range");
-			return;
-		}
-		offset = (s2->val16 - (location() + sizeof(byte)));
-		putByte(offset);
-	}
+	putFixup(s2, IM8);
 }
 
 /////////////////////////////////////////////////////////////////////////////
