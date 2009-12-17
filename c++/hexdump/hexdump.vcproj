@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="hexdump"
+	ProjectGUID="{CC9E7A1D-9898-4F39-85CF-B2F76EA69E2A}"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -232,4 +233,6 @@
 			>
 		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>
