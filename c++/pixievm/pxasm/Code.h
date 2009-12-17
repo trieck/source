@@ -35,7 +35,6 @@ public:
 	bool isOriginSet() const;
 
 	void putSym(LPSYMBOL s, uint32_t ctxt);
-	void putList(LPSYMBOL head, uint32_t ctxt);
 	void putWord(word w);
 	void putByte(byte b);
 
@@ -80,6 +79,7 @@ private:
 	void i8(const Instr *instr, LPSYMBOL s);
 
 	void putOp(LPSYMBOL s, uint32_t ctxt);
+	void putList(LPSYMBOL s, uint32_t ctxt);
 	void putFixup(LPSYMBOL s, uint32_t ctxt);
 
 	typedef void (Code::*Code0Ptr)(const Instr *);

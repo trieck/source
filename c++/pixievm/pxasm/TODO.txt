@@ -1,3 +1,5 @@
+FIX: symbol name may conflict in quoted strings
+
 Implement relbranch machine instruction
 Implement '*' assembly-address operator
 Implement EOR, AND, OR operations

@@ -20,20 +20,26 @@ enum SymbolType {
 	ST_ID, 				// identifier 
 	ST_CONST,			// numeric constant 
 	ST_STRING,			// string literal
-	ST_OP				// operator
+	ST_OP,				// operator
+	ST_LIST				// list of symbols
 };
 
+class Symbol;
+typedef vector<Symbol*> SymbolVec;
+
+class SymbolTable;
+typedef auto_ptr<SymbolTable> SymbolTablePtr;
+
 /////////////////////////////////////////////////////////////////////////////
-// Symbol struct
-typedef struct Symbol {
-	Symbol() : type(ST_UNDEF), sub(0), lineno(0), nargs(0), 
-		instr(0), args(0), next(0) {}
-	
+// Symbol class
+class Symbol {
+private:
+	Symbol() : type(ST_UNDEF), sub(0), lineno(0), instr(0), args(0) {}
+public:
 	string name;			// symbol name
 	SymbolType type;		// symbol type
 	uint32_t sub;			// sub-type
 	uint32_t lineno;		// line number where first seen
-	uint32_t nargs;			// number of arguments for operator
 	union {
 		const Instr *instr;	// instruction
 		uint32_t opcode;	// operator code
@@ -41,11 +47,11 @@ typedef struct Symbol {
 		byte val8;			// byte value
 	};
 	Symbol *args;			// operator arguments
-	Symbol *next;			// next symbol in list
-} Symbol, *LPSYMBOL;
+	SymbolVec vsyms;		// list values
+	friend class SymbolTable;
+};
 
-class SymbolTable;
-typedef auto_ptr<SymbolTable> SymbolTablePtr;
+typedef Symbol *LPSYMBOL;
 
 /////////////////////////////////////////////////////////////////////////////
 class SymbolTable {
@@ -59,18 +65,14 @@ public:
 	static SymbolTable *getInstance();
 	LPSYMBOL install(const string &s);	// undefined
 	LPSYMBOL installs(const string &s);	// string literal
-
 	LPSYMBOL installw(const string &s, SymbolType type, 
 		uint32_t sub, word value);	
-	LPSYMBOL installw(SymbolType type, uint32_t sub, word value);	
 
-	// operators
-	LPSYMBOL installo(uint32_t op, uint32_t sub, uint32_t nargs, 
-		Symbol *args); 
+	// operator
+	LPSYMBOL installo(uint32_t op, uint32_t sub, Symbol *args); 
 
 	LPSYMBOL lookup(const string &s) const;
-
-	static LPSYMBOL link(LPSYMBOL s1, LPSYMBOL s2);
+	LPSYMBOL mklist(LPSYMBOL s1, LPSYMBOL s2);
 
 // Implementation
 private:
@@ -80,7 +82,6 @@ private:
 	void freeSym(LPSYMBOL s);
 
 	static string opname(uint32_t opcode);
-	static string constname(word value);
 
 	static SymbolTablePtr instance;	// singleton instance
 

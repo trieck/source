@@ -12,6 +12,8 @@
 #include "Parser.hpp"
 #include "Util.h"
 
+#define ISLIST(s)	(s->type == ST_LIST)
+
 extern int yylineno;
 
 SymbolTablePtr SymbolTable::instance(SymbolTable::getInstance());
@@ -203,14 +205,7 @@ LPSYMBOL SymbolTable::installw(const string &s, SymbolType type,
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installw(SymbolType type, uint32_t sub, word value)
-{
-	return installw(constname(value), type, sub, value);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, uint32_t nargs,
-	Symbol *args)
+LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *args)
 {
 	LPSYMBOL sym = new Symbol;
 
@@ -218,8 +213,7 @@ LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, uint32_t nargs,
 	sym->type = ST_OP;	
 	sym->sub = sub;
 	sym->lineno = yylineno;
-	sym->nargs = nargs;		// argument count
-	sym->args = args;		// arguments
+	sym->args = args;		// argument list
 	sym->opcode = op;		// operator code
 	table[sym->name] = sym;
 
@@ -237,35 +231,40 @@ LPSYMBOL SymbolTable::lookup(const string &s) const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::link(LPSYMBOL s1, LPSYMBOL s2)
+LPSYMBOL SymbolTable::mklist(LPSYMBOL s1, LPSYMBOL s2)
 {
-	LPSYMBOL s;
+	LPSYMBOL list = NULL;
 
-	if (s1 == NULL)
-		return s2;
+	if (!ISLIST(s1) && !ISLIST(s2)) {	// make a new list
+		uint32_t counter = counter32();
+		string name = format("LIST:0x%.8X", counter);
+		
+		list = new Symbol;
+		list->name = name;
+		list->type = ST_LIST;	
+		list->lineno = yylineno;
+		list->vsyms.push_back(s1);
+		list->vsyms.push_back(s2);
+		table[name] = list;
+	} else if (ISLIST(s1) && !ISLIST(s2)) {	// s1 is an existing list
+		list = s1;
+		list->vsyms.push_back(s2);
+	} else if (!ISLIST(s1) && ISLIST(s2)) {	// s2 is an existing list
+		list = s2; 
+		list->vsyms.push_back(s1);
+	} else if (s1 != s2) {	// s1 and s2 are distinct existing lists
+		list = s1;	// copy list values from s2 to s1
 
-	if (s2 == NULL)
-		return s1;
+		SymbolVec::const_iterator it = s2->vsyms.begin();
+		for ( ; it != s2->vsyms.end(); it++) {
+			list->vsyms.push_back(*it);
+		}
 
-	/* put at end of list */
-	for (s = s1; s->next; s = s->next);
+	} else {	// existing list s1 == s2
+		list = s1;
+	}
 
-	s->next = s2;
-
-	return s1;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-string SymbolTable::constname(word value)
-{
-	string name;
-	string opname;
-
-	uint32_t counter = counter32();
-
-	name = format("const(0x%.4x):0x%.8X", value, counter);
-
-	return name;
+	return list;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -299,7 +298,7 @@ string SymbolTable::opname(uint32_t opcode)
 		opname = "unknown";
 	}
 
-	name = format("operator(%s):0x%.8X", 
+	name = format("OPERATOR(%s):0x%.8X", 
 		opname.c_str(),
 		counter);
 

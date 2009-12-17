@@ -96,11 +96,12 @@ void Code::putWord(word w)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::putList(LPSYMBOL head, uint32_t ctxt)
+void Code::putList(LPSYMBOL s, uint32_t ctxt)
 {
-	while (head != NULL) {
-		putSym(head, ctxt);
-		head = head->next;
+	SymbolVec::const_iterator it = s->vsyms.begin();
+
+	for ( ; it != s->vsyms.end(); it++) {
+		putSym(*it, ctxt);
 	}
 }
 
@@ -110,6 +111,9 @@ void Code::putSym(LPSYMBOL s, uint32_t ctxt)
 	switch (s->type) {
 	case ST_OP:		// operator
 		putOp(s, ctxt);
+		break;
+	case ST_LIST:	// list
+		putList(s, ctxt);
 		break;
 	case ST_UNDEF:	// forward reference
 		putFixup(s, ctxt);
@@ -141,10 +145,11 @@ void Code::putOp(LPSYMBOL s, uint32_t ctxt)
 
 	// push operator arguments
 	LPSYMBOL argv = s->args;
-	for (uint32_t i = 0; i < s->nargs; i++) {
-		ASSERT(argv != NULL);
-		program.push(argv);
-		argv = argv->next;
+	ASSERT(argv->type == ST_LIST);
+
+	SymbolVec::const_iterator it = argv->vsyms.begin();
+	for ( ; it != argv->vsyms.end(); it++) {
+		program.push(*it);
 	}
 
 	if (ctxt == IM8) {
