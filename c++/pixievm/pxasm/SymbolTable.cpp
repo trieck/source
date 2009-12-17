@@ -247,9 +247,6 @@ LPSYMBOL SymbolTable::link(LPSYMBOL s1, LPSYMBOL s2)
 	if (s2 == NULL)
 		return s1;
 
-	if (s1 == s2)
-		return s1;
-
 	/* put at end of list */
 	for (s = s1; s->next; s = s->next);
 
