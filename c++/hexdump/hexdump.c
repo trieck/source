@@ -39,8 +39,12 @@ void dump(const char *filename)
 
 	while ((c = getc(fp)) != EOF) {
 		unsigned char ch = (unsigned char)c;
+
+		if (charcount > 0 && charcount % LINELEN == 0)
+			printf("\n");
+
 		if (charcount % LINELEN == 0)
-			printf("\n%.4x:", charcount);
+			printf("%.4x:", charcount);
 
 		printf(" %.2x", ch);
 		charcount++;
