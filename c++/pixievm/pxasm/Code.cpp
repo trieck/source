@@ -154,7 +154,9 @@ void Code::putFixup(LPSYMBOL s, uint32_t ctxt)
 	program.push(&Machine::fixup);
 	program.push(ctxt);
 	program.push(location());
-	program.push(s);
+
+	// push symbol
+	pushsym(s);
 
 	if (ctxt == IM8) {
 		putByte(0);
