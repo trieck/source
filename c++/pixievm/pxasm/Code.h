@@ -35,6 +35,7 @@ public:
 	bool isOriginSet() const;
 
 	void putSym(LPSYMBOL s, uint32_t ctxt);
+	void putList(LPSYMBOL head, uint32_t ctxt);
 	void putWord(word w);
 	void putByte(byte b);
 

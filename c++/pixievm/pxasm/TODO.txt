@@ -1,4 +1,2 @@
-Implement .byte b1, b2, b3, ... and .word w1, w2, w3, ...
-Implement decimal numbers
 Implement '*' assembly-address operator
 Implement EOR, AND, OR operations

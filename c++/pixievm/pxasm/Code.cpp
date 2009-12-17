@@ -96,6 +96,15 @@ void Code::putWord(word w)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+void Code::putList(LPSYMBOL head, uint32_t ctxt)
+{
+	while (head != NULL) {
+		putSym(head, ctxt);
+		head = head->next;
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
 void Code::putSym(LPSYMBOL s, uint32_t ctxt)
 {
 	switch (s->type) {
@@ -131,10 +140,11 @@ void Code::putOp(LPSYMBOL s, uint32_t ctxt)
 	program.pushop(s->opcode);
 
 	// push operator arguments
-	LPSYMBOL next = s->next;
-	while (next != NULL) {
-		program.push(next);
-		next = next->next;
+	LPSYMBOL argv = s->args;
+	for (uint32_t i = 0; i < s->nargs; i++) {
+		ASSERT(argv != NULL);
+		program.push(argv);
+		argv = argv->next;
 	}
 
 	if (ctxt == IM8) {

@@ -37,6 +37,7 @@ ANON_END
 %token	<sym>	UNDEF
 
 %type	<sym>	NVAL M16 A16 expr8 expr16 prim8 prim16
+%type	<sym>	decl8_list decl16_list
 
 %right		'='
 %left		PLUS MINUS
@@ -139,16 +140,16 @@ A16:		'[' expr8 ']'			{ $$ = $2; }
 		
 expr8:	  prim8
 		| LO_BYTE expr16	{ 
-				$$ = table->installo(LO_BYTE, IM8, $2);
+				$$ = table->installo(LO_BYTE, IM8, 1, $2);
 			}
 		| HI_BYTE expr16	{
-				$$ = table->installo(HI_BYTE, IM8, $2);
+				$$ = table->installo(HI_BYTE, IM8, 1, $2);
 			}
 		| expr8 PLUS expr8 { 
-				$$ = table->installo(PLUS, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(PLUS, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr8 MINUS expr8 { 
-				$$ = table->installo(MINUS, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(MINUS, IM16, 2, SymbolTable::link($1, $3));
 			}
 		;
 		
@@ -158,40 +159,40 @@ prim8:	  IM8
 
 expr16:	  prim16		
 		| expr8 PLUS expr16 { 
-				$$ = table->installo(PLUS, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(PLUS, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr16 PLUS expr8 { 
-				$$ = table->installo(PLUS, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(PLUS, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr16 PLUS expr16 { 
-				$$ = table->installo(PLUS, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(PLUS, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr8 MINUS expr16 { 
-				$$ = table->installo(MINUS, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(MINUS, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr16 MINUS expr8 { 
-				$$ = table->installo(MINUS, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(MINUS, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr16 MINUS expr16 { 
-				$$ = table->installo(MINUS, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(MINUS, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr8 MULT expr16 { 
-				$$ = table->installo(MULT, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(MULT, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr16 MULT expr8 { 
-				$$ = table->installo(MULT, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(MULT, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr16 MULT expr16 { 
-				$$ = table->installo(MULT, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(MULT, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr8 DIV expr16 { 
-				$$ = table->installo(DIV, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(DIV, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr16 DIV expr8 { 
-				$$ = table->installo(DIV, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(DIV, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| expr16 DIV expr16 { 
-				$$ = table->installo(DIV, IM16, SymbolTable::link($1, $3));
+				$$ = table->installo(DIV, IM16, 2, SymbolTable::link($1, $3));
 			}
 		| UNDEF	/* forward reference */
 		;
@@ -210,14 +211,22 @@ pseudo_op:
 			}
 			code->setOrigin($2->val16); 
 		}
-		| DECL_BYTE expr8		{ code->putSym($2, IM8); }
-		| DECL_WORD expr8		{ code->putSym($2, IM16); }
-		| DECL_WORD expr16		{ code->putSym($2, IM16); }
+		| DECL_BYTE decl8_list	{ code->putList($2, IM8); }
+		| DECL_WORD decl8_list	{ code->putList($2, IM16); }
+		| DECL_WORD decl16_list	{ code->putList($2, IM16); }
 		| DECL_TEXT STRING	{ code->putString($2->name); }
 		;
 
 NVAL:	IM8	| IM16	
 		;
+
+decl8_list:	  expr8
+			| decl8_list ',' expr8 { $$ = SymbolTable::link($1, $3); }
+			;
+
+decl16_list:  expr16
+			| decl16_list ',' expr16 { $$ = SymbolTable::link($1, $3); }
+			;
 
 %%	
     /* end grammar */

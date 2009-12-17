@@ -26,18 +26,21 @@ enum SymbolType {
 /////////////////////////////////////////////////////////////////////////////
 // Symbol struct
 typedef struct Symbol {
-	Symbol() : type(ST_UNDEF), sub(0), lineno(0), instr(0), next(0) {}
+	Symbol() : type(ST_UNDEF), sub(0), lineno(0), nargs(0), 
+		instr(0), args(0), next(0) {}
 	
 	string name;			// symbol name
 	SymbolType type;		// symbol type
 	uint32_t sub;			// sub-type
 	uint32_t lineno;		// line number where first seen
+	uint32_t nargs;			// number of arguments for operator
 	union {
 		const Instr *instr;	// instruction
 		uint32_t opcode;	// operator code
 		word val16;			// word value
 		byte val8;			// byte value
 	};
+	Symbol *args;			// operator arguments
 	Symbol *next;			// next symbol in list
 } Symbol, *LPSYMBOL;
 
@@ -62,7 +65,8 @@ public:
 	LPSYMBOL installw(SymbolType type, uint32_t sub, word value);	
 
 	// operators
-	LPSYMBOL installo(uint32_t op, uint32_t sub, Symbol *args); 
+	LPSYMBOL installo(uint32_t op, uint32_t sub, uint32_t nargs, 
+		Symbol *args); 
 
 	LPSYMBOL lookup(const string &s) const;
 

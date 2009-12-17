@@ -209,7 +209,8 @@ LPSYMBOL SymbolTable::installw(SymbolType type, uint32_t sub, word value)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *args)
+LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, uint32_t nargs,
+	Symbol *args)
 {
 	LPSYMBOL sym = new Symbol;
 
@@ -217,7 +218,8 @@ LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *args)
 	sym->type = ST_OP;	
 	sym->sub = sub;
 	sym->lineno = yylineno;
-	sym->next = args;		// arguments
+	sym->nargs = nargs;		// argument count
+	sym->args = args;		// arguments
 	sym->opcode = op;		// operator code
 	table[sym->name] = sym;
 
