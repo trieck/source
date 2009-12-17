@@ -82,7 +82,7 @@ private:
 	void putList(LPSYMBOL s, uint32_t ctxt);
 	void putFixup(LPSYMBOL s, uint32_t ctxt);
 
-	void pushargs(LPSYMBOL s);
+	void pushsym(LPSYMBOL s);
 
 	typedef void (Code::*Code0Ptr)(const Instr *);
 	typedef void (Code::*Code1Ptr)(const Instr *, LPSYMBOL);

@@ -7,7 +7,6 @@
 
 #include "common.h"
 #include "Code.h"
-#include "Machine.h"
 #include "Program.h"
 #include "Parser.hpp"
 #include "Exception.h"
@@ -17,8 +16,6 @@
 
 CodePtr Code::instance(Code::getInstance());
 extern SymbolTable *table;
-
-Machine *machine = Machine::getInstance();
 
 extern int yyerror(const char *s);
 
@@ -140,11 +137,8 @@ void Code::putOp(LPSYMBOL s, uint32_t ctxt)
 	program.push(ctxt);
 	program.push(location());
 
-	// push instruction opcode
-	program.pushop(s->opcode);
-
-	// push operator arguments
-	pushargs(s->args);
+	// push symbol
+	pushsym(s);
 
 	if (ctxt == IM8) {
 		putByte(0);
@@ -461,7 +455,8 @@ void Code::i8(const Instr *instr, LPSYMBOL s)
 /////////////////////////////////////////////////////////////////////////////
 void Code::pass2()
 {
-	// evaluate machine program
+	// execute machine program
+	Machine *machine = Machine::getInstance();
 	machine->exec(program);
 }
 
@@ -486,17 +481,21 @@ void Code::write(FILE *fp) const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Code::pushargs(LPSYMBOL s)
+void Code::pushsym(LPSYMBOL s)
 {
-	// push operator arguments
-	// this may be recursive, if arguments are themselves operators
+	SymbolVec::const_iterator it;
 
-	ASSERT(s->type == ST_LIST);
-
-	SymbolVec::const_iterator it = s->vsyms.begin();
-	for ( ; it != s->vsyms.end(); it++) {
-		program.push(*it);
-		if ((*it)->type == ST_OP)
-			pushargs((*it)->args);
-	}
+	switch (s->type) {
+	case ST_LIST: 	// list of arguments
+		for (it = s->vsyms.begin(); it != s->vsyms.end(); it++) {
+			pushsym(*it);
+		}
+		break;
+	case ST_OP:	// operator
+		program.pushop(s->opcode);	
+		pushsym(s->args);
+		break;
+	default:
+		program.push(s);	// single argument
+	};
 }

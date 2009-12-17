@@ -15,8 +15,6 @@
 
 MachinePtr Machine::instance(Machine::getInstance());
 
-extern Program program;
-
 /////////////////////////////////////////////////////////////////////////////
 Machine::Machine() : m_pc(NULL)
 {
