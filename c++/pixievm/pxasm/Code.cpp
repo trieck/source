@@ -125,8 +125,8 @@ void Code::putOp(LPSYMBOL s, uint32_t ctxt)
 	// and memory store instruction
 	program.push(&Machine::memstore);
 	program.push(ctxt);
-	program.push(location());		
-	
+	program.push(location());
+
 	// push instruction opcode
 	program.pushop(s->opcode);
 
@@ -146,13 +146,13 @@ void Code::putOp(LPSYMBOL s, uint32_t ctxt)
 
 /////////////////////////////////////////////////////////////////////////////
 void Code::putFixup(LPSYMBOL s, uint32_t ctxt)
-{		
+{
 	// push args and fixup instruction
 	program.push(&Machine::fixup);
 	program.push(ctxt);
-	program.push(location());	
+	program.push(location());
 	program.push(s);
-	
+
 	if (ctxt == IM8) {
 		putByte(0);
 	} else {
@@ -182,7 +182,7 @@ void Code::putByteAt(word location, byte b)
 	word offset = location - m_origin;
 
 	ASSERT(m_memory[offset] == 0);
-	
+
 	m_memory[offset] = b;
 }
 
@@ -460,16 +460,16 @@ void Code::pass2()
 void Code::write(FILE *fp) const
 {
 	const byte *pmem = &m_memory[0];
-	
+
 	if (fwrite(&m_origin, sizeof(word), 1, fp) != 1) {
 		throw Exception("can't write to file: %s.",
-				strerror(errno));
+		                strerror(errno));
 	}
 
 	for ( ; pmem < m_pmem; pmem++) {
 		if (fputc(*pmem, fp) == EOF) {
 			throw Exception("can't write to file: %s.",
-				strerror(errno));
+			                strerror(errno));
 		}
 	}
 

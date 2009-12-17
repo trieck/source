@@ -60,7 +60,7 @@ Instruction Machine::lookup(uint32_t opcode)
 void Machine::exec(const Program &program)
 {
 	m_pc = program;
-	
+
 	while (m_pc->type != DT_UNDEF)
 		eval();
 }
@@ -77,7 +77,7 @@ Datum Machine::eval()
 	case DT_INSTR:
 		return (this->*m_pc++->instr)();
 	default:
-		return *m_pc++; 
+		return *m_pc++;
 	};
 }
 
@@ -89,8 +89,8 @@ Datum Machine::evalsym(LPSYMBOL s)
 
 	switch (s->type) {
 	case ST_UNDEF:
-		throw Exception("identifier \"%s\" was undefined near line %d.", 
-			s->name.c_str(), s->lineno);
+		throw Exception("identifier \"%s\" was undefined near line %d.",
+		                s->name.c_str(), s->lineno);
 	case ST_OP:
 		if ((i = lookup(s->opcode)) == NULL) {
 			throw Exception("unrecognized opcode %d.", s->opcode);
@@ -163,7 +163,7 @@ Datum Machine::hibyte()
 	Datum result;
 	result.type = DT_CONST;
 	result.value = HIBYTE(arg.value);
-	
+
 	return result;
 }
 
@@ -175,7 +175,7 @@ Datum Machine::lobyte()
 	Datum result;
 	result.type = DT_CONST;
 	result.value = LOBYTE(arg.value);
-	
+
 	return result;
 }
 
@@ -188,12 +188,12 @@ Datum Machine::fixup()
 
 	word symloc = dsym.value;
 	word fixloc = loc.value;
-	
+
 	if (ctxt.value == IM8) {	// relative branch fix-up
 		word diff = symloc - fixloc;
 		if (diff > 0x7F) {
 			throw Exception("branch out of range.");
-		}		
+		}
 		m_code->putByteAt(fixloc, (byte)diff);
 	} else {	// forward reference
 		m_code->putWordAt(fixloc, symloc);

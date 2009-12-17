@@ -35,20 +35,40 @@ SymbolTable *table = SymbolTable::getInstance();
 %}
 
 comment			;.*
-newline			[\n]
+decnum			[0-9]+
+div				\/
+gt				>
 hexnum			\$[a-fA-F0-9]+
 identifier		[a-zA-Z][a-zA-Z0-9_]*
-whitespace		[\t\r ]+
-quotedstr		\"[^"\n]+\"
-pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
-offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
 lt				<
-gt				>
+minus			-
+mult			\*
+newline			[\n]
+offset-reg		[a-zA-Z]+[\r\t ]*\+[\r\t ]*[xX]
+plus			\+
+pseudo_op		\.[a-zA-Z][a-zA-Z0-9_]*
+quotedstr		\"[^"\n]+\"
+whitespace		[\t\r ]+
+
 %%
 {whitespace}	;
 {comment}		;
+{decnum}		{
+	word d;		
+	if (!sscanf(yytext, "%hu", &d)) {
+		yyerror("invalid decimal number");
+		return 0;
+	}		
+	
+	if (d < 0x100) {
+		yylval.sym = table->installw(ST_CONST, IM8, d); 
+		return IM8;
+	} else {
+		yylval.sym = table->installw(ST_CONST, IM16, d); 
+		return IM16;
+	}
+}
 {hexnum}		{
-	string error;
 	word d;		
 	if (!sscanf(&yytext[1], "%hx", &d)) {
 		yyerror("invalid hex number");
@@ -135,5 +155,9 @@ gt				>
 }
 {lt}	{ return LO_BYTE; }
 {gt}	{ return HI_BYTE; }
+{plus}	{ return PLUS; }
+{minus}	{ return MINUS; }
+{mult}	{ return MULT; }
+{div}	{ return DIV; }
 .		{ return yytext[0]; }
 %%

@@ -36,18 +36,19 @@ ANON_END
 %token	<sym>	IM8 IM16
 %token	<sym>	UNDEF
 
-%type	<sym>	NVAL M16 A16 expr8 expr16
+%type	<sym>	NVAL M16 A16 expr8 expr16 prim8 prim16
 
 %right		'='
-%left		'+' '-'
-%left		'*' '/' '%'
+%left		PLUS MINUS
+%left		MULT DIV
+%left		LO_BYTE HI_BYTE
 
 %%	/* begin grammar */
 
 prog:	stmts
 		;
 
-stmts:	stmt
+stmts:	  stmt
 		| stmts stmt
 		;
 
@@ -136,31 +137,69 @@ A16:		'[' expr8 ']'			{ $$ = $2; }
 		|	'[' expr16 ']'			{ $$ = $2; }
 		;
 		
-expr8:	IM8
+expr8:	  prim8
 		| LO_BYTE expr16	{ 
 				$$ = table->installo(LO_BYTE, IM8, $2);
 			}
 		| HI_BYTE expr16	{
 				$$ = table->installo(HI_BYTE, IM8, $2);
 			}
-		;
-		
-expr16:	IM16
-		| expr16 '+' expr16 {
+		| expr8 PLUS expr8 { 
 				$$ = table->installo(PLUS, IM16, SymbolTable::link($1, $3));
 			}
-		| expr16 '-' expr16 {
+		| expr8 MINUS expr8 { 
 				$$ = table->installo(MINUS, IM16, SymbolTable::link($1, $3));
 			}
-		| expr16 '*' expr16 {
+		;
+		
+prim8:	  IM8
+		| '(' expr8 ')' { $$ = $2; }
+		;
+
+expr16:	  prim16		
+		| expr8 PLUS expr16 { 
+				$$ = table->installo(PLUS, IM16, SymbolTable::link($1, $3));
+			}
+		| expr16 PLUS expr8 { 
+				$$ = table->installo(PLUS, IM16, SymbolTable::link($1, $3));
+			}
+		| expr16 PLUS expr16 { 
+				$$ = table->installo(PLUS, IM16, SymbolTable::link($1, $3));
+			}
+		| expr8 MINUS expr16 { 
+				$$ = table->installo(MINUS, IM16, SymbolTable::link($1, $3));
+			}
+		| expr16 MINUS expr8 { 
+				$$ = table->installo(MINUS, IM16, SymbolTable::link($1, $3));
+			}
+		| expr16 MINUS expr16 { 
+				$$ = table->installo(MINUS, IM16, SymbolTable::link($1, $3));
+			}
+		| expr8 MULT expr16 { 
 				$$ = table->installo(MULT, IM16, SymbolTable::link($1, $3));
 			}
-		| expr16 '/' expr16 {
+		| expr16 MULT expr8 { 
+				$$ = table->installo(MULT, IM16, SymbolTable::link($1, $3));
+			}
+		| expr16 MULT expr16 { 
+				$$ = table->installo(MULT, IM16, SymbolTable::link($1, $3));
+			}
+		| expr8 DIV expr16 { 
+				$$ = table->installo(DIV, IM16, SymbolTable::link($1, $3));
+			}
+		| expr16 DIV expr8 { 
+				$$ = table->installo(DIV, IM16, SymbolTable::link($1, $3));
+			}
+		| expr16 DIV expr16 { 
 				$$ = table->installo(DIV, IM16, SymbolTable::link($1, $3));
 			}
 		| UNDEF	/* forward reference */
 		;
-
+		
+prim16:	  IM16
+		| '(' expr16 ')'	{ $$ = $2; }
+		;
+		
 pseudo_op:	
 		DECL_ORG NVAL	{ 
 			if (code->isGenerating()) {

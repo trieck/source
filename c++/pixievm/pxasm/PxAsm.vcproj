@@ -324,7 +324,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Generating Parser from $(InputPath)..."
-						CommandLine="bison -d -y $(InputPath) -o Parser.cpp&#x0D;&#x0A;"
+						CommandLine="bison -v -d -y $(InputPath) -o Parser.cpp&#x0D;&#x0A;"
 						Outputs="Parser.hpp;Parser.cpp"
 					/>
 				</FileConfiguration>
