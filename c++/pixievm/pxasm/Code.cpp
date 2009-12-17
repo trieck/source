@@ -144,13 +144,7 @@ void Code::putOp(LPSYMBOL s, uint32_t ctxt)
 	program.pushop(s->opcode);
 
 	// push operator arguments
-	LPSYMBOL argv = s->args;
-	ASSERT(argv->type == ST_LIST);
-
-	SymbolVec::const_iterator it = argv->vsyms.begin();
-	for ( ; it != argv->vsyms.end(); it++) {
-		program.push(*it);
-	}
+	pushargs(s->args);
 
 	if (ctxt == IM8) {
 		putByte(0);
@@ -491,3 +485,18 @@ void Code::write(FILE *fp) const
 	fflush(fp);
 }
 
+/////////////////////////////////////////////////////////////////////////////
+void Code::pushargs(LPSYMBOL s)
+{
+	// push operator arguments
+	// this may be recursive, if arguments are themselves operators
+
+	ASSERT(s->type == ST_LIST);
+
+	SymbolVec::const_iterator it = s->vsyms.begin();
+	for ( ; it != s->vsyms.end(); it++) {
+		program.push(*it);
+		if ((*it)->type == ST_OP)
+			pushargs((*it)->args);
+	}
+}
