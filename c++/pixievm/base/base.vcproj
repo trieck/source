@@ -201,6 +201,16 @@
 			<File
 				RelativePath=".\PxDisassembler.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						FavorSizeOrSpeed="2"
+						BufferSecurityCheck="false"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Util.cpp"
