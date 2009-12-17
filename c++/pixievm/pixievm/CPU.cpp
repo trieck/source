@@ -850,7 +850,7 @@
     do {                                    \
         word ad = FETCH_WORD(REG_IP + 1);   \
         word m = FETCH_WORD(ad);            \
-        PUSH16(REG_IP + 2);                 \
+        PUSH16(REG_IP + 3);                 \
         REG_IP = m;                         \
     } while (0)                             \
  
