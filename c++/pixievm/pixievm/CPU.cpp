@@ -104,7 +104,7 @@
         STORE(a+1, LOBYTE(w));  \
     } while (0)
 
-#define R8PTR(n)            (((byte*)&regs[n])+(n&1))
+#define R8PTR(n)			(((byte*)regs)+n)
 #define R8VAL(n)            (*(R8PTR(n)))
 #define R16PTR(n)           (&regs[n])
 #define R16VAL(n)           (regs[n])

@@ -185,7 +185,7 @@ Datum Machine::fixup()
 	Datum target = eval();
 
 	if (ctxt.value == IM8) {	// relative branch fix-up
-		int16_t diff = target.value - loc.value;
+		int16_t diff = target.value - (loc.value+1);
 		
 		if (diff < (int8_t)0x80) {	// backward branch
 			throw Exception("backward branch out of range.");
