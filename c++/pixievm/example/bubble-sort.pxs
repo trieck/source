@@ -3,7 +3,9 @@
 ;
 ; the starting address of the list is in .d
 ; the length of the list is in .cl
-; .ch is used to hold an exchange flag.
+;
+; .bl is used as a counter
+; .ch is used to hold an exchange flag
 
 .org $8800
 
@@ -11,7 +13,7 @@ start:
 		; if we had an address-of-assembly
 		; operator here, we could programmatically
 		; determine the length of the list
-		mov cl, 8
+		mov cl, 2
 		mov d, data
 		call sort8
 		ret
@@ -19,12 +21,16 @@ start:
 data:
 		; data elements to be sorted
 		
-		.byte $ff, $a0, $c8, $c9
-		.byte $80, $ee, $08, $fe
+		.byte $ff, $fe
 		
 sort8:
+		cmp cl, 0		; empty list ?
+		jz end			; yes, nothing to do
+sortloop:
 		xor ch, ch		; turn exchange flag off
         xor x, x		; initialize index register
+        mov bl, cl		; put length of list in element counter
+        dec bl			; last element index
 nxtel:   
 		mov al, [d+x]	; fetch element
         inx
@@ -38,8 +44,9 @@ nxtel:
 		inx
 		mov ch, $ff		; turn on exchange flag
 chkend:
-		dec cl			; end of list ?
+		dec bl			; end of list ?
 		jnz nxtel		; no, fetch next element
 		bit ch, ch		; exchange flag still off ?
-		jmi sort8		; no, go through list again
+		jmi sortloop	; no, go through list again
+end:
 		ret				; yes, list is now ordered
