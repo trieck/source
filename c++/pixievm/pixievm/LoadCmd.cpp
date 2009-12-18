@@ -58,6 +58,6 @@ void LoadCmd::exec(const stringvec &v)
 		        filename.c_str());
 	}
 
-	printf("file \"%s\" loaded at $%.4x.\n", filename.c_str(),
-		start);
+	printf("file \"%s\" loaded @ $%.4x-$%.4x.\n", filename.c_str(),
+		start, start + (buf.st_size - sizeof(word)) - 1);
 }

@@ -1029,7 +1029,7 @@
         byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         byte m = FETCH(ad);                 \
-        word w = m - R8VAL(hi);             \
+        word w = R8VAL(hi) - m;             \
         SET_CARRY(w < 0x100);               \
         SET_NZ8(w);                         \
         REG_IP += 2;                        \
@@ -1042,7 +1042,7 @@
         byte lo = LONYBBLE(rp);             \
         word ad = EFFADDRESS(lo);           \
         word m = FETCH_WORD(ad);            \
-        dword dw = m - R16VAL(hi);          \
+        dword dw = R16VAL(hi) - m;          \
         SET_CARRY(dw < 0x10000);            \
         SET_NZ16(dw);                       \
         REG_IP += 2;                        \
@@ -1053,7 +1053,7 @@
         byte r = LOREG8(FETCH(REG_IP+1));   \
         word ad = FETCH_WORD(REG_IP + 2);   \
         byte m = FETCH(ad);                 \
-        word w = m - R8VAL(r);              \
+        word w = R8VAL(r) - m;              \
         SET_CARRY(w < 0x100);               \
         SET_NZ8(w);                         \
         REG_IP += 4;                        \
@@ -1064,7 +1064,7 @@
         byte r = LOREG16(FETCH(REG_IP+1));  \
         word ad = FETCH_WORD(REG_IP + 2);   \
         word m = FETCH_WORD(ad);            \
-        dword dw = m - R16VAL(r);           \
+        dword dw = R16VAL(r) - m;           \
         SET_CARRY(dw < 0x10000);            \
         SET_NZ16(dw);                       \
         REG_IP += 4;                        \
