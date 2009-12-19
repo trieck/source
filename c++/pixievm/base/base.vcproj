@@ -300,6 +300,10 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\PixieVM.pm"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

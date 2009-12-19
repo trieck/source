@@ -1,7 +1,14 @@
 #!/usr/bin/perl -w
 
 package PixieVM;
-use strict qw(vars warnings);
+use strict;
+use vars qw(@ISA @EXPORT);
+use warnings;
+
+use Exporter;
+@ISA = qw(Exporter);
+
+@EXPORT = qw(@modes %instr);
 
 # addressing modes 
 use constant RR8 		=> 0;	
@@ -33,7 +40,7 @@ use constant I8		 	=> IMPLIED + 1;
 use constant I16		=> I8 + 1;
 
 # addressing mode array
-my @modes = qw(
+our @modes = qw(
 	RR8
 	RR16
 	RM8
@@ -89,7 +96,7 @@ my @group_six = (R8, R16, M8, M16, A8, A16);
 my @group_seven = (R8, R16, M8, M16, A8, A16, I8, I16);
 
 # instructions
-my %instr = (
+our %instr = (
 	"ADC" => \@group_one,  
 	"AND" => \@group_one, 
 	"BIT" => \@group_one, 
