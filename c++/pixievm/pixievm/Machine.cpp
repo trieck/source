@@ -53,7 +53,7 @@ void Machine::run()
 {
 	// setup global interrupt
 	g_interrupt.setMonitor(&monitor);
-	g_interrupt.setTrap(&monitor, NULL);
+	g_interrupt.setTrap(&monitor);
 	g_interrupt.clearPending(IK_TRAP);
 
 	cpu->run();

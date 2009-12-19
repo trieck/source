@@ -8,6 +8,7 @@
 #include "Common.h"
 #include "SymbolTable.h"
 #include "Parser.hpp"
+#include "PixieVM.h"
 
 SymbolTablePtr SymbolTable::instance(SymbolTable::getInstance());
 
@@ -69,22 +70,22 @@ SymbolTable::SymbolTable()
 	iinsert("PUSH", I7, &INS_PUSH);
 
 	/* 8-bit registers */
-	rinsert("AL", R8, 0x00);
-	rinsert("AH", R8, 0x01);
-	rinsert("BL", R8, 0x02);
-	rinsert("BH", R8, 0x03);
-	rinsert("CL", R8, 0x04);
-	rinsert("CH", R8, 0x05);
-	rinsert("DL", R8, 0x06);
-	rinsert("DH", R8, 0x07);
+	rinsert("AL", R8, REG8_AL);
+	rinsert("AH", R8, REG8_AH);
+	rinsert("BL", R8, REG8_BL);
+	rinsert("BH", R8, REG8_BH);
+	rinsert("CL", R8, REG8_CL);
+	rinsert("CH", R8, REG8_CH);
+	rinsert("DL", R8, REG8_DL);
+	rinsert("DH", R8, REG8_DH);
 
 	/* 16-bit registers */
-	rinsert("A", R16, 0x00);
-	rinsert("B", R16, 0x01);
-	rinsert("C", R16, 0x02);
-	rinsert("D", R16, 0x03);
-	rinsert("X", R16, 0x04);
-	rinsert("SP", R16, 0x05);
+	rinsert("A", R16, REG16_A);
+	rinsert("B", R16, REG16_B);
+	rinsert("C", R16, REG16_C);
+	rinsert("D", R16, REG16_D);
+	rinsert("X", R16, REG16_X);
+	rinsert("SP", R16, REG16_SP);
 
 	/* Identifiers */
 	idinsert("BYTE", BYTE_PTR);

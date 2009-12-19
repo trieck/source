@@ -9,9 +9,7 @@
 #include "SymbolTable.h"
 #include "Code.h"
 #include "Memory.h"
-
-#define MAKEREG(hi, lo)	((hi << 4) | lo)
-#define OPCODE(i, m)	(*(*i)[m])
+#include "PixieVM.h"
 
 extern word address;
 

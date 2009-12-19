@@ -28,6 +28,7 @@ void HelpCmd::exec(const stringvec &v)
 	cout << "q   quit" << endl;
 	cout << "r   print registers" << endl;
 	cout << "s   save range file" << endl;
+	cout << "t   test machine" << endl;
 	cout << "u   dump memory [range]" << endl;
 	cout << "z   step [address]" << endl;
 }

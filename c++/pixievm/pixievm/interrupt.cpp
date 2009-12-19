@@ -46,6 +46,13 @@ void Interrupt::setMonitor(LPHANDLER handler)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+void Interrupt::setMonitorBreak(LPTRAPHANDLER handler)
+{
+	m_pending |= IK_MONBREAK;
+	m_trapHandler = handler;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 void Interrupt::handleMonitor()
 {
 	if (m_monHandler != NULL) {
@@ -53,3 +60,8 @@ void Interrupt::handleMonitor()
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////
+LPTRAPHANDLER Interrupt::getTrapHandler() const
+{
+	return m_trapHandler;
+}

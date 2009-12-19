@@ -19,7 +19,8 @@ enum cpu_int {
 	IK_IRQ		= 1 << 1,
 	IK_RESET	= 1 << 2,
 	IK_TRAP		= 1 << 3,
-	IK_MONITOR	= 1 << 4
+	IK_MONITOR	= 1 << 4,
+	IK_MONBREAK	= 1 << 5
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -38,10 +39,12 @@ public:
 		m_pending &= ~p;
 	}
 
-	void setTrap(LPTRAPHANDLER handler, void *data);
+	LPTRAPHANDLER getTrapHandler() const;
+	void setTrap(LPTRAPHANDLER handler, void *data = NULL);
 	void handleTrap();
 
 	void setMonitor(LPHANDLER handler);
+	void setMonitorBreak(LPTRAPHANDLER handler);
 	void handleMonitor();
 
 private:

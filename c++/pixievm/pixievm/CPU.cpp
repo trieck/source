@@ -33,13 +33,6 @@
 #define RESET_VECTOR        0xFFFC
 #define IRQ_VECTOR          0xFFFE
 
-#define NEG_FLAG            (0x80)
-#define OVERFLOW_FLAG       (0x40)
-#define BRK_FLAG            (0x08)
-#define INT_DISABLE_FLAG    (0x04)
-#define ZERO_FLAG           (0x02)
-#define CARRY_FLAG          (0x01)
-
 #define GET_CARRY()         (REG_FL & CARRY_FLAG)
 #define SET_CARRY(f)                    \
     do {                                \
@@ -2625,9 +2618,147 @@ word CPU::getFL() const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void CPU::setIP(word address)
+byte CPU::getAL() const
 {
-	REG_IP = address;
+	return R8VAL(REG8_AL);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+byte CPU::getAH() const
+{
+	return R8VAL(REG8_AH);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+byte CPU::getBL() const
+{
+	return R8VAL(REG8_BL);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+byte CPU::getBH() const
+{
+	return R8VAL(REG8_BH);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+byte CPU::getCL() const
+{
+	return R8VAL(REG8_CL);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+byte CPU::getCH() const
+{
+	return R8VAL(REG8_CH);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+byte CPU::getDL() const
+{
+	return R8VAL(REG8_DL);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+byte CPU::getDH() const
+{
+	return R8VAL(REG8_DH);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setA(word w)
+{
+	REG_A = w;
+}
+	
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setB(word w)
+{
+	REG_B = w;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setC(word w)
+{
+	REG_C = w;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setD(word w)
+{
+	REG_D = w;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setX(word w)
+{
+	REG_X = w;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setSP(word w)
+{
+	REG_SP = w;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setIP(word w)
+{
+	REG_IP = w;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setFL(word w)
+{
+	REG_FL = w;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setAL(byte b)
+{
+	R8VAL(REG8_AL) = b;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setAH(byte b)
+{
+	R8VAL(REG8_AH) = b;;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setBL(byte b)
+{
+	R8VAL(REG8_BL) = b;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setBH(byte b)
+{
+	R8VAL(REG8_BH) = b;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setCL(byte b)
+{
+	R8VAL(REG8_CL) = b;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setCH(byte b)
+{
+	R8VAL(REG8_CH) = b;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setDL(byte b)
+{
+	R8VAL(REG8_DL) = b;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::setDH(byte b)
+{
+	R8VAL(REG8_DH) = b;
 }
 
 void CPU::setShutdown(bool fShutdown)
@@ -2637,24 +2768,28 @@ void CPU::setShutdown(bool fShutdown)
 
 #define DO_INTERRUPT()										\
 	do {													\
-		int pending_interrupt = g_interrupt.getPending();	\
-															\
 		/* reset */											\
-		if (pending_interrupt & IK_RESET) {					\
+		if (g_interrupt.getPending() & IK_RESET) {			\
 			g_interrupt.clearPending(IK_RESET);				\
 			REG_IP = FETCH_WORD(RESET_VECTOR);				\
 		}													\
 															\
 		/* trap */											\
-		if (pending_interrupt & IK_TRAP) {					\
+		if (g_interrupt.getPending() & IK_TRAP) {			\
 			g_interrupt.clearPending(IK_TRAP);				\
 			g_interrupt.handleTrap();						\
 		}													\
 															\
 		/* monitor */										\
-		if (pending_interrupt & IK_MONITOR) {				\
+		if (g_interrupt.getPending() & IK_MONITOR) {		\
 			g_interrupt.clearPending(IK_MONITOR);			\
 			g_interrupt.handleMonitor();					\
+		}													\
+															\
+		/* monitor break */									\
+		if (g_interrupt.getPending() & IK_MONBREAK) {		\
+			g_interrupt.clearPending(IK_MONBREAK);			\
+			g_interrupt.handleTrap();						\
 		}													\
 	} while (0)
 
@@ -2662,16 +2797,11 @@ void CPU::setShutdown(bool fShutdown)
 void CPU::run()
 {
 	byte b;
-	int pending_interrupt;
 
 	reset();
 
 	while (!m_shutdown) {
-
-		pending_interrupt = g_interrupt.getPending();
-		if (pending_interrupt != IK_NONE) {
-			DO_INTERRUPT();
-		}
+		DO_INTERRUPT();
 
 		if (m_shutdown)
 			break;

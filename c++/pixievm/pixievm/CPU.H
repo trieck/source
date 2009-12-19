@@ -45,7 +45,33 @@ public:
 	word getIP() const;
 	word getFL() const;
 
-	void setIP(word address);
+	byte getAL() const;
+	byte getAH() const;
+	byte getBL() const;
+	byte getBH() const;
+	byte getCL() const;
+	byte getCH() const;
+	byte getDL() const;
+	byte getDH() const;
+
+	void setA(word w);
+	void setB(word w);
+	void setC(word w);
+	void setD(word w);
+	void setX(word w);
+	void setSP(word w);
+	void setIP(word w);
+	void setFL(word w);
+
+	void setAL(byte b);
+	void setAH(byte b);
+	void setBL(byte b);
+	void setBH(byte b);
+	void setCL(byte b);
+	void setCH(byte b);
+	void setDL(byte b);
+	void setDH(byte b);
+
 	void setShutdown(bool f);
 
 // Implementation
