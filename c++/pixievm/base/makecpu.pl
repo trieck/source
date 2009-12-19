@@ -1,6 +1,6 @@
 #!/bin/perl -w 
 
-# automatically generate source and header files
+# automatically generate pixievm CPU source and header files
 
 use strict qw(vars warnings);
 use lib './';

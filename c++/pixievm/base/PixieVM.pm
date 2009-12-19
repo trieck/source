@@ -1,5 +1,8 @@
 #!/usr/bin/perl -w
 
+# PixieVM module definitions
+#
+
 package PixieVM;
 use strict;
 use vars qw(@ISA @EXPORT);

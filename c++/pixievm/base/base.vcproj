@@ -277,7 +277,7 @@
 			Name="Perl Files"
 			>
 			<File
-				RelativePath=".\autogen.pl"
+				RelativePath=".\makecpu.pl"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
