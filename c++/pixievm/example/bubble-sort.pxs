@@ -13,15 +13,16 @@ start:
 		; if we had an address-of-assembly
 		; operator here, we could programmatically
 		; determine the length of the list
-		mov cl, 2
+		mov cl, 8
 		mov d, data
-		call sort8
-		ret
+		
+		jmp sort8		; jump over data
 
 data:
 		; data elements to be sorted
 		
-		.byte $ff, $fe
+		.byte $ff, $fe, $a0, $33
+		.byte $01, $cc, $8a, $80
 		
 sort8:
 		cmp cl, 0		; empty list ?
