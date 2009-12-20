@@ -743,6 +743,28 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\StepUntilCmd.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="common.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="common.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\SymbolTable.cpp"
 				>
 				<FileConfiguration
@@ -879,6 +901,10 @@
 			</File>
 			<File
 				RelativePath=".\StepCmd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StepUntilCmd.h"
 				>
 			</File>
 			<File

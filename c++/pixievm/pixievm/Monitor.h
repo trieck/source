@@ -53,20 +53,27 @@ private:
 typedef Command *LPCOMMAND;
 typedef map<string, LPCOMMAND, stringless> CommandMap;
 
+class Monitor;
+typedef auto_ptr<Monitor> MonitorPtr;
+
 /////////////////////////////////////////////////////////////////////////////
 // Monitor class
 class Monitor : public TrapHandler, public Handler {
 // Construction / Destruction
-public:
+private:
 	Monitor();
+public:
 	virtual ~Monitor();
 
 // Interface
+	static Monitor *getInstance();
+
 	virtual void trap(void *data);
 	virtual void handle();
-
+	
 	void setExit(bool f);
 	void disassemble(word address);
+	bool isRunning() const { return !m_exit_mon; }
 
 // Implementation
 private:
@@ -77,16 +84,18 @@ private:
 	void prompt() const;
 	void notice() const;
 
-	CommandMap commands;	/* map of commands */
-	bool exit_mon;			/* exit flag */
-	bool show_notice;		/* show notice */
+	static void sighandler(int signal);
+
+	CommandMap m_commands;			// map of commands 
+	bool m_exit_mon;				// exit flag 
+	bool m_show_notice;				// show notice 
+	static MonitorPtr instance;		// singleton instance
 };
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
-inline void Monitor::setExit(bool f)
-{
-	exit_mon = f;
+inline void Monitor::setExit(bool f) {
+	m_exit_mon = f;
 }
 
 #endif // __MONITOR_H__

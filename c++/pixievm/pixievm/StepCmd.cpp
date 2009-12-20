@@ -29,7 +29,7 @@ void StepCmd::exec(const stringvec &v)
 	if (v.size() > 0) {
 		int n = sscanf(v[0].c_str(), "%hx", &ip);
 		if (n != 1) {
-			cerr << "? z [address]" << endl;
+			cerr << "? t [address]" << endl;
 			return;
 		}
 

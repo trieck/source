@@ -25,10 +25,10 @@ void HelpCmd::exec(const stringvec &v)
 	cout << "a   assemble [address]" << endl;
 	cout << "d   disassemble [range]" << endl;
 	cout << "l   load file" << endl;
+	cout << "m   dump memory [range]" << endl;
 	cout << "q   quit" << endl;
 	cout << "r   print registers" << endl;
 	cout << "s   save range file" << endl;
-	cout << "t   test machine" << endl;
-	cout << "u   dump memory [range]" << endl;
-	cout << "z   step [address]" << endl;
+	cout << "t   step [address]" << endl;
+	cout << "u   step until return [address]" << endl;
 }

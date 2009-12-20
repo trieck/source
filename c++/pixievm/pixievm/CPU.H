@@ -72,6 +72,9 @@ public:
 	void setDL(byte b);
 	void setDH(byte b);
 
+	void push16(word w);
+	word pop16();
+
 	void setShutdown(bool f);
 
 // Implementation

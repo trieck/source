@@ -812,7 +812,7 @@
         REG_SP -= 2;                        \
     } while (0)
 
-#define POP16()   (FETCH_WORD(++(++REG_SP)))
+#define POP16()		((POP8() << 8) | POP8())
 
 #define DO_BRK()                            \
     do {                                    \
@@ -2817,4 +2817,16 @@ void CPU::run()
 void CPU::reset()
 {
 	g_interrupt.setPending(IK_RESET);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CPU::push16(word w)
+{
+	PUSH16(w);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+word CPU::pop16()
+{
+	return POP16();
 }

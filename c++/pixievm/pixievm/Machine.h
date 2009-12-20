@@ -10,7 +10,6 @@
 
 #include "CPU.h"
 #include "Memory.h"
-#include "Monitor.h"
 
 /////////////////////////////////////////////////////////////////////////////
 class Machine {
@@ -29,7 +28,6 @@ private:
 
 	Memory* memory;				// pointer to memory
 	CPU *cpu;					// pointer to CPU
-	Monitor monitor;			// monitor instance
 };
 /////////////////////////////////////////////////////////////////////////////
 

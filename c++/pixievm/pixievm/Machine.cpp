@@ -10,6 +10,7 @@
 #include "Machine.h"
 #include "Exception.h"
 #include "Opcodes.h"
+#include "Monitor.h"
 
 #define CHARGEN_BASE (0xC000)
 #define CHARGEN_SIZE (0x800)
@@ -52,8 +53,10 @@ void Machine::loadROM(const char *filename, word base, word size)
 void Machine::run()
 {
 	// setup global interrupt
-	g_interrupt.setMonitor(&monitor);
-	g_interrupt.setTrap(&monitor);
+	Monitor *mon = Monitor::getInstance();
+
+	g_interrupt.setMonitor(mon);
+	g_interrupt.setTrap(mon);
 	g_interrupt.clearPending(IK_TRAP);
 
 	cpu->run();

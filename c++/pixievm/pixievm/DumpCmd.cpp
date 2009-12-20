@@ -38,19 +38,19 @@ void DumpCmd::exec(const stringvec &v)
 	} else if (v.size() == 1) {
 		int n = sscanf(v[0].c_str(), "%hx", &start);
 		if (n != 1) {
-			cerr << "? u [range]" << endl;
+			cerr << "? m [range]" << endl;
 			return;
 		}
 		end = start + (LINESIZE * DEFLINES) - 1;
 	} else if (v.size() > 1) {
 		int n = sscanf(v[0].c_str(), "%hx", &start);
 		if (n != 1) {
-			cerr << "? u [range]" << endl;
+			cerr << "? m [range]" << endl;
 			return;
 		}
 		n = sscanf(v[1].c_str(), "%hx", &end);
 		if (n != 1) {
-			cerr << "? u [range]" << endl;
+			cerr << "? m [range]" << endl;
 			return;
 		}
 	}

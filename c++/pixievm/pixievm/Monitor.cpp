@@ -18,30 +18,46 @@
 #include "SaveCmd.h"
 #include "DumpCmd.h"
 #include "StepCmd.h"
+#include "StepUntilCmd.h"
+#include "Interrupt.h"
+#include "CPU.h"
+#include <signal.h>
+
+MonitorPtr Monitor::instance(Monitor::getInstance());
 
 /////////////////////////////////////////////////////////////////////////////
-Monitor::Monitor() : exit_mon(false), show_notice(true)
+Monitor::Monitor() : m_exit_mon(false), m_show_notice(true)
 {
-	commands["?"] = new HelpCmd(this);
-	commands["help"] = commands["?"]->CopyRef();
-	commands["a"] = new AssemCmd(this);
-	commands["d"] = new DisassemCmd(this);
-	commands["l"] = new LoadCmd(this);
-	commands["q"] = new QuitCmd(this);
-	commands["r"] = new RegistersCmd(this);
-	commands["s"] = new SaveCmd(this);
-	commands["u"] = new DumpCmd(this);
-	commands["z"] = new StepCmd(this);
+	m_commands["?"] = new HelpCmd(this);
+	m_commands["help"] = m_commands["?"]->CopyRef();
+	m_commands["a"] = new AssemCmd(this);
+	m_commands["d"] = new DisassemCmd(this);
+	m_commands["l"] = new LoadCmd(this);
+	m_commands["m"] = new DumpCmd(this);
+	m_commands["q"] = new QuitCmd(this);
+	m_commands["r"] = new RegistersCmd(this);
+	m_commands["s"] = new SaveCmd(this);
+	m_commands["t"] = new StepCmd(this);
+	m_commands["u"] = new StepUntilCmd(this);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Monitor::~Monitor()
 {
-	CommandMap::const_iterator it = commands.begin();
-	for (; it != commands.end(); it++) {
+	CommandMap::const_iterator it = m_commands.begin();
+	for (; it != m_commands.end(); it++) {
 		LPCOMMAND cmd = (*it).second;
 		cmd->DecRef();
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Monitor *Monitor::getInstance()
+{
+	if (instance.get() == NULL) {
+		instance = MonitorPtr(new Monitor);
+	}
+	return instance.get();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -49,7 +65,7 @@ void Monitor::disassemble(word address)
 {
 	// this is a single line convenience method used by the stepper
 
-	DisassemCmd *disassemble = static_cast<DisassemCmd*>(commands["d"]);
+	DisassemCmd *disassemble = static_cast<DisassemCmd*>(m_commands["d"]);
 	if (disassemble != NULL) {
 		disassemble->disassemble(address);
 	}
@@ -59,6 +75,7 @@ void Monitor::disassemble(word address)
 void Monitor::run()
 {
 	notice();
+	signal(SIGBREAK, &Monitor::sighandler);
 	runLoop(NULL);
 }
 
@@ -68,7 +85,7 @@ void Monitor::runLoop(void *data)
 	LineReader reader(cin);
 	string line;
 
-	for (exit_mon = false; !exit_mon; ) {
+	for (m_exit_mon = false; !m_exit_mon; ) {
 		prompt();
 		line = reader.readLine();
 		if (line.length())
@@ -79,10 +96,11 @@ void Monitor::runLoop(void *data)
 /////////////////////////////////////////////////////////////////////////////
 void Monitor::notice() const
 {
-	if (show_notice) {
-		cout << endl << "PixieVM version 0.0.1" << endl
+	if (m_show_notice) {
+		cout << "PixieVM Monitor version 0.0.1" << endl
 		     << "Copyright (c) 2006-2009 Thomas A. Rieck" << endl
-		     << "type '?' for help" << endl;
+			 << "use CTRL+BREAK to break execution." << endl
+		     << "type '?' for help." << endl;
 	}
 }
 
@@ -93,8 +111,8 @@ void Monitor::dispatch(const string & line)
 	if (v.size() == 0) {
 		cerr << '?' << endl;
 	} else {
-		CommandMap::const_iterator it = commands.find(v[0]);
-		if (it == commands.end()) {
+		CommandMap::const_iterator it = m_commands.find(v[0]);
+		if (it == m_commands.end()) {
 			cerr << '?' << endl;
 		} else {
 			v.erase(v.begin());
@@ -122,3 +140,21 @@ void Monitor::trap(void *data)
 	runLoop(data);
 }
 
+////////////////////////////////////////////////////////////////////////////
+void Monitor::sighandler(int signum)
+{
+	Monitor *This = Monitor::getInstance();
+	CPU *cpu = CPU::getInstance();
+
+	switch (signum) {
+	case SIGBREAK:
+		if (!This->isRunning()) {	// executing code, not in monitor
+			This->setExit(false);	// set back to running to break
+		} else {
+			cpu->setShutdown(true);	// shut down CPU
+			This->setExit(true);	// exit monitor
+		}
+	default:
+		break;
+	};
+}
