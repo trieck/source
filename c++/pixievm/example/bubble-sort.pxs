@@ -10,11 +10,8 @@
 .org $8800
 
 start:
-		; if we had an address-of-assembly
-		; operator here, we could programmatically
-		; determine the length of the list
-		mov cl, 8
-		mov d, data
+		mov cl, 8		; length of the list
+		mov d, data		; starting address of list
 		
 		jmp sort8		; jump over data
 
