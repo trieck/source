@@ -50,7 +50,6 @@ void StepUntilCmd::exec(const stringvec &v)
 	}
 	
 	Monitor *mon = getMonitor();
-	mon->disassemble(ip);
 
 	g_interrupt.setTrap(this, reinterpret_cast<void*>(ip));
 	mon->setExit(true);	
@@ -73,7 +72,6 @@ void StepUntilCmd::trap(void *data)
 		g_interrupt.setMonitorBreak(mon);
 	} else {		
 		ip = cpu->getIP();
-		mon->disassemble(ip);
 		g_interrupt.setTrap(this, reinterpret_cast<void*>(ip));
 	}
 }
