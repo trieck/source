@@ -36,7 +36,7 @@ ANON_END
 %token	<sym>	IM8 IM16
 %token	<sym>	UNDEF
 
-%type	<sym>	NVAL M16 A16 expr8 expr16 prim8 prim16
+%type	<sym>	NVAL M16 A16 expr expr8 expr16 prim8 prim16
 %type	<sym>	decl8_list decl16_list
 
 %right		'='
@@ -157,6 +157,9 @@ prim8:	  IM8
 		| '(' expr8 ')' { $$ = $2; }
 		;
 
+expr:	expr8 | expr16
+		;
+
 expr16:	  prim16		
 		| expr8 PLUS expr16 { 
 				$$ = table->installo(PLUS, IM16, table->mklist($1, $3));
@@ -218,7 +221,6 @@ pseudo_op:
 			code->setOrigin($2->val16); 
 		}
 		| DECL_BYTE decl8_list	{ code->putSym($2, IM8); }
-		| DECL_WORD decl8_list	{ code->putSym($2, IM16); }
 		| DECL_WORD decl16_list	{ code->putSym($2, IM16); }
 		| DECL_TEXT STRING		{ code->putString($2->sval); }
 		;
@@ -230,8 +232,8 @@ decl8_list:	  expr8
 			| decl8_list ',' expr8 { $$ = table->mklist($1, $3); }
 			;
 
-decl16_list:  expr16
-			| decl16_list ',' expr16 { $$ = table->mklist($1, $3); }
+decl16_list:  expr
+			| decl16_list ',' expr { $$ = table->mklist($1, $3); }
 			;
 
 %%	
