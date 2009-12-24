@@ -1,0 +1,20 @@
+
+; fast multiply by 10
+; adapted from http://6502.org/source/integers/fastx10.htm
+; by Leao Nechaev (leo@ogpi.orsk.ru), 28 October 2000
+;
+; .al holds the number to multiply
+;
+
+.org $c000
+
+mult10:
+	shl al			; multiply by 2
+	mov [TEMP], al	; store to TEMP
+	shl al			; again multiply by 2 (*4)
+	shl al			; again multiply by 2 (*8)
+	clc	
+	adc al, [TEMP]	; as result, al = x*8 + x*2
+	ret
+	
+TEMP:	.byte $00

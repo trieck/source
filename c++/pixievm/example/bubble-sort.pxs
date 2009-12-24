@@ -1,8 +1,8 @@
 
 ; PixieVM 8-bit bubble sort
 ;
-; the starting address of the list is in .d
-; the length of the list is in .cl
+; .cl holds the length of the list
+; .d holds the starting address of the list
 ;
 ; .bl is used as a counter
 ; .ch is used to hold an exchange flag
@@ -10,11 +10,11 @@
 .org $8800
 
 start:
-		mov cl, 8		; length of the list
-		mov d, data		; starting address of list
+		mov c, sort8-data	; length of the list
+		mov d, data			; starting address of list
 		
-		jmp sort8		; jump over data
-
+		jmp sort8			; jump over data
+		
 data:
 		; data elements to be sorted
 		

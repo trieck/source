@@ -1,0 +1,55 @@
+
+; PixieVM 8-bit insertion sort
+;
+; .cl holds the length of the list
+; .d holds the starting address of the list
+;
+
+.org $8800
+
+start:
+		mov c, sort8-data	; length of the list
+		mov d, data			; starting address of list
+		
+		jmp sort8			; jump over data
+		
+data:
+		; data elements to be sorted
+		
+		.byte $ff, $fe, $a0, $33
+		.byte $01, $cc, $8a, $80
+		
+sort8:	
+		cmp cl, 2		; list length <= 1 ?
+		jcc end			; yes, nothing to do
+		
+		xor x, x		; initialize index 
+		
+loop1:
+		inx				; next element
+		cmp c, x		
+		jz end			; end of list
+		
+		mov al, [d+x]	; fetch element 
+	
+loop2:
+		dex				; previous element
+		jmi next		; index >= 0
+		
+		cmp [d+x], al	; compare with previous
+		jcc next		; [d+x] < al
+		jz next			; [d+x] = al
+		
+		mov bl, [d+x]
+		inx
+		mov [d+x], bl	; a[j+1] := a[j]
+		dex
+		
+		jmp loop2
+		
+next:
+		inx				; restore index
+		mov [d+x], al	; a[j+1] := value
+		jmp loop1	
+end:
+		ret
