@@ -90,11 +90,11 @@ public class TicTacToe {
 	public void play() {
 		theFrame.setVisible(true);
 	}
-	
+
 	public int getDepth() {
 		return theMachine.getDepth();
 	}
-	
+
 	public void setDepth(int depth) {
 		theMachine.setDepth(depth);
 	}

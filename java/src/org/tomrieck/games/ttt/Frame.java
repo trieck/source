@@ -14,8 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class Frame extends JFrame {
 
@@ -40,7 +40,7 @@ public class Frame extends JFrame {
 	private static final String MENU_FILE = "File";
 	private static final String ITEM_FILE_EXIT = "Exit";
 	private static final String ITEM_FILE_NEW = "New Game";
-	
+
 	private static final String MENU_TOOLS = "Tools";
 	private static final String ITEM_TOOLS_OPTIONS = "Options";
 
@@ -65,22 +65,18 @@ public class Frame extends JFrame {
 			game.newGame();
 		}
 	};
-	
+
 	private final ActionListener ITEM_TOOLS_OPTIONS_LISTENER = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			TicTacToe game = TicTacToe.getInstance();
 			int ndepth = game.getDepth();
 			String[] depths = { "1", "2", "4", "9" };
-			
-			String depth = (String)JOptionPane.showInputDialog(
-					Frame.this,
-			        "Game Tree Depth:",
-			        "Options",
-			        JOptionPane.QUESTION_MESSAGE,
-			        null,
-			        depths,
-			        String.valueOf(ndepth));
-			
+
+			String depth = (String) JOptionPane.showInputDialog(Frame.this,
+					"Game Tree Depth:", "Options",
+					JOptionPane.QUESTION_MESSAGE, null, depths, String
+							.valueOf(ndepth));
+
 			if (depth != null) {
 				try {
 					ndepth = Integer.parseInt(depth);
@@ -130,11 +126,11 @@ public class Frame extends JFrame {
 		item = new JMenuItem(ITEM_FILE_EXIT, KeyEvent.VK_X);
 		item.addActionListener(ITEM_FILE_EXIT_LISTENER);
 		menu.add(item);
-		
+
 		menu = new JMenu(MENU_TOOLS);
 		menu.setMnemonic(KeyEvent.VK_T);
 		bar.add(menu);
-		
+
 		item = new JMenuItem(ITEM_TOOLS_OPTIONS, KeyEvent.VK_O);
 		item.addActionListener(ITEM_TOOLS_OPTIONS_LISTENER);
 		menu.add(item);

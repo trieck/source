@@ -5,16 +5,16 @@ public class Machine {
 	private static final int MAX_RANK = Integer.MAX_VALUE;
 	private final int color;
 	private int theDepth;
-	
+
 	public Machine(int color) {
 		theDepth = DEFAULT_DEPTH;
 		this.color = color;
 	}
-	
+
 	public int getDepth() {
 		return theDepth;
 	}
-	
+
 	public void setDepth(int depth) {
 		theDepth = depth;
 	}

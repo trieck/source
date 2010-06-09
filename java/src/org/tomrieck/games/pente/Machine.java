@@ -72,9 +72,9 @@ public class Machine {
 	private static final int MEANPOINT = Board.VSIZE / 2;
 
 	private final List<Point> block = new ArrayList<Point>(); /*
-																 * current "must
-																 * block" list
-																 */
+	 * current "must
+	 * block" list
+	 */
 	private final Board board = Board.getInstance();
 
 	public Point move() {
@@ -95,7 +95,7 @@ public class Machine {
 		}
 
 		if (maxWeight == MINWEIGHT && block.size() == 0) { // no feasible
-															// strategy found
+			// strategy found
 			if ((pt = blockMove()) == null) { // try a blocking move
 				pt = randomMove(); // try a random move
 			}
@@ -377,8 +377,8 @@ public class Machine {
 			}
 
 			if (ocount == Board.VSIZE - 1 && ecount == 1) { // must block, b
-															// contains the
-															// square to block
+				// contains the
+				// square to block
 				weight = weight(b);
 				if (weight > maxWeight) {
 					maxP = b;

@@ -43,7 +43,7 @@ public class Board implements Cloneable, Iterable<Board> {
 					continue; // winner
 				}
 
-				addNode(next, depth-1, -color);
+				addNode(next, depth - 1, -color);
 			}
 		}
 	}
