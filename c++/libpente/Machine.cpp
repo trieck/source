@@ -108,7 +108,7 @@ float Machine::weightVector(const Vector &v) const
 	n = pt.y;
 	x = CENTER / BOARD_SIZE;
 	y = CENTER % BOARD_SIZE;
-	d = abs(x - m) + abs(y - n) + 1;
+	d = abs((int)(x - m)) + abs((int)(y - n)) + 1;
 	weight += 1/float(d);
 
 	// add weighted contiguity
