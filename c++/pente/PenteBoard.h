@@ -38,7 +38,7 @@ public:
 
 	bool addPiece(int x, int y, uint32_t currentTurn);
 
-	const Vector *winner(uint32_t &nplayer) const;
+	const Vector *winner(uint32_t &nplayer);
 	void getCaptures(const CPoint &pt, CaptureVec &captures);
 
 	bool isEmpty() const;
@@ -49,11 +49,12 @@ public:
 	static void getDimensions(CRect & rc);
 	static void getBoundingRect(CRect & rc);
 
-	enum { DEFAULT_TABLE_COLOR		= 0x00003250 };
-	enum { DEFAULT_BOARD_COLOR		= 0x00D4F0FF };
+	enum { DEFAULT_TABLE_COLOR		= 0x003250 };
+	enum { DEFAULT_BOARD_COLOR		= 0xD4F0FF };
 	enum { DEFAULT_GRID_COLOR		= 0xC0C0C0 };
-	enum { DEFAULT_PLAYER_ONE_COLOR = 0x00008000 };
-	enum { DEFAULT_PLAYER_TWO_COLOR = 0x00000080 };
+	enum { DEFAULT_PLAYER_ONE_COLOR = 0x008000 };
+	enum { DEFAULT_PLAYER_TWO_COLOR = 0x000080 };
+	enum { DEFAULT_WINNER_COLOR		= 0x0000C0 };
 
 // Implementation
 private:
@@ -61,7 +62,7 @@ private:
 	void renderBoard(CDC *pDC, const CRect & rc);
 	void CreateBitmap();
 	void PaintBitmap();
-
+	bool isWinner(const CPoint &pt) const;
 	static CPoint mapIndexToPoint(const CPoint &);
 
 	enum { cxPiece = 18 };
@@ -74,12 +75,13 @@ private:
 	enum { cxOffset = 2 };
 	enum { cyOffset = 2 };
 
-	PieceBitmap bmPlayerOne, bmPlayerTwo;
+	PieceBitmap bmPlayerOne, bmPlayerTwo, bmWinner;
 
 	CBrush bkgBrush;
 	CPen pen;
 	COLORREF bkgColor, gridColor;
 	Board *board;
+	const Vector *winnerVec;
 
 	CRgn m_Region;
 	CDC m_MemDC;

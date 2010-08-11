@@ -105,6 +105,10 @@ bool PenteDoc::checkWinner()
 	        playerOneCaptures == Player::MAX_CAPTURES ||
 	        playerTwoCaptures == Player::MAX_CAPTURES) {
 
+		if (vector != NULL) {
+			UpdateAllViews(NULL); // winning vector
+		}
+
 		if (vector == NULL && playerOneCaptures == Player::MAX_CAPTURES)
 			winner = ET_PLAYER_ONE;
 		if (vector == NULL && playerTwoCaptures == Player::MAX_CAPTURES)
@@ -218,3 +222,5 @@ void PenteDoc::OnToolsSettings()
 	SettingsSheet sheet(IDS_SETTINGS, AfxGetMainWnd());
 	sheet.DoModal();
 }
+
+

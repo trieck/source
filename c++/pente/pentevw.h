@@ -53,6 +53,7 @@ protected:
 private:
 	CBrush bkgBrush;
 	COLORREF bkgColor;
+public:
 };
 
 #ifndef _DEBUG  // debug version in pentevw.cpp

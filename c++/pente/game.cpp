@@ -128,7 +128,7 @@ void PenteGame::makePlayers()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-const Vector *PenteGame::winner(uint32_t &nplayer) const
+const Vector *PenteGame::winner(uint32_t &nplayer)
 {
 	return board.winner(nplayer);
 }

@@ -27,6 +27,7 @@ BEGIN_MESSAGE_MAP(PenteView, CView)
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
+//	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -177,4 +178,5 @@ LRESULT PenteView::OnAppSettingChange(WPARAM wParam, LPARAM lParam)
 
 	return 0;
 }
+
 

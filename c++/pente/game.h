@@ -32,7 +32,7 @@ public:
 	bool move(CPoint &pt, CaptureVec &captures);
 	void Serialize(CArchive& ar);
 	static WORD getFileMagicNumber();
-	const Vector *winner(uint32_t &nplayer) const;
+	const Vector *winner(uint32_t &nplayer);
 
 // Implementation
 private:

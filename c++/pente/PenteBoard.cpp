@@ -10,7 +10,7 @@
 IMPLEMENT_SERIAL(PenteBoard, CObject, VERSIONABLE_SCHEMA | 1)
 
 /////////////////////////////////////////////////////////////////////////////
-PenteBoard::PenteBoard()
+PenteBoard::PenteBoard() : winnerVec(NULL)
 {
 	CWinApp *pApp = AfxGetApp();
 	ASSERT_VALID(pApp);
@@ -29,6 +29,7 @@ PenteBoard::PenteBoard()
 
 	bmPlayerOne.setColor(playerOneColor);
 	bmPlayerTwo.setColor(playerTwoColor);
+	bmWinner.setColor(DEFAULT_WINNER_COLOR);
 
 	board = Board::instance();
 
@@ -67,13 +68,14 @@ void PenteBoard::renderTable(CDC *pDC, const CRect & rc)
 /////////////////////////////////////////////////////////////////////////////
 void PenteBoard::renderBoard(CDC *pDC, const CRect & rc)
 {
-	CPoint pt;
+	CPoint pt, ePoint;
 	CRect rcPiece;
 
 	UInt32EntryMapEnum e = board->enumEntries();
 	while (e.hasNext()) {
 		const Entry & entry = e.next().second;
-		pt = mapIndexToPoint(entry.where());
+		ePoint = entry.where();
+		pt = mapIndexToPoint(ePoint);
 		rcPiece.left = pt.x;
 		rcPiece.top = pt.y;
 		rcPiece.right = rcPiece.left + cxPiece;
@@ -82,11 +84,30 @@ void PenteBoard::renderBoard(CDC *pDC, const CRect & rc)
 		if (!pDC->RectVisible(rcPiece))
 			continue;
 
-		PieceBitmap &piece = entry.getType() == ET_PLAYER_ONE ?
-		                     bmPlayerOne : bmPlayerTwo;
+		PieceBitmap &piece = isWinner(ePoint) ?
+							bmWinner : (
+							entry.getType() == ET_PLAYER_ONE ?
+		                     bmPlayerOne : bmPlayerTwo);
 
 		piece.Draw(pDC, pt.x, pt.y);
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool PenteBoard::isWinner(const CPoint &aPoint) const 
+{
+	if (winnerVec == NULL)
+		return false;
+
+	POINT pt;
+	for (uint32_t i = 0; i < VSIZE; i++) {
+		pt = winnerVec->entry(i);
+
+		if (aPoint == pt) 
+			return true;
+	}
+
+	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -164,12 +185,18 @@ bool PenteBoard::addPiece(int x, int y, uint32_t currentTurn)
 void PenteBoard::clear()
 {
 	board->clear();
+	winnerVec = NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-const Vector *PenteBoard::winner(uint32_t &nplayer) const
+const Vector *PenteBoard::winner(uint32_t &nplayer)
 {
-	return board->winner(nplayer);
+	const Vector *vector;
+	if ((vector = board->winner(nplayer)) != NULL) {
+		winnerVec = vector;
+	}
+
+	return vector;
 }
 
 /////////////////////////////////////////////////////////////////////////////
