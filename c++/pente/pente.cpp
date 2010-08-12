@@ -70,10 +70,10 @@ BOOL PenteApp::InitInstance()
 		res_reg = RegOverridePredefKey(HKEY_CLASSES_ROOT, HKCU);
 
 	RegisterShellFileTypes(TRUE);
-	EnableShellOpen();
-
 	RegCloseKey(HKCU);
-
+	
+	EnableShellOpen();
+	
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
