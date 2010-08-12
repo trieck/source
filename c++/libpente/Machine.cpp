@@ -298,12 +298,12 @@ POINT Machine::blockMove() const
 POINT Machine::randomMove() const
 {
 	EntryVec empty = board->empty();
-	uint32_t size, n;
+	size_t size, n;
 
 	srand((uint32_t)time(NULL));
 
 	if ((size = empty.size()) > 0) {
-		n = (uint32_t)(double)rand() / (RAND_MAX + 1) * (size-1);
+		n = (size_t)(double)rand() / (RAND_MAX + 1) * (size-1);
 		const Entry &entry = empty.at(n);
 		return entry.where();
 	}

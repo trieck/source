@@ -124,7 +124,7 @@ bool PenteDoc::checkWinner()
 		if (nRtn == IDNO) {
 			AfxGetMainWnd()->PostMessage(WM_CLOSE);
 		} else {
-			OnNewDocument();
+			AfxGetApp()->OnCmdMsg(ID_FILE_NEW, 0, 0, 0);
 			UpdateAllViews(NULL);
 		}
 		return true;

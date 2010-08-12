@@ -140,7 +140,7 @@ void PenteGame::getCaptures(const CPoint &pt, CaptureVec &captures)
 
 	Player *player = getCurrentPlayer();
 
-	player->addCaptures(captures.size());
+	player->addCaptures((uint8_t)captures.size());
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -253,7 +253,7 @@ CSize GripperBar::CalcLayout(DWORD dwMode, int nLength)
 	CSize sizeResult(0,0);
 	//BLOCK: Load Buttons
 	{
-		nCount = DefWindowProc(TB_BUTTONCOUNT, 0, 0);
+		nCount = (int)DefWindowProc(TB_BUTTONCOUNT, 0, 0);
 		if (nCount != 0) {
 			int i;
 			pData = new TBBUTTON[nCount];

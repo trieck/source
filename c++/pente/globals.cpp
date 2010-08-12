@@ -16,7 +16,7 @@ int getTextWidth(CWnd *pWnd, LPCTSTR str)
 	ASSERT_VALID(pFont);
 	CFont * pOldFont = pDC->SelectObject(pFont);
 	SIZE sz;
-	::GetTextExtentPoint32(*pDC, str, _tcslen(str), &sz);
+	::GetTextExtentPoint32(*pDC, str, (int)_tcslen(str), &sz);
 	pDC->SelectObject(pOldFont);
 	pWnd->ReleaseDC(pDC);
 	return sz.cx;
