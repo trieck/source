@@ -1,8 +1,11 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pente", "pente.vcxproj", "{2D6E7937-4E6F-496B-8843-3692D0846AF4}"
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pente", "pente.vcproj", "{2D6E7937-4E6F-496B-8843-3692D0846AF4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BA2B31F3-2A32-4432-9511-ED9D72134702} = {BA2B31F3-2A32-4432-9511-ED9D72134702}
+	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libpente", "..\libpente\libpente.vcxproj", "{BA2B31F3-2A32-4432-9511-ED9D72134702}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libpente", "..\libpente\libpente.vcproj", "{BA2B31F3-2A32-4432-9511-ED9D72134702}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
