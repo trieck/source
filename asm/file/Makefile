@@ -5,7 +5,7 @@
 
 OBJECTS = file.obj 
 LIBS = msvcrt.lib
-ASM = nasmw
+ASM = nasm
 ASMFLAGS = -f win32
 
 file.exe :	$(OBJECTS)
