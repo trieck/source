@@ -1,13 +1,16 @@
 
-OBJECTS = first.obj 
 LINK = link.exe
-LIB64 = C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Lib\x64
-LFLAGS = /nologo /machine:X64 /subsystem:windows /defaultlib:"$(LIB64)\kernel32.lib" /defaultlib:"$(LIB64)\user32.lib" /entry:main
+LFLAGS = /nologo /machine:X64 /entry:main
 NASM = nasm
 NASMFLAGS = -f win64
 
-first.exe :	$(OBJECTS)
-	$(LINK) $(LFLAGS) $(OBJECTS) /out:$@
+all : first.exe second.exe
+
+first.exe :	first.obj
+	$(LINK) $(LFLAGS) /subsystem:windows /defaultlib:kernel32.lib /defaultlib:user32.lib first.obj /out:$@
+
+second.exe : second.obj
+	$(LINK) $(LFLAGS) /subsystem:console /defaultlib:kernel32.lib second.obj /out:$@
 	
 .asm.obj :
 	$(NASM) $(NASMFLAGS) $< 
@@ -15,4 +18,5 @@ first.exe :	$(OBJECTS)
 clean:
 	@erase *.obj 2>nul
 	@erase *.exe 2>nul
-	
+	@erase *.pdb 2>nul
+	@erase *.ilk 2>nul
