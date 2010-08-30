@@ -1,6 +1,7 @@
 ; first x64 program
 ;
 bits 64
+default rel
 
 extern MessageBoxA
 extern ExitProcess
@@ -13,9 +14,6 @@ SECTION .text
 global main
 main:
 	sub rsp, 28h 		; shadow space, aligns stack
-						; 4 params to MessageBox @8-bytes
-						; + 8-byte return value
-						; = 40d (28h).
 						
 	xor r9d, r9d		; uType = MB_OK
 	mov r8, title		; LPCSTR lpCaption
