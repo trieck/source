@@ -1,24 +1,19 @@
+INCLUDE = 
 LINK = GoLink.exe
-LFLAGS = /entry main 
-NASM = nasm
-NASMFLAGS = -ic:\nasmx\inc\ -f win64 
+LFLAGS = /entry _MAIN__ 
+ASM = GoAsm
+AFLAGS = /x64 /l
 
-all : first.exe second.exe third.exe fourth.exe
+all : fifth.exe sixth.exe
 
-first.exe :	first.obj
-	$(LINK) $(LFLAGS) first.obj kernel32.dll user32.dll
+fifth.exe : fifth.obj
+	$(LINK) $(LFLAGS) /console fifth.obj kernel32.dll
 
-second.exe : second.obj
-	$(LINK) $(LFLAGS) /console second.obj kernel32.dll
-	
-third.exe :	third.obj
-	$(LINK) $(LFLAGS) third.obj kernel32.dll user32.dll
-	
-fourth.exe : fourth.obj
-	$(LINK) $(LFLAGS) /console fourth.obj kernel32.dll user32.dll
+sixth.exe : sixth.obj
+	$(LINK) $(LFLAGS) sixth.obj kernel32.dll user32.dll gdi32.dll
 
 .asm.obj :
-	$(NASM) $(NASMFLAGS) $< 
+	$(ASM) $(AFLAGS) $< 
 	 
 clean:
 	@erase *.obj 2>nul
