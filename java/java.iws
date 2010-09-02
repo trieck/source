@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="4" relativePaths="false">
-  <component name="AspectsView" />
-  <component name="BookmarkManager" />
+<project version="4">
   <component name="ChangeBrowserSettings">
     <option name="MAIN_SPLITTER_PROPORTION" value="0.3" />
     <option name="MESSAGES_SPLITTER_PROPORTION" value="0.8" />
@@ -14,7 +12,17 @@
     <option name="CHANGE_BEFORE" value="" />
     <option name="CHANGE_AFTER" value="" />
   </component>
-  <component name="CheckinPanelState" />
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="cbf0f225-5496-4107-9a04-c04a6131b88c" name="Default" comment="" />
+    <ignored path="java.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="Commander">
     <leftPanel />
     <rightPanel />
@@ -24,6 +32,10 @@
     <option name="COMPILE_IN_BACKGROUND" value="false" />
     <option name="AUTO_SHOW_ERRORS_IN_EDITOR" value="true" />
     <option name="CLOSE_MESSAGE_VIEW_IF_SUCCESS" value="true" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+    <option name="REVERSE_PATCH" value="false" />
   </component>
   <component name="Cvs2Configuration">
     <option name="ON_FILE_ADDING" value="0" />
@@ -93,49 +105,66 @@
     <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
     <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
   </component>
-  <component name="CvsTabbedWindow" />
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
   <component name="DebuggerManager">
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/tomrieck/bencode/BEString.java" line="59">
+      <breakpoint url="file://$PROJECT_DIR$/src/org/tomrieck/bencode/BEString.java" line="59" class="org.tomrieck.bencode.BEString" package="org.tomrieck.bencode">
         <option name="ENABLED" value="true" />
-        <option name="SUSPEND_VM" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
         <option name="COUNT_FILTER_ENABLED" value="false" />
         <option name="COUNT_FILTER" value="0" />
         <option name="CONDITION_ENABLED" value="false" />
         <option name="CLASS_FILTERS_ENABLED" value="false" />
         <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="myCondition" value="" />
-        <option name="myLogMessage" value="" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </line_breakpoints>
-    <exception_breakpoints>
-      <breakpoint_any>
+    <breakpoint_any>
+      <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
         <option name="NOTIFY_UNCAUGHT" value="true" />
         <option name="ENABLED" value="false" />
-        <option name="SUSPEND_VM" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
         <option name="COUNT_FILTER_ENABLED" value="false" />
         <option name="COUNT_FILTER" value="0" />
         <option name="CONDITION_ENABLED" value="false" />
         <option name="CLASS_FILTERS_ENABLED" value="false" />
         <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="myCondition" value="" />
-        <option name="myLogMessage" value="" />
-      </breakpoint_any>
-    </exception_breakpoints>
-    <field_breakpoints />
-    <method_breakpoints />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <breakpoint_rules />
+    <ui_properties />
   </component>
   <component name="ErrorTreeViewConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="HIDE_WARNINGS" value="false" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="java" />
   </component>
   <component name="FavoritesViewImpl">
     <favorites_list name="java">
@@ -150,19 +179,19 @@
     </favorites_list>
     <option name="myCurrentFavoritesList" value="java" />
   </component>
-  <component name="FileEditorManager" split-orientation="horizontal" split-proportion="0.5">
-    <first-group selected-file="file://$PROJECT_DIR$/src/org/tomrieck/testing/MapTest.java">
-      <entry file="file://$PROJECT_DIR$/src/org/tomrieck/testing/MapTest.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="36" column="35" selection-start="754" selection-end="754" vertical-scroll-proportion="0.3022508">
-            <folding>
-              <element signature="imports" expanded="true" />
-            </folding>
-          </state>
-        </provider>
-      </entry>
-    </first-group>
-    <second-group />
+  <component name="FileColors" enabled="true" enabledForTabs="true" />
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="Concordance.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/tomrieck/bible/Concordance.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="13" selection-start="333" selection-end="333" vertical-scroll-proportion="0.092449926">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -179,12 +208,10 @@
     <option name="SPLITTER_PROPORTION" value="0.5" />
     <profile name="Default" />
   </component>
-  <component name="J2EEProjectPane" />
   <component name="ModuleEditorState">
     <option name="LAST_EDITED_MODULE_NAME" value="java" />
     <option name="LAST_EDITED_TAB_NAME" value="Libraries (Classpath)" />
   </component>
-  <component name="NamedScopeManager" />
   <component name="PackagesPane">
     <expanded_node url="" module="java" type="module" />
   </component>
@@ -217,6 +244,11 @@
     <option name="INTEGRATE_CHANGE_LIST" value="false" />
     <option name="INTEGRATE_REVERSE" value="false" />
   </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state />
+    </entry>
+  </component>
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
@@ -243,29 +275,104 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" splitterProportion="0.05277778">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages PackagesPane="true" ProjectPane="false" />
       <showMembers />
       <showModules />
       <showLibraryContents />
       <hideEmptyPackages ProjectPane="false" />
-      <showStructure PackagesPane="false" ProjectPane="false" />
+      <abbreviatePackageNames />
       <autoscrollToSource />
       <autoscrollFromSource />
+      <sortByType />
     </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Favorites" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tomrieck" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tomrieck" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bible" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="GenerateAntBuildDialog.generateSingleFile" value="true" />
-    <property name="GoToClass.includeLibraries" value="false" />
-    <property name="MemberChooser.showClasses" value="true" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="RunManagerConfig.compileBeforeRunning" value="true" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="false" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="false" />
     <property name="RunManagerConfig.showSettingsBeforeRunnig" value="false" />
+    <property name="RunManagerConfig.compileBeforeRunning" value="true" />
+    <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="GenerateAntBuildDialog.generateSingleFile" value="true" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="GenerateAntBuildDialog.backupFiles" value="false" />
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
   </component>
   <component name="ReadonlyStatusHandler">
     <option name="SHOW_DIALOG" value="false" />
@@ -277,38 +384,53 @@
       <recent name="org.tomrieck.apps" />
     </key>
   </component>
-  <component name="RestoreUpdateTree" />
-  <component name="RunManager">
-    <activeType name="Application" />
-    <configuration selected="false" default="true" type="JUnit" factoryName="JUnit">
-      <module name="" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ADDITIONAL_CLASS_PATH" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="wholeProject" />
-      </option>
-    </configuration>
-    <configuration selected="false" default="true" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <module name="java" />
-    </configuration>
-    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
+  <component name="RunManager" selected="Application.Unnamed">
+    <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
     </configuration>
-    <configuration selected="false" default="true" type="Applet" factoryName="Applet">
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="snapshooter" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
       <option name="HTML_FILE_NAME" />
@@ -317,22 +439,86 @@
       <option name="HEIGHT" value="300" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
     </configuration>
-    <configuration selected="true" default="false" name="Unnamed" type="Application" factoryName="Application">
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="snapshooter" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="java" />
+      <envs />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="snapshooter" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <envs />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="false" name="Unnamed" type="Application" factoryName="Application">
+      <extension name="snapshooter" />
       <option name="MAIN_CLASS_NAME" value="org.tomrieck.testing.MapTest" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
       <module name="java" />
+      <envs />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="2845" />
         <option name="TRANSPORT" value="0" />
         <option name="LOCAL" value="false" />
       </RunnerSettings>
       <ConfigurationWrapper RunnerId="Debug" />
+      <method />
     </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Application.Unnamed" />
+    </list>
   </component>
-  <component name="SelectInManager" />
+  <component name="ShelveChangesManager" show_recycled="false" />
   <component name="StarteamConfiguration">
     <option name="SERVER" value="" />
     <option name="PORT" value="49201" />
@@ -354,7 +540,6 @@
     <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
     <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
   </component>
-  <component name="StructuralSearchPlugin" />
   <component name="StructureViewFactory">
     <option name="SORT_MODE" value="0" />
     <option name="GROUP_INHERITED" value="true" />
@@ -372,10 +557,22 @@
     <option name="USE_PROJECT_SETTINGS" value="true" />
     <option name="USE_ALTERNATE_LOCATION" value="false" />
   </component>
-  <component name="SvnConfiguration">
+  <component name="SvnConfiguration" maxAnnotateRevisions="500">
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
-    <configuration useDefault="true">C:\Documents and Settings\Thomas A. Rieck.DELL8300.000\Application Data\Subversion</configuration>
+    <option name="LAST_MERGED_REVISION" />
+    <option name="UPDATE_RUN_STATUS" value="false" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="DETECT_NESTED_COPIES" value="true" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <configuration useDefault="true">C:\Users\euccr11\AppData\Roaming\Subversion</configuration>
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+    <supportedVersion>125</supportedVersion>
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -390,30 +587,33 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="164" y="148" width="942" height="785" extended-state="0" />
+    <frame x="-8" y="-8" width="1292" height="812" extended-state="1" />
     <editor active="true" />
     <layout>
-      <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="8" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.32942554" order="7" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.28876406" order="0" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.47565117" order="1" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.30270907" order="1" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.1762295" order="8" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.4" order="6" />
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="8" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.34304208" order="1" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.73386186" order="2" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="2" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.42771083" order="4" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="sliding" type="sliding" visible="false" weight="0.4" order="0" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="2" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="0" />
-      <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="3" />
-      <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="3" />
-      <window_info id="Favorites" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.32928804" order="3" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="5" />
-      <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="3" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="8" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34304208" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47492626" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42771083" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942554" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30270907" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28874388" sideWeight="0.5147493" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.73386186" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928804" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1762295" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VCS.FileViewConfiguration">
@@ -424,8 +624,31 @@
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
     <option name="ACTIVE_VCS_NAME" value="SourceSafe" />
-    <option name="STATE" value="0" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
   </component>
   <component name="VssConfiguration">
     <MapItem>
@@ -483,6 +706,9 @@
     <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
     <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
@@ -490,114 +716,68 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/bencode/BEDecoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="27" selection-start="445" selection-end="445" vertical-scroll-proportion="0.33293697">
-          <folding />
-        </state>
+        <state line="25" column="27" selection-start="445" selection-end="445" vertical-scroll-proportion="0.33293697" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/ODBManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="65" selection-end="65" vertical-scroll-proportion="0.066587396">
-          <folding />
-        </state>
+        <state line="4" column="13" selection-start="65" selection-end="65" vertical-scroll-proportion="0.066587396" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/bencode/BEDictionary.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="44" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.7824019">
-          <folding />
-        </state>
+        <state line="47" column="44" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.7824019" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/Protocol.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="82" selection-start="1505" selection-end="1505" vertical-scroll-proportion="0.9876543">
-          <folding />
-        </state>
+        <state line="40" column="82" selection-start="1505" selection-end="1505" vertical-scroll-proportion="0.9876543" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/RowData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="45" selection-start="170" selection-end="170" vertical-scroll-proportion="0.24691358">
-          <folding />
-        </state>
+        <state line="10" column="45" selection-start="170" selection-end="170" vertical-scroll-proportion="0.24691358" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/ODBTableModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="34" selection-start="2312" selection-end="2312" vertical-scroll-proportion="1.393298">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="89" column="34" selection-start="2312" selection-end="2312" vertical-scroll-proportion="1.393298" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/bencode/BEString.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="637" selection-end="637" vertical-scroll-proportion="0.319224">
-          <folding />
-        </state>
+        <state line="28" column="0" selection-start="637" selection-end="637" vertical-scroll-proportion="0.319224" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/lib/TCipher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="38" selection-end="38" vertical-scroll-proportion="0.03422983">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/jdk1.5.0_01/src.zip!/java/lang/Math.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="691" column="25" selection-start="29043" selection-end="29043" vertical-scroll-proportion="0.21026894">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/jdk1.5.0_01/src.zip!/java/lang/Character.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3516" column="59" selection-start="134489" selection-end="134489" vertical-scroll-proportion="0.41220424">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/jdk1.5.0_01/src.zip!/java/lang/CharacterDataLatin1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="15" selection-start="2623" selection-end="2623" vertical-scroll-proportion="0.7409714">
-          <folding />
-        </state>
+        <state line="2" column="13" selection-start="38" selection-end="38" vertical-scroll-proportion="0.03422983" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/ODBClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="60" selection-start="2618" selection-end="2618" vertical-scroll-proportion="0.35230026">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="90" column="60" selection-start="2618" selection-end="2618" vertical-scroll-proportion="0.35230026" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/ODBTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="79" selection-start="678" selection-end="678" vertical-scroll-proportion="0.33293697">
-          <folding />
-        </state>
+        <state line="23" column="79" selection-start="678" selection-end="678" vertical-scroll-proportion="0.33293697" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/apps/odb/ClientThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="13" selection-start="258" selection-end="258" vertical-scroll-proportion="-0.24911033">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="10" column="13" selection-start="258" selection-end="258" vertical-scroll-proportion="-0.24911033" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/testing/MapTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="35" selection-start="754" selection-end="754" vertical-scroll-proportion="0.3022508">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="36" column="35" selection-start="754" selection-end="754" vertical-scroll-proportion="0.3022508" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/bible/Concordance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="13" selection-start="333" selection-end="333" vertical-scroll-proportion="0.092449926">
+          <folding />
         </state>
       </provider>
     </entry>

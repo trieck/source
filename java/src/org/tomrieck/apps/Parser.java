@@ -10,7 +10,7 @@ import java.util.Stack;
 import java.util.TreeSet;
 
 /**
- * An example engine implementing Thompson's construction of an NFA from a
+ * An example bible implementing Thompson's construction of an NFA from a
  * regular expression as well as the subset construction of a DFA from an NFA.
  * <p/> The grammar for the language is: <p/> expression := conjunction '|'
  * expression | conjunction <p/> conjunction := closure conjunction | closure
