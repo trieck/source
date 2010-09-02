@@ -1,4 +1,4 @@
-package org.tomrieck.engine;
+package org.tomrieck.bible;
 
 public class Prime {
 

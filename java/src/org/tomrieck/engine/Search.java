@@ -1,4 +1,4 @@
-package org.tomrieck.engine;
+package org.tomrieck.bible;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
