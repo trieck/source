@@ -2,18 +2,18 @@ package org.tomrieck.bencode;
 
 public class BEInteger extends BEObject {
 
-	long iVal;
+    long iVal;
 
-	public BEInteger(long val) {
-		iVal = val;
-	}
+    public BEInteger(long val) {
+        iVal = val;
+    }
 
-	public long getVal() {
-		return iVal;
-	}
+    public long getVal() {
+        return iVal;
+    }
 
-	@Override
-	public int getType() {
-		return BEObject.BET_INTEGER;
-	}
+    @Override
+    public int getType() {
+        return BEObject.BET_INTEGER;
+    }
 }

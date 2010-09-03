@@ -8,31 +8,31 @@ import javax.swing.JScrollPane;
 
 public class ODBView extends JScrollPane {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private final ODBTable table = new ODBTable();
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    private final ODBTable table = new ODBTable();
 
-	private static class WindowResizeManager extends ComponentAdapter {
-		@Override
-		public void componentResized(ComponentEvent event) {
-			final ODBView theView = (ODBView) event.getComponent();
-			if (theView.table != null) {
-				final Dimension dim = theView.getSize();
-				theView.table.setPreferredSize(dim);
-			}
-		}
-	}
+    private static class WindowResizeManager extends ComponentAdapter {
+        @Override
+        public void componentResized(ComponentEvent event) {
+            final ODBView theView = (ODBView) event.getComponent();
+            if (theView.table != null) {
+                final Dimension dim = theView.getSize();
+                theView.table.setPreferredSize(dim);
+            }
+        }
+    }
 
-	public ODBView() {
-		addComponentListener(new WindowResizeManager());
-		setOpaque(true);
-		setViewportView(table);
-	}
+    public ODBView() {
+        addComponentListener(new WindowResizeManager());
+        setOpaque(true);
+        setViewportView(table);
+    }
 
-	public ODBTable getTable() {
-		return table;
-	}
+    public ODBTable getTable() {
+        return table;
+    }
 
 }

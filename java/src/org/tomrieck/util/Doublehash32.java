@@ -5,21 +5,21 @@ import java.nio.ByteOrder;
 
 public class Doublehash32 implements Hash32 {
 
-	public int hash(byte[] v) {
+    public int hash(byte[] v) {
 
-		final Hash32 H = new FNVHash32();
+        final Hash32 H = new FNVHash32();
 
-		final int r = H.hash(v);
+        final int r = H.hash(v);
 
-		final byte[] bytes = new byte[Integer.SIZE / Byte.SIZE];
-		final ByteBuffer buf = ByteBuffer.allocate(Integer.SIZE / Byte.SIZE);
+        final byte[] bytes = new byte[Integer.SIZE / Byte.SIZE];
+        final ByteBuffer buf = ByteBuffer.allocate(Integer.SIZE / Byte.SIZE);
 
-		buf.order(ByteOrder.LITTLE_ENDIAN);
-		buf.putInt(r);
-		buf.flip();
-		buf.get(bytes);
+        buf.order(ByteOrder.LITTLE_ENDIAN);
+        buf.putInt(r);
+        buf.flip();
+        buf.get(bytes);
 
-		return H.hash(bytes);
-	}
+        return H.hash(bytes);
+    }
 
 }
