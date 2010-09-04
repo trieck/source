@@ -1,5 +1,7 @@
 package org.tomrieck.content;
 
+import org.tomrieck.util.Timer;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -10,7 +12,7 @@ public class Index {
     private String outfile;
     private int currDoc;
 
-    private Concordance concord = new Concordance();
+    private Concordance concord;
 
     public Index() {
     }
@@ -18,6 +20,7 @@ public class Index {
     public void index(String[] args) throws IOException {
         infiles = Arrays.copyOf(args, args.length - 1);
         outfile = args[args.length - 1];
+        concord = new Concordance(infiles, outfile);
         index();
     }
 
@@ -27,7 +30,7 @@ public class Index {
             currDoc++;
         }
 
-        concord.merge(outfile);
+        concord.merge();
     }
 
     private void indexFile(String file) throws IOException {
@@ -37,7 +40,6 @@ public class Index {
         for (int i = 0; ((term = lexer.getToken()).length()) != 0; i++) {
             concord.insert(term, currDoc, i);
         }
-
     }
 
     public static void main(String[] args) {
@@ -47,6 +49,8 @@ public class Index {
             System.exit(1);
         }
 
+        Timer t = new Timer();
+
         Index index = new Index();
 
         try {
@@ -55,5 +59,7 @@ public class Index {
             System.err.println(e);
             System.exit(1);
         }
+
+        System.out.printf("    elapsed time %s\n", t);
     }
 }

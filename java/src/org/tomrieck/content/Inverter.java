@@ -7,26 +7,12 @@ import java.nio.LongBuffer;
 
 public class Inverter {
 
-    /**
-     * maximum amount of memory available for concordance
-     */
-    private static final int MEMORY_SIZE = 67108864;
+    private static final int MAX_COUNT = 100000;    // max. number of index records
+    private static final int FILL_RATIO = 2;    
 
-    /**
-     * average record size
-     */
-    private static final int AVERAGE_SIZE = 50;
-
-    /**
-     * maximum number of records
-     */
-    private static final int MAX_COUNT = MEMORY_SIZE / AVERAGE_SIZE;
-
-    private static final int FILL_RATIO = 2;
-
-    private IndexRecs records;
-    private int count;
-    private int size;
+    private IndexRecs records;  // table of records
+    private int count;          // number of records in table
+    private int size;           // size of hash table, should be prime
 
     public Inverter() {
         size = (int) Prime.prime(FILL_RATIO * MAX_COUNT);
@@ -51,6 +37,7 @@ public class Inverter {
 
     private void clear() {
         records.clear();
+        count = 0;
     }
 
     public void write(OutputStream os) throws IOException {
@@ -66,12 +53,11 @@ public class Inverter {
             term = records.getTerm(i);
             locations = records.getLocations(i);
 
-            dos.writeInt(term.length()); // length of term
-            dos.write(term.getBytes()); // term bytes
-
-            dos.writeInt(locations.position()); // length of doclist
+            IOUtil.writeString(dos, term);
+            dos.writeInt(locations.position()); // size of location list            
+            
             for (int j = 0; j < locations.position(); j++) {
-                dos.writeLong(locations.get(j)); // documents
+                dos.writeLong(locations.get(j)); // locations
             }
         }
 

@@ -3,6 +3,9 @@ package org.tomrieck.content;
 import java.nio.LongBuffer;
 import java.util.Arrays;
 
+/**
+ * Open addressed hash table of index records
+ */
 public class IndexRecs {
 
     /**
@@ -11,7 +14,7 @@ public class IndexRecs {
     private static final int DEF_BUF_SIZE = 80;
 
     private IndexRecord[] records;
-    private int size;
+    private int size;   // size of table, should be prime
 
     private IndexRecs() {
     }
