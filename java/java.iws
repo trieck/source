@@ -107,34 +107,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/tomrieck/content/Concordance.java" line="81" class="org.tomrieck.content.Concordance" package="org.tomrieck.content">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/tomrieck/content/Concordance.java" line="43" class="org.tomrieck.content.Concordance" package="org.tomrieck.content">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -205,7 +177,17 @@
   </component>
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="IndexRecord.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/IndexRecord.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="13" selection-start="73" selection-end="73" vertical-scroll-proportion="0.09630819">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -227,7 +209,6 @@
         <option value="$PROJECT_DIR$/src/org/tomrieck/bible/Concordance.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/bible/Inverter.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/Lexer.java" />
-        <option value="$PROJECT_DIR$/src/org/tomrieck/content/IndexRecord.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/IndexRecs.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/ConcordRecord.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/Index.java" />
@@ -236,6 +217,7 @@
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/Inverter.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/BlockMerge.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/CheckIndex.java" />
+        <option value="$PROJECT_DIR$/src/org/tomrieck/content/IndexRecord.java" />
       </list>
     </option>
   </component>
@@ -337,7 +319,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Favorites" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -432,8 +415,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -444,7 +426,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="RunManagerConfig.compileBeforeRunning" value="true" />
     <property name="RunManagerConfig.showSettingsBeforeRunnig" value="false" />
-    <property name="options.lastSelected" value="Errors" />
+    <property name="options.lastSelected" value="preferences.sourceCode" />
     <property name="GenerateAntBuildDialog.generateSingleFile" value="true" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
@@ -471,7 +453,7 @@
       <recent name="org.tomrieck.apps" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CheckIndex">
+  <component name="RunManager" selected="Application.Index">
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -691,7 +673,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="786" extended-state="0" />
+    <frame x="-8" y="-8" width="1296" height="786" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -701,10 +683,10 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.308204" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942554" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30243903" sideWeight="0.50460124" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30243903" sideWeight="0.50460124" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.50460124" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25528455" sideWeight="0.50460124" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.732816" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -818,21 +800,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/util/Hash32.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="17" selection-start="45" selection-end="45" vertical-scroll-proportion="0.03436426" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/util/FNVHash32.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="41" selection-end="41" vertical-scroll-proportion="0.03436426" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/util/Doublehash32.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="97" selection-end="97" vertical-scroll-proportion="0.06872852" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/util/Timer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="55" column="8" selection-start="1338" selection-end="1360" vertical-scroll-proportion="0.92783505" />
@@ -848,73 +815,86 @@
         <state line="2767" column="4" selection-start="106375" selection-end="106436" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/IndexRecs.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/IOUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="18" selection-start="792" selection-end="792" vertical-scroll-proportion="0.60137457" />
+        <state line="17" column="0" selection-start="409" selection-end="409" vertical-scroll-proportion="0.20545746" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Index.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/nio/Buffer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="0" selection-start="692" selection-end="692" vertical-scroll-proportion="0.17174959">
+        <state line="156" column="22" selection-start="5670" selection-end="5670" vertical-scroll-proportion="0.33226323" />
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/nio/LongBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="240" column="14" selection-start="2529" selection-end="2529" vertical-scroll-proportion="0.3563403" />
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/lang/System.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="379" column="30" selection-start="14188" selection-end="14188" vertical-scroll-proportion="0.024077047" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Hash32.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="13" selection-start="44" selection-end="44" vertical-scroll-proportion="0.048154093">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/IndexRecs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="16" selection-start="1558" selection-end="1558" vertical-scroll-proportion="1.5168539">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Inverter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="0" selection-start="1584" selection-end="1584" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/IOUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="409" selection-end="409" vertical-scroll-proportion="0.20545746">
+        <state line="17" column="0" selection-start="519" selection-end="519" vertical-scroll-proportion="0.33707866">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Concordance.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="0" selection-start="1090" selection-end="1090" vertical-scroll-proportion="0.0">
+        <state line="78" column="16" selection-start="2035" selection-end="2035" vertical-scroll-proportion="1.8298556">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/BlockMerge.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="135" column="47" selection-start="3727" selection-end="3727" vertical-scroll-proportion="1.7913322">
+        <state line="6" column="13" selection-start="114" selection-end="114" vertical-scroll-proportion="0.09630819">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/nio/Buffer.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/ConcordRecord.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="22" selection-start="5670" selection-end="5670" vertical-scroll-proportion="0.33226323">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/nio/LongBuffer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="240" column="14" selection-start="2529" selection-end="2529" vertical-scroll-proportion="0.3563403">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/lang/System.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="379" column="30" selection-start="14188" selection-end="14188" vertical-scroll-proportion="0.024077047">
+        <state line="4" column="13" selection-start="77" selection-end="77" vertical-scroll-proportion="0.09630819">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/CheckIndex.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="59" selection-start="1951" selection-end="1951" vertical-scroll-proportion="1.2118781">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="6" column="13" selection-start="137" selection-end="137" vertical-scroll-proportion="0.09630819">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Index.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="13" selection-start="158" selection-end="158" vertical-scroll-proportion="-0.5168539">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/IndexRecord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="13" selection-start="73" selection-end="73" vertical-scroll-proportion="0.09630819">
+          <folding />
         </state>
       </provider>
     </entry>

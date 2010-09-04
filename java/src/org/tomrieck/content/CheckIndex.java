@@ -21,13 +21,13 @@ public class CheckIndex {
         }
 
         nfiles = dis.readInt();
-        System.out.printf("   Checking index file: %s...\n", file);
-        System.out.printf("   Indexes %d content file(s):\n", nfiles);
+        System.out.printf("    Checking index file: %s...\n", file);
+        System.out.printf("    Indexes %d content file(s):\n", nfiles);
 
         String infile;
         for (int i = 0; i < nfiles; i++) {
             infile = IOUtil.readString(dis);
-            System.out.printf("      %s\n", infile);
+            System.out.printf("       %s\n", infile);
         }
 
         String term;
