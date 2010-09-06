@@ -14,8 +14,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="cbf0f225-5496-4107-9a04-c04a6131b88c" name="Default" comment="" />
-    <ignored path="java.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path="java.iws" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,6 +121,19 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/org/tomrieck/content/Search.java" line="37" class="org.tomrieck.content.Search" package="org.tomrieck.content">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
     </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
@@ -169,8 +182,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="field_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -205,10 +218,8 @@
       <file leaf-file-name="Search.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Search.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="53" selection-start="1466" selection-end="1466" vertical-scroll-proportion="0.7271268">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="48" column="0" selection-start="1410" selection-end="1410" vertical-scroll-proportion="0.33333334">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -348,6 +359,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Favorites" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -443,8 +456,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -460,17 +471,17 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="false" />
-    <property name="project.structure.side.proportion" value="0.0" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
-    <property name="GoToClass.includeLibraries" value="false" />
     <property name="GenerateAntBuildDialog.backupFiles" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="ReadonlyStatusHandler">
     <option name="SHOW_DIALOG" value="false" />
@@ -639,7 +650,7 @@
       <extension name="snapshooter" />
       <option name="MAIN_CLASS_NAME" value="org.tomrieck.content.Search" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="c:\content\content.idx adam" />
+      <option name="PROGRAM_PARAMETERS" value="c:\content\content.idx tarnation" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -897,72 +908,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/CheckIndex.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="13" selection-start="137" selection-end="137" vertical-scroll-proportion="0.09630819">
-          <folding />
-        </state>
+        <state line="6" column="13" selection-start="137" selection-end="137" vertical-scroll-proportion="0.09630819" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/ConcordMerge.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="7" selection-start="38" selection-end="38" vertical-scroll-proportion="0.048154093">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="2" column="7" selection-start="38" selection-end="38" vertical-scroll-proportion="0.048154093" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/InverterRecord.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="73" selection-end="73" vertical-scroll-proportion="0.09630819">
-          <folding />
-        </state>
+        <state line="4" column="13" selection-start="73" selection-end="73" vertical-scroll-proportion="0.09630819" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Indexer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="0" selection-start="1516" selection-end="1516" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="65" column="0" selection-start="1516" selection-end="1516" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Concordance.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="692" selection-end="692" vertical-scroll-proportion="0.12947658">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="24" column="0" selection-start="692" selection-end="692" vertical-scroll-proportion="0.12947658" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Index.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="61" selection-start="707" selection-end="707" vertical-scroll-proportion="-0.96694213">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Prime.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="26" column="61" selection-start="707" selection-end="707" vertical-scroll-proportion="-0.96694213" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Inverter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="-0.4751204">
-          <folding />
-        </state>
+        <state line="7" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="-0.4751204" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Prime.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="13" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Search.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="53" selection-start="1466" selection-end="1466" vertical-scroll-proportion="0.7271268">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="48" column="0" selection-start="1410" selection-end="1410" vertical-scroll-proportion="0.33333334">
+          <folding />
         </state>
       </provider>
     </entry>

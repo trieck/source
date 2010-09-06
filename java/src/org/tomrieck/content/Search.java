@@ -32,12 +32,8 @@ public class Search {
         index.seek(12 + hash /* MAGIC_NO + TBL_SIZE */);
 
         long offset = index.readLong();
-        if (offset == 0) {
-            System.out.println("no hit.");
-            return;
-        }
-
-        int nhits;
+      
+        int nhits = 0;
         String sTerm;
         InputStream is = Channels.newInputStream(concord.getChannel());
         while (offset != 0) {   // linear-probing
@@ -45,13 +41,13 @@ public class Search {
             sTerm = IOUtil.readString(is);
             if (sTerm.equals(term)) {
                 nhits = concord.readInt();
-                System.out.printf("%d hits.\n", nhits);
                 break;
             }
-
             offset = index.readLong();
         }
 
+        System.out.printf("    %d hits.\n", nhits);
+        
         is.close();
         concord.close();
         index.close();        
