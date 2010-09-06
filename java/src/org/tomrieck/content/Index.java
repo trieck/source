@@ -1,9 +1,7 @@
 package org.tomrieck.content;
 
 import java.io.*;
-import java.nio.channels.Channel;
 import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
 
 /**
  * External open-addressed hash table index
@@ -37,9 +35,11 @@ public class Index {
         long term_area_offset = infile.readLong();  // term area offset
 
         long tableSize = Prime.prime(nterms * 8 * FILL_FACTOR);
-        outfile.setLength(tableSize + 4 /* MAGIC_NUMBER */);
+        outfile.writeLong(tableSize);
+        
+        outfile.setLength(tableSize + 12 /* MAGIC_NUMBER+TABLE_SIZE */);
 
-        outfile.seek(4 /* MAGIC_NUMBER */);
+        outfile.seek(12 /* MAGIC_NUMBER+TABLE_SIZE*/);
         for (long i = 0; i < tableSize; i++) {
             outfile.write(0);
         }
@@ -57,7 +57,7 @@ public class Index {
         while ((term = IOUtil.readString(is)).length() > 0) {
             h = bucket_hash(term, tableSize);
             
-            outfile.seek(4 + h /* MAGIC_NUMBER */);
+            outfile.seek(12 + h /* MAGIC_NUMBER+TABLE_SIZE */);
 
             // collisions are resolved via linear-probing
             while (outfile.readLong() != 0)
@@ -81,7 +81,7 @@ public class Index {
         outfile.close();
     }
 
-    private static long bucket_hash(String term, long size) {
+    public static long bucket_hash(String term, long size) {
         long h = (DoubleHash64.hash(term) & 0x7FFFFFFFFFFFFFFFL) % size;
 
         // align offset to multiple of bucket size
