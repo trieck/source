@@ -10,9 +10,9 @@ public class Inverter {
     private static final int MAX_COUNT = 100000;    // max. number of index records
     private static final int FILL_RATIO = 2;    
 
-    private IndexRecs records;  // table of records
-    private int count;          // number of records in table
-    private int size;           // size of hash table, should be prime
+    private InverterRecs records;   // hash table of records
+    private int count;              // number of records in table
+    private int size;               // size of hash table, should be prime
 
     public Inverter() {
         size = (int) Prime.prime(FILL_RATIO * MAX_COUNT);
@@ -81,7 +81,7 @@ public class Inverter {
     }
 
     private void alloc() {
-        records = IndexRecs.allocate(size);
+        records = InverterRecs.allocate(size);
     }
 
     private int lookup(String term) {

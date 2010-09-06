@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockMerge {
+public class ConcordMerge {
 
     private static final int NWAY = 100;                    // number of ways to merge
     private static final int BUF_SIZE = 4096;               // for transfer
@@ -14,7 +14,7 @@ public class BlockMerge {
     private ConcordRecord[] records;                        // concordance records for least
     private int pass;                                       // countdown of pass number
 
-    public BlockMerge() {
+    public ConcordMerge() {
         records = new ConcordRecord[NWAY + 1];
     }
 
@@ -57,7 +57,7 @@ public class BlockMerge {
 
         pass--;
 
-        File file = File.createTempFile("merge", "ndx");
+        File file = File.createTempFile("conc", "dat");
         file.deleteOnExit();
 
         out = new DataOutputStream(new FileOutputStream(file));

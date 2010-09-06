@@ -1,6 +1,7 @@
 package org.tomrieck.content;
 
 import java.io.*;
+import java.nio.channels.Channels;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,13 @@ public class Concordance {
 
     public Concordance(String[] infiles, String outfile) {
         this.infiles = infiles;
-        this.outfile = outfile;
+        this.outfile = IOUtil.baseFilename(outfile) + ".dat";
     }
 
+    public String getFilename() {
+        return outfile;
+    }
+    
     public boolean isFull() {
         return block.isFull();
     }
@@ -29,7 +34,7 @@ public class Concordance {
             return;
         }
 
-        File file = File.createTempFile("conc", "ndx");
+        File file = File.createTempFile("conc", "dat");
         file.deleteOnExit();
 
         FileOutputStream os = new FileOutputStream(file);
@@ -47,33 +52,67 @@ public class Concordance {
             return;
         }
 
-        BlockMerge merger = new BlockMerge();
+        ConcordMerge merger = new ConcordMerge();
         String merge = merger.merge(tempfiles);
 
-        File oldFile = new File(merge); // merge target
-        File newFile = new File(outfile);
-
-        DataOutputStream dos = new DataOutputStream(new FileOutputStream(newFile));
-        FileInputStream fis = new FileInputStream(oldFile);
+        RandomAccessFile ofile = new RandomAccessFile(outfile, "rw");
+        DataInputStream dis = new DataInputStream(new FileInputStream(merge));
 
         // write the magic number
-        dos.writeInt(MAGIC_NUMBER);
-        
+        ofile.writeInt(MAGIC_NUMBER);
+
+        // write the total number of terms
+        long term_count_offset = ofile.getFilePointer();
+        ofile.writeLong(0); // not yet known
+
+        // write the offset to the term area
+        long term_area_offset = ofile.getFilePointer();
+        ofile.writeLong(0); // not yet known
+
         // write the number of input files
-        dos.writeInt(infiles.length);
-        for (String infile : infiles) { // write each input file name in index order
-            IOUtil.writeString(dos, infile);
+        ofile.writeInt(infiles.length);
+
+        // write each input file in index order
+        OutputStream os = Channels.newOutputStream(ofile.getChannel());
+        for (String infile : infiles) {
+            IOUtil.writeString(os, infile);
         }
 
-        byte[] bytes = new byte[BUF_SIZE];
-
-        int nread;
-        while ((nread = fis.read(bytes)) != -1) {
-            dos.write(bytes, 0, nread);
-        }
+        // write the real offset to the term area
+        long term_area = ofile.getFilePointer();
+        ofile.seek(term_area_offset);
+        ofile.writeLong(term_area);
+        ofile.seek(term_area);  // jump back
         
-        fis.close();
-        dos.close();
+        // write terms/docvectors
+
+        long nterms;
+        String term;
+        int n, m, read;
+        byte[] buf = new byte[BUF_SIZE];
+
+        for (nterms = 0; (term = IOUtil.readString(dis)).length() > 0; nterms++) {
+            n = dis.readInt();  // docvec size
+
+            IOUtil.writeString(os, term);
+            ofile.writeInt(n);
+
+            for (n = n * 8 /* size in bytes */; n > 0; ) {
+                m = Math.min(BUF_SIZE, n);
+                if ((read = dis.read(buf, 0, m)) <= 0)
+                    break;
+
+                os.write(buf, 0, read);
+                n -= read;
+            }
+        }
+
+        ofile.seek(term_count_offset);  // term count offset
+        ofile.writeLong(nterms);
+        
+        dis.close();
+        os.close();
+        ofile.close();
     }
 
     public void insert(String term, int docnum, int wordnum) throws IOException {

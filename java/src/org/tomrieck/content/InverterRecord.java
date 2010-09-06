@@ -2,12 +2,12 @@ package org.tomrieck.content;
 
 import java.nio.LongBuffer;
 
-public class IndexRecord implements Comparable<IndexRecord> {
+public class InverterRecord implements Comparable<InverterRecord> {
 
     String term;            // record term
     LongBuffer buffer;      // document vector
 
-    public int compareTo(IndexRecord o) {
+    public int compareTo(InverterRecord o) {
         return term.compareTo(o.term);
     }
 }
