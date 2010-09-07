@@ -41,5 +41,5 @@ public class GraphApp {
     public static void main(String[] args) {
         final GraphApp theApp = GraphApp.getInstance();
         theApp.run(args);
-	}
+    }
 }

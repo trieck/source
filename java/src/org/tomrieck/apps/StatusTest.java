@@ -25,6 +25,6 @@ public class StatusTest {
      */
     public static void main(String[] args) {
         final StatusTest test = new StatusTest();
-		test.run(args);
-	}
+        test.run(args);
+    }
 }

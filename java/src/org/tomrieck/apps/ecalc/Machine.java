@@ -190,7 +190,7 @@ public class Machine {
      */
     public final Instruction pop = new Instruction() {
         public void execute() throws MachineException {
-			machinestack.pop();
-		}
-	};
+            machinestack.pop();
+        }
+    };
 }

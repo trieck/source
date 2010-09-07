@@ -56,6 +56,6 @@ public class Memory {
      * @param b       byte
      */
     void store(int address, byte b) {
-		memory[address & 0x0000FFFF] = b;
-	}
+        memory[address & 0x0000FFFF] = b;
+    }
 }

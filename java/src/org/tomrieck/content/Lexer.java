@@ -19,7 +19,7 @@ public class Lexer {
         int c;
         while ((c = reader.read()) != -1) {
             if (Character.isLetterOrDigit(c)) {
-                builder.append(Character.toLowerCase((char)c));
+                builder.append(Character.toLowerCase((char) c));
             } else if (builder.length() > 0) {
                 return builder.toString();
             }

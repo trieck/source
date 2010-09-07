@@ -12,45 +12,43 @@ public class Search {
 
     public void search(String index_file, String term) throws IOException {
 
-        String base = IOUtil.baseFilename(index_file);
+        RandomAccessFile f1 = new RandomAccessFile(index_file, "r");
+        RandomAccessFile f2 = new RandomAccessFile(index_file, "r");
 
-        RandomAccessFile index = new RandomAccessFile(base + ".idx", "r");
-        RandomAccessFile concord = new RandomAccessFile(base + ".dat", "r");
-
-        int magicno = index.readInt();
-        if (magicno != Index.MAGIC_NUMBER)
+        int magicno = f1.readInt();
+        if (magicno != Index.MAGIC_NO)
             throw new IOException("index bad file format.");
 
-        magicno = concord.readInt();
-        if (magicno != Concordance.MAGIC_NUMBER)
-            throw new IOException("concordance bad file format.");
+        f1.readLong();  // number of terms
+        f1.readLong();  // concordance offset
 
-        long tableSize = index.readLong();
+        long hash_tbl_size = f1.readLong();     // size of hash table
+        long hash_tbl_offset = f1.readLong();   // offset to the hash table
 
-        long hash = Index.bucket_hash(term, tableSize);
+        long hash = Index.bucket_hash(term, hash_tbl_size);
 
-        index.seek(12 + hash /* MAGIC_NO + TBL_SIZE */);
+        f1.seek(hash_tbl_offset + hash);
 
-        long offset = index.readLong();
-      
+        long offset = f1.readLong();
+
         int nhits = 0;
         String sTerm;
-        InputStream is = Channels.newInputStream(concord.getChannel());
+        InputStream is = Channels.newInputStream(f2.getChannel());
         while (offset != 0) {   // linear-probing
-            concord.seek(offset);
+            f2.seek(offset);
             sTerm = IOUtil.readString(is);
             if (sTerm.equals(term)) {
-                nhits = concord.readInt();
+                nhits = f2.readInt();
                 break;
             }
-            offset = index.readLong();
+            offset = f1.readLong();
         }
 
         System.out.printf("    %d hits.\n", nhits);
-        
+
         is.close();
-        concord.close();
-        index.close();        
+        f2.close();
+        f1.close();
     }
 
     public static void main(String[] args) {

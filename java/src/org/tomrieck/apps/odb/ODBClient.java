@@ -270,13 +270,13 @@ public class ODBClient {
             case BEObject.BET_INTEGER:
                 return Protocol.OT_INTEGER;
             case BEObject.BET_STRING:
-			return Protocol.OT_STRING;
-		case BEObject.BET_LIST:
-			return Protocol.OT_LIST;
-		case BEObject.BET_DICT:
-			return Protocol.OT_DICT;
-		}
+                return Protocol.OT_STRING;
+            case BEObject.BET_LIST:
+                return Protocol.OT_LIST;
+            case BEObject.BET_DICT:
+                return Protocol.OT_DICT;
+        }
 
-		return -1; // invalid
-	}
+        return -1; // invalid
+    }
 }

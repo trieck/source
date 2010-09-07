@@ -194,12 +194,12 @@ public class BEDecoder {
             BEEncoder.encode(o, os);
 
         } catch (final FileNotFoundException e) {
-			System.err.println(e);
-			System.exit(-1);
-		} catch (final IOException ioe) {
-			System.err.println(ioe);
-			System.exit(-2);
-		}
+            System.err.println(e);
+            System.exit(-1);
+        } catch (final IOException ioe) {
+            System.err.println(ioe);
+            System.exit(-2);
+        }
 
-	}
+    }
 }

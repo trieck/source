@@ -247,5 +247,5 @@ public class GraphView extends JComponent implements MouseListener {
     }
 
     public void mouseExited(MouseEvent e) {
-	}
+    }
 }

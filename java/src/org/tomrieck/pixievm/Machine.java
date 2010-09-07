@@ -80,7 +80,7 @@ public class Machine {
             machine.run();
         } catch (final IOException e) {
             System.err.println(e.getMessage());
-			System.exit(1);
-		}
-	}
+            System.exit(1);
+        }
+    }
 }

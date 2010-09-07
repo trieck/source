@@ -108,6 +108,7 @@ public class InverterRecs {
     }
 
     /* must be compacted first */
+
     public void sort(int count) {
         Arrays.sort(records, 0, count);
     }

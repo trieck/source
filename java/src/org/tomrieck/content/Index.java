@@ -1,73 +1,170 @@
 package org.tomrieck.content;
 
+import org.tomrieck.util.DoubleHash64;
+import org.tomrieck.util.Timer;
+
 import java.io.*;
 import java.nio.channels.Channels;
+import java.util.Arrays;
 
-/**
- * External open-addressed hash table index
- */
 public class Index {
 
-    public static final int MAGIC_NUMBER = 0xbaadd00d;
-    private static final int BUCKET_SIZE = 8;
-    private static final int FILL_FACTOR = 3;
+    public static final int MAGIC_NO = 0xc001d00d;  // file magic number
+    private static final int BUF_SIZE = 4096;       // buffer size
+    private static final int BUCKET_SIZE = 8;       // size of hash bucket
+    private static final int FILL_FACTOR = 3;       // hash table fill factor
 
-    private String filename;
+    private String[] infiles;       // array of files to index
+    private String outfile;         // name of output file
+    private int currDoc;            // current document # while indexing
+    private Concordance concord;    // term concordance
 
-    public Index(String filename) {
-        this.filename = filename;
+    public Index() {
     }
 
-    public void index(String concordance) throws IOException {
-        
-        RandomAccessFile infile = new RandomAccessFile(concordance, "r");
-        RandomAccessFile outfile = new RandomAccessFile(filename, "rw");
+    public void index(String[] args) throws IOException {
+        infiles = Arrays.copyOf(args, args.length - 1);
+        outfile = args[args.length - 1];
+        concord = new Concordance(infiles);
+        index();
+    }
 
-        // write the magic number
-        outfile.writeInt(MAGIC_NUMBER);
-
-        int magicno = infile.readInt();
-        if (magicno != Concordance.MAGIC_NUMBER) {
-            throw new IOException("file not in concordance format.");
+    private void index() throws IOException {
+        for (String file : infiles) {
+            indexFile(file);
+            currDoc++;
         }
 
-        long nterms = infile.readLong();            // total number of terms
-        long term_area_offset = infile.readLong();  // term area offset
+        finalPass();
+    }
 
-        long tableSize = Prime.prime(nterms * 8 * FILL_FACTOR);
-        outfile.writeLong(tableSize);
-        
-        outfile.setLength(tableSize + 12 /* MAGIC_NUMBER+TABLE_SIZE */);
+    /* combine concordance and hash table into final index */
+    private void finalPass() throws IOException {
 
-        outfile.seek(12 /* MAGIC_NUMBER+TABLE_SIZE*/);
-        for (long i = 0; i < tableSize; i++) {
-            outfile.write(0);
+        // merge concordance blocks
+        String concordFile = concord.merge();
+
+        RandomAccessFile ofile = new RandomAccessFile(outfile, "rw");
+        DataInputStream dis = new DataInputStream(new FileInputStream(concordFile));
+
+        // write file magic number
+        ofile.writeInt(MAGIC_NO);
+
+        // write the total number of terms
+        long term_count_offset = ofile.getFilePointer();
+        ofile.writeLong(0); // not yet known
+
+        // write the offset to the concordance
+        long concordance_offset = ofile.getFilePointer();
+        ofile.writeLong(0); // not yet known
+
+        // write the size of the hash table
+        long hash_table_size_offset = ofile.getFilePointer();
+        ofile.writeLong(0); // not yet known
+
+        // write the offset to the hash table
+        long hash_table_offset = ofile.getFilePointer();
+        ofile.writeLong(0); // not yet known
+
+        // write the number of input files
+        ofile.writeInt(infiles.length);
+
+        // write each input file in index order
+        OutputStream os = Channels.newOutputStream(ofile.getChannel());
+        for (String infile : infiles) {
+            IOUtil.writeString(os, infile);
         }
 
-        // seek to beginning of term list
-        infile.seek(term_area_offset);
+        // write the real offset to the concordance
+        long concordance = ofile.getFilePointer();
+        ofile.seek(concordance_offset);
+        ofile.writeLong(concordance);
+        ofile.seek(concordance);  // jump back
 
-        long term_offset = term_area_offset;
-        long h;
-        int vsize;
+        // write terms/docvectors
 
+        long nterms;
         String term;
+        int n, m, read;
+        byte[] buf = new byte[BUF_SIZE];
+
+        for (nterms = 0; (term = IOUtil.readString(dis)).length() > 0; nterms++) {
+            n = dis.readInt();  // docvec size
+
+            IOUtil.writeString(os, term);
+            ofile.writeInt(n);
+
+            for (n = n * 8 /* size in bytes */; n > 0;) {
+                m = Math.min(BUF_SIZE, n);
+                if ((read = dis.read(buf, 0, m)) <= 0)
+                    break;
+
+                os.write(buf, 0, read);
+                n -= read;
+            }
+        }
+
+        dis.close();
+
+        // generate the hash table
+
+        // hash table location
+        long hash_table_area = ofile.getFilePointer();
+
+        // write the total term count
+        ofile.seek(term_count_offset);
+        ofile.writeLong(nterms);
+
+        // compute the size of the hash table and store it
+        long tableSize = Prime.prime(nterms * 8 * FILL_FACTOR);
+        ofile.seek(hash_table_size_offset);
+        ofile.writeLong(tableSize);
+
+        // write the offset to the hash table
+        ofile.seek(hash_table_offset);
+        ofile.writeLong(hash_table_area);
+        ofile.seek(hash_table_area); // jump back
+
+        // expand file to make space for hash table
+        long newLength = ofile.length() + tableSize;
+        ofile.setLength(newLength);
+
+        // need to ensure the hash table is empty
+        Arrays.fill(buf, (byte) 0);
+
+        long remaining = tableSize;
+        while (remaining > 0) {
+            m = (int) Math.min(BUF_SIZE, remaining);
+            ofile.write(buf, 0, m);
+            remaining -= m;
+        }
+
+        // we need two file pointers to the output file
+        // in order to generate the hash table
+        RandomAccessFile infile = new RandomAccessFile(outfile, "r");
+
+        // seek to the concordance
+        infile.seek(concordance);
+
         InputStream is = Channels.newInputStream(infile.getChannel());
 
-        while ((term = IOUtil.readString(is)).length() > 0) {
+        long h, term_offset = concordance;
+        int vsize;
+        for (long i = 0; i < nterms; i++) {
+            term = IOUtil.readString(is);
+
             h = bucket_hash(term, tableSize);
-            
-            outfile.seek(12 + h /* MAGIC_NUMBER+TABLE_SIZE */);
+            ofile.seek(hash_table_area + h);
 
             // collisions are resolved via linear-probing
-            while (outfile.readLong() != 0)
+            while (ofile.readLong() != 0)
                 ;
 
-            // move back to the last empty slot
-            outfile.seek(outfile.getFilePointer()-8);
+            // move back to the last empty bucket
+            ofile.seek(ofile.getFilePointer() - 8);
 
             // write the term offset
-            outfile.writeLong(term_offset);
+            ofile.writeLong(term_offset);
 
             // document vector size
             vsize = infile.readInt() * 8;
@@ -76,16 +173,47 @@ public class Index {
             // next term offset
             term_offset = infile.getFilePointer();
         }
-        
+
+        is.close();
         infile.close();
-        outfile.close();
+        ofile.close();
+    }
+
+    private void indexFile(String file) throws IOException {
+        Lexer lexer = new Lexer(new FileReader(file));
+
+        String term;
+        for (int i = 0; ((term = lexer.getToken()).length()) != 0; i++) {
+            concord.insert(term, currDoc, i);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        if (args.length < 2) {
+            System.err.println("usage: Index input-files output-file");
+            System.exit(1);
+        }
+
+        Timer t = new Timer();
+
+        Index index = new Index();
+
+        try {
+            index.index(args);
+        } catch (IOException e) {
+            System.err.println(e);
+            System.exit(1);
+        }
+
+        System.out.printf("    elapsed time %s\n", t);
     }
 
     public static long bucket_hash(String term, long size) {
         long h = (DoubleHash64.hash(term) & 0x7FFFFFFFFFFFFFFFL) % size;
 
         // align offset to multiple of bucket size
-        h = h + (BUCKET_SIZE-1) & ~(BUCKET_SIZE-1);
+        h = h + (BUCKET_SIZE - 1) & ~(BUCKET_SIZE - 1);
 
         return h;
     }

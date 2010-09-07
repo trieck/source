@@ -10,5 +10,5 @@ public class ConcordRecord {
 
     public ConcordRecord() {
     }
-    
+
 }

@@ -1,5 +1,7 @@
 package org.tomrieck.content;
 
+import org.tomrieck.util.Hash32;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -8,7 +10,7 @@ import java.nio.LongBuffer;
 public class Inverter {
 
     private static final int MAX_COUNT = 100000;    // max. number of index records
-    private static final int FILL_RATIO = 2;    
+    private static final int FILL_RATIO = 2;
 
     private InverterRecs records;   // hash table of records
     private int count;              // number of records in table
@@ -55,7 +57,7 @@ public class Inverter {
 
             IOUtil.writeString(dos, term);
             dos.writeInt(locations.position()); // size of location list            
-            
+
             for (int j = 0; j < locations.position(); j++) {
                 dos.writeLong(locations.get(j)); // locations
             }
@@ -93,5 +95,5 @@ public class Inverter {
         }
 
         return i;
-	}
+    }
 }

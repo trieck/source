@@ -594,14 +594,14 @@ public class Compiler {
      */
     private void divide() throws CompilerException {
         prim(true);
-		program.code(machine.divide);
-	}
+        program.code(machine.divide);
+    }
 
-	/**
-	 * Modulo
-	 */
-	private void mod() throws CompilerException {
-		prim(true);
-		program.code(machine.mod);
-	}
+    /**
+     * Modulo
+     */
+    private void mod() throws CompilerException {
+        prim(true);
+        program.code(machine.mod);
+    }
 }

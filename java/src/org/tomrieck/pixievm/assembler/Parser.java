@@ -71,6 +71,6 @@ public class Parser {
             throws ParserException {
         String message = MessageFormat.format(pattern, arguments);
         message = message + " @ line #" + lexer.getLineno() + ".";
-		throw new ParserException(message);
-	}
+        throw new ParserException(message);
+    }
 }

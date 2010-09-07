@@ -107,34 +107,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/tomrieck/content/Concordance.java" line="48" class="org.tomrieck.content.Concordance" package="org.tomrieck.content">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/tomrieck/content/Search.java" line="37" class="org.tomrieck.content.Search" package="org.tomrieck.content">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -182,8 +154,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="field_breakpoints_viewId" value="TABLE" />
       <property name="exception_breakpoints_groupByClasses" value="true" />
+      <property name="field_breakpoints_viewId" value="TABLE" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -205,26 +177,7 @@
   </component>
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Prime.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Prime.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="13" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Search.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Search.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="0" selection-start="1410" selection-end="1410" vertical-scroll-proportion="0.33333334">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -239,21 +192,21 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/org/tomrieck/io/Block.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/io/BlockIO.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/io/BTree.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/InverterRec.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/IndexRecs.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/InverterRecs.java" />
-        <option value="$PROJECT_DIR$/src/org/tomrieck/content/ConcordMerge.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/Hash64.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/Hash32.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/DoubleHash64.java" />
-        <option value="$PROJECT_DIR$/src/org/tomrieck/content/Indexer.java" />
-        <option value="$PROJECT_DIR$/src/org/tomrieck/content/IOUtil.java" />
-        <option value="$PROJECT_DIR$/src/org/tomrieck/content/Concordance.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/Inverter.java" />
+        <option value="$PROJECT_DIR$/src/org/tomrieck/content/Indexer.java" />
+        <option value="$PROJECT_DIR$/src/org/tomrieck/content/ConcordMerge.java" />
+        <option value="$PROJECT_DIR$/src/org/tomrieck/content/Concordance.java" />
+        <option value="$PROJECT_DIR$/src/org/tomrieck/content/IOUtil.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/Index.java" />
+        <option value="$PROJECT_DIR$/src/org/tomrieck/content/CheckIndex.java" />
         <option value="$PROJECT_DIR$/src/org/tomrieck/content/Search.java" />
       </list>
     </option>
@@ -359,8 +312,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Favorites" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -450,19 +401,47 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="testing" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tomrieck" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="content" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="RunManagerConfig.compileBeforeRunning" value="true" />
     <property name="RunManagerConfig.showSettingsBeforeRunnig" value="false" />
@@ -471,29 +450,30 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="false" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
-    <property name="project.structure.side.proportion" value="0.0" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
-    <property name="GenerateAntBuildDialog.backupFiles" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="GenerateAntBuildDialog.backupFiles" value="false" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="ReadonlyStatusHandler">
     <option name="SHOW_DIALOG" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.tomrieck.util" />
       <recent name="org.tomrieck.pixievm.Assembler" />
       <recent name="org.tomrieck.parser" />
       <recent name="org.tomrieck.apps" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Unnamed">
+  <component name="RunManager" selected="Application.Search">
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -602,11 +582,11 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="false" name="Indexer" type="Application" factoryName="Application">
+    <configuration default="false" name="Index" type="Application" factoryName="Application">
       <extension name="snapshooter" />
-      <option name="MAIN_CLASS_NAME" value="org.tomrieck.content.Indexer" />
+      <option name="MAIN_CLASS_NAME" value="org.tomrieck.content.Index" />
       <option name="VM_PARAMETERS" value="-Djava.io.tmpdir=c:/tmp" />
-      <option name="PROGRAM_PARAMETERS" value="c:\content\*.txt c:\content\content.idx" />
+      <option name="PROGRAM_PARAMETERS" value="c:\content\33610*.txt c:\content\33610.idx" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -646,7 +626,7 @@
       <ConfigurationWrapper RunnerId="Debug" />
       <method />
     </configuration>
-    <configuration default="false" name="Unnamed" type="Application" factoryName="Application">
+    <configuration default="false" name="Search" type="Application" factoryName="Application">
       <extension name="snapshooter" />
       <option name="MAIN_CLASS_NAME" value="org.tomrieck.content.Search" />
       <option name="VM_PARAMETERS" value="" />
@@ -668,9 +648,9 @@
       <method />
     </configuration>
     <list size="3">
-      <item index="0" class="java.lang.String" itemvalue="Application.Indexer" />
+      <item index="0" class="java.lang.String" itemvalue="Application.Index" />
       <item index="1" class="java.lang.String" itemvalue="Application.CheckIndex" />
-      <item index="2" class="java.lang.String" itemvalue="Application.Unnamed" />
+      <item index="2" class="java.lang.String" itemvalue="Application.Search" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -743,20 +723,21 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="786" extended-state="6" />
+    <frame x="-8" y="-8" width="1296" height="786" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34304208" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38803682" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4739264" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38803682" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30674848" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32668713" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30243903" sideWeight="0.59662575" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30243903" sideWeight="0.601227" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24878049" sideWeight="0.601227" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23821138" sideWeight="0.601227" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28374234" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297546" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -764,7 +745,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4739264" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928804" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -871,85 +851,119 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/util/FNVHash32.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Prime.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="41" selection-end="41" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/lang/CharSequence.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="17" selection-start="1349" selection-end="1349" vertical-scroll-proportion="-0.64179105" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/DoubleHash64.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="243" selection-end="243" vertical-scroll-proportion="0.3130016" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/util/Doublehash32.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="55" selection-start="239" selection-end="239" vertical-scroll-proportion="0.24077046" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Hash64.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="396" selection-end="396" vertical-scroll-proportion="0.505618" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Hash32.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="44" selection-end="44" vertical-scroll-proportion="0.048154093" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/IOUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="0" selection-start="747" selection-end="747" vertical-scroll-proportion="0.19422151" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/CheckIndex.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="13" selection-start="137" selection-end="137" vertical-scroll-proportion="0.09630819" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/ConcordMerge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="7" selection-start="38" selection-end="38" vertical-scroll-proportion="0.048154093" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/InverterRecord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="73" selection-end="73" vertical-scroll-proportion="0.09630819" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Indexer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="0" selection-start="1516" selection-end="1516" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Concordance.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="692" selection-end="692" vertical-scroll-proportion="0.12947658" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Index.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="61" selection-start="707" selection-end="707" vertical-scroll-proportion="-0.96694213" />
+        <state line="2" column="13" selection-start="44" selection-end="44" vertical-scroll-proportion="0.048154093">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Inverter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="-0.4751204" />
+        <state line="7" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="-0.39807382">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Prime.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/testing/MapTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0" />
+        <state line="5" column="13" selection-start="93" selection-end="93" vertical-scroll-proportion="-0.56500804">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/util/Hash32.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="13" selection-start="41" selection-end="41" vertical-scroll-proportion="0.048154093">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/io/DataOutput.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="10" selection-start="932" selection-end="932" vertical-scroll-proportion="-6.4879613">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/io/RandomAccessFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="49" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.8426966">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/nio/ByteBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="239" column="22" selection-start="7710" selection-end="7710" vertical-scroll-proportion="0.33226323">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/util/Arrays.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2565" column="23" selection-start="96958" selection-end="96958" vertical-scroll-proportion="0.33226323">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/lang/Math.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="861" column="22" selection-start="35914" selection-end="35914" vertical-scroll-proportion="0.33226323">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_21/src.zip!/java/io/File.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="933" column="16" selection-start="37909" selection-end="37909" vertical-scroll-proportion="0.33223686">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Concordance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="0" selection-start="1055" selection-end="1055" vertical-scroll-proportion="0.9871589">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/ConcordMerge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="0" selection-start="834" selection-end="834" vertical-scroll-proportion="0.19422151">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/IOUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="4" selection-start="1003" selection-end="1003" vertical-scroll-proportion="0.7110754">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Index.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="13" selection-start="195" selection-end="195" vertical-scroll-proportion="-2.0272872">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/CheckIndex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="107" column="28" selection-start="2509" selection-end="3105" vertical-scroll-proportion="0.85232747">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tomrieck/content/Search.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="0" selection-start="1410" selection-end="1410" vertical-scroll-proportion="0.33333334">
-          <folding />
+        <state line="11" column="0" selection-start="207" selection-end="207" vertical-scroll-proportion="0.3305785">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

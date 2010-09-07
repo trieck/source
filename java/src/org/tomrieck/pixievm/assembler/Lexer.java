@@ -171,7 +171,7 @@ public class Lexer {
         reader.unread(c);
 
         tok.setValue(output.toString());
-		return tok;
-	}
+        return tok;
+    }
 
 }

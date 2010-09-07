@@ -34,7 +34,7 @@ public class MachineException extends Exception {
                 return "Attempt to assign to a non-variable.";
             default:
                 return "Unknown error.";
-		}
-	}
+        }
+    }
 
 }

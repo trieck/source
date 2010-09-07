@@ -28,7 +28,7 @@ public class CompilerException extends Exception {
                 return "A number was expected and not found.";
             default:
                 return "Unknown error.";
-		}
-	}
+        }
+    }
 
 }

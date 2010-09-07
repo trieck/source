@@ -48,6 +48,6 @@ public class Assembler {
 
     public static void usage() {
         System.err.println("usage: assembler file");
-		System.exit(1);
-	}
+        System.exit(1);
+    }
 }

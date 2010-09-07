@@ -9,7 +9,7 @@ public class ConcordMerge {
     private static final int NWAY = 100;                    // number of ways to merge
     private static final int BUF_SIZE = 4096;               // for transfer
     private static final String TERM_EOF = "\uFFFF";        // EOF indictator
-    
+
     private DataOutputStream out;                           // output stream for merge
     private ConcordRecord[] records;                        // concordance records for least
     private int pass;                                       // countdown of pass number

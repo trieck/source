@@ -109,9 +109,9 @@ public class Symbols {
         final Machine machine = Machine.getInstance();
 
         // Install built-in functions
-		install("pow", machine.pow);
+        install("pow", machine.pow);
 
-		// Install keywords
-	}
+        // Install keywords
+    }
 
 }

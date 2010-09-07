@@ -610,7 +610,7 @@ public class Parser {
         /**
          * print a human readable rep of the machine
          */
-		public void dump(PrintWriter writer) {
+        public void dump(PrintWriter writer) {
 		}
 	}
 }

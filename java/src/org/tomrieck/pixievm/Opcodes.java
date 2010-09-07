@@ -168,9 +168,9 @@ public class Opcodes {
                         case AM_R16_IMM16:
                             System.out.println(element[0] + " R16, IMM16");
                             break;
-					}
-				}
-			}
-		}
-	}
+                    }
+                }
+            }
+        }
+    }
 }

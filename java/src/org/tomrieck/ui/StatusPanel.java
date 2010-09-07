@@ -101,5 +101,5 @@ public class StatusPanel extends JPanel {
     public void setText(String str) {
         label.setText(str);
         label.setVisible(str.length() > 0);
-	}
+    }
 }

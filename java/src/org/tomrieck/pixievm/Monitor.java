@@ -107,5 +107,5 @@ public class Monitor {
 
     private void prompt() {
         System.out.print("> ");
-	}
+    }
 }

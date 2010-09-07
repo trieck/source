@@ -141,8 +141,8 @@ public class DAG {
 
         for (final Vertex m : v.edges) {
             visit(m, L, visited);
-		}
+        }
 
-		L.add(v);
-	}
+        L.add(v);
+    }
 }

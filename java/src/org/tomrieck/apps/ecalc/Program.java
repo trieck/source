@@ -30,7 +30,7 @@ public class Program {
      */
     public void define(String name, int type) {
         Symbols.install(name, type, /* base */null);
-		// pbase = pmem
-	}
+        // pbase = pmem
+    }
 
 }

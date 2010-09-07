@@ -55,5 +55,5 @@ public class ODBManager {
     public static void main(String[] args) {
         final ODBManager theApp = ODBManager.getInstance();
         theApp.run(args);
-	}
+    }
 }

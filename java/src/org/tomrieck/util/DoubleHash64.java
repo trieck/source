@@ -1,4 +1,6 @@
-package org.tomrieck.content;
+package org.tomrieck.util;
+
+import org.tomrieck.util.Hash64;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -8,7 +10,7 @@ public class DoubleHash64 {
     public static long hash(String s) {
         return hash(s.getBytes());
     }
-    
+
     public static long hash(byte[] b) {
 
         long l = Hash64.hash(b);

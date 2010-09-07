@@ -102,7 +102,7 @@ public class Binomial {
             usage();
         }
 
-		final Binomial b = new Binomial(n);
-		System.out.println(b);
-	}
+        final Binomial b = new Binomial(n);
+        System.out.println(b);
+    }
 }
