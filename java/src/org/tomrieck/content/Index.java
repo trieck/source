@@ -25,7 +25,7 @@ public class Index {
     public void index(String[] args) throws IOException {
         infiles = Arrays.copyOf(args, args.length - 1);
         outfile = args[args.length - 1];
-        concord = new Concordance(infiles);
+        concord = new Concordance();
         index();
     }
 
@@ -72,7 +72,7 @@ public class Index {
         // write each input file in index order
         OutputStream os = Channels.newOutputStream(ofile.getChannel());
         for (String infile : infiles) {
-            IOUtil.writeString(os, infile);
+            IOUtil.writeString(os, makeAbsolute(infile));
         }
 
         // write the real offset to the concordance
@@ -186,6 +186,11 @@ public class Index {
         for (int i = 0; ((term = lexer.getToken()).length()) != 0; i++) {
             concord.insert(term, currDoc, i);
         }
+    }
+
+    private static String makeAbsolute(String filename) {
+        File file = new File(filename);        
+        return file.getAbsolutePath();
     }
 
     public static void main(String[] args) {

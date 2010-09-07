@@ -1,7 +1,5 @@
 package org.tomrieck.util;
 
-import org.tomrieck.util.Hash64;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 

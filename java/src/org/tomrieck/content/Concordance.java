@@ -13,10 +13,7 @@ public class Concordance {
     private Inverter block = new Inverter();
     private final List<String> tempfiles = new ArrayList<String>(); // temporary files
 
-    private String[] infiles;   // input files
-
-    public Concordance(String[] infiles) throws IOException {
-        this.infiles = infiles;
+    public Concordance() {
     }
 
     public boolean isFull() {
