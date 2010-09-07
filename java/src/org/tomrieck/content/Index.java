@@ -72,7 +72,7 @@ public class Index {
         // write each input file in index order
         OutputStream os = Channels.newOutputStream(ofile.getChannel());
         for (String infile : infiles) {
-            IOUtil.writeString(os, makeAbsolute(infile));
+            IOUtil.writeString(os, makeCanonical(infile));
         }
 
         // write the real offset to the concordance
@@ -188,9 +188,9 @@ public class Index {
         }
     }
 
-    private static String makeAbsolute(String filename) {
+    private static String makeCanonical(String filename) throws IOException {
         File file = new File(filename);        
-        return file.getAbsolutePath();
+        return file.getCanonicalPath();
     }
 
     public static void main(String[] args) {
