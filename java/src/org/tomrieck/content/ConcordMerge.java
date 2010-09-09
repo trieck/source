@@ -108,7 +108,7 @@ public class ConcordMerge {
                 continue;
             }
 
-            // read size of document list
+            // read size of anchor list
             recs[i].size = recs[i].stream.readInt();
         }
 
@@ -147,7 +147,7 @@ public class ConcordMerge {
             size += recs[i].size;
         }
 
-        // write location size
+        // write anchor list size
         out.writeInt(size);
 
         for (i = 0; recs[i] != null; i++) {

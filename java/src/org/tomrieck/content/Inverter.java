@@ -49,17 +49,17 @@ public class Inverter {
         final DataOutputStream dos = new DataOutputStream(os);
 
         String term;
-        LongBuffer locations;
+        LongBuffer anchors;
 
         for (int i = 0; i < count; i++) {
             term = records.getTerm(i);
-            locations = records.getLocations(i);
+            anchors = records.getAnchors(i);
 
             IOUtil.writeString(dos, term);
-            dos.writeInt(locations.position()); // size of location list            
+            dos.writeInt(anchors.position()); // size of anchor list
 
-            for (int j = 0; j < locations.position(); j++) {
-                dos.writeLong(locations.get(j)); // locations
+            for (int j = 0; j < anchors.position(); j++) {
+                dos.writeLong(anchors.get(j)); // anchor
             }
         }
 

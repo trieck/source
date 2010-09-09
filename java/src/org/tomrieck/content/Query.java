@@ -27,31 +27,31 @@ public class Query {
         }
     }
 
-    public DocList query(String phrase) throws IOException {
+    public AnchorList query(String phrase) throws IOException {
         lexer = new Lexer(new StringReader(phrase));
         return conjunction();
     }
 
-    private DocList conjunction() throws IOException {
-        DocList left = primary();
+    private AnchorList conjunction() throws IOException {
+        AnchorList left = primary();
 
         for (;;) {
             if (lookahead().length() == 0)
                 return left;
 
-            DocList right = primary();
+            AnchorList right = primary();
             
             left = adjacent(left, right);
         }
     }
 
-    private DocList primary() throws IOException {
-        DocList doclist = new DocList();
+    private AnchorList primary() throws IOException {
+        AnchorList anchorlist = new AnchorList();
 
         String left = getTok();
 
         if (left.length() == 0)
-            return doclist; // error condition
+            return anchorlist; // error condition
 
         return lookup(left);
     }
@@ -64,12 +64,12 @@ public class Query {
         return lexer.lookahead();
     }
 
-    private DocList adjacent(DocList left, DocList right) {
-        return DocList.adjacent(left, right);
+    private AnchorList adjacent(AnchorList left, AnchorList right) {
+        return AnchorList.adjacent(left, right);
     }
     
-    private DocList lookup(String term) throws IOException {
-        DocList doclist = new DocList();
+    public AnchorList lookup(String term) throws IOException {
+        AnchorList anchorlist = new AnchorList();
 
         // hash the term
         long bucket = Index.bucket_hash(term, hash_tbl_size);
@@ -80,7 +80,7 @@ public class Query {
         // read the concordance offset
         long conc_offset;
         if ((conc_offset = f1.readLong()) == 0)
-            return doclist; // no hit
+            return anchorlist; // no hit
         
         String sTerm;
         InputStream is = Channels.newInputStream(f2.getChannel());
@@ -92,15 +92,19 @@ public class Query {
             // read term in concordance
             sTerm = IOUtil.readString(is);
             if (sTerm.equals(term)) {   // match
-                doclist.read(is);
+                anchorlist.read(is);
                 break;
             }
 
             // move to next bucket
+            bucket = (bucket + Index.BUCKET_SIZE) % hash_tbl_size;
+
+            f1.seek(hash_tbl_offset + bucket);
+
             conc_offset = f1.readLong();
         }
 
-        return doclist;
+        return anchorlist;
     }
 
     private void readHeader() throws IOException {

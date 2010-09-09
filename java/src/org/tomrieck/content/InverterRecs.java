@@ -42,7 +42,7 @@ public class InverterRecs {
         return records[index].term;
     }
 
-    public LongBuffer getLocations(int index) {
+    public LongBuffer getAnchors(int index) {
         if (index < 0 || index >= records.length) {
             throw new IllegalArgumentException();
         }
@@ -69,11 +69,11 @@ public class InverterRecs {
 
         assert (records[index] != null);
 
-        long location = (docnum << 32) | wordnum;
+        long anchor = (docnum << 32) | wordnum;
 
         LongBuffer buffer = records[index].buffer;
         if (buffer.position() > 0) {
-            if (buffer.get(buffer.position() - 1) == location) {
+            if (buffer.get(buffer.position() - 1) == anchor) {
                 return; // exists
             }
         }
@@ -83,7 +83,7 @@ public class InverterRecs {
             buffer = records[index].buffer;
         }
 
-        buffer.put(location);
+        buffer.put(anchor);
     }
 
     public void compact() {

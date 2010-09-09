@@ -8,8 +8,6 @@ import java.util.List;
 
 public class Concordance {
 
-    private static final int BUF_SIZE = 4096;
-
     private Inverter block = new Inverter();
     private final List<String> tempfiles = new ArrayList<String>(); // temporary files
 

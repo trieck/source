@@ -1,18 +1,13 @@
 package org.tomrieck.content;
 
+import org.tomrieck.util.Timer;
+
 import java.io.*;
-import java.nio.channels.Channels;
 
 public class CheckIndex {
 
     private int nfiles;
-
-    private long nterms;            // number of terms in index
-    private long conc_offset;       // offset to concordance
-    private long hash_tbl_size;     // hash table size
-    private long hash_tbl_offset;   // hash table offset
-
-    private RandomAccessFile file1, file2;
+    private Query query;
 
     public CheckIndex() {
     }
@@ -21,24 +16,23 @@ public class CheckIndex {
         DataInputStream dis = new DataInputStream(new FileInputStream(file));
 
         /* for searching */
-        file1 = new RandomAccessFile(file, "r");
-        file2 = new RandomAccessFile(file, "r");
+        query = new Query(file);
 
         int magicno = dis.readInt();
         if (magicno != Index.MAGIC_NO) {
             throw new IOException("file not in index format.");
         }
 
-        nterms = dis.readLong();
+        long nterms = dis.readLong();
         System.out.printf("    Contains %d terms(s)\n", nterms);
 
-        conc_offset = dis.readLong();
+        long conc_offset = dis.readLong();
         System.out.printf("    Concordance offset: 0x%08x\n", conc_offset);
 
-        hash_tbl_size = dis.readLong();
+        long hash_tbl_size = dis.readLong();
         System.out.printf("    Hash table size: 0x%08x\n", hash_tbl_size);
 
-        hash_tbl_offset = dis.readLong();
+        long hash_tbl_offset = dis.readLong();
         System.out.printf("    Hash table offset: 0x%08x\n", hash_tbl_offset);
 
         nfiles = dis.readInt();
@@ -51,8 +45,8 @@ public class CheckIndex {
         }
 
         String term;
-        int vsize;  // document vector size
-        long[] docvec;
+        int vsize;  // anchor list size
+        long[] anchorlist;
 
         for (long i = 0; i < nterms; i++) {
             term = IOUtil.readString(dis);
@@ -62,60 +56,43 @@ public class CheckIndex {
             vsize = dis.readInt();
             if (vsize <= 0) {
                 throw new IOException(
-                        String.format("bad document vector size %d for term \"%s\".",
+                        String.format("bad anchor list size %d for term \"%s\".",
                                 vsize, term));
             }
 
-            docvec = new long[vsize];
+            anchorlist = new long[vsize];
             for (int j = 0; j < vsize; j++) {
-                docvec[j] = dis.readLong();
+                anchorlist[j] = dis.readLong();
             }
 
-            checkDocs(docvec);
+            checkAnchors(anchorlist);
         }
 
         dis.close();
-
-        file1.close();
-        file2.close();
+        query.close();
     }
 
     private void search(String term) throws IOException {
 
-        long hash = Index.bucket_hash(term, hash_tbl_size);
+        AnchorList list = query.lookup(term);
 
-        file1.seek(hash_tbl_offset + hash);
-
-        String sTerm;
-        InputStream is = Channels.newInputStream(file2.getChannel());
-
-        long offset = file1.readLong();
-        while (offset != 0) {
-            file2.seek(offset);
-            sTerm = IOUtil.readString(is);
-            if (sTerm.equals(term)) {
-                break;  // hit!
-            }
-            offset = file1.readLong();
-        }
-
-        if (offset == 0) {
+        if (list.size() == 0) {
             throw new IOException(String.format("search failed for term \"%s\".", term));
         }
     }
 
-    private void checkDocs(long[] docvec) throws IOException {
+    private void checkAnchors(long[] anchorlist) throws IOException {
         int docnum;
         int wordnum;
 
-        for (int i = 0; i < docvec.length; i++) {
-            docnum = (int) (docvec[i] >> 32);
+        for (int i = 0; i < anchorlist.length; i++) {
+            docnum = (int) (anchorlist[i] >> 32);
             if (docnum < 0 || docnum >= nfiles) {
                 throw new IOException(
                         String.format("document number (%d) out of range.", docnum)
                 );
             }
-            wordnum = (int) docvec[i];
+            wordnum = (int) anchorlist[i];
             if (wordnum < 0) {
                 throw new IOException(
                         String.format("word number (%d) out of range.", wordnum)
@@ -130,6 +107,8 @@ public class CheckIndex {
             System.exit(1);
         }
 
+        Timer t = new Timer();
+
         CheckIndex chkindex = new CheckIndex();
 
         try {
@@ -138,5 +117,7 @@ public class CheckIndex {
             System.err.println(e.getMessage());
             System.exit(1);
         }
+
+        System.out.printf("    elapsed time %s\n", t);
     }
 }

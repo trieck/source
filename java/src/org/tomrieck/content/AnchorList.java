@@ -5,40 +5,40 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DocList {
+public class AnchorList {
 
-    private ArrayList<Long> documents = new ArrayList<Long>();
+    private ArrayList<Long> anchors = new ArrayList<Long>();
 
-    public DocList() {
+    public AnchorList() {
     }
 
     public int size() {
-        return documents.size();
+        return anchors.size();
     }
 
-    public Document getDoc(int index) {
-        return new Document(documents.get(index));
+    public Anchor getAnchor(int index) {
+        return new Anchor(anchors.get(index));
     }
 
     public void read(InputStream is) throws IOException {
 
         DataInputStream dis = new DataInputStream(is);
 
-        int size = dis.readInt();   // size of document vector
+        int size = dis.readInt();   // size of anchor list
 
         byte[] buffer = new byte[size * 8];
 
         int nread = dis.read(buffer);
         if (nread != buffer.length) {
-            throw new IOException("unable to read document vector.");
+            throw new IOException("unable to read anchor list.");
         }
 
-        documents.clear();
-        documents.ensureCapacity(size);
+        anchors.clear();
+        anchors.ensureCapacity(size);
         
-        long doc;
+        long anchor;
         for (int i = 0; i < size; i++) {    // convert byte array to long
-            doc = buffer[i*8+0] << 56
+            anchor = buffer[i*8+0] << 56
                 | buffer[i*8+1] << 48
                 | buffer[i*8+2] << 40
                 | buffer[i*8+3] << 32
@@ -46,38 +46,36 @@ public class DocList {
                 | buffer[i*8+5] << 16
                 | buffer[i*8+6] << 8
                 | buffer[i*8+7];
-            documents.add(doc);
+            anchors.add(anchor);
         }        
     }
 
     public void add(long l) {
-        documents.add(l);
+        anchors.add(l);
     }
 
-    public void add(Document doc) {
-        add(doc.getDocID());
+    public void add(Anchor anchor) {
+        add(anchor.getAnchorID());
     }
 
-    public static DocList adjacent(DocList set1, DocList set2) {
+    public static AnchorList adjacent(AnchorList set1, AnchorList set2) {
 
-        DocList output = new DocList();
+        AnchorList output = new AnchorList();
 
-        Document left, right;
+        Anchor left, right;
         
         int i = 0, j = 0, k, m = set1.size(), n = set2.size();
 
         while (i != m && j != n) {
-            left = set1.getDoc(i);
-            right = set2.getDoc(j);
+            left = set1.getAnchor(i);
+            right = set2.getAnchor(j);
 
             k = left.compareTo(right);
             if (k == -1) {
                 output.add(right);
                 i++;
-                j++;
             } else if (k == 1) {
                 output.add(left);
-                i++;
                 j++;
             } else if (k < 0) {
                 i++;
@@ -89,7 +87,7 @@ public class DocList {
             }
             
         }
-
+        
         return output;
     }
 }

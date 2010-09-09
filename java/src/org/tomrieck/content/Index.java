@@ -10,8 +10,9 @@ import java.util.Arrays;
 public class Index {
 
     public static final int MAGIC_NO = 0xc001d00d;  // file magic number
+    public static final int BUCKET_SIZE = 8;       // size of hash bucket
+
     private static final int BUF_SIZE = 4096;       // buffer size
-    private static final int BUCKET_SIZE = 8;       // size of hash bucket
     private static final int FILL_FACTOR = 3;       // hash table fill factor
 
     private String[] infiles;       // array of files to index
@@ -81,7 +82,7 @@ public class Index {
         ofile.writeLong(concordance);
         ofile.seek(concordance);  // jump back
 
-        // write terms/docvectors
+        // write terms/anchors
 
         long nterms;
         String term;
@@ -89,7 +90,7 @@ public class Index {
         byte[] buf = new byte[BUF_SIZE];
 
         for (nterms = 0; (term = IOUtil.readString(dis)).length() > 0; nterms++) {
-            n = dis.readInt();  // docvec size
+            n = dis.readInt();  // anchor list size
 
             IOUtil.writeString(os, term);
             ofile.writeInt(n);
@@ -148,25 +149,28 @@ public class Index {
 
         InputStream is = Channels.newInputStream(infile.getChannel());
 
-        long h, term_offset = concordance;
+        long h, offset, term_offset = concordance;
         int vsize;
         for (long i = 0; i < nterms; i++) {
             term = IOUtil.readString(is);
 
             h = bucket_hash(term, tableSize);
-            ofile.seek(hash_table_area + h);
 
             // collisions are resolved via linear-probing
-            while (ofile.readLong() != 0)
-                ;
+            for (;;) {
+	            offset = hash_table_area + h;
 
-            // move back to the last empty bucket
-            ofile.seek(ofile.getFilePointer() - 8);
+	            ofile.seek(offset);
+	            if (ofile.readLong() == 0)
+		            break;
 
-            // write the term offset
+	            h = (h + BUCKET_SIZE) % tableSize;
+            }
+
+            ofile.seek(offset);
             ofile.writeLong(term_offset);
-
-            // document vector size
+            
+            // anchor list size
             vsize = infile.readInt() * 8;
             infile.skipBytes(vsize);
 

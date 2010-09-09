@@ -1,9 +1,6 @@
 package org.tomrieck.content;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
-import java.nio.channels.Channels;
 
 public class Search {
 
@@ -14,11 +11,11 @@ public class Search {
 
         Query query = new Query(index_file);
 
-        DocList doclist = query.query(phrase);
+        AnchorList anchorlist = query.query(phrase);
 
         query.close();
 
-        System.out.printf("    %d hits.\n", doclist.size());        
+        System.out.printf("    %d hits.\n", anchorlist.size());
     }
 
     public static void main(String[] args) {
