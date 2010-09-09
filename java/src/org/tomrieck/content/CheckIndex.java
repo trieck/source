@@ -2,7 +2,9 @@ package org.tomrieck.content;
 
 import org.tomrieck.util.Timer;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.nio.channels.Channels;
 import java.text.DecimalFormat;
 
@@ -48,7 +50,7 @@ public class CheckIndex {
         }
 
         // check the terms and anchor lists
-        
+
         String term;
         int vsize;  // anchor list size
         long[] anchorlist;
@@ -84,8 +86,8 @@ public class CheckIndex {
 
         DecimalFormat df = new DecimalFormat("#0.00");
 
-        System.out.printf("    Hash table fill factor: %s%%\n", df.format(100 * (nfilled / (double)hash_tbl_size)));
-        
+        System.out.printf("    Hash table fill factor: %s%%\n", df.format(100 * (nfilled / (double) hash_tbl_size)));
+
         is.close();
         file.close();
         query.close();

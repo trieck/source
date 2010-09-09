@@ -14,7 +14,7 @@ public class Lexer {
         reader = new BufferedReader(r);
     }
 
-    public String lookahead() throws IOException {        
+    public String lookahead() throws IOException {
         reader.mark(READ_AHEAD_LIMIT);
 
         String tok = getToken();

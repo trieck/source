@@ -18,16 +18,16 @@ public class Anchor implements Comparable<Anchor> {
     public long getAnchorID() {
         return anchorid;
     }
-    
+
     public int getDocNum() {
-        return (int)(anchorid >> 32);
+        return (int) (anchorid >> 32);
     }
 
     public int getWordNum() {
-        return (int)anchorid;
+        return (int) anchorid;
     }
 
     public int compareTo(Anchor d) {
-        return (int)(anchorid - d.anchorid);
-    }    
+        return (int) (anchorid - d.anchorid);
+    }
 }

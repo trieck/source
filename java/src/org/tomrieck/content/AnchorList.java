@@ -1,8 +1,8 @@
 package org.tomrieck.content;
 
 import java.io.DataInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class AnchorList {
@@ -35,19 +35,19 @@ public class AnchorList {
 
         anchors.clear();
         anchors.ensureCapacity(size);
-        
+
         long anchor;
         for (int i = 0; i < size; i++) {    // convert byte array to long
-            anchor = (buffer[i*8+0] & 0xFF) << 56
-                | (buffer[i*8+1] & 0xFF) << 48
-                | (buffer[i*8+2] & 0xFF) << 40
-                | (buffer[i*8+3] & 0xFF) << 32
-                | (buffer[i*8+4] & 0xFF) << 24
-                | (buffer[i*8+5] & 0xFF) << 16
-                | (buffer[i*8+6] & 0xFF) << 8
-                | (buffer[i*8+7] & 0xFF);
+            anchor = (buffer[i * 8 + 0] & 0xFF) << 56
+                    | (buffer[i * 8 + 1] & 0xFF) << 48
+                    | (buffer[i * 8 + 2] & 0xFF) << 40
+                    | (buffer[i * 8 + 3] & 0xFF) << 32
+                    | (buffer[i * 8 + 4] & 0xFF) << 24
+                    | (buffer[i * 8 + 5] & 0xFF) << 16
+                    | (buffer[i * 8 + 6] & 0xFF) << 8
+                    | (buffer[i * 8 + 7] & 0xFF);
             anchors.add(anchor);
-        }        
+        }
     }
 
     public void add(long l) {
@@ -63,7 +63,7 @@ public class AnchorList {
         AnchorList output = new AnchorList();
 
         Anchor left, right;
-        
+
         int i = 0, j = 0, k, m = set1.size(), n = set2.size();
 
         while (i != m && j != n) {
@@ -85,9 +85,9 @@ public class AnchorList {
                 i++;
                 j++;
             }
-            
+
         }
-        
+
         return output;
     }
 }

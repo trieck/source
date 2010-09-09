@@ -1,6 +1,9 @@
 package org.tomrieck.content;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.io.StringReader;
 import java.nio.channels.Channels;
 
 public class Query {
@@ -35,12 +38,12 @@ public class Query {
     private AnchorList conjunction() throws IOException {
         AnchorList left = primary();
 
-        for (;;) {
+        for (; ;) {
             if (lookahead().length() == 0)
                 return left;
 
             AnchorList right = primary();
-            
+
             left = adjacent(left, right);
         }
     }
@@ -67,7 +70,7 @@ public class Query {
     private AnchorList adjacent(AnchorList left, AnchorList right) {
         return AnchorList.adjacent(left, right);
     }
-    
+
     public AnchorList lookup(String term) throws IOException {
         AnchorList anchorlist = new AnchorList();
 
@@ -81,7 +84,7 @@ public class Query {
         long conc_offset;
         if ((conc_offset = f1.readLong()) == 0)
             return anchorlist; // no hit
-        
+
         String sTerm;
         InputStream is = Channels.newInputStream(f2.getChannel());
         while (conc_offset != 0) {   // linear-probing
@@ -99,7 +102,7 @@ public class Query {
             // move to next bucket
             bucket = (bucket + 1) % hash_tbl_size;
 
-            f1.seek(hash_tbl_offset + (bucket*8));
+            f1.seek(hash_tbl_offset + (bucket * 8));
 
             conc_offset = f1.readLong();
         }

@@ -10,7 +10,7 @@ import java.nio.LongBuffer;
 public class Inverter {
 
     private static final int MAX_COUNT = 100000;    // max. number of index records
-    
+
     private InverterRecs records;   // hash table of records
     private int count;              // number of records in table
     private int size;               // size of hash table, should be prime

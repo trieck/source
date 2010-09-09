@@ -11,7 +11,7 @@ public class Index {
 
     public static final int MAGIC_NO = 0xc001d00d;  // file magic number
     private static final int BUF_SIZE = 4096;       // buffer size
-    
+
     private String[] infiles;       // array of files to index
     private String outfile;         // name of output file
     private int currDoc;            // current document # while indexing
@@ -154,19 +154,19 @@ public class Index {
             h = hash(term, tableSize);
 
             // collisions are resolved via linear-probing
-            for (;;) {
-	            offset = hash_table_area + (h * 8);
+            for (; ;) {
+                offset = hash_table_area + (h * 8);
 
-	            ofile.seek(offset);
-	            if (ofile.readLong() == 0)
-		            break;
+                ofile.seek(offset);
+                if (ofile.readLong() == 0)
+                    break;
 
-	            h = (h + 1) % tableSize;
+                h = (h + 1) % tableSize;
             }
 
             ofile.seek(offset);
             ofile.writeLong(term_offset);
-            
+
             // anchor list size
             vsize = infile.readInt() * 8;
             infile.skipBytes(vsize);
@@ -190,7 +190,7 @@ public class Index {
     }
 
     private static String makeCanonical(String filename) throws IOException {
-        File file = new File(filename);        
+        File file = new File(filename);
         return file.getCanonicalPath();
     }
 
@@ -216,7 +216,7 @@ public class Index {
     }
 
     public static long hash(String term, long size) {
-        long h = (DoubleHash64.hash(term) & 0x7FFFFFFFFFFFFFFFL) % size;        
+        long h = (DoubleHash64.hash(term) & 0x7FFFFFFFFFFFFFFFL) % size;
 
         return h;
     }
