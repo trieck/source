@@ -10,11 +10,8 @@ import java.util.Arrays;
 public class Index {
 
     public static final int MAGIC_NO = 0xc001d00d;  // file magic number
-    public static final int BUCKET_SIZE = 8;       // size of hash bucket
-
     private static final int BUF_SIZE = 4096;       // buffer size
-    private static final int FILL_FACTOR = 3;       // hash table fill factor
-
+    
     private String[] infiles;       // array of files to index
     private String outfile;         // name of output file
     private int currDoc;            // current document # while indexing
@@ -117,7 +114,7 @@ public class Index {
         ofile.writeLong(nterms);
 
         // compute the size of the hash table and store it
-        long tableSize = Prime.prime(nterms * 8 * FILL_FACTOR);
+        long tableSize = Prime.prime(nterms);
         ofile.seek(hash_table_size_offset);
         ofile.writeLong(tableSize);
 
@@ -127,13 +124,13 @@ public class Index {
         ofile.seek(hash_table_area); // jump back
 
         // expand file to make space for hash table
-        long newLength = ofile.length() + tableSize;
+        long newLength = ofile.length() + (tableSize * 8);
         ofile.setLength(newLength);
 
         // need to ensure the hash table is empty
         Arrays.fill(buf, (byte) 0);
 
-        long remaining = tableSize;
+        long remaining = tableSize * 8;
         while (remaining > 0) {
             m = (int) Math.min(BUF_SIZE, remaining);
             ofile.write(buf, 0, m);
@@ -154,17 +151,17 @@ public class Index {
         for (long i = 0; i < nterms; i++) {
             term = IOUtil.readString(is);
 
-            h = bucket_hash(term, tableSize);
+            h = hash(term, tableSize);
 
             // collisions are resolved via linear-probing
             for (;;) {
-	            offset = hash_table_area + h;
+	            offset = hash_table_area + (h * 8);
 
 	            ofile.seek(offset);
 	            if (ofile.readLong() == 0)
 		            break;
 
-	            h = (h + BUCKET_SIZE) % tableSize;
+	            h = (h + 1) % tableSize;
             }
 
             ofile.seek(offset);
@@ -218,11 +215,8 @@ public class Index {
         System.out.printf("    elapsed time %s\n", t);
     }
 
-    public static long bucket_hash(String term, long size) {
-        long h = (DoubleHash64.hash(term) & 0x7FFFFFFFFFFFFFFFL) % size;
-
-        // align offset to multiple of bucket size
-        h = h + (BUCKET_SIZE - 1) & ~(BUCKET_SIZE - 1);
+    public static long hash(String term, long size) {
+        long h = (DoubleHash64.hash(term) & 0x7FFFFFFFFFFFFFFFL) % size;        
 
         return h;
     }

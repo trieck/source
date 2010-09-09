@@ -38,14 +38,14 @@ public class AnchorList {
         
         long anchor;
         for (int i = 0; i < size; i++) {    // convert byte array to long
-            anchor = buffer[i*8+0] << 56
-                | buffer[i*8+1] << 48
-                | buffer[i*8+2] << 40
-                | buffer[i*8+3] << 32
-                | buffer[i*8+4] << 24
-                | buffer[i*8+5] << 16
-                | buffer[i*8+6] << 8
-                | buffer[i*8+7];
+            anchor = (buffer[i*8+0] & 0xFF) << 56
+                | (buffer[i*8+1] & 0xFF) << 48
+                | (buffer[i*8+2] & 0xFF) << 40
+                | (buffer[i*8+3] & 0xFF) << 32
+                | (buffer[i*8+4] & 0xFF) << 24
+                | (buffer[i*8+5] & 0xFF) << 16
+                | (buffer[i*8+6] & 0xFF) << 8
+                | (buffer[i*8+7] & 0xFF);
             anchors.add(anchor);
         }        
     }

@@ -84,6 +84,7 @@ public class ConcordMerge {
         File infile;
         for (i = 0, j = save; i < argc; i++, j++) {
             recs[i].stream.close();
+            recs[i].stream = null;
             infile = new File(files.get(j));
             infile.delete();
         }
