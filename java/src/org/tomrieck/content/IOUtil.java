@@ -77,7 +77,7 @@ public class IOUtil {
 
         byte[] buf = new byte[BUF_SIZE];
 
-        Arrays.fill(buf, (byte) 0);
+        Arrays.fill(buf, b);
 
         int m;
         while (size > 0) {

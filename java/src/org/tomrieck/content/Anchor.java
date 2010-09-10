@@ -4,9 +4,6 @@ public class Anchor implements Comparable<Anchor> {
 
     private long anchorid;
 
-    public Anchor() {
-    }
-
     public Anchor(long anchorid) {
         this.anchorid = anchorid;
     }

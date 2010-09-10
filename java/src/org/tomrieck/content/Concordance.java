@@ -37,6 +37,9 @@ public class Concordance {
     public String merge() throws IOException {
         blockSave();
 
+        if (tempfiles.size() == 1)
+            return tempfiles.get(0);    // optimization
+
         ConcordMerge merger = new ConcordMerge();
         return merger.merge(tempfiles);
     }

@@ -40,20 +40,16 @@ public class CheckIndex {
         System.out.printf("    Hash table offset: 0x%08x\n", hash_tbl_offset);
 
         nfiles = file.readInt();
-        System.out.printf("    Indexes %d file(s):\n", nfiles);
+        System.out.printf("    Indexes %d file(s)\n", nfiles);
 
-        String infile;
-        InputStream is = Channels.newInputStream(file.getChannel());
-        for (int i = 0; i < nfiles; i++) {
-            infile = IOUtil.readString(is);
-            System.out.printf("        %s\n", infile);
-        }
+        // skip over the file list
+        file.seek(conc_offset);
 
         // check the terms and anchor lists
 
         String term;
         AnchorList list = new AnchorList();        
-
+        InputStream is = Channels.newInputStream(file.getChannel());
         for (long i = 0; i < nterms; i++) {
             term = IOUtil.readString(is);
             search(term);

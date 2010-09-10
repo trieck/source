@@ -16,27 +16,23 @@ public class Index {
     private int currDoc;            // current document # while indexing
     private Concordance concord;    // term concordance
 
-    public Index() {
-    }
-
-    public void index(String[] args) throws IOException {
+    public Index(String[] args) throws IOException {
         infiles = Arrays.copyOf(args, args.length - 1);
         outfile = args[args.length - 1];
         concord = new Concordance();
-        index();
     }
 
-    private void index() throws IOException {
+    public void index() throws IOException {
         for (String file : infiles) {
             indexFile(file);
             currDoc++;
         }
 
-        finalPass();
+        write();
     }
 
     /* combine concordance and hash table into final index */
-    private void finalPass() throws IOException {
+    public void write() throws IOException {
 
         // merge concordance blocks
         String concordFile = concord.merge();
@@ -174,8 +170,13 @@ public class Index {
 
         String term;
         for (int i = 0; ((term = lexer.getToken()).length()) != 0; i++) {
-            concord.insert(term, currDoc, i);
+            insert(term, currDoc, i);
         }
+    }
+
+    public void insert(String term, int docnum, int wordnum)
+        throws IOException {
+        concord.insert(term, docnum, wordnum);
     }
 
     private static String makeCanonical(String filename) throws IOException {
@@ -192,10 +193,9 @@ public class Index {
 
         Timer t = new Timer();
 
-        Index index = new Index();
-
         try {
-            index.index(args);
+            Index index = new Index(args);
+            index.index();
         } catch (IOException e) {
             System.err.println(e);
             System.exit(1);
