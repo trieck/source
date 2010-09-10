@@ -10,8 +10,7 @@ import java.util.Arrays;
 public class Index {
 
     public static final int MAGIC_NO = 0xc001d00d;  // file magic number
-    private static final int BUF_SIZE = 4096;       // buffer size
-
+    
     private String[] infiles;       // array of files to index
     private String outfile;         // name of output file
     private int currDoc;            // current document # while indexing
@@ -83,23 +82,20 @@ public class Index {
 
         long nterms;
         String term;
-        int n, m, read;
-        byte[] buf = new byte[BUF_SIZE];
+        int n;
 
         for (nterms = 0; (term = IOUtil.readString(dis)).length() > 0; nterms++) {
-            n = dis.readInt();  // anchor list size
+            // read the anchor list size
+            n = dis.readInt();
 
+            // write the term
             IOUtil.writeString(os, term);
+
+            // write the anchor list size
             ofile.writeInt(n);
 
-            for (n = n * 8 /* size in bytes */; n > 0;) {
-                m = Math.min(BUF_SIZE, n);
-                if ((read = dis.read(buf, 0, m)) <= 0)
-                    break;
-
-                os.write(buf, 0, read);
-                n -= read;
-            }
+            // transfer the anchor list
+            IOUtil.transfer(dis, os, n * 8);
         }
 
         dis.close();
@@ -128,14 +124,7 @@ public class Index {
         ofile.setLength(newLength);
 
         // need to ensure the hash table is empty
-        Arrays.fill(buf, (byte) 0);
-
-        long remaining = tableSize * 8;
-        while (remaining > 0) {
-            m = (int) Math.min(BUF_SIZE, remaining);
-            ofile.write(buf, 0, m);
-            remaining -= m;
-        }
+        IOUtil.fill(os, tableSize * 8, (byte)0);
 
         // we need two file pointers to the output file
         // in order to generate the hash table
@@ -216,8 +205,6 @@ public class Index {
     }
 
     public static long hash(String term, long size) {
-        long h = (DoubleHash64.hash(term) & 0x7FFFFFFFFFFFFFFFL) % size;
-
-        return h;
+        return (DoubleHash64.hash(term) & 0x7FFFFFFFFFFFFFFFL) % size;
     }
 }

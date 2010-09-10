@@ -2,14 +2,14 @@ package org.tomrieck.util;
 
 public class Hash32 {
 
-    public static long hash(String key) {
+    public static int hash(String key) {
         return hash(key.getBytes());
     }
 
     /**
      * 32-bit Fowler/Noll/Vo hash
      */
-    public static long hash(byte[] key) {
+    public static int hash(byte[] key) {
         int i;
         int hash;
 
@@ -18,6 +18,6 @@ public class Hash32 {
             hash ^= key[i];
         }
 
-        return (hash & 0xFFFFFFFFL);
+        return hash;
     }
 }

@@ -12,7 +12,7 @@ public class Anchor implements Comparable<Anchor> {
     }
 
     public Anchor(int docnum, int wordnum) {
-        anchorid = (docnum << 32) | wordnum;
+        anchorid = Anchor.makeAnchorID(docnum, wordnum);
     }
 
     public long getAnchorID() {
@@ -28,6 +28,16 @@ public class Anchor implements Comparable<Anchor> {
     }
 
     public int compareTo(Anchor d) {
-        return (int) (anchorid - d.anchorid);
+        if (getDocNum() < d.getDocNum())
+            return Integer.MIN_VALUE;
+
+        if (getDocNum() > d.getDocNum())
+            return Integer.MAX_VALUE;
+
+        return getWordNum() - d.getWordNum();
+    }
+
+    public static long makeAnchorID(int docnum, int wordnum) {
+        return ((long)docnum << 32) | wordnum;        
     }
 }

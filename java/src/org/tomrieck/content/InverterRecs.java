@@ -59,7 +59,7 @@ public class InverterRecs {
 
         records[index] = new InverterRecord();
         records[index].buffer = LongBuffer.allocate(DEF_BUF_SIZE);
-        records[index].term = new String(term);
+        records[index].term = term;
     }
 
     public void insert(int index, int docnum, int wordnum) {
@@ -69,13 +69,15 @@ public class InverterRecs {
 
         assert (records[index] != null);
 
-        long anchor = (docnum << 32) | wordnum;
+        long anchor = Anchor.makeAnchorID(docnum, wordnum);
 
         LongBuffer buffer = records[index].buffer;
         if (buffer.position() > 0) {
             if (buffer.get(buffer.position() - 1) == anchor) {
                 return; // exists
             }
+
+            assert(buffer.get(buffer.position()-1) < anchor);
         }
 
         if (!buffer.hasRemaining()) { // reallocate

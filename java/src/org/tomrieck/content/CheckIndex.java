@@ -52,27 +52,13 @@ public class CheckIndex {
         // check the terms and anchor lists
 
         String term;
-        int vsize;  // anchor list size
-        long[] anchorlist;
+        AnchorList list = new AnchorList();        
 
         for (long i = 0; i < nterms; i++) {
             term = IOUtil.readString(is);
-
             search(term);
-
-            vsize = file.readInt();
-            if (vsize <= 0) {
-                throw new IOException(
-                        String.format("bad anchor list size %d for term \"%s\".",
-                                vsize, term));
-            }
-
-            anchorlist = new long[vsize];
-            for (int j = 0; j < vsize; j++) {
-                anchorlist[j] = file.readLong();
-            }
-
-            checkAnchors(anchorlist);
+            list.read(is);
+            checkAnchors(list);
         }
 
         // check the hash table
@@ -102,23 +88,35 @@ public class CheckIndex {
         }
     }
 
-    private void checkAnchors(long[] anchorlist) throws IOException {
-        int docnum;
-        int wordnum;
+    private void checkAnchors(AnchorList list) throws IOException {
+        int docnum, wordnum;
 
-        for (int i = 0; i < anchorlist.length; i++) {
-            docnum = (int) (anchorlist[i] >> 32);
+        Anchor anchor;
+        Anchor last = new Anchor(-1);
+        
+        for (int i = 0; i < list.size(); i++) {
+            anchor = list.getAnchor(i);
+            if (anchor.compareTo(last) <= 0) {
+                throw new IOException(
+                    String.format("anchor list out of order; %d <= %d.",
+                        anchor.getAnchorID(), last.getAnchorID())
+                );                      
+            }
+
+            docnum = anchor.getDocNum();
             if (docnum < 0 || docnum >= nfiles) {
                 throw new IOException(
                         String.format("document number (%d) out of range.", docnum)
                 );
             }
-            wordnum = (int) anchorlist[i];
+            wordnum = anchor.getWordNum();
             if (wordnum < 0) {
                 throw new IOException(
                         String.format("word number (%d) out of range.", wordnum)
                 );
             }
+
+            last = anchor;
         }
     }
 

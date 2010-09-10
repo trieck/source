@@ -7,7 +7,6 @@ import java.util.List;
 public class ConcordMerge {
 
     private static final int NWAY = 100;                    // number of ways to merge
-    private static final int BUF_SIZE = 4096;               // for transfer
     private static final String TERM_EOF = "\uFFFF";        // EOF indictator
 
     private DataOutputStream out;                           // output stream for merge
@@ -152,23 +151,7 @@ public class ConcordMerge {
         out.writeInt(size);
 
         for (i = 0; recs[i] != null; i++) {
-            transfer(recs[i].stream, recs[i].size * (Long.SIZE / Byte.SIZE));
-        }
-    }
-
-    private void transfer(InputStream is, int size) throws IOException {
-
-        byte[] buf = new byte[BUF_SIZE];
-
-        int read, m, n = size;
-
-        while (n > 0) {
-            m = Math.min(BUF_SIZE, n);
-            if ((read = is.read(buf, 0, m)) <= 0)
-                break;
-
-            out.write(buf, 0, read);
-            n -= read;
+            IOUtil.transfer(recs[i].stream, out, recs[i].size * 8);
         }
     }
 }

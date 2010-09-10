@@ -58,7 +58,7 @@ public class Inverter {
             dos.writeInt(anchors.position()); // size of anchor list
 
             for (int j = 0; j < anchors.position(); j++) {
-                dos.writeLong(anchors.get(j)); // anchor
+                dos.writeLong(anchors.get(j));
             }
         }
 
@@ -87,7 +87,7 @@ public class Inverter {
 
     private int lookup(String term) {
 
-        int i = (int) (Hash32.hash(term) % size);
+        int i = (Hash32.hash(term) & 0x7FFFFFFF) % size;
 
         while (!records.isEmpty(i) && !records.getTerm(i).equals(term)) {
             i = (i + 1) % size;

@@ -75,10 +75,10 @@ public class Query {
         AnchorList anchorlist = new AnchorList();
 
         // hash the term
-        long bucket = Index.hash(term, hash_tbl_size);
+        long h = Index.hash(term, hash_tbl_size);
 
         // seek to bucket in hash table
-        f1.seek(hash_tbl_offset + (bucket * 8));
+        f1.seek(hash_tbl_offset + (h * 8));
 
         // read the concordance offset
         long conc_offset;
@@ -100,9 +100,9 @@ public class Query {
             }
 
             // move to next bucket
-            bucket = (bucket + 1) % hash_tbl_size;
+            h = (h + 1) % hash_tbl_size;
 
-            f1.seek(hash_tbl_offset + (bucket * 8));
+            f1.seek(hash_tbl_offset + (h * 8));
 
             conc_offset = f1.readLong();
         }
