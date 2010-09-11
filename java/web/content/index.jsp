@@ -10,7 +10,7 @@
 <input type="hidden" name="count" value="25"/>
 <table>
 <tr>
-<td>Query:</td>
+<td>Phrase search:</td>
 <td><input type="text" size="40" name="query"/></td>
 </tr>
 <tr>

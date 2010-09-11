@@ -39,6 +39,7 @@ public class Content {
             Document root = builder.newDocument();
             Element results = root.createElement("results");
 
+            results.setAttribute("db", db);
             results.setAttribute("query", q);
             results.setAttribute("start", Integer.toString(start));
             results.setAttribute("count", Integer.toString(anchorlist.size()));
