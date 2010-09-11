@@ -1,5 +1,6 @@
 package org.tomrieck.content;
 
+import org.tomrieck.util.Config;
 import org.tomrieck.util.Timer;
 import org.xml.sax.InputSource;
 
@@ -10,48 +11,40 @@ import java.util.List;
 
 import javax.xml.xpath.*;
 
-public class XMLLoader {
+public class XMLIndexer {
 
     private static final XPathFactory factory = XPathFactory.newInstance();
     private static final XPath xpath = factory.newXPath();
+    
+    private Repository repos;   // repository instance
+    private Index index;        // index instance
+    private int currDoc;        // current document number while indexing
 
-    // current document number while indexing
-    private int currDoc;
-
-    private Index index;
-
-    public XMLLoader() {
+    public XMLIndexer() throws IOException {
+        repos = Repository.getInstance();
     }
 
-    public void load(String path, String outfile)
+    public void load(String db)
             throws IOException, XPathExpressionException {
-        File dir = new File(path);
-        if (!dir.isDirectory()) {
-            throw new IOException(
-                String.format("\"%s\" not a directory.", path)
-            );
-        }
+
+        File dir = repos.mapPath(db);
 
         List<File> files = expand(dir);
-        
-        List<String> indexFiles = new ArrayList<String>();
-        for (File f : files) {
-            indexFiles.add(f.getCanonicalPath());
-        }
-        indexFiles.add(outfile);
+        if (files.size() == 0)
+            throw new IOException(
+                String.format("no content files found in \"%s\".",
+                    dir.getCanonicalPath())
+        );
 
-        String[] aFiles = new String[indexFiles.size()];
-        indexFiles.toArray(aFiles);
-
-        index = new Index(aFiles);
+        index = new Index();
 
         loadfiles(files);
 
-        index.write();        
+        index.write(db, files);
     }
 
     private void loadfiles(List<File> files)
-            throws IOException, XPathExpressionException {
+        throws IOException, XPathExpressionException {
         for (File f : files) {
             loadfile(f);
             currDoc++;
@@ -60,7 +53,7 @@ public class XMLLoader {
 
     private void loadfile(File file)
             throws IOException, XPathExpressionException {
-        XPathExpression expr = xpath.compile("//root/text");
+        XPathExpression expr = xpath.compile("//document/text");
 
         InputSource source = new InputSource(
                 new FileInputStream(file)
@@ -110,16 +103,16 @@ public class XMLLoader {
     }
 
     public static void main(String[] args) {
-        if (args.length != 2) {
-            System.err.println("usage: XMLLoader pathname outfile");
+        if (args.length != 1) {
+            System.err.println("usage: XMLIndexer database");
             System.exit(1);
         }
 
         Timer t = new Timer();
         
         try {
-            XMLLoader loader = new XMLLoader();
-            loader.load(args[0], args[1]);
+            XMLIndexer indexer = new XMLIndexer();
+            indexer.load(args[0]);
         } catch (IOException e) {
             System.err.println(e);
             System.exit(1);

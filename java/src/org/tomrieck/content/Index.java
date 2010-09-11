@@ -1,41 +1,32 @@
 package org.tomrieck.content;
 
 import org.tomrieck.util.DoubleHash64;
-import org.tomrieck.util.Timer;
 
 import java.io.*;
 import java.nio.channels.Channels;
-import java.util.Arrays;
+import java.util.List;
 
 public class Index {
 
     public static final int MAGIC_NO = 0xc001d00d;  // file magic number
+    private static final int MAX_FNAME_LEN = 64;    // maximum file length
+    private static final int NFILES_OFFSET = 36;    // offset to number of files
     
-    private String[] infiles;       // array of files to index
-    private String outfile;         // name of output file
-    private int currDoc;            // current document # while indexing
-    private Concordance concord;    // term concordance
+    private Repository repos;                       // content repository
+    private Concordance concord;                    // term concordance
 
-    public Index(String[] args) throws IOException {
-        infiles = Arrays.copyOf(args, args.length - 1);
-        outfile = args[args.length - 1];
+    public Index() throws IOException {
         concord = new Concordance();
-    }
-
-    public void index() throws IOException {
-        for (String file : infiles) {
-            indexFile(file);
-            currDoc++;
-        }
-
-        write();
+        repos = Repository.getInstance();
     }
 
     /* combine concordance and hash table into final index */
-    public void write() throws IOException {
+    public void write(String db, List<File> infiles) throws IOException {
 
         // merge concordance blocks
         String concordFile = concord.merge();
+
+        File outfile = repos.getIndexPath(db);
 
         RandomAccessFile ofile = new RandomAccessFile(outfile, "rw");
         DataInputStream dis = new DataInputStream(new FileInputStream(concordFile));
@@ -60,12 +51,20 @@ public class Index {
         ofile.writeLong(0); // not yet known
 
         // write the number of input files
-        ofile.writeInt(infiles.length);
+        ofile.writeInt(infiles.size());
 
         // write each input file in index order
         OutputStream os = Channels.newOutputStream(ofile.getChannel());
-        for (String infile : infiles) {
-            IOUtil.writeString(os, makeCanonical(infile));
+
+        int m, n;
+        String filename;
+        for (File infile : infiles) {
+            filename = repos.makeRelative(db, infile);
+            m = Math.min(filename.length(), MAX_FNAME_LEN);
+            n = Math.max(0, MAX_FNAME_LEN - m - 1);
+            filename = filename.substring(0, m);
+            IOUtil.writeString(os, filename);
+            IOUtil.fill(os, n, (byte)0);
         }
 
         // write the real offset to the concordance
@@ -78,8 +77,7 @@ public class Index {
 
         long nterms;
         String term;
-        int n;
-
+        
         for (nterms = 0; (term = IOUtil.readString(dis)).length() > 0; nterms++) {
             // read the anchor list size
             n = dis.readInt();
@@ -165,43 +163,31 @@ public class Index {
         ofile.close();
     }
 
-    private void indexFile(String file) throws IOException {
-        Lexer lexer = new Lexer(new FileReader(file));
-
-        String term;
-        for (int i = 0; ((term = lexer.getToken()).length()) != 0; i++) {
-            insert(term, currDoc, i);
-        }
-    }
-
     public void insert(String term, int docnum, int wordnum)
         throws IOException {
         concord.insert(term, docnum, wordnum);
     }
 
-    private static String makeCanonical(String filename) throws IOException {
-        File file = new File(filename);
-        return file.getCanonicalPath();
-    }
+    public static String getFilename(File index, int docnum) throws IOException {
+        RandomAccessFile file = new RandomAccessFile(index, "r");
 
-    public static void main(String[] args) {
+        file.seek(NFILES_OFFSET);
+        int nfiles = file.readInt();
 
-        if (args.length < 2) {
-            System.err.println("usage: Index input-files output-file");
-            System.exit(1);
-        }
+        if (docnum < 0 || docnum >= nfiles)
+            throw new IOException("document number out of range.");
 
-        Timer t = new Timer();
+        // seek to the filename offset for the document
+        long offset = file.getFilePointer() + (docnum * MAX_FNAME_LEN);
+        file.seek(offset);
 
-        try {
-            Index index = new Index(args);
-            index.index();
-        } catch (IOException e) {
-            System.err.println(e);
-            System.exit(1);
-        }
+        InputStream is = Channels.newInputStream(file.getChannel());
+        String filename = IOUtil.readString(is);
 
-        System.out.printf("    elapsed time %s\n", t);
+        is.close();
+        file.close();
+
+        return filename;
     }
 
     public static long hash(String term, long size) {

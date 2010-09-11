@@ -3,7 +3,7 @@ package org.tomrieck.content;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.*;
 
 public class AnchorList {
 
@@ -14,6 +14,35 @@ public class AnchorList {
 
     public int size() {
         return anchors.size();
+    }
+
+    public AnchorList slice(int start, int count) {
+        start = Math.min(start, anchors.size() - 1);
+        start = Math.max(0, start);
+
+        count = Math.min(count, anchors.size() - start);
+        count = Math.max(0, count);
+
+        AnchorList slice = new AnchorList();
+        slice.anchors.addAll(anchors.subList(start, start+count));
+        
+        return slice;
+    }
+
+    /**
+     * Return the unique set of documents in the anchor list
+     * @return the set of unique documents
+     */
+    public Set<Integer> docSet() {
+        Set<Integer> documents = new TreeSet<Integer>();
+
+        Anchor a;
+        for (int i = 0; i < anchors.size(); i++) {
+            a = getAnchor(i);
+            documents.add(a.getDocNum());
+        }
+
+        return documents;
     }
 
     public Anchor getAnchor(int index) {

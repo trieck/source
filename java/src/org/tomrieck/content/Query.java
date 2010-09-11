@@ -1,9 +1,6 @@
 package org.tomrieck.content;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
-import java.io.StringReader;
+import java.io.*;
 import java.nio.channels.Channels;
 
 public class Query {
@@ -12,7 +9,9 @@ public class Query {
     private long hash_tbl_size, hash_tbl_offset;
     private Lexer lexer;
 
-    public Query(String index_file) throws IOException {
+    public Query(String db) throws IOException {
+        Repository repos = Repository.getInstance();
+        File index_file = repos.getIndexPath(db);
         f1 = new RandomAccessFile(index_file, "r");
         f2 = new RandomAccessFile(index_file, "r");
         readHeader();

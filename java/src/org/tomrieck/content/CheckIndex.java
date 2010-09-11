@@ -1,7 +1,9 @@
 package org.tomrieck.content;
 
+import org.tomrieck.util.StringUtil;
 import org.tomrieck.util.Timer;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -16,19 +18,28 @@ public class CheckIndex {
     public CheckIndex() {
     }
 
-    public void checkIndex(String filename) throws IOException {
-        RandomAccessFile file = new RandomAccessFile(filename, "r");
+    public void checkIndex(String db) throws IOException {
+
+        Repository repos = Repository.getInstance();
+
+        File index = repos.getIndexPath(db);
+
+        RandomAccessFile file = new RandomAccessFile(index, "r");
 
         // for searching
-        query = new Query(filename);
+        query = new Query(db);
 
         int magicno = file.readInt();
         if (magicno != Index.MAGIC_NO) {
             throw new IOException("file not in index format.");
         }
 
+        System.out.printf("    Index filename: %s\n", index.getCanonicalPath());
+
+        System.out.printf("    Index file size: %s bytes\n", StringUtil.comma(file.length()));
+        
         long nterms = file.readLong();
-        System.out.printf("    Contains %d terms(s)\n", nterms);
+        System.out.printf("    Index term count: %s\n", StringUtil.comma(nterms));
 
         long conc_offset = file.readLong();
         System.out.printf("    Concordance offset: 0x%08x\n", conc_offset);
@@ -40,7 +51,7 @@ public class CheckIndex {
         System.out.printf("    Hash table offset: 0x%08x\n", hash_tbl_offset);
 
         nfiles = file.readInt();
-        System.out.printf("    Indexes %d file(s)\n", nfiles);
+        System.out.printf("    Indexed file count: %s\n", StringUtil.comma(nfiles));
 
         // skip over the file list
         file.seek(conc_offset);
@@ -118,7 +129,7 @@ public class CheckIndex {
 
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("usage: CheckIndex index-file");
+            System.err.println("usage: CheckIndex db");
             System.exit(1);
         }
 
@@ -133,6 +144,6 @@ public class CheckIndex {
             System.exit(1);
         }
 
-        System.out.printf("    elapsed time %s\n", t);
+        System.out.printf("\n    elapsed time %s\n", t);
     }
 }

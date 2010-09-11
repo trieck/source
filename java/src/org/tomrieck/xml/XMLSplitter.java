@@ -89,12 +89,10 @@ public class XMLSplitter {
 
         DocumentBuilder builder = dbfactory.newDocumentBuilder();
         Document doc = builder.newDocument();
-        Element root = doc.createElement("root");
-        Element text = doc.createElement("text");
-
-        text.setTextContent(element.getTextContent());
-        root.appendChild(text);
+        Element root = doc.createElement("document");
         doc.appendChild(root);
+
+        XMLUtil.transferNode(root, doc, element);        
 
         Transformer transformer = transfactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
