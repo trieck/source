@@ -1,6 +1,7 @@
-package org.tomrieck.xml;
+package org.tomrieck.content;
 
 import org.tomrieck.util.Timer;
+import org.tomrieck.xml.XMLUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -20,8 +21,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 public class XMLSplitter {
 
@@ -31,56 +30,38 @@ public class XMLSplitter {
     public XMLSplitter() {
     }
 
-    public void split(String xml_file, String root)
+    public void split(String xml_file, String sElement, String path)
             throws IOException, ParserConfigurationException,
                 TransformerException, SAXException {
 
         DocumentBuilder builder = dbfactory.newDocumentBuilder();
         Document doc = builder.parse(new FileInputStream(xml_file));
 
-        NodeList elements = doc.getElementsByTagName("text");
+        NodeList elements = doc.getElementsByTagName(sElement);
         if (elements.getLength() == 0)
-            throw new IOException("no text elements found.");
+            throw new IOException(String.format("element \"%s\" not found.", sElement));
         
         Node element;
         for (int i = 0; i < elements.getLength(); i++) {
             element = elements.item(i);
-            writeElement(root, (Element)element);
+            writeElement(i+1, path, (Element)element);
         }
     }
 
-    private void writeElement(String root, Element element)
+    private void writeElement(int docnum, String path, Element element)
         throws IOException, ParserConfigurationException,
             TransformerException {
-        String sPath = getPath(element);
-
-        List<String> pathlist = makePath(sPath);
-        if (pathlist.size() < 1)
-            throw new IOException(String.format("bad path %s specified.", sPath));
 
         // ensure the root path exists
-        File f = new File(root);
+        File f = new File(path);
         if (!f.exists() && !f.mkdir()) {
             throw new IOException(
-                String.format("could not create directory \"%s\".\n", root));
+                String.format("could not create directory \"%s\".\n", path));
         }
 
-        // create subdirectories & file
-        String path = root;
-        for (int i = 0; i < pathlist.size(); i++) {
-            path = path + "/" + pathlist.get(i);
+        String filename = String.format("%s/%04x.xml", path, docnum);
 
-            if (i < pathlist.size() - 1) {
-               f = new File(path);
-               if (!f.exists() && !f.mkdir()) {
-                    throw new IOException(
-                        String.format("could not create directory \"%s\".\n", path));
-               }
-            } else {    // last item is the filename
-                path = path + ".xml";
-                writeDoc(path, element);
-            }
-        } 
+        writeDoc(filename, element);
     }
 
     private void writeDoc(String path, Element element)
@@ -92,7 +73,7 @@ public class XMLSplitter {
         Element root = doc.createElement("document");
         doc.appendChild(root);
 
-        XMLUtil.transferNode(root, doc, element);        
+        XMLUtil.transferNode(root, doc, element);
 
         Transformer transformer = transfactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
@@ -105,22 +86,9 @@ public class XMLSplitter {
         transformer.transform(source, result);
     }
 
-    private List<String> makePath(String sPath) {
-        String[] aPath = sPath.split("/");
-        return Arrays.asList(aPath);
-    }
-    
-    private static String getPath(Element element) throws IOException {
-        String path = element.getAttribute("path");
-        if (path == null || path.length() == 0)
-            throw new IOException("empty path attribute.");
-
-        return path;
-    }
-
     public static void main(String[] args) {
-        if (args.length != 2) {
-            System.err.println("usage: XMLSplitter xml-file output-path");
+        if (args.length != 3) {
+            System.err.println("usage: XMLSplitter xml-file element-to-split output-path");
             System.exit(1);
         }
 
@@ -129,7 +97,7 @@ public class XMLSplitter {
         XMLSplitter splitter = new XMLSplitter();
 
         try {
-            splitter.split(args[0], args[1]);
+            splitter.split(args[0], args[1], args[2]);
         } catch (IOException e) {
             System.err.println(e);
             System.exit(1);

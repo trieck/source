@@ -3,8 +3,6 @@ package org.tomrieck.content;
 import org.tomrieck.xml.XMLUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -60,25 +58,16 @@ public class Content {
 
     public Document getDoc(String db, int docid) throws IOException {
 
-        File file = repos.getIndexPath(db);
-        
-        String filename = Index.getFilename(file, docid);
-        
-        filename = repos.makeAbsolute(db, new File(filename));
+        File file = repos.getFile(db, docid);
 
         try {
             DocumentBuilder builder = dbfactory.newDocumentBuilder();
 
-            Document root = builder.newDocument();
-            Element record = root.createElement("record");
+            Document doc = builder.parse(new FileInputStream(file));            
+            Element record = doc.getDocumentElement();
             record.setAttribute("docid", Integer.toString(docid));
-            root.appendChild(record);
             
-            Document doc = builder.parse(new FileInputStream(filename));            
-
-            XMLUtil.transferNode(record, root, doc.getDocumentElement());
-
-            return root;
+            return doc;
         } catch (ParserConfigurationException e) {
             throw new IOException(e);
         } catch (SAXException e) {

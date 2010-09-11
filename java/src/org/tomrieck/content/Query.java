@@ -116,8 +116,8 @@ public class Query {
         if (magicno != Index.MAGIC_NO)
             throw new IOException("index bad file format.");
 
-        f1.readLong();  // number of terms
-        f1.readLong();  // concordance offset
+        f1.readInt();  // number of documents
+        f1.readInt();  // number of terms
 
         hash_tbl_size = f1.readLong();     // size of hash table
         hash_tbl_offset = f1.readLong();   // offset to the hash table

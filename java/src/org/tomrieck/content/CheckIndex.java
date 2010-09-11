@@ -37,12 +37,12 @@ public class CheckIndex {
         System.out.printf("    Index filename: %s\n", index.getCanonicalPath());
 
         System.out.printf("    Index file size: %s bytes\n", StringUtil.comma(file.length()));
-        
-        long nterms = file.readLong();
-        System.out.printf("    Index term count: %s\n", StringUtil.comma(nterms));
 
-        long conc_offset = file.readLong();
-        System.out.printf("    Concordance offset: 0x%08x\n", conc_offset);
+        nfiles = file.readInt();
+        System.out.printf("    Index document count: %s\n", StringUtil.comma(nfiles));
+
+        int nterms = file.readInt();
+        System.out.printf("    Index term count: %s\n", StringUtil.comma(nterms));
 
         long hash_tbl_size = file.readLong();
         System.out.printf("    Hash table size: 0x%08x\n", hash_tbl_size);
@@ -50,18 +50,12 @@ public class CheckIndex {
         long hash_tbl_offset = file.readLong();
         System.out.printf("    Hash table offset: 0x%08x\n", hash_tbl_offset);
 
-        nfiles = file.readInt();
-        System.out.printf("    Indexed file count: %s\n", StringUtil.comma(nfiles));
-
-        // skip over the file list
-        file.seek(conc_offset);
-
         // check the terms and anchor lists
 
         String term;
         AnchorList list = new AnchorList();        
         InputStream is = Channels.newInputStream(file.getChannel());
-        for (long i = 0; i < nterms; i++) {
+        for (int i = 0; i < nterms; i++) {
             term = IOUtil.readString(is);
             search(term);
             list.read(is);
@@ -111,7 +105,7 @@ public class CheckIndex {
             }
 
             docnum = anchor.getDocNum();
-            if (docnum < 0 || docnum >= nfiles) {
+            if (docnum <= 0 || docnum > nfiles) {
                 throw new IOException(
                         String.format("document number (%d) out of range.", docnum)
                 );

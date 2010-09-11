@@ -51,9 +51,7 @@ public class Repository {
     public File getIndexPath(String db) throws IOException {
         File outpath = mapPath(db);
 
-        File idxfile = new File(outpath.getCanonicalPath() + "/" + db + ".idx").getCanonicalFile();
-
-        return idxfile;
+        return new File(outpath.getCanonicalPath() + "/" + db + ".idx").getCanonicalFile();
     }
 
     private void checkRepos(File dir) throws IOException {
@@ -64,33 +62,14 @@ public class Repository {
         }
     }
 
-    /* remove repository portion of file */
-    public String makeRelative(String db, File filename) throws IOException {
+    /* get file for document number */
+    public File getFile(String db, int docnum) throws IOException {
         File dir = mapPath(db);
 
         String dirpath = dir.getCanonicalPath();
-        String path = filename.getCanonicalPath();
 
-        if (path.startsWith(dirpath)) {
-            path = path.substring(dirpath.length());
-        }
+        String filename = String.format("%s/%04x.xml", dirpath, docnum);
 
-        if (path.startsWith("" + File.separatorChar) && path.length() > 1) {
-            path = path.substring(1);
-        }
-
-        return path;
-    }
-
-    /* add repository portion to file */
-    public String makeAbsolute(String db, File filename) throws IOException {
-        File dir = mapPath(db);
-
-        String dirpath = dir.getCanonicalPath();
-        String path = filename.getPath();
-
-        File absolute = new File(dirpath + "/" + path).getCanonicalFile();
-
-        return absolute.getCanonicalPath();
+        return new File(filename).getCanonicalFile();
     }
 }

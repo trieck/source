@@ -4,14 +4,12 @@ import org.tomrieck.util.DoubleHash64;
 
 import java.io.*;
 import java.nio.channels.Channels;
-import java.util.List;
 
 public class Index {
 
     public static final int MAGIC_NO = 0xc001d00d;  // file magic number
-    private static final int MAX_FNAME_LEN = 64;    // maximum file length
-    private static final int NFILES_OFFSET = 36;    // offset to number of files
-    
+    private static final int CONC_OFFSET = 28;      // offset to concordance
+        
     private Repository repos;                       // content repository
     private Concordance concord;                    // term concordance
 
@@ -21,7 +19,7 @@ public class Index {
     }
 
     /* combine concordance and hash table into final index */
-    public void write(String db, List<File> infiles) throws IOException {
+    public void write(String db, int nfiles) throws IOException {
 
         // merge concordance blocks
         String concordFile = concord.merge();
@@ -34,13 +32,12 @@ public class Index {
         // write file magic number
         ofile.writeInt(MAGIC_NO);
 
+        // write the number of documents indexed
+        ofile.writeInt(nfiles);
+
         // write the total number of terms
         long term_count_offset = ofile.getFilePointer();
-        ofile.writeLong(0); // not yet known
-
-        // write the offset to the concordance
-        long concordance_offset = ofile.getFilePointer();
-        ofile.writeLong(0); // not yet known
+        ofile.writeInt(0); // not yet known
 
         // write the size of the hash table
         long hash_table_size_offset = ofile.getFilePointer();
@@ -50,34 +47,12 @@ public class Index {
         long hash_table_offset = ofile.getFilePointer();
         ofile.writeLong(0); // not yet known
 
-        // write the number of input files
-        ofile.writeInt(infiles.size());
-
-        // write each input file in index order
-        OutputStream os = Channels.newOutputStream(ofile.getChannel());
-
-        int m, n;
-        String filename;
-        for (File infile : infiles) {
-            filename = repos.makeRelative(db, infile);
-            m = Math.min(filename.length(), MAX_FNAME_LEN);
-            n = Math.max(0, MAX_FNAME_LEN - m - 1);
-            filename = filename.substring(0, m);
-            IOUtil.writeString(os, filename);
-            IOUtil.fill(os, n, (byte)0);
-        }
-
-        // write the real offset to the concordance
-        long concordance = ofile.getFilePointer();
-        ofile.seek(concordance_offset);
-        ofile.writeLong(concordance);
-        ofile.seek(concordance);  // jump back
-
         // write terms/anchors
 
-        long nterms;
+        int n, nterms;
         String term;
-        
+
+        OutputStream os = Channels.newOutputStream(ofile.getChannel());
         for (nterms = 0; (term = IOUtil.readString(dis)).length() > 0; nterms++) {
             // read the anchor list size
             n = dis.readInt();
@@ -101,7 +76,7 @@ public class Index {
 
         // write the total term count
         ofile.seek(term_count_offset);
-        ofile.writeLong(nterms);
+        ofile.writeInt(nterms);
 
         // compute the size of the hash table and store it
         long tableSize = Prime.prime(nterms);
@@ -125,11 +100,11 @@ public class Index {
         RandomAccessFile infile = new RandomAccessFile(outfile, "r");
 
         // seek to the concordance
-        infile.seek(concordance);
+        infile.seek(CONC_OFFSET);
 
         InputStream is = Channels.newInputStream(infile.getChannel());
 
-        long h, offset, term_offset = concordance;
+        long h, offset, term_offset = CONC_OFFSET;
         int vsize;
         for (long i = 0; i < nterms; i++) {
             term = IOUtil.readString(is);
@@ -166,28 +141,6 @@ public class Index {
     public void insert(String term, int docnum, int wordnum)
         throws IOException {
         concord.insert(term, docnum, wordnum);
-    }
-
-    public static String getFilename(File index, int docnum) throws IOException {
-        RandomAccessFile file = new RandomAccessFile(index, "r");
-
-        file.seek(NFILES_OFFSET);
-        int nfiles = file.readInt();
-
-        if (docnum < 0 || docnum >= nfiles)
-            throw new IOException("document number out of range.");
-
-        // seek to the filename offset for the document
-        long offset = file.getFilePointer() + (docnum * MAX_FNAME_LEN);
-        file.seek(offset);
-
-        InputStream is = Channels.newInputStream(file.getChannel());
-        String filename = IOUtil.readString(is);
-
-        is.close();
-        file.close();
-
-        return filename;
     }
 
     public static long hash(String term, long size) {

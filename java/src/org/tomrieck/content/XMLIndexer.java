@@ -1,6 +1,5 @@
 package org.tomrieck.content;
 
-import org.tomrieck.util.Config;
 import org.tomrieck.util.Timer;
 import org.xml.sax.InputSource;
 
@@ -40,7 +39,7 @@ public class XMLIndexer {
 
         loadfiles(files);
 
-        index.write(db, files);
+        index.write(db, files.size());
     }
 
     private void loadfiles(List<File> files)
@@ -53,7 +52,7 @@ public class XMLIndexer {
 
     private void loadfile(File file)
             throws IOException, XPathExpressionException {
-        XPathExpression expr = xpath.compile("//document/text");
+        XPathExpression expr = xpath.compile("//document/*/text");
 
         InputSource source = new InputSource(
                 new FileInputStream(file)
@@ -69,7 +68,7 @@ public class XMLIndexer {
 
         String term;
         for (int i = 0; ((term = lexer.getToken()).length()) != 0; i++) {
-            index.insert(term, currDoc, i);
+            index.insert(term, currDoc+1, i);
         }
     }
 
