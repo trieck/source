@@ -18,7 +18,8 @@
 <select name="db">
   <option value="asv">American Standard Version</option>
   <option value="basic-english">Basic English Version</option>
-  <option value="kjv">King James Version</option>  
+  <option value="kjv">King James Version</option>
+  <option value="niv">New International Version</option>
 </select>
 </td>
 </tr>
