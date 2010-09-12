@@ -90,6 +90,35 @@ public class AnchorList {
         add(anchor.getAnchorID());
     }
 
+    public static AnchorList intersection(AnchorList set1, AnchorList set2) {
+        AnchorList output = new AnchorList();
+
+        Anchor left, right;
+
+        int i = 0, j = 0, k, m = set1.size(), n = set2.size();
+        int leftdoc, rightdoc;
+
+        while (i != m && j != n) {
+            left = set1.getAnchor(i);
+            right = set2.getAnchor(j);
+
+            leftdoc = left.getDocNum();
+            rightdoc = right.getDocNum();
+
+            if (leftdoc < rightdoc) {
+                i++;
+            } else if (leftdoc > rightdoc) {
+                j++;
+            } else {    // intersection is defined by same document
+                output.add(left);
+                i++;
+                j++;
+            }
+        }
+
+        return output;
+    }
+    
     public static AnchorList adjacent(AnchorList set1, AnchorList set2) {
 
         AnchorList output = new AnchorList();
@@ -103,12 +132,9 @@ public class AnchorList {
             right = set2.getAnchor(j);
 
             k = left.compareTo(right);
-            if (k == -1) {
+            if (k == -1) { // adjacent is defined only when right > left
                 output.add(right);
                 i++;
-            } else if (k == 1) {
-                output.add(left);
-                j++;
             } else if (k < 0) {
                 i++;
             } else if (k > 0) {

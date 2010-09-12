@@ -7,7 +7,7 @@ public class Query {
 
     private RandomAccessFile f1, f2;
     private long hash_tbl_size, hash_tbl_offset;
-    private Lexer lexer;
+    private QueryTokenizer lexer;
 
     public Query(String db) throws IOException {
         Repository repos = Repository.getInstance();
@@ -30,20 +30,20 @@ public class Query {
     }
 
     public AnchorList query(String phrase) throws IOException {
-        lexer = new Lexer(new StringReader(phrase));
+        lexer = new QueryTokenizer(new StringReader(phrase));
         return conjunction();
     }
 
     private AnchorList conjunction() throws IOException {
         AnchorList left = primary();
 
-        for (; ;) {
+        for (;;) {
             if (lookahead().length() == 0)
                 return left;
 
             AnchorList right = primary();
 
-            left = adjacent(left, right);
+            left = intersection(left, right);
         }
     }
 
@@ -70,8 +70,29 @@ public class Query {
         return AnchorList.adjacent(left, right);
     }
 
+    private AnchorList intersection(AnchorList left, AnchorList right) {
+        return AnchorList.intersection(left, right);        
+    }
+
     public AnchorList lookup(String term) throws IOException {
-        AnchorList anchorlist = new AnchorList();
+        AnchorList list = new AnchorList();
+
+        Lexer lexer = new Lexer(new StringReader(term));
+
+        String token;
+        for (int i = 0; (token = lexer.getToken()).length() > 0; i++) {
+            if (i > 0) {
+                list = adjacent(list, indexLookup(token));
+            } else {
+                list = indexLookup(token);
+            }
+        }
+
+        return list;
+    }
+
+    private AnchorList indexLookup(String term) throws IOException {
+        AnchorList list = new AnchorList();
 
         // hash the term
         long h = Index.hash(term, hash_tbl_size);
@@ -80,33 +101,33 @@ public class Query {
         f1.seek(hash_tbl_offset + (h * 8));
 
         // read the concordance offset
-        long conc_offset;
-        if ((conc_offset = f1.readLong()) == 0)
-            return anchorlist; // no hit
+        long offset;
+        if ((offset = f1.readLong()) == 0)
+           return list; // no hit
 
         String sTerm;
         InputStream is = Channels.newInputStream(f2.getChannel());
-        while (conc_offset != 0) {   // linear-probing
+        while (offset != 0) {   // linear-probing
 
-            // seek into concordance
-            f2.seek(conc_offset);
+           // seek into concordance
+           f2.seek(offset);
 
-            // read term in concordance
-            sTerm = IOUtil.readString(is);
-            if (sTerm.equals(term)) {   // match
-                anchorlist.read(is);
-                break;
-            }
+           // read term in concordance
+           sTerm = IOUtil.readString(is);
+           if (sTerm.equals(term)) {   // match
+               list.read(is);
+               break;
+           }
 
-            // move to next bucket
-            h = (h + 1) % hash_tbl_size;
+           // move to next bucket
+           h = (h + 1) % hash_tbl_size;
 
-            f1.seek(hash_tbl_offset + (h * 8));
+           f1.seek(hash_tbl_offset + (h * 8));
 
-            conc_offset = f1.readLong();
-        }
+           offset = f1.readLong();
+        }          
 
-        return anchorlist;
+        return list;
     }
 
     private void readHeader() throws IOException {
