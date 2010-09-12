@@ -28,11 +28,12 @@ public class Content {
         Query query = new Query(db);
 
         AnchorList anchorlist = query.query(q);
-
         query.close();
+                
+        // set of unique documents for anchor list
+        DocList doclist = anchorlist.documents();
 
-        AnchorList pagelist = anchorlist.slice(start-1, count);
-        Set<Integer> docset = pagelist.docSet();
+        DocList pagelist = doclist.slice(start-1, count);
 
         try {
             DocumentBuilder builder = dbfactory.newDocumentBuilder();
@@ -42,11 +43,13 @@ public class Content {
             results.setAttribute("db", db);
             results.setAttribute("query", q);
             results.setAttribute("start", Integer.toString(start));
-            results.setAttribute("count", Integer.toString(anchorlist.size()));
+            results.setAttribute("count", Integer.toString(doclist.size()));
             root.appendChild(results);
             
             Document doc;
-            for (int docid : docset) {
+            int docid;
+            for (int i = 0; i < pagelist.size(); i++) {
+                docid = pagelist.getDoc(i);
                 doc = getDoc(db, docid);
                 XMLUtil.transferNode(results, root, doc.getDocumentElement());
             }
@@ -54,7 +57,7 @@ public class Content {
             return root;
         } catch (ParserConfigurationException e) {
             throw new IOException(e);
-        } 
+        }        
     }
 
     public Document getDoc(String db, int docid) throws IOException {

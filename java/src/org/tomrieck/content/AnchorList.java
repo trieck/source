@@ -33,7 +33,7 @@ public class AnchorList {
      * Return the unique set of documents in the anchor list
      * @return the set of unique documents
      */
-    public Set<Integer> docSet() {
+    public DocList documents() {
         Set<Integer> documents = new TreeSet<Integer>();
 
         Anchor a;
@@ -42,7 +42,10 @@ public class AnchorList {
             documents.add(a.getDocNum());
         }
 
-        return documents;
+        DocList list = new DocList();
+        list.addAll(documents);
+                           
+        return list;
     }
 
     public Anchor getAnchor(int index) {

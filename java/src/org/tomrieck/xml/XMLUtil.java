@@ -24,7 +24,6 @@ public class XMLUtil {
         return builder.parse(f);
     }
 
-
     /**
      * * Convenience method to transfer a node (and all of its children) from one
      * * DOM XML document to another.
