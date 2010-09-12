@@ -1,8 +1,28 @@
 package org.tomrieck.xml;
 
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class XMLUtil {
+
+    private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    
+    public static Document parseXML(File f)
+        throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilder builder;
+        synchronized (factory) {
+            builder = factory.newDocumentBuilder();
+        }
+        return builder.parse(f);
+    }
 
 
     /**

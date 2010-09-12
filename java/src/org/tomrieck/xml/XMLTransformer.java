@@ -1,24 +1,67 @@
 package org.tomrieck.xml;
 
+import org.w3c.dom.Document;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.OutputStream;
+import java.io.Writer;
 
 public class XMLTransformer {
+
+    private static final TransformerFactory factory = TransformerFactory.newInstance();
 
     public XMLTransformer() {
     }
 
-    public void transform(String xml_file, String xslt_file, OutputStream os)
+    public static void transform(String xmlFile, String xslFile, OutputStream os)
         throws TransformerException {
+        StreamSource xmlSource = new StreamSource(xmlFile);
+        StreamSource xslSource = new StreamSource(xslFile);
+        transform(xmlSource, xslSource, os);
+    }
 
-        TransformerFactory factory = TransformerFactory.newInstance();
-        
-        Transformer transformer = factory.newTransformer(new StreamSource(xslt_file));
-        transformer.transform(new StreamSource(xml_file), new StreamResult(os));
+    public static void transform(String xmlFile, String xslFile, Writer writer)
+        throws TransformerException {
+        StreamSource xmlSource = new StreamSource(xmlFile);
+        StreamSource xslSource = new StreamSource(xslFile);
+        transform(xmlSource, xslSource, writer);
+    }
+
+    public static void transform(Document xml, Document xsl, OutputStream os)
+        throws TransformerException {
+        DOMSource xmlSource = new DOMSource(xml);
+        DOMSource xslSource = new DOMSource(xsl);
+        transform(xmlSource, xslSource, os);
+    }
+
+    public static void transform(Document xml, Document xsl, Writer writer)
+        throws TransformerException {
+        DOMSource xmlSource = new DOMSource(xml);
+        DOMSource xslSource = new DOMSource(xsl);
+        transform(xmlSource, xslSource, writer);
+    }
+
+    public static void transform(Source xml, Source xsl, OutputStream os)
+        throws TransformerException {
+        Transformer transformer;
+        synchronized (factory) {
+            transformer = factory.newTransformer(xsl);
+        }
+        transformer.transform(xml, new StreamResult(os));
+    }
+
+    public static void transform(Source xml, Source xsl, Writer writer)
+        throws TransformerException {
+        Transformer transformer;
+        synchronized (factory) {
+            transformer = factory.newTransformer(xsl);
+        }
+        transformer.transform(xml, new StreamResult(writer));
     }
 
     public static void main(String[] args) {
@@ -27,7 +70,6 @@ public class XMLTransformer {
             System.exit(1);
         }
 
-        XMLTransformer XMLTransformer = new XMLTransformer();
         try {
             XMLTransformer.transform(args[0], args[1], System.out);
         } catch (TransformerException e) {
