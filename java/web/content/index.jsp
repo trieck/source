@@ -9,10 +9,19 @@
 <p/>
 <form action="/servlet/org.tomrieck.content.servlets.ContentServlet">
 <input type="hidden" name="function" value="search"/>
-<input type="hidden" name="db" value="kjv"/>
 <input type="hidden" name="start" value="1"/>
 <input type="hidden" name="count" value="25"/>
 <table>
+<tr>
+<td>Version:</td>
+<td>
+<select name="db">
+  <option value="asv">American Standard Version</option>
+  <option value="basic-english">Basic English Version</option>
+  <option value="kjv">King James Version</option>  
+</select>
+</td>
+</tr>
 <tr>
 <td>Query:</td>
 <td><input type="text" size="40" name="query"/></td>
