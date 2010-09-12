@@ -2,7 +2,11 @@
 <head>
 <link href="/style.css" rel="stylesheet" type="text/css" />
 </head>
+<h1>Content Search Engine</h1>
 <body>
+<p/>
+<div>Enter search query, surround phrases with double-quotes</div>
+<p/>
 <form action="/servlet/org.tomrieck.content.servlets.ContentServlet">
 <input type="hidden" name="function" value="search"/>
 <input type="hidden" name="db" value="kjv"/>
@@ -10,7 +14,7 @@
 <input type="hidden" name="count" value="25"/>
 <table>
 <tr>
-<td>Phrase search:</td>
+<td>Query:</td>
 <td><input type="text" size="40" name="query"/></td>
 </tr>
 <tr>
