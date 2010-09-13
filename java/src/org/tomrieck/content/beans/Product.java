@@ -1,8 +1,6 @@
 package org.tomrieck.content.beans;
 
 import org.tomrieck.xml.CachedTransformer;
-import org.tomrieck.xml.XMLTransformer;
-import org.tomrieck.xml.XMLUtil;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 

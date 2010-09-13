@@ -3,7 +3,9 @@ package org.tomrieck.content;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class AnchorList {
 
@@ -14,19 +16,6 @@ public class AnchorList {
 
     public int size() {
         return anchors.size();
-    }
-
-    public AnchorList slice(int start, int count) {
-        start = Math.min(start, anchors.size() - 1);
-        start = Math.max(0, start);
-
-        count = Math.min(count, anchors.size() - start);
-        count = Math.max(0, count);
-
-        AnchorList slice = new AnchorList();
-        slice.anchors.addAll(anchors.subList(start, start+count));
-        
-        return slice;
     }
 
     /**
@@ -98,7 +87,7 @@ public class AnchorList {
 
         Anchor left, right;
 
-        int i = 0, j = 0, k, m = set1.size(), n = set2.size();
+        int i = 0, j = 0, m = set1.size(), n = set2.size();
         int leftdoc, rightdoc;
 
         while (i != m && j != n) {

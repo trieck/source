@@ -3,12 +3,14 @@ package org.tomrieck.content;
 import org.tomrieck.util.Timer;
 import org.xml.sax.InputSource;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.xml.xpath.*;
 
 public class XMLIndexer {
 
