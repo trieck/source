@@ -22,6 +22,15 @@ public class XMLUtil {
         return builder.parse(f);
     }
 
+    public static Document newDocument()
+        throws ParserConfigurationException {
+        DocumentBuilder builder;
+        synchronized (factory) {
+            builder = factory.newDocumentBuilder();
+        }
+        return builder.newDocument();
+    }
+
     /**
      * * Convenience method to transfer a node (and all of its children) from one
      * * DOM XML document to another.

@@ -65,6 +65,15 @@ public class XMLTransformer {
         transformer.transform(xml, new StreamResult(writer));
     }
 
+    public static void transform(Source xml, Writer writer)
+            throws TransformerException {
+        Transformer transformer;
+        synchronized (factory) {
+            transformer = factory.newTransformer();
+        }
+        transformer.transform(xml, new StreamResult(writer));
+    }
+
     public static void main(String[] args) {
         if (args.length != 2) {
             System.err.println("usage: XMLTransformer xml-file xslt-file");
