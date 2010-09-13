@@ -5,16 +5,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Content {
-
-    private static final DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
 
     private Repository repos;
 
@@ -35,8 +30,7 @@ public class Content {
         DocList pagelist = doclist.slice(start - 1, count);
 
         try {
-            DocumentBuilder builder = dbfactory.newDocumentBuilder();
-            Document root = builder.newDocument();
+            Document root = XMLUtil.newDocument();
             Element results = root.createElement("results");
 
             results.setAttribute("db", db);
@@ -64,12 +58,9 @@ public class Content {
         File file = repos.getFile(db, docid);
 
         try {
-            DocumentBuilder builder = dbfactory.newDocumentBuilder();
-
-            Document doc = builder.parse(new FileInputStream(file));
+            Document doc = XMLUtil.parseXML(file);
             Element record = doc.getDocumentElement();
             record.setAttribute("docid", Integer.toString(docid));
-
             return doc;
         } catch (ParserConfigurationException e) {
             throw new IOException(e);

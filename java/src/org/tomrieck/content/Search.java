@@ -1,15 +1,12 @@
 package org.tomrieck.content;
 
 import org.tomrieck.util.Timer;
+import org.tomrieck.xml.XMLTransformer;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 
 public class Search {
@@ -23,16 +20,7 @@ public class Search {
         Content content = new Content();
         Document doc = content.search(db, query, 1, 25);
 
-        TransformerFactory factory = TransformerFactory.newInstance();
-        Transformer transformer = factory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-        transformer.setOutputProperty("encoding", "UTF-8");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-
-        DOMSource source = new DOMSource(doc);
-
-        StreamResult result = new StreamResult(System.out);
-        transformer.transform(source, result);
+        XMLTransformer.transform(new DOMSource(doc), System.out);
     }
 
     public static void main(String[] args) {

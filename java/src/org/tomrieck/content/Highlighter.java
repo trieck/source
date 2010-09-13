@@ -1,12 +1,10 @@
 package org.tomrieck.content;
 
-import org.apache.tools.ant.filters.StringInputStream;
 import org.tomrieck.xml.XMLTransformer;
 import org.tomrieck.xml.XMLUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.Text;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -22,7 +20,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 public class Highlighter {
 
@@ -36,7 +33,7 @@ public class Highlighter {
             String term;
             while ((term = lexer.getToken()).length() > 0) {
                 strings.add(term);
-            } 
+            }
 
             String[] aStrings = new String[strings.size()];
             strings.toArray(aStrings);
@@ -52,7 +49,7 @@ public class Highlighter {
         private String[] terms;     // query terms
 
         public DocHighlighter(String query)
-            throws ParserConfigurationException, IOException {
+                throws ParserConfigurationException, IOException {
             output = XMLUtil.newDocument();
             QueryTerms qterms = new QueryTerms();
             terms = qterms.terms(query);
@@ -63,13 +60,13 @@ public class Highlighter {
         }
 
         public void startElement(String namespaceURI, String localName, String rawName, Attributes atts)
-            throws SAXException {
+                throws SAXException {
             sElement = localName;
             org.w3c.dom.Element next = output.createElement(localName);
             if (element == null) {
-                element = (org.w3c.dom.Element)output.appendChild(next);
+                element = (org.w3c.dom.Element) output.appendChild(next);
             } else {
-                element = (org.w3c.dom.Element)element.appendChild(next);
+                element = (org.w3c.dom.Element) element.appendChild(next);
             }
 
             for (int i = 0; i < atts.getLength(); i++) {
@@ -78,12 +75,12 @@ public class Highlighter {
         }
 
         public void endElement(String namespaceURI, String localName, String rawName)
-            throws SAXException {
+                throws SAXException {
             Node parent = element.getParentNode();
             if (parent.getNodeType() == Node.ELEMENT_NODE)
-                element = (org.w3c.dom.Element)parent;
+                element = (org.w3c.dom.Element) parent;
         }
-        
+
         public void characters(char[] ch, int start, int end) {
             String value = new String(ch, start, end);
             highlight(value);
@@ -103,7 +100,7 @@ public class Highlighter {
     }
 
     public Document highlight(Document doc, String query)
-        throws IOException {
+            throws IOException {
 
         try {
             DocHighlighter handler = new DocHighlighter(query);
@@ -116,12 +113,12 @@ public class Highlighter {
 
             StringReader reader = new StringReader(rep);
 
-            parser.parse(new InputSource(reader), handler);            
+            parser.parse(new InputSource(reader), handler);
 
             return handler.getDocument();
         } catch (ParserConfigurationException e) {
             throw new IOException(e);
-        } catch (SAXException e) {               
+        } catch (SAXException e) {
             throw new IOException(e);
         } catch (TransformerException e) {
             throw new IOException(e);

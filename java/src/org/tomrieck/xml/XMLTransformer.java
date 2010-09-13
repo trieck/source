@@ -65,6 +65,15 @@ public class XMLTransformer {
         transformer.transform(xml, new StreamResult(writer));
     }
 
+    public static void transform(Source xml, OutputStream os)
+            throws TransformerException {
+        Transformer transformer;
+        synchronized (factory) {
+            transformer = factory.newTransformer();
+        }
+        transformer.transform(xml, new StreamResult(os));
+    }
+
     public static void transform(Source xml, Writer writer)
             throws TransformerException {
         Transformer transformer;
@@ -86,6 +95,5 @@ public class XMLTransformer {
             System.err.println(e);
             System.exit(1);
         }
-
     }
 }

@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class XMLUtil {
 
@@ -22,8 +23,17 @@ public class XMLUtil {
         return builder.parse(f);
     }
 
+    public static Document parseXML(InputStream is)
+            throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilder builder;
+        synchronized (factory) {
+            builder = factory.newDocumentBuilder();
+        }
+        return builder.parse(is);
+    }
+
     public static Document newDocument()
-        throws ParserConfigurationException {
+            throws ParserConfigurationException {
         DocumentBuilder builder;
         synchronized (factory) {
             builder = factory.newDocumentBuilder();

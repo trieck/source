@@ -1,6 +1,7 @@
 package org.tomrieck.content;
 
 import org.tomrieck.util.Timer;
+import org.tomrieck.xml.XMLTransformer;
 import org.tomrieck.xml.XMLUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -8,24 +9,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class XMLSplitter {
-
-    private static final DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
-    private static final TransformerFactory transfactory = TransformerFactory.newInstance();
 
     public XMLSplitter() {
     }
@@ -34,8 +25,7 @@ public class XMLSplitter {
             throws IOException, ParserConfigurationException,
             TransformerException, SAXException {
 
-        DocumentBuilder builder = dbfactory.newDocumentBuilder();
-        Document doc = builder.parse(new FileInputStream(xml_file));
+        Document doc = XMLUtil.parseXML(new File(xml_file));
 
         NodeList elements = doc.getElementsByTagName(sElement);
         if (elements.getLength() == 0)
@@ -68,22 +58,13 @@ public class XMLSplitter {
             throws IOException, ParserConfigurationException,
             TransformerException {
 
-        DocumentBuilder builder = dbfactory.newDocumentBuilder();
-        Document doc = builder.newDocument();
+        Document doc = XMLUtil.newDocument();
         Element root = doc.createElement("document");
         doc.appendChild(root);
 
         XMLUtil.transferNode(root, doc, element);
 
-        Transformer transformer = transfactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-        transformer.setOutputProperty("encoding", "UTF-8");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-
-        DOMSource source = new DOMSource(doc);
-
-        StreamResult result = new StreamResult(new FileOutputStream(path));
-        transformer.transform(source, result);
+        XMLTransformer.transform(new DOMSource(doc), new FileWriter(path));
     }
 
     public static void main(String[] args) {
@@ -113,6 +94,5 @@ public class XMLSplitter {
         }
 
         System.out.printf("    elapsed time %s\n", t);
-
     }
 }
