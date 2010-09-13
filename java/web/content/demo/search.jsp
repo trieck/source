@@ -17,7 +17,8 @@
 
 <BODY BGCOLOR="#FFFFFF" BOTTOMMARGIN="0" LEFTMARGIN="0" RIGHTMARGIN="0" TOPMARGIN="0" MARGINHEIGHT="0" MARGINWIDTH="0">
 
-<SPAN CLASS="directions">Enter query; surround phrases with double-quotes and then select a version.</SPAN>
+
+<SPAN CLASS="directions">Enter query (surround phrases with double-quotes) and select a version.</SPAN>
 <p/>
 
 <FORM METHOD="get" ACTION="/demo/summary.jsp">
