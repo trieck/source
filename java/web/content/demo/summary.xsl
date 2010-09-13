@@ -39,10 +39,18 @@
                 </b>
             </TD>
             <TD CLASS="regtext11" align="left">
-                <b class="grey"><xsl:value-of select="verse/text"/></b>
+                <xsl:apply-templates select="verse/text"/>
             </TD>
         </TR>
     </xsl:template>
 
+    <xsl:template match="verse/text">
+        <b class="grey"><xsl:apply-templates/></b>
+    </xsl:template>
+
+    <xsl:template match="highlight">
+        <b class="highlight"><xsl:value-of select="."/></b>
+    </xsl:template>
+    
 </xsl:stylesheet>
         

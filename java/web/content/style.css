@@ -16,6 +16,6 @@ body {
 .searchbutton { font : 9pt Arial, San-Serif; color : #FFFFFF; font-weight: bold; background-color : #003366; } /* Color of "Search" button */
 
 b.grey { color: #757575; font-weight : normal }
-b.header { font : 9pt Arial, San-Serif; font-weight : bold; } /* Global */
-
+b.header { font : 9pt Arial, San-Serif; font-weight: bold; } /* Global */
+b.hilight { font-weight: bold; background-color: yellow; }
 
