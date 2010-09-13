@@ -139,30 +139,46 @@ public class WebUtils {
      */
     public static String selected(String value1, String value2) {
 
-		if (value1.equals(value2))
-			return "Selected";
+        if (value1.equals(value2))
+            return "Selected";
 
-		return "";
-	}
+        return "";
+    }
 
     /**
-	 * Format string using entries from symbol table
-	 * @param fmt the format string
-	 * @param ids the symbol identifiers
-	 */
-	public static String formatString(String fmt, String ids) {
-		Context context = Context.getContext();
+     * Format string using entries from symbol table
+     *
+     * @param fmt the format string
+     * @param ids the symbol identifiers
+     */
+    public static String formatString(String fmt, String ids) {
+        Context context = Context.getContext();
 
-		List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<String>();
 
-		StringTokenizer tok = new StringTokenizer(ids, ";");
-		while (tok.hasMoreTokens()) {
-			String val = context.getSymbol(tok.nextToken().trim());
-			list.add(val);
-		}
+        StringTokenizer tok = new StringTokenizer(ids, ";");
+        while (tok.hasMoreTokens()) {
+            String val = context.getSymbol(tok.nextToken().trim());
+            list.add(val);
+        }
 
-		Object[] args = list.toArray();
+        Object[] args = list.toArray();
 
-		return MessageFormat.format(fmt, args);
-	}
+        return MessageFormat.format(fmt, args);
+    }
+
+    public static String htmlEncode(String s) {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c > 127 || c == '"' || c == '<' || c == '>') {
+                output.append("&#");
+                output.append((int)c);
+                output.append(";");
+            } else {
+                output.append(c);
+            }
+        }
+        return output.toString();
+    }
 }

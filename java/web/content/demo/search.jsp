@@ -27,7 +27,9 @@
    <TR>
       <TD VALIGN="middle" CLASS="normal"><B CLASS="header">Query:</B></TD>
       <TD VALIGN="top">&nbsp;</TD>
-      <TD VALIGN="top"><INPUT NAME="query" TYPE="text" SIZE="30" MAXLENGTH="128" value="<%= query %>"/></TD>
+      <TD VALIGN="top">
+        <INPUT NAME="query" TYPE="text" SIZE="30" MAXLENGTH="128" value="<%= WebUtils.htmlEncode(query) %>"/>
+      </TD>
    </TR>
 
    <TR>

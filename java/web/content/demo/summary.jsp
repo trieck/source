@@ -5,10 +5,10 @@
 <jsp:setProperty name="context" property="context" value="<%= pageContext %>" />
 
 <%
-    String db = request.getParameter("db");
-    String query = request.getParameter("query");
-    String start = request.getParameter("start");
-    String count = request.getParameter("count");
+    String db = context.getSymbol("db");
+    String query = context.getSymbol("query");
+    String start = context.getSymbol("start");
+    String count = context.getSymbol("count");
     String style = "summary";
     int nstart = 1;
     
@@ -18,8 +18,7 @@
         ;
     }
 
-    String ModifyLink = WebUtils.formatString("/demo/search.jsp?db={0}&query={1}",
-		"db; query");
+    String ModifyLink = String.format("/demo/search.jsp?db=%s&query=%s", db, context.encode(query));
 
     Search search = Search.DatabaseSearch("demo", db, query, nstart, style);    
 %>
