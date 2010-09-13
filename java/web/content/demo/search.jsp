@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html" %>
 <%@ page import="org.tomrieck.content.beans.*" %>
 
-<%@ page language="java" contentType="text/html" %>
-<%@ page import="com.kx.frontend.beans.*" %>
-<%@ page import="com.kx.frontend.db.GetSEO" %>
+<jsp:useBean id="context" scope="page" class="org.tomrieck.content.beans.Context"/>
+<jsp:setProperty name="context" property="context" value="<%= pageContext %>" />
+
+<%
+   String db = context.getSymbol("db");
+   String query = context.getSymbol("query");
+%>
 
 <HTML>
 <head>
@@ -23,7 +27,7 @@
    <TR>
       <TD VALIGN="middle" CLASS="normal"><B CLASS="header">Query:</B></TD>
       <TD VALIGN="top">&nbsp;</TD>
-      <TD VALIGN="top"><INPUT NAME="query" TYPE="text" SIZE="30" MAXLENGTH="128"/></TD>
+      <TD VALIGN="top"><INPUT NAME="query" TYPE="text" SIZE="30" MAXLENGTH="128" value="<%= query %>"/></TD>
    </TR>
 
    <TR>
@@ -36,10 +40,10 @@
           <tr>
             <td>
               <SELECT NAME="db" SIZE="1">
-                <option value="asv">American Standard Version</option>
-                <option value="basic-english">Basic English Version</option>
-                <option value="kjv">King James Version</option>
-                <option value="niv">New International Version</option>
+                <option <%= WebUtils.selected(db, "asv") %> value="asv">American Standard Version</option>
+                <option <%= WebUtils.selected(db, "basic-english") %> value="basic-english">Basic English Version</option>
+                <option <%= WebUtils.selected(db, "kjv") %> value="kjv">King James Version</option>
+                <option <%= WebUtils.selected(db, "niv") %> value="niv">New International Version</option>
               </SELECT>
             </td>
             <td>&nbsp;</td>

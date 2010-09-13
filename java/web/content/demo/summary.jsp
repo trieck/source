@@ -10,9 +10,17 @@
     String start = request.getParameter("start");
     String count = request.getParameter("count");
     String style = "summary";
+    int nstart = 1;
+    
+    try {
+        nstart = Integer.parseInt(start);
+    } catch (NumberFormatException e) {
+        ;
+    }
 
-    int nstart = Integer.parseInt(start);
-      
+    String ModifyLink = WebUtils.formatString("/demo/search.jsp?db={0}&query={1}",
+		"db; query");
+
     Search search = Search.DatabaseSearch("demo", db, query, nstart, style);    
 %>
 
@@ -30,13 +38,17 @@
       <b class="blu14large"><%= search.getRecordCount() %></b>&#xa0;
       <b class="blu14large">matches found</b>
     </td>
+    <TD VALIGN="bottom" CLASS="normal" ALIGN="right" width="50%">
+      Searching: query: <B CLASS="yoursearch"><%= query %></B> | db : <B CLASS="yoursearch"><%= db %></B>      
+    </TD>
 	</tr>
 </table>
 
 <table border="0" cellspacing="0" cellpadding="2" width="100%">
   <tr bgcolor="#00619c" height="25">
     <td border="1" valign="bottom" align="left"><a href="/demo/search.jsp?" class="regtextw11">New search</a></td>
-      
+    <td border="1" valign="bottom" align="left"><a href="<%= ModifyLink %>" class="regtextw11">Modify search</a></td>
+
   	<td valign="bottom">
       <% if (search.getPrevious().length() > 0 ) { %>
          &#xa0;<img src="/images/page_rev.gif" border="0"/><a href="<%= search.getPrevious() %>" class="regtextw11">Previous page</a>&#xa0;&#xa0;
