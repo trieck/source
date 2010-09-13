@@ -11,7 +11,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -75,7 +74,7 @@ public class CachedTransformer {
         return transformer;
     }
 
-   public Transformer getTransformer(File file)
+    public Transformer getTransformer(File file)
             throws ParserConfigurationException, IOException, SAXException,
             TransformerConfigurationException {
 

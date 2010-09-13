@@ -23,7 +23,7 @@ public class DocList {
         count = Math.max(0, count);
 
         DocList slice = new DocList();
-        slice.documents.addAll(documents.subList(start, start+count));
+        slice.documents.addAll(documents.subList(start, start + count));
 
         return slice;
     }
@@ -39,5 +39,5 @@ public class DocList {
     public void addAll(Collection<Integer> c) {
         documents.addAll(c);
     }
-    
+
 }

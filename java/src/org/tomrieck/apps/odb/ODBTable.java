@@ -1,13 +1,9 @@
 package org.tomrieck.apps.odb;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.Rectangle;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JTable;
 
 public class ODBTable extends JTable implements ActionListener {
 

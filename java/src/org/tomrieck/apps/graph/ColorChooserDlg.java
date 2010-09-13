@@ -1,12 +1,9 @@
 package org.tomrieck.apps.graph;
 
-import java.awt.BorderLayout;
-import java.awt.Frame;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 
 public class ColorChooserDlg extends JDialog implements ChangeListener {
 

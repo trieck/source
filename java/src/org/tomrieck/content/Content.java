@@ -17,7 +17,7 @@ public class Content {
     private static final DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
 
     private Repository repos;
-    
+
     public Content() throws IOException {
         repos = Repository.getInstance();
     }
@@ -28,11 +28,11 @@ public class Content {
 
         AnchorList anchorlist = query.query(q);
         query.close();
-                
+
         // set of unique documents for anchor list
         DocList doclist = anchorlist.documents();
 
-        DocList pagelist = doclist.slice(start-1, count);
+        DocList pagelist = doclist.slice(start - 1, count);
 
         try {
             DocumentBuilder builder = dbfactory.newDocumentBuilder();
@@ -44,7 +44,7 @@ public class Content {
             results.setAttribute("start", Integer.toString(start));
             results.setAttribute("count", Integer.toString(doclist.size()));
             root.appendChild(results);
-            
+
             Document doc;
             int docid;
             for (int i = 0; i < pagelist.size(); i++) {
@@ -56,7 +56,7 @@ public class Content {
             return root;
         } catch (ParserConfigurationException e) {
             throw new IOException(e);
-        }        
+        }
     }
 
     public Document getDoc(String db, int docid) throws IOException {
@@ -66,15 +66,15 @@ public class Content {
         try {
             DocumentBuilder builder = dbfactory.newDocumentBuilder();
 
-            Document doc = builder.parse(new FileInputStream(file));            
+            Document doc = builder.parse(new FileInputStream(file));
             Element record = doc.getDocumentElement();
             record.setAttribute("docid", Integer.toString(docid));
-            
+
             return doc;
         } catch (ParserConfigurationException e) {
             throw new IOException(e);
         } catch (SAXException e) {
             throw new IOException(e);
         }
-    }    
+    }
 }

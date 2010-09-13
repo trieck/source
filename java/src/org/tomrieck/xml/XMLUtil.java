@@ -4,19 +4,17 @@ import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
 
 public class XMLUtil {
 
     private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    
+
     public static Document parseXML(File f)
-        throws ParserConfigurationException, IOException, SAXException {
+            throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilder builder;
         synchronized (factory) {
             builder = factory.newDocumentBuilder();
@@ -87,5 +85,5 @@ public class XMLUtil {
 
         // return the merged document
         return master;
-	}	
+    }
 }

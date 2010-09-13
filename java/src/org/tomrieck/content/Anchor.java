@@ -35,6 +35,6 @@ public class Anchor implements Comparable<Anchor> {
     }
 
     public static long makeAnchorID(int docnum, int wordnum) {
-        return ((long)docnum << 32) | wordnum;        
+        return ((long) docnum << 32) | wordnum;
     }
 }

@@ -37,7 +37,7 @@ public class Query {
     private AnchorList conjunction() throws IOException {
         AnchorList left = primary();
 
-        for (;;) {
+        for (; ;) {
             if (lookahead().length() == 0)
                 return left;
 
@@ -71,7 +71,7 @@ public class Query {
     }
 
     private AnchorList intersection(AnchorList left, AnchorList right) {
-        return AnchorList.intersection(left, right);        
+        return AnchorList.intersection(left, right);
     }
 
     public AnchorList lookup(String term) throws IOException {
@@ -103,29 +103,29 @@ public class Query {
         // read the concordance offset
         long offset;
         if ((offset = f1.readLong()) == 0)
-           return list; // no hit
+            return list; // no hit
 
         String sTerm;
         InputStream is = Channels.newInputStream(f2.getChannel());
         while (offset != 0) {   // linear-probing
 
-           // seek into concordance
-           f2.seek(offset);
+            // seek into concordance
+            f2.seek(offset);
 
-           // read term in concordance
-           sTerm = IOUtil.readString(is);
-           if (sTerm.equals(term)) {   // match
-               list.read(is);
-               break;
-           }
+            // read term in concordance
+            sTerm = IOUtil.readString(is);
+            if (sTerm.equals(term)) {   // match
+                list.read(is);
+                break;
+            }
 
-           // move to next bucket
-           h = (h + 1) % hash_tbl_size;
+            // move to next bucket
+            h = (h + 1) % hash_tbl_size;
 
-           f1.seek(hash_tbl_offset + (h * 8));
+            f1.seek(hash_tbl_offset + (h * 8));
 
-           offset = f1.readLong();
-        }          
+            offset = f1.readLong();
+        }
 
         return list;
     }

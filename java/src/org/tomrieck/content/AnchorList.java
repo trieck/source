@@ -20,6 +20,7 @@ public class AnchorList {
 
     /**
      * Return the unique set of documents in the anchor list
+     *
      * @return the set of unique documents
      */
     public DocList documents() {
@@ -33,7 +34,7 @@ public class AnchorList {
 
         DocList list = new DocList();
         list.addAll(documents);
-                           
+
         return list;
     }
 
@@ -46,7 +47,7 @@ public class AnchorList {
         DataInputStream dis = new DataInputStream(is);
 
         int size = dis.readInt();   // size of anchor list
-        if (size <=0) {
+        if (size <= 0) {
             throw new IOException("bad anchor list size.");
         }
 
@@ -62,10 +63,10 @@ public class AnchorList {
 
         long anchor;
         for (int i = 0; i < size; i++) {    // convert byte array to long
-            anchor = ((long)(buffer[i * 8] & 0xFF)) << 56
-                    | ((long)(buffer[i * 8 + 1] & 0xFF)) << 48
-                    | ((long)(buffer[i * 8 + 2] & 0xFF)) << 40
-                    | ((long)(buffer[i * 8 + 3] & 0xFF)) << 32
+            anchor = ((long) (buffer[i * 8] & 0xFF)) << 56
+                    | ((long) (buffer[i * 8 + 1] & 0xFF)) << 48
+                    | ((long) (buffer[i * 8 + 2] & 0xFF)) << 40
+                    | ((long) (buffer[i * 8 + 3] & 0xFF)) << 32
                     | (buffer[i * 8 + 4] & 0xFF) << 24
                     | (buffer[i * 8 + 5] & 0xFF) << 16
                     | (buffer[i * 8 + 6] & 0xFF) << 8
@@ -110,7 +111,7 @@ public class AnchorList {
 
         return output;
     }
-    
+
     public static AnchorList adjacent(AnchorList set1, AnchorList set2) {
 
         AnchorList output = new AnchorList();

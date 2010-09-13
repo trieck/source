@@ -17,12 +17,12 @@ public class Repository {
 
     public static synchronized Repository getInstance() throws IOException {
 
-       if (instance != null)
-           return instance;
+        if (instance != null)
+            return instance;
 
-       instance = new Repository();
+        instance = new Repository();
 
-       return instance;
+        return instance;
     }
 
     public File getPath() throws IOException {
@@ -57,7 +57,7 @@ public class Repository {
     private void checkRepos(File dir) throws IOException {
         if (!dir.isDirectory()) {
             throw new IOException(
-                String.format("\"%s\" is not a repository.", dir.getCanonicalPath())
+                    String.format("\"%s\" is not a repository.", dir.getCanonicalPath())
             );
         }
     }

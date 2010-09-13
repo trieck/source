@@ -54,27 +54,27 @@ public class Search extends Product {
     }
 
     private String getSearchUrl() throws IOException {
-		Config config = Config.getInstance();
-		
-		StringBuffer url = new StringBuffer();
-		url.append("http://");
-		url.append(config.getProperty("content.host"));
-		url.append(':');
-		url.append(config.getProperty("content.port"));
-		url.append('/');
-		url.append(config.getProperty("content.uri"));
-		url.append("?function=search&query=");
-		url.append(Context.encode(getQuery()));
-		url.append("&db=");
-		url.append(getDatabase());
+        Config config = Config.getInstance();
 
-		url.append("&start=");
-		url.append(start);
-		url.append("&count=");
-		url.append(pagesize);
+        StringBuffer url = new StringBuffer();
+        url.append("http://");
+        url.append(config.getProperty("content.host"));
+        url.append(':');
+        url.append(config.getProperty("content.port"));
+        url.append('/');
+        url.append(config.getProperty("content.uri"));
+        url.append("?function=search&query=");
+        url.append(Context.encode(getQuery()));
+        url.append("&db=");
+        url.append(getDatabase());
 
-		return url.toString();
-	}
+        url.append("&start=");
+        url.append(start);
+        url.append("&count=");
+        url.append(pagesize);
+
+        return url.toString();
+    }
 
     /**
      * Retrieve the previous page link

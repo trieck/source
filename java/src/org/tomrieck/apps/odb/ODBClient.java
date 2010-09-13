@@ -1,16 +1,12 @@
 package org.tomrieck.apps.odb;
 
+import org.tomrieck.bencode.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-import org.tomrieck.bencode.BEDecoder;
-import org.tomrieck.bencode.BEDictionary;
-import org.tomrieck.bencode.BEEncoder;
-import org.tomrieck.bencode.BEObject;
-import org.tomrieck.bencode.BEString;
 
 public class ODBClient {
 

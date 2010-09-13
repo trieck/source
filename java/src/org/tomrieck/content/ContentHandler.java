@@ -7,5 +7,5 @@ import java.io.IOException;
 
 public interface ContentHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException;    
+            throws ServletException, IOException;
 }

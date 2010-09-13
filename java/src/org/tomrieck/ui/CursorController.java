@@ -1,7 +1,6 @@
 package org.tomrieck.ui;
 
-import java.awt.Component;
-import java.awt.Cursor;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

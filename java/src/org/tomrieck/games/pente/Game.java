@@ -1,9 +1,8 @@
 package org.tomrieck.games.pente;
 
-import java.awt.Point;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Iterator;
-
-import javax.swing.JOptionPane;
 
 public class Game {
     private static Game instance = null;

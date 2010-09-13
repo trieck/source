@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class IOUtil {
 
     private static final int BUF_SIZE = 16384;
-    
+
     private IOUtil() {
     }
 
@@ -41,8 +41,9 @@ public class IOUtil {
 
     /**
      * Transfer bytes from input stream to output stream
-     * @param is, the input stream
-     * @param os, the output stream
+     *
+     * @param is,   the input stream
+     * @param os,   the output stream
      * @param size, the number of bytes to transfer
      * @throws IOException, if unable to transfer size bytes
      */
@@ -62,15 +63,16 @@ public class IOUtil {
             os.write(buf, 0, m);
 
             size -= m;
-        }        
+        }
     }
 
 
     /**
      * Write a continuous series of bytes to output stream
-     * @param os, the output stream
+     *
+     * @param os,   the output stream
      * @param size, the number of bytes to write
-     * @param b, the byte to write
+     * @param b,    the byte to write
      * @throws IOException, if the bytes cannot be written
      */
     public static void fill(OutputStream os, long size, byte b) throws IOException {
@@ -81,7 +83,7 @@ public class IOUtil {
 
         int m;
         while (size > 0) {
-            m = (int)Math.min(BUF_SIZE, size);
+            m = (int) Math.min(BUF_SIZE, size);
             os.write(buf, 0, m);
             size -= m;
         }
@@ -91,7 +93,6 @@ public class IOUtil {
         String message = String.format(format, args);
         System.err.printf("   {WARNING} : %s\n", message);
     }
-
 
 
 }

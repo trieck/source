@@ -18,7 +18,7 @@ public class Search {
     }
 
     public void search(String db, String query) throws IOException,
-        ParserConfigurationException, TransformerException {
+            ParserConfigurationException, TransformerException {
 
         Content content = new Content();
         Document doc = content.search(db, query, 1, 25);

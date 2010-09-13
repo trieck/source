@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class Product {
-   
+
     private String product;     // product
     private String db;          // database
     private String query;       // query
@@ -51,7 +51,7 @@ public abstract class Product {
     protected void setResults(Document doc) {
         results = doc;
     }
-    
+
     public void getContent() {
 
         Context context = Context.getContext();
@@ -72,30 +72,30 @@ public abstract class Product {
             } catch (SAXException e) {
                 e.printStackTrace();
             }
-        }                  
+        }
     }
 
     private File getStylesheet() throws IOException {
-		String path = getProductDir() + '/' + style.toLowerCase() + ".xsl";
-		File file = new File(path).getCanonicalFile();
-		if (!file.canRead()) {
+        String path = getProductDir() + '/' + style.toLowerCase() + ".xsl";
+        File file = new File(path).getCanonicalFile();
+        if (!file.canRead()) {
             throw new IOException(String.format("can't read \"%s\".", path));
-		}
+        }
 
         return file;
     }
 
     private String getProductDir() {
         Context context = Context.getContext();
-		return context.getRealPath("/" + product);
+        return context.getRealPath("/" + product);
     }
 
     public int getRecordCount() {
-		return count;
-	}
+        return count;
+    }
 
     protected void setRecordCount(int count) {
         this.count = count;
     }
-    
+
 }

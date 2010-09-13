@@ -9,7 +9,7 @@ public class Index {
 
     public static final int MAGIC_NO = 0xc001d00d;  // file magic number
     private static final int CONC_OFFSET = 28;      // offset to concordance
-        
+
     private Repository repos;                       // content repository
     private Concordance concord;                    // term concordance
 
@@ -93,7 +93,7 @@ public class Index {
         ofile.setLength(newLength);
 
         // need to ensure the hash table is empty
-        IOUtil.fill(os, tableSize * 8, (byte)0);
+        IOUtil.fill(os, tableSize * 8, (byte) 0);
 
         // we need two file pointers to the output file
         // in order to generate the hash table
@@ -139,7 +139,7 @@ public class Index {
     }
 
     public void insert(String term, int docnum, int wordnum)
-        throws IOException {
+            throws IOException {
         concord.insert(term, docnum, wordnum);
     }
 

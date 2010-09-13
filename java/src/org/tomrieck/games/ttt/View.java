@@ -1,20 +1,10 @@
 package org.tomrieck.games.ttt;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.Rectangle;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 
 public class View extends JComponent implements MouseListener {
 

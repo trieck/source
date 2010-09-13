@@ -53,7 +53,7 @@ public class CheckIndex {
         // check the terms and anchor lists
 
         String term;
-        AnchorList list = new AnchorList();        
+        AnchorList list = new AnchorList();
         InputStream is = Channels.newInputStream(file.getChannel());
         for (int i = 0; i < nterms; i++) {
             term = IOUtil.readString(is);
@@ -94,14 +94,14 @@ public class CheckIndex {
 
         Anchor anchor;
         Anchor last = new Anchor(-1);
-        
+
         for (int i = 0; i < list.size(); i++) {
             anchor = list.getAnchor(i);
             if (anchor.compareTo(last) <= 0) {
                 throw new IOException(
-                    String.format("anchor list out of order; %d <= %d.",
-                        anchor.getAnchorID(), last.getAnchorID())
-                );                      
+                        String.format("anchor list out of order; %d <= %d.",
+                                anchor.getAnchorID(), last.getAnchorID())
+                );
             }
 
             docnum = anchor.getDocNum();

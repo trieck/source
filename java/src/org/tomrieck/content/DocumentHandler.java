@@ -8,7 +8,7 @@ import java.io.IOException;
 public class DocumentHandler implements ContentHandler {
 
     public void handle(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
 
     }
 }

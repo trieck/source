@@ -1,6 +1,7 @@
 package org.tomrieck.xml;
 
 import org.w3c.dom.Document;
+
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -19,35 +20,35 @@ public class XMLTransformer {
     }
 
     public static void transform(String xmlFile, String xslFile, OutputStream os)
-        throws TransformerException {
+            throws TransformerException {
         StreamSource xmlSource = new StreamSource(xmlFile);
         StreamSource xslSource = new StreamSource(xslFile);
         transform(xmlSource, xslSource, os);
     }
 
     public static void transform(String xmlFile, String xslFile, Writer writer)
-        throws TransformerException {
+            throws TransformerException {
         StreamSource xmlSource = new StreamSource(xmlFile);
         StreamSource xslSource = new StreamSource(xslFile);
         transform(xmlSource, xslSource, writer);
     }
 
     public static void transform(Document xml, Document xsl, OutputStream os)
-        throws TransformerException {
+            throws TransformerException {
         DOMSource xmlSource = new DOMSource(xml);
         DOMSource xslSource = new DOMSource(xsl);
         transform(xmlSource, xslSource, os);
     }
 
     public static void transform(Document xml, Document xsl, Writer writer)
-        throws TransformerException {
+            throws TransformerException {
         DOMSource xmlSource = new DOMSource(xml);
         DOMSource xslSource = new DOMSource(xsl);
         transform(xmlSource, xslSource, writer);
     }
 
     public static void transform(Source xml, Source xsl, OutputStream os)
-        throws TransformerException {
+            throws TransformerException {
         Transformer transformer;
         synchronized (factory) {
             transformer = factory.newTransformer(xsl);
@@ -56,7 +57,7 @@ public class XMLTransformer {
     }
 
     public static void transform(Source xml, Source xsl, Writer writer)
-        throws TransformerException {
+            throws TransformerException {
         Transformer transformer;
         synchronized (factory) {
             transformer = factory.newTransformer(xsl);
@@ -76,6 +77,6 @@ public class XMLTransformer {
             System.err.println(e);
             System.exit(1);
         }
-        
+
     }
 }

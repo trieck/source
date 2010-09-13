@@ -1,13 +1,9 @@
 package org.tomrieck.apps;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import org.tomrieck.ui.StatusPanel;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class StatusFrame extends JFrame {
 

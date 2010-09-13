@@ -77,7 +77,7 @@ public class InverterRecs {
                 return; // exists
             }
 
-            assert(buffer.get(buffer.position()-1) < anchor);
+            assert (buffer.get(buffer.position() - 1) < anchor);
         }
 
         if (!buffer.hasRemaining()) { // reallocate

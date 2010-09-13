@@ -1,6 +1,6 @@
 package org.tomrieck.games.ttt;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class TicTacToe {
 

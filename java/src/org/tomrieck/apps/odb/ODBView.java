@@ -1,10 +1,9 @@
 package org.tomrieck.apps.odb;
 
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-
-import javax.swing.JScrollPane;
 
 public class ODBView extends JScrollPane {
 

@@ -32,7 +32,7 @@ public class XMLSplitter {
 
     public void split(String xml_file, String sElement, String path)
             throws IOException, ParserConfigurationException,
-                TransformerException, SAXException {
+            TransformerException, SAXException {
 
         DocumentBuilder builder = dbfactory.newDocumentBuilder();
         Document doc = builder.parse(new FileInputStream(xml_file));
@@ -40,23 +40,23 @@ public class XMLSplitter {
         NodeList elements = doc.getElementsByTagName(sElement);
         if (elements.getLength() == 0)
             throw new IOException(String.format("element \"%s\" not found.", sElement));
-        
+
         Node element;
         for (int i = 0; i < elements.getLength(); i++) {
             element = elements.item(i);
-            writeElement(i+1, path, (Element)element);
+            writeElement(i + 1, path, (Element) element);
         }
     }
 
     private void writeElement(int docnum, String path, Element element)
-        throws IOException, ParserConfigurationException,
+            throws IOException, ParserConfigurationException,
             TransformerException {
 
         // ensure the root path exists
         File f = new File(path);
         if (!f.exists() && !f.mkdir()) {
             throw new IOException(
-                String.format("could not create directory \"%s\".\n", path));
+                    String.format("could not create directory \"%s\".\n", path));
         }
 
         String filename = String.format("%s/%04x.xml", path, docnum);
@@ -65,7 +65,7 @@ public class XMLSplitter {
     }
 
     private void writeDoc(String path, Element element)
-        throws IOException, ParserConfigurationException,
+            throws IOException, ParserConfigurationException,
             TransformerException {
 
         DocumentBuilder builder = dbfactory.newDocumentBuilder();
@@ -77,8 +77,8 @@ public class XMLSplitter {
 
         Transformer transformer = transfactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-        transformer.setOutputProperty("encoding", "UTF-8");        
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");        
+        transformer.setOutputProperty("encoding", "UTF-8");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
         DOMSource source = new DOMSource(doc);
 
@@ -109,7 +109,7 @@ public class XMLSplitter {
             System.exit(3);
         } catch (TransformerException e) {
             System.err.println(e);
-            System.exit(4);            
+            System.exit(4);
         }
 
         System.out.printf("    elapsed time %s\n", t);

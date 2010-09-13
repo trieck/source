@@ -32,7 +32,7 @@ public class QueryTokenizer {
         while ((c = reader.read()) != -1) {
             if (c == '"') { // literal
                 while ((c = reader.read()) != -1 && c != '"') {
-                    builder.append((char)c);
+                    builder.append((char) c);
                 }
                 return builder.toString();
             } else if ((c == '_' || c == '\'') && builder.length() > 0) {

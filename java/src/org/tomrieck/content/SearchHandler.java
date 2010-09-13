@@ -13,7 +13,7 @@ import java.io.IOException;
 public class SearchHandler implements ContentHandler {
 
     public void handle(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
 
         String db = request.getParameter("db");
         String query = request.getParameter("query");
@@ -45,11 +45,11 @@ public class SearchHandler implements ContentHandler {
         DOMSource source = new DOMSource(doc);
 
         StreamResult result = new StreamResult(response.getOutputStream());
-        
+
         try {
             transformer.transform(source, result);
         } catch (TransformerException e) {
             throw new ServletException(e);
-        }        
+        }
     }
 }

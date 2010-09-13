@@ -173,7 +173,7 @@ public class WebUtils {
             char c = s.charAt(i);
             if (c > 127 || c == '"' || c == '<' || c == '>') {
                 output.append("&#");
-                output.append((int)c);
+                output.append((int) c);
                 output.append(";");
             } else {
                 output.append(c);
