@@ -30,7 +30,17 @@ public class QueryTokenizer {
 
         int c;
         while ((c = reader.read()) != -1) {
-            if (c == '"') { // literal
+            if (c == ':') { // field/term delimiter
+              if (builder.length() > 0) {
+                    return builder.toString();
+              }
+              builder.append((char)c);
+              return builder.toString();
+            } else if (c == '"') { // literal
+                if (builder.length() > 0) {
+                    return builder.toString();
+                }
+                
                 while ((c = reader.read()) != -1 && c != '"') {
                     builder.append((char) c);
                 }

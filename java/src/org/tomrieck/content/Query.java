@@ -55,7 +55,13 @@ public class Query {
         if (left.length() == 0)
             return anchorlist; // error condition
 
-        return lookup(left);
+        if (lookahead().equals(":")) {
+		    getTok();   // ':'
+            String right = getTok();
+            return lookup(left, right);
+        }
+
+        return anchorlist;  // error condition
     }
 
     private String getTok() throws IOException {
@@ -74,17 +80,19 @@ public class Query {
         return AnchorList.intersection(left, right);
     }
 
-    public AnchorList lookup(String term) throws IOException {
+    private AnchorList lookup(String field, String term) throws IOException {
         AnchorList list = new AnchorList();
 
         Lexer lexer = new Lexer(new StringReader(term));
 
-        String token;
+        String token, restriction;
         for (int i = 0; (token = lexer.getToken()).length() > 0; i++) {
+            restriction = String.format("%s:%s", field, token);
+
             if (i > 0) {
-                list = adjacent(list, indexLookup(token));
+                list = adjacent(list, indexLookup(restriction));
             } else {
-                list = indexLookup(token);
+                list = indexLookup(restriction);
             }
         }
 

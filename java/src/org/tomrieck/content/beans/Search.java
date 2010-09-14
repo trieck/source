@@ -41,7 +41,7 @@ public class Search extends Product {
 
         setResults(doc);
         NodeList results = doc.getElementsByTagName("results");
-        if (results != null) {
+        if (results != null && results.getLength() > 0) {
             Element element = (Element) results.item(0);
 
             try {
