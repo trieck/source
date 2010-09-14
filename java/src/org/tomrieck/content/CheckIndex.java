@@ -12,7 +12,6 @@ import java.text.DecimalFormat;
 
 public class CheckIndex {
 
-    private int nfiles;
     private Query query;
 
     public CheckIndex() {
@@ -38,9 +37,6 @@ public class CheckIndex {
 
         System.out.printf("    Index file size: %s bytes\n", StringUtil.comma(file.length()));
 
-        nfiles = file.readInt();
-        System.out.printf("    Index document count: %s\n", StringUtil.comma(nfiles));
-
         int nterms = file.readInt();
         System.out.printf("    Index term count: %s\n", StringUtil.comma(nterms));
 
@@ -49,18 +45,6 @@ public class CheckIndex {
 
         long hash_tbl_offset = file.readLong();
         System.out.printf("    Hash table offset: 0x%08x\n", hash_tbl_offset);
-
-        // check the terms and anchor lists
-
-        String term;
-        AnchorList list = new AnchorList();
-        InputStream is = Channels.newInputStream(file.getChannel());
-        for (int i = 0; i < nterms; i++) {
-            term = IOUtil.readString(is);
-            search(term);
-            list.read(is);
-            checkAnchors(list);
-        }
 
         // check the hash table
         file.seek(hash_tbl_offset);
@@ -75,50 +59,8 @@ public class CheckIndex {
 
         System.out.printf("    Hash table fill factor: %s%%\n", df.format(100 * (nfilled / (double) hash_tbl_size)));
 
-        is.close();
         file.close();
         query.close();
-    }
-
-    private void search(String term) throws IOException {
-
-        AnchorList list = query.lookup(term);
-
-        if (list.size() == 0) {
-            throw new IOException(String.format("search failed for term \"%s\".", term));
-        }
-    }
-
-    private void checkAnchors(AnchorList list) throws IOException {
-        int docnum, wordnum;
-
-        Anchor anchor;
-        Anchor last = new Anchor(-1);
-
-        for (int i = 0; i < list.size(); i++) {
-            anchor = list.getAnchor(i);
-            if (anchor.compareTo(last) <= 0) {
-                throw new IOException(
-                        String.format("anchor list out of order; %d <= %d.",
-                                anchor.getAnchorID(), last.getAnchorID())
-                );
-            }
-
-            docnum = anchor.getDocNum();
-            if (docnum <= 0 || docnum > nfiles) {
-                throw new IOException(
-                        String.format("document number (%d) out of range.", docnum)
-                );
-            }
-            wordnum = anchor.getWordNum();
-            if (wordnum < 0) {
-                throw new IOException(
-                        String.format("word number (%d) out of range.", wordnum)
-                );
-            }
-
-            last = anchor;
-        }
     }
 
     public static void main(String[] args) {

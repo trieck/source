@@ -29,7 +29,7 @@ public class AnchorList {
         Anchor a;
         for (int i = 0; i < anchors.size(); i++) {
             a = getAnchor(i);
-            documents.add(a.getDocNum());
+            documents.add(a.getDocID());
         }
 
         DocList list = new DocList();
@@ -95,8 +95,8 @@ public class AnchorList {
             left = set1.getAnchor(i);
             right = set2.getAnchor(j);
 
-            leftdoc = left.getDocNum();
-            rightdoc = right.getDocNum();
+            leftdoc = left.getDocID();
+            rightdoc = right.getDocID();
 
             if (leftdoc < rightdoc) {
                 i++;
@@ -136,7 +136,6 @@ public class AnchorList {
                 i++;
                 j++;
             }
-
         }
 
         return output;

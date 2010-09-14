@@ -63,12 +63,12 @@ public class Repository {
     }
 
     /* get file for document number */
-    public File getFile(String db, int docnum) throws IOException {
+    public File getFile(String db, short filenum) throws IOException {
         File dir = mapPath(db);
 
         String dirpath = dir.getCanonicalPath();
 
-        String filename = String.format("%s/%04x.xml", dirpath, docnum);
+        String filename = String.format("%s/%04x.xml", dirpath, filenum);
 
         return new File(filename).getCanonicalFile();
     }

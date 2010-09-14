@@ -3,13 +3,17 @@ package org.tomrieck.content;
 import org.tomrieck.xml.XMLUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
+import org.xml.sax.InputSource;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.*;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class Content {
+
+    private static final XPath xpath = XPathFactory.newInstance().newXPath();
 
     private Repository repos;
 
@@ -39,12 +43,12 @@ public class Content {
             results.setAttribute("count", Integer.toString(doclist.size()));
             root.appendChild(results);
 
-            Document doc;
+            Element doc;
             int docid;
             for (int i = 0; i < pagelist.size(); i++) {
                 docid = pagelist.getDoc(i);
                 doc = getDoc(db, docid);
-                XMLUtil.transferNode(results, root, doc.getDocumentElement());
+                XMLUtil.transferNode(results, root, doc);
             }
 
             return root;
@@ -53,18 +57,39 @@ public class Content {
         }
     }
 
-    public Document getDoc(String db, int docid) throws IOException {
+    public Element getDoc(String db, int ndocid) throws IOException {
 
-        File file = repos.getFile(db, docid);
+        DocID docid = new DocID(ndocid);
+
+        short filenum = docid.getFileNum();
+        short recnum = docid.getRecNum();
+
+        File file = repos.getFile(db, filenum);
 
         try {
-            Document doc = XMLUtil.parseXML(file);
-            Element record = doc.getDocumentElement();
-            record.setAttribute("docid", Integer.toString(docid));
-            return doc;
+            Element record = getRecord(file, recnum);
+            record.setAttribute("docid", Integer.toString(ndocid));
+            return record;
         } catch (ParserConfigurationException e) {
             throw new IOException(e);
-        } catch (SAXException e) {
+        } catch (XPathExpressionException e) {
+            throw new IOException(e);
+        }
+    }
+
+    public Element getRecord(File file, short recnum)
+            throws IOException, ParserConfigurationException,
+            XPathExpressionException {
+
+        String sExpr = String.format("//record/record[position()=%d]", recnum);
+
+        XPathExpression expr = xpath.compile(sExpr);
+
+        InputSource source = new InputSource(new FileReader(file));
+
+        try {
+            return (Element) expr.evaluate(source, XPathConstants.NODE);
+        } catch (ClassCastException e) {
             throw new IOException(e);
         }
     }

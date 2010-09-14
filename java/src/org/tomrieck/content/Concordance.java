@@ -44,12 +44,12 @@ public class Concordance {
         return merger.merge(tempfiles);
     }
 
-    public void insert(String term, int docnum, int wordnum) throws IOException {
+    public void insert(String term, long anchor) throws IOException {
 
         if (isFull()) {
             blockSave();
         }
 
-        block.insert(term, docnum, wordnum);
+        block.insert(term, anchor);
     }
 }

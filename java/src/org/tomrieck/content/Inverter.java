@@ -65,7 +65,7 @@ public class Inverter {
         clear();
     }
 
-    public void insert(String term, int docnum, int wordnum) {
+    public void insert(String term, long anchor) {
 
         if (records == null) {
             alloc();
@@ -78,7 +78,7 @@ public class Inverter {
             count++;
         }
 
-        records.insert(i, docnum, wordnum);
+        records.insert(i, anchor);
     }
 
     private void alloc() {

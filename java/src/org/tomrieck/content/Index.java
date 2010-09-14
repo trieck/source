@@ -8,7 +8,7 @@ import java.nio.channels.Channels;
 public class Index {
 
     public static final int MAGIC_NO = 0xc001d00d;  // file magic number
-    private static final int CONC_OFFSET = 28;      // offset to concordance
+    private static final int CONC_OFFSET = 24;      // offset to concordance
 
     private Repository repos;                       // content repository
     private Concordance concord;                    // term concordance
@@ -19,7 +19,7 @@ public class Index {
     }
 
     /* combine concordance and hash table into final index */
-    public void write(String db, int nfiles) throws IOException {
+    public void write(String db) throws IOException {
 
         // merge concordance blocks
         String concordFile = concord.merge();
@@ -31,9 +31,6 @@ public class Index {
 
         // write file magic number
         ofile.writeInt(MAGIC_NO);
-
-        // write the number of documents indexed
-        ofile.writeInt(nfiles);
 
         // write the total number of terms
         long term_count_offset = ofile.getFilePointer();
@@ -47,7 +44,7 @@ public class Index {
         long hash_table_offset = ofile.getFilePointer();
         ofile.writeLong(0); // not yet known
 
-        // write terms/anchors
+        // write terms & anchors
 
         int n, nterms;
         String term;
@@ -138,9 +135,9 @@ public class Index {
         ofile.close();
     }
 
-    public void insert(String term, int docnum, int wordnum)
+    public void insert(String term, long anchor)
             throws IOException {
-        concord.insert(term, docnum, wordnum);
+        concord.insert(term, anchor);
     }
 
     public static long hash(String term, long size) {

@@ -62,14 +62,12 @@ public class InverterRecs {
         records[index].term = term;
     }
 
-    public void insert(int index, int docnum, int wordnum) {
+    public void insert(int index, long anchor) {
         if (index < 0 || index >= records.length) {
             throw new IllegalArgumentException();
         }
 
         assert (records[index] != null);
-
-        long anchor = Anchor.makeAnchorID(docnum, wordnum);
 
         LongBuffer buffer = records[index].buffer;
         if (buffer.position() > 0) {

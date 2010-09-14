@@ -18,30 +18,48 @@ import java.io.IOException;
 
 public class XMLSplitter {
 
+    private static final short MAX_RECS = 1000;   // number of records to split on, not greater than 2^15-1
+
     public XMLSplitter() {
     }
 
-    public void split(String xml_file, String sElement, String path)
+    public void split(String xml_file, String path)
             throws IOException, ParserConfigurationException,
             TransformerException, SAXException {
 
         Document doc = XMLUtil.parseXML(new File(xml_file));
 
-        NodeList elements = doc.getElementsByTagName(sElement);
+        NodeList elements = doc.getElementsByTagName("record");
         if (elements.getLength() == 0)
-            throw new IOException(String.format("element \"%s\" not found.", sElement));
+            throw new IOException("no record elements found.");
 
+        Document records = makeDocument();
         Node element;
-        for (int i = 0; i < elements.getLength(); i++) {
+        int i, j;
+        for (i = 0, j = 0; i < elements.getLength(); i++) {
             element = elements.item(i);
-            writeElement(i + 1, path, (Element) element);
+
+            if (i > 0 && i % MAX_RECS == 0) {
+                writeDoc(path, records, ++j);
+                records = makeDocument();
+            } else {
+                XMLUtil.transferNode(records.getDocumentElement(), records, element);
+            }
+        }
+
+        if (i > 0 && (i - 1) % MAX_RECS != 0) {
+            writeDoc(path, records, ++j);
         }
     }
 
-    private void writeElement(int docnum, String path, Element element)
-            throws IOException, ParserConfigurationException,
-            TransformerException {
+    private Document makeDocument() throws ParserConfigurationException {
+        Document doc = XMLUtil.newDocument();
+        Element element = doc.createElement("records");
+        doc.appendChild(element);
+        return doc;
+    }
 
+    private File makeFile(String path, int docnum) throws IOException {
         // ensure the root path exists
         File f = new File(path);
         if (!f.exists() && !f.mkdir()) {
@@ -51,25 +69,19 @@ public class XMLSplitter {
 
         String filename = String.format("%s/%04x.xml", path, docnum);
 
-        writeDoc(filename, element);
+        return new File(filename);
     }
 
-    private void writeDoc(String path, Element element)
+    private void writeDoc(String path, Document doc, int docnum)
             throws IOException, ParserConfigurationException,
             TransformerException {
-
-        Document doc = XMLUtil.newDocument();
-        Element root = doc.createElement("document");
-        doc.appendChild(root);
-
-        XMLUtil.transferNode(root, doc, element);
-
-        XMLTransformer.transform(new DOMSource(doc), new FileWriter(path));
+        File file = makeFile(path, docnum);
+        XMLTransformer.transform(new DOMSource(doc), new FileWriter(file));
     }
 
     public static void main(String[] args) {
-        if (args.length != 3) {
-            System.err.println("usage: XMLSplitter xml-file element-to-split output-path");
+        if (args.length != 2) {
+            System.err.println("usage: XMLSplitter xml-file output-path");
             System.exit(1);
         }
 
@@ -78,7 +90,7 @@ public class XMLSplitter {
         XMLSplitter splitter = new XMLSplitter();
 
         try {
-            splitter.split(args[0], args[1], args[2]);
+            splitter.split(args[0], args[1]);
         } catch (IOException e) {
             System.err.println(e);
             System.exit(1);

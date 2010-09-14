@@ -1,32 +1,63 @@
 package org.tomrieck.content;
 
 import org.tomrieck.util.Timer;
+import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class XMLIndexer {
+public class XMLIndexer extends DefaultHandler {
 
-    private static final XPathFactory factory = XPathFactory.newInstance();
-    private static final XPath xpath = factory.newXPath();
+    private SAXParserFactory factory = SAXParserFactory.newInstance();
 
     private Repository repos;   // repository instance
     private Index index;        // index instance
-    private int currDoc;        // current document number while indexing
-
+    private String field;       // current tag while parsing
+    private short docnum;       // current document number while indexing
+    private short recnum;       // current record number while parsing
+    
     public XMLIndexer() throws IOException {
         repos = Repository.getInstance();
     }
 
+    public void startElement(String namespaceURI, String localName, String rawName, Attributes atts)
+            throws SAXException {
+        field = rawName;
+        if (field.equals("record")) {
+            recnum++;
+        }        
+    }
+
+    public void characters(char[] ch, int start, int end) {
+        String text = new String(ch, start, end);
+
+        Lexer lexer = new Lexer(new StringReader(text));
+
+        int docid = DocID.makeDocID(docnum, recnum);
+        long anchor;
+
+        try {
+            String term, tok;
+            for (int i = 0; ((tok = lexer.getToken()).length()) != 0; i++) {
+                term = String.format("%s:%s", field, tok);
+                anchor = Anchor.makeAnchorID(docid, i);                
+                index.insert(term, anchor);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void load(String db)
-            throws IOException, XPathExpressionException {
+            throws IOException, SAXException, ParserConfigurationException {
 
         File dir = repos.mapPath(db);
 
@@ -38,57 +69,27 @@ public class XMLIndexer {
             );
 
         index = new Index();
-
         loadfiles(files);
-
-        index.write(db, files.size());
+        index.write(db);
     }
 
     private void loadfiles(List<File> files)
-            throws IOException, XPathExpressionException {
+            throws IOException, SAXException, ParserConfigurationException {
         for (File f : files) {
             loadfile(f);
-            currDoc++;
+            docnum++;
+            recnum = 0;
         }
     }
 
     private void loadfile(File file)
-            throws IOException, XPathExpressionException {
-        XPathExpression expr = xpath.compile("//document/*/text");
-
-        InputSource source = new InputSource(
-                new FileInputStream(file)
-        );
-
-        String text = expr.evaluate(source);
-        if (text.length() == 0) {
-            System.err.printf("empty text found for file \"%s\".\n",
-                    file.getCanonicalPath());
-        }
-
-        Lexer lexer = new Lexer(new StringReader(text));
-
-        String term;
-        for (int i = 0; ((term = lexer.getToken()).length()) != 0; i++) {
-            index.insert(term, currDoc + 1, i);
-        }
+            throws IOException, SAXException, ParserConfigurationException {
+        SAXParser parser = factory.newSAXParser();
+        parser.parse(new InputSource(new FileReader(file)), this);
     }
 
     private List<File> expand(File dir) {
         List<File> result = new ArrayList<File>();
-
-        // expand sub-directories
-        File[] dirs = dir.listFiles(new FilenameFilter() {
-            public boolean accept(File dir, String name) {
-                File f = new File(dir.getAbsolutePath(), name);
-                return f.isDirectory();
-            }
-        }
-        );
-
-        for (File d : dirs) {
-            result.addAll(expand(d));
-        }
 
         // list xml files
         File[] files = dir.listFiles(new FilenameFilter() {
@@ -117,9 +118,12 @@ public class XMLIndexer {
         } catch (IOException e) {
             System.err.println(e);
             System.exit(1);
-        } catch (XPathExpressionException e) {
+        } catch (SAXException e) {
             System.err.println(e);
             System.exit(2);
+        } catch (ParserConfigurationException e) {
+            System.err.println(e);
+            System.exit(3);
         }
 
         System.out.printf("    elapsed time %s\n", t);
