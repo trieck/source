@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html" %>
-<%@ page import="org.tomrieck.content.beans.*" %>
+<%@ page import="org.pixielib.content.beans.*" %>
 
-<jsp:useBean id="context" scope="page" class="org.tomrieck.content.beans.Context"/>
+<jsp:useBean id="context" scope="page" class="org.pixielib.content.beans.Context"/>
 <jsp:setProperty name="context" property="context" value="<%= pageContext %>" />
 
 <%
@@ -20,7 +20,8 @@
 
     String ModifyLink = String.format("/demo/search.jsp?db=%s&query=%s", db, context.encode(query));
 
-    Search search = Search.DatabaseSearch("demo", db, query, nstart, style);    
+	String dbquery = String.format("text:%s", query);
+    Search search = Search.DatabaseSearch("demo", db, dbquery, nstart, style);    
 %>
 
 <html>

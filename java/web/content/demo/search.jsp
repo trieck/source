@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html" %>
-<%@ page import="org.tomrieck.content.beans.*" %>
+<%@ page import="org.pixielib.content.beans.*" %>
 
-<jsp:useBean id="context" scope="page" class="org.tomrieck.content.beans.Context"/>
+<jsp:useBean id="context" scope="page" class="org.pixielib.content.beans.Context"/>
 <jsp:setProperty name="context" property="context" value="<%= pageContext %>" />
 
 <%
@@ -47,6 +47,7 @@
                 <option <%= WebUtils.selected(db, "basic-english") %> value="basic-english">Basic English Version</option>
                 <option <%= WebUtils.selected(db, "kjv") %> value="kjv">King James Version</option>
                 <option <%= WebUtils.selected(db, "niv") %> value="niv">New International Version</option>
+                <option <%= WebUtils.selected(db, "tmp") %> value="tmp">TEST!</option>
               </SELECT>
             </td>
             <td>&nbsp;</td>
