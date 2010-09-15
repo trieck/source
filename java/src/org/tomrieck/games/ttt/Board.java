@@ -1,4 +1,4 @@
-package org.tomrieck.games.ttt;
+package org.pixielib.games.ttt;
 
 import java.util.ArrayList;
 import java.util.Iterator;

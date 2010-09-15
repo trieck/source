@@ -1,4 +1,4 @@
-package org.tomrieck.apps.ecalc;
+package org.pixielib.apps.ecalc;
 
 import java.util.HashMap;
 import java.util.Map;

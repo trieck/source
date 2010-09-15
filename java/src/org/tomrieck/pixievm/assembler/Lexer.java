@@ -1,4 +1,4 @@
-package org.tomrieck.pixievm.assembler;
+package org.pixielib.pixievm.assembler;
 
 import java.io.FileReader;
 import java.io.IOException;

@@ -1,6 +1,6 @@
-package org.tomrieck.content.beans;
+package org.pixielib.content.beans;
 
-import org.tomrieck.util.Config;
+import org.pixielib.util.Config;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;

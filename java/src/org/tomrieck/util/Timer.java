@@ -1,4 +1,4 @@
-package org.tomrieck.util;
+package org.pixielib.util;
 
 import java.text.DecimalFormat;
 import java.text.MessageFormat;

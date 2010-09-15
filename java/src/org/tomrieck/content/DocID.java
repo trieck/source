@@ -1,31 +1,23 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
-public class DocID implements Comparable<DocID> {
+public class DocID {
 
-    private int docid;  // document identifier
+    private long docid;  // document identifier
 
-    public DocID(int docid) {
+    public DocID(long docid) {
         this.docid = docid;
     }
 
-    public int getDocID() {
-        return docid;
-    }
-
     public short getFileNum() {
-        return (short) (docid >> 16);
+        return (short)(docid >>> Anchor.OFFSET_BITS);
     }
 
-    public short getRecNum() {
-        return (short) docid;
+    public int getOffset() {
+        return (int)(docid & 0x7FFFFFFF);
     }
 
-    public int compareTo(DocID d) {
-        return docid - d.docid;
-    }
-
-    public static int makeDocID(short filenum, short recnum) {
-        return ((int) filenum << 16) | recnum;
+    public static long makeDocID(short filenum, int offset) {
+        return ((long)filenum << Anchor.OFFSET_BITS) | offset;
     }
 
 }

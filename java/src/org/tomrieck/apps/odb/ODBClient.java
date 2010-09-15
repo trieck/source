@@ -1,6 +1,6 @@
-package org.tomrieck.apps.odb;
+package org.pixielib.apps.odb;
 
-import org.tomrieck.bencode.*;
+import org.pixielib.bencode.*;
 
 import java.io.IOException;
 import java.io.InputStream;

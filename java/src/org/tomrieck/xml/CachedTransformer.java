@@ -1,6 +1,6 @@
-package org.tomrieck.xml;
+package org.pixielib.xml;
 
-import org.tomrieck.util.Config;
+import org.pixielib.util.Config;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 

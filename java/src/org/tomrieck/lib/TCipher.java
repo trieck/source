@@ -1,4 +1,4 @@
-package org.tomrieck.lib;
+package org.pixielib.lib;
 
 public class TCipher {
 

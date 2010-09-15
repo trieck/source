@@ -1,4 +1,4 @@
-package org.tomrieck.util;
+package org.pixielib.util;
 
 public class Hash64 {
 

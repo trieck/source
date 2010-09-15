@@ -1,4 +1,4 @@
-package org.tomrieck.pixievm;
+package org.pixielib.pixievm;
 
 /**
  * 16-bit Big Endian Machine Support for 4 16-bit general purpose registers: A,

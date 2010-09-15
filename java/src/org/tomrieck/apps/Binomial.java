@@ -1,4 +1,4 @@
-package org.tomrieck.apps;
+package org.pixielib.apps;
 
 public class Binomial {
 

@@ -1,4 +1,4 @@
-package org.tomrieck.xml;
+package org.pixielib.xml;
 
 import org.w3c.dom.Document;
 

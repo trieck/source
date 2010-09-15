@@ -1,4 +1,4 @@
-package org.tomrieck.apps;
+package org.pixielib.apps;
 
 import java.io.FileInputStream;
 import java.io.IOException;

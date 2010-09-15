@@ -1,4 +1,4 @@
-package org.tomrieck.bencode;
+package org.pixielib.bencode;
 
 public class BEInteger extends BEObject {
 

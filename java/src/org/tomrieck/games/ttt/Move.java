@@ -1,4 +1,4 @@
-package org.tomrieck.games.ttt;
+package org.pixielib.games.ttt;
 
 public class Move {
 

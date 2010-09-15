@@ -1,4 +1,4 @@
-package org.tomrieck.games.ttt;
+package org.pixielib.games.ttt;
 
 public class Machine {
     public static final int DEFAULT_DEPTH = 4;

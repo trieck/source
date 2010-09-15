@@ -1,6 +1,7 @@
-package org.tomrieck.xml;
+package org.pixielib.xml;
 
 import org.w3c.dom.*;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -9,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 
 public class XMLUtil {
 
@@ -30,6 +32,15 @@ public class XMLUtil {
             builder = factory.newDocumentBuilder();
         }
         return builder.parse(is);
+    }
+
+    public static Document parseXML(String xml)
+            throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilder builder;
+        synchronized (factory) {
+            builder = factory.newDocumentBuilder();
+        }
+        return builder.parse(new InputSource(new StringReader(xml)));
     }
 
     public static Document newDocument()

@@ -1,6 +1,6 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
-import org.tomrieck.util.Config;
+import org.pixielib.util.Config;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +63,7 @@ public class Repository {
     }
 
     /* get file for document number */
-    public File getFile(String db, short filenum) throws IOException {
+    public File getFile(String db, int filenum) throws IOException {
         File dir = mapPath(db);
 
         String dirpath = dir.getCanonicalPath();

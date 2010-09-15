@@ -1,6 +1,6 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
-import org.tomrieck.util.DoubleHash64;
+import org.pixielib.util.DoubleHash64;
 
 import java.io.*;
 import java.nio.channels.Channels;

@@ -1,7 +1,7 @@
-package org.tomrieck.content.beans;
+package org.pixielib.content.beans;
 
-import org.tomrieck.util.Config;
-import org.tomrieck.xml.XMLHttpRequest;
+import org.pixielib.util.Config;
+import org.pixielib.xml.XMLHttpRequest;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

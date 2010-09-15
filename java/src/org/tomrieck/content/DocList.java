@@ -1,4 +1,4 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,7 +6,7 @@ import java.util.List;
 
 public class DocList {
 
-    private List<Integer> documents = new ArrayList<Integer>();
+    private List<Long> documents = new ArrayList<Long>();
 
     public DocList() {
     }
@@ -28,15 +28,15 @@ public class DocList {
         return slice;
     }
 
-    public int getDoc(int index) {
+    public long getDoc(int index) {
         return documents.get(index);
     }
 
-    public void add(int doc) {
+    public void add(long doc) {
         documents.add(doc);
     }
 
-    public void addAll(Collection<Integer> c) {
+    public void addAll(Collection<Long> c) {
         documents.addAll(c);
     }
 

@@ -1,4 +1,4 @@
-package org.tomrieck.bencode;
+package org.pixielib.bencode;
 
 import java.io.IOException;
 import java.io.OutputStream;

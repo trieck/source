@@ -1,4 +1,4 @@
-package org.tomrieck.apps.ecalc;
+package org.pixielib.apps.ecalc;
 
 public class Datum {
 

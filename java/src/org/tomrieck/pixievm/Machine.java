@@ -1,4 +1,4 @@
-package org.tomrieck.pixievm;
+package org.pixielib.pixievm;
 
 import java.io.IOException;
 import java.io.InputStream;

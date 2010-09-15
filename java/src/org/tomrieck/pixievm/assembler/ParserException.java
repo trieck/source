@@ -1,4 +1,4 @@
-package org.tomrieck.pixievm.assembler;
+package org.pixielib.pixievm.assembler;
 
 public class ParserException extends Throwable {
 

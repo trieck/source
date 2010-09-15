@@ -1,4 +1,4 @@
-package org.tomrieck.bencode;
+package org.pixielib.bencode;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;

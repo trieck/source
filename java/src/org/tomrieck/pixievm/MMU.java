@@ -1,4 +1,4 @@
-package org.tomrieck.pixievm;
+package org.pixielib.pixievm;
 
 /* Memory map layout and specifications */
 

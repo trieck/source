@@ -1,4 +1,4 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
 import java.io.*;
 import java.nio.channels.Channels;

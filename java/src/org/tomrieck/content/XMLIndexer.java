@@ -1,54 +1,56 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
-import org.tomrieck.util.Timer;
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
+import org.pixielib.util.Timer;
+import org.pixielib.xml.QParser;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class XMLIndexer extends DefaultHandler {
+public class XMLIndexer extends QParser {
 
-    private SAXParserFactory factory = SAXParserFactory.newInstance();
+    private Repository repos;       // repository instance
+    private Index index;            // index instance
+    private String field;           // current tag while parsing
+    private short filenum;          // current file number while indexing
+    private long docid;              // document id while parsing    
 
-    private Repository repos;   // repository instance
-    private Index index;        // index instance
-    private String field;       // current tag while parsing
-    private short docnum;       // current document number while indexing
-    private short recnum;       // current record number while parsing
-    
     public XMLIndexer() throws IOException {
         repos = Repository.getInstance();
     }
 
-    public void startElement(String namespaceURI, String localName, String rawName, Attributes atts)
-            throws SAXException {
-        field = rawName;
+    /**
+     * Process an element while parsing
+     *
+     * @param name the name of the tag
+     * @param tag  the tag value
+     */
+    @Override
+    public void element(String name, String tag) {
+        field = name;
         if (field.equals("record")) {
-            recnum++;
-        }        
+            int offset = (int)Math.max(0, getPosition() - tag.length());
+            docid = DocID.makeDocID(filenum, offset);
+        }
     }
 
-    public void characters(char[] ch, int start, int end) {
-        String text = new String(ch, start, end);
-
+    /**
+     * Process a value while parsing
+     *
+     * @param text the text encountered
+     */
+    @Override
+    public void value(String text) {
         Lexer lexer = new Lexer(new StringReader(text));
 
-        int docid = DocID.makeDocID(docnum, recnum);
         long anchor;
 
         try {
             String term, tok;
-            for (int i = 0; ((tok = lexer.getToken()).length()) != 0; i++) {
+            for (short i = 0; ((tok = lexer.getToken()).length()) != 0; i++) {
                 term = String.format("%s:%s", field, tok);
-                anchor = Anchor.makeAnchorID(docid, i);                
+                anchor = Anchor.makeAnchorID(docid, i);
                 index.insert(term, anchor);
             }
         } catch (IOException e) {
@@ -56,8 +58,7 @@ public class XMLIndexer extends DefaultHandler {
         }
     }
 
-    public void load(String db)
-            throws IOException, SAXException, ParserConfigurationException {
+    public void load(String db) throws IOException {
 
         File dir = repos.mapPath(db);
 
@@ -74,18 +75,17 @@ public class XMLIndexer extends DefaultHandler {
     }
 
     private void loadfiles(List<File> files)
-            throws IOException, SAXException, ParserConfigurationException {
+            throws IOException {
         for (File f : files) {
             loadfile(f);
-            docnum++;
-            recnum = 0;
+            filenum++;
         }
     }
 
     private void loadfile(File file)
-            throws IOException, SAXException, ParserConfigurationException {
-        SAXParser parser = factory.newSAXParser();
-        parser.parse(new InputSource(new FileReader(file)), this);
+            throws IOException {
+        setPosition(0);
+        parse(new FileReader(file));
     }
 
     private List<File> expand(File dir) {
@@ -105,6 +105,7 @@ public class XMLIndexer extends DefaultHandler {
     }
 
     public static void main(String[] args) {
+
         if (args.length != 1) {
             System.err.println("usage: XMLIndexer database");
             System.exit(1);
@@ -118,12 +119,6 @@ public class XMLIndexer extends DefaultHandler {
         } catch (IOException e) {
             System.err.println(e);
             System.exit(1);
-        } catch (SAXException e) {
-            System.err.println(e);
-            System.exit(2);
-        } catch (ParserConfigurationException e) {
-            System.err.println(e);
-            System.exit(3);
         }
 
         System.out.printf("    elapsed time %s\n", t);

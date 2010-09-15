@@ -1,4 +1,4 @@
-package org.tomrieck.ui;
+package org.pixielib.ui;
 
 import javax.swing.*;
 import java.awt.*;

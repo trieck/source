@@ -1,4 +1,4 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
 public class Prime {
 

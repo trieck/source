@@ -1,6 +1,6 @@
-package org.tomrieck.content.beans;
+package org.pixielib.content.beans;
 
-import org.tomrieck.xml.CachedTransformer;
+import org.pixielib.xml.CachedTransformer;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 

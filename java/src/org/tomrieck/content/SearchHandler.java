@@ -1,6 +1,6 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
-import org.tomrieck.xml.XMLTransformer;
+import org.pixielib.xml.XMLTransformer;
 import org.w3c.dom.Document;
 
 import javax.servlet.ServletException;

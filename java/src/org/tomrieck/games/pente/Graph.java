@@ -1,4 +1,4 @@
-package org.tomrieck.games.pente;
+package org.pixielib.games.pente;
 
 public class Graph {
     public static final int VT_E = 0;

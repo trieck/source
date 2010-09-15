@@ -1,4 +1,4 @@
-package org.tomrieck.ui;
+package org.pixielib.ui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

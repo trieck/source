@@ -1,4 +1,4 @@
-package org.tomrieck.tsort;
+package org.pixielib.tsort;
 
 import java.io.BufferedReader;
 import java.io.IOException;

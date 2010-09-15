@@ -1,6 +1,6 @@
-package org.tomrieck.apps.graph;
+package org.pixielib.apps.graph;
 
-import org.tomrieck.ui.StatusPanel;
+import org.pixielib.ui.StatusPanel;
 
 import javax.swing.*;
 import java.awt.*;

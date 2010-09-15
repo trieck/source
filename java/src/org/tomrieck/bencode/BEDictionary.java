@@ -1,4 +1,4 @@
-package org.tomrieck.bencode;
+package org.pixielib.bencode;
 
 import java.util.Iterator;
 import java.util.Map;

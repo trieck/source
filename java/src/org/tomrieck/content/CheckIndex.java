@@ -1,18 +1,14 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
-import org.tomrieck.util.StringUtil;
-import org.tomrieck.util.Timer;
+import org.pixielib.util.StringUtil;
+import org.pixielib.util.Timer;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.RandomAccessFile;
-import java.nio.channels.Channels;
 import java.text.DecimalFormat;
 
 public class CheckIndex {
-
-    private Query query;
 
     public CheckIndex() {
     }
@@ -24,9 +20,6 @@ public class CheckIndex {
         File index = repos.getIndexPath(db);
 
         RandomAccessFile file = new RandomAccessFile(index, "r");
-
-        // for searching
-        query = new Query(db);
 
         int magicno = file.readInt();
         if (magicno != Index.MAGIC_NO) {
@@ -60,7 +53,6 @@ public class CheckIndex {
         System.out.printf("    Hash table fill factor: %s%%\n", df.format(100 * (nfilled / (double) hash_tbl_size)));
 
         file.close();
-        query.close();
     }
 
     public static void main(String[] args) {

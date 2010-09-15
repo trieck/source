@@ -1,4 +1,4 @@
-package org.tomrieck.pixievm;
+package org.pixielib.pixievm;
 
 /**
  * Video Display Controller <p/> Provides the interface to raster scan the CRT.

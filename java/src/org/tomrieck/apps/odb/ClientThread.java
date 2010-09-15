@@ -1,4 +1,4 @@
-package org.tomrieck.apps.odb;
+package org.pixielib.apps.odb;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

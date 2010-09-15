@@ -1,4 +1,4 @@
-package org.tomrieck.apps.graph;
+package org.pixielib.apps.graph;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

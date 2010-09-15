@@ -1,8 +1,8 @@
-package org.tomrieck.content.servlets;
+package org.pixielib.content.servlets;
 
-import org.tomrieck.content.ContentHandler;
-import org.tomrieck.content.DocumentHandler;
-import org.tomrieck.content.SearchHandler;
+import org.pixielib.content.ContentHandler;
+import org.pixielib.content.DocumentHandler;
+import org.pixielib.content.SearchHandler;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

@@ -1,4 +1,4 @@
-package org.tomrieck.games.pente;
+package org.pixielib.games.pente;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package org.tomrieck.apps.graph;
+package org.pixielib.apps.graph;
 
 public class GraphApp {
 

@@ -1,4 +1,4 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class AnchorList {
      * @return the set of unique documents
      */
     public DocList documents() {
-        Set<Integer> documents = new TreeSet<Integer>();
+        Set<Long> documents = new TreeSet<Long>();
 
         Anchor a;
         for (int i = 0; i < anchors.size(); i++) {
@@ -89,7 +89,7 @@ public class AnchorList {
         Anchor left, right;
 
         int i = 0, j = 0, m = set1.size(), n = set2.size();
-        int leftdoc, rightdoc;
+        long leftdoc, rightdoc;
 
         while (i != m && j != n) {
             left = set1.getAnchor(i);

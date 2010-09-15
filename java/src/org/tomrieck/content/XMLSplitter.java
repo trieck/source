@@ -1,8 +1,8 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
-import org.tomrieck.util.Timer;
-import org.tomrieck.xml.XMLTransformer;
-import org.tomrieck.xml.XMLUtil;
+import org.pixielib.util.Timer;
+import org.pixielib.xml.XMLTransformer;
+import org.pixielib.xml.XMLUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

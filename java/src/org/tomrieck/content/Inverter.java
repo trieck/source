@@ -1,6 +1,6 @@
-package org.tomrieck.content;
+package org.pixielib.content;
 
-import org.tomrieck.util.Hash32;
+import org.pixielib.util.Hash32;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

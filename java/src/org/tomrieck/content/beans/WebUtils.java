@@ -1,4 +1,4 @@
-package org.tomrieck.content.beans;
+package org.pixielib.content.beans;
 
 import java.text.MessageFormat;
 import java.util.*;

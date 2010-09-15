@@ -1,4 +1,4 @@
-package org.tomrieck.games.pente;
+package org.pixielib.games.pente;
 
 public class Board {
     public static final int SIZE = 19; // must be odd
