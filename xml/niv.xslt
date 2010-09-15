@@ -8,9 +8,9 @@
 </xsl:template>
 
 <xsl:template match="bible">
-	<root>
+	<records>
 	<xsl:apply-templates />  
-	</root>
+	</records>
 </xsl:template>
 
 <xsl:template match="book">
@@ -22,20 +22,20 @@
 </xsl:template>
 
 <xsl:template match="verse">
-	<verse>
-	<xsl:attribute name="book">
-  		<xsl:value-of select="../../@name"/>
-  	</xsl:attribute>
-	<xsl:attribute name="chapter">
+	<record>
+	<book>		
+		<xsl:value-of select="../../@name"/>
+  	</book>
+  	<chapter>
   		<xsl:value-of select="../@name"/>
-  	</xsl:attribute>
-	<xsl:attribute name="number">
-  		<xsl:value-of select="@name"/>
-  	</xsl:attribute>
-	<text>
-  	<xsl:value-of select="."/>
-	</text>
+  	</chapter>  	
+  	<verse>
+		<xsl:value-of select="@name"/>
 	</verse>
+  	<text>
+		<xsl:value-of select="."/>
+	</text>
+	</record>
 </xsl:template>
 
 </xsl:stylesheet>
