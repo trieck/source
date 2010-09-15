@@ -1,4 +1,4 @@
 @echo off
-start javaw -cp ..\classes org.tomrieck.apps.odb.ODBManager
+start javaw -cp ..\classes org.pixielib.apps.odb.ODBManager
 
 

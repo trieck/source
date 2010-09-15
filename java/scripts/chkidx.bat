@@ -1,3 +1,3 @@
 @echo off
-java -Dorg.tomrieck.util.Config=c:\source\java\config\content.properties -cp ..\classes org.tomrieck.content.CheckIndex %1
+java -Dorg.pixielib.util.Config=c:\source\java\config\content.properties -cp ..\classes org.pixielib.content.CheckIndex %1
 

@@ -1,3 +1,3 @@
 @echo off
-java -cp ..\classes org.tomrieck.xml.XMLTransformer %1 %2
+java -cp ..\classes org.pixielib.xml.XMLTransformer %1 %2
 

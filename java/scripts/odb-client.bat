@@ -1,3 +1,3 @@
 @echo off
-java -cp ..\classes org.tomrieck.apps.odb.ODBClient localhost
+java -cp ..\classes org.pixielib.apps.odb.ODBClient localhost
 

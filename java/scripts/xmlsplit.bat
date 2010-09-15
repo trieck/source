@@ -1,3 +1,3 @@
 @echo off
-java -cp ..\classes org.tomrieck.content.XMLSplitter %1 %2 %3
+java -cp ..\classes org.pixielib.content.XMLSplitter %1 %2 %3
 
