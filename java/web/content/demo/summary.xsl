@@ -29,20 +29,27 @@
     </xsl:template>
 
     <xsl:template match="record">
+        <xsl:variable name="linkdetail">/demo/detail.jsp?db=<xsl:value-of select="//results/@db"/>&amp;docid=<xsl:value-of select="@docid"/>&amp;query=<xsl:value-of select="//results/@query"/>
+        </xsl:variable>
         <TR>
             <TD CLASS="regtext11">
                 <xsl:value-of select="//results/@start + position() - 1"/>.
             </TD>
             <TD CLASS="regtext11" align="left">
-                <b class="grey">
-                    <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:<xsl:value-of select="verse"/>
-                </b>
+                <a href="{$linkdetail}" class="blue">
+                    <b class="grey">
+                        <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:
+                        <xsl:value-of select="verse"/>
+                    </b>
+                </a>
             </TD>
             <TD CLASS="regtext11" align="left">
-                <xsl:value-of select="text"/>
+                <b class="grey">
+                    <xsl:value-of select="substring(text, 1, 100)"/>...
+                </b>
             </TD>
         </TR>
     </xsl:template>
-    
+
 </xsl:stylesheet>
         

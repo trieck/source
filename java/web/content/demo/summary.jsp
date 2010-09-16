@@ -20,7 +20,7 @@
 
     String ModifyLink = String.format("/demo/search.jsp?db=%s&query=%s", db, context.encode(query));
 
-	String dbquery = String.format("text:[%s]", query);
+	String dbquery = String.format("text[%s]", query);
     Search search = Search.DatabaseSearch("demo", db, dbquery, nstart, style);    
 %>
 
