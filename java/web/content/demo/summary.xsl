@@ -23,33 +23,25 @@
                         <b>Verse</b>
                     </TD>
                 </TR>
-                <xsl:apply-templates select="document"/>
+                <xsl:apply-templates select="record"/>
             </TABLE>
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="document">
+    <xsl:template match="record">
         <TR>
             <TD CLASS="regtext11">
                 <xsl:value-of select="//results/@start + position() - 1"/>.
             </TD>
             <TD CLASS="regtext11" align="left">
                 <b class="grey">
-                    <xsl:value-of select="verse/@book"/>&#xa0;<xsl:value-of select="verse/@chapter"/>:<xsl:value-of select="verse/@number"/>
+                    <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:<xsl:value-of select="verse"/>
                 </b>
             </TD>
             <TD CLASS="regtext11" align="left">
-                <xsl:apply-templates select="verse/text"/>
+                <xsl:value-of select="text"/>
             </TD>
         </TR>
-    </xsl:template>
-
-    <xsl:template match="verse/text">
-        <b class="grey"><xsl:apply-templates/></b>
-    </xsl:template>
-
-    <xsl:template match="highlight">
-        <b class="highlight"><xsl:value-of select="."/></b>
     </xsl:template>
     
 </xsl:stylesheet>
