@@ -43,6 +43,9 @@
           <tr>
             <td>
               <SELECT NAME="db" SIZE="1">
+                <option <%= WebUtils.selected(db, "asv") %> value="asv">American Standard Version</option>
+                <option <%= WebUtils.selected(db, "basic-english") %> value="basic-english">Basic English Version</option>
+                <option <%= WebUtils.selected(db, "kjv") %> value="kjv">King James Version</option>
                 <option <%= WebUtils.selected(db, "niv") %> value="niv">New International Version</option>                
               </SELECT>
             </td>
