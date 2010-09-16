@@ -23,13 +23,13 @@ public class SearchHandler implements ContentHandler {
         if (db == null || query == null || start == null || count == null)
             throw new IllegalArgumentException("required argument not supplied.");
 
-        int nstart = 0, ncount = 0;
+        int nstart, ncount;
         
         try {
             nstart = Integer.parseInt(start);
             ncount = Integer.parseInt(count);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            throw new ServletException(e);
         }
 
         Content content = new Content();

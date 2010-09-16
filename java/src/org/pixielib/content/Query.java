@@ -7,20 +7,16 @@ import java.nio.channels.Channels;
  * This class maps a search expression into an anchor list.
  *
  * The grammar uses juxtaposition for the "and" operator.
+ * Each production rule has a corresponding method in the class.
  * Search "phrases" are surrounded by double-quotes.
  *
  *      conjunction := primary primary
  *                   | primary
  *
- *      primary     := field[ values ]
+ *      primary     := field[ term-list ]
  *
- *      values      := value value
- *                   | value
- *
- *      value       := term
- *                   | literal
- *
- *      literal      := "{terms}"
+ *      term-list   := term term
+ *                   | term
  *
  */
 
@@ -78,7 +74,7 @@ public class Query {
 
         if (lookahead().equals("[")) {  // field restriction
             getTok();   // '['
-            anchorlist = lookup(left);
+            anchorlist = termList(left);
             getTok();   // ']'
         }
 
@@ -101,7 +97,7 @@ public class Query {
         return AnchorList.intersection(left, right);
     }
 
-    private AnchorList lookup(String field) throws IOException {
+    private AnchorList termList(String field) throws IOException {
 
         String term = getTok();
 
@@ -130,16 +126,16 @@ public class Query {
             restriction = String.format("%s:%s", field, token);
 
             if (i > 0) {
-                list = adjacent(list, indexLookup(restriction));
+                list = adjacent(list, lookup(restriction));
             } else {
-                list = indexLookup(restriction);
+                list = lookup(restriction);
             }
         }
 
         return list;
     }
 
-    private AnchorList indexLookup(String term) throws IOException {
+    private AnchorList lookup(String term) throws IOException {
         AnchorList list = new AnchorList();
 
         // hash the term

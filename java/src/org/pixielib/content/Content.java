@@ -56,7 +56,21 @@ public class Content {
         }
     }
 
-    public Document getDoc(String db, long ndocid)
+    public Document getDoc(String db, String query, long ndocid) throws IOException {
+
+        try {
+            Document doc = getDoc(db, ndocid);
+            Element root = doc.getDocumentElement();
+            root.setAttribute("query", query);
+            return doc;
+        } catch (ParserConfigurationException e) {
+            throw new IOException(e);
+        } catch (SAXException e) {
+            throw new IOException(e);
+        }
+    }
+        
+    private Document getDoc(String db, long ndocid)
         throws IOException, ParserConfigurationException, SAXException {
 
         DocID docid = new DocID(ndocid);
