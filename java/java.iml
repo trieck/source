@@ -10,33 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="module-library">
-      <library name="msbase.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jars/msbase.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="mssqlserver.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jars/mssqlserver.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="msutil.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jars/msutil.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://C:/resin-2.1.17/lib/j2ee.jar!/" />
