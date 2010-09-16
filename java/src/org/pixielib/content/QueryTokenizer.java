@@ -18,6 +18,7 @@ public class QueryTokenizer {
 
     /**
      * Lookahead to the next token
+     *
      * @return the peeked token
      * @throws IOException, if an i/o error occurs
      */
@@ -29,6 +30,7 @@ public class QueryTokenizer {
 
     /**
      * Unread the entire token buffer
+     *
      * @throws IOException, if an i/o error occurs
      */
     private void unread() throws IOException {
@@ -37,6 +39,7 @@ public class QueryTokenizer {
 
     /**
      * Unread characters from the token buffer
+     *
      * @param n, the number of characters to unread
      * @return the number of characters unread
      * @throws IOException, if an i/o error occurs
@@ -46,7 +49,7 @@ public class QueryTokenizer {
         int m = Math.min(buffer.length(), n);
 
         int c;
-        for (int i = buffer.length() -1, j = 0; i >= 0 && j < m; i--, j++) {
+        for (int i = buffer.length() - 1, j = 0; i >= 0 && j < m; i--, j++) {
             c = buffer.charAt(i);
             reader.unread(c);
             buffer.deleteCharAt(i);
@@ -56,53 +59,63 @@ public class QueryTokenizer {
     }
 
     /* clear the token buffer */
+
     private void clear() {
         buffer.setLength(0);
     }
 
+    /* read next character from reader into token buffer */
+
+    private int read() throws IOException {
+        int c = reader.read();
+        buffer.append((char) c);
+        return c;
+    }
+
+
     /* get the next token from the reader */
+
     public String getToken() throws IOException {
 
         clear();    // clear the token buffer
-        
+
         StringBuilder token = new StringBuilder();
 
         int c, blen;
-        while ((c = reader.read()) != -1) {
-            buffer.append((char)c); // add character to token buffer
+        while ((c = read()) != -1) {
             blen = token.length();  // length of current token
-            
+
             switch (c) {
-            case '[':   // field-term delimiter
-            case ']':
-                if (blen > 0) {
-                    unread(1);
-                    return token.toString();
-                }
-                token.append((char)c);
-                return token.toString();
-            case '"':   // literal
-                if (blen > 0) {
-                    unread(1);
-                    return token.toString();
-                }
-                while ((c = reader.read()) != -1 && c != '"') {
+                case '[':   // field-term delimiter
+                case ']':
+                    if (blen > 0) {
+                        unread(1);
+                        return token.toString();
+                    }
                     token.append((char) c);
-                }
-                return token.toString();
-            case '_':
-            case '\'':
-                if (blen > 0) {
-                    token.append((char)c);
-                }
-                break;
-            default:
-                if (Character.isLetterOrDigit(c)) {
-                    token.append(Character.toLowerCase((char) c));
-                } else if (blen > 0) {
                     return token.toString();
-                }
-                break;
+                case '"':   // literal
+                    if (blen > 0) {
+                        unread(1);
+                        return token.toString();
+                    }
+                    while ((c = read()) != -1 && c != '"') {
+                        token.append((char) c);
+                    }
+                    return token.toString();
+                case '_':
+                case '\'':
+                    if (blen > 0) {
+                        token.append((char) c);
+                    }
+                    break;
+                default:
+                    if (Character.isLetterOrDigit(c)) {
+                        token.append(Character.toLowerCase((char) c));
+                    } else if (blen > 0) {
+                        return token.toString();
+                    }
+                    break;
             }
         }
 
