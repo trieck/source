@@ -26,22 +26,17 @@ public class CachedTransformer {
      */
     private final Map<String, Transformer> table;
 
+    private Config config;
+
     /**
      * the singleton instance
      */
     private static CachedTransformer instance = null;
 
-    /**
-     * always generate stylesheet fresh
-     */
-    private String cacheStylesheets;
-
     private CachedTransformer() throws IOException {
         factory = TransformerFactory.newInstance();
         table = new Hashtable<String, Transformer>();
-
-        Config config = Config.getInstance();
-        cacheStylesheets = config.getProperty("stylesheet-cache");
+        config = Config.getInstance();        
     }
 
     public static synchronized CachedTransformer getInstance()
@@ -67,6 +62,7 @@ public class CachedTransformer {
             transformer = factory.newTransformer(source);
         }
 
+        String cacheStylesheets = config.getProperty("stylesheet-cache");
         if (cacheStylesheets.equals("on")) {
             table.put(file.getCanonicalPath(), transformer);
         }
@@ -81,8 +77,16 @@ public class CachedTransformer {
         // use a normalized naming scheme
         String filename = file.getCanonicalPath();
 
-        Transformer t;
-        if ((t = table.get(filename)) == null) {
+        Transformer t = null;
+
+        String cacheStylesheets = config.getProperty("stylesheet-cache");
+        if (cacheStylesheets.equals("on")) {
+            t = table.get(filename);
+        } else {
+            table.clear();
+        }
+
+        if (t == null) {
             t = createTransformer(file);
         }
 

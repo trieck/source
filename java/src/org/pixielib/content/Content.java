@@ -61,7 +61,8 @@ public class Content {
         try {
             Document doc = getDoc(db, ndocid);
             Element root = doc.getDocumentElement();
-            root.setAttribute("query", query);
+            root.setAttribute("db", db);
+            root.setAttribute("query", query);            
             return doc;
         } catch (ParserConfigurationException e) {
             throw new IOException(e);
