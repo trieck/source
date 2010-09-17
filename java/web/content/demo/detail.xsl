@@ -11,12 +11,22 @@
     </xsl:template>
 
     <xsl:template match="record">
+        <!--  <xsl:variable name="linkdetail">/demo/detail.jsp?db=<xsl:value-of select="//results/@db"/>&amp;docid=<xsl:value-of select="@docid"/>&amp;query=<xsl:value-of select="//results/@query"/>
+        -->
+        
+        <xsl:variable name="chapterlink">
+            <xsl:text>/demo/chapter.jsp?db=</xsl:text><xsl:value-of select="@db"/>
+            <xsl:text>&amp;book=</xsl:text><xsl:value-of select="book"/>
+            <xsl:text>&amp;chapter=</xsl:text><xsl:value-of select="chapter"/>
+            <xsl:text>&amp;start=1</xsl:text>
+        </xsl:variable>
+
         <TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0">
             <TR>
                 <TD CLASS="regtext11" align="left">
                     <b>Source:</b>
                 </TD>
-                <TD>&#xa0;</TD>
+                <TD>&#160;</TD>
                 <TD CLASS="regtext11" align="left">
                     <b class="grey">
                         <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:
@@ -28,11 +38,19 @@
                 <TD WIDTH="25" CLASS="regtext11" align="left">
                     <b>Verse:</b>
                 </TD>
-                <TD>&#xa0;</TD>
+                <TD>&#160;</TD>
                 <TD CLASS="regtext11" align="left">
                     <xsl:value-of select="text"/>
                 </TD>
             </TR>
+            <TR>&#160;</TR>
+            <TR>
+                <TD>&#160;</TD>
+                <TD>&#160;</TD>
+                <TD CLASS="regtext11" align="left">
+                    <a href="{$chapterlink}" class="blue">Read this chapter</a>
+                </TD>
+            </TR>            
         </TABLE>
     </xsl:template>
 

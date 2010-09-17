@@ -38,8 +38,7 @@
             <TD CLASS="regtext11" align="left">
                 <a href="{$linkdetail}" class="blue">
                     <b class="grey">
-                        <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:
-                        <xsl:value-of select="verse"/>
+                        <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:<xsl:value-of select="verse"/>
                     </b>
                 </a>
             </TD>

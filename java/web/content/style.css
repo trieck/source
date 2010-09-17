@@ -21,3 +21,5 @@ b.grey { color: #757575; font-weight : normal }
 b.header { font : 9pt Arial, San-Serif; font-weight: bold; } /* Global */
 b.hilight { font-weight: bold; background-color: yellow; }
 
+.cite { color: #757575; font : 7pt Arial, San-Serif; font-weight : normal }
+.text { color: #003366; font : 12pt Arial, San-Serif; font-weight: normal }
