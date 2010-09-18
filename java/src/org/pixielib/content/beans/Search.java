@@ -6,9 +6,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
 
 public class Search extends Product {
+
+    private static final XPathFactory factory = XPathFactory.newInstance();
 
     int start;     // starting record
     int pagesize;   // page size
@@ -26,6 +32,37 @@ public class Search extends Product {
         Search search = new Search(product, db, query, start, style);
         search.doSearch();
         return search;
+    }
+
+    public static String select(String db, String query, String expr) {
+        Search search = new Search("", db, query, 1, "");
+        search.doSearch();
+        return search.select(expr);
+    }
+
+    private String select(String expr) {
+
+        Document doc;
+        if ((doc = getResults()) == null)
+            return "";
+
+        XPath xpath;
+        synchronized(factory) {
+            xpath = factory.newXPath();
+        }
+
+        XPathExpression xpathExpr;
+        String results;
+
+        try {
+            xpathExpr = xpath.compile(expr);
+            results = xpathExpr.evaluate(doc);
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        return results;
     }
 
     private void doSearch() {
