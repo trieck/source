@@ -11,7 +11,23 @@
     </xsl:template>
 
     <xsl:template match="record">
-                
+        <xsl:variable name="SearchQuery">
+            <xsl:value-of select="java:org.pixielib.content.beans.Context.getContextSymbol(&quot;SearchQuery&quot;)"/>
+        </xsl:variable>
+
+        <xsl:variable name="resultslink">
+            <xsl:if test="$SearchQuery">
+                <xsl:text>/demo/summary.jsp?</xsl:text><xsl:value-of select="$SearchQuery"/>
+            </xsl:if>
+        </xsl:variable>
+
+        <xsl:variable name="booklink">
+            <xsl:text>/demo/chapter.jsp?db=</xsl:text><xsl:value-of select="@db"/>
+            <xsl:text>&amp;book=</xsl:text><xsl:value-of select="book"/>
+            <xsl:text>&amp;chapter=1</xsl:text>
+            <xsl:text>&amp;start=1</xsl:text>
+        </xsl:variable>
+
         <xsl:variable name="chapterlink">
             <xsl:text>/demo/chapter.jsp?db=</xsl:text><xsl:value-of select="@db"/>
             <xsl:text>&amp;book=</xsl:text><xsl:value-of select="book"/>
@@ -94,7 +110,9 @@
                 <TD>&#160;</TD>
                 <TD>&#160;</TD>
                 <TD CLASS="regtext11" align="left">
-                    <span><a href="{$chapterlink}" class="blue">Read this chapter</a></span>
+                    <span><a href="{$resultslink}" class="blue">Back to Search Results</a></span>
+                    &#160;<span><a href="{$booklink}" class="blue">Read this Book</a></span>
+                    &#160;<span><a href="{$chapterlink}" class="blue">Read this Chapter</a></span>
                     <xsl:if test="$prevlink">
                         &#160;<span><a href="{$prevlink}" class="blue">Previous Verse</a></span>
                     </xsl:if>

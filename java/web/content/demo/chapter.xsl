@@ -16,8 +16,8 @@
             <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0" WIDTH="100%">
                 <TR><TD class="text">
                 <xsl:for-each select="record">
-                    <cite class="cite"><xsl:value-of select="chapter"/>:<xsl:value-of select="verse"/></cite>
-                     <xsl:value-of select="text"/>&#160;
+                    <cite class="cite"><xsl:value-of select="verse"/></cite>
+                     <xsl:value-of select="text"/><br/>
                 </xsl:for-each>
                 </TD>
                 </TR>

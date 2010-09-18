@@ -17,6 +17,10 @@
         ;
     }
 
+    context.setTempCookie("SearchQuery",
+        String.format("db=%s&query=%s&start=%d",
+            db, context.encode(query), nstart));
+
     String ModifyLink = String.format("/demo/search.jsp?db=%s&query=%s", db, context.encode(query));
 
 	String dbquery = String.format("text[%s]", query);
@@ -45,15 +49,15 @@
 
 <table border="0" cellspacing="0" cellpadding="2" width="100%">
   <tr bgcolor="#00619c" height="25">
-    <td border="1" valign="bottom" align="left"><a href="/demo/search.jsp?db=<%=db%>" class="regtextw11">New search</a></td>
-    <td border="1" valign="bottom" align="left"><a href="<%= ModifyLink %>" class="regtextw11">Modify search</a></td>
+    <td border="1" valign="bottom" align="left"><a href="/demo/search.jsp?db=<%=db%>" class="regtextw11">New Search</a></td>
+    <td border="1" valign="bottom" align="left"><a href="<%= ModifyLink %>" class="regtextw11">Modify Search</a></td>
 
   	<td valign="bottom">
       <% if (search.getPrevious().length() > 0 ) { %>
-         &#xa0;<img src="/images/page_rev.gif" border="0"/><a href="<%= search.getPrevious() %>" class="regtextw11">Previous page</a>&#xa0;&#xa0;
+         &#xa0;<img src="/images/page_rev.gif" border="0"/><a href="<%= search.getPrevious() %>" class="regtextw11">Previous Page</a>&#xa0;&#xa0;
       <% } %>
       <% if (search.getNext().length() > 0 ) { %>
-         &#xa0;<a href="<%= search.getNext() %>" class="regtextw11">Next page</a><img src="/images/page_arr.gif" border="0"/> &#xa0;&#xa0;
+         &#xa0;<a href="<%= search.getNext() %>" class="regtextw11">Next Page</a><img src="/images/page_arr.gif" border="0"/> &#xa0;&#xa0;
       <% } %>
     </td>
   </tr>

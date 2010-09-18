@@ -23,6 +23,13 @@
     String dbquery = String.format("book[%s] chapter[%d]", book, nchapter);
     Search search = Search.DatabaseSearch("demo", db, dbquery, nstart, style);
 
+    String searchQuery = context.getSymbol("SearchQuery");
+
+    String results = "";
+    if (searchQuery.length() > 0) {
+        results = String.format("/demo/summary.jsp?%s", searchQuery);
+    }
+
     String prevQuery = String.format("book[%s] chapter[%d]", book, nchapter-1);
     String nextQuery = String.format("book[%s] chapter[%d]", book, nchapter+1);
 
@@ -62,27 +69,29 @@
 <table border="0" cellspacing="0" cellpadding="2" width="100%">
   <tr bgcolor="#00619c" height="25">
     <td border="1" valign="bottom" align="left"><a href="/demo/search.jsp?db=<%=db%>" class="regtextw11">New search</a></td>
+    <% if (results.length() > 0) { %>
+    <td border="1" valign="bottom" align="left"><a href="<%= results %>" class="regtextw11">Back to Search Results</a></td>
+    <% } %>
+
   	<td valign="bottom">
       <% if (search.getPrevious().length() > 0 ) { %>
-         &#xa0;<img src="/images/page_rev.gif" border="0"/><a href="<%= search.getPrevious() %>" class="regtextw11">Previous page</a>&#xa0;&#xa0;
+         &#xa0;<img src="/images/page_rev.gif" border="0"/><a href="<%= search.getPrevious() %>" class="regtextw11">Previous Page</a>&#xa0;&#xa0;
       <% } %>
       <% if (search.getNext().length() > 0 ) { %>
-         &#xa0;<a href="<%= search.getNext() %>" class="regtextw11">Next page</a><img src="/images/page_arr.gif" border="0"/> &#xa0;&#xa0;
+         &#xa0;<a href="<%= search.getNext() %>" class="regtextw11">Next Page</a><img src="/images/page_arr.gif" border="0"/> &#xa0;&#xa0;
       <% } %>
       <% if (prevChapter.length() > 0) { %>
-      &#xa0;<img src="/images/page_rev.gif" border="0"/><a href="<%= prevChapter %>" class="regtextw11">Previous chapter</a>&#xa0;&#xa0;
+      &#xa0;<img src="/images/page_rev.gif" border="0"/><a href="<%= prevChapter %>" class="regtextw11">Previous Chapter</a>&#xa0;&#xa0;
       <% } %>
       <% if (nextChapter.length() > 0) { %>
-      &#xa0;<a href="<%= nextChapter %>" class="regtextw11">Next chapter</a><img src="/images/page_arr.gif" border="0"/> &#xa0;&#xa0;
+      &#xa0;<a href="<%= nextChapter %>" class="regtextw11">Next Chapter</a><img src="/images/page_arr.gif" border="0"/> &#xa0;&#xa0;
       <% } %>
     </td>
   </tr>
 </table>
+<p/>
 
-<table border="0" cellspacing="1" cellpadding="0" width="100%">
-  <tr>
-    <td bgcolor="#aaaaaa">
-      <table border="0" cellspacing="1" cellpadding="1" width="100%">
+<table border="0" cellspacing="1" cellpadding="1" width="75%" align="center">
         <tr>
           <td bgcolor="#ffffff">
             <% search.getContent(); %>
