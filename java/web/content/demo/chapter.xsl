@@ -12,6 +12,7 @@
 
     <xsl:template match="results">
         <xsl:if test="//results/@count != 0">
+                       
             <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0" WIDTH="100%">
                 <TR><TD class="text">
                 <xsl:for-each select="record">

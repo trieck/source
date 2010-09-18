@@ -11,16 +11,36 @@
     String start = context.getSymbol("start");
     String style = "chapter";
     int nstart = 1;
+    int nchapter = 0;
 
     try {
         nstart = Integer.parseInt(start);
+        nchapter = Integer.parseInt(chapter);
     } catch (NumberFormatException e) {
         ;
     }
 
-    String dbquery = String.format("book[%s] chapter[%s]", book, chapter);
-	
+    String dbquery = String.format("book[%s] chapter[%d]", book, nchapter);
     Search search = Search.DatabaseSearch("demo", db, dbquery, nstart, style);
+
+    String prevQuery = String.format("book[%s] chapter[%d]", book, nchapter-1);
+    String nextQuery = String.format("book[%s] chapter[%d]", book, nchapter+1);
+
+    String expr = "//results/record[position()=1]/@docid";
+    String prevDoc = Search.select(db, prevQuery, expr);
+    String nextDoc = Search.select(db, nextQuery, expr);
+
+    String prevChapter = "";
+    if (prevDoc.length() > 0) {
+        prevChapter = String.format("/demo/chapter.jsp?db=%s&book=%s&chapter=%d&start=1",
+            db, book, nchapter - 1);
+    }
+    
+    String nextChapter = "";
+    if (nextDoc.length() > 0) {
+        nextChapter = String.format("/demo/chapter.jsp?db=%s&book=%s&chapter=%d&start=1",
+            db, book, nchapter + 1);
+    }
 %>
 
 <html>
@@ -48,6 +68,12 @@
       <% } %>
       <% if (search.getNext().length() > 0 ) { %>
          &#xa0;<a href="<%= search.getNext() %>" class="regtextw11">Next page</a><img src="/images/page_arr.gif" border="0"/> &#xa0;&#xa0;
+      <% } %>
+      <% if (prevChapter.length() > 0) { %>
+      &#xa0;<img src="/images/page_rev.gif" border="0"/><a href="<%= prevChapter %>" class="regtextw11">Previous chapter</a>&#xa0;&#xa0;
+      <% } %>
+      <% if (nextChapter.length() > 0) { %>
+      &#xa0;<a href="<%= nextChapter %>" class="regtextw11">Next chapter</a><img src="/images/page_arr.gif" border="0"/> &#xa0;&#xa0;
       <% } %>
     </td>
   </tr>
