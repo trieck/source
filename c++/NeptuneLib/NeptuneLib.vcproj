@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="NeptuneLib"
+	ProjectGUID="{95C0859E-DF55-4091-826B-6545C7B4ADC6}"
 	SccProjectName="&quot;$/Source/c++/NeptuneLib&quot;, CPDAAAAA"
 	SccLocalPath="."
 	Keyword="MFCProj"
@@ -299,6 +300,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\TrueColorToolBar.cpp"
+				>
+			</File>
+			<File
 				RelativePath="util.cpp"
 				>
 				<FileConfiguration
@@ -349,6 +354,10 @@
 			</File>
 			<File
 				RelativePath="StdAfx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TrueColorToolBar.h"
 				>
 			</File>
 			<File
@@ -408,4 +417,6 @@
 			</File>
 		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>
