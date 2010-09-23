@@ -26,6 +26,9 @@ public class Query {
     private long hash_tbl_size, hash_tbl_offset;
     private QueryTokenizer lexer;
 
+    protected Query() {
+    }
+    
     public Query(String db) throws IOException {
         Repository repos = Repository.getInstance();
         File index_file = repos.getIndexPath(db);
@@ -73,7 +76,7 @@ public class Query {
             return anchorlist; // error condition
 
         if (lookahead().equals("[")) {  // field restriction
-            getTok();   // '['
+            getTok();   // '['                                                                                  I d
             anchorlist = termList(left);
             getTok();   // ']'
         }
@@ -116,7 +119,7 @@ public class Query {
         }
     }
     
-    private AnchorList lookup(String field, String term) throws IOException {
+    protected AnchorList lookup(String field, String term) throws IOException {
         AnchorList list = new AnchorList();
 
         Lexer lexer = new Lexer(new StringReader(term));
@@ -135,7 +138,7 @@ public class Query {
         return list;
     }
 
-    private AnchorList lookup(String term) throws IOException {
+    protected AnchorList lookup(String term) throws IOException {
         AnchorList list = new AnchorList();
 
         // hash the term
