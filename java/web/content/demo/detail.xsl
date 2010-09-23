@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-    <xsl:strip-space elements="*"/>
     <xsl:output method="html" indent="yes" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN"/>
 
     <xsl:template match="/">
@@ -102,7 +101,7 @@
                 </TD>
                 <TD>&#160;</TD>
                 <TD CLASS="regtext11" align="left">
-                    <xsl:value-of select="text"/>
+                    <xsl:apply-templates select="text"/>
                 </TD>
             </TR>
             <TR>&#160;</TR>
@@ -122,6 +121,16 @@
                 </TD>
             </TR>            
         </TABLE>
+    </xsl:template>
+
+    <xsl:template match="text">
+        <xsl:apply-templates/>
+    </xsl:template>
+
+    <xsl:template match="highlight">
+        <span class="highlight">
+            <xsl:value-of select="."/>
+        </span>
     </xsl:template>
 
 </xsl:stylesheet>

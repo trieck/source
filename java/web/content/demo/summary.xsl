@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-    <xsl:strip-space elements="*"/>
+    
     <xsl:output method="html" indent="yes" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN"/>
 
     <xsl:template match="/">
@@ -37,17 +37,27 @@
             </TD>
             <TD CLASS="regtext11" align="left">
                 <a href="{$linkdetail}" class="blue">
-                    <b class="grey">
+                    <span class="grey">
                         <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:<xsl:value-of select="verse"/>
-                    </b>
+                    </span>
                 </a>
             </TD>
             <TD CLASS="regtext11" align="left">
                 <b class="grey">
-                    <xsl:value-of select="substring(text, 1, 100)"/>...
+                    <xsl:apply-templates select="text"/>
                 </b>
             </TD>
         </TR>
+    </xsl:template>
+
+    <xsl:template match="text">
+        <xsl:apply-templates/>
+    </xsl:template>
+
+    <xsl:template match="highlight">
+        <span class="highlight">
+            <xsl:value-of select="."/>
+        </span>
     </xsl:template>
 
 </xsl:stylesheet>
