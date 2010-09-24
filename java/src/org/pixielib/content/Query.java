@@ -76,7 +76,7 @@ public class Query {
             return anchorlist; // error condition
 
         if (lookahead().equals("[")) {  // field restriction
-            getTok();   // '['                                                                                  I d
+            getTok();   // '['
             anchorlist = termList(left);
             getTok();   // ']'
         }
