@@ -72,7 +72,8 @@ HRESULT __stdcall CWaveLib :: GetInputDevices(PPSAFEARRAY ppsa)
 	if (!psab)
 		return E_OUTOFMEMORY;
 
-	for (UINT i = 0; i < nNumDevs; i++) {
+	UINT i;
+	for (i = 0; i < nNumDevs; i++) {
 		psab[i].lLbound		= 0;
 		psab[i].cElements	= 1;
 	}
@@ -127,7 +128,8 @@ HRESULT __stdcall CWaveLib :: GetOutputDevices(PPSAFEARRAY ppsa)
 	if (!psab)
 		return E_OUTOFMEMORY;
 
-	for (UINT i = 0; i < nNumDevs; i++) {
+	UINT i;
+	for (i = 0; i < nNumDevs; i++) {
 		psab[i].lLbound		= 0;
 		psab[i].cElements	= 1;
 	}

@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="wavelib"
+	ProjectGUID="{F55C812B-6503-451F-9D5F-281A581445A7}"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -347,4 +348,6 @@
 			>
 		</File>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>
