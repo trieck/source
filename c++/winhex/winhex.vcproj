@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="winhex"
+	ProjectGUID="{9CE3A194-AC23-4B5B-A0F8-7EE2FE6A796C}"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>
@@ -353,26 +354,6 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath="winhex.rc"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -428,6 +409,26 @@
 				>
 			</File>
 			<File
+				RelativePath="winhex.rc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="res\winhex.rc2"
 				>
 			</File>
@@ -436,13 +437,11 @@
 			Name="Miscellaneous"
 			>
 			<File
-				RelativePath="bin\todo.txt"
-				>
-			</File>
-			<File
 				RelativePath="bin\winhex.ini"
 				>
 			</File>
 		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>

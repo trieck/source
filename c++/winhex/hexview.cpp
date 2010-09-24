@@ -516,10 +516,10 @@ void HexView::UpdateCell()
 	CString str;
 	m_edit.GetWindowText(str);
 
-	BYTE data;
+	WORD data;
 	if (sscanf(str, "%hx", &data) == -1)
 		InvalidateCell(FALSE);
-	else GetDocument()->SetData(m_ActiveCell, data);
+	else GetDocument()->SetData(m_ActiveCell, (BYTE)data);
 	m_edit.SetModify(FALSE);
 }
 
