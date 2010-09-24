@@ -46,7 +46,7 @@
 				Name="VCCLCompilerTool"
 				UseUnicodeResponseFiles="false"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\libadf"
+				AdditionalIncludeDirectories="..\libadf;..\NeptuneLib"
 				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -69,8 +69,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\libadf.lib"
+				AdditionalDependencies="$(OutDir)\libadf.lib NeptuneLib.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="..\NeptuneLib\Debug"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -128,7 +129,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\libadf"
+				AdditionalIncludeDirectories="..\libadf;..\NeptuneLib"
 				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="false"
 				RuntimeLibrary="0"
@@ -151,8 +152,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\libadf.lib"
+				AdditionalDependencies="$(OutDir)\libadf.lib NeptuneLib.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="..\NeptuneLib\Release"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -190,10 +192,6 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath=".\BigScrollView.cpp"
-				>
-			</File>
 			<File
 				RelativePath=".\BinaryFileView.cpp"
 				>
@@ -296,10 +294,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\BigScrollView.h"
-				>
-			</File>
 			<File
 				RelativePath=".\BinaryFileView.h"
 				>

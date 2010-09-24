@@ -1,12 +1,15 @@
 #include "stdafx.h"
 #include "BigScrollView.h"
 
-IMPLEMENT_DYNAMIC(BigScrollView, CView)
+IMPLEMENT_DYNAMIC(BigScrollView, CScrollView)
 
-BEGIN_MESSAGE_MAP(BigScrollView, CView)
+BEGIN_MESSAGE_MAP(BigScrollView, CScrollView)
 	ON_WM_HSCROLL()
 	ON_WM_VSCROLL()
 	ON_WM_SIZE()
+	ON_COMMAND(ID_FILE_PRINT, &CScrollView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CScrollView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CScrollView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -22,7 +25,29 @@ BigScrollView::~BigScrollView()
 /////////////////////////////////////////////////////////////////////////////
 void BigScrollView::OnInitialUpdate()
 {
-	CView::OnInitialUpdate();
+	SetScrollSizes(MM_TEXT,
+	               CSize(m_nDocWidth, m_nDocHeight),
+	               CSize(m_nXPageSize, m_nYPageSize),
+	               m_szChar);
+
+	CScrollView::OnInitialUpdate();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// BigScrollView printing
+
+BOOL BigScrollView::OnPreparePrinting(CPrintInfo* pInfo)
+{
+	// default preparation
+	return DoPreparePrinting(pInfo);
+}
+
+void BigScrollView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+{
+}
+
+void BigScrollView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+{
 }
 
 // BigScrollView diagnostics
@@ -30,12 +55,12 @@ void BigScrollView::OnInitialUpdate()
 #ifdef _DEBUG
 void BigScrollView::AssertValid() const
 {
-	CView::AssertValid();
+	CScrollView::AssertValid();
 }
 
 void BigScrollView::Dump(CDumpContext& dc) const
 {
-	CView::Dump(dc);
+	CScrollView::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -45,7 +70,7 @@ void BigScrollView::Dump(CDumpContext& dc) const
 BOOL BigScrollView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.style |= WS_VSCROLL | WS_HSCROLL;
-	return CView::PreCreateWindow(cs);
+	return CScrollView::PreCreateWindow(cs);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -53,7 +78,7 @@ void BigScrollView::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)
 {
 	pDC->SetViewportOrg(-m_ScrollPos.x, -m_ScrollPos.y);
 	pDC->SetBkMode(TRANSPARENT);
-	CView::OnPrepareDC(pDC, pInfo);
+	CScrollView::OnPrepareDC(pDC, pInfo);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -171,7 +196,7 @@ void BigScrollView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 /////////////////////////////////////////////////////////////////////////////
 void BigScrollView::OnSize(UINT nType, int cx, int cy)
 {
-	CView::OnSize(nType, cx, cy);
+	CScrollView::OnSize(nType, cx, cy);
 
 	int nScrollMax;
 	if (cy < m_nDocHeight) {

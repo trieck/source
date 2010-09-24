@@ -1,7 +1,7 @@
 #pragma once
 
 /////////////////////////////////////////////////////////////////////////////
-class BigScrollView : public CView {
+class BigScrollView : public CScrollView {
 	DECLARE_DYNAMIC(BigScrollView)
 
 protected:
@@ -16,6 +16,9 @@ public:
 
 protected:
 	virtual void OnInitialUpdate();
+	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
+	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
+	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
 
 	DECLARE_MESSAGE_MAP()
 protected:
