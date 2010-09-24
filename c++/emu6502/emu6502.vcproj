@@ -24,7 +24,7 @@
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
-			UseOfMFC="2"
+			UseOfMFC="1"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
 			>
@@ -55,7 +55,7 @@
 				AdditionalIncludeDirectories="..\NeptuneLib"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Debug/emu6502.pch"
@@ -412,6 +412,7 @@
 	<References>
 		<ProjectReference
 			ReferencedProjectIdentifier="{95C0859E-DF55-4091-826B-6545C7B4ADC6}"
+			RelativePathToProject="..\NeptuneLib\NeptuneLib.vcproj"
 		/>
 	</References>
 	<Files>

@@ -10,6 +10,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#pragma warning(disable:4996)	// disable deprecation warnings
+
 #define WINVER 0x0501
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 

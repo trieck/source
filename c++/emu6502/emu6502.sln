@@ -1,5 +1,5 @@
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "emu6502", "emu6502.vcproj", "{F7BF5A1D-98BC-4B0E-A631-2569692D8A8C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{95C0859E-DF55-4091-826B-6545C7B4ADC6} = {95C0859E-DF55-4091-826B-6545C7B4ADC6}
@@ -8,17 +8,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NeptuneLib", "..\NeptuneLib\NeptuneLib.vcproj", "{95C0859E-DF55-4091-826B-6545C7B4ADC6}"
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 2
-		SccProjectUniqueName0 = emu6502.vcproj
-		SccProjectName0 = \u0022$/Source/c++/emu6502\u0022,\u0020FODAAAAA
-		SccLocalPath0 = .
-		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
-		SccProjectUniqueName1 = ..\\NeptuneLib\\NeptuneLib.vcproj
-		SccProjectName1 = \u0022$/Source/c++/NeptuneLib\u0022,\u0020CPDAAAAA
-		SccLocalPath1 = ..\\NeptuneLib
-		SccProvider1 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Unicode|Win32 = Debug Unicode|Win32
 		Debug|Win32 = Debug|Win32
