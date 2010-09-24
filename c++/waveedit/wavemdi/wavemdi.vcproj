@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="wavemdi"
+	ProjectGUID="{42E876EE-A470-4A9D-8C7C-2E48DE50C8A2}"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>
@@ -538,4 +539,6 @@
 			</File>
 		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>
