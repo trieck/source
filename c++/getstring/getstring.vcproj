@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="getstring"
+	ProjectGUID="{6A754B39-8C52-4FCD-8757-F2CCD895AB3F}"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -227,6 +228,16 @@
 					/>
 				</FileConfiguration>
 			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl"
+			>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+			>
 			<File
 				RelativePath="getstring.rc"
 				>
@@ -248,15 +259,7 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
-			>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
-			>
-		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>
