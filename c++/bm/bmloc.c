@@ -208,6 +208,7 @@ BOOL CALLBACK DlgProc(	HWND  hwndDlg,	// handle to dialog box
 	default:
 		return (FALSE);
 	}
+	return TRUE;
 }
 
 //////////////////
