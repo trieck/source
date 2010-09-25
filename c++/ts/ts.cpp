@@ -186,7 +186,7 @@ int ReadSector(int ndrive, __int64 track, DWORD sector)
 	// ensure valid track, sector
 	if (track >= tracks ||
 	        sector >= geom.SectorsPerTrack) {
-		wsprintf(buf, "invalid t/s#: %d,%d.\r\n",
+		wsprintf(buf, "invalid t/s#: %I64d, %d.\r\n",
 		         track, sector);
 		WriteErr(buf);
 		CloseHandle(hFile);
