@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="backends"
+	ProjectGUID="{B889A2E0-733D-44F1-89F3-9A30D580F09B}"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>
@@ -573,4 +574,6 @@
 			</File>
 		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>
