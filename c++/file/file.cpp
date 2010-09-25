@@ -91,7 +91,7 @@ bool File::readLine(LPTSTR line, DWORD maxsize)
 	TCHAR *pline = line;
 	DWORD read = 0UL;
 
-	for (int i = 0; i < maxsize; i++) {
+	for (DWORD i = 0; i < maxsize; i++) {
 		if (!ReadFile(*this, pline, 1, &read, NULL))
 			return false;
 
@@ -121,11 +121,11 @@ tstring File::gulp()
 
 	seek(0, File::begin);
 
-	TCHAR *pbuff = new TCHAR[size() + 1];
+	TCHAR *pbuff = new TCHAR[(unsigned)size() + 1];
 	if (0 == pbuff)
 		return _T("");
 
-	if (!read(pbuff, size()))
+	if (!read(pbuff, (unsigned)size()))
 		return _T("");
 
 	pbuff[size()] = _T('\0');

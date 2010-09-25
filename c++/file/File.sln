@@ -1,32 +1,19 @@
-Microsoft Visual Studio Solution File, Format Version 8.00
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "File", "File.vcproj", "{8D0B0C60-7C5D-4343-BADF-8CED73F5693F}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 2
-		SccProjectName0 = \u0022$/Source/c++/FILE\u0022,\u0020ENCAAAAA
-		SccLocalPath0 = .
-		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
-		CanCheckoutShared = false
-		SolutionUniqueID = {55238B5B-8BF0-436F-86E4-0E0158D5A5D5}
-		SccProjectUniqueName1 = File.vcproj
-		SccLocalPath1 = .
-		CanCheckoutShared = false
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
 	EndGlobalSection
-	GlobalSection(SolutionConfiguration) = preSolution
-		Debug = Debug
-		Release = Release
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D0B0C60-7C5D-4343-BADF-8CED73F5693F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8D0B0C60-7C5D-4343-BADF-8CED73F5693F}.Debug|Win32.Build.0 = Debug|Win32
+		{8D0B0C60-7C5D-4343-BADF-8CED73F5693F}.Release|Win32.ActiveCfg = Release|Win32
+		{8D0B0C60-7C5D-4343-BADF-8CED73F5693F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
-	GlobalSection(ProjectConfiguration) = postSolution
-		{8D0B0C60-7C5D-4343-BADF-8CED73F5693F}.Debug.ActiveCfg = Debug|Win32
-		{8D0B0C60-7C5D-4343-BADF-8CED73F5693F}.Debug.Build.0 = Debug|Win32
-		{8D0B0C60-7C5D-4343-BADF-8CED73F5693F}.Release.ActiveCfg = Release|Win32
-		{8D0B0C60-7C5D-4343-BADF-8CED73F5693F}.Release.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-	EndGlobalSection
-	GlobalSection(ExtensibilityAddIns) = postSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
