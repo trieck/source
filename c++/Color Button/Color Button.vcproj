@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="Color Button"
+	ProjectGUID="{4535F06C-54AA-43AE-8180-D13808B0C939}"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>
@@ -634,4 +635,6 @@
 			</File>
 		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>
