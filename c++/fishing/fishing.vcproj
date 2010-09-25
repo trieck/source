@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="fishing"
+	ProjectGUID="{ADBFF3EA-8E93-4E26-9075-573428B2A42A}"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -73,11 +74,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib neptune.lib"
 				OutputFile="bin\fishing.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="D:\vs98\MyProjects\neptune\release"
+				AdditionalLibraryDirectories=""
 				ProgramDatabaseFile=".\Release/fishing.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -168,11 +168,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="neptune.lib"
 				OutputFile="bin\fishing.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="D:\vs98\MyProjects\neptune\debug"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/fishing.pdb"
 				SubSystem="2"
@@ -348,4 +347,6 @@
 			>
 		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>
