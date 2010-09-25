@@ -10,9 +10,12 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
-
 #pragma warning(disable:4786) // disable truncation warning
+#pragma warning(disable:4996) // disable deprecation warning
+
+#define WINVER 0x0500
+
+#define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions

@@ -10,7 +10,7 @@
 
 ///////////////////////////////////////////////////////////////////////
 // Interval enumeration
-typedef enum {
+enum IntervalEnum {
 	Unison = 0,
 	MinorSecond = 1,
 	MajorSecond = 2,
@@ -24,7 +24,7 @@ typedef enum {
 	MinorSeventh = 10,
 	MajorSeventh = 11,
 	Octave = 12
-} Interval;
+};
 
 ///////////////////////////////////////////////////////////////////////
 

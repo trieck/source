@@ -13,7 +13,7 @@ static char THIS_FILE[] = __FILE__;
 extern int loNote;
 extern int hiNote;
 static int random(int lo, int hi);
-static CString IntervalToString(Interval i);
+static CString IntervalToString(IntervalEnum i);
 /////////////////////////////////////////////////////////////////////////////
 // AboutDlg dialog used for App About
 class AboutDlg : public CDialog {
@@ -135,7 +135,7 @@ void EarDlg::CreateInterval()
 	while ((second = random(loNote, hiNote)) == first)
 		;
 
-	m_MidiInterval = Interval(abs(second - first));
+	m_MidiInterval = IntervalEnum(abs(second - first));
 	m_buffer.Transform(first, second);
 }
 // Helper functions
@@ -148,7 +148,7 @@ void EarDlg::OnEnter()
 {
 	CString message;
 	UpdateData(TRUE);
-	Interval i = Interval(m_Interval + 1);
+	IntervalEnum i = IntervalEnum(m_Interval + 1);
 	if (i == m_MidiInterval) {
 		message.LoadString(IDS_CORRECT);
 		CString correct;
@@ -169,7 +169,7 @@ void EarDlg::OnEnter()
 	CreateInterval();
 	OnListen();
 }
-CString IntervalToString(Interval i)
+CString IntervalToString(IntervalEnum i)
 {
 	CString output;
 	switch (i) {

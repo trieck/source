@@ -50,7 +50,7 @@ protected:
 private:
 	HICON m_hIcon;
 	MidiBuffer m_buffer;
-	Interval m_MidiInterval;
+	IntervalEnum m_MidiInterval;
 	int m_correct;
 	int m_incorrect;
 };
