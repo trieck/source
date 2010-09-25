@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="fetch"
+	ProjectGUID="{81584A6F-D437-461C-97E6-0A35C53CE3F2}"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>
@@ -427,4 +428,6 @@
 			</File>
 		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>

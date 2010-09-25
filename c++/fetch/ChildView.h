@@ -50,7 +50,7 @@ protected:
 	afx_msg void OnUpdateSearch(CCmdUI* pCmdUI);
 	afx_msg void OnStop();
 	afx_msg void OnUpdateStop(CCmdUI* pCmdUI);
-	afx_msg void OnSearchComplete(WPARAM, LPARAM);
+	afx_msg LRESULT OnSearchComplete(WPARAM, LPARAM);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

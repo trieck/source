@@ -103,15 +103,15 @@ LPNETRESOURCEENUM NetResourceEnum::GetAt(DWORD index)
 	ASSERT(m_pres != NULL);
 
 	if (index > m_buffers - 1)
-		return NULL; // out of range
+		return LPNETRESOURCEENUM(NULL); // out of range
 
-	return new NetResourceEnum(&m_pres[index]);
+	return LPNETRESOURCEENUM(new NetResourceEnum(&m_pres[index]));
 }
 
 // Helper functions
 LPNETRESOURCEENUM GetRootEnum()
 {
-	return new NetResourceEnum(OpenResource(NULL));
+	return LPNETRESOURCEENUM(new NetResourceEnum(OpenResource(NULL)));
 }
 
 HANDLE OpenResource(LPNETRESOURCE res)
