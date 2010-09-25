@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="DialogTest"
+	ProjectGUID="{2F1F0D54-B7C8-453D-BF1D-AFEA37B98F11}"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>
@@ -286,4 +287,6 @@
 			>
 		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>

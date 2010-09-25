@@ -87,7 +87,10 @@ void CDlgWin::CreateControls()
 	m_pBlueSlider->SetPos(128);
 
 	// set current directory and fill list box
-	SetCurrentDirectory("c:\\win95");
+	char path[_MAX_PATH+_MAX_FNAME+1] = { 0 };
+	GetWindowsDirectory(path, _MAX_PATH+_MAX_FNAME+1);
+
+	SetCurrentDirectory(path);
 	m_pListBox->Dir(DDL_READONLY, (LPCTSTR)"*.ini");
 
 	// fill combo box with colors
@@ -121,8 +124,10 @@ void CDlgWin::OnBtnOpenClick()
 		m_pFile = new CStdioFile(_T(szFile), CFile::modeRead | CFile::typeBinary);
 		ASSERT_VALID(m_pFile);
 
+		UINT nLength = (UINT)m_pFile->GetLength();
+
 		// allocate memory
-		lpBuff = new BYTE[m_pFile->GetLength()];
+		lpBuff = new BYTE[nLength+1];
 		ASSERT_VALID(m_pFile);
 
 		if (!(lpBuff)) {
@@ -130,15 +135,20 @@ void CDlgWin::OnBtnOpenClick()
 			return;
 		}
 
+		memset(lpBuff, 0, nLength);
+
 		// set progress control range
-		m_pProgressCtrl->SetRange(0, m_pFile->GetLength());
+		m_pProgressCtrl->SetRange(0, nLength);
 
 		// read data
-		while (dwCount < m_pFile->GetLength()) {
-			m_pFile->Read(lpBuff+dwCount, 10);
-			dwCount +=10;
+		UINT nRead = 0;
+		while (dwCount < nLength) {
+			nRead = m_pFile->Read(lpBuff+dwCount, 10);
+			dwCount += nRead;
 			m_pProgressCtrl->SetPos(dwCount);
 		}
+
+		lpBuff[nLength] = '\0';
 
 		// set text in edit control
 		m_pEdit->SetWindowText((LPCTSTR)lpBuff);
