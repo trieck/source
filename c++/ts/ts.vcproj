@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="ts"
+	ProjectGUID="{76DE695A-7C17-4BF2-A862-68C330FDCB98}"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -230,4 +231,6 @@
 			>
 		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>
