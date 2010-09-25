@@ -1,9 +1,38 @@
 
 #include <windows.h>
 #include <winioctl.h>
+#include <string>
+
+using std::string;
 
 static const char hexish[] = "0123456789abcdef";
 static char CharStr[17];
+
+string LastError()
+{
+	string output;
+
+	char *pmsg = NULL;
+
+	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
+	              NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+	              (LPTSTR)&pmsg, 0, NULL);
+
+	if (pmsg != NULL) {
+		int N = strlen(pmsg);
+		if (N > 1 && pmsg[N - 1] == '\n')
+			pmsg[N - 1] = '\0';
+
+		if (N > 1 && pmsg[N - 2] == '\r')
+			pmsg[N - 2] = '\0';
+
+		output = pmsg;
+
+		LocalFree(pmsg);
+	}
+
+	return output;
+}
 
 void WriteString(const char *s)
 {
@@ -17,6 +46,11 @@ void WriteErr(const char *s)
 	HANDLE hConsole = GetStdHandle(STD_ERROR_HANDLE);
 	DWORD written;
 	WriteFile(hConsole, s, strlen(s), &written, 0);
+}
+
+void WriteErr()
+{
+	WriteErr(LastError().c_str());
 }
 
 void PrintByte(BYTE b)
@@ -71,7 +105,7 @@ void PrintSector(HANDLE hFile, DISK_GEOMETRY *geom, __int64 track, DWORD sector)
 
 	offset.LowPart = SetFilePointer (hFile, offset.LowPart, &offset.HighPart, FILE_BEGIN);
 	if (offset.LowPart == -1 && GetLastError() != NO_ERROR) {
-		WriteErr("unable to set file pointer.");
+		WriteErr();
 		VirtualFree(lpSector, 0, MEM_RELEASE);
 		return;
 	}
@@ -81,13 +115,13 @@ void PrintSector(HANDLE hFile, DISK_GEOMETRY *geom, __int64 track, DWORD sector)
 	               geom->BytesPerSector,
 	               &read,
 	               NULL)) {
-		WriteErr("unable to read file.");
+		WriteErr();
 		VirtualFree(lpSector, 0, MEM_RELEASE);
 		return;
 	}
 
 	if (read == 0) {
-		WriteErr("unable to read file.");
+		WriteErr();
 		VirtualFree(lpSector, 0, MEM_RELEASE);
 	}
 
@@ -116,21 +150,21 @@ void PrintSector(HANDLE hFile, DISK_GEOMETRY *geom, __int64 track, DWORD sector)
 	VirtualFree(lpSector, 0, MEM_RELEASE);
 }
 
-int ReadSector(char drive, __int64 track, DWORD sector)
+int ReadSector(int ndrive, __int64 track, DWORD sector)
 {
 	char buf[MAX_PATH];
-	wsprintf(buf, "\\\\.\\%c:", drive);
+	wsprintf(buf, "\\\\.\\PhysicalDrive%d", ndrive);
 
 	HANDLE hFile = CreateFile(
 	                   buf,
 	                   GENERIC_READ,
-	                   FILE_SHARE_READ|FILE_SHARE_WRITE,
+	                   FILE_SHARE_READ,
 	                   NULL,
 	                   OPEN_EXISTING,
 	                   0,
 	                   NULL);
 	if (hFile == INVALID_HANDLE_VALUE) {
-		WriteErr("open failed.\r\n");
+		WriteErr();
 		return 1;
 	}
 
@@ -167,13 +201,11 @@ int ReadSector(char drive, __int64 track, DWORD sector)
 
 int main(int argc, char *argv[])
 {
-	if (argc == 2) {
-		;
-	} else if (argc != 4) {
-		WriteErr("usage: ts drive [track# sec#]\r\n");
+	if (argc != 4) {
+		WriteErr("usage: ts drive# track# sec#\r\n");
 		return 1;
 	} else {
-		return ReadSector(argv[1][0], _atoi64(argv[2]), atoi(argv[3]));
+		return ReadSector(atoi(argv[1]), _atoi64(argv[2]), atoi(argv[3]));
 	}
 
 	return 0;
