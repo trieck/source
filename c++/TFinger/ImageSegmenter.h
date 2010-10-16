@@ -15,6 +15,9 @@ private:
 	static ULONG MeanBlock(CImage &image, int x, int y);
 	static ULONG VarianceBlock(CImage &image, int x, int y);
 	static void VarianceThreshold(CImage &image, int x, int y);
+
+	enum { BLOCK_SIZE = 8 };
+	enum { VARIANCE_THRESHOLD = 49 };
 };
 
 

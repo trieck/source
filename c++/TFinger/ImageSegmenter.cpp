@@ -6,9 +6,6 @@
 
 // ImageSegmenter
 
-#define BLOCK_SIZE			(16)
-#define VARIANCE_THRESHOLD	(80)
-
 ImageSegmenter::ImageSegmenter()
 {
 }
