@@ -45,7 +45,7 @@ public:
 protected:
 	DECLARE_MESSAGE_MAP()
 private:
-	GreyscaleBitmap m_bitmap;			
+	GreyscaleBitmap m_bitmap;
 	ImageSegmenter m_segmenter;			
 	ImageBinarizer m_binarizer;
 	ImageEroder m_eroder;

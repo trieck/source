@@ -216,3 +216,4 @@ void CTFingerDoc::OnUpdateImageExtractMinutia(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable(!m_bitmap.IsNull() && m_skeletonized && !m_extracted);
 }
+
