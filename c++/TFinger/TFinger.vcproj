@@ -194,6 +194,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\GaborFilter.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GreyscaleBitmap.cpp"
 				>
 			</File>
@@ -207,6 +211,10 @@
 			</File>
 			<File
 				RelativePath=".\ImageEroder.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ImageNormalizer.cpp"
 				>
 			</File>
 			<File
@@ -230,6 +238,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Matrix.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Minutia.cpp"
 				>
 			</File>
@@ -243,6 +255,10 @@
 			</File>
 			<File
 				RelativePath=".\MorphologicalOperator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Sobel.cpp"
 				>
 			</File>
 			<File
@@ -284,6 +300,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\GaborFilter.h"
+				>
+			</File>
+			<File
 				RelativePath=".\GreyscaleBitmap.h"
 				>
 			</File>
@@ -297,6 +317,10 @@
 			</File>
 			<File
 				RelativePath=".\ImageEroder.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ImageNormalizer.h"
 				>
 			</File>
 			<File
@@ -320,6 +344,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Matrix.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Minutia.h"
 				>
 			</File>
@@ -337,6 +365,10 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Sobel.h"
 				>
 			</File>
 			<File

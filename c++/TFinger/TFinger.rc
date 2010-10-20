@@ -84,6 +84,7 @@ BEGIN
     BUTTON      ID_FILE_CLOSE
     SEPARATOR
     BUTTON      ID_IMAGE_SEGMENT
+	BUTTON		ID_IMAGE_NORMALIZE
     BUTTON      ID_IMAGE_BINARIZE
     BUTTON      ID_IMAGE_ERODE
     BUTTON      ID_IMAGE_DILATE
@@ -117,6 +118,7 @@ BEGIN
     POPUP "&Image"
     BEGIN
         MENUITEM "&Segment",                    ID_IMAGE_SEGMENT
+        MENUITEM "&Normalize",                  ID_IMAGE_NORMALIZE
         MENUITEM "&Binarize",                   ID_IMAGE_BINARIZE
         MENUITEM "&Erode",                      ID_IMAGE_ERODE
         MENUITEM "&Dilate",                     ID_IMAGE_DILATE
@@ -371,6 +373,7 @@ BEGIN
     ID_VIEW_ZOOMIN          "Zoom in\nZoom in"
     ID_VIEW_ZOOMOUT         "Zoom out\nZoom out"
     ID_IMAGE_EXTRACTMINUTIA "Extract Minutia\nExtract Minutia"
+    ID_IMAGE_NORMALIZE      "Normalize image\nNormalize"
 END
 
 #endif    // English (U.S.) resources

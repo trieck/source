@@ -61,3 +61,102 @@ BYTE PixelDigit(const CImage &image, const CPoint &pt)
 	return PixelDigit(image, pt.x, pt.y);
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// Calculate the mean value of a block 
+UINT MeanBlock(const CImage &image, int x, int y, int blocksize)
+{
+	UINT mean = 0;
+
+	int rows = image.GetHeight();
+	int cols = image.GetWidth();
+	int pitch = image.GetPitch();
+
+	LPCBYTE pbits = reinterpret_cast<LPCBYTE>(image.GetBits());	
+
+	for (int j = y; j < y + blocksize && j < rows; j++) {
+		for (int i = x; i < x + blocksize && i < cols; i++) {
+			mean += pbits[j*pitch+i];
+		}
+	}
+	
+	mean /= (blocksize * blocksize);
+
+	return mean;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Calculate the variance of a block
+UINT VarianceBlock(CImage &image, int x, int y, int blocksize)
+{
+	UINT variance = 0;
+	
+	UINT mean = MeanBlock(image, x, y, blocksize);
+
+	int diff;
+	int rows = image.GetHeight();
+	int cols = image.GetWidth();
+	int pitch = image.GetPitch();
+
+	LPCBYTE pbits = reinterpret_cast<LPCBYTE>(image.GetBits());	
+
+	for (int j = y; j < y + blocksize && j < rows; j++) {
+		for (int i = x; i < x + blocksize && i < cols; i++) {
+			diff = pbits[j*pitch+i] - mean;
+			variance += (diff * diff);
+		}
+	}
+	
+	variance /= (blocksize * blocksize);
+
+	return variance;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Calculate the mean of a block
+UINT ImageMean(const CImage &image)
+{
+	UINT mean = 0;
+
+	int rows = image.GetHeight();
+	int cols = image.GetWidth();
+	int pitch = image.GetPitch();
+
+	LPCBYTE pbits = reinterpret_cast<LPCBYTE>(image.GetBits());	
+
+	for (int y = 0; y < rows; y++) {
+		for (int x = 0; x < cols; x++) {
+			mean += pbits[y*pitch+x];
+		}
+	}
+	
+	mean /= rows * cols;
+
+	return mean;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Calculate the variance of an image
+UINT ImageVariance(const CImage &image)
+{
+	UINT variance = 0;
+	
+	UINT mean = ImageMean(image);
+
+	int diff;
+	int rows = image.GetHeight();
+	int cols = image.GetWidth();
+	int pitch = image.GetPitch();
+
+	LPCBYTE pbits = reinterpret_cast<LPCBYTE>(image.GetBits());	
+
+	for (int y = 0; y < rows; y++) {
+		for (int x = 0; x < cols; x++) {
+			diff = pbits[y*pitch+x] - mean;
+			variance += (diff * diff);
+		}
+	}
+	
+	variance /= rows * cols;
+
+	return variance;
+}

@@ -6,6 +6,7 @@
 
 #include "GreyscaleBitmap.h"
 #include "ImageSegmenter.h"
+#include "ImageNormalizer.h"
 #include "ImageBinarizer.h"
 #include "ImageEroder.h"
 #include "ImageDilater.h"
@@ -47,6 +48,7 @@ protected:
 private:
 	GreyscaleBitmap m_bitmap;
 	ImageSegmenter m_segmenter;			
+	ImageNormalizer m_normalizer;
 	ImageBinarizer m_binarizer;
 	ImageEroder m_eroder;
 	ImageDilater m_dilater;
@@ -55,6 +57,7 @@ private:
 	MinutiaVec m_minutia;
 
 	BOOL m_segmented;		// image has been segmented
+	BOOL m_normalized;		// image has been normalized
 	BOOL m_binarized;		// image has been binarized
 	BOOL m_eroded;			// image has been eroded
 	BOOL m_dilated;			// image has been dilated
@@ -78,6 +81,8 @@ public:
 	afx_msg void OnUpdateImageSkeletonize(CCmdUI *pCmdUI);
 	afx_msg void OnImageExtractMinutia();
 	afx_msg void OnUpdateImageExtractMinutia(CCmdUI *pCmdUI);
+	afx_msg void OnImageNormalize();
+	afx_msg void OnUpdateImageNormalize(CCmdUI *pCmdUI);
 };
 
 

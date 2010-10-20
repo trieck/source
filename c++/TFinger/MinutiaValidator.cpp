@@ -11,13 +11,7 @@
 #include "StdAfx.h"
 #include "MinutiaValidator.h"
 #include "ImageUtil.h"
-
-static LPBYTE* AllocBlock(UINT size);
-static void FreeBlock(LPBYTE *block);
-static void ClearBlock(LPBYTE *block);
-
-#define REAL_BLOCK(b)	((LPDWORD)((LPBYTE*)b-1))
-#define BLOCK_SIZE(b)	(*REAL_BLOCK(b))
+#include "Matrix.h"
 
 struct RidgeOrigin {
 	POINT ptKernel;	// kernel origin
@@ -29,23 +23,23 @@ typedef std::vector<RidgeOrigin> RidgeOriginVec;
 /////////////////////////////////////////////////////////////////////////////
 MinutiaValidator::MinutiaValidator()
 {
-	m_plimage = AllocBlock(L_IMAGE_SIZE);
-	m_pkernel = AllocBlock(3);
+	m_plimage = AllocMatrix(L_IMAGE_SIZE, L_IMAGE_SIZE);
+	m_pkernel = AllocMatrix(3, 3);
 	Clear();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 MinutiaValidator::~MinutiaValidator()
 {
-	FreeBlock(m_plimage);
-	FreeBlock(m_pkernel);
+	FreeMatrix(m_plimage);
+	FreeMatrix(m_pkernel);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void MinutiaValidator::Clear()
 {
-	ClearBlock(m_plimage);
-	ClearBlock(m_pkernel);
+	ClearMatrix(m_plimage);
+	ClearMatrix(m_pkernel);
 	m_visited.clear();
 	m_plimage[L_IMAGE_SIZE/2][L_IMAGE_SIZE/2] = -1;	// minutia point
 }
@@ -319,46 +313,3 @@ void MinutiaValidator::Visit(const CImage &image, int x, int y)
 	m_visited.push_back(pt);
 }
 
-// Helper functions
-
-/////////////////////////////////////////////////////////////////////////////
-LPBYTE *AllocBlock(UINT size)
-{
-	DWORD allocSize = sizeof(BYTE*) * size + sizeof(DWORD);
-
-	LPDWORD pdwBlock = (LPDWORD)GlobalAlloc(GMEM_FIXED, allocSize);
-
-	*pdwBlock = size;	// store the block size
-
-	LPBYTE *block = (LPBYTE*)++pdwBlock;
-
-	for (UINT i = 0; i < size; i++) {
-		block[i] = (LPBYTE)GlobalAlloc(GMEM_FIXED, size * sizeof(BYTE));
-	}	
-
-	return block;	
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void FreeBlock(LPBYTE *block)
-{
-	LPDWORD pdwBlock = REAL_BLOCK(block);
-	DWORD size = *pdwBlock;
-	
-	for (UINT i = 0; i < size; i++) {
-		GlobalFree(block[i]);
-	}
-
-	GlobalFree(pdwBlock);
-}
-
-void ClearBlock(LPBYTE *block)
-{
-	DWORD size = BLOCK_SIZE(block);
-
-	for (UINT i = 0; i < size; i++) {
-		for (UINT j = 0; j < size; j++) {
-			block[i][j] = 0;
-		}
-	}
-}

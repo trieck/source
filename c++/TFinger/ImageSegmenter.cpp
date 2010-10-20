@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "ImageSegmenter.h"
+#include "ImageUtil.h"
 
 // ImageSegmenter
 
@@ -37,8 +38,6 @@ void ImageSegmenter::Segment(CImage &image)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 	
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
-
 	for (int y = 0; y < rows; y += BLOCK_SIZE) {
 		for (int x = 0; x < cols; x += BLOCK_SIZE) {
 			VarianceThreshold(image, x, y);
@@ -52,7 +51,7 @@ void ImageSegmenter::VarianceThreshold(CImage &image, int x, int y)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	ULONG v = VarianceBlock(image, x, y);
+	ULONG v = VarianceBlock(image, x, y, BLOCK_SIZE);
 	
 	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
 
@@ -65,48 +64,6 @@ void ImageSegmenter::VarianceThreshold(CImage &image, int x, int y)
 	}
 }
 
-ULONG ImageSegmenter::VarianceBlock(CImage &image, int x, int y)
-{
-	ULONG variance = 0;
-	
-	ULONG mean = MeanBlock(image, x, y);
 
-	int diff;
-	int rows = image.GetHeight();
-	int cols = image.GetWidth();
-	int pitch = image.GetPitch();
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
 
-	for (int j = y; j < y + BLOCK_SIZE && j < rows; j++) {
-		for (int i = x; i < x + BLOCK_SIZE && i < cols; i++) {
-			diff = pbits[j*pitch+i] - mean;
-			variance += (diff * diff);
-		}
-	}
-	
-	variance /= (BLOCK_SIZE * BLOCK_SIZE);
-
-	return variance;
-}
-
-ULONG ImageSegmenter::MeanBlock(CImage &image, int x, int y)
-{
-	ULONG mean = 0;
-
-	int rows = image.GetHeight();
-	int cols = image.GetWidth();
-	int pitch = image.GetPitch();
-
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
-
-	for (int j = y; j < y + BLOCK_SIZE && j < rows; j++) {
-		for (int i = x; i < x + BLOCK_SIZE && i < cols; i++) {
-			mean += pbits[j*pitch+i];
-		}
-	}
-	
-	mean /= (BLOCK_SIZE * BLOCK_SIZE);
-
-	return mean;
-}

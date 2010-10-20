@@ -29,11 +29,14 @@ BEGIN_MESSAGE_MAP(CTFingerDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_IMAGE_SKELETONIZE, &CTFingerDoc::OnUpdateImageSkeletonize)
 	ON_COMMAND(ID_IMAGE_EXTRACTMINUTIA, &CTFingerDoc::OnImageExtractMinutia)
 	ON_UPDATE_COMMAND_UI(ID_IMAGE_EXTRACTMINUTIA, &CTFingerDoc::OnUpdateImageExtractMinutia)
+	ON_COMMAND(ID_IMAGE_NORMALIZE, &CTFingerDoc::OnImageNormalize)
+	ON_UPDATE_COMMAND_UI(ID_IMAGE_NORMALIZE, &CTFingerDoc::OnUpdateImageNormalize)
 END_MESSAGE_MAP()
 
 // CTFingerDoc construction/destruction
 CTFingerDoc::CTFingerDoc()
  : m_segmented(FALSE), 
+ m_normalized(FALSE),
  m_binarized(FALSE), 
  m_eroded(FALSE), 
  m_dilated(FALSE),
@@ -105,7 +108,7 @@ BOOL CTFingerDoc::OnOpenDocument(LPCTSTR lpszPathName)
 void CTFingerDoc::DeleteContents()
 {
 	m_bitmap.Destroy();
-	m_segmented = m_binarized = m_eroded = 
+	m_segmented = m_normalized = m_binarized = m_eroded = 
 		m_dilated = m_skeletonized = m_extracted = FALSE;
 	m_minutia.clear();
 
@@ -148,7 +151,7 @@ void CTFingerDoc::OnImageSegment()
 }
 void CTFingerDoc::OnUpdateImageBinarize(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && m_segmented && !m_binarized);
+	pCmdUI->Enable(!m_bitmap.IsNull() && m_normalized && !m_binarized);
 }
 
 void CTFingerDoc::OnImageBinarize()
@@ -217,3 +220,15 @@ void CTFingerDoc::OnUpdateImageExtractMinutia(CCmdUI *pCmdUI)
 	pCmdUI->Enable(!m_bitmap.IsNull() && m_skeletonized && !m_extracted);
 }
 
+void CTFingerDoc::OnImageNormalize()
+{
+	CWaitCursor cursor;
+	m_normalizer.Normalize(m_bitmap);
+	m_normalized = TRUE;
+	UpdateAllViews(NULL);
+}
+
+void CTFingerDoc::OnUpdateImageNormalize(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(!m_bitmap.IsNull() && m_segmented && !m_normalized);
+}
