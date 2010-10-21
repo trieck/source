@@ -198,6 +198,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GaussianFilter.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GreyscaleBitmap.cpp"
 				>
 			</File>
@@ -238,7 +242,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Matrix.cpp"
+				RelativePath=".\MeanFilter.cpp"
 				>
 			</File>
 			<File
@@ -304,6 +308,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GaussianFilter.h"
+				>
+			</File>
+			<File
 				RelativePath=".\GreyscaleBitmap.h"
 				>
 			</File>
@@ -345,6 +353,10 @@
 			</File>
 			<File
 				RelativePath=".\Matrix.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MeanFilter.h"
 				>
 			</File>
 			<File

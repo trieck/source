@@ -24,7 +24,9 @@ void GaborFilter::Apply(CImage &image)
 
 	int gx, gy;
 	int Vx, Vy;
+
 	float theta;
+	float Px, Py;
 
 	for (int y = 0; y < rows; y++) {
 		for (int x = 0; x < cols; x++) {
@@ -42,6 +44,13 @@ void GaborFilter::Apply(CImage &image)
 			}
 
 			theta = atan((float)Vy/Vx) / 2;
+
+			// convert the orientation image into a continuous vector field
+			Px = cos(2 * theta);
+			Py = sin(2 * theta);
+
+			// perform gaussian smoothing 
+
 		}
 	}
 

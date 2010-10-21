@@ -33,7 +33,7 @@ void ImageNormalizer::Normalize(CImage &image)
 	for (int y = 0; y < rows; y++) {
 		for (int x = 0; x < cols; x++) {
 			BYTE &I = pbits[y*pitch+x];
-			N = (int)sqrt((float)(I-M) * (I-M) * ((float)V0/V));
+			N = (int)sqrt(((float)V0/V) * (I-M) * (I-M));
 			if (I > M) {
 				I = M0 + N;
 			} else {

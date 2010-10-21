@@ -6,6 +6,7 @@
 
 #include "GreyscaleBitmap.h"
 #include "ImageSegmenter.h"
+#include "GaussianFilter.h"
 #include "ImageNormalizer.h"
 #include "ImageBinarizer.h"
 #include "ImageEroder.h"
@@ -48,6 +49,7 @@ protected:
 private:
 	GreyscaleBitmap m_bitmap;
 	ImageSegmenter m_segmenter;			
+	GaussianFilter m_filter;
 	ImageNormalizer m_normalizer;
 	ImageBinarizer m_binarizer;
 	ImageEroder m_eroder;
@@ -57,6 +59,7 @@ private:
 	MinutiaVec m_minutia;
 
 	BOOL m_segmented;		// image has been segmented
+	BOOL m_filtered;		// image has been filtered
 	BOOL m_normalized;		// image has been normalized
 	BOOL m_binarized;		// image has been binarized
 	BOOL m_eroded;			// image has been eroded
@@ -83,6 +86,8 @@ public:
 	afx_msg void OnUpdateImageExtractMinutia(CCmdUI *pCmdUI);
 	afx_msg void OnImageNormalize();
 	afx_msg void OnUpdateImageNormalize(CCmdUI *pCmdUI);
+	afx_msg void OnImageFilter();
+	afx_msg void OnUpdateImageFilter(CCmdUI *pCmdUI);
 };
 
 

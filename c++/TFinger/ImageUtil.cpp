@@ -1,6 +1,13 @@
+/////////////////////////////////////////////////////////////////////////////
+// 
+// IMAGEUTIL.CPP : Image utility functions
+//
+// Copyright(c) 2010 LexisNexis, All Rights Reserved
+//
 
 #include "stdafx.h"
 #include "ImageUtil.h"
+#include "Matrix.h"
 
 // clockwise neighbors defining the 8-neighborhood
 static const POINT neighbors[8] = {
@@ -10,11 +17,15 @@ static const POINT neighbors[8] = {
 	{ -1, 0 }, { -1, -1 }
 };
 
+static void Convolve(CImage &image, LPBYTE *out, LPCFLOAT kernel, int ksize);
+
+/////////////////////////////////////////////////////////////////////////////
 bool IsValidPoint(const CImage &image, const CPoint &pt)
 {
 	return IsValidPoint(image, pt.x, pt.y);
 }
 
+/////////////////////////////////////////////////////////////////////////////
 bool IsValidPoint(const CImage &image, int x, int y)
 {
 	int rows = image.GetHeight();
@@ -26,6 +37,7 @@ bool IsValidPoint(const CImage &image, int x, int y)
 	return true;
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // Find the k-th neighbor in the 8-neighborhood of pixel x, y
 CPoint Neighbor(int x, int y, int k)
 {
@@ -159,4 +171,60 @@ UINT ImageVariance(const CImage &image)
 	variance /= rows * cols;
 
 	return variance;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Convolve(CImage &image, LPCFLOAT kernel, int ksize)
+{
+	int rows = image.GetHeight();
+	int cols = image.GetWidth();
+
+	LPBYTE *out = MatrixAlloc<BYTE>(rows, cols);
+
+	Convolve(image, out, kernel, ksize);
+
+	SetBits(image, out);
+
+	MatrixFree<BYTE>(out);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Convolve(CImage &image, LPBYTE *out, LPCFLOAT kernel, int ksize)
+{
+	int rows = image.GetHeight();
+	int cols = image.GetWidth();
+	int pitch = image.GetPitch();
+
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+
+	float v;
+	for (int y = 0; y < rows; y++) {
+		for (int x = 0; x < cols; x++) {
+			v = 0;
+			for (int j = y - ksize/2, l = 0; j <= y + ksize/2; j++, l++) {
+				for (int i = x - ksize/2, k = 0; i <= x + ksize/2; i++, k++) {
+					if (i < 0 || i >= cols || j < 0 || j >= rows)
+						continue;
+					v += pbits[j*pitch+i] * kernel[l*ksize+k];
+				}
+			}
+			out[y][x] = BYTE(v);
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void SetBits(CImage &image, LPBYTE *bits)
+{
+	int rows = image.GetHeight();
+	int cols = image.GetWidth();
+	int pitch = image.GetPitch();
+
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+
+	for (int y = 0; y < rows; y++) {
+		for (int x = 0; x < cols; x++) {
+			pbits[y*pitch+x] = bits[y][x];
+		}
+	}
 }

@@ -1,3 +1,9 @@
+/////////////////////////////////////////////////////////////////////////////
+// 
+// IMAGEUTIL.H : Image utility functions
+//
+// Copyright(c) 2010 LexisNexis, All Rights Reserved
+//
 
 #pragma once
 
@@ -11,3 +17,6 @@ UINT MeanBlock(const CImage &image, int x, int y, int blocksize);
 UINT VarianceBlock(CImage &image, int x, int y, int blocksize);
 UINT ImageMean(const CImage &image);
 UINT ImageVariance(const CImage &image);
+void Convolve(CImage &image, LPCFLOAT kernel, int ksize);
+void SetBits(CImage &image, LPBYTE *bits);
+/////////////////////////////////////////////////////////////////////////////

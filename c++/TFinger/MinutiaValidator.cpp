@@ -23,23 +23,23 @@ typedef std::vector<RidgeOrigin> RidgeOriginVec;
 /////////////////////////////////////////////////////////////////////////////
 MinutiaValidator::MinutiaValidator()
 {
-	m_plimage = AllocMatrix(L_IMAGE_SIZE, L_IMAGE_SIZE);
-	m_pkernel = AllocMatrix(3, 3);
+	m_plimage = MatrixAlloc<BYTE>(L_IMAGE_SIZE, L_IMAGE_SIZE);
+	m_pkernel = MatrixAlloc<BYTE>(3, 3);
 	Clear();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 MinutiaValidator::~MinutiaValidator()
 {
-	FreeMatrix(m_plimage);
-	FreeMatrix(m_pkernel);
+	MatrixFree(m_plimage);
+	MatrixFree(m_pkernel);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void MinutiaValidator::Clear()
 {
-	ClearMatrix(m_plimage);
-	ClearMatrix(m_pkernel);
+	MatrixClear(m_plimage);
+	MatrixClear(m_pkernel);
 	m_visited.clear();
 	m_plimage[L_IMAGE_SIZE/2][L_IMAGE_SIZE/2] = -1;	// minutia point
 }

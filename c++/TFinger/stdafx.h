@@ -38,6 +38,7 @@
 
 typedef std::vector<CPoint> CPointVec;
 typedef CONST BYTE *LPCBYTE;
+typedef CONST FLOAT *LPCFLOAT;
 
 #ifdef _UNICODE
 #if defined _M_IX86
