@@ -98,7 +98,7 @@ UINT MeanBlock(const CImage &image, int x, int y, int blocksize)
 
 /////////////////////////////////////////////////////////////////////////////
 // Calculate the variance of a block
-UINT VarianceBlock(CImage &image, int x, int y, int blocksize)
+UINT VarianceBlock(const CImage &image, int x, int y, int blocksize)
 {
 	UINT variance = 0;
 	

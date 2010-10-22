@@ -8,6 +8,6 @@ public:
 
 	void Normalize(CImage &image);
 private:
-	enum { M0 = 215 };	// desired mean
-	enum { V0 = 2200 };	// desired variance
+	enum { M0 = 220 };	// desired mean
+	enum { V0 = 220 };	// desired variance
 };

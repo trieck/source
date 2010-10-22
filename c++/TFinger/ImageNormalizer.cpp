@@ -23,22 +23,24 @@ void ImageNormalizer::Normalize(CImage &image)
 
 	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
 
-	UINT M = ImageMean(image);
-	UINT V = ImageVariance(image);
+	int M = ImageMean(image);
+	int V = ImageVariance(image);
 
 	if (V == 0)
 		return;
 
-	int N;
+	int N, I;
+	BYTE v;
 	for (int y = 0; y < rows; y++) {
 		for (int x = 0; x < cols; x++) {
-			BYTE &I = pbits[y*pitch+x];
+			I = pbits[y*pitch+x];
 			N = (int)sqrt(((float)V0/V) * (I-M) * (I-M));
 			if (I > M) {
-				I = M0 + N;
+				v = M0 + N;
 			} else {
-				I = M0 - N;
+				v = M0 - N;
 			}
+			pbits[y*pitch+x] = v;
 		}
 	}
 }
