@@ -84,8 +84,8 @@ BEGIN
     BUTTON      ID_FILE_CLOSE
     SEPARATOR
     BUTTON      ID_IMAGE_SEGMENT
-	BUTTON      ID_IMAGE_FILTER
     BUTTON      ID_IMAGE_NORMALIZE
+	BUTTON      ID_IMAGE_FILTER    
     BUTTON      ID_IMAGE_BINARIZE
     BUTTON      ID_IMAGE_ERODE
     BUTTON      ID_IMAGE_DILATE
@@ -119,8 +119,8 @@ BEGIN
     POPUP "&Image"
     BEGIN
         MENUITEM "&Segment",                    ID_IMAGE_SEGMENT
-        MENUITEM "&Filter",                     ID_IMAGE_FILTER
         MENUITEM "&Normalize",                  ID_IMAGE_NORMALIZE
+        MENUITEM "&Filter",                     ID_IMAGE_FILTER
         MENUITEM "&Binarize",                   ID_IMAGE_BINARIZE
         MENUITEM "&Erode",                      ID_IMAGE_ERODE
         MENUITEM "&Dilate",                     ID_IMAGE_DILATE

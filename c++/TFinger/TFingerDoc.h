@@ -6,8 +6,8 @@
 
 #include "GreyscaleBitmap.h"
 #include "ImageSegmenter.h"
-#include "GaussianFilter.h"
 #include "ImageNormalizer.h"
+#include "GaussianFilter.h"
 #include "ImageBinarizer.h"
 #include "ImageEroder.h"
 #include "ImageDilater.h"
@@ -59,8 +59,8 @@ private:
 	MinutiaVec m_minutia;
 
 	BOOL m_segmented;		// image has been segmented
-	BOOL m_filtered;		// image has been filtered
 	BOOL m_normalized;		// image has been normalized
+	BOOL m_filtered;		// image has been filtered	
 	BOOL m_binarized;		// image has been binarized
 	BOOL m_eroded;			// image has been eroded
 	BOOL m_dilated;			// image has been dilated

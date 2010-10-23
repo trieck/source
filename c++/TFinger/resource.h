@@ -16,7 +16,6 @@
 #define ID_IMAGE_SEGMENT                32771
 #define ID_IMAGE_BINARIZE               32772
 #define ID_IMAGE_ERODE                  32773
-#define ID_FILE_CLOSE32774              32774
 #define ID_IMAGE_DILATE                 32775
 #define ID_IMAGE_SKELETONIZE            32776
 #define ID_VIEW_ZOOMIN                  32777

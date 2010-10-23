@@ -38,8 +38,8 @@ END_MESSAGE_MAP()
 // CTFingerDoc construction/destruction
 CTFingerDoc::CTFingerDoc()
  : m_segmented(FALSE), 
- m_filtered(FALSE),
  m_normalized(FALSE),
+ m_filtered(FALSE), 
  m_binarized(FALSE), 
  m_eroded(FALSE), 
  m_dilated(FALSE),
@@ -154,7 +154,7 @@ void CTFingerDoc::OnImageSegment()
 }
 void CTFingerDoc::OnUpdateImageBinarize(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && m_normalized && !m_binarized);
+	pCmdUI->Enable(!m_bitmap.IsNull() && m_filtered && !m_binarized);
 }
 
 void CTFingerDoc::OnImageBinarize()
@@ -209,7 +209,6 @@ void CTFingerDoc::OnUpdateImageSkeletonize(CCmdUI *pCmdUI)
 	pCmdUI->Enable(!m_bitmap.IsNull() && m_dilated && !m_skeletonized);
 }
 
-
 void CTFingerDoc::OnImageExtractMinutia()
 {
 	CWaitCursor cursor;
@@ -233,7 +232,7 @@ void CTFingerDoc::OnImageNormalize()
 
 void CTFingerDoc::OnUpdateImageNormalize(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && m_filtered && !m_normalized);
+	pCmdUI->Enable(!m_bitmap.IsNull() && m_segmented && !m_normalized);
 }
 
 void CTFingerDoc::OnImageFilter()
@@ -246,5 +245,5 @@ void CTFingerDoc::OnImageFilter()
 
 void CTFingerDoc::OnUpdateImageFilter(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && m_segmented && !m_filtered);
+	pCmdUI->Enable(!m_bitmap.IsNull() && m_normalized && !m_filtered);
 }
