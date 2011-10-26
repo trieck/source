@@ -9,19 +9,10 @@
 #include "MainFrm.h"
 #include "DrumSequencerDoc.h"
 #include "DrumSequencerView.h"
-#include "outputdevs.h"
-#include "resource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
-ANON_BEGIN
-void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance, 
-	DWORD dwParam1, DWORD dwParam2);
-ANON_END
-
-#define PRG_SYNTH_DRUM	(118)
 
 // CDrumSequencerApp
 
@@ -32,14 +23,15 @@ BEGIN_MESSAGE_MAP(CDrumSequencerApp, CWinAppEx)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
 	// Standard print setup command
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
-	ON_COMMAND(ID_SEQUENCER_PLAY, &CDrumSequencerApp::OnSequencerPlay)
 	ON_COMMAND(ID_SEQUENCER_STOP, &CDrumSequencerApp::OnSequencerStop)
+	ON_UPDATE_COMMAND_UI(ID_SEQUENCER_PLAY, &CDrumSequencerApp::OnUpdateSequencerPlay)
+	ON_UPDATE_COMMAND_UI(ID_SEQUENCER_STOP, &CDrumSequencerApp::OnUpdateSequencerStop)
 END_MESSAGE_MAP()
 
 
 // CDrumSequencerApp construction
 
-CDrumSequencerApp::CDrumSequencerApp() : m_pStream(NULL)
+CDrumSequencerApp::CDrumSequencerApp()
 {
 	m_bHiColorIcons = TRUE;
 
@@ -66,18 +58,13 @@ CDrumSequencerApp theApp;
 
 CDrumSequencerApp::~CDrumSequencerApp()
 {
-	if (m_pStream != NULL) {
-		delete m_pStream;
-		m_pStream = NULL;
-	}
 }
 
 // CDrumSequencerApp initialization
 
 BOOL CDrumSequencerApp::InitInstance()
 {
-	// Initialize the MIDI stream
-	if (!InitializeStream())
+	if (!m_sequencer.Initialize())
 		return FALSE;
 
 	// InitCommonControlsEx() is required on Windows XP if an application
@@ -202,71 +189,27 @@ void CDrumSequencerApp::SaveCustomState()
 
 int CDrumSequencerApp::ExitInstance()
 {
-	if (m_pStream != NULL) {
-		m_pStream->Close();
-	}
-
+	m_sequencer.Close();
+	
 	return CWinAppEx::ExitInstance();
 }
 
-BOOL CDrumSequencerApp::InitializeStream(void)
+BOOL CDrumSequencerApp::Play(const Sequence & sequence)
 {
-	ASSERT(m_pStream == NULL);
-
-	// Set the output stream to the midi mapper
-	m_pStream = (MidiStream *)OutputDevices().GetStream(MIDI_MAPPER);
-	if (m_pStream == NULL) {
-		AfxMessageBox(IDS_COULDNOTOPENMIDIMAPPER);
-		return FALSE;
-	}
-
-	m_pStream->RegisterHook(StreamProc);
-
-	// Open the output device
-	MMRESULT result = m_pStream->Open();
-	if (result != MMSYSERR_NOERROR) {
-		AfxMessageBox(OutputDevice::GetErrorText(result));
-		return FALSE;
-	}
-
-	// Set the time division
-	MIDIPROPTIMEDIV prop;
-	prop.cbStruct = sizeof(MIDIPROPTIMEDIV);
-	prop.dwTimeDiv = DEFAULT_PPQN;
-	if (m_pStream->Property((LPBYTE)&prop, MIDIPROP_SET | MIDIPROP_TIMEDIV) != MMSYSERR_NOERROR) {
-		AfxMessageBox(IDS_COULDNOTSETTIMEDIVISION);
-		return FALSE;
-	}
-
-	// make a program change to synth drum
-	MidiMessage msg;
-	msg.SetStatus(PROGRAM_CHANGE(0));
-	msg.SetData(PRG_SYNTH_DRUM);
-	
-	return (m_pStream->ShortMessage(msg) == MMSYSERR_NOERROR);
-}
-
-void CDrumSequencerApp::OnSequencerPlay()
-{
+	return m_sequencer.Play(sequence);	
 }
 
 void CDrumSequencerApp::OnSequencerStop()
 {
+	m_sequencer.Stop();
 }
 
-ANON_BEGIN
-
-void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance,
-                DWORD dwParam1, DWORD dwParam2)
+void CDrumSequencerApp::OnUpdateSequencerPlay(CCmdUI *pCmdUI)
 {
-	if (uMsg != MOM_DONE)
-		return;
-
-	// Unprepare the midi header
-	::midiOutUnprepareHeader(
-	    (HMIDIOUT)hMidiStream,
-	    (LPMIDIHDR)dwParam1,
-	    sizeof(MIDIHDR));
+	pCmdUI->Enable(!m_sequencer.IsPlaying());
 }
 
-ANON_END
+void CDrumSequencerApp::OnUpdateSequencerStop(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_sequencer.IsPlaying());
+}

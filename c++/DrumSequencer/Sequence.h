@@ -8,6 +8,7 @@ public:
 
 	bool GetBeat(int x, int y) const;
 	void Clear(void);
+	BYTE GetInstrument(int i) const;
 
 	enum { NINSTRUMENTS = 10 };	// number of instruments
 	enum { NBARS = 1 };			// number of bars

@@ -14,7 +14,6 @@ ANON_END
 MidiBuffer::MidiBuffer()
 {
 	memset(&m_header, 0, sizeof(MIDIHDR));
-	Alloc();
 }
 
 MidiBuffer::~MidiBuffer()
@@ -22,15 +21,13 @@ MidiBuffer::~MidiBuffer()
 	Free();
 }
 
-void MidiBuffer::Alloc()
+void MidiBuffer::Alloc(UINT nSize)
 {
 	Free();
-
-	// Determine the size of the buffer needed
-	UINT size = 0;
-
-	m_header.dwBufferLength = m_header.dwBytesRecorded = size;
-	m_header.lpData = new CHAR[size];
+	m_header.dwBufferLength = m_header.dwBytesRecorded = nSize;
+	m_header.lpData = new CHAR[nSize];
+	if (m_header.lpData == NULL)
+		AfxThrowMemoryException();
 }
 
 void MidiBuffer::Free()
@@ -40,6 +37,34 @@ void MidiBuffer::Free()
 	memset(&m_header, 0, sizeof(MIDIHDR));
 }
 
+void MidiBuffer::Encode(const Sequence & seq)
+{
+	// Determine the size of the buffer needed
+	UINT size = (Sequence::NINSTRUMENTS * Sequence::NSUBS)	/* notes */
+		* 2	/* note-on + note-off */
+		* sizeof(shortEvent)
+		+ sizeof(shortEvent);	// tempo
+	
+	if (size > m_header.dwBufferLength) {
+		Alloc(size);	
+	}
+
+	LPSTR pdata = m_header.lpData;
+	PutEvent(&pdata, Tempo(100));
+	
+	BYTE instrument;
+	for (int i = 0; i < Sequence::NSUBS; i++) {
+		for (int j = 0; j < Sequence::NINSTRUMENTS; j++) {
+			instrument = seq.GetInstrument(j);
+			if (seq.GetBeat(i, j)) {
+				PutEvent(&pdata, NoteOn(instrument));
+				PutEvent(&pdata, NoteOff(instrument));
+			} else {
+				PutEvent(&pdata, NoteOff(instrument));
+			}
+		}		
+	}
+}
 
 // Helper functions
 
@@ -93,7 +118,7 @@ shortEvent* NoteOff(BYTE data)
 	return &event;
 }
 
-void putevent(LPSTR *ppdata, const shortEvent *event)
+void PutEvent(LPSTR *ppdata, const shortEvent *event)
 {
 	ASSERT(*ppdata != NULL);
 	ASSERT(event != NULL);
@@ -103,3 +128,4 @@ void putevent(LPSTR *ppdata, const shortEvent *event)
 }
 
 ANON_END
+

@@ -8,7 +8,7 @@
 #endif
 
 #include "resource.h"       // main symbols
-#include "midistream.h"
+#include "sequencer.h"
 
 // CDrumSequencerApp:
 // See DrumSequencer.cpp for the implementation of this class
@@ -35,12 +35,13 @@ public:
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
 private:
-	MidiStream *m_pStream;
+	Sequencer m_sequencer;	
 public:
 	virtual int ExitInstance();
-	BOOL InitializeStream(void);
-	afx_msg void OnSequencerPlay();
 	afx_msg void OnSequencerStop();
+	BOOL Play(const Sequence & sequence);
+	afx_msg void OnUpdateSequencerPlay(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateSequencerStop(CCmdUI *pCmdUI);
 };
 
 extern CDrumSequencerApp theApp;

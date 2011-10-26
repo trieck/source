@@ -3,12 +3,30 @@
 
 IMPLEMENT_SERIAL(Sequence, CObject, VERSIONABLE_SCHEMA)
 
+ANON_BEGIN
+
 // sequence file marker
-static const BYTE SEQ_MARKER[3] = {
+const BYTE SEQ_MARKER[3] = {
 	'S',
 	'E',
 	'Q'
 }; 
+
+// MIDI instruments
+const BYTE INSTRUMENTS[Sequence::NINSTRUMENTS] = {
+	42,	// closed hi-hat
+	44,	// pedal hi-hat
+	46,	// open hi-hat
+	49,	// crash cymbal
+	51,	// ride cymbal
+	38,	// acoustic snare
+	50,	// hi tom
+	48,	// hi-mid tom
+	45,	// low tom
+	36	// bass drum1
+};
+
+ANON_END
 
 Sequence::Sequence(void)
 {
@@ -31,6 +49,14 @@ bool Sequence::GetBeat(int x, int y) const
 	x = x % NSUBS;
 	y = y % NINSTRUMENTS;
 	return m_beats[y][x];
+}
+
+BYTE Sequence::GetInstrument(int i) const
+{
+	if (i < 0 || i >= NINSTRUMENTS)
+		return 0;
+
+	return INSTRUMENTS[i];
 }
 
 void Sequence::Clear(void)

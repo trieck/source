@@ -134,3 +134,14 @@ void CDrumSequencerDoc::DeleteContents()
 	CDocument::DeleteContents();
 }
 
+BEGIN_MESSAGE_MAP(CDrumSequencerDoc, CDocument)
+	ON_COMMAND(ID_SEQUENCER_PLAY, &CDrumSequencerDoc::OnSequencerPlay)
+END_MESSAGE_MAP()
+
+void CDrumSequencerDoc::OnSequencerPlay()
+{
+	CDrumSequencerApp *pApp = (CDrumSequencerApp*)AfxGetApp();
+	ASSERT_VALID(pApp);
+
+	pApp->Play(m_sequence);
+}

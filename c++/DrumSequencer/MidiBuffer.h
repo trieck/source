@@ -1,6 +1,7 @@
 #pragma once
 
 #include "midicommon.h"
+#include "Sequence.h"
 
 ///////////////////////////////////////////////////////////////////////
 class MidiBuffer {
@@ -16,10 +17,12 @@ public:
 
 	// Implementation
 protected:
-	void Alloc();
+	void Alloc(UINT nSize);
 	void Free();
 
 private:
 	MIDIHDR m_header;
+public:
+	void Encode(const Sequence & seq);
 };
 

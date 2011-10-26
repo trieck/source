@@ -50,4 +50,6 @@ private:
 	Sequence m_sequence;
 public:
 	virtual void DeleteContents();
+	DECLARE_MESSAGE_MAP()
+	afx_msg void OnSequencerPlay();
 };

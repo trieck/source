@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // Duration enumeration
-typedef enum {
+typedef enum Duration {
 	EmptyNote = 0,
 	WholeNote = 1,
 	HalfNote = 2,
@@ -18,7 +18,7 @@ typedef enum {
 	EigthNote = 8,
 	SixteenthNote = 16,
 	ThirtySecondNote = 32
-} Duration;
+};
 
 /////////////////////////////////////////////////////////////////////////////
 namespace MidiTime {
