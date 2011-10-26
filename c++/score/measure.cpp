@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	MEASURE.CPP
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -22,7 +22,7 @@ static const int vicinity = 2;                                  // note vicinity
 //
 // Constructor
 //
-Measure :: Measure(const Staff * pStaff, const CRect & rc, UINT Clef)
+Measure::Measure(const Staff * pStaff, const CRect & rc, UINT Clef)
 		: m_ks(0),
 		m_ts(4, Crotchet),
 		m_pStaff(pStaff)
@@ -45,7 +45,7 @@ Measure :: Measure(const Staff * pStaff, const CRect & rc, UINT Clef)
 //
 // Destructor
 //
-Measure :: ~Measure()
+Measure::~Measure()
 {
 	if (m_pClef != NULL)
 		delete m_pClef;
@@ -54,7 +54,7 @@ Measure :: ~Measure()
 //
 // Clear
 //
-void Measure :: Clear()
+void Measure::Clear()
 {
 	m_Beats.clear();
 	m_ts.SetTimeSignature(4, Crotchet);
@@ -66,7 +66,7 @@ void Measure :: Clear()
 //
 // SetNoteAlign
 //
-void Measure :: SetNoteAlign()
+void Measure::SetNoteAlign()
 {
 	m_NoteAlign = defaultNoteAlign;
 
@@ -82,7 +82,7 @@ void Measure :: SetNoteAlign()
 //
 // AddNote
 //
-BOOL Measure :: AddNote(Note * pNote)
+BOOL Measure::AddNote(Note * pNote)
 {
 	ASSERT_VALID(pNote);
 
@@ -123,7 +123,7 @@ BOOL Measure :: AddNote(Note * pNote)
 //
 // RemoveNote
 //
-BOOL Measure :: RemoveNote(Note * pNote)
+BOOL Measure::RemoveNote(Note * pNote)
 {
 	ASSERT_VALID(pNote);
 
@@ -144,7 +144,7 @@ BOOL Measure :: RemoveNote(Note * pNote)
 //
 // ResetForward
 //
-Note * Measure :: ResetForward(Note * pNote)
+Note * Measure::ResetForward(Note * pNote)
 {
 	ASSERT_VALID(pNote);
 
@@ -175,7 +175,7 @@ Note * Measure :: ResetForward(Note * pNote)
 //
 // CanAddNote
 //
-BOOL Measure :: CanAddNote(const Note * pNote) const
+BOOL Measure::CanAddNote(const Note * pNote) const
 {
 	ASSERT(pNote != NULL);
 
@@ -197,7 +197,7 @@ BOOL Measure :: CanAddNote(const Note * pNote) const
 //
 // AdjustNotePositions
 //
-void Measure :: AdjustNotePositions()
+void Measure::AdjustNotePositions()
 {
 	int cx = left + m_NoteAlign;
 
@@ -223,7 +223,7 @@ void Measure :: AdjustNotePositions()
 //
 // GetNoteSpanWidth
 //
-int Measure :: GetNoteSpanWidth() const
+int Measure::GetNoteSpanWidth() const
 {
 	return Width() - m_NoteAlign - endOffset;
 }
@@ -231,7 +231,7 @@ int Measure :: GetNoteSpanWidth() const
 //
 // GetNoteWidth
 //
-int Measure :: GetNoteWidth(const Note * pNote) const
+int Measure::GetNoteWidth(const Note * pNote) const
 {
 	ASSERT_VALID(pNote);
 
@@ -246,7 +246,7 @@ int Measure :: GetNoteWidth(const Note * pNote) const
 //
 // Render
 //
-void Measure :: Render(CDC * pDC) const
+void Measure::Render(CDC * pDC) const
 {
 	ASSERT_VALID(pDC);
 
@@ -281,7 +281,7 @@ void Measure :: Render(CDC * pDC) const
 //
 // RenderSelected
 //
-void Measure :: RenderSelected(CDC * pDC) const
+void Measure::RenderSelected(CDC * pDC) const
 {
 	ASSERT(pDC != NULL);
 
@@ -293,7 +293,7 @@ void Measure :: RenderSelected(CDC * pDC) const
 //
 // RenderClef
 //
-void Measure :: RenderClef(CDC * pDC) const
+void Measure::RenderClef(CDC * pDC) const
 {
 	ASSERT_VALID(pDC);
 	ASSERT_VALID(m_pClef);
@@ -309,7 +309,7 @@ void Measure :: RenderClef(CDC * pDC) const
 //
 // RenderKeySignature
 //
-void Measure :: RenderKeySignature(CDC * pDC) const
+void Measure::RenderKeySignature(CDC * pDC) const
 {
 	ASSERT_VALID(pDC);
 
@@ -321,7 +321,7 @@ void Measure :: RenderKeySignature(CDC * pDC) const
 //
 // RenderNotes
 //
-void Measure :: RenderNotes(CDC * pDC) const
+void Measure::RenderNotes(CDC * pDC) const
 {
 	POSITION pos = m_Beats.GetHeadPosition();
 	while (pos != NULL) {
@@ -340,7 +340,7 @@ void Measure :: RenderNotes(CDC * pDC) const
 //
 // GetNote
 //
-Note * Measure :: GetNote(const CPoint & pt) const
+Note * Measure::GetNote(const CPoint & pt) const
 {
 	POSITION pos = m_Beats.GetHeadPosition();
 	while (pos != NULL) {
@@ -362,7 +362,7 @@ Note * Measure :: GetNote(const CPoint & pt) const
 //
 // IsBetween
 //
-BOOL Measure :: IsBetween(const Note * pNote, NoteList ** ppLeft, NoteList ** ppRight) const
+BOOL Measure::IsBetween(const Note * pNote, NoteList ** ppLeft, NoteList ** ppRight) const
 {
 	ASSERT_VALID(pNote);
 	ASSERT(ppLeft != NULL);
@@ -401,7 +401,7 @@ BOOL Measure :: IsBetween(const Note * pNote, NoteList ** ppLeft, NoteList ** pp
 //
 // Serialize
 //
-void Measure :: Serialize(CArchive & ar)
+void Measure::Serialize(CArchive & ar)
 {
 	if (ar.IsStoring()) {
 		ar << m_Tempo;
@@ -415,7 +415,7 @@ void Measure :: Serialize(CArchive & ar)
 //
 // GetVicinity
 //
-NoteList * Measure :: GetVicinity(const Note * pNote) const
+NoteList * Measure::GetVicinity(const Note * pNote) const
 {
 	ASSERT_VALID(pNote);
 
@@ -438,7 +438,7 @@ NoteList * Measure :: GetVicinity(const Note * pNote) const
 //
 // GetNoteCount
 //
-int Measure :: GetNoteCount() const
+int Measure::GetNoteCount() const
 {
 	int count = 0;
 
@@ -456,7 +456,7 @@ int Measure :: GetNoteCount() const
 //
 // SetKeySignature
 //
-void Measure :: SetKeySignature(int index)
+void Measure::SetKeySignature(int index)
 {
 	m_ks.assign(index);
 	SetNoteAlign();

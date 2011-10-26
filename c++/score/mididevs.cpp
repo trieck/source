@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	MIDIDEVS.CPP
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -11,13 +11,13 @@
 //
 // Constructor
 //
-MidiDevices :: MidiDevices()
+MidiDevices::MidiDevices()
 {
 }
 
 //
 // Destructor
 //
-MidiDevices :: ~MidiDevices()
+MidiDevices::~MidiDevices()
 {
 }

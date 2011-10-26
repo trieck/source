@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	OUTPUTDEVS.CPP
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -13,21 +13,21 @@
 //
 // Constructor
 //
-OutputDevices :: OutputDevices()
+OutputDevices::OutputDevices()
 {
 }
 
 //
 // Destructor
 //
-OutputDevices :: ~OutputDevices()
+OutputDevices::~OutputDevices()
 {
 }
 
 //
 // Count
 //
-UINT OutputDevices :: Count() const
+UINT OutputDevices::Count() const
 {
 	return ::midiOutGetNumDevs();
 }
@@ -35,7 +35,7 @@ UINT OutputDevices :: Count() const
 //
 // GetDevice
 //
-MidiDevice * OutputDevices :: GetDevice(UINT device) const
+MidiDevice * OutputDevices::GetDevice(UINT device) const
 {
 	MIDIOUTCAPS caps;
 	MMRESULT result = ::midiOutGetDevCaps(device, &caps, sizeof(MIDIOUTCAPS));
@@ -48,7 +48,7 @@ MidiDevice * OutputDevices :: GetDevice(UINT device) const
 //
 // GetStream
 //
-MidiDevice * OutputDevices :: GetStream(UINT device) const
+MidiDevice * OutputDevices::GetStream(UINT device) const
 {
 	MIDIOUTCAPS caps;
 	MMRESULT result = ::midiOutGetDevCaps(device, &caps, sizeof(MIDIOUTCAPS));

@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	STAFF.CPP
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -38,7 +38,7 @@ IMPLEMENT_SERIAL(Staff, CObject, VERSIONABLE_SCHEMA)
 //
 // Constructor
 //
-Staff :: Staff()
+Staff::Staff()
 {
 	this->left = borderOffset;
 	this->top = borderOffset;
@@ -55,7 +55,7 @@ Staff :: Staff()
 //
 // Destructor
 //
-Staff :: ~Staff()
+Staff::~Staff()
 {
 	RemoveAnchors();
 	RemoveMeasures();
@@ -64,7 +64,7 @@ Staff :: ~Staff()
 //
 // Clear
 //
-void Staff :: Clear()
+void Staff::Clear()
 {
 	// Remove all the notes from the measures
 	for (int i = 0; i < GetMeasureCount(); i++) {
@@ -78,7 +78,7 @@ void Staff :: Clear()
 //
 // BuildAnchors
 //
-void Staff :: BuildAnchors()
+void Staff::BuildAnchors()
 {
 	int Count = GetSize();
 	int mx = sizeof(NoteIntervals) / sizeof(NoteInterval);
@@ -107,7 +107,7 @@ void Staff :: BuildAnchors()
 //
 // BuildMeasures
 //
-void Staff :: BuildMeasures()
+void Staff::BuildMeasures()
 {
 	int Measures = GetMeasureCount();
 	ASSERT(Measures != 0);
@@ -133,7 +133,7 @@ void Staff :: BuildMeasures()
 //
 // GetMeasure
 //
-Measure * Staff :: GetMeasure(const CPoint & pt) const
+Measure * Staff::GetMeasure(const CPoint & pt) const
 {
 	int Count = GetMeasureCount();
 	for (int i = 0; i < Count; i++) {
@@ -152,7 +152,7 @@ Measure * Staff :: GetMeasure(const CPoint & pt) const
 //
 // Render
 //
-void Staff :: Render (CDC * pDC) const
+void Staff::Render (CDC * pDC) const
 {
 	ASSERT_VALID(pDC);
 
@@ -180,7 +180,7 @@ void Staff :: Render (CDC * pDC) const
 //
 // RenderMeasures
 //
-void Staff :: RenderMeasures(CDC * pDC) const
+void Staff::RenderMeasures(CDC * pDC) const
 {
 	ASSERT_VALID(pDC);
 
@@ -195,7 +195,7 @@ void Staff :: RenderMeasures(CDC * pDC) const
 //
 // GetAnchor
 //
-PANCHOR Staff :: GetAnchor(const CPoint & pt) const
+PANCHOR Staff::GetAnchor(const CPoint & pt) const
 {
 	// Does this point land on a ledger line
 	int line = PtOnLedgerLine(pt);
@@ -215,7 +215,7 @@ PANCHOR Staff :: GetAnchor(const CPoint & pt) const
 //
 // PtOnLedgerLine
 //
-int Staff :: PtOnLedgerLine(const CPoint & pt) const
+int Staff::PtOnLedgerLine(const CPoint & pt) const
 {
 	for (int i = 0; i < numLines; i++) {
 		if (pt.x >= this->left &&
@@ -231,7 +231,7 @@ int Staff :: PtOnLedgerLine(const CPoint & pt) const
 //
 // PtOnSpace
 //
-int Staff :: PtOnSpace(const CPoint & pt) const
+int Staff::PtOnSpace(const CPoint & pt) const
 {
 	for (int i = 0; i < numSpaces; i++) {
 		if (pt.x >= this->left &&
@@ -247,7 +247,7 @@ int Staff :: PtOnSpace(const CPoint & pt) const
 //
 // RemoveAnchors
 //
-void Staff :: RemoveAnchors()
+void Staff::RemoveAnchors()
 {
 	int Count = GetSize();
 
@@ -263,7 +263,7 @@ void Staff :: RemoveAnchors()
 //
 // RemoveMeasures
 //
-void Staff :: RemoveMeasures()
+void Staff::RemoveMeasures()
 {
 	int Count = GetMeasureCount();
 
@@ -278,7 +278,7 @@ void Staff :: RemoveMeasures()
 //
 // DeselectAllMeasures
 //
-void Staff :: DeselectAllMeasures ()
+void Staff::DeselectAllMeasures ()
 {
 	int Count = GetMeasureCount();
 	for (int i = 0; i < Count; i++) {
@@ -291,7 +291,7 @@ void Staff :: DeselectAllMeasures ()
 //
 // Serialize
 //
-void Staff :: Serialize(CArchive & ar)
+void Staff::Serialize(CArchive & ar)
 {
 	CObject::Serialize(ar);
 

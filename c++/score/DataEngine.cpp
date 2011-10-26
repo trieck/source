@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	DATAENGINE.CPP
 //
@@ -6,7 +6,7 @@
 //	a high level abstract measure object
 //	into raw MIDI data suitable for playback
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -19,7 +19,7 @@ extern BYTE defaultChannel;
 //
 // Constructor
 //
-DataEngine :: DataEngine(const Measure * pMeasure)
+DataEngine::DataEngine(const Measure * pMeasure)
 {
 	ASSERT(pMeasure != NULL);
 	m_pData = NULL;
@@ -29,7 +29,7 @@ DataEngine :: DataEngine(const Measure * pMeasure)
 //
 // Destructor
 //
-DataEngine :: ~DataEngine()
+DataEngine::~DataEngine()
 {
 	FREEMIDIDATA(m_pData);
 }
@@ -37,7 +37,7 @@ DataEngine :: ~DataEngine()
 //
 // xform
 //
-BOOL DataEngine :: xform(const Measure * pMeasure)
+BOOL DataEngine::xform(const Measure * pMeasure)
 {
 	ASSERT(pMeasure != NULL);
 
@@ -90,7 +90,7 @@ BOOL DataEngine :: xform(const Measure * pMeasure)
 //
 // NoteOn
 //
-shortEvent * DataEngine :: NoteOn(const Note * pNote) const
+shortEvent * DataEngine::NoteOn(const Note * pNote) const
 {
 	// Build a note on event
 	static shortEvent event;
@@ -113,7 +113,7 @@ shortEvent * DataEngine :: NoteOn(const Note * pNote) const
 //
 // NoteOff
 //
-shortEvent * DataEngine :: NoteOff(const Note * pNote, BOOL delay) const
+shortEvent * DataEngine::NoteOff(const Note * pNote, BOOL delay) const
 {
 	static shortEvent event;
 	memset(&event, 0, sizeof(shortEvent));
@@ -135,7 +135,7 @@ shortEvent * DataEngine :: NoteOff(const Note * pNote, BOOL delay) const
 //
 // SetTempo
 //
-void DataEngine :: SetTempo(int bpm)
+void DataEngine::SetTempo(int bpm)
 {
 	ASSERT(m_pData->lpData != NULL);
 
@@ -152,7 +152,7 @@ void DataEngine :: SetTempo(int bpm)
 //
 // AllocBuffer
 //
-BOOL DataEngine :: AllocBuffer(const Measure * pMeasure)
+BOOL DataEngine::AllocBuffer(const Measure * pMeasure)
 {
 	ASSERT_VALID(pMeasure);
 

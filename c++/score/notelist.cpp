@@ -1,11 +1,11 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	NOTELIST.CPP : doubly linked list of notes
 //
 //  This class represents a vertical list of notes
 //  represented as a musical chord
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -33,14 +33,14 @@ IMPLEMENT_SERIAL(NoteList, CObject, VERSIONABLE_SCHEMA)
 //
 // Constructor
 //
-NoteList :: NoteList()
+NoteList::NoteList()
 {
 }
 
 //
 // Destructor
 //
-NoteList :: ~NoteList()
+NoteList::~NoteList()
 {
 	Clear();
 }
@@ -48,7 +48,7 @@ NoteList :: ~NoteList()
 //
 // Copy Constructor
 //
-NoteList :: NoteList(const NoteList & list)
+NoteList::NoteList(const NoteList & list)
 {
 	POSITION pos = list.GetHeadPosition();
 	while (pos != NULL) {
@@ -65,7 +65,7 @@ NoteList :: NoteList(const NoteList & list)
 //
 // operator =
 //
-NoteList & NoteList :: operator = (const NoteList & list)
+NoteList & NoteList::operator = (const NoteList & list)
 {
 	if (this != &list) {
 		Clear();
@@ -88,7 +88,7 @@ NoteList & NoteList :: operator = (const NoteList & list)
 //
 // Clear
 //
-void NoteList :: Clear()
+void NoteList::Clear()
 {
 	POSITION pos = GetHeadPosition();
 	while (pos != NULL) {
@@ -104,7 +104,7 @@ void NoteList :: Clear()
 //
 // ismember
 //
-BOOL NoteList :: ismember(const Note * pNote) const
+BOOL NoteList::ismember(const Note * pNote) const
 {
 	ASSERT_VALID(pNote);
 
@@ -125,7 +125,7 @@ BOOL NoteList :: ismember(const Note * pNote) const
 //
 // find
 //
-Note * NoteList :: find(BYTE data) const
+Note * NoteList::find(BYTE data) const
 {
 	POSITION pos = GetHeadPosition();
 	while (pos != NULL) {
@@ -144,7 +144,7 @@ Note * NoteList :: find(BYTE data) const
 //
 // GetDuration
 //
-Duration NoteList :: GetDuration() const
+Duration NoteList::GetDuration() const
 {
 	ASSERT(!IsEmpty());
 
@@ -154,7 +154,7 @@ Duration NoteList :: GetDuration() const
 //
 // GetX
 //
-int NoteList :: GetX() const
+int NoteList::GetX() const
 {
 	ASSERT(!IsEmpty());
 
@@ -164,7 +164,7 @@ int NoteList :: GetX() const
 //
 // Remove
 //
-BOOL NoteList :: Remove(Note * pNote)
+BOOL NoteList::Remove(Note * pNote)
 {
 	ASSERT_VALID(pNote);
 
@@ -181,7 +181,7 @@ BOOL NoteList :: Remove(Note * pNote)
 //
 // Serialize
 //
-void NoteList :: Serialize(CArchive & ar)
+void NoteList::Serialize(CArchive & ar)
 {
 	CObject::Serialize(ar);
 

@@ -68,7 +68,7 @@ BOOL TempoDlg::OnInitDialog()
 //
 // OnOK
 //
-void TempoDlg :: OnOK()
+void TempoDlg::OnOK()
 {
 	CDialog::OnOK();
 
@@ -81,7 +81,7 @@ void TempoDlg :: OnOK()
 //
 // ApplyForward
 //
-void TempoDlg :: ApplyForward() const
+void TempoDlg::ApplyForward() const
 {
 	const Staff * pStaff = m_pMeasure->GetStaff();
 	ASSERT(pStaff != NULL);

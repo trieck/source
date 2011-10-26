@@ -1,11 +1,11 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	DBLEBUFF.CPP : double buffer
 //
 //	This class implements a double buffer scheme
 //	for streaming MIDI data
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -17,7 +17,7 @@
 //
 // Constructor
 //
-DoubleBuffer :: DoubleBuffer()
+DoubleBuffer::DoubleBuffer()
 {
 	memset(&m_Buffers, 0, sizeof(m_Buffers));
 	AllocBuffers();
@@ -26,7 +26,7 @@ DoubleBuffer :: DoubleBuffer()
 //
 // Destructor
 //
-DoubleBuffer :: ~DoubleBuffer()
+DoubleBuffer::~DoubleBuffer()
 {
 	FreeBuffers();
 }
@@ -34,7 +34,7 @@ DoubleBuffer :: ~DoubleBuffer()
 //
 // AllocBuffers
 //
-void DoubleBuffer :: AllocBuffers()
+void DoubleBuffer::AllocBuffers()
 {
 	FreeBuffers();
 
@@ -47,7 +47,7 @@ void DoubleBuffer :: AllocBuffers()
 //
 // FreeBuffers
 //
-void DoubleBuffer :: FreeBuffers()
+void DoubleBuffer::FreeBuffers()
 {
 	for (int i = 0; i < BUFFERS; i++) {
 		if (m_Buffers[i].lpData != NULL)
@@ -59,7 +59,7 @@ void DoubleBuffer :: FreeBuffers()
 //
 // ReallocBuffer
 //
-BOOL DoubleBuffer :: ReallocBuffer(MIDIHDR * pBuffer) const
+BOOL DoubleBuffer::ReallocBuffer(MIDIHDR * pBuffer) const
 {
 	ASSERT(pBuffer != NULL);
 	ASSERT(pBuffer->lpData != NULL);
@@ -80,7 +80,7 @@ BOOL DoubleBuffer :: ReallocBuffer(MIDIHDR * pBuffer) const
 //
 // SetFront
 //
-BOOL DoubleBuffer :: SetFront(MIDIHDR * pdata)
+BOOL DoubleBuffer::SetFront(MIDIHDR * pdata)
 {
 	ASSERT(pdata != NULL);
 
@@ -90,7 +90,7 @@ BOOL DoubleBuffer :: SetFront(MIDIHDR * pdata)
 //
 // SetBack
 //
-BOOL DoubleBuffer :: SetBack(MIDIHDR * pdata)
+BOOL DoubleBuffer::SetBack(MIDIHDR * pdata)
 {
 	ASSERT(pdata != NULL);
 
@@ -100,7 +100,7 @@ BOOL DoubleBuffer :: SetBack(MIDIHDR * pdata)
 //
 // Set
 //
-BOOL DoubleBuffer :: Set(MIDIHDR * pDest, MIDIHDR * pSrc) const
+BOOL DoubleBuffer::Set(MIDIHDR * pDest, MIDIHDR * pSrc) const
 {
 	ASSERT(pDest != NULL);
 	ASSERT(pSrc != NULL);

@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	TIMESIGNATURE.CPP
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -11,7 +11,7 @@
 //
 // Constructor
 //
-TimeSignature :: TimeSignature()
+TimeSignature::TimeSignature()
 {
 	m_beats = 0;
 	m_length = EmptyLength;
@@ -20,7 +20,7 @@ TimeSignature :: TimeSignature()
 //
 // Constructor
 //
-TimeSignature :: TimeSignature(int beats, BeatLength length)
+TimeSignature::TimeSignature(int beats, BeatLength length)
 {
 	m_beats = beats;
 	m_length = length;
@@ -29,14 +29,14 @@ TimeSignature :: TimeSignature(int beats, BeatLength length)
 //
 // Destructor
 //
-TimeSignature :: ~TimeSignature()
+TimeSignature::~TimeSignature()
 {
 }
 
 //
 // SetTimeSignature
 //
-void TimeSignature :: SetTimeSignature(int beats, BeatLength length)
+void TimeSignature::SetTimeSignature(int beats, BeatLength length)
 {
 	m_beats = beats;
 	m_length = length;
@@ -45,7 +45,7 @@ void TimeSignature :: SetTimeSignature(int beats, BeatLength length)
 //
 // GetTimeSignature
 //
-void TimeSignature :: GetTimeSignature(int & beats, BeatLength & length) const
+void TimeSignature::GetTimeSignature(int & beats, BeatLength & length) const
 {
 	beats = m_beats;
 	length = m_length;
@@ -54,7 +54,7 @@ void TimeSignature :: GetTimeSignature(int & beats, BeatLength & length) const
 //
 // GetDuration
 //
-float TimeSignature :: GetDuration() const
+float TimeSignature::GetDuration() const
 {
 	if (m_length == EmptyLength)
 		return 0;

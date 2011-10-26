@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	NEPTUNE.CPP : commonly used functions
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -11,7 +11,7 @@
 //
 // DrawBitmap
 //
-void Neptune :: DrawBitmap (CBitmap * pBitmap, CDC * pDC, int x, int y)
+void Neptune::DrawBitmap (CBitmap * pBitmap, CDC * pDC, int x, int y)
 {
 	ASSERT_VALID(pBitmap);
 	ASSERT_VALID(pDC);
@@ -37,7 +37,7 @@ void Neptune :: DrawBitmap (CBitmap * pBitmap, CDC * pDC, int x, int y)
 // DrawTransparentBitmap
 //
 // Borrowed from MSJ 1997
-void Neptune :: DrawTransparentBitmap (CBitmap * pBitmap, CDC * pDC, int x, int y, COLORREF transparent)
+void Neptune::DrawTransparentBitmap (CBitmap * pBitmap, CDC * pDC, int x, int y, COLORREF transparent)
 {
 	ASSERT_VALID(pBitmap);
 	ASSERT_VALID(pDC);
@@ -130,7 +130,7 @@ void Neptune :: DrawTransparentBitmap (CBitmap * pBitmap, CDC * pDC, int x, int 
 //
 // LoadImage
 //
-HANDLE Neptune :: LoadImage(UINT Resource, UINT Type)
+HANDLE Neptune::LoadImage(UINT Resource, UINT Type)
 {
 	return ::LoadImage(AfxGetResourceHandle(),
 	                   MAKEINTRESOURCE(Resource),
@@ -142,7 +142,7 @@ HANDLE Neptune :: LoadImage(UINT Resource, UINT Type)
 //
 // AfxCopyMemory
 //
-LPVOID Neptune :: AfxCopyMemory(LPVOID pdest, LPVOID psrc, size_t count)
+LPVOID Neptune::AfxCopyMemory(LPVOID pdest, LPVOID psrc, size_t count)
 {
 	ASSERT(AfxIsValidAddress(psrc, count, FALSE));
 	ASSERT(AfxIsValidAddress(pdest, count, TRUE));

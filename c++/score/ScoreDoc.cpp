@@ -90,7 +90,7 @@ void ScoreDoc::Serialize(CArchive& ar)
 //
 // DeselectAllMeasures
 //
-void ScoreDoc :: DeselectAllMeasures()
+void ScoreDoc::DeselectAllMeasures()
 {
 	m_Staff.DeselectAllMeasures();
 
@@ -100,7 +100,7 @@ void ScoreDoc :: DeselectAllMeasures()
 //
 // SelectMeasure
 //
-void ScoreDoc :: SelectMeasure(Measure * pMeasure)
+void ScoreDoc::SelectMeasure(Measure * pMeasure)
 {
 	DeselectAllMeasures();
 
@@ -113,7 +113,7 @@ void ScoreDoc :: SelectMeasure(Measure * pMeasure)
 //
 // AddNote
 //
-BOOL ScoreDoc :: AddNote(Measure * pMeasure, Note * pNote)
+BOOL ScoreDoc::AddNote(Measure * pMeasure, Note * pNote)
 {
 	ASSERT_VALID(pMeasure);
 	ASSERT_VALID(pNote);
@@ -131,7 +131,7 @@ BOOL ScoreDoc :: AddNote(Measure * pMeasure, Note * pNote)
 //
 // RemoveNote
 //
-BOOL ScoreDoc :: RemoveNote(Measure * pMeasure, Note * pNote)
+BOOL ScoreDoc::RemoveNote(Measure * pMeasure, Note * pNote)
 {
 	ASSERT_VALID(pMeasure);
 	ASSERT_VALID(pNote);
@@ -149,7 +149,7 @@ BOOL ScoreDoc :: RemoveNote(Measure * pMeasure, Note * pNote)
 //
 // ModifyNote
 //
-BOOL ScoreDoc :: ModifyNote(Measure * pMeasure, Note * pNote, const Tool & tool)
+BOOL ScoreDoc::ModifyNote(Measure * pMeasure, Note * pNote, const Tool & tool)
 {
 	ASSERT_VALID(pMeasure);
 	ASSERT_VALID(pNote);
@@ -188,7 +188,7 @@ void ScoreDoc::DeleteContents()
 //
 // OnUpdateFileSave
 //
-void ScoreDoc :: OnUpdateFileSave(CCmdUI* pCmdUI)
+void ScoreDoc::OnUpdateFileSave(CCmdUI* pCmdUI)
 {
 	ASSERT(pCmdUI != NULL);
 

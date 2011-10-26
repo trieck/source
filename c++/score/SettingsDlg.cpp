@@ -49,9 +49,9 @@ END_MESSAGE_MAP()
 //
 // OnInitDialog
 //
-BOOL SettingsDlg :: OnInitDialog()
+BOOL SettingsDlg::OnInitDialog()
 {
-	CDialog :: OnInitDialog();
+	CDialog::OnInitDialog();
 
 	BuildDevices();
 
@@ -62,7 +62,7 @@ BOOL SettingsDlg :: OnInitDialog()
 //
 // BuildDevices
 //
-void SettingsDlg :: BuildDevices()
+void SettingsDlg::BuildDevices()
 {
 	// Insert output devices
 	OutputDevices outputDevs;

@@ -46,7 +46,7 @@ ToolboxDlg::ToolboxDlg(CWnd * pParent)
 //
 // Destructor
 //
-ToolboxDlg :: ~ToolboxDlg()
+ToolboxDlg::~ToolboxDlg()
 {
 }
 
@@ -81,7 +81,7 @@ END_MESSAGE_MAP()
 //
 BOOL ToolboxDlg::OnInitDialog()
 {
-	CDialog :: OnInitDialog();
+	CDialog::OnInitDialog();
 
 	LoadImages();
 
@@ -94,7 +94,7 @@ BOOL ToolboxDlg::OnInitDialog()
 //
 // LoadImages
 //
-void ToolboxDlg :: LoadImages()
+void ToolboxDlg::LoadImages()
 {
 	int Count = sizeof(Tools) / sizeof(Tool);
 
@@ -110,7 +110,7 @@ void ToolboxDlg :: LoadImages()
 //
 // SetActiveButton
 //
-void ToolboxDlg :: SetActiveButton()
+void ToolboxDlg::SetActiveButton()
 {
 	int Count = sizeof(Tools) / sizeof(Tool);
 
@@ -130,7 +130,7 @@ void ToolboxDlg :: SetActiveButton()
 //
 // PostNcDestroy
 //
-void ToolboxDlg :: PostNcDestroy()
+void ToolboxDlg::PostNcDestroy()
 {
 	ASSERT_VALID(this);
 	delete this;
@@ -141,7 +141,7 @@ void ToolboxDlg :: PostNcDestroy()
 //
 // OnCancel
 //
-void ToolboxDlg :: OnCancel()
+void ToolboxDlg::OnCancel()
 {
 	DestroyWindow();
 }
@@ -149,7 +149,7 @@ void ToolboxDlg :: OnCancel()
 //
 // OnWholeNote
 //
-void ToolboxDlg :: OnWholeNote()
+void ToolboxDlg::OnWholeNote()
 {
 	SetTool(IDC_WHOLENOTE);
 }
@@ -157,7 +157,7 @@ void ToolboxDlg :: OnWholeNote()
 //
 // OnHalfNote
 //
-void ToolboxDlg :: OnHalfNote()
+void ToolboxDlg::OnHalfNote()
 {
 	SetTool(IDC_HALFNOTE);
 }
@@ -165,7 +165,7 @@ void ToolboxDlg :: OnHalfNote()
 //
 // OnQuarterNote
 //
-void ToolboxDlg :: OnQuarterNote()
+void ToolboxDlg::OnQuarterNote()
 {
 	SetTool(IDC_QUARTERNOTE);
 }
@@ -173,7 +173,7 @@ void ToolboxDlg :: OnQuarterNote()
 //
 // OnEigthNote
 //
-void ToolboxDlg :: OnEigthNote()
+void ToolboxDlg::OnEigthNote()
 {
 	SetTool(IDC_EIGTHNOTE);
 }
@@ -181,7 +181,7 @@ void ToolboxDlg :: OnEigthNote()
 //
 // OnSixteenthNote
 //
-void ToolboxDlg :: OnSixteenthNote()
+void ToolboxDlg::OnSixteenthNote()
 {
 	SetTool(IDC_SIXTEENTHNOTE);
 }
@@ -189,7 +189,7 @@ void ToolboxDlg :: OnSixteenthNote()
 //
 // OnThirtySecondNote
 //
-void ToolboxDlg :: OnThirtysecondNote()
+void ToolboxDlg::OnThirtysecondNote()
 {
 	SetTool(IDC_THIRTYSECONDNOTE);
 }
@@ -197,7 +197,7 @@ void ToolboxDlg :: OnThirtysecondNote()
 //
 // OnSharpen
 //
-void ToolboxDlg :: OnSharpen()
+void ToolboxDlg::OnSharpen()
 {
 	SetTool(IDC_SHARPEN);
 }
@@ -205,7 +205,7 @@ void ToolboxDlg :: OnSharpen()
 //
 // OnFlatten
 //
-void ToolboxDlg :: OnFlatten()
+void ToolboxDlg::OnFlatten()
 {
 	SetTool(IDC_FLATTEN);
 }
@@ -213,7 +213,7 @@ void ToolboxDlg :: OnFlatten()
 //
 // OnNaturalize
 //
-void ToolboxDlg :: OnNaturalize()
+void ToolboxDlg::OnNaturalize()
 {
 	SetTool(IDC_NATURALIZE);
 }
@@ -221,7 +221,7 @@ void ToolboxDlg :: OnNaturalize()
 //
 // SetTool
 //
-void ToolboxDlg :: SetTool(UINT nButton)
+void ToolboxDlg::SetTool(UINT nButton)
 {
 	CButton * pButton = (CButton*)GetDlgItem(nButton);
 	ASSERT_VALID(pButton);

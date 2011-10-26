@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="score"
+	ProjectGUID="{A3351C2C-70D9-46C2-BD9F-4149695A5825}"
 	SccProjectName="&quot;$/score&quot;, GQEAAAAA"
 	SccLocalPath="."
 	Keyword="MFCProj"
@@ -1044,26 +1045,6 @@
 				>
 			</File>
 			<File
-				RelativePath="res\bmp00001.bmp"
-				>
-			</File>
-			<File
-				RelativePath="res\bmp00002.bmp"
-				>
-			</File>
-			<File
-				RelativePath="res\bmp00003.bmp"
-				>
-			</File>
-			<File
-				RelativePath="res\bmp00004.bmp"
-				>
-			</File>
-			<File
-				RelativePath="res\bmp00005.bmp"
-				>
-			</File>
-			<File
 				RelativePath="res\default.ico"
 				>
 			</File>
@@ -1212,10 +1193,7 @@
 				>
 			</File>
 		</Filter>
-		<Filter
-			Name="Documents"
-			Filter="xls;doc"
-			>
-		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>

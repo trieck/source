@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	NOTE.CPP
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -59,7 +59,7 @@ static HICON DurationToIcon(Duration d);
 //
 // Constructor
 //
-Note :: Note()
+Note::Note()
 {
 	mod = NATURAL;
 	keyname = 0;
@@ -74,7 +74,7 @@ Note :: Note()
 //
 // Copy Constructor
 //
-Note :: Note (const Note & note)
+Note::Note (const Note & note)
 {
 	mod = note.mod;
 	keyname = note.keyname;
@@ -88,14 +88,14 @@ Note :: Note (const Note & note)
 //
 // Destructor
 //
-Note :: ~Note()
+Note::~Note()
 {
 }
 
 //
 // operator =
 //
-Note & Note :: operator = (const Note & note)
+Note & Note::operator = (const Note & note)
 {
 	if (this != &note) {
 		mod = note.mod;
@@ -113,7 +113,7 @@ Note & Note :: operator = (const Note & note)
 //
 // Render
 //
-BOOL Note :: Render(CDC * pDC) const
+BOOL Note::Render(CDC * pDC) const
 {
 	ASSERT_VALID(pDC);
 
@@ -138,7 +138,7 @@ BOOL Note :: Render(CDC * pDC) const
 //
 // RenderModifier
 //
-BOOL Note :: RenderModifier(CDC * pDC) const
+BOOL Note::RenderModifier(CDC * pDC) const
 {
 	ASSERT_VALID(pDC);
 	ASSERT(m_hModifier != NULL);
@@ -157,7 +157,7 @@ BOOL Note :: RenderModifier(CDC * pDC) const
 //
 // SetPos
 //
-void Note :: SetPos(const CPoint & pos)
+void Note::SetPos(const CPoint & pos)
 {
 	m_pos.x = pos.x;
 	m_pos.y = pos.y;
@@ -166,7 +166,7 @@ void Note :: SetPos(const CPoint & pos)
 //
 // GetNoteHead
 //
-void Note :: GetNoteHead(CRect & rc) const
+void Note::GetNoteHead(CRect & rc) const
 {
 	rc.left = m_pos.x;
 	rc.top = m_pos.y - headYOffset;
@@ -177,7 +177,7 @@ void Note :: GetNoteHead(CRect & rc) const
 //
 // PtOnHead
 //
-BOOL Note :: PtOnHead(const CPoint & pt) const
+BOOL Note::PtOnHead(const CPoint & pt) const
 {
 	CRect rcHead;
 	GetNoteHead(rcHead);
@@ -195,7 +195,7 @@ BOOL Note :: PtOnHead(const CPoint & pt) const
 //
 // GetRect
 //
-void Note :: GetRect(CRect & rc) const
+void Note::GetRect(CRect & rc) const
 {
 	rc.left = m_pos.x;
 	rc.top = m_pos.y - iconYOffset;
@@ -206,7 +206,7 @@ void Note :: GetRect(CRect & rc) const
 //
 // GetModifierRect
 //
-void Note :: GetModifierRect(CRect & rc) const
+void Note::GetModifierRect(CRect & rc) const
 {
 	rc.left = m_pos.x - modifierXOffset;
 	rc.top = m_pos.y - modifierYOffset;
@@ -217,7 +217,7 @@ void Note :: GetModifierRect(CRect & rc) const
 //
 // Serialize
 //
-void Note :: Serialize(CArchive & ar)
+void Note::Serialize(CArchive & ar)
 {
 	// BUGBUG -- include modifiers
 
@@ -232,7 +232,7 @@ void Note :: Serialize(CArchive & ar)
 //
 // SetModifier
 //
-void Note :: SetModifier(const Tool * pTool)
+void Note::SetModifier(const Tool * pTool)
 {
 	if (pTool != NULL) {
 		ASSERT(pTool->type == ModifierTool);

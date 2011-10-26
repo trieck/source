@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	INPUTDEV.CPP
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -11,7 +11,7 @@
 //
 // Constructor
 //
-InputDevice :: InputDevice(LPMIDIINCAPS pmidicaps, UINT id)
+InputDevice::InputDevice(LPMIDIINCAPS pmidicaps, UINT id)
 {
 	wMid = pmidicaps->wMid;
 	wPid = pmidicaps->wPid;
@@ -26,7 +26,7 @@ InputDevice :: InputDevice(LPMIDIINCAPS pmidicaps, UINT id)
 //
 // Destructor
 //
-InputDevice :: ~InputDevice()
+InputDevice::~InputDevice()
 {
 	Close();
 }
@@ -34,7 +34,7 @@ InputDevice :: ~InputDevice()
 //
 // Open
 //
-MMRESULT InputDevice :: Open()
+MMRESULT InputDevice::Open()
 {
 	Close();
 
@@ -49,7 +49,7 @@ MMRESULT InputDevice :: Open()
 //
 // Close
 //
-MMRESULT InputDevice :: Close()
+MMRESULT InputDevice::Close()
 {
 	MMRESULT result = MMSYSERR_INVALHANDLE;
 
@@ -64,7 +64,7 @@ MMRESULT InputDevice :: Close()
 //
 // GetErrorText
 //
-CString InputDevice :: GetErrorText(MMRESULT error)
+CString InputDevice::GetErrorText(MMRESULT error)
 {
 	CHAR buffer[MAXERRORLENGTH + 1];
 	buffer[0] = '\0';
@@ -77,7 +77,7 @@ CString InputDevice :: GetErrorText(MMRESULT error)
 //
 // MidiInProc
 //
-void CALLBACK InputDevice :: MidiInProc(
+void CALLBACK InputDevice::MidiInProc(
     HMIDIIN /*hMidiIn*/,
     UINT /*wMsg*/,
     DWORD dwInstance,

@@ -2,7 +2,7 @@
 //
 //	KEYSIG.CPP : defines a key signature
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -37,7 +37,7 @@ static const UINT bitmaps [] = {
 //
 // Constructor
 //
-KeySignature :: KeySignature(int index)
+KeySignature::KeySignature(int index)
 {
 	m_pbm = NULL;
 	assign(index);
@@ -46,7 +46,7 @@ KeySignature :: KeySignature(int index)
 //
 // Destructor
 //
-KeySignature :: ~KeySignature()
+KeySignature::~KeySignature()
 {
 	if (m_pbm != NULL)
 		delete m_pbm;
@@ -55,7 +55,7 @@ KeySignature :: ~KeySignature()
 //
 // assign
 //
-void KeySignature :: assign(int index)
+void KeySignature::assign(int index)
 {
 	int count = sizeof(KeySignatures) / sizeof(tagKeySignature);
 
@@ -72,7 +72,7 @@ void KeySignature :: assign(int index)
 //
 // SetBitmap
 //
-void KeySignature :: SetBitmap()
+void KeySignature::SetBitmap()
 {
 	if (m_pbm != NULL) {
 		delete m_pbm;
@@ -90,7 +90,7 @@ void KeySignature :: SetBitmap()
 //
 // ismodifier
 //
-BOOL KeySignature :: ismodifier(const KeyNote * note) const
+BOOL KeySignature::ismodifier(const KeyNote * note) const
 {
 	ASSERT(note != NULL);
 	ASSERT(modifiers != NULL);
@@ -107,7 +107,7 @@ BOOL KeySignature :: ismodifier(const KeyNote * note) const
 //
 // getmodifier
 //
-Modifier KeySignature :: getmodifier(char keyname) const
+Modifier KeySignature::getmodifier(char keyname) const
 {
 	const KeyNote * pmods = modifiers;
 	for (; pmods && pmods <= modifiers + size; pmods++) {
@@ -121,7 +121,7 @@ Modifier KeySignature :: getmodifier(char keyname) const
 //
 // Render
 //
-void KeySignature :: Render(CDC * pDC, int cx, int cy) const
+void KeySignature::Render(CDC * pDC, int cx, int cy) const
 {
 	ASSERT_VALID(pDC);
 
@@ -140,7 +140,7 @@ void KeySignature :: Render(CDC * pDC, int cx, int cy) const
 //
 // GetSize
 //
-CSize KeySignature :: GetSize() const
+CSize KeySignature::GetSize() const
 {
 	CSize size(0, 0);
 	if (m_pbm != NULL) {

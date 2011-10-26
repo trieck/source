@@ -57,7 +57,7 @@ BOOL KeySignatureDlg::OnInitDialog()
 //
 // SetActiveKeySignature
 //
-void KeySignatureDlg :: SetActiveKeySignature()
+void KeySignatureDlg::SetActiveKeySignature()
 {
 	const KeySignature & ks = m_pMeasure->GetKeySignature();
 	int index = ks.GetIndex();
@@ -68,7 +68,7 @@ void KeySignatureDlg :: SetActiveKeySignature()
 //
 // OnOK
 //
-void KeySignatureDlg :: OnOK()
+void KeySignatureDlg::OnOK()
 {
 	CDialog::OnOK();
 

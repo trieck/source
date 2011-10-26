@@ -2,7 +2,7 @@
 //
 //	KEYNOTES.H
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __KEYNOTES_H__

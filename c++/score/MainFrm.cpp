@@ -120,7 +120,7 @@ void MainFrame::Dump(CDumpContext& dc) const
 //
 // BuildInstruments
 //
-void MainFrame :: BuildInstruments()
+void MainFrame::BuildInstruments()
 {
 	CComboBox * pInstruments =
 	    (CComboBox *)m_wndDlgBar.GetDlgItem(IDC_CB_INSTRUMENT);
@@ -153,7 +153,7 @@ void MainFrame :: BuildInstruments()
 //
 // SetActiveInstrument
 //
-void MainFrame :: SetActiveInstrument()
+void MainFrame::SetActiveInstrument()
 {
 	ScoreApp * pApp = (ScoreApp*)AfxGetApp();
 	ASSERT_VALID(pApp);
@@ -170,7 +170,7 @@ void MainFrame :: SetActiveInstrument()
 //
 // OnInstrumentChange
 //
-void MainFrame :: OnInstrumentChange()
+void MainFrame::OnInstrumentChange()
 {
 	ScoreApp * pApp = (ScoreApp*)AfxGetApp();
 	ASSERT_VALID(pApp);
@@ -187,7 +187,7 @@ void MainFrame :: OnInstrumentChange()
 //
 // OnInitMenuPopup
 //
-void MainFrame :: OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+void MainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
 	CFrameWnd::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 }

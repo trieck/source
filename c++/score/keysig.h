@@ -2,7 +2,7 @@
 //
 //	KEYSIG.H : defines a key signature
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __KEYSIG_H__

@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	MEASQUEUE.CPP : queue of measure pointers
 //
@@ -6,7 +6,7 @@
 //	and is used in implementing a double buffering
 //	scheme for streamed ouput
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -15,21 +15,21 @@
 //
 // Constructor
 //
-MeasureQueue :: MeasureQueue()
+MeasureQueue::MeasureQueue()
 {
 }
 
 //
 // Destructor
 //
-MeasureQueue :: ~MeasureQueue()
+MeasureQueue::~MeasureQueue()
 {
 }
 
 //
 // clear
 //
-void MeasureQueue :: clear()
+void MeasureQueue::clear()
 {
 	while (!empty())
 		pop();

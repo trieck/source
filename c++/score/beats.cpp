@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	BEATS.CPP : list of note lists
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -29,14 +29,14 @@ IMPLEMENT_SERIAL(Beats, CObject, VERSIONABLE_SCHEMA)
 //
 // Constructor
 //
-Beats :: Beats()
+Beats::Beats()
 {
 }
 
 //
 // Destructor
 //
-Beats :: ~Beats()
+Beats::~Beats()
 {
 	clear();
 }
@@ -44,7 +44,7 @@ Beats :: ~Beats()
 //
 // insert
 //
-void Beats :: insert(Note * pNote)
+void Beats::insert(Note * pNote)
 {
 	ASSERT_VALID(pNote);
 
@@ -58,7 +58,7 @@ void Beats :: insert(Note * pNote)
 //
 // remove
 //
-BOOL Beats :: remove(NoteList * pNoteList)
+BOOL Beats::remove(NoteList * pNoteList)
 {
 	ASSERT_VALID(pNoteList);
 
@@ -75,7 +75,7 @@ BOOL Beats :: remove(NoteList * pNoteList)
 //
 // clear
 //
-void Beats :: clear()
+void Beats::clear()
 {
 	POSITION pos = GetHeadPosition();
 	while (pos != NULL) {
@@ -91,7 +91,7 @@ void Beats :: clear()
 //
 // find
 //
-NoteList * Beats :: find(const Note * pNote, POSITION & rpos)
+NoteList * Beats::find(const Note * pNote, POSITION & rpos)
 {
 	ASSERT_VALID(pNote);
 
@@ -119,7 +119,7 @@ NoteList * Beats :: find(const Note * pNote, POSITION & rpos)
 //
 // splice
 // insert after a position
-POSITION Beats :: splice(POSITION pos, Note * pNote)
+POSITION Beats::splice(POSITION pos, Note * pNote)
 {
 	ASSERT_VALID(pNote);
 
@@ -134,7 +134,7 @@ POSITION Beats :: splice(POSITION pos, Note * pNote)
 //
 // Serialize
 //
-void Beats :: Serialize(CArchive & ar)
+void Beats::Serialize(CArchive & ar)
 {
 	CObject::Serialize(ar);
 

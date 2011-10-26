@@ -54,7 +54,7 @@ ScoreApp::ScoreApp()
 	m_instrument = 0;
 }
 
-ScoreApp :: ~ScoreApp()
+ScoreApp::~ScoreApp()
 {
 	if (m_pSequencer != NULL)
 		delete m_pSequencer;
@@ -70,7 +70,7 @@ ScoreApp theApp;
 /////////////////////////////////////////////////////////////////////////////
 // ScoreApp initialization
 
-BOOL ScoreApp :: InitInstance()
+BOOL ScoreApp::InitInstance()
 {
 	// Initialize the MIDI stream
 	if (!InitializeStream())
@@ -182,7 +182,7 @@ void ScoreApp::OnAppAbout()
 //
 // OnSettings
 //
-void ScoreApp :: OnSettings()
+void ScoreApp::OnSettings()
 {
 	SettingsDlg().DoModal();
 }
@@ -202,7 +202,7 @@ int ScoreApp::ExitInstance()
 //
 // Stop
 //
-BOOL ScoreApp :: Stop() const
+BOOL ScoreApp::Stop() const
 {
 	if (m_pSequencer != NULL)
 		m_pSequencer->Stop();
@@ -216,7 +216,7 @@ BOOL ScoreApp :: Stop() const
 //
 // PlayNote
 //
-BOOL ScoreApp :: PlayNote(const Note * pNote) const
+BOOL ScoreApp::PlayNote(const Note * pNote) const
 {
 	ASSERT(pNote != NULL);
 	ASSERT(m_pStream != NULL);
@@ -233,7 +233,7 @@ BOOL ScoreApp :: PlayNote(const Note * pNote) const
 //
 // ReleaseNote
 //
-BOOL ScoreApp :: ReleaseNote(const Note * pNote) const
+BOOL ScoreApp::ReleaseNote(const Note * pNote) const
 {
 	ASSERT(pNote != NULL);
 	ASSERT(m_pStream != NULL);
@@ -250,7 +250,7 @@ BOOL ScoreApp :: ReleaseNote(const Note * pNote) const
 //
 // SetInstrument
 //
-BOOL ScoreApp :: SetInstrument (BYTE b)
+BOOL ScoreApp::SetInstrument (BYTE b)
 {
 	ASSERT(m_pStream != NULL);
 	ASSERT(m_pStream->IsOpen());
@@ -267,7 +267,7 @@ BOOL ScoreApp :: SetInstrument (BYTE b)
 //
 // PlayStaff
 //
-BOOL ScoreApp :: PlayStaff(const Staff * pStaff)
+BOOL ScoreApp::PlayStaff(const Staff * pStaff)
 {
 	ASSERT(m_pSequencer != NULL);
 	ASSERT(pStaff != NULL);
@@ -286,7 +286,7 @@ BOOL ScoreApp :: PlayStaff(const Staff * pStaff)
 //
 // PlayMeasure
 //
-BOOL ScoreApp :: PlayMeasure (const Measure * pMeasure)
+BOOL ScoreApp::PlayMeasure (const Measure * pMeasure)
 {
 	ASSERT(m_pSequencer != NULL);
 	ASSERT(pMeasure != NULL);
@@ -305,7 +305,7 @@ BOOL ScoreApp :: PlayMeasure (const Measure * pMeasure)
 //
 // IsPlaying
 //
-BOOL ScoreApp :: IsPlaying() const
+BOOL ScoreApp::IsPlaying() const
 {
 	ASSERT(m_pSequencer != NULL);
 
@@ -315,7 +315,7 @@ BOOL ScoreApp :: IsPlaying() const
 //
 // OnStop
 //
-void ScoreApp :: OnStop()
+void ScoreApp::OnStop()
 {
 	ASSERT(m_pSequencer != NULL);
 
@@ -325,7 +325,7 @@ void ScoreApp :: OnStop()
 //
 // PumpMessages
 //
-void ScoreApp :: PumpMessages()
+void ScoreApp::PumpMessages()
 {
 	MSG msg;
 	while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
@@ -343,7 +343,7 @@ void ScoreApp :: PumpMessages()
 //
 // OnFileNew
 //
-void ScoreApp :: OnFileNew()
+void ScoreApp::OnFileNew()
 {
 	Stop();
 
@@ -353,7 +353,7 @@ void ScoreApp :: OnFileNew()
 //
 // OnFileOpen
 //
-void ScoreApp :: OnFileOpen()
+void ScoreApp::OnFileOpen()
 {
 	CWinApp::OnFileOpen();
 }
@@ -361,7 +361,7 @@ void ScoreApp :: OnFileOpen()
 //
 // OpenDocumentFile
 //
-CDocument* ScoreApp :: OpenDocumentFile(LPCTSTR lpszFileName)
+CDocument* ScoreApp::OpenDocumentFile(LPCTSTR lpszFileName)
 {
 	Stop();
 
@@ -371,7 +371,7 @@ CDocument* ScoreApp :: OpenDocumentFile(LPCTSTR lpszFileName)
 //
 // InitializeStream
 //
-BOOL ScoreApp :: InitializeStream()
+BOOL ScoreApp::InitializeStream()
 {
 	ASSERT(m_pStream == NULL);
 
@@ -395,17 +395,17 @@ BOOL ScoreApp :: InitializeStream()
 //
 // LoadSettings
 //
-void ScoreApp :: LoadSettings()
+void ScoreApp::LoadSettings()
 {
-	BYTE instrument;
+	DWORD instrument;
 	GetRegValue("midi", "instrument", (LPDWORD)&instrument);
-	SetInstrument(instrument);
+	SetInstrument((BYTE)instrument);
 }
 
 //
 // SaveSettings
 //
-void ScoreApp :: SaveSettings() const
+void ScoreApp::SaveSettings() const
 {
 	SetRegValue("midi", "instrument", m_instrument);
 }

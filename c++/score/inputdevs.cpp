@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	INPUTDEVS.CPP
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -12,21 +12,21 @@
 //
 // Constructor
 //
-InputDevices :: InputDevices()
+InputDevices::InputDevices()
 {
 }
 
 //
 // Destructor
 //
-InputDevices :: ~InputDevices()
+InputDevices::~InputDevices()
 {
 }
 
 //
 // Count
 //
-UINT InputDevices :: Count() const
+UINT InputDevices::Count() const
 {
 	return ::midiInGetNumDevs();
 }
@@ -34,7 +34,7 @@ UINT InputDevices :: Count() const
 //
 // GetDevice
 //
-MidiDevice * InputDevices :: GetDevice(UINT device) const
+MidiDevice * InputDevices::GetDevice(UINT device) const
 {
 	MIDIINCAPS caps;
 	MMRESULT result = ::midiInGetDevCaps(device, &caps, sizeof(MIDIINCAPS));

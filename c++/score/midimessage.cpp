@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	MIDIMESSAGE.CPP
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -11,7 +11,7 @@
 //
 // Constructor
 //
-MidiMessage :: MidiMessage()
+MidiMessage::MidiMessage()
 {
 	m_velocity = 0;
 	m_data = 0;
@@ -21,7 +21,7 @@ MidiMessage :: MidiMessage()
 //
 // Constructor
 //
-MidiMessage :: MidiMessage(DWORD data)
+MidiMessage::MidiMessage(DWORD data)
 {
 	m_velocity = LOBYTE(HIWORD(data));
 	m_data = HIBYTE(LOWORD(data));
@@ -31,14 +31,14 @@ MidiMessage :: MidiMessage(DWORD data)
 //
 // Destructor
 //
-MidiMessage :: ~MidiMessage()
+MidiMessage::~MidiMessage()
 {
 }
 
 //
 // operator DWORD
 //
-MidiMessage :: operator DWORD() const
+MidiMessage::operator DWORD() const
 {
 	DWORD data = m_velocity << 16;  // velocity
 	data |= m_data << 8;            // midi data

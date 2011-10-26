@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	REGKEY.CPP
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -11,7 +11,7 @@
 //
 // Constructor
 //
-CRegKey :: CRegKey()
+CRegKey::CRegKey()
 {
 	m_hKey = NULL;
 }
@@ -19,7 +19,7 @@ CRegKey :: CRegKey()
 //
 // Destructor
 //
-CRegKey :: ~CRegKey()
+CRegKey::~CRegKey()
 {
 	Close();
 }
@@ -27,7 +27,7 @@ CRegKey :: ~CRegKey()
 //
 // Close
 //
-LONG CRegKey :: Close()
+LONG CRegKey::Close()
 {
 	LONG lRtn = ERROR_SUCCESS;
 
@@ -42,7 +42,7 @@ LONG CRegKey :: Close()
 //
 // Open
 //
-LONG CRegKey :: Open(HKEY hKeyParent, LPCTSTR lpszKeyName, REGSAM samDesired)
+LONG CRegKey::Open(HKEY hKeyParent, LPCTSTR lpszKeyName, REGSAM samDesired)
 {
 	LONG lRtn = ERROR_SUCCESS;
 	ASSERT(hKeyParent != NULL);
@@ -61,7 +61,7 @@ LONG CRegKey :: Open(HKEY hKeyParent, LPCTSTR lpszKeyName, REGSAM samDesired)
 //
 // GetValue
 //
-LONG CRegKey :: GetValue(LPTSTR szValue, LPCTSTR lpszValueName, LPDWORD pdwCount)
+LONG CRegKey::GetValue(LPTSTR szValue, LPCTSTR lpszValueName, LPDWORD pdwCount)
 {
 	LONG lRtn = ERROR_SUCCESS;
 
@@ -80,7 +80,7 @@ LONG CRegKey :: GetValue(LPTSTR szValue, LPCTSTR lpszValueName, LPDWORD pdwCount
 //
 // GetValue
 //
-LONG CRegKey :: GetValue(LPBYTEARRAY pByteArray, LPCTSTR lpszValueName, LPDWORD pdwCount)
+LONG CRegKey::GetValue(LPBYTEARRAY pByteArray, LPCTSTR lpszValueName, LPDWORD pdwCount)
 {
 	LONG lRtn = ERROR_SUCCESS;
 
@@ -112,7 +112,7 @@ LONG CRegKey :: GetValue(LPBYTEARRAY pByteArray, LPCTSTR lpszValueName, LPDWORD 
 //
 // GetValue
 //
-LONG CRegKey :: GetValue (LPDWORD pdwValue, LPCTSTR lpszValueName)
+LONG CRegKey::GetValue (LPDWORD pdwValue, LPCTSTR lpszValueName)
 {
 	LONG lRtn = ERROR_SUCCESS;
 
@@ -134,7 +134,7 @@ LONG CRegKey :: GetValue (LPDWORD pdwValue, LPCTSTR lpszValueName)
 //
 // SetValue
 //
-LONG CRegKey :: SetValue(LPCTSTR lpszValue, LPCTSTR lpszValueName)
+LONG CRegKey::SetValue(LPCTSTR lpszValue, LPCTSTR lpszValueName)
 {
 	ASSERT(lpszValue != NULL);
 	ASSERT(m_hKey != NULL);
@@ -145,7 +145,7 @@ LONG CRegKey :: SetValue(LPCTSTR lpszValue, LPCTSTR lpszValueName)
 //
 // SetValue
 //
-LONG CRegKey :: SetValue(LPBYTE pData, DWORD dwSize, LPCTSTR lpszValueName)
+LONG CRegKey::SetValue(LPBYTE pData, DWORD dwSize, LPCTSTR lpszValueName)
 {
 	ASSERT(pData != NULL);
 	ASSERT(m_hKey != NULL);
@@ -156,7 +156,7 @@ LONG CRegKey :: SetValue(LPBYTE pData, DWORD dwSize, LPCTSTR lpszValueName)
 //
 // SetValue
 //
-LONG CRegKey :: SetValue(DWORD dwValue, LPCTSTR lpszValueName)
+LONG CRegKey::SetValue(DWORD dwValue, LPCTSTR lpszValueName)
 {
 	ASSERT(m_hKey != NULL);
 
@@ -166,7 +166,7 @@ LONG CRegKey :: SetValue(DWORD dwValue, LPCTSTR lpszValueName)
 //
 // EnumKeys
 //
-LONG CRegKey :: EnumKeys(LPTSTR lpszKey, LONG lIndex, LPDWORD pdwCount)
+LONG CRegKey::EnumKeys(LPTSTR lpszKey, LONG lIndex, LPDWORD pdwCount)
 {
 	ASSERT(pdwCount != NULL);
 	ASSERT(lpszKey != NULL);
@@ -178,7 +178,7 @@ LONG CRegKey :: EnumKeys(LPTSTR lpszKey, LONG lIndex, LPDWORD pdwCount)
 //
 // EnumValues
 //
-LONG CRegKey :: EnumValues(DWORD dwIndex, LPTSTR lpszValueName, LPDWORD pdwValSize, LPDWORD pdwTypeCode, LPBYTE pValueData, LPDWORD pdwDataSize)
+LONG CRegKey::EnumValues(DWORD dwIndex, LPTSTR lpszValueName, LPDWORD pdwValSize, LPDWORD pdwTypeCode, LPBYTE pValueData, LPDWORD pdwDataSize)
 {
 	ASSERT(lpszValueName != NULL);
 	ASSERT(m_hKey != NULL);

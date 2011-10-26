@@ -1,10 +1,10 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 //	SEQUENCE.CPP
 //
 //	MIDI Sequencer class
 //
-//	Copyright © 1999 Rieck Enterprises
+//	Copyright(c) 1999-2011 Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
@@ -18,7 +18,7 @@ static Sequencer * This = NULL;
 //
 // Constructor
 //
-Sequencer :: Sequencer(MidiStream * pStream)
+Sequencer::Sequencer(MidiStream * pStream)
 {
 	ASSERT(pStream != NULL);
 	ASSERT(pStream->IsOpen());
@@ -35,7 +35,7 @@ Sequencer :: Sequencer(MidiStream * pStream)
 //
 // Destructor
 //
-Sequencer :: ~Sequencer()
+Sequencer::~Sequencer()
 {
 	if (m_pStream != NULL)
 		m_pStream->RevokeHook(StreamProc);
@@ -44,7 +44,7 @@ Sequencer :: ~Sequencer()
 //
 // PlayMeasure
 //
-BOOL Sequencer :: PlayMeasure(const Measure * pMeasure)
+BOOL Sequencer::PlayMeasure(const Measure * pMeasure)
 {
 	ASSERT(m_pStream != NULL);
 	ASSERT(m_pStream->IsOpen());
@@ -72,7 +72,7 @@ BOOL Sequencer :: PlayMeasure(const Measure * pMeasure)
 //
 // PlayStaff
 //
-BOOL Sequencer :: PlayStaff(const Staff * pStaff)
+BOOL Sequencer::PlayStaff(const Staff * pStaff)
 {
 	ASSERT(m_pStream != NULL);
 	ASSERT(m_pStream->IsOpen());
@@ -117,7 +117,7 @@ BOOL Sequencer :: PlayStaff(const Staff * pStaff)
 //
 // Stop
 //
-BOOL Sequencer :: Stop()
+BOOL Sequencer::Stop()
 {
 	ASSERT(m_pStream != NULL);
 	ASSERT(m_pStream->IsOpen());
@@ -138,7 +138,7 @@ BOOL Sequencer :: Stop()
 //
 // StreamProc
 //
-void Sequencer :: StreamProc(
+void Sequencer::StreamProc(
     HMIDISTRM hMidiStream,
     UINT uMsg,
     DWORD dwInstance,
