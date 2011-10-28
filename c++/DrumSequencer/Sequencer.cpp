@@ -3,11 +3,6 @@
 #include "outputdevs.h"
 #include "resource.h"
 
-ANON_BEGIN
-void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance, 
-	DWORD dwParam1, DWORD dwParam2);
-ANON_END
-
 #define PRG_SYNTH_DRUM	(118)
 
 Sequencer::Sequencer() : m_pStream(NULL), m_state(Stopped)
@@ -34,6 +29,7 @@ BOOL Sequencer::Initialize()
 		return FALSE;
 	}
 
+	m_pStream->SetSequencer(this);
 	m_pStream->RegisterHook(StreamProc);
 
 	// Open the output device
@@ -90,8 +86,7 @@ BOOL Sequencer::Play(const Sequence &sequence)
 	result = m_pStream->Restart();
 	if (result != MMSYSERR_NOERROR)
 		return FALSE;
-	return TRUE;
-
+	
 	m_state = Playing;
 
 	return TRUE;
@@ -110,19 +105,23 @@ BOOL Sequencer::Stop()
 	return TRUE;
 }
 
-ANON_BEGIN
-
-void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance,
-                DWORD dwParam1, DWORD dwParam2)
+void Sequencer::StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance,
+	DWORD dwParam1, DWORD dwParam2)
 {
 	if (uMsg != MOM_DONE)
 		return;
+
+	MidiStream *pStream = (MidiStream *)dwInstance;
+	ASSERT(pStream != NULL);
+
+	Sequencer *pThis = pStream->GetSequencer();
+	ASSERT(pThis != NULL);
 
 	// Unprepare the midi header
 	::midiOutUnprepareHeader(
 	    (HMIDIOUT)hMidiStream,
 	    (LPMIDIHDR)dwParam1,
 	    sizeof(MIDIHDR));
-}
 
-ANON_END
+	pThis->m_state = Stopped;
+}

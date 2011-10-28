@@ -33,16 +33,16 @@ END_MESSAGE_MAP()
 // CDrumSequencerView construction/destruction
 
 const LPCTSTR Instruments[] = {
-	_T("CH"),
-	_T("PH"),
-	_T("OH"),
-	_T("CC"),
-	_T("RC"),
-	_T("SD"),
-	_T("HT"),
-	_T("MT"),
-	_T("LT"),
-	_T("BD")	
+	_T("Closed Hi-Hat"),
+	_T("Pedal Hi-Hat"),
+	_T("Open Hi-Hat"),
+	_T("Crash Cymbal"),
+	_T("Ride Cymbal"),
+	_T("Snare Drum"),
+	_T("High Tom"),
+	_T("Mid Tom"),
+	_T("Low Tom"),
+	_T("Bass Drum")	
 };
 
 CDrumSequencerView::CDrumSequencerView()
@@ -55,9 +55,6 @@ CDrumSequencerView::~CDrumSequencerView()
 
 BOOL CDrumSequencerView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: Modify the Window class or styles here by modifying
-	//  the CREATESTRUCT cs
-
 	return CView::PreCreateWindow(cs);
 }
 
@@ -155,7 +152,7 @@ int CDrumSequencerView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	_tcscpy(lf.lfFaceName, _T("Verdana"));
 	lf.lfWeight = FW_NORMAL;
 	lf.lfCharSet = DEFAULT_CHARSET;
-	lf.lfHeight = -MulDiv(8, dc.GetDeviceCaps(LOGPIXELSY), 72);
+	lf.lfHeight = -MulDiv(7, dc.GetDeviceCaps(LOGPIXELSY), 72);
 
 	if (!m_font.CreateFontIndirect(&lf))
 		return -1;

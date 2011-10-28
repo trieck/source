@@ -52,4 +52,5 @@ public:
 	virtual void DeleteContents();
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnSequencerPlay();
+	afx_msg void OnUpdateFileSave(CCmdUI *pCmdUI);
 };

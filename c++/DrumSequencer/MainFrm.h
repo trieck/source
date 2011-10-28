@@ -4,6 +4,10 @@
 
 #pragma once
 
+#include "DrumSequencerToolbar.h"
+#include "DrumSequencerMenubar.h"
+#include "SettingsPane.h"
+
 class CMainFrame : public CFrameWndEx
 {
 	
@@ -31,24 +35,22 @@ public:
 #endif
 
 protected:  // control bar embedded members
-	CMFCMenuBar       m_wndMenuBar;
-	CMFCToolBar       m_wndToolBar;
-	CMFCStatusBar     m_wndStatusBar;
-	CMFCToolBarImages m_UserImages;
+	DrumSequencerMenubar	m_wndMenuBar;
+	DrumSequencerToolbar	m_wndToolBar;
+	SettingsPane			m_wndSettingsPane;
+	CMFCStatusBar			m_wndStatusBar;
+	CMFCToolBarImages		m_UserImages;
 
 // Generated message map functions
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnViewCustomize();
 	afx_msg LRESULT OnToolbarCreateNew(WPARAM wp, LPARAM lp);
-	afx_msg void OnApplicationLook(UINT id);
-	afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
-
 public:
 	virtual void RecalcLayout(BOOL bNotify = TRUE);
 	void ResizeFrame(void);
 	virtual void AdjustClientArea();
+	virtual void AdjustDockingLayout(HDWP hdwp = NULL);
 };
 
 

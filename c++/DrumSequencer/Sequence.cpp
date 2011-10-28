@@ -87,3 +87,4 @@ void Sequence::Serialize(CArchive& ar)
 		}
 	}
 }
+

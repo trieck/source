@@ -28,7 +28,6 @@ BEGIN_MESSAGE_MAP(CDrumSequencerApp, CWinAppEx)
 	ON_UPDATE_COMMAND_UI(ID_SEQUENCER_STOP, &CDrumSequencerApp::OnUpdateSequencerStop)
 END_MESSAGE_MAP()
 
-
 // CDrumSequencerApp construction
 
 CDrumSequencerApp::CDrumSequencerApp()
@@ -196,7 +195,7 @@ int CDrumSequencerApp::ExitInstance()
 
 BOOL CDrumSequencerApp::Play(const Sequence & sequence)
 {
-	return m_sequencer.Play(sequence);	
+	return m_sequencer.Play(sequence);
 }
 
 void CDrumSequencerApp::OnSequencerStop()
@@ -213,3 +212,4 @@ void CDrumSequencerApp::OnUpdateSequencerStop(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable(m_sequencer.IsPlaying());
 }
+

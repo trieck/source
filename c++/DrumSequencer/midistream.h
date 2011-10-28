@@ -14,6 +14,8 @@
 typedef void (*PFNCALLBACK)(HMIDISTRM, UINT, DWORD, DWORD, DWORD);
 typedef CList<PFNCALLBACK, PFNCALLBACK> HookChain;
 
+class Sequencer;	// forward declarations
+
 /////////////////////////////////////////////////////////////////////////////
 class MidiStream : public OutputDevice {
 	friend class OutputDevices;
@@ -38,6 +40,9 @@ public:
 	BOOL RegisterHook(PFNCALLBACK);
 	BOOL RevokeHook(PFNCALLBACK);
 
+	void SetSequencer(Sequencer *pSeq);
+	Sequencer *GetSequencer() const;
+
 protected:
 	static void CALLBACK MidiStreamProc(
 	    HMIDISTRM hMidiStream,
@@ -55,6 +60,7 @@ protected:
 	}
 
 	HookChain m_HookChain;
+	Sequencer *m_pSequencer;	// sequencer that owns stream
 };
 /////////////////////////////////////////////////////////////////////////////
 

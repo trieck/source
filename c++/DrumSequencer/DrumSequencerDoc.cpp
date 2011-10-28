@@ -136,6 +136,7 @@ void CDrumSequencerDoc::DeleteContents()
 
 BEGIN_MESSAGE_MAP(CDrumSequencerDoc, CDocument)
 	ON_COMMAND(ID_SEQUENCER_PLAY, &CDrumSequencerDoc::OnSequencerPlay)
+	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, &CDrumSequencerDoc::OnUpdateFileSave)
 END_MESSAGE_MAP()
 
 void CDrumSequencerDoc::OnSequencerPlay()
@@ -144,4 +145,9 @@ void CDrumSequencerDoc::OnSequencerPlay()
 	ASSERT_VALID(pApp);
 
 	pApp->Play(m_sequence);
+}
+
+void CDrumSequencerDoc::OnUpdateFileSave(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(IsModified());	
 }

@@ -11,7 +11,7 @@ public:
 
 	enum { CX_SUB = 30 };		// width of each subdivision
 	enum { CY_SUB = 20 };		// height of subdivision
-	enum { CX_OFFSET = 50 };	// horz. border
+	enum { CX_OFFSET = 80 };	// horz. border
 	enum { CY_OFFSET = 20 };	// vert. border
 	
 	enum { CX_GRID = CX_SUB * Sequence::NSUBS };	// width of grid

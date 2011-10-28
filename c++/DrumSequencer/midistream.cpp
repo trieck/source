@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 MidiStream::MidiStream(LPMIDIOUTCAPS pmidicaps, UINT id)
-	: OutputDevice(pmidicaps, id)
+	: OutputDevice(pmidicaps, id), m_pSequencer(NULL)
 {
 }
 
@@ -163,4 +163,16 @@ BOOL MidiStream::RevokeHook(PFNCALLBACK pfnCallBack)
 	}
 
 	return FALSE;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void MidiStream::SetSequencer(Sequencer *pSeq)
+{
+	m_pSequencer = pSeq;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+Sequencer *MidiStream::GetSequencer() const
+{
+	return m_pSequencer;
 }

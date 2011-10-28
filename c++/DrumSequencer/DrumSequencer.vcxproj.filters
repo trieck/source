@@ -95,6 +95,18 @@
     <ClInclude Include="Sequencer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SettingsPane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrumSequencerToolbar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrumSequencerMenubar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DrumSequencer.cpp">
@@ -146,6 +158,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sequencer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrumSequencerToolbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrumSequencerMenubar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
