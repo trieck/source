@@ -35,5 +35,6 @@ using std::endl;
 typedef std::basic_string<TCHAR> tstring;
 
 #include "utility.h"
+#include "exception.h"
 
 #endif // __PLUTOLIB_H__
