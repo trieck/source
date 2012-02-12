@@ -18,12 +18,12 @@ import java.io.IOException;
 
 public class XMLSplitter {
 
-    private static final short MAX_RECS = 1000;   // number of records to split on, not greater than 2^15-1
+	private static final int DEFAULT_REC_SIZE = 1000;   // number of records to split on
 
     public XMLSplitter() {
     }
 
-    public void split(String xml_file, String path)
+    public void split(String xml_file, String path, int recsize)
             throws IOException, ParserConfigurationException,
             TransformerException, SAXException {
 
@@ -39,7 +39,7 @@ public class XMLSplitter {
         for (i = 0, j = 0; i < elements.getLength(); i++) {
             element = elements.item(i);
 
-            if (i > 0 && i % MAX_RECS == 0) {
+            if (i > 0 && i % recsize == 0) {
                 writeDoc(path, records, ++j);
                 records = makeDocument();
             } else {
@@ -47,7 +47,7 @@ public class XMLSplitter {
             }
         }
 
-        if (i > 0 && (i - 1) % MAX_RECS != 0) {
+        if (i > 0 && (i - 1) % recsize != 0) {
             writeDoc(path, records, ++j);
         }
     }
@@ -80,17 +80,22 @@ public class XMLSplitter {
     }
 
     public static void main(String[] args) {
-        if (args.length != 2) {
-            System.err.println("usage: XMLSplitter xml-file output-path");
+        if (args.length < 2) {
+            System.err.println("usage: XMLSplitter xml-file output-path [record-size]");
             System.exit(1);
         }
-
-        Timer t = new Timer();
+	    
+	    Timer t = new Timer();
+	    
+	    int nrecsize = DEFAULT_REC_SIZE;
 
         XMLSplitter splitter = new XMLSplitter();
 
         try {
-            splitter.split(args[0], args[1]);
+	        if (args.length > 2) {
+		        nrecsize = Integer.parseInt(args[2]);
+	        }
+            splitter.split(args[0], args[1], nrecsize);
         } catch (IOException e) {
             System.err.println(e);
             System.exit(1);
@@ -103,6 +108,9 @@ public class XMLSplitter {
         } catch (TransformerException e) {
             System.err.println(e);
             System.exit(4);
+        } catch (NumberFormatException e) {
+	        System.err.println(e);
+	        System.exit(5);
         }
 
         System.out.printf("    elapsed time %s\n", t);
