@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.*;
+import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Iterator;
 
 public class Highlighter extends XMLEventHandlerImpl {
 
@@ -41,7 +43,17 @@ public class Highlighter extends XMLEventHandlerImpl {
 	@Override
 	public void startElement(StartElement element) throws XMLStreamException {
 		field = element.getName().toString();
+
 		stream.writeStartElement(field);
+
+		Attribute attr;
+		String name, value;
+		for (Iterator it = element.getAttributes(); it.hasNext(); ) {
+			attr = (Attribute) it.next();
+			name = attr.getName().getLocalPart();
+			value = attr.getValue();
+			stream.writeAttribute(name, value);
+		}
 	}
 
 	@Override
