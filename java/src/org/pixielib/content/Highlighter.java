@@ -1,81 +1,62 @@
 package org.pixielib.content;
 
+import org.pixielib.xml.XMLEventHandlerImpl;
+import org.pixielib.xml.XMLEventParser;
 import org.pixielib.xml.XMLTransformer;
 import org.pixielib.xml.XMLUtil;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+import javax.xml.stream.*;
+import javax.xml.stream.events.Characters;
+import javax.xml.stream.events.EndElement;
+import javax.xml.stream.events.StartElement;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.dom.DOMSource;
-import java.io.CharArrayWriter;
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.Reader;
 import java.io.StringWriter;
+import java.io.Writer;
 
-public class Highlighter extends DefaultHandler {
+public class Highlighter extends XMLEventHandlerImpl {
 
-    private static final SAXParserFactory factory = SAXParserFactory.newInstance();
+	private static XMLInputFactory inFactory = XMLInputFactory.newInstance();
+	private static XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
 
-    private Document output;        // output document
-    private QueryTerms terms;       // query terms
-    private String field;           // current field name while parsing
-    private Element element;        // current element
-	private CharArrayWriter writer; // character writer
+	static {
+		inFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);
+	}
 
-    private Highlighter(QueryTerms terms) throws IOException, ParserConfigurationException {
-        this.terms = terms;
-        output = XMLUtil.newDocument();
-	    writer = new CharArrayWriter();
-    }
+	private QueryTerms terms;
+	private Writer writer;
+	private XMLStreamWriter stream;
+	private String field;               // current element seen during parsing
 
-    @Override
-    public void startElement(String namespaceURI, String localName, String rawName, Attributes atts)
-            throws SAXException {
-	    writer.reset();
-        field = rawName;
-        org.w3c.dom.Element next = output.createElement(rawName);
-        if (element == null) {
-            element = (org.w3c.dom.Element) output.appendChild(next);
-        } else {
-            element = (org.w3c.dom.Element) element.appendChild(next);
-        }
+	private Highlighter(QueryTerms terms) throws XMLStreamException {
+		this.terms = terms;
+		writer = new StringWriter();
+		stream = outFactory.createXMLStreamWriter(writer);
+	}
 
-        for (int i = 0; i < atts.getLength(); i++) {
-            element.setAttribute(atts.getLocalName(i), atts.getValue(i));
-        }
-    }
+	@Override
+	public void startElement(StartElement element) throws XMLStreamException {
+		field = element.getName().toString();
+		stream.writeStartElement(field);
+	}
 
-    @Override
-    public void endElement(String namespaceURI, String localName, String rawName)
-            throws SAXException {
-	    writeCharacters();
-        Node parent = element.getParentNode();
-        if (parent.getNodeType() == Node.ELEMENT_NODE)
-            element = (org.w3c.dom.Element) parent;
-    }
+	@Override
+	public void endElement(EndElement element) throws XMLStreamException {
+		stream.writeEndElement();
+	}
 
-    @Override
-    public void characters(char[] ch, int start, int length) {
-	    writer.write(ch, start, length);
-    }
+	@Override
+	public void characters(Characters chars) throws XMLStreamException {
 
-	private void writeCharacters()
-	{
-		String value = writer.toString();
+		String value = chars.toString();
 
 		char[] buffer = value.toCharArray();
 
 		StringBuilder token = new StringBuilder();
-		StringBuilder builder = new StringBuilder();
 
 		for (char c : buffer) {
 			if (Character.isLetterOrDigit(c)) {
@@ -84,75 +65,52 @@ public class Highlighter extends DefaultHandler {
 				token.append(c);
 			} else if (token.length() > 0) {
 				if (match(token.toString())) {
-					builder.append("<highlight>");
-					builder.append(token.toString());
-					builder.append("</highlight>");
+					stream.writeStartElement("highlight");
+					stream.writeCharacters(token.toString());
+					stream.writeEndElement();
 				} else {
-					builder.append(token.toString());
+					stream.writeCharacters(token.toString());
 				}
 				token.setLength(0);
-				builder.append(c);
+				stream.writeCharacters("" + c);
 			} else {
-				builder.append(c);
+				stream.writeCharacters("" + c);
 			}
 		}
 
 		if (token.length() > 0 && match(token.toString())) {
-			builder.append("<highlight>");
-			builder.append(token.toString());
-			builder.append("</highlight>");
+			stream.writeStartElement("highlight");
+			stream.writeCharacters(token.toString());
+			stream.writeEndElement();
 		} else if (token.length() > 0) {
-			builder.append(token.toString());
-		}
-
-		StringBuilder xml = new StringBuilder();
-		xml.append("<root>");
-		xml.append(builder.toString());
-		xml.append("</root>");
-
-		Document doc;
-		try {
-			doc = XMLUtil.parseXML(xml.toString());
-		} catch (Exception e) {
-			return;
-		}
-
-		Element root = doc.getDocumentElement();
-		NodeList list = root.getChildNodes();
-		Node node;
-
-		for (int i = 0; i < list.getLength(); i++) {
-			node = list.item(i);
-			XMLUtil.transferNode(element, output, node);
+			stream.writeCharacters(token.toString());
 		}
 	}
-    private boolean match(String value) {
 
-        String restriction = String.format("%s:%s", field, value.toLowerCase());
+	private boolean match(String value) {
 
-        return terms.match(restriction);
-    }
+		String restriction = String.format("%s:%s", field, value.toLowerCase());
 
-    public static Document highlight(Document doc, QueryTerms terms)
-            throws IOException, ParserConfigurationException, SAXException {
+		return terms.match(restriction);
+	}
 
-        Highlighter highlighter = new Highlighter(terms);
+	private Document getOutput()
+			throws ParserConfigurationException, IOException, SAXException {
+		return XMLUtil.parseXML(writer.toString());
+	}
 
-        SAXParser parser;
-        synchronized (factory) {
-            parser = factory.newSAXParser();
-        }
+	public static Document highlight(Document doc, QueryTerms terms)
+			throws ParserConfigurationException, IOException,
+			SAXException, XMLStreamException, TransformerException {
 
-        StringWriter writer = new StringWriter();
-        try {
-            XMLTransformer.transform(new DOMSource(doc), writer);
-        } catch (TransformerException e) {
-            throw new IOException(e);
-        }
+		Reader r = XMLTransformer.asReader(doc);
+		XMLEventReader reader = inFactory.createXMLEventReader(r);
+		Highlighter highlighter = new Highlighter(terms);
 
-        StringReader reader = new StringReader(writer.toString());
-        parser.parse(new InputSource(reader), highlighter);
+		XMLEventParser parser = new XMLEventParser();
+		parser.parse(reader, highlighter);
 
-        return highlighter.output;
-    }    
+		return highlighter.getOutput();
+	}
+
 }

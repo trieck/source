@@ -6,6 +6,8 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -55,6 +57,10 @@ public class Content {
             throw new IOException(e);
         } catch (SAXException e) {
             throw new IOException(e);
+        } catch (XMLStreamException e) {
+	        throw new IOException(e);
+        } catch (TransformerException e) {
+	        throw new IOException(e);
         }
     }
 
@@ -73,6 +79,10 @@ public class Content {
             throw new IOException(e);
         } catch (SAXException e) {
             throw new IOException(e);
+        } catch (XMLStreamException e) {
+	        throw new IOException(e);
+        } catch (TransformerException e) {
+	        throw new IOException(e);
         }
     }
         

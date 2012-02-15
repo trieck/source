@@ -9,8 +9,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.OutputStream;
-import java.io.Writer;
+import java.io.*;
 
 public class XMLTransformer {
 
@@ -74,6 +73,15 @@ public class XMLTransformer {
         transformer.transform(new DOMSource(xml), new StreamResult(os));
     }
 
+	public static void transform(Document xml, Writer writer)
+			throws TransformerException {
+		Transformer transformer;
+		synchronized (factory) {
+			transformer = factory.newTransformer();
+		}
+		transformer.transform(new DOMSource(xml), new StreamResult(writer));
+	}
+	
     public static void transform(Source xml, OutputStream os)
             throws TransformerException {
         Transformer transformer;
@@ -91,6 +99,18 @@ public class XMLTransformer {
         }
         transformer.transform(xml, new StreamResult(writer));
     }
+
+	public static InputStream asStream(Document doc) throws TransformerException {
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		transform(doc, os);
+		return new ByteArrayInputStream(os.toByteArray());
+	}
+	
+	public static Reader asReader(Document doc) throws TransformerException {
+		StringWriter writer = new StringWriter();
+		transform(doc, writer);
+		return new StringReader(writer.toString());
+	}
 
     public static void main(String[] args) {
         if (args.length != 2) {
