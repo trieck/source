@@ -100,12 +100,6 @@ public class XMLTransformer {
         transformer.transform(xml, new StreamResult(writer));
     }
 
-	public static InputStream asStream(Document doc) throws TransformerException {
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		transform(doc, os);
-		return new ByteArrayInputStream(os.toByteArray());
-	}
-	
 	public static Reader asReader(Document doc) throws TransformerException {
 		StringWriter writer = new StringWriter();
 		transform(doc, writer);
