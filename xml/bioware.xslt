@@ -4,7 +4,7 @@
 	xmlns:xhtml="http://www.w3.org/1999/xhtml"
 	exclude-result-prefixes="xhtml">
 <xsl:strip-space elements="*"/>
-<xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+<xsl:output method="xml" indent="yes" omit-xml-declaration="yes" encoding="utf-8"/>
 
 <xsl:template match="/">
 	<xsl:apply-templates />

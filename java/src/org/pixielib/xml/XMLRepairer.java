@@ -1,6 +1,6 @@
 package org.pixielib.xml;
 
-import org.pixielib.util.FileUtil;
+import org.pixielib.io.FileUtil;
 
 import java.io.File;
 import java.io.FilenameFilter;
