@@ -23,6 +23,8 @@ public class Content {
     public Document search(String db, String q, int start, int count) throws IOException {
 
         Query query = new Query(db);
+	    IndexFields fields = new IndexFields(db);
+
         QueryTerms terms = new QueryTerms(q);
         
         AnchorList anchorlist = query.query(q);
@@ -48,7 +50,7 @@ public class Content {
             for (int i = 0; i < pagelist.size(); i++) {
                 docid = pagelist.getDoc(i);
                 doc = getDoc(db, docid);
-                doc = Highlighter.highlight(doc, terms);
+                doc = Highlighter.highlight(doc, terms, fields);
                 XMLUtil.transferNode(results, root, doc.getDocumentElement());
             }
 
@@ -67,10 +69,11 @@ public class Content {
     public Document getDoc(String db, String query, long ndocid) throws IOException {
 
         QueryTerms terms = new QueryTerms(query);
+	    IndexFields fields = new IndexFields(db);
 
         try {
             Document doc = getDoc(db, ndocid);
-            doc = Highlighter.highlight(doc, terms);
+            doc = Highlighter.highlight(doc, terms, fields);
             Element root = doc.getDocumentElement();
             root.setAttribute("db", db);
             root.setAttribute("query", query);            

@@ -32,9 +32,11 @@ public class Highlighter extends XMLEventHandlerImpl {
 	private QueryTerms terms;
 	private Writer writer;
 	private XMLStreamWriter stream;
-	private String field;               // current element seen during parsing
+	private IndexFields fields;
+	private String field = "";   // current element seen during parsing
 
-	private Highlighter(QueryTerms terms) throws XMLStreamException {
+	private Highlighter(QueryTerms terms, IndexFields fields) throws XMLStreamException {
+		this.fields = fields;
 		this.terms = terms;
 		writer = new StringWriter();
 		stream = outFactory.createXMLStreamWriter(writer);
@@ -42,9 +44,11 @@ public class Highlighter extends XMLEventHandlerImpl {
 
 	@Override
 	public void startElement(StartElement element) throws XMLStreamException {
-		field = element.getName().toString();
+		String sElement = element.getName().toString();
+		if (fields.isTopLevel(sElement))
+			field = sElement;
 
-		stream.writeStartElement(field);
+		stream.writeStartElement(sElement);
 
 		Attribute attr;
 		String name, value;
@@ -111,13 +115,13 @@ public class Highlighter extends XMLEventHandlerImpl {
 		return XMLUtil.parseXML(writer.toString());
 	}
 
-	public static Document highlight(Document doc, QueryTerms terms)
+	public static Document highlight(Document doc, QueryTerms terms, IndexFields fields)
 			throws ParserConfigurationException, IOException,
 			SAXException, XMLStreamException, TransformerException {
 
 		Reader r = XMLTransformer.asReader(doc);
 		XMLEventReader reader = inFactory.createXMLEventReader(r);
-		Highlighter highlighter = new Highlighter(terms);
+		Highlighter highlighter = new Highlighter(terms, fields);
 
 		XMLEventParser parser = new XMLEventParser();
 		parser.parse(reader, highlighter);

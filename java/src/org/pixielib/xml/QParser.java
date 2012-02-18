@@ -67,7 +67,7 @@ public abstract class QParser {
 
     protected void parse() throws IOException {
 
-        int c;
+        int c, save;
         char[] buffer;
         String tag, name;
 
@@ -82,7 +82,10 @@ public abstract class QParser {
 
             switch (buffer[0]) {
                 case '/':   // end tag
+	                save = type;
                     endTag();
+	                if (save == BEGINTAG)
+		                endElement();
                     break;
                 case '!':   // xml comment
                     if (buffer[1] == '-' && buffer[2] == '-') {
@@ -94,7 +97,9 @@ public abstract class QParser {
                     tag = startTag();
                     type = tagType(tag);
                     name = tagName(tag);
-                    element(name, tag);
+                    startElement(name, tag);
+	                if (type == EMPTYTAG)
+		                endElement();
                     break;
             }
         }
@@ -131,7 +136,8 @@ public abstract class QParser {
 
     public abstract void value(String value);
 
-    public abstract void element(String name, String tag);
+    public abstract void startElement(String name, String tag);
+	public abstract void endElement();
 
     public String startTag() throws IOException {
         StringBuilder tag = new StringBuilder();

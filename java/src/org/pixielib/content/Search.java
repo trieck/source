@@ -14,27 +14,38 @@ public class Search {
     public Search() {
     }
 
-    public void search(String db, String query) throws IOException,
+    public void search(String db, String query, int nrecs) throws IOException,
             ParserConfigurationException, TransformerException {
 
         Content content = new Content();
-        Document doc = content.search(db, query, 1, 25);
+        Document doc = content.search(db, query, 1, nrecs);
 
         XMLTransformer.transform(new DOMSource(doc), System.out);
     }
 
     public static void main(String[] args) {
+	    
+	    int nrecs = 25;
+	    
         if (args.length < 2) {
-            System.err.println("usage: Search db \"phrase\"");
+            System.err.println("usage: Search db \"phrase\" [records]");
             System.exit(1);
         }
+	    
+	    if (args.length == 3) {
+		    try {
+			    nrecs = Integer.parseInt(args[2]);
+		    } catch (NumberFormatException e) {
+			    ;
+		    }
+	    }
 
         Timer t = new Timer();
 
         Search search = new Search();
 
         try {
-            search.search(args[0], args[1]);
+            search.search(args[0], args[1], nrecs);
         } catch (IOException e) {
             System.err.println(e);
             System.exit(1);
