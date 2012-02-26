@@ -16,19 +16,19 @@
 
         <xsl:variable name="resultslink">
             <xsl:if test="$SearchQuery">
-                <xsl:text>/demo/summary.jsp?</xsl:text><xsl:value-of select="$SearchQuery"/>
+                <xsl:text>/bible/summary.jsp?</xsl:text><xsl:value-of select="$SearchQuery"/>
             </xsl:if>
         </xsl:variable>
 
         <xsl:variable name="booklink">
-            <xsl:text>/demo/chapter.jsp?db=</xsl:text><xsl:value-of select="@db"/>
+            <xsl:text>/bible/chapter.jsp?db=</xsl:text><xsl:value-of select="@db"/>
             <xsl:text>&amp;book=</xsl:text><xsl:value-of select="book"/>
             <xsl:text>&amp;chapter=1</xsl:text>
             <xsl:text>&amp;start=1</xsl:text>
         </xsl:variable>
 
         <xsl:variable name="chapterlink">
-            <xsl:text>/demo/chapter.jsp?db=</xsl:text><xsl:value-of select="@db"/>
+            <xsl:text>/bible/chapter.jsp?db=</xsl:text><xsl:value-of select="@db"/>
             <xsl:text>&amp;book=</xsl:text><xsl:value-of select="book"/>
             <xsl:text>&amp;chapter=</xsl:text><xsl:value-of select="chapter"/>
             <xsl:text>&amp;start=1</xsl:text>
@@ -52,7 +52,7 @@
             </xsl:variable>
 
             <xsl:if test="$prevdocid">
-                <xsl:text>/demo/detail.jsp?db=</xsl:text><xsl:value-of select="@db"/>
+                <xsl:text>/bible/detail.jsp?db=</xsl:text><xsl:value-of select="@db"/>
                 <xsl:text>&amp;docid=</xsl:text><xsl:value-of select="$prevdocid"/>
                 <xsl:text>&amp;query=</xsl:text><xsl:value-of select="java:org.pixielib.content.beans.Context.encode(normalize-space($query))"/>
             </xsl:if>
@@ -77,7 +77,7 @@
             </xsl:variable>
 
             <xsl:if test="$nextdocid">
-                <xsl:text>/demo/detail.jsp?db=</xsl:text><xsl:value-of select="@db"/>
+                <xsl:text>/bible/detail.jsp?db=</xsl:text><xsl:value-of select="@db"/>
                 <xsl:text>&amp;docid=</xsl:text><xsl:value-of select="$nextdocid"/>
                 <xsl:text>&amp;query=</xsl:text><xsl:value-of select="java:org.pixielib.content.beans.Context.encode(normalize-space($query))"/>
             </xsl:if>

@@ -10,23 +10,23 @@
     String query = context.getSymbol("query");    
     String style = "detail";
 
-    Detail record = Detail.DetailRecord("demo", db, docid, query, style);
+    Detail record = Detail.DetailRecord("nwn", db, docid, query, style);
 %>
 
 <html>
 <head>
-<link href="/style.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-<h1>Content Search Engine Demo</h1>
+<h1>NWN Script Archive Search Engine</h1>
 <body>
 <p/>
 
 <table border="0" cellspacing="1" cellpadding="0" width="600">
   <tr>
-    <td bgcolor="#aaaaaa">
+    <td class="bg1">
       <table border="0" cellspacing="1" cellpadding="1" width="100%">
         <tr>
-          <td bgcolor="#ffffff">
+          <td class="bg2">
             <% record.getContent(); %>
           </td>
         </tr>

@@ -29,7 +29,7 @@
     </xsl:template>
 
     <xsl:template match="record">
-        <xsl:variable name="linkdetail">/demo/detail.jsp?db=<xsl:value-of select="//results/@db"/>&amp;docid=<xsl:value-of select="@docid"/>&amp;query=<xsl:value-of select="java:org.pixielib.content.beans.Context.encode(//results/@query)"/>
+        <xsl:variable name="linkdetail">/bible/detail.jsp?db=<xsl:value-of select="//results/@db"/>&amp;docid=<xsl:value-of select="@docid"/>&amp;query=<xsl:value-of select="java:org.pixielib.content.beans.Context.encode(//results/@query)"/>
         </xsl:variable>
         <TR>
             <TD CLASS="regtext11">

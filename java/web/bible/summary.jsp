@@ -21,17 +21,17 @@
         String.format("db=%s&query=%s&start=%d",
             db, context.encode(query), nstart));
 
-    String ModifyLink = String.format("/demo/search.jsp?db=%s&query=%s", db, context.encode(query));
+    String ModifyLink = String.format("/bible/search.jsp?db=%s&query=%s", db, context.encode(query));
 
 	String dbquery = String.format("text[%s]", query);
-    Search search = Search.DatabaseSearch("demo", db, dbquery, nstart, style);    
+    Search search = Search.DatabaseSearch("bible", db, dbquery, nstart, style);    
 %>
 
 <html>
 <head>
 <link href="/style.css" rel="stylesheet" type="text/css" />
 </head>
-<h1>Content Search Engine Demo</h1>
+<h1>Bible Search Engine</h1>
 <body>
 <p/>
 
@@ -49,7 +49,7 @@
 
 <table border="0" cellspacing="0" cellpadding="2" width="100%">
   <tr bgcolor="#00619c" height="25">
-    <td border="1" valign="bottom" align="left"><a href="/demo/search.jsp?db=<%=db%>" class="regtextw11">New Search</a></td>
+    <td border="1" valign="bottom" align="left"><a href="/bible/search.jsp?db=<%=db%>" class="regtextw11">New Search</a></td>
     <td border="1" valign="bottom" align="left"><a href="<%= ModifyLink %>" class="regtextw11">Modify Search</a></td>
 
   	<td valign="bottom">
