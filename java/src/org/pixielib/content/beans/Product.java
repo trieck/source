@@ -2,9 +2,7 @@ package org.pixielib.content.beans;
 
 import org.pixielib.xml.CachedTransformer;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
@@ -59,17 +57,14 @@ public abstract class Product {
         if (results != null) {
             try {
                 File f = getStylesheet();
-                CachedTransformer cache = CachedTransformer.getInstance();
-                Transformer transformer = cache.getTransformer(f);
-                transformer.transform(new DOMSource(results),
-                        new StreamResult(context.getWriter()));
+	            
+	            CachedTransformer cache = CachedTransformer.getInstance();
+	            Transformer transformer = cache.getTransformer(f);
+
+                transformer.transform(new DOMSource(results), new StreamResult(context.getWriter()));
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (TransformerException e) {
-                e.printStackTrace();
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
                 e.printStackTrace();
             }
         }

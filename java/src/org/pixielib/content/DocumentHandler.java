@@ -36,7 +36,7 @@ public class DocumentHandler implements ContentHandler {
         Document doc = content.getDoc(db, query, ndocid);
 
         try {
-            XMLTransformer.transform(new DOMSource(doc), response.getWriter());
+            XMLTransformer.transform(new DOMSource(doc), response.getOutputStream());
         } catch (TransformerException e) {
             throw new ServletException(e);
         }

@@ -36,7 +36,7 @@ public class SearchHandler implements ContentHandler {
         Document doc = content.search(db, query, nstart, ncount);
 
         try {
-            XMLTransformer.transform(new DOMSource(doc), response.getWriter());
+            XMLTransformer.transform(new DOMSource(doc), response.getOutputStream());
         } catch (TransformerException e) {
             throw new ServletException(e);
         }
