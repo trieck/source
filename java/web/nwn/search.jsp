@@ -16,7 +16,7 @@
 <h1>NWN Script Archive Search Engine</h1>
 </HEAD>
 
-<BODY BOTTOMMARGIN="0" LEFTMARGIN="0" RIGHTMARGIN="0" TOPMARGIN="0" MARGINHEIGHT="0" MARGINWIDTH="0">
+<BODY>
 
 <SPAN CLASS="directions">Enter query (surround phrases with double-quotes):</SPAN>
 <p/>
@@ -24,7 +24,7 @@
 <FORM METHOD="get" ACTION="summary.jsp">
 <input type="hidden" name="function" value="search"/>
 <input type="hidden" name="start" value="1"/>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+<TABLE BORDER="0">
    <TR>
       <TD VALIGN="middle" CLASS="normal"><B CLASS="header">Title:</B></TD>
       <TD VALIGN="top">&nbsp;</TD>
@@ -46,11 +46,14 @@
         <INPUT NAME="message" TYPE="text" SIZE="30" MAXLENGTH="128" value="<%= WebUtils.htmlEncode(message) %>"/>
       </TD>
    </TR>
+   <TR><TD>&nbsp;</TD></TR>
    <TR>
+   		<TD>&nbsp;</TD>
+   		<TD>&nbsp;</TD>
       <TD VALIGN="top">
-        <table cellspacing="0" cellpadding="0">
-          <tr>
-          <td><INPUT TYPE="submit" VALUE="  Search  " CLASS="searchbutton"></td>
+        <table>
+        	<tr>
+					<td><INPUT TYPE="submit" VALUE="  Search  " CLASS="searchbutton"></td>
           </tr>
         </table>
       </TD>

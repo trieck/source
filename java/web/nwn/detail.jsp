@@ -21,12 +21,12 @@
 <body>
 <p/>
 
-<table border="0" cellspacing="1" cellpadding="0" width="600">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
   <tr>
-    <td class="bg1">
+    <td class="grey">
       <table border="0" cellspacing="1" cellpadding="1" width="100%">
         <tr>
-          <td class="bg2">
+          <td>
             <% record.getContent(); %>
           </td>
         </tr>

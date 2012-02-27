@@ -22,17 +22,16 @@
             </xsl:if>
         </xsl:variable>
 
-		<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0">
+		<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
 		<TR>
-		<TD>
-        <TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0">
+		<TD class="grey">
+        <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
             <TR>
-                <TD CLASS="regtext11" align="left">
+                <TD align="left" class="grey" width="125">
                     <b>Title:</b>
                 </TD>
-                <TD>&#160;</TD>
-                <TD CLASS="regtext11" align="left">
-                    <b class="normal">
+                <TD align="left" class="grey">
+                    <b>
                         <xsl:apply-templates select="title"/>
                     </b>
                 </TD>
@@ -42,15 +41,13 @@
 		</TD>
 		</TR>
 		<TR>
-		<TD>
+		<TD class="grey">
 		<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0">
             <TR>&#160;</TR>
             <TR>&#160;</TR>
             <TR>
-                <TD>&#160;</TD>
-                <TD>&#160;</TD>
-                <TD CLASS="regtext11" align="left">
-                    <span><a href="{$resultslink}" class="blue">Back to Search Results</a></span>                    
+                <TD align="left" class="grey">
+                    <span><a href="{$resultslink}" >Back to Search Results</a></span>                    
                 </TD>
             </TR>            
         </TABLE>
@@ -60,26 +57,24 @@
     </xsl:template>
 
 	<xsl:template match="post">
-		<TR><TD colspan="3"><HR/></TD></TR>
+		<TR><TD colspan="2" class="grey"><HR/></TD></TR>
 		<TR>
-        	<TD CLASS="regtext11" align="left">
+        	<TD align="left" class="grey">
             <b>User:</b>
 			</TD>
-            <TD>&#160;</TD>
-            <TD CLASS="regtext11" align="left">
-            	<b class="normal">
+            <TD align="left" class="grey">
+            	<b>
                 	<xsl:apply-templates select="user"/>
 				</b>
 			</TD>
 		</TR>
-		<TR>&#160;</TR>
+		<TR><TD class="grey">&#160;</TD></TR>
 		<TR>
-        	<TD CLASS="regtext11" align="left">
+        	<TD align="left" class="grey">
             <b>Message:</b>
 			</TD>
-            <TD>&#160;</TD>
-            <TD CLASS="regtext11" align="left">
-            	<b class="normal">
+            <TD align="left" class="grey">
+            	<b>
                 	<xsl:apply-templates select="message"/>
 				</b>
 			</TD>

@@ -15,12 +15,11 @@
     <xsl:template match="results">
         <xsl:if test="//results/@count != 0">
             <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0" WIDTH="100%">
-                <TR CLASS="bg1">
-                    <TD WIDTH="25" CLASS="regtext11" align="left">&#xa0;</TD>
-
-                    <TD WIDTH="125" CLASS="regtext11" align="left">
+                <TR>
+                    <TH WIDTH="25" align="left">&#xa0;</TH>
+                    <TH WIDTH="125" align="left">
                         <b>Title</b>
-                    </TD>                    
+                    </TH>                    
                 </TR>
                 <xsl:apply-templates select="record"/>
             </TABLE>
@@ -31,11 +30,11 @@
         <xsl:variable name="linkdetail">detail.jsp?db=<xsl:value-of select="//results/@db"/>&amp;docid=<xsl:value-of select="@docid"/>&amp;query=<xsl:value-of select="java:org.pixielib.content.beans.Context.encode(//results/@query)"/>
         </xsl:variable>
         <TR>
-            <TD CLASS="regtext11">
+            <TD class="grey">
                 <xsl:value-of select="//results/@start + position() - 1"/>.
             </TD>
-            <TD CLASS="regtext11" align="left">
-                <a href="{$linkdetail}" class="blue">
+            <TD align="left" class="grey">
+                <a href="{$linkdetail}">
                     <xsl:apply-templates select="title"/>
                 </a>
             </TD>            

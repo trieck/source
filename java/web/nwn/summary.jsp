@@ -58,28 +58,27 @@
 <p/>
 
 <table border="0" cellspacing="0" cellpadding="3" width="100%">
-  <tr class="bg1">
+  <tr>
     <td valign="bottom" width="50%">
-      <b class="blu14large"><%= search.getRecordCount() %></b>&#xa0;
-      <b class="blu14large">matches found</b>
+      <b class="searchresults"><%= search.getRecordCount() %></b>&#xa0;
+      <b class="searchresults">matches found</b>
     </td>
     <TD VALIGN="bottom" CLASS="normal" ALIGN="right" width="50%">
-      Searching: <B CLASS="yoursearch"><%= dbquery %></B>      
+      <B CLASS="searchquery">Searching: </B><B CLASS="searchquery"><%= dbquery %></B>      
     </TD>
 	</tr>
 </table>
 
 <table border="0" cellspacing="0" cellpadding="2" width="100%">
-  <tr class="bg2" height="25">
-    <td border="1" valign="bottom" align="left"><a href="search.jsp?" class="regtextw11">New Search</a></td>
-    <td border="1" valign="bottom" align="left"><a href="<%= ModifyLink %>" class="regtextw11">Modify Search</a></td>
-
-  	<td valign="bottom">
+  <tr>
+    <td border="1" valign="bottom" align="left"><a href="search.jsp?" class="navigation">New Search</a></td>
+    <td border="1" valign="bottom" align="left"><a href="<%= ModifyLink %>" class="navigation">Modify Search</a></td>
+  	<td>
       <% if (search.getPrevious().length() > 0 ) { %>
-         &#xa0;<img src="../images/page_rev.gif" border="0"/><a href="<%= search.getPrevious() %>" class="regtextw11">Previous Page</a>&#xa0;&#xa0;
+         &#xa0;<img src="../images/page_rev.gif" border="0"/><a href="<%= search.getPrevious() %>" class="navigation">Previous Page</a>&#xa0;&#xa0;
       <% } %>
       <% if (search.getNext().length() > 0 ) { %>
-         &#xa0;<a href="<%= search.getNext() %>" class="regtextw11">Next Page</a><img src="../images/page_arr.gif" border="0"/> &#xa0;&#xa0;
+         &#xa0;<a href="<%= search.getNext() %>" class="navigation">Next Page</a><img src="../images/page_arr.gif" border="0"/> &#xa0;&#xa0;
       <% } %>
     </td>
   </tr>
@@ -87,10 +86,10 @@
 
 <table border="0" cellspacing="1" cellpadding="0" width="100%">
   <tr>
-    <td class="bg1">
+    <td>
       <table border="0" cellspacing="1" cellpadding="1" width="100%">
         <tr>
-          <td class="bg2">
+          <td>
             <% search.getContent(); %>
           </td>
         </tr>

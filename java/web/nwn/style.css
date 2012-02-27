@@ -1,28 +1,69 @@
 body {
-	color: white;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 8pt;
 	background-color: black;
-	padding: 3px;
 	border-spacing: 3px;
+	color: RoyalBlue;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;	
+	padding: 3px;	
 }
 
-.directions { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; color: #DDDDDD; }
+a {
+	display:block;
+}
 
-.normal { font : 9pt Arial, San-Serif; color: #FFFFFF; } /* Default text */
-b.header { font : 9pt Arial, San-Serif; font-weight: bold; } /* Global */
-.searchbutton { font : 9pt Arial, San-Serif; color : #FFFFFF; font-weight: bold; background-color : #003366; } /* Color of "Search" button */
-.blu14large { font-family: Arial Black, Helvetica, sans-serif; font-size: 14px; font-weight: normal; color: #3300DD; text-decoration: none; }
-a.blue { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal; color: #3300DD; text-decoration: underline; }
-.regtext11 { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal; color: #3300DD; }
-.regtextw11 { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal; color: #ffffff; }
-.highlight { color: #dd0000; font-weight : bold }
-b.hilight { font-weight: bold; background-color: yellow; }
-.text { color: #FFFFFF; font : 11pt  Arial, Helvetica, sans-serif; font-weight: normal }
-.cite { color: #FFFFFF; font : 9 Arial, Helvetica, sans-serif; font-weight: normal }
+a:link { 
+	color: RoyalBlue; 
+}
+a:visited { 
+	color: RoyalBlue;
+}
 
-tr.bg1 { background-color: #808080; }
-tr.bg2 { background-color: #808080; }
+a.navigation { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 11px; 
+	font-weight: normal;
+	color: CornflowerBlue;
+}
 
-td.bg1 { background-color: #808080; }
-td.bg2 { background-color: #a0a0a0; }
+.directions { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 12px; 
+	font-weight: bold; 
+	color: CornflowerBlue;
+}
+
+.header {
+	font-family: Arial, Helvetica, sans-serif; 
+	color: CornflowerBlue
+}
+
+h1 {
+	color: DodgerBlue
+}
+.normal { font : 9pt Arial, San-Serif; }
+
+.searchbutton { 
+	font : 9pt Arial, San-Serif; 
+	color : White; 
+	font-weight: bold; 
+	background-color : RoyalBlue; 
+}
+
+.searchresults { font-family: Arial Black, Helvetica, sans-serif; font-size: 16px; font-weight: bold; color: PowderBlue; text-decoration: none; }
+.searchquery { font-family: Arial Black, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: CornflowerBlue; text-decoration: none; }
+
+th {
+	background-color:silver;
+}
+
+td {
+	background-color:black;
+}
+
+.grey {
+	background-color:LightGrey;
+	font : 9pt Arial, San-Serif;
+}
+
+.highlight { color: DarkRed; font-weight : bold }
+
