@@ -7,10 +7,6 @@ body {
 	padding: 3px;	
 }
 
-a {
-	display:block;
-}
-
 a:link { 
 	color: RoyalBlue; 
 }
