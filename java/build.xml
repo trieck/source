@@ -381,6 +381,18 @@
        localWar="file://${dist.home}/${app.name}-${app.version}.war"/>
 
   </target>
+  
+  <target name="install-remote" depends="dist"
+   description="Install application to remote servlet container">
+
+    <deploy url="${manager.remote-url}"
+       username="${manager.username}"
+       password="${manager.password}"
+           path="${app.path}"
+       localWar="file://${dist.home}/${app.name}-${app.version}.war"/>
+
+  </target>
+
 
 <!-- ====================== List Target =================================== -->
 
@@ -402,6 +414,14 @@
 
   </target>
 
+  <target name="list-remote"
+   description="List installed applications on remote servlet container">
+
+    <list    url="${manager.remote-url}"
+        username="${manager.username}"
+        password="${manager.password}"/>
+        
+  </target>
 
 <!-- ==================== Prepare Target ================================== -->
 
@@ -468,6 +488,15 @@
 
   </target>
 
+  <target name="reload-remote" depends="compile"
+   description="Reload application on servlet container">
+
+    <reload url="${manager.remote-url}"
+       username="${manager.username}"
+       password="${manager.password}"
+           path="${app.path}"/>
+
+  </target>
 
 <!-- ==================== Remove Target =================================== -->
 
@@ -490,6 +519,17 @@
 
   </target>
 
+  <target name="remove-remote"
+   description="Remove application on remote servlet container">
+
+    <undeploy url="${manager.remote-url}"
+         username="${manager.username}"
+         password="${manager.password}"
+             path="${app.path}"/>
+
+  </target>
+  
   <target name="reinstall" depends="dist,remove,install"/>
+  <target name="reinstall-remote" depends="dist,remove-remote,install-remote"/>
 
 </project>
