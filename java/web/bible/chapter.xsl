@@ -14,7 +14,7 @@
         <xsl:if test="//results/@count != 0">
                        
             <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0" WIDTH="100%">
-                <TR><TD class="text">
+                <TR><TD class="grey">
                 <xsl:for-each select="record">
                     <cite class="cite"><xsl:value-of select="verse"/></cite>
                      <xsl:value-of select="text"/><br/>

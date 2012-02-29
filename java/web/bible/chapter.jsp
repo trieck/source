@@ -27,7 +27,7 @@
 
     String results = "";
     if (searchQuery.length() > 0) {
-        results = String.format("/bible/summary.jsp?%s", searchQuery);
+        results = String.format("summary.jsp?%s", searchQuery);
     }
 
     String prevQuery = String.format("book[%s] chapter[%d]", book, nchapter-1);
@@ -39,20 +39,20 @@
 
     String prevChapter = "";
     if (prevDoc.length() > 0) {
-        prevChapter = String.format("/bible/chapter.jsp?db=%s&book=%s&chapter=%d&start=1",
+        prevChapter = String.format("chapter.jsp?db=%s&book=%s&chapter=%d&start=1",
             db, book, nchapter - 1);
     }
     
     String nextChapter = "";
     if (nextDoc.length() > 0) {
-        nextChapter = String.format("/bible/chapter.jsp?db=%s&book=%s&chapter=%d&start=1",
+        nextChapter = String.format("chapter.jsp?db=%s&book=%s&chapter=%d&start=1",
             db, book, nchapter + 1);
     }
 %>
 
 <html>
 <head>
-<link href="/style.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <h1>Bible Search Engine</h1>
 <body>
@@ -68,23 +68,23 @@
 
 <table border="0" cellspacing="0" cellpadding="2" width="100%">
   <tr bgcolor="#00619c" height="25">
-    <td border="1" valign="bottom" align="left"><a href="/bible/search.jsp?db=<%=db%>" class="regtextw11">New search</a></td>
+    <td border="1" valign="bottom" align="left"><a href="search.jsp?db=<%=db%>" class="navigation">New search</a></td>
     <% if (results.length() > 0) { %>
-    <td border="1" valign="bottom" align="left"><a href="<%= results %>" class="regtextw11">Back to Search Results</a></td>
+    <td border="1" valign="bottom" align="left"><a href="<%= results %>" class="navigation">Back to Search Results</a></td>
     <% } %>
 
   	<td valign="bottom">
       <% if (search.getPrevious().length() > 0 ) { %>
-         &#xa0;<img src="/images/page_rev.gif" border="0"/><a href="<%= search.getPrevious() %>" class="regtextw11">Previous Page</a>&#xa0;&#xa0;
+         &#xa0;<img src="../images/page_rev.gif" border="0"/><a href="<%= search.getPrevious() %>" class="navigation">Previous Page</a>&#xa0;&#xa0;
       <% } %>
       <% if (search.getNext().length() > 0 ) { %>
-         &#xa0;<a href="<%= search.getNext() %>" class="regtextw11">Next Page</a><img src="/images/page_arr.gif" border="0"/> &#xa0;&#xa0;
+         &#xa0;<a href="<%= search.getNext() %>" class="navigation">Next Page</a><img src="../images/page_arr.gif" border="0"/> &#xa0;&#xa0;
       <% } %>
       <% if (prevChapter.length() > 0) { %>
-      &#xa0;<img src="/images/page_rev.gif" border="0"/><a href="<%= prevChapter %>" class="regtextw11">Previous Chapter</a>&#xa0;&#xa0;
+      &#xa0;<img src="../images/page_rev.gif" border="0"/><a href="<%= prevChapter %>" class="navigation">Previous Chapter</a>&#xa0;&#xa0;
       <% } %>
       <% if (nextChapter.length() > 0) { %>
-      &#xa0;<a href="<%= nextChapter %>" class="regtextw11">Next Chapter</a><img src="/images/page_arr.gif" border="0"/> &#xa0;&#xa0;
+      &#xa0;<a href="<%= nextChapter %>" class="navigation">Next Chapter</a><img src="../images/page_arr.gif" border="0"/> &#xa0;&#xa0;
       <% } %>
     </td>
   </tr>
@@ -93,7 +93,7 @@
 
 <table border="0" cellspacing="1" cellpadding="1" width="75%" align="center">
         <tr>
-          <td bgcolor="#0">
+          <td class="grey">
             <% search.getContent(); %>
           </td>
         </tr>

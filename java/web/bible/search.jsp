@@ -11,7 +11,7 @@
 
 <HTML>
 <head>
-<LINK HREF="/style.css" REL="stylesheet" TYPE="text/css">
+<LINK HREF="style.css" REL="stylesheet" TYPE="text/css">
 <h1>Bible Search Engine</h1>
 </HEAD>
 
@@ -21,7 +21,7 @@
 <SPAN CLASS="directions">Enter query (surround phrases with double-quotes) and select a version.</SPAN>
 <p/>
 
-<FORM METHOD="get" ACTION="/bible/summary.jsp">
+<FORM METHOD="get" ACTION="summary.jsp">
 <input type="hidden" name="function" value="search"/>
 <input type="hidden" name="start" value="1"/>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">

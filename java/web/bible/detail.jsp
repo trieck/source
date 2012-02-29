@@ -15,7 +15,7 @@
 
 <html>
 <head>
-<link href="/style.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <h1>Bible Search Engine</h1>
 <body>
@@ -23,10 +23,10 @@
 
 <table border="0" cellspacing="1" cellpadding="0" width="600">
   <tr>
-    <td bgcolor="#aaaaaa">
+    <td class="grey">
       <table border="0" cellspacing="1" cellpadding="1" width="100%">
         <tr>
-          <td bgcolor="#ffffff">
+          <td class="grey">
             <% record.getContent(); %>
           </td>
         </tr>

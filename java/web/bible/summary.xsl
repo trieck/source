@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" 
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:java="http://xml.apache.org/xslt/java">
     
     <xsl:output method="html" indent="yes" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN"/>
 
@@ -20,7 +22,7 @@
                         <b>Source</b>
                     </TD>
                     <TD CLASS="regtext11" align="left">
-                        <b>Verse</b>
+                        <b>Text</b>
                     </TD>
                 </TR>
                 <xsl:apply-templates select="record"/>
@@ -29,20 +31,20 @@
     </xsl:template>
 
     <xsl:template match="record">
-        <xsl:variable name="linkdetail">/bible/detail.jsp?db=<xsl:value-of select="//results/@db"/>&amp;docid=<xsl:value-of select="@docid"/>&amp;query=<xsl:value-of select="java:org.pixielib.content.beans.Context.encode(//results/@query)"/>
+        <xsl:variable name="linkdetail">detail.jsp?db=<xsl:value-of select="//results/@db"/>&amp;docid=<xsl:value-of select="@docid"/>&amp;query=<xsl:value-of select="java:org.pixielib.content.beans.Context.encode(//results/@query)"/>
         </xsl:variable>
         <TR>
-            <TD CLASS="regtext11">
+            <TD CLASS="grey">
                 <xsl:value-of select="//results/@start + position() - 1"/>.
             </TD>
-            <TD CLASS="regtext11" align="left">
-                <a href="{$linkdetail}" class="blue">
+            <TD CLASS="grey" align="left">
+                <a href="{$linkdetail}" class="grey">
                     <span class="grey">
                         <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:<xsl:value-of select="verse"/>
                     </span>
                 </a>
             </TD>
-            <TD CLASS="regtext11" align="left">
+            <TD CLASS="grey" align="left">
                 <b class="grey">
                     <xsl:apply-templates select="text"/>
                 </b>

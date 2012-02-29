@@ -21,7 +21,7 @@
         String.format("db=%s&query=%s&start=%d",
             db, context.encode(query), nstart));
 
-    String ModifyLink = String.format("/bible/search.jsp?db=%s&query=%s", db, context.encode(query));
+    String ModifyLink = String.format("search.jsp?db=%s&query=%s", db, context.encode(query));
 
 	String dbquery = String.format("text[%s]", query);
     Search search = Search.DatabaseSearch("bible", db, dbquery, nstart, style);    
@@ -29,7 +29,7 @@
 
 <html>
 <head>
-<link href="/style.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <h1>Bible Search Engine</h1>
 <body>
@@ -38,26 +38,26 @@
 <table border="0" cellspacing="0" cellpadding="3" width="100%">
   <tr bgcolor="#f1f1f1">
     <td valign="bottom" width="50%">
-      <b class="blu14large"><%= search.getRecordCount() %></b>&#xa0;
-      <b class="blu14large">matches found</b>
+      <b class="searchresults"><%= search.getRecordCount() %></b>&#xa0;
+      <b class="searchresults">matches found</b>
     </td>
     <TD VALIGN="bottom" CLASS="normal" ALIGN="right" width="50%">
-      Searching: query: <B CLASS="yoursearch"><%= query %></B> | db : <B CLASS="yoursearch"><%= db %></B>      
+      Searching: query: <B CLASS="searchquery"><%= query %></B> | db : <B CLASS="searchquery"><%= db %></B>      
     </TD>
 	</tr>
 </table>
 
 <table border="0" cellspacing="0" cellpadding="2" width="100%">
   <tr bgcolor="#00619c" height="25">
-    <td border="1" valign="bottom" align="left"><a href="/bible/search.jsp?db=<%=db%>" class="regtextw11">New Search</a></td>
-    <td border="1" valign="bottom" align="left"><a href="<%= ModifyLink %>" class="regtextw11">Modify Search</a></td>
+    <td border="1" valign="bottom" align="left"><a href="search.jsp?db=<%=db%>" class="navigation">New Search</a></td>
+    <td border="1" valign="bottom" align="left"><a href="<%= ModifyLink %>" class="navigation">Modify Search</a></td>
 
   	<td valign="bottom">
       <% if (search.getPrevious().length() > 0 ) { %>
-         &#xa0;<img src="/images/page_rev.gif" border="0"/><a href="<%= search.getPrevious() %>" class="regtextw11">Previous Page</a>&#xa0;&#xa0;
+         &#xa0;<img src="../images/page_rev.gif" border="0"/><a href="<%= search.getPrevious() %>" class="navigation">Previous Page</a>&#xa0;&#xa0;
       <% } %>
       <% if (search.getNext().length() > 0 ) { %>
-         &#xa0;<a href="<%= search.getNext() %>" class="regtextw11">Next Page</a><img src="/images/page_arr.gif" border="0"/> &#xa0;&#xa0;
+         &#xa0;<a href="<%= search.getNext() %>" class="navigation">Next Page</a><img src="../images/page_arr.gif" border="0"/> &#xa0;&#xa0;
       <% } %>
     </td>
   </tr>
@@ -65,10 +65,10 @@
 
 <table border="0" cellspacing="1" cellpadding="0" width="100%">
   <tr>
-    <td bgcolor="#aaaaaa">
+    <td>
       <table border="0" cellspacing="1" cellpadding="1" width="100%">
         <tr>
-          <td bgcolor="#ffffff">
+          <td>
             <% search.getContent(); %>
           </td>
         </tr>
