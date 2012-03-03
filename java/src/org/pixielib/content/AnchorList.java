@@ -64,13 +64,13 @@ public class AnchorList {
         long anchor;
         for (int i = 0; i < size; i++) {    // convert byte array to long
             anchor = ((long) (buffer[i * 8] & 0xFF)) << 56
-                    | ((long)(buffer[i * 8 + 1] & 0xFF)) << 48
-                    | ((long)(buffer[i * 8 + 2] & 0xFF)) << 40
-                    | ((long)(buffer[i * 8 + 3] & 0xFF)) << 32
-                    | ((long)(buffer[i * 8 + 4] & 0xFF)) << 24
-                    | ((long)(buffer[i * 8 + 5] & 0xFF)) << 16
-                    | ((long)(buffer[i * 8 + 6] & 0xFF)) << 8
-                    | ((long)(buffer[i * 8 + 7] & 0xFF));
+                    | ((long) (buffer[i * 8 + 1] & 0xFF)) << 48
+                    | ((long) (buffer[i * 8 + 2] & 0xFF)) << 40
+                    | ((long) (buffer[i * 8 + 3] & 0xFF)) << 32
+                    | ((long) (buffer[i * 8 + 4] & 0xFF)) << 24
+                    | ((long) (buffer[i * 8 + 5] & 0xFF)) << 16
+                    | ((long) (buffer[i * 8 + 6] & 0xFF)) << 8
+                    | ((long) (buffer[i * 8 + 7] & 0xFF));
             anchors.add(anchor);
         }
     }

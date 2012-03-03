@@ -62,7 +62,7 @@ public class Frame extends JFrame {
             String depth = (String) JOptionPane.showInputDialog(Frame.this,
                     "Game Tree Depth:", "Options",
                     JOptionPane.QUESTION_MESSAGE, null, depths, String
-                            .valueOf(ndepth));
+                    .valueOf(ndepth));
 
             if (depth != null) {
                 try {

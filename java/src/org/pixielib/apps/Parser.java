@@ -60,7 +60,7 @@ public class Parser {
 
     private NFA expression() {
         NFA left = conjunction();
-        for (; ;) {
+        for (; ; ) {
             if (lookahead() == '|') {
                 gettok();
                 left = new UnionNFA(left, conjunction());
@@ -73,7 +73,7 @@ public class Parser {
     private NFA conjunction() {
         NFA left = closure();
 
-        for (; ;) {
+        for (; ; ) {
             if (Character.isLetter(lookahead())) {
                 left = new ConcatNFA(left, closure());
             } else {
@@ -85,7 +85,7 @@ public class Parser {
     private NFA closure() {
         NFA left = primary();
 
-        for (; ;) {
+        for (; ; ) {
             if (lookahead() == '*') {
                 gettok();
                 left = new ClosureNFA(left);

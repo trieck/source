@@ -57,9 +57,9 @@ public abstract class Product {
         if (results != null) {
             try {
                 File f = getStylesheet();
-	            
-	            CachedTransformer cache = CachedTransformer.getInstance();
-	            Transformer transformer = cache.getTransformer(f);
+
+                CachedTransformer cache = CachedTransformer.getInstance();
+                Transformer transformer = cache.getTransformer(f);
 
                 transformer.transform(new DOMSource(results), new StreamResult(context.getWriter()));
             } catch (IOException e) {

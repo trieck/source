@@ -24,7 +24,7 @@ public class SearchHandler implements ContentHandler {
             throw new IllegalArgumentException("required argument not supplied.");
 
         int nstart, ncount;
-        
+
         try {
             nstart = Integer.parseInt(start);
             ncount = Integer.parseInt(count);

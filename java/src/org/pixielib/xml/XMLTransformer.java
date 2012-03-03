@@ -73,15 +73,15 @@ public class XMLTransformer {
         transformer.transform(new DOMSource(xml), new StreamResult(os));
     }
 
-	public static void transform(Document xml, Writer writer)
-			throws TransformerException {
-		Transformer transformer;
-		synchronized (factory) {
-			transformer = factory.newTransformer();
-		}
-		transformer.transform(new DOMSource(xml), new StreamResult(writer));
-	}
-	
+    public static void transform(Document xml, Writer writer)
+            throws TransformerException {
+        Transformer transformer;
+        synchronized (factory) {
+            transformer = factory.newTransformer();
+        }
+        transformer.transform(new DOMSource(xml), new StreamResult(writer));
+    }
+
     public static void transform(Source xml, OutputStream os)
             throws TransformerException {
         Transformer transformer;
@@ -100,11 +100,11 @@ public class XMLTransformer {
         transformer.transform(xml, new StreamResult(writer));
     }
 
-	public static Reader asReader(Document doc) throws TransformerException {
-		StringWriter writer = new StringWriter();
-		transform(doc, writer);
-		return new StringReader(writer.toString());
-	}
+    public static Reader asReader(Document doc) throws TransformerException {
+        StringWriter writer = new StringWriter();
+        transform(doc, writer);
+        return new StringReader(writer.toString());
+    }
 
     public static void main(String[] args) {
         if (args.length != 2) {

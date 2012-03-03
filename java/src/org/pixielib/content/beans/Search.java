@@ -47,7 +47,7 @@ public class Search extends Product {
             return "";
 
         XPath xpath;
-        synchronized(factory) {
+        synchronized (factory) {
             xpath = factory.newXPath();
         }
 

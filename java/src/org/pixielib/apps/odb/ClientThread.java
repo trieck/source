@@ -33,7 +33,7 @@ public class ClientThread implements Runnable {
         }
 
         String key = null, val = null;
-        for (; ;) {
+        for (; ; ) {
 
             /* always try to destroy the object first */
             try {

@@ -10,12 +10,12 @@ public class Lexer extends Tokenizer {
     public Lexer(Reader r) {
         super(r);
     }
-    
+
     /* get next token from reader */
     public String getToken() throws IOException {
 
         clear();    // clear the token buffer
-        
+
         StringBuilder builder = new StringBuilder();
 
         int c;

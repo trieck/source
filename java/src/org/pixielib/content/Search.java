@@ -24,21 +24,21 @@ public class Search {
     }
 
     public static void main(String[] args) {
-	    
-	    int nrecs = 25;
-	    
+
+        int nrecs = 25;
+
         if (args.length < 2) {
             System.err.println("usage: Search db \"phrase\" [records]");
             System.exit(1);
         }
-	    
-	    if (args.length == 3) {
-		    try {
-			    nrecs = Integer.parseInt(args[2]);
-		    } catch (NumberFormatException e) {
-			    ;
-		    }
-	    }
+
+        if (args.length == 3) {
+            try {
+                nrecs = Integer.parseInt(args[2]);
+            } catch (NumberFormatException e) {
+                ;
+            }
+        }
 
         Timer t = new Timer();
 

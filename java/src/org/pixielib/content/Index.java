@@ -109,7 +109,7 @@ public class Index {
             h = hash(term, tableSize);
 
             // collisions are resolved via linear-probing
-            for (; ;) {
+            for (; ; ) {
                 offset = hash_table_area + (h * 8);
 
                 ofile.seek(offset);

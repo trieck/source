@@ -4,7 +4,10 @@ import org.pixielib.util.Timer;
 import org.pixielib.xml.QParser;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
 
 public class XMLIndexer extends QParser {
 
@@ -12,12 +15,12 @@ public class XMLIndexer extends QParser {
     private Index index;            // index instance
     private short filenum;          // current file number while indexing
     private int offset;             // offset into current file
-	private Stack<String> elements; // stack of elements seen
-	private IndexFields fields;     // set of top-level fields for indexing
+    private Stack<String> elements; // stack of elements seen
+    private IndexFields fields;     // set of top-level fields for indexing
 
     public XMLIndexer() throws IOException {
         repos = Repository.getInstance();
-	    elements = new Stack<String>();
+        elements = new Stack<String>();
     }
 
     /**
@@ -28,35 +31,35 @@ public class XMLIndexer extends QParser {
      */
     @Override
     public void startElement(String name, String tag) {
-	    elements.push(name);
-	    if (name.equals("record")) {
-            offset = (int)Math.max(0, getPosition() - tag.length());
-            assert(offset < ((long)1 << Anchor.OFFSET_BITS-1));
-		}
+        elements.push(name);
+        if (name.equals("record")) {
+            offset = (int) Math.max(0, getPosition() - tag.length());
+            assert (offset < ((long) 1 << Anchor.OFFSET_BITS - 1));
+        }
     }
 
-	public void endElement() {
-		elements.pop();
-	}
+    public void endElement() {
+        elements.pop();
+    }
 
-	/**
+    /**
      * Process a value while parsing
      *
      * @param text the text encountered
      */
     @Override
     public void value(String text) {
-	    
-	    if (!isTopLevel())
-		    return;
 
-	    if ((text = text.trim()).length() == 0)
-		    return; // whitespace
+        if (!isTopLevel())
+            return;
 
-	    String field = elements.peek();
-	    
-	    Lexer lexer = new Lexer(new StringReader(text));
-        long anchor;	    
+        if ((text = text.trim()).length() == 0)
+            return; // whitespace
+
+        String field = elements.peek();
+
+        Lexer lexer = new Lexer(new StringReader(text));
+        long anchor;
 
         try {
             String term, tok;
@@ -72,15 +75,15 @@ public class XMLIndexer extends QParser {
 
     public void load(String db) throws IOException {
 
-	    fields = new IndexFields(db);    // top-level index fields
+        fields = new IndexFields(db);    // top-level index fields
 
-	    File dir = repos.mapPath(db);
-		List<File> files = expand(dir);
+        File dir = repos.mapPath(db);
+        List<File> files = expand(dir);
         if (files.size() == 0)
             throw new IOException(
                     String.format("no content files found in \"%s\".",
                             dir.getCanonicalPath())
-        );
+            );
 
         index = new Index();
         loadfiles(files);
@@ -91,7 +94,7 @@ public class XMLIndexer extends QParser {
             throws IOException {
         for (File f : files) {
             setPosition(0);
-            loadfile(f);            
+            loadfile(f);
             filenum++;
         }
     }
@@ -118,14 +121,15 @@ public class XMLIndexer extends QParser {
         return result;
     }
 
-	private boolean isTopLevel() {
-		if (elements.size() == 0)
-			return false;
-		
-		String field = elements.peek();
+    private boolean isTopLevel() {
+        if (elements.size() == 0)
+            return false;
 
-		return fields.isTopLevel(field);
-	}
+        String field = elements.peek();
+
+        return fields.isTopLevel(field);
+    }
+
     public static void main(String[] args) {
 
         if (args.length != 1) {

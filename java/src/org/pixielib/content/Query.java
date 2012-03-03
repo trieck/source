@@ -5,19 +5,18 @@ import java.nio.channels.Channels;
 
 /**
  * This class maps a search expression into an anchor list.
- *
+ * <p/>
  * The grammar uses juxtaposition for the "and" operator.
  * Each production rule has a corresponding method in the class.
  * Search "phrases" are surrounded by double-quotes.
- *
- *      conjunction := primary primary
- *                   | primary
- *
- *      primary     := field[ term-list ]
- *
- *      term-list   := term term
- *                   | term
- *
+ * <p/>
+ * conjunction := primary primary
+ * | primary
+ * <p/>
+ * primary     := field[ term-list ]
+ * <p/>
+ * term-list   := term term
+ * | term
  */
 
 public class Query {
@@ -28,7 +27,7 @@ public class Query {
 
     protected Query() {
     }
-    
+
     public Query(String db) throws IOException {
         Repository repos = Repository.getInstance();
         File index_file = repos.getIndexPath(db);
@@ -57,7 +56,7 @@ public class Query {
     private AnchorList conjunction() throws IOException {
         AnchorList left = primary();
 
-        for (; ;) {
+        for (; ; ) {
             if (lookahead().length() == 0)
                 return left;
 
@@ -106,10 +105,10 @@ public class Query {
 
         AnchorList list = lookup(field, term);
 
-        for (;;) {
+        for (; ; ) {
             if (lookahead().equals(""))
                 return list;
-            
+
             if (lookahead().equals("]"))
                 return list;
 
@@ -118,7 +117,7 @@ public class Query {
             list = intersection(list, lookup(field, term));
         }
     }
-    
+
     protected AnchorList lookup(String field, String term) throws IOException {
         AnchorList list = new AnchorList();
 

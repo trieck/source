@@ -68,9 +68,9 @@ public class Repository {
 
         String dirpath = dir.getCanonicalPath();
 
-        String filename = String.format("%s/%04x.xml", dirpath, filenum+1);
+        String filename = String.format("%s/%04x.xml", dirpath, filenum + 1);
 
         return new File(filename).getCanonicalFile();
     }
-    
+
 }

@@ -33,7 +33,7 @@ public class CachedTransformer {
     private CachedTransformer() throws IOException {
         factory = TransformerFactory.newInstance();
         table = new Hashtable<String, Transformer>();
-        config = Config.getInstance();        
+        config = Config.getInstance();
     }
 
     public static synchronized CachedTransformer getInstance()
@@ -55,7 +55,7 @@ public class CachedTransformer {
             transformer = factory.newTransformer(new StreamSource(file));
         }
 
-	    String cacheStylesheets = config.getProperty("stylesheet-cache");
+        String cacheStylesheets = config.getProperty("stylesheet-cache");
         if (cacheStylesheets.equals("on")) {
             table.put(file.getCanonicalPath(), transformer);
         }

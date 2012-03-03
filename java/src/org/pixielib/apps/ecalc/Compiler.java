@@ -35,7 +35,7 @@ public class Compiler {
     private void expr(boolean get) throws CompilerException {
         compexpr(get);
 
-        for (; ;) {
+        for (; ; ) {
             switch (tok.type) {
                 case Lexer.TT_AND:
                     if (lexer.peek() == Lexer.TT_AND) {
@@ -65,7 +65,7 @@ public class Compiler {
     private void compexpr(boolean get) throws CompilerException {
         shiftexpr(get);
 
-        for (; ;) {
+        for (; ; ) {
             switch (tok.type) {
                 case Lexer.TT_EQUAL: // ==
                     if (lexer.peek() == Lexer.TT_EQUAL) {
@@ -113,7 +113,7 @@ public class Compiler {
     private void shiftexpr(boolean get) throws CompilerException {
         addexpr(get);
 
-        for (; ;) {
+        for (; ; ) {
             switch (tok.type) {
                 case Lexer.TT_LT:
                     if (lexer.peek() == Lexer.TT_LT) {
@@ -145,7 +145,7 @@ public class Compiler {
     private void addexpr(boolean get) throws CompilerException {
         multexpr(get);
 
-        for (; ;) {
+        for (; ; ) {
             switch (tok.type) {
                 case Lexer.TT_PLUS:
                     plus();
@@ -167,7 +167,7 @@ public class Compiler {
     private void multexpr(boolean get) throws CompilerException {
         prim(get);
 
-        for (; ;) {
+        for (; ; ) {
             switch (tok.type) {
                 case Lexer.TT_MULT:
                     mult();

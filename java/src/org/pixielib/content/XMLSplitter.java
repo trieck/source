@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class XMLSplitter {
 
-	private static final int DEFAULT_REC_SIZE = 1000;   // number of records to split on
+    private static final int DEFAULT_REC_SIZE = 1000;   // number of records to split on
 
     public XMLSplitter() {
     }
@@ -84,17 +84,17 @@ public class XMLSplitter {
             System.err.println("usage: XMLSplitter xml-file output-path [record-size]");
             System.exit(1);
         }
-	    
-	    Timer t = new Timer();
-	    
-	    int nrecsize = DEFAULT_REC_SIZE;
+
+        Timer t = new Timer();
+
+        int nrecsize = DEFAULT_REC_SIZE;
 
         XMLSplitter splitter = new XMLSplitter();
 
         try {
-	        if (args.length > 2) {
-		        nrecsize = Integer.parseInt(args[2]);
-	        }
+            if (args.length > 2) {
+                nrecsize = Integer.parseInt(args[2]);
+            }
             splitter.split(args[0], args[1], nrecsize);
         } catch (IOException e) {
             System.err.println(e);
@@ -109,8 +109,8 @@ public class XMLSplitter {
             System.err.println(e);
             System.exit(4);
         } catch (NumberFormatException e) {
-	        System.err.println(e);
-	        System.exit(5);
+            System.err.println(e);
+            System.exit(5);
         }
 
         System.out.printf("    elapsed time %s\n", t);
