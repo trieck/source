@@ -22,8 +22,9 @@ public class Jumble {
         int n = 1;
 
         do {
-            ps.println(String.format("%d\t%s", n++, perm));
-            
+            if (concordance.lookup(perm)) {
+                ps.println(String.format("%d\t%s", n++, perm));
+            }
         } while ((perm = wp.getNextPerm(perm)) != null);
     }
 
