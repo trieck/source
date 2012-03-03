@@ -15,7 +15,8 @@
       <TD VALIGN="middle" CLASS="normal"><a href="nwn/search.jsp"/>NWN Script Archive Engine</a></TD>
 	</TR>
 </TABLE>
-
+<p/>
+<a href="http://valid.canardpc.com/show_oc.php?id=2279435"><img src="http://valid.canardpc.com/cache/banner/2279435.png"/></a>
 </BODY>
 </HTML>
 
