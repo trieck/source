@@ -18,11 +18,11 @@ public class Config {
         filename = System.getProperty(className);
         if (filename == null) {
             String message = String.format("System property not set for %s.",
-                className);
-                throw new IOException(message);
+                    className);
+            throw new IOException(message);
         }
 
-        reload();        
+        reload();
     }
 
     private void reload() throws IOException {
@@ -33,7 +33,7 @@ public class Config {
         props.load(fis);
         fis.close();
     }
-    
+
     public static synchronized Config getInstance() throws IOException {
 
         if (instance != null)
