@@ -6,7 +6,7 @@ import java.io.Reader;
 
 public class ConcordanceReader {
 
-    PushbackReader reader;
+    private PushbackReader reader;
     
     public ConcordanceReader(Reader reader) {
         this.reader = new PushbackReader(reader);

@@ -32,9 +32,9 @@ public class Concordance {
     }
 
     private void load() throws IOException {
-        String filename = config.getProperty("concordance-file");
+        String filename = config.getProperty("jumble-concordance-file");
         if (filename.length() == 0)
-            throw new IOException(String.format("concordance-file not set."));
+            throw new IOException(String.format("jumble-concordance-file not set."));
 
         File file = new File(filename).getCanonicalFile();
         if (!file.canRead()) {
