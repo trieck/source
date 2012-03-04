@@ -1,31 +1,33 @@
 package org.pixielib.games.jumble;
 
 import java.io.IOException;
-import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Jumble {
 
     private Concordance concordance;
-
+    
     public Jumble() throws IOException {
-        concordance = Concordance.getInstance();
+        concordance = Concordance.getInstance();        
     }
-
-    public void solve(String word, PrintStream ps) throws IOException {
+       
+    public List<String> solve(String word) {
                 
+        List<String> solutions = new ArrayList<String>();
+
         WordPerms wp = new WordPerms(word);
-        
-        ps.println(String.format("%d possible arrangements.", wp.getSize()));
 
         String perm = wp.getFirstPerm();
 
-        int n = 1;
-
         do {
             if (concordance.lookup(perm)) {
-                ps.println(String.format("%d\t%s", n++, perm));
+                solutions.add(perm);
             }
         } while ((perm = wp.getNextPerm(perm)) != null);
+
+        return solutions;
     }
 
     public static void main(String[] args) {
@@ -34,9 +36,14 @@ public class Jumble {
             System.exit(1);
         }
 
+        Iterator<String> it;
+
         try {
             Jumble jumble = new Jumble();
-            jumble.solve(args[0], System.out);
+            it = jumble.solve(args[0]).iterator();
+            while (it.hasNext()) {
+                System.out.println(it.next());
+            }
         } catch (IOException e) {
             System.err.println(e);
             System.exit(1);
