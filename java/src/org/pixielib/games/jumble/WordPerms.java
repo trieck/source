@@ -17,7 +17,7 @@ public class WordPerms {
     }
 
     public WordPerms(String word) {
-        this.word = word;
+        this.word = word.toLowerCase();
         letters = new Letters();
         count();
 
