@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pixie", "pixie.vcproj", "{43DBD797-DDAC-48D0-B08A-9826F41BA9FE}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pixie", "pixie.vcxproj", "{1560B5CA-FCC2-EC0A-682F-E8F393988523}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,10 +8,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{43DBD797-DDAC-48D0-B08A-9826F41BA9FE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{43DBD797-DDAC-48D0-B08A-9826F41BA9FE}.Debug|Win32.Build.0 = Debug|Win32
-		{43DBD797-DDAC-48D0-B08A-9826F41BA9FE}.Release|Win32.ActiveCfg = Release|Win32
-		{43DBD797-DDAC-48D0-B08A-9826F41BA9FE}.Release|Win32.Build.0 = Release|Win32
+		{1560B5CA-FCC2-EC0A-682F-E8F393988523}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1560B5CA-FCC2-EC0A-682F-E8F393988523}.Debug|Win32.Build.0 = Debug|Win32
+		{1560B5CA-FCC2-EC0A-682F-E8F393988523}.Release|Win32.ActiveCfg = Release|Win32
+		{1560B5CA-FCC2-EC0A-682F-E8F393988523}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
