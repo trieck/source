@@ -1,19 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pixievm", "pixievm.vcproj", "{870A2B25-074C-4B76-8664-B2BBFE2FE72B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{18677942-167D-438E-9A64-8C675E4F885B} = {18677942-167D-438E-9A64-8C675E4F885B}
-	EndProjectSection
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pixievm", "pixievm.vcxproj", "{870A2B25-074C-4B76-8664-B2BBFE2FE72B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "..\base\base.vcproj", "{18677942-167D-438E-9A64-8C675E4F885B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "..\base\base.vcxproj", "{18677942-167D-438E-9A64-8C675E4F885B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pxasm", "..\pxasm\PxAsm.vcproj", "{7000E879-FEDC-4BE5-98B3-3EEE21B8C78F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{18677942-167D-438E-9A64-8C675E4F885B} = {18677942-167D-438E-9A64-8C675E4F885B}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PxAsm", "..\pxasm\PxAsm.vcxproj", "{7000E879-FEDC-4BE5-98B3-3EEE21B8C78F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pxdasm", "..\pxdasm\pxdasm.vcproj", "{0B4E35F6-8A3C-44F2-AC2F-A529F8BB976F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pxdasm", "..\pxdasm\pxdasm.vcxproj", "{0B4E35F6-8A3C-44F2-AC2F-A529F8BB976F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

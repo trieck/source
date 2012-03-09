@@ -20,6 +20,9 @@ ANON_END
 /////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
+	if (argc < 2)
+		usage();
+
 	Disassembler disassembler;
 
 	try {

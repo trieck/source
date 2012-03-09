@@ -2,8 +2,8 @@
 
 # automatically generate pixievm CPU source and header files
 
-use strict qw(vars warnings);
-use lib './';
+use strict qw(vars);
+use warnings;
 
 use PixieVM;
 
