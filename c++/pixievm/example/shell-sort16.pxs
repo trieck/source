@@ -1,0 +1,35 @@
+
+; PixieVM 16-bit shell sort
+; Adapted from Algorithms in C, Sedgwick pg. 109
+;
+; .c holds the length of the list
+; .d holds the starting address of the list
+;
+
+.org $1000
+
+start:
+		mov c, shellsort - data 	; length of the list in bytes
+		shr c						; c contains number of 16-bit elements
+		mov d, data					; starting address of list
+		
+		jmp shellsort				; jump over data
+		
+data:
+		; data elements to be sorted
+		
+		.word $fffe, $a033, $01cc, $8a80
+
+shellsort:
+		; for (h = 1; h <= N/9; h = 3*h+1) ;
+		mov a, c	; N = number of elements
+		shr a		
+		shr a		
+		shr a		; N / 8
+		
+		; mov a, [h_value]
+		
+		ret
+
+h_value:	.word $0001
+n_div_9:	.word $0000

@@ -1,0 +1,33 @@
+; PixieVM 8-bit division
+;
+; Input:
+; TQ, 8-bit divisor
+; BB, 8-bit dividend
+;
+
+.org $8000
+
+	jmp div8
+	
+; data
+TQ:	.byte 12
+BB:	.byte 3
+
+div8:
+	xor al, al
+	mov x, 8
+	shl byte [TQ]
+
+l1:	
+	rol al
+	cmp al, [BB]
+	jcc l2
+	sbb al, [BB]
+l2:
+	rol byte [TQ]
+	dex
+	jnz l1
+	
+	ret
+
+
