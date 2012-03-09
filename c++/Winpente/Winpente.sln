@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Winpente", "Winpente.vcproj", "{3E54E9B5-7BD9-4C4F-A302-4015243019B9}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Winpente", "Winpente.vcxproj", "{DBE60D32-DE2B-D516-272F-BE24E4D02545}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,10 +8,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3E54E9B5-7BD9-4C4F-A302-4015243019B9}.Debug|Win32.ActiveCfg = Debug|Win32
-		{3E54E9B5-7BD9-4C4F-A302-4015243019B9}.Debug|Win32.Build.0 = Debug|Win32
-		{3E54E9B5-7BD9-4C4F-A302-4015243019B9}.Release|Win32.ActiveCfg = Release|Win32
-		{3E54E9B5-7BD9-4C4F-A302-4015243019B9}.Release|Win32.Build.0 = Release|Win32
+		{DBE60D32-DE2B-D516-272F-BE24E4D02545}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DBE60D32-DE2B-D516-272F-BE24E4D02545}.Debug|Win32.Build.0 = Debug|Win32
+		{DBE60D32-DE2B-D516-272F-BE24E4D02545}.Release|Win32.ActiveCfg = Release|Win32
+		{DBE60D32-DE2B-D516-272F-BE24E4D02545}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
