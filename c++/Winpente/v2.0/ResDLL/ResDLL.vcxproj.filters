@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Bitmap Files">
+      <UniqueIdentifier>{c04d30cd-daad-4849-b5b3-f1fcea1b6783}</UniqueIdentifier>
+      <Extensions>.bmp</Extensions>
+    </Filter>
+    <Filter Include="Wave Files">
+      <UniqueIdentifier>{f7940a8c-9ac8-4c3d-abd0-2b7530edf065}</UniqueIdentifier>
+      <Extensions>.wav</Extensions>
+    </Filter>
+    <Filter Include="Icon Files">
+      <UniqueIdentifier>{3eb775ae-2971-4129-9508-60ead9a1fb22}</UniqueIdentifier>
+      <Extensions>.ico</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{3b328493-a50f-4966-9d33-b3268cabf650}</UniqueIdentifier>
+      <Extensions>.h</Extensions>
+    </Filter>
+    <Filter Include="Cursor Files">
+      <UniqueIdentifier>{9b87b82f-7cff-4f0b-aa8f-a2b332a065f5}</UniqueIdentifier>
+      <Extensions>.cur</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{5d2b8464-db7a-46c6-b52f-eec08aa42b76}</UniqueIdentifier>
+      <Extensions>.rc, .bin</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="1c.bmp">
+      <Filter>Bitmap Files</Filter>
+    </None>
+    <None Include="1u.bmp">
+      <Filter>Bitmap Files</Filter>
+    </None>
+    <None Include="1ulg.bmp">
+      <Filter>Bitmap Files</Filter>
+    </None>
+    <None Include="af.bmp">
+      <Filter>Bitmap Files</Filter>
+    </None>
+    <None Include="aj.bmp">
+      <Filter>Bitmap Files</Filter>
+    </None>
+    <None Include="aw.bmp">
+      <Filter>Bitmap Files</Filter>
+    </None>
+    <None Include="ax.bmp">
+      <Filter>Bitmap Files</Filter>
+    </None>
+    <None Include="tbarmain.bmp">
+      <Filter>Bitmap Files</Filter>
+    </None>
+    <None Include="TOOLBAR.BMP">
+      <Filter>Bitmap Files</Filter>
+    </None>
+    <None Include="blip.wav">
+      <Filter>Wave Files</Filter>
+    </None>
+    <None Include="piece.wav">
+      <Filter>Wave Files</Filter>
+    </None>
+    <None Include="theme.wav">
+      <Filter>Wave Files</Filter>
+    </None>
+    <None Include="Winner.wav">
+      <Filter>Wave Files</Filter>
+    </None>
+    <None Include="blueball.ico">
+      <Filter>Icon Files</Filter>
+    </None>
+    <None Include="greenbal.ico">
+      <Filter>Icon Files</Filter>
+    </None>
+    <None Include="ico00ste.ico">
+      <Filter>Icon Files</Filter>
+    </None>
+    <None Include="ltblueba.ico">
+      <Filter>Icon Files</Filter>
+    </None>
+    <None Include="mainicon.ico">
+      <Filter>Icon Files</Filter>
+    </None>
+    <None Include="purpleba.ico">
+      <Filter>Icon Files</Filter>
+    </None>
+    <None Include="redball.ico">
+      <Filter>Icon Files</Filter>
+    </None>
+    <None Include="idr_main.cur">
+      <Filter>Cursor Files</Filter>
+    </None>
+    <None Include="scores.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="players.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resdll.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

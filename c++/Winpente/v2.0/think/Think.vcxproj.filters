@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{0ee0a9be-6a78-4928-a18f-fe9219ab94ea}</UniqueIdentifier>
+      <Extensions>.c, .cpp</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{e7f7ad56-2545-4db9-87de-faa0859596e6}</UniqueIdentifier>
+      <Extensions>.h</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{8fc6cf34-67ac-4ab5-8b08-09cd72be6d9a}</UniqueIdentifier>
+      <Extensions>.rc</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="capture.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="compmov.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fiverow.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wpthk.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="capture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="compmov.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fiverow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wpthk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Think.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
