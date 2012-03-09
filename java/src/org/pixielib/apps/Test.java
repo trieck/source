@@ -1,22 +1,20 @@
 package org.pixielib.apps;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import org.pixielib.util.Transversal;
+
+import java.util.Arrays;
 
 public class Test {
 
     public static void main(String[] args) {
 
-        final Map<String, String> M = new TreeMap<String, String>();
-        M.put("a", "b");
-        M.put("c", "d");
-        M.put("e", "f");
+        Integer[] A = { 2, 3, 2 };
 
-        final Iterator<Map.Entry<String, String>> it = M.entrySet().iterator();
-        while (it.hasNext()) {
-            final Map.Entry<String, String> e = it.next();
-            System.out.println(e.getKey() + '-' + e.getValue());
+        Transversal T = new Transversal(Arrays.asList(A));
+        
+        int[] s;
+        for (int i = 0; i < T.cardinality(); i++) {
+            s = T.get(i);
         }
     }
 }
