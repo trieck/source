@@ -11,7 +11,7 @@ function euclid(m, n)
 	return euclid(n, r)
 end
 
---print (euclid(800,51))
+print (euclid(800,51))
 
 -- Harmonic series
 function harmonic(n)
@@ -25,4 +25,4 @@ function harmonic(n)
 	return t
 end
 
-print (harmonic(10000000))
+print (harmonic(10))

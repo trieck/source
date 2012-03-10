@@ -4,10 +4,7 @@ OBJECTS = first.o
 .lua.o:
 	luac52 -o $@ $<
 
-all: ${OBJECTS}
+all: $(OBJECTS)
 
 clean:
-	@-rm *.o > /dev/null 2>&1
-
-
-	
+	@-del *.o > /nul 2>&1
