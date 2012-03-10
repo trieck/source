@@ -8,6 +8,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PxAsm", "..\pxasm\PxAsm.vcxproj", "{7000E879-FEDC-4BE5-98B3-3EEE21B8C78F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pxdasm", "..\pxdasm\pxdasm.vcxproj", "{0B4E35F6-8A3C-44F2-AC2F-A529F8BB976F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{18677942-167D-438E-9A64-8C675E4F885B} = {18677942-167D-438E-9A64-8C675E4F885B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
