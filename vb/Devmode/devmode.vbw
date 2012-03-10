@@ -1,5 +1,5 @@
 basSysWAPI = 88, 88, 586, 355, C
-frmDevMode = 88, 88, 444, 347, C, 88, 88, 410, 347, 
+frmDevMode = 88, 88, 444, 347, C, 88, 88, 486, 452, C
 dwSpool = 44, 44, 542, 311, CI
 dwPrinterInfo = 22, 22, 520, 289, I
 dwPortInfo = 0, 0, 0, 0, C

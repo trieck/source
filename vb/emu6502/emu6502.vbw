@@ -1,6 +1,7 @@
-frmCode = 160, 456, 873, 945, C, 0, 0, 0, 0, C
-cls6502 = 290, 172, 846, 960, C
-frmRegisters = 261, 204, 1033, 1027, C, 50, 86, 831, 699, C
-basMain = 623, 452, 1203, 923, C
-frmInit = 42, 117, 489, 940, C, 0, 0, 0, 0, C
-clsDisassembler = 285, 159, 1011, 826, 
+cls6502 = 0, 0, 0, 0, C
+clsDisassembler = 0, 0, 0, 0, C
+basMain = 22, 29, 522, 309, 
+frmMain = 0, 0, 0, 0, C, 0, 0, 0, 0, C
+frmRegisters = 0, 0, 0, 0, C, 0, 0, 0, 0, C
+basTimer = 0, 0, 0, 0, C
+clsMemory = 0, 0, 0, 0, C
