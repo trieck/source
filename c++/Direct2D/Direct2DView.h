@@ -21,21 +21,21 @@ public:
 		MSG_WM_SIZE(OnSize)
 	END_MSG_MAP()
 
-// Handler prototypes (uncomment arguments if needed):
-//	LRESULT MessageHandler(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
-//	LRESULT CommandHandler(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
-//	LRESULT NotifyHandler(int /*idCtrl*/, LPNMHDR /*pnmh*/, BOOL& /*bHandled*/)
+	// Handler prototypes (uncomment arguments if needed):
+	//	LRESULT MessageHandler(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+	//	LRESULT CommandHandler(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	//	LRESULT NotifyHandler(int /*idCtrl*/, LPNMHDR /*pnmh*/, BOOL& /*bHandled*/)
 
 	LRESULT OnCreate(LPCREATESTRUCT cs)
 	{
 		HRESULT hr = D2D1CreateFactory(
 			D2D1_FACTORY_TYPE_SINGLE_THREADED,
 			&m_factory
-		);
-		
+			);
+
 		if (FAILED(hr))
 			return -1;
-		
+
 		return 0;
 	}
 
@@ -56,7 +56,7 @@ public:
 		CPaintDC dc(*this);
 		Render(dc);
 	}
-	
+
 	void OnSize(UINT /*type*/, CSize size) 
 	{
 		if (m_target != NULL) {
@@ -82,20 +82,20 @@ private:
 
 		m_target->BeginDraw();
 		m_target->SetTransform(D2D1::Matrix3x2F::Identity());
-		m_target->Clear(D2D1::ColorF(D2D1::ColorF::Olive));
-        
+		m_target->Clear(D2D1::ColorF(D2D1::ColorF::ForestGreen));
+
 		m_target->DrawLine(D2D1::Point2(10.0f, 10.0f), // start
-                   D2D1::Point2(200.0f, 200.0f), // end
-                   m_brush,
-                   10.0f); // stroke width
+			D2D1::Point2(200.0f, 200.0f), // end
+			m_brush,
+			10.0f); // stroke width
 
 		const D2D1_POINT_2F center = D2D1::Point2(105.0f, 105.0f);
 		const D2D1_ELLIPSE ellipse = D2D1::Ellipse(center,
-                                           95.0f, // radius X
-                                           95.0f); // radius Y
+			95.0f, // radius X
+			95.0f); // radius Y
 		m_target->DrawEllipse(&ellipse,
-                      m_brush,
-                      5.0f); // stroke width
+			m_brush,
+			5.0f); // stroke width
 
 		if (D2DERR_RECREATE_TARGET == m_target->EndDraw()) {
 			DiscardDevResources();
@@ -105,16 +105,16 @@ private:
 	HRESULT CreateDevResources(CRect &rc) {
 
 		m_target.Release();
-		
+
 		HRESULT hr = m_factory->CreateHwndRenderTarget(
 			D2D1::RenderTargetProperties(),
 			D2D1::HwndRenderTargetProperties(
-				m_hWnd,
-				D2D1::SizeU(rc.right - rc.left,
-					rc.bottom - rc.top)
+			m_hWnd,
+			D2D1::SizeU(rc.right - rc.left,
+			rc.bottom - rc.top)
 			),
 			&m_target
-		);
+			);
 
 		if (FAILED(hr))
 			return hr;
