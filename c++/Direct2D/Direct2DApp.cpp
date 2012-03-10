@@ -1,6 +1,3 @@
-// wtlapp.cpp : main source file for wtlapp.exe
-//
-
 #include "stdafx.h"
 
 #include <atlframe.h>

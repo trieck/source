@@ -1,5 +1,3 @@
-// wtlappView.h : interface of the CWtlappView class
-//
 /////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -16,10 +14,11 @@ public:
 	}
 
 	BEGIN_MSG_MAP(CWtlappView)
-		MESSAGE_HANDLER(WM_PAINT, OnPaint)
-		MESSAGE_HANDLER(WM_CREATE, OnCreate)
-		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
-		MESSAGE_HANDLER(WM_ERASEBKGND, OnEraseBkgnd)
+		MSG_WM_PAINT(OnPaint)
+		MSG_WM_DISPLAYCHANGE(OnDisplayChange)
+		MSG_WM_DESTROY(OnDestroy)
+		MSG_WM_CREATE(OnCreate)
+		MSG_WM_SIZE(OnSize)
 	END_MSG_MAP()
 
 // Handler prototypes (uncomment arguments if needed):
@@ -27,7 +26,7 @@ public:
 //	LRESULT CommandHandler(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 //	LRESULT NotifyHandler(int /*idCtrl*/, LPNMHDR /*pnmh*/, BOOL& /*bHandled*/)
 
-	LRESULT OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+	LRESULT OnCreate(LPCREATESTRUCT cs)
 	{
 		HRESULT hr = D2D1CreateFactory(
 			D2D1_FACTORY_TYPE_SINGLE_THREADED,
@@ -40,70 +39,70 @@ public:
 		return 0;
 	}
 
-	LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
+	void OnDestroy()
 	{
-		bHandled = FALSE;
-
-		m_target.Release();
+		DiscardDevResources();
 		m_factory.Release();
-	
-		return 1;
 	}
 
-
-	LRESULT OnPaint(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+	void OnDisplayChange(UINT /*bpp*/, CSize /*resolution*/)
 	{
-		CPaintDC dc(m_hWnd);
+		CClientDC dc(*this);
 		Render(dc);
-
-		return 0;
 	}
 
-	LRESULT OnEraseBkgnd(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& bHandled)
+	void OnPaint(CDCHandle /*hDC*/)
 	{
-		CDC dc;
-		dc.Attach((HDC)wParam);
-
-		RECT rc;
-		dc.GetClipBox(&rc);
-
-		HRESULT hr;
-		if (m_target == NULL) {
-			hr = CreateRenderTarget(rc);			
-			if (FAILED(hr))
-				return 0;
+		CPaintDC dc(*this);
+		Render(dc);
+	}
+	
+	void OnSize(UINT /*type*/, CSize size) 
+	{
+		if (m_target != NULL) {
+			if (FAILED(m_target->Resize(D2D1::SizeU(size.cx, size.cy)))) {
+				DiscardDevResources();
+				Invalidate(FALSE);
+			}
 		}
-
-		if ((m_target->CheckWindowState() & D2D1_WINDOW_STATE_OCCLUDED) == 0) {
-			m_target->BeginDraw();
-            m_target->SetTransform(D2D1::Matrix3x2F::Identity());
-            m_target->Clear(D2D1::ColorF(D2D1::ColorF::SeaGreen));
-
-            if (D2DERR_RECREATE_TARGET == m_target->EndDraw()) {
-				m_target.Release();
-            }
-		}
-
-		bHandled = TRUE;
-
-		return 1;
 	}
 
 private:
-	void Render(CPaintDC &dc) {
-		
+	void Render(CDC &dc) {
 		HRESULT hr;
 
+		CRect rc;
+		dc.GetClipBox(rc);
+
 		if (m_target == NULL) {
-			hr = CreateRenderTarget(dc.m_ps.rcPaint);			
+			hr = CreateDevResources(rc);			
 			if (FAILED(hr))
 				return;	
-		}
+		}	
 
-		
+		m_target->BeginDraw();
+		m_target->SetTransform(D2D1::Matrix3x2F::Identity());
+		m_target->Clear(D2D1::ColorF(D2D1::ColorF::Olive));
+        
+		m_target->DrawLine(D2D1::Point2(10.0f, 10.0f), // start
+                   D2D1::Point2(200.0f, 200.0f), // end
+                   m_brush,
+                   10.0f); // stroke width
+
+		const D2D1_POINT_2F center = D2D1::Point2(105.0f, 105.0f);
+		const D2D1_ELLIPSE ellipse = D2D1::Ellipse(center,
+                                           95.0f, // radius X
+                                           95.0f); // radius Y
+		m_target->DrawEllipse(&ellipse,
+                      m_brush,
+                      5.0f); // stroke width
+
+		if (D2DERR_RECREATE_TARGET == m_target->EndDraw()) {
+			DiscardDevResources();
+		}
 	}
 
-	HRESULT CreateRenderTarget(const RECT &rc) {
+	HRESULT CreateDevResources(CRect &rc) {
 
 		m_target.Release();
 		
@@ -117,9 +116,21 @@ private:
 			&m_target
 		);
 
+		if (FAILED(hr))
+			return hr;
+
+		hr = m_target->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &m_brush);
+
 		return hr;
 	}
 
+	void DiscardDevResources()
+	{
+		m_brush.Release();
+		m_target.Release();		
+	}
+
 	CComPtr<ID2D1HwndRenderTarget> m_target;	
+	CComPtr<ID2D1SolidColorBrush> m_brush;
 	CComPtr<ID2D1Factory> m_factory;
 };

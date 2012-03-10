@@ -1,8 +1,3 @@
-// stdafx.h : include file for standard system include files,
-//  or project specific include files that are used frequently, but
-//  are changed infrequently
-//
-
 #pragma once
 
 // Change these values to use different versions
@@ -12,11 +7,13 @@
 #define _RICHEDIT_VER	0x0200
 
 #include <atlbase.h>
+#include <atltypes.h>
 #include <atlapp.h>
 
 extern CAppModule _Module;
 
 #include <atlwin.h>
+#include <atlcrack.h>
 
 #if defined _M_IX86
   #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")

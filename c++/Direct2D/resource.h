@@ -1,12 +1,12 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by wtlapp.RC
+// Used by Direct2D.RC
 //
 
 
 #define IDD_ABOUTBOX				100
 #define IDR_MAINFRAME				128
-//#define IDR_WTLAPPTYPE	129
+#define IDR_DIRECT2DAPPTYPE			129
 
 // Next default values for new objects
 // 
