@@ -2,7 +2,7 @@ OBJECTS = first.o
 
 .SUFFIXES: .lua .o
 .lua.o:
-	luac5.1 -o $@ $<
+	luac52 -o $@ $<
 
 all: ${OBJECTS}
 

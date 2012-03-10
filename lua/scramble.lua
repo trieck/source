@@ -16,11 +16,11 @@ end
 
 function scramble(v)
 	local r
-	local n = table.getn(v)
+	local n = #v
 	for i=1,n do
 		if not x[i] then
 			x[i] = 1
-			if table.getn(x) == n then break end
+			if #x == n then break end
 			r = rand(1, n)
 			exch(v, i, r)
 			x[r] = 1
@@ -31,5 +31,5 @@ end
 a = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
 scramble(a)
 
-print(unpack(a))
+print(table.unpack(a))
 
