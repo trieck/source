@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "Board.h"
+
 class CMainFrame : 
 	public CFrameWindowImpl<CMainFrame>, 
 	public CUpdateUI<CMainFrame>,
@@ -82,6 +84,9 @@ public:
 		pLoop->AddMessageFilter(this);
 		pLoop->AddIdleHandler(this);
 
+		ResizeFrameByBoard();
+		CenterWindow();
+
 		return 0;
 	}
 
@@ -136,5 +141,17 @@ public:
 		CAboutDlg dlg;
 		dlg.DoModal();
 		return 0;
+	}
+
+	void ResizeFrameByBoard() 
+	{
+		CRect rc = Board::GetBoundingRect();
+
+		DWORD style = GetStyle();
+		DWORD dwExStyle = GetExStyle() | WS_EX_CLIENTEDGE;
+		AdjustWindowRectEx(&rc, style, TRUE, dwExStyle);
+
+		SetWindowPos(NULL, 0, 0, rc.Width(), rc.Height(),
+			SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);
 	}
 };

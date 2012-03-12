@@ -15,7 +15,6 @@ public:
 
 	BEGIN_MSG_MAP(CWtlappView)
 		MSG_WM_PAINT(OnPaint)
-		MSG_WM_DISPLAYCHANGE(OnDisplayChange)
 		MSG_WM_DESTROY(OnDestroy)
 		MSG_WM_CREATE(OnCreate)
 		MSG_WM_SIZE(OnSize)
@@ -45,12 +44,6 @@ public:
 		m_factory.Release();
 	}
 
-	void OnDisplayChange(UINT /*bpp*/, CSize /*resolution*/)
-	{
-		CClientDC dc(*this);
-		Render(dc);
-	}
-
 	void OnPaint(CDCHandle /*hDC*/)
 	{
 		CPaintDC dc(*this);
@@ -58,27 +51,20 @@ public:
 	}
 
 	void OnSize(UINT /*type*/, CSize size) 
-	{
-		if (m_target != NULL) {
-			if (FAILED(m_target->Resize(D2D1::SizeU(size.cx, size.cy)))) {
-				DiscardDevResources();
-				Invalidate(FALSE);
-			}
-		}
+	{		
 	}
 
 private:
-	void Render(CDC &dc) {
+	void Render(CPaintDC &dc) {
 		HRESULT hr;
-
-		CRect rc;
-		dc.GetClipBox(rc);
-
+				
 		if (m_target == NULL) {
-			hr = CreateDevResources(rc);			
+			hr = CreateDevResources();			
 			if (FAILED(hr))
 				return;	
 		}	
+
+		hr = m_target->BindDC(dc, &dc.m_ps.rcPaint);
 
 		m_target->BeginDraw();
 		m_target->SetTransform(D2D1::Matrix3x2F::Identity());
@@ -102,19 +88,24 @@ private:
 		}
 	}
 
-	HRESULT CreateDevResources(CRect &rc) {
+	HRESULT CreateDevResources() {
 
 		m_target.Release();
 
-		HRESULT hr = m_factory->CreateHwndRenderTarget(
-			D2D1::RenderTargetProperties(),
-			D2D1::HwndRenderTargetProperties(
-			m_hWnd,
-			D2D1::SizeU(rc.right - rc.left,
-			rc.bottom - rc.top)
-			),
-			&m_target
-			);
+		D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
+			D2D1_RENDER_TARGET_TYPE_DEFAULT,
+			D2D1::PixelFormat(
+				DXGI_FORMAT_B8G8R8A8_UNORM,
+				D2D1_ALPHA_MODE_IGNORE),
+			0,
+			0,
+			D2D1_RENDER_TARGET_USAGE_NONE,
+			D2D1_FEATURE_LEVEL_DEFAULT
+		);
+
+		HRESULT hr = m_factory->CreateDCRenderTarget(
+			&props, &m_target
+		);
 
 		if (FAILED(hr))
 			return hr;
@@ -130,7 +121,7 @@ private:
 		m_target.Release();		
 	}
 
-	CComPtr<ID2D1HwndRenderTarget> m_target;	
+	CComPtr<ID2D1DCRenderTarget> m_target;	
 	CComPtr<ID2D1SolidColorBrush> m_brush;
 	CComPtr<ID2D1Factory> m_factory;
 };
