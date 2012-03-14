@@ -81,7 +81,7 @@ private:
 
 	HRESULT CreateDevResources() {
 
-		m_target.Release();
+		DiscardDevResources();
 
 		D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
 			D2D1_RENDER_TARGET_TYPE_DEFAULT,
@@ -101,7 +101,9 @@ private:
 		if (FAILED(hr))
 			return hr;
 
-		hr = m_target->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &m_brush);
+		hr = m_target->CreateSolidColorBrush(
+			D2D1::ColorF(D2D1::ColorF::Black), 
+			&m_brush);
 
 		return hr;
 	}
@@ -113,7 +115,7 @@ private:
 	}
 
 	CComPtr<ID2D1DCRenderTarget> m_target;	
-	CComPtr<ID2D1SolidColorBrush> m_brush;
 	CComPtr<ID2D1Factory> m_factory;
+	CComPtr<ID2D1SolidColorBrush> m_brush;
 	Board m_board;
 };

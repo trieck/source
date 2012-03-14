@@ -6,14 +6,8 @@
 
 #include "Board.h"
 
-typedef CWinTraits<
-	WS_OVERLAPPED |
-	WS_CAPTION	| 
-	WS_SYSMENU | 
-	WS_CLIPCHILDREN | 
-	WS_CLIPSIBLINGS |
-	WS_MINIMIZEBOX, 
-	WS_EX_APPWINDOW | 
+typedef CWinTraits<WS_OVERLAPPED | 	WS_CAPTION | WS_SYSMENU | 
+	WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_MINIMIZEBOX, WS_EX_APPWINDOW | 
 	WS_EX_WINDOWEDGE> CMainFrameTraits;
 
 class CMainFrame;
@@ -50,7 +44,7 @@ public:
 	END_UPDATE_UI_MAP()
 
 	BEGIN_MSG_MAP(CMainFrame)
-		MESSAGE_HANDLER(WM_CREATE, OnCreate)
+		MSG_WM_CREATE(OnCreate)
 		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
 		COMMAND_ID_HANDLER(ID_APP_EXIT, OnFileExit)
 		COMMAND_ID_HANDLER(ID_FILE_NEW, OnFileNew)
@@ -66,7 +60,7 @@ public:
 	//	LRESULT CommandHandler(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 	//	LRESULT NotifyHandler(int /*idCtrl*/, LPNMHDR /*pnmh*/, BOOL& /*bHandled*/)
 
-	LRESULT OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+	LRESULT OnCreate(LPCREATESTRUCT pcs)
 	{
 		// create command bar window
 		HWND hWndCmdBar = m_CmdBar.Create(m_hWnd, rcDefault, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
@@ -83,7 +77,8 @@ public:
 		AddSimpleReBarBand(hWndCmdBar);
 		AddSimpleReBarBand(hWndToolBar, NULL, TRUE);
 
-		CreateSimpleStatusBar();
+		CreateSimpleStatusBar(ATL_IDS_IDLEMESSAGE, WS_CHILD | WS_VISIBLE | 
+			WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
 
 		m_hWndClient = m_view.Create(m_hWnd, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
 
