@@ -6,8 +6,21 @@
 
 #include "Board.h"
 
+typedef CWinTraits<
+	WS_OVERLAPPED |
+	WS_CAPTION	| 
+	WS_SYSMENU | 
+	WS_CLIPCHILDREN | 
+	WS_CLIPSIBLINGS |
+	WS_MINIMIZEBOX, 
+	WS_EX_APPWINDOW | 
+	WS_EX_WINDOWEDGE> CMainFrameTraits;
+
+class CMainFrame;
+typedef CFrameWindowImpl<CMainFrame, CWindow, CMainFrameTraits> CMainFrameImpl;
+
 class CMainFrame : 
-	public CFrameWindowImpl<CMainFrame>, 
+	public CMainFrameImpl, 
 	public CUpdateUI<CMainFrame>,
 	public CMessageFilter, public CIdleHandler
 {
@@ -19,7 +32,7 @@ public:
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg)
 	{
-		if(CFrameWindowImpl<CMainFrame>::PreTranslateMessage(pMsg))
+		if(CMainFrameImpl::PreTranslateMessage(pMsg))
 			return TRUE;
 
 		return m_view.PreTranslateMessage(pMsg);
@@ -45,7 +58,7 @@ public:
 		COMMAND_ID_HANDLER(ID_VIEW_STATUS_BAR, OnViewStatusBar)
 		COMMAND_ID_HANDLER(ID_APP_ABOUT, OnAppAbout)
 		CHAIN_MSG_MAP(CUpdateUI<CMainFrame>)
-		CHAIN_MSG_MAP(CFrameWindowImpl<CMainFrame>)
+		CHAIN_MSG_MAP(CMainFrameImpl)
 	END_MSG_MAP()
 
 	// Handler prototypes (uncomment arguments if needed):

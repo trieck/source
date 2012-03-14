@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "Board.h"
+
 class CWtlappView : public CWindowImpl<CWtlappView>
 {
 public:
@@ -70,18 +72,7 @@ private:
 		m_target->SetTransform(D2D1::Matrix3x2F::Identity());
 		m_target->Clear(D2D1::ColorF(D2D1::ColorF::ForestGreen));
 
-		m_target->DrawLine(D2D1::Point2(10.0f, 10.0f), // start
-			D2D1::Point2(200.0f, 200.0f), // end
-			m_brush,
-			10.0f); // stroke width
-
-		const D2D1_POINT_2F center = D2D1::Point2(105.0f, 105.0f);
-		const D2D1_ELLIPSE ellipse = D2D1::Ellipse(center,
-			95.0f, // radius X
-			95.0f); // radius Y
-		m_target->DrawEllipse(&ellipse,
-			m_brush,
-			5.0f); // stroke width
+		m_board.Render(m_target);
 
 		if (D2DERR_RECREATE_TARGET == m_target->EndDraw()) {
 			DiscardDevResources();
@@ -124,4 +115,5 @@ private:
 	CComPtr<ID2D1DCRenderTarget> m_target;	
 	CComPtr<ID2D1SolidColorBrush> m_brush;
 	CComPtr<ID2D1Factory> m_factory;
+	Board m_board;
 };
