@@ -4,7 +4,7 @@
 
 #include "Board.h"
 
-class CWtlappView : public CWindowImpl<CWtlappView>
+class CDirect2DView : public CWindowImpl<CDirect2DView>
 {
 public:
 	DECLARE_WND_CLASS(NULL)
@@ -70,9 +70,9 @@ private:
 
 		m_target->BeginDraw();
 		m_target->SetTransform(D2D1::Matrix3x2F::Identity());
-		m_target->Clear(D2D1::ColorF(D2D1::ColorF::ForestGreen));
+		m_target->Clear(D2D1::ColorF(D2D1::ColorF::DarkGreen));
 
-		m_board.Render(m_target);
+		m_board.Render(m_target, dc.m_ps.rcPaint);
 
 		if (D2DERR_RECREATE_TARGET == m_target->EndDraw()) {
 			DiscardDevResources();

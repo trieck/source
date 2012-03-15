@@ -18,9 +18,17 @@ Board::~Board()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Board::Render(ID2D1RenderTarget *pTarget)
+void Board::Render(ID2D1RenderTarget *pTarget, const CRect &rc)
 {
-	pTarget->DrawBitmap(m_bitmap, D2D1::RectF(0, 0, 10, 10), 1.0);
+	CSize dims = GetDimensions();
+
+	D2D1_RECT_F aRect;
+	aRect.left = rc.left + CX_BORDER;
+	aRect.top = rc.top + CY_BORDER;
+	aRect.right = aRect.left + dims.cx;
+	aRect.bottom = aRect.top + dims.cy;
+
+	pTarget->DrawBitmap(m_bitmap, aRect);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -30,14 +38,10 @@ HRESULT Board::Create(ID2D1RenderTarget *pTarget)
 
 	CSize dims = GetDimensions();
 
-	D2D1_SIZE_U size;
-	size.width = dims.cx;
-	size.height = dims.cy;
-
 	// Create a compatible render target
 	CComPtr<ID2D1BitmapRenderTarget> pbmTarget;
 	HRESULT hr = pTarget->CreateCompatibleRenderTarget(
-		D2D1::SizeF(10.0f, 10.0f), 
+		D2D1::SizeF(dims.cx, dims.cy), 
 		&pbmTarget);
 	if (FAILED(hr))
 		return hr;
@@ -45,14 +49,13 @@ HRESULT Board::Create(ID2D1RenderTarget *pTarget)
 	// Draw a pattern
 	CComPtr<ID2D1SolidColorBrush> pGridBrush;
 	hr = pbmTarget->CreateSolidColorBrush(
-		D2D1::ColorF(D2D1::ColorF(0.93f, 0.94f, 0.96f, 1.0f)),
+		D2D1::ColorF(D2D1::ColorF::ForestGreen),
         &pGridBrush);
 	if (FAILED(hr))
 		return hr;
 
     pbmTarget->BeginDraw();
-	pbmTarget->FillRectangle(D2D1::RectF(0.0f, 0.0f, 10.0f, 1.0f), pGridBrush);
-    pbmTarget->FillRectangle(D2D1::RectF(0.0f, 0.1f, 1.0f, 10.0f), pGridBrush);
+	pbmTarget->FillRectangle(D2D1::RectF(0, 0, dims.cx, dims.cy), pGridBrush);
     pbmTarget->EndDraw();
 
 	// Retrieve the bitmap from the render target

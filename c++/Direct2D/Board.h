@@ -19,7 +19,7 @@ public:
 	HRESULT Create(ID2D1RenderTarget *pTarget);
 	void Destroy();
 
-	void Render(ID2D1RenderTarget *pTarget); 
+	void Render(ID2D1RenderTarget *pTarget, const CRect &rc); 
 private:
 	enum { BOARD_SIZE = 19 };
 	enum { CX_PIECE = 18 };
