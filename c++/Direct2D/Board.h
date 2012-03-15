@@ -16,6 +16,9 @@ public:
 	static CSize GetDimensions();
 	static CRect GetBoundingRect();
 
+	HRESULT Create(ID2D1RenderTarget *pTarget);
+	void Destroy();
+
 	void Render(ID2D1RenderTarget *pTarget); 
 private:
 	enum { BOARD_SIZE = 19 };
@@ -28,6 +31,8 @@ private:
 	enum { SQUARE_SIZE = 21 };
 	enum { CX_OFFSET = 2 };
 	enum { CY_OFFSET = 2 };
+
+	CComPtr<ID2D1Bitmap> m_bitmap;
 };
 
 #endif // __BOARD_H__

@@ -101,21 +101,18 @@ private:
 		if (FAILED(hr))
 			return hr;
 
-		hr = m_target->CreateSolidColorBrush(
-			D2D1::ColorF(D2D1::ColorF::Black), 
-			&m_brush);
+		hr = m_board.Create(m_target);
 
 		return hr;
 	}
 
 	void DiscardDevResources()
 	{
-		m_brush.Release();
+		m_board.Destroy();
 		m_target.Release();		
 	}
 
 	CComPtr<ID2D1DCRenderTarget> m_target;	
 	CComPtr<ID2D1Factory> m_factory;
-	CComPtr<ID2D1SolidColorBrush> m_brush;
 	Board m_board;
 };
