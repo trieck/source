@@ -79,12 +79,12 @@ public:
 
 		CreateSimpleStatusBar(ATL_IDS_IDLEMESSAGE, WS_CHILD | WS_VISIBLE | 
 			WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
-
-		m_hWndClient = m_view.Create(m_hWnd, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
-
+		
 		UIAddToolBar(hWndToolBar);
 		UISetCheck(ID_VIEW_TOOLBAR, 1);
 		UISetCheck(ID_VIEW_STATUS_BAR, 1);
+
+		m_hWndClient = m_view.Create(m_hWnd, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
 
 		// register object for message filtering and idle updates
 		CMessageLoop* pLoop = _Module.GetMessageLoop();
@@ -154,6 +154,24 @@ public:
 	void ResizeFrameByBoard() 
 	{
 		CRect rc = Board::GetBoundingRect();
+		
+		// make room for the status bar
+		CRect rcStatus;
+		ATL::CWindow wndStatus(m_hWndStatusBar);
+		wndStatus.GetWindowRect(rcStatus);
+		rcStatus.OffsetRect(-rcStatus.left, -rcStatus.top);
+
+		// make room for the toolbar
+		CRect rcToolbar;
+		ATL::CWindow wndToolbar(m_hWndToolBar);
+		wndToolbar.GetWindowRect(rcToolbar);
+		rcToolbar.OffsetRect(-rcToolbar.left, -rcToolbar.top);
+
+		if (wndStatus.IsWindowVisible())
+			rc.bottom += rcStatus.Height();
+		
+		if (!wndToolbar.IsWindowVisible()) 
+			rc.bottom += rcToolbar.Height();
 
 		DWORD style = GetStyle();
 		DWORD dwExStyle = GetExStyle() | WS_EX_CLIENTEDGE;

@@ -70,7 +70,7 @@ private:
 
 		m_target->BeginDraw();
 		m_target->SetTransform(D2D1::Matrix3x2F::Identity());
-		m_target->Clear(D2D1::ColorF(D2D1::ColorF::DarkGreen));
+		m_target->Clear(D2D1::ColorF(D2D1::ColorF::DarkBlue));
 
 		m_board.Render(m_target, dc.m_ps.rcPaint);
 
