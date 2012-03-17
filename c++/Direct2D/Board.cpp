@@ -51,16 +51,45 @@ HRESULT Board::Create(ID2D1RenderTarget *pTarget)
 	if (FAILED(hr))
 		return hr;
 
-	// Draw a pattern
+	CComPtr<ID2D1SolidColorBrush> pBgBrush;
+	hr = pbmTarget->CreateSolidColorBrush(
+		D2D1::ColorF(D2D1::ColorF::LightSteelBlue),
+        &pBgBrush);
+	if (FAILED(hr))
+		return hr;
+
 	CComPtr<ID2D1SolidColorBrush> pGridBrush;
 	hr = pbmTarget->CreateSolidColorBrush(
-		D2D1::ColorF(D2D1::ColorF::Blue),
+		D2D1::ColorF(D2D1::ColorF::DarkSlateGray),
         &pGridBrush);
 	if (FAILED(hr))
 		return hr;
 
+	D2D1_RECT_F rc = D2D1::RectF(0, 0, (FLOAT)dims.cx, (FLOAT)dims.cy);
+	FLOAT cx = FLOAT(dims.cx) / CX_SQUARES;
+	FLOAT cy = FLOAT(dims.cy) / CY_SQUARES;
+		
+	D2D1_POINT_2F ptStart = D2D1::Point2F(cx, 0);
+	D2D1_POINT_2F ptEnd;
+		
     pbmTarget->BeginDraw();
-	pbmTarget->FillRectangle(D2D1::RectF(0, 0, (FLOAT)dims.cx, (FLOAT)dims.cy), pGridBrush);
+	pbmTarget->FillRectangle(rc, pBgBrush);
+
+	// Draw vertical lines
+	while (ptStart.x < rc.right) {
+		ptEnd = D2D1::Point2F(ptStart.x, FLOAT(dims.cy));
+		pbmTarget->DrawLine(ptStart, ptEnd, pGridBrush, 0.2);
+		ptStart.x += cx;
+	}
+
+	// Draw horizontal lines
+	ptStart = D2D1::Point2F(0, cy);	
+	while (ptStart.y < rc.bottom) {
+		ptEnd = D2D1::Point2F(FLOAT(dims.cx), ptStart.y);
+		pbmTarget->DrawLine(ptStart, ptEnd, pGridBrush, 0.2);
+		ptStart.y += cy;
+	}
+
     pbmTarget->EndDraw();
 
 	// Retrieve the bitmap from the render target

@@ -132,6 +132,7 @@ public:
 		rebar.ShowBand(nBandIndex, bVisible);
 		UISetCheck(ID_VIEW_TOOLBAR, bVisible);
 		UpdateLayout();
+		ResizeFrameByBoard();
 		return 0;
 	}
 
@@ -141,6 +142,7 @@ public:
 		::ShowWindow(m_hWndStatusBar, bVisible ? SW_SHOWNOACTIVATE : SW_HIDE);
 		UISetCheck(ID_VIEW_STATUS_BAR, bVisible);
 		UpdateLayout();
+		ResizeFrameByBoard();
 		return 0;
 	}
 
@@ -157,20 +159,29 @@ public:
 		
 		// make room for the status bar
 		CRect rcStatus;
-		ATL::CWindow wndStatus(m_hWndStatusBar);
+		CStatusBarCtrl wndStatus(m_hWndStatusBar);
 		wndStatus.GetWindowRect(rcStatus);
 		rcStatus.OffsetRect(-rcStatus.left, -rcStatus.top);
 
 		// make room for the toolbar
 		CRect rcToolbar;
-		ATL::CWindow wndToolbar(m_hWndToolBar);
-		wndToolbar.GetWindowRect(rcToolbar);
+		CReBarCtrl rebar = m_hWndToolBar;
+		rebar.GetWindowRect(rcToolbar);
 		rcToolbar.OffsetRect(-rcToolbar.left, -rcToolbar.top);
+
+		// toolbar is 2nd added band
+		int nBandIndex = rebar.IdToIndex(ATL_IDW_BAND_FIRST + 1);
+		
+		REBARBANDINFO rbbi;
+		memset(&rbbi, 0, sizeof(REBARBANDINFO));
+		rbbi.cbSize = sizeof(REBARBANDINFO);
+		rbbi.fMask = RBBIM_STYLE;
+		rebar.GetBandInfo(nBandIndex, &rbbi);
 
 		if (wndStatus.IsWindowVisible())
 			rc.bottom += rcStatus.Height();
 		
-		if (!wndToolbar.IsWindowVisible()) 
+		if ((rbbi.fStyle & RBBS_HIDDEN) == 0) 
 			rc.bottom += rcToolbar.Height();
 
 		DWORD style = GetStyle();
