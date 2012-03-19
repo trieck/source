@@ -65,6 +65,7 @@ END
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDB_ROOK                BITMAP                  "res\\rook.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

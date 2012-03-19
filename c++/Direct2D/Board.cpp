@@ -78,7 +78,7 @@ HRESULT Board::Create(ID2D1RenderTarget *pTarget)
 	// Draw vertical lines
 	while (ptStart.x < rc.right) {
 		ptEnd = D2D1::Point2F(ptStart.x, FLOAT(dims.cy));
-		pbmTarget->DrawLine(ptStart, ptEnd, pGridBrush, 0.2);
+		pbmTarget->DrawLine(ptStart, ptEnd, pGridBrush, 0.2f);
 		ptStart.x += cx;
 	}
 
@@ -86,7 +86,7 @@ HRESULT Board::Create(ID2D1RenderTarget *pTarget)
 	ptStart = D2D1::Point2F(0, cy);	
 	while (ptStart.y < rc.bottom) {
 		ptEnd = D2D1::Point2F(FLOAT(dims.cx), ptStart.y);
-		pbmTarget->DrawLine(ptStart, ptEnd, pGridBrush, 0.2);
+		pbmTarget->DrawLine(ptStart, ptEnd, pGridBrush, 0.2f);
 		ptStart.y += cy;
 	}
 

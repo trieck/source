@@ -132,6 +132,7 @@
     <ResourceCompile Include="Direct2D.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\rook.bmp" />
     <None Include="res\toolbar.bmp" />
     <None Include="res\Direct2D.ico" />
   </ItemGroup>

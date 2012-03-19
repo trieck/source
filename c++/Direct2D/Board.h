@@ -22,13 +22,13 @@ public:
 	void Render(ID2D1RenderTarget *pTarget, const CRect &rc); 
 private:
 	enum { BOARD_SIZE = 8 };
-	enum { CX_PIECE = 47 };
-	enum { CY_PIECE = 47 };
+	enum { CX_PIECE = 53 };
+	enum { CY_PIECE = 53 };
 	enum { CX_BORDER = 20 };
 	enum { CY_BORDER = 20 };
 	enum { CX_SQUARES = BOARD_SIZE-1 };
 	enum { CY_SQUARES = BOARD_SIZE-1 };
-	enum { SQUARE_SIZE = 50 };
+	enum { SQUARE_SIZE = 56 };
 	enum { CX_OFFSET = 2 };
 	enum { CY_OFFSET = 2 };
 

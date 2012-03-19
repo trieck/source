@@ -60,5 +60,8 @@
     <None Include="res\Direct2D.ico">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\rook.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
