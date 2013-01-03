@@ -1,15 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinADF", "WinADF.vcproj", "{B0599F7A-0F74-441E-9A23-40B523A6361D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{95C0859E-DF55-4091-826B-6545C7B4ADC6} = {95C0859E-DF55-4091-826B-6545C7B4ADC6}
-		{ECE4D6C0-0634-4C7F-9C68-BA992CDF3742} = {ECE4D6C0-0634-4C7F-9C68-BA992CDF3742}
-	EndProjectSection
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinADF", "WinADF.vcxproj", "{B0599F7A-0F74-441E-9A23-40B523A6361D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libadf", "..\libadf\libadf.vcproj", "{ECE4D6C0-0634-4C7F-9C68-BA992CDF3742}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libadf", "..\libadf\libadf.vcxproj", "{ECE4D6C0-0634-4C7F-9C68-BA992CDF3742}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NeptuneLib", "..\NeptuneLib\NeptuneLib.vcproj", "{95C0859E-DF55-4091-826B-6545C7B4ADC6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NeptuneLib", "..\NeptuneLib\NeptuneLib.vcxproj", "{95C0859E-DF55-4091-826B-6545C7B4ADC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
