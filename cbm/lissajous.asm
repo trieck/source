@@ -1,575 +1,575 @@
          *= $0800
 
 ;---------------------------------------
-; LISSAJOUS CURVE
+; lissajous curve
 ;---------------------------------------
 
 ;---------------------------------------
-; DEFINITIONS
+; definitions
 ;---------------------------------------
-STOREFLT = $BBD4 ; STORE FAC#1 TO MEM.
-LOADFLT  = $BBA2 ; LOAD FAC#1 FROM MEM.
-CONUPK   = $BA8C ; LOAD FAC#2 FROM MEM.
-FLTADD   = $B86A ; FLOAT PT. ADD
-FLTMULT  = $BA2B ; FLOAT PT. MULT.
-FLTAND   = $AFE9 ; FLOAT PT. AND
-FLTOR    = $AFE6 ; FLOAT PT. OR
-FLTNOT   = $AED4 ; FLOAT PT. NOT
-FLTXFER  = $BC0C ; COPY FAC#1 FAC#2
-BYTE2FLT = $BC3C ; BYTE TO FLOAT
-UWRD2FLT = $BC49 ; UNSIG. WORD TO FLOAT
-GIVAYF   = $B391 ; 16-BIT INT TO FLOAT
-QINT     = $BC9B ; FLOAT TO UNSIGNED INT
-FOUT     = $BDDD ; FLOAT TO STRING
-STROUT   = $AB1E ; PRINT STRING
-SIN      = $E26B ; SIN(X)
-CHROUT   = $FFD2 ; PRINT CHAR
-LINPRT   = $BDCD ; PRINT INT
-PI2      = $E2E0 ; CONSTANT PI / 2
-FAC1EXP  = $61   ; FAC#1 EXPONENT
-FAC1MANT = $62   ; FAC#1 MANTISSA
-VMCSB    = $D018 ; VIC MEMORY CONTROL
-SCROLY   = $D011 ; VIC SCROLL REG.
-BBITMAP  = $2000 ; BITMAP BEGIN
-EBITMAP  = $3F3F ; BITMAP END
-BCOLOR   = $0400 ; COLOR BEGIN
-ECOLOR   = $07E7 ; COLOR END
-
-;---------------------------------------
-; BASIC PROGRAM
-;---------------------------------------
-         .BYTE $00    ; BEGIN BASIC PRG
-         .BYTE <NEXTL ; NEXT LINK
-         .BYTE >NEXTL
-         .BYTE $00    ; LINE #
-         .BYTE $00
-         .BYTE $9E    ; SYS TOKEN
-         .ASCII "2061"; $80D
-         .BYTE $00    ; END OF LINE
-NEXTL    .BYTE $00    ; END OF PROGRAM
-         .BYTE $00
-;---------------------------------------
-         JMP START    ; MUST BE @ $80D
-;---------------------------------------
+storeflt = $bbd4 ; store fac#1 to mem.
+loadflt  = $bba2 ; load fac#1 from mem.
+conupk   = $ba8c ; load fac#2 from mem.
+fltadd   = $b86a ; float pt. add
+fltmult  = $ba2b ; float pt. mult.
+fltand   = $afe9 ; float pt. and
+fltor    = $afe6 ; float pt. or
+fltnot   = $aed4 ; float pt. not
+fltxfer  = $bc0c ; copy fac#1 fac#2
+byte2flt = $bc3c ; byte to float
+uwrd2flt = $bc49 ; unsig. word to float
+givayf   = $b391 ; 16-bit int to float
+qint     = $bc9b ; float to unsigned int
+fout     = $bddd ; float to string
+strout   = $ab1e ; print string
+sin      = $e26b ; sin(x)
+chrout   = $ffd2 ; print char
+linprt   = $bdcd ; print int
+pi2      = $e2e0 ; constant pi / 2
+fac1exp  = $61   ; fac#1 exponent
+fac1mant = $62   ; fac#1 mantissa
+vmcsb    = $d018 ; vic memory control
+scroly   = $d011 ; vic scroll reg.
+bbitmap  = $2000 ; bitmap begin
+ebitmap  = $3f3f ; bitmap end
+bcolor   = $0400 ; color begin
+ecolor   = $07e7 ; color end
 
 ;---------------------------------------
-; STORAGE
+; basic program
 ;---------------------------------------
-ALPHA    .BYTE $09
-BETA     .BYTE $08
-TAU      .BYTE $00,$00,$00,$00,$00
-TMP      .BYTE $00,$00,$00,$00,$00
-IVAL     .BYTE $79,$00,$00,$00,$00
-XVAL     .WORD $00
-YVAL     .WORD $00
-BY       .WORD $00
-XFAC     .BYTE $A0
-YFAC     .BYTE $64
-
+         .byte $00    ; begin basic prg
+         .byte <nextl ; next link
+         .byte >nextl
+         .byte $00    ; line #
+         .byte $00
+         .byte $9e    ; sys token
+         .text "2061" ; $80d
+         .byte $00    ; end of line
+nextl    .byte $00    ; end of program
+         .byte $00
 ;---------------------------------------
-; CODE
+         jmp start    ; must be @ $80d
 ;---------------------------------------
-START
-         LDA VMCSB    ; PUT BITMAP
-         ORA #$08     ; AT $2000
-         STA VMCSB
-
-         LDA SCROLY   ; ENABLE BITMAP
-         ORA #$20     ; MODE
-         STA SCROLY
-
-         JSR CLEARBM  ; CLEAR BITMAP
-         JSR COLORBM  ; COLOR BITMAP
-
-         LDA #$00     ; TAU = 0
-         JSR BYTE2FLT ; STORE TO FAC#1
-         LDX #<TAU    ; STORE FAC#1 TO
-         LDY #>TAU    ; TAU
-         JSR STOREFLT
-
-L4
-         LDA #$80     ; CHECK STOP KEY
-         BIT $91
-         BEQ L5
-
-         JSR CALCX    ; CALCULATE X
-         JSR CALCY    ; CALCULATE Y
-         JSR CALCBY   ; CALCULATE BYTE
-         JSR PLOT     ; PLOT X, Y
-         JSR NEXT     ; TAU=TAU+IVAL
-         JMP L4
-L5
-         LDA SCROLY   ; DISABLE BITMAP
-         AND #$DF     ; MODE
-         STA SCROLY
-
-         LDA VMCSB    ; CHARACTER DOT
-         AND #$F7     ; DATA AT $1000
-         STA VMCSB
-
-         LDA #$93     ; CLEAR SCREEN
-         JSR CHROUT
-
-         RTS
 
 ;---------------------------------------
-; CLEAR BITMAP AREA
+; storage
 ;---------------------------------------
-CLEARBM
-         LDA #<BBITMAP
-         STA $FB
-         LDA #>BBITMAP
-         STA $FC
-
-         LDA #<EBITMAP
-         STA $FD
-         LDA #>EBITMAP
-         STA $FE
-
-         LDX #$00
-         JSR FILLBLOCK
-
-         RTS
+alpha    .byte $09
+beta     .byte $08
+tau      .byte $00,$00,$00,$00,$00
+tmp      .byte $00,$00,$00,$00,$00
+ival     .byte $79,$00,$00,$00,$00
+xval     .word $00
+yval     .word $00
+by       .word $00
+xfac     .byte $a0
+yfac     .byte $64
 
 ;---------------------------------------
-; COLOR BITMAP
+; code
 ;---------------------------------------
-COLORBM
-         LDA #<BCOLOR
-         STA $FB
-         LDA #>BCOLOR
-         STA $FC
+start
+         lda vmcsb    ; put bitmap
+         ora #$08     ; at $2000
+         sta vmcsb
 
-         LDA #<ECOLOR
-         STA $FD
-         LDA #>ECOLOR
-         STA $FE
+         lda scroly   ; enable bitmap
+         ora #$20     ; mode
+         sta scroly
 
-         LDX #$6F
-         JSR FILLBLOCK
+         jsr clearbm  ; clear bitmap
+         jsr colorbm  ; color bitmap
 
-         RTS
+         lda #$00     ; tau = 0
+         jsr byte2flt ; store to fac#1
+         ldx #<tau    ; store fac#1 to
+         ldy #>tau    ; tau
+         jsr storeflt
+
+l4
+         lda #$80     ; check stop key
+         bit $91
+         beq l5
+
+         jsr calcx    ; calculate x
+         jsr calcy    ; calculate y
+         jsr calcby   ; calculate byte
+         jsr plot     ; plot x, y
+         jsr next     ; tau=tau+ival
+         jmp l4
+l5
+         lda scroly   ; disable bitmap
+         and #$df     ; mode
+         sta scroly
+
+         lda vmcsb    ; character dot
+         and #$f7     ; data at $1000
+         sta vmcsb
+
+         lda #$93     ; clear screen
+         jsr chrout
+
+         rts
 
 ;---------------------------------------
-; FILL A MEMORY BLOCK WITH A BYTE
+; clear bitmap area
+;---------------------------------------
+clearbm
+         lda #<bbitmap
+         sta $fb
+         lda #>bbitmap
+         sta $fc
+
+         lda #<ebitmap
+         sta $fd
+         lda #>ebitmap
+         sta $fe
+
+         ldx #$00
+         jsr fillblock
+
+         rts
+
+;---------------------------------------
+; color bitmap
+;---------------------------------------
+colorbm
+         lda #<bcolor
+         sta $fb
+         lda #>bcolor
+         sta $fc
+
+         lda #<ecolor
+         sta $fd
+         lda #>ecolor
+         sta $fe
+
+         ldx #$6f
+         jsr fillblock
+
+         rts
+
+;---------------------------------------
+; fill a memory block with a byte
 ;
-; START ADDRESS IN $FB,$FC
-; END ADDRESS IN $FD, $FE
-; BYTE IN .X
-; $02 USED FOR COMPARISON
+; start address in $fb,$fc
+; end address in $fd, $fe
+; byte in .x
+; $02 used for comparison
 ;---------------------------------------
-FILLBLOCK
-         LDY #$00
+fillblock
+         ldy #$00
 
-L1       TXA
-         STA ($FB),Y
+l1       txa
+         sta ($fb),y
 
-         CLC           ; COMPARE
-         LDA $FB
-         STA $02
-         TYA
-         ADC $02
+         clc           ; compare
+         lda $fb
+         sta $02
+         tya
+         adc $02
 
-         SEC
-         SBC $FD
-         STA $02
+         sec
+         sbc $fd
+         sta $02
 
-         LDA $FC
-         SBC $FE
-         ORA $02
-         BEQ L3
+         lda $fc
+         sbc $fe
+         ora $02
+         beq l3
 
-         INY
-         CLC
-         LDA $FB
-         STA $02
-         TYA
-         ADC $02
-         BEQ L2
-         BNE L1
+         iny
+         clc
+         lda $fb
+         sta $02
+         tya
+         adc $02
+         beq l2
+         bne l1
 
-L2       LDA #$00     ; NEXT PAGE
-         STA $FB
-         INC $FC
-         JMP L1
+l2       lda #$00     ; next page
+         sta $fb
+         inc $fc
+         jmp l1
 
-L3       RTS
-
-;---------------------------------------
-; CALCULATE X VALUE
-;---------------------------------------
-CALCX
-         LDA #<TAU    ; LOAD TAU TO
-         LDY #>TAU    ; FAC#1
-         JSR LOADFLT
-
-         JSR FNX      ; CALL X(T)
-         JSR FLTXFER  ; XFER TO FAC#2
-
-         LDA XFAC     ; MULT. BY X
-         JSR UBYT2FLT ; X FACTOR
-         JSR MULTF
-
-         JSR FLTXFER  ; XFER TO FAC#2
-
-         LDA XFAC     ; ADD X FACTOR
-         JSR UBYT2FLT
-         JSR ADDF
-
-         JSR FLT2INT  ; CONVERT TO
-                      ; UNSIGNED
-                      ; INTEGER
-
-         STX XVAL
-         STA XVAL+1
-
-         RTS
+l3       rts
 
 ;---------------------------------------
-; CALCULATE Y VALUE
+; calculate x value
 ;---------------------------------------
-CALCY
-         LDA #<TAU    ; LOAD TAU TO
-         LDY #>TAU    ; FAC#1
-         JSR LOADFLT
+calcx
+         lda #<tau    ; load tau to
+         ldy #>tau    ; fac#1
+         jsr loadflt
 
-         JSR FNY      ; CALL Y(T)
-         JSR FLTXFER  ; XFER TO FAC#2
+         jsr fnx      ; call x(t)
+         jsr fltxfer  ; xfer to fac#2
 
-         LDA YFAC     ; MULT. BY
-         JSR UBYT2FLT ; YFACTOR
-         JSR MULTF
+         lda xfac     ; mult. by x
+         jsr ubyt2flt ; x factor
+         jsr multf
 
-         JSR FLTXFER  ; XFER TO FAC#2
+         jsr fltxfer  ; xfer to fac#2
 
-         LDA YFAC     ; ADD Y FACTOR
-         JSR UBYT2FLT
+         lda xfac     ; add x factor
+         jsr ubyt2flt
+         jsr addf
 
-         JSR ADDF
+         jsr flt2int  ; convert to
+                      ; unsigned
+                      ; integer
 
-         JSR FLT2INT  ; CONVERT TO
-                      ; UNSIGNED
-                      ; INTEGER
-         STX YVAL
-         STA YVAL+1
+         stx xval
+         sta xval+1
 
-         RTS
+         rts
 
 ;---------------------------------------
-; CALCULATE BYTE BASED ON X, Y
+; calculate y value
+;---------------------------------------
+calcy
+         lda #<tau    ; load tau to
+         ldy #>tau    ; fac#1
+         jsr loadflt
+
+         jsr fny      ; call y(t)
+         jsr fltxfer  ; xfer to fac#2
+
+         lda yfac     ; mult. by
+         jsr ubyt2flt ; yfactor
+         jsr multf
+
+         jsr fltxfer  ; xfer to fac#2
+
+         lda yfac     ; add y factor
+         jsr ubyt2flt
+
+         jsr addf
+
+         jsr flt2int  ; convert to
+                      ; unsigned
+                      ; integer
+         stx yval
+         sta yval+1
+
+         rts
+
+;---------------------------------------
+; calculate byte based on x, y
 ;
-; BY = BASE+40*(Y AND 248)+(Y AND 7)
-;      +(X AND 504)
+; by = base+40*(y and 248)+(y and 7)
+;      +(x and 504)
 ;---------------------------------------
-CALCBY
-         LDA XVAL+1    ; STORE HI BYTE
-         STA FAC1MANT  ; TO FAC#1
-                       ; MANTISSA
-         LDA XVAL      ; STORE LO BYTE
-         STA FAC1MANT+1
-         JSR UWORD2FLT ; CONVERT TO
-                       ; FLOAT
+calcby
+         lda xval+1    ; store hi byte
+         sta fac1mant  ; to fac#1
+                       ; mantissa
+         lda xval      ; store lo byte
+         sta fac1mant+1
+         jsr uword2flt ; convert to
+                       ; float
 
-         JSR FLTXFER   ; XFER TO FAC#2
+         jsr fltxfer   ; xfer to fac#2
 
-         LDA #$01      ; 504
-         LDY #$F8
-         JSR GIVAYF    ; CONVERT TO
-                       ; FLOAT
+         lda #$01      ; 504
+         ldy #$f8
+         jsr givayf    ; convert to
+                       ; float
 
-         JSR FLTAND    ; AND THEM
+         jsr fltand    ; and them
 
-         LDX #<TMP     ; STORE TO TMP
-         LDY #>TMP
-         JSR STOREFLT
+         ldx #<tmp     ; store to tmp
+         ldy #>tmp
+         jsr storeflt
 
-         LDA YVAL+1    ; STORE HI BYTE
-         STA FAC1MANT  ; TO FAC#1
-                       ; MANTISSA
-         LDA YVAL      ; STORE LO BYTE
-         STA FAC1MANT+1
-         JSR UWORD2FLT ; CONVERT TO
-                       ; FLOAT
+         lda yval+1    ; store hi byte
+         sta fac1mant  ; to fac#1
+                       ; mantissa
+         lda yval      ; store lo byte
+         sta fac1mant+1
+         jsr uword2flt ; convert to
+                       ; float
 
-         JSR FLTXFER   ; XFER TO FAC#2
+         jsr fltxfer   ; xfer to fac#2
 
-         LDA #$07      ; 7
-         JSR BYTE2FLT  ; CONVERT TO
-                       ; FLOAT
-         JSR FLTAND    ; AND THEM
+         lda #$07      ; 7
+         jsr byte2flt  ; convert to
+                       ; float
+         jsr fltand    ; and them
 
-         LDA #<TMP     ; LOAD FAC#2 FROM
-         LDY #>TMP     ; TMP
-         JSR CONUPK
+         lda #<tmp     ; load fac#2 from
+         ldy #>tmp     ; tmp
+         jsr conupk
 
-         JSR ADDF      ; ADD THE RESULTS
+         jsr addf      ; add the results
 
-         LDX #<TMP     ; STORE TO TMP
-         LDY #>TMP
-         JSR STOREFLT
+         ldx #<tmp     ; store to tmp
+         ldy #>tmp
+         jsr storeflt
 
-         LDA YVAL+1    ; STORE HI BYTE
-         STA FAC1MANT  ; TO FAC#1
-                       ; MANTISSA
-         LDA YVAL      ; STORE LO BYTE
-         STA FAC1MANT+1
-         JSR UWORD2FLT ; CONVERT TO
-                       ; FLOAT
+         lda yval+1    ; store hi byte
+         sta fac1mant  ; to fac#1
+                       ; mantissa
+         lda yval      ; store lo byte
+         sta fac1mant+1
+         jsr uword2flt ; convert to
+                       ; float
 
-         JSR FLTXFER   ; XFER TO FAC#2
+         jsr fltxfer   ; xfer to fac#2
 
-         LDA #$F8      ; 248
-         JSR UBYT2FLT  ; CONVERT TO
-                       ; FLOAT
+         lda #$f8      ; 248
+         jsr ubyt2flt  ; convert to
+                       ; float
 
-         JSR FLTAND    ; AND THEM
+         jsr fltand    ; and them
 
-         JSR FLTXFER   ; XFER TO FAC#2
+         jsr fltxfer   ; xfer to fac#2
 
-         LDA #$28      ; 40
-         JSR BYTE2FLT  ; CONVERT TO
-                       ; FLOAT
+         lda #$28      ; 40
+         jsr byte2flt  ; convert to
+                       ; float
 
-         JSR MULTF     ; MULTIPLY THEM
+         jsr multf     ; multiply them
 
-         LDA #<TMP     ; LOAD FAC#2 FROM
-         LDY #>TMP     ; TMP
-         JSR CONUPK
+         lda #<tmp     ; load fac#2 from
+         ldy #>tmp     ; tmp
+         jsr conupk
 
-         JSR ADDF      ; ADD THEM
+         jsr addf      ; add them
 
-         JSR FLTXFER   ; XFER TO FAC#2
+         jsr fltxfer   ; xfer to fac#2
 
-         LDA #>BBITMAP ; CONVERT BASE
-         LDY #<BBITMAP ; ADDRESS TO
-         JSR GIVAYF    ; FLOAT
+         lda #>bbitmap ; convert base
+         ldy #<bbitmap ; address to
+         jsr givayf    ; float
 
-         JSR ADDF      ; ADD THEM
+         jsr addf      ; add them
 
-         JSR FLT2INT   ; UNSIGNED
-                       ; INTEGER
-         STX BY
-         STA BY+1
+         jsr flt2int   ; unsigned
+                       ; integer
+         stx by
+         sta by+1
 
-         RTS
-
-;---------------------------------------
-; PLOT POINT IN X, Y ON HI-RES SCREEN
-;---------------------------------------
-PLOT
-         LDA XVAL+1    ; STORE HI BYTE
-         STA FAC1MANT  ; TO FAC#1
-                       ; MANTISSA
-         LDA XVAL      ; STORE LO BYTE
-         STA FAC1MANT+1
-         JSR UWORD2FLT ; CONVERT TO
-                       ; FLOAT
-
-         JSR FLTNOT    ; NOT(X)
-         JSR FLTXFER   ; XFER TO FAC#2
-
-         LDA #$07      ; 7
-         JSR BYTE2FLT  ; CONVERT TO
-                       ; FLOAT
-         JSR FLTAND    ; AND THEM
-
-         JSR FLT2INT   ; CONVERT TO
-                       ; UNSIGNED
-                       ; INTEGER
-
-         LDA #$01      ; POWER OF 2
-         CPX #$00      ; LSB IN .X
-         BEQ L7
-L6
-         ASL
-         DEX
-         BNE L6
-L7
-         JSR UBYT2FLT  ; CONVERT TO
-                       ; FLOAT
-         JSR FLTXFER   ; XFER TO FAC#2
-
-         LDA BY
-         STA $FB
-         LDA BY+1
-         STA $FC
-
-         LDY #$00
-         LDA ($FB),Y
-
-         JSR UBYT2FLT  ; CONVERT TO
-                       ; FLOAT
-
-         JSR FLTOR     ; OR THEM
-         JSR FLT2INT   ; CONVERT TO
-                       ; UNSIGNED
-                       ; INTEGER
-                       ; LO BYTE IN .X
-         LDA BY
-         STA $FB
-         LDA BY+1
-         STA $FC
-
-         LDY #$00
-         TXA
-         STA ($FB),Y
-
-         RTS
+         rts
 
 ;---------------------------------------
-; TAU = TAU + IVAL
-; IVAL IS DEFINED TO BE 2^(-8)
-; OR APPROXIMATELY 0.00390625
+; plot point in x, y on hi-res screen
 ;---------------------------------------
-NEXT
-         LDA #<TAU    ; LOAD TAU TO
-         LDY #>TAU    ; FAC#1
-         JSR LOADFLT
-         JSR FLTXFER  ; XFER FAC#1 TO
-                      ; FAC#2
+plot
+         lda xval+1    ; store hi byte
+         sta fac1mant  ; to fac#1
+                       ; mantissa
+         lda xval      ; store lo byte
+         sta fac1mant+1
+         jsr uword2flt ; convert to
+                       ; float
 
-         LDA #<IVAL   ; LOAD IVAL TO
-         LDY #>IVAL   ; FAC#1
-         JSR LOADFLT
+         jsr fltnot    ; not(x)
+         jsr fltxfer   ; xfer to fac#2
 
-         JSR ADDF     ; ADD THEM
+         lda #$07      ; 7
+         jsr byte2flt  ; convert to
+                       ; float
+         jsr fltand    ; and them
 
-         LDX #<TAU    ; STORE FAC#1 TO
-         LDY #>TAU    ; TAU
-         JSR STOREFLT
+         jsr flt2int   ; convert to
+                       ; unsigned
+                       ; integer
 
-         RTS
+         lda #$01      ; power of 2
+         cpx #$00      ; lsb in .x
+         beq l7
+l6
+         asl a
+         dex
+         bne l6
+l7
+         jsr ubyt2flt  ; convert to
+                       ; float
+         jsr fltxfer   ; xfer to fac#2
 
-;---------------------------------------
-; CONVERT FAC#1 TO UNSIGNED 16-BIT
-; INTEGER.  UNSIGNED INTEGER RETURNED
-; IN .A, .X
-;---------------------------------------
-FLT2INT
-         JSR QINT       ; CONVERT TO
-                        ; INTEGER
-         LDA FAC1MANT+2 ; MSB MANTISSA
-         LDX FAC1MANT+3 ; LSB MANTISSA
-         RTS
+         lda by
+         sta $fb
+         lda by+1
+         sta $fc
 
-;---------------------------------------
-; CONVERT UNSIGNED WORD TO FLOAT
-; MSB OF WORD IN FAC#1 MANTISSA
-; LSB OF WORD IN FAC#1 MANTISSA+1
-;---------------------------------------
-UWORD2FLT
-         LDX #$90     ; SETTING THE
-                      ; EXPONENT TO
-                      ; $90 PLACES THE
-                      ; BINARY POINT TO
-                      ; THE RIGHT OF
-                      ; THE LEAST
-                      ; SIGNIFICANT BIT
-                      ; OF THIS INTEGER
-                      ; MAKING IT A
-                      ; WHOLE NUMBER
-         SEC          ; TREAT INT AS
-                      ; UNSIGNED
-         JSR UWRD2FLT ; STORE IN FAC#1
-         RTS
+         ldy #$00
+         lda ($fb),y
 
-;---------------------------------------
-; CONVERT UNSIGNED BYTE IN A. TO FLOAT
-;---------------------------------------
-UBYT2FLT
-         STA FAC1MANT+1 ; STORE LO BYTE
-         LDA #$00       ; STORE HI BYTE
-         STA FAC1MANT
-         JSR UWORD2FLT
-         RTS
+         jsr ubyt2flt  ; convert to
+                       ; float
+
+         jsr fltor     ; or them
+         jsr flt2int   ; convert to
+                       ; unsigned
+                       ; integer
+                       ; lo byte in .x
+         lda by
+         sta $fb
+         lda by+1
+         sta $fc
+
+         ldy #$00
+         txa
+         sta ($fb),y
+
+         rts
 
 ;---------------------------------------
-; PRINT FAC#1
+; tau = tau + ival
+; ival is defined to be 2^(-8)
+; or approximately 0.00390625
 ;---------------------------------------
-FLTPRNT
-         JSR FOUT     ; CONVERT FAC#1
-                      ; TO A STRING
-                      ; IN .A, .Y
-         JSR STROUT   ; PRINT IT
+next
+         lda #<tau    ; load tau to
+         ldy #>tau    ; fac#1
+         jsr loadflt
+         jsr fltxfer  ; xfer fac#1 to
+                      ; fac#2
 
-         LDA #$0D     ; PRINT NEWLINE
-         JSR CHROUT
+         lda #<ival   ; load ival to
+         ldy #>ival   ; fac#1
+         jsr loadflt
 
-         RTS
+         jsr addf     ; add them
 
-;---------------------------------------
-; PRINT INT IN .A, .X
-;---------------------------------------
-INTPRNT
-         JSR LINPRT
-         LDA #$0D
-         JSR CHROUT
+         ldx #<tau    ; store fac#1 to
+         ldy #>tau    ; tau
+         jsr storeflt
 
-         RTS
-
-;---------------------------------------
-; X(T) = SIN(A*T+D)
-; T IS IN FAC#1
-;---------------------------------------
-FNX
-         JSR FLTXFER  ; XFER TO FAC#2
-
-         LDA ALPHA    ; LOAD ALPHA TO
-         JSR BYTE2FLT ; FAC#1
-
-         JSR MULTF    ; MULTIPLY THEM
-         JSR FLTXFER  ; XFER TO FAC#2
-
-         LDA #<PI2    ; LOAD DELTA TO
-         LDY #>PI2    ; FAC#1
-         JSR LOADFLT
-
-         JSR ADDF     ; ADD THEM
-
-         JSR SIN      ; CALL SIN(X)
-
-         RTS
+         rts
 
 ;---------------------------------------
-; Y(T) = SIN(B*T)
-; T IS IN FAC#1
+; convert fac#1 to unsigned 16-bit
+; integer.  unsigned integer returned
+; in .a, .x
 ;---------------------------------------
-FNY
-         JSR FLTXFER  ; XFER TO FAC#2
-
-         LDA BETA     ; LOAD BETA TO
-         JSR BYTE2FLT ; FAC#1
-
-         JSR MULTF    ; MULTIPLY THEM
-
-         JSR SIN      ; CALL SIN(X)
-
-         RTS
+flt2int
+         jsr qint       ; convert to
+                        ; integer
+         lda fac1mant+2 ; msb mantissa
+         ldx fac1mant+3 ; lsb mantissa
+         rts
 
 ;---------------------------------------
-; MULT FAC#1 BY FAC#2
+; convert unsigned word to float
+; msb of word in fac#1 mantissa
+; lsb of word in fac#1 mantissa+1
 ;---------------------------------------
-MULTF
-         JSR SGNCMP
-         LDA FAC1EXP
-         JSR FLTMULT
-         RTS
+uword2flt
+         ldx #$90     ; setting the
+                      ; exponent to
+                      ; $90 places the
+                      ; binary point to
+                      ; the right of
+                      ; the least
+                      ; significant bit
+                      ; of this integer
+                      ; making it a
+                      ; whole number
+         sec          ; treat int as
+                      ; unsigned
+         jsr uwrd2flt ; store in fac#1
+         rts
 
 ;---------------------------------------
-; ADD FAC#1 TO FAC#2
+; convert unsigned byte in a. to float
 ;---------------------------------------
-ADDF
-         JSR SGNCMP
-         LDA FAC1EXP
-         JSR FLTADD
-         RTS
+ubyt2flt
+         sta fac1mant+1 ; store lo byte
+         lda #$00       ; store hi byte
+         sta fac1mant
+         jsr uword2flt
+         rts
 
 ;---------------------------------------
-; SETUP SIGN COMPARE
+; print fac#1
 ;---------------------------------------
-SGNCMP
-         LDA $66      ; SETUP SIGN
-         EOR $6E      ; COMPARE
-         STA $6F
-         RTS
+fltprnt
+         jsr fout     ; convert fac#1
+                      ; to a string
+                      ; in .a, .y
+         jsr strout   ; print it
+
+         lda #$0d     ; print newline
+         jsr chrout
+
+         rts
+
+;---------------------------------------
+; print int in .a, .x
+;---------------------------------------
+intprnt
+         jsr linprt
+         lda #$0d
+         jsr chrout
+
+         rts
+
+;---------------------------------------
+; x(t) = sin(a*t+d)
+; t is in fac#1
+;---------------------------------------
+fnx
+         jsr fltxfer  ; xfer to fac#2
+
+         lda alpha    ; load alpha to
+         jsr byte2flt ; fac#1
+
+         jsr multf    ; multiply them
+         jsr fltxfer  ; xfer to fac#2
+
+         lda #<pi2    ; load delta to
+         ldy #>pi2    ; fac#1
+         jsr loadflt
+
+         jsr addf     ; add them
+
+         jsr sin      ; call sin(x)
+
+         rts
+
+;---------------------------------------
+; y(t) = sin(b*t)
+; t is in fac#1
+;---------------------------------------
+fny
+         jsr fltxfer  ; xfer to fac#2
+
+         lda beta     ; load beta to
+         jsr byte2flt ; fac#1
+
+         jsr multf    ; multiply them
+
+         jsr sin      ; call sin(x)
+
+         rts
+
+;---------------------------------------
+; mult fac#1 by fac#2
+;---------------------------------------
+multf
+         jsr sgncmp
+         lda fac1exp
+         jsr fltmult
+         rts
+
+;---------------------------------------
+; add fac#1 to fac#2
+;---------------------------------------
+addf
+         jsr sgncmp
+         lda fac1exp
+         jsr fltadd
+         rts
+
+;---------------------------------------
+; setup sign compare
+;---------------------------------------
+sgncmp
+         lda $66      ; setup sign
+         eor $6e      ; compare
+         sta $6f
+         rts
 

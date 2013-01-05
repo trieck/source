@@ -77,6 +77,7 @@ rtrack   .text "00"
          .text " "
 rsector  .text "00"
 rcmdlen  = *-readcmd
+         .byte $00
 
 chkin    = $ffc6
 chkout   = $ffc9
@@ -438,10 +439,69 @@ rblock
 
          ldy #$2c     ; find index of ,
          jsr instr
-         bcs rbdone   ; not found
+         bcc rb5      ; found ,
+         jmp rbdone   ; not found
+rb5
+         sty $02      ; save delim index
+
+         lda #$20     ; initialize t/s
+         sta rtrack   ; buffers
+         sta rtrack+1
+         sta rsector
+         sta rsector+1
+
+         lda #<rtrack ; set up target
+         sta $fd      ; pointer
+         lda #>rtrack
+         sta $fe
+
+         lda #$02     ; t/s buffer len.
+         sta length
+
+         ldx #$00     ; init. indices
+         ldy #$00
+         sty $03      ; source index
+         sty $04      ; dest. index
+rb3
+         ldy $03      ; load source idx
+         cpy $02      ; delimiter
+         beq rb4
+
+         lda ($fb),y
+         beq rb4      ; terminator
+
+         iny          ; increment and
+         sty $03      ; save source idx
+
+         jsr isdec    ; is decimal?
+         bcs rb3      ; no, keep looping
+
+         ldy $04      ; dest. index
+         cpy length
+         beq rb4      ; done copying
+
+         sta ($fd),y  ; copy
+
+         iny          ; increment and
+         sty $04      ; save dest. idx
+
+         jmp rb3      ; keep looping
+rb4
+         lda $04      ; ensure we copied
+         cmp #$01     ; at least one
+         bcc rbdone   ; byte
+
+         ; DEBUG!
+         jsr loline
+
+         lda #<readcmd
+         ldy #>readcmd
+         jsr strout
+
+         jsr upline
+         ; DEBUG!
 
          jsr loline   ; lower line sep.
-
          lda #$00     ; initialize
          sta rvs      ; reverse flag
 
@@ -1359,10 +1419,35 @@ gd5
          rts
 
 ;---------------------------------------
+; check for decimal digit in .a
+; index stored to .y
+;---------------------------------------
+isdec
+         pha          ; save char
+
+         cmp #$30     ; < 48
+         bcc id2
+
+         cmp #$3a     ; < 58
+         bcc id1
+id2
+         sec          ; non-decimal
+         jmp id3
+id1
+         sec          ; store idx to .y
+         sbc #$30
+         tay
+         clc          ; decimal
+id3
+         pla          ; restore char
+         rts
+
+;---------------------------------------
 ; check for hex digit in .a
+; index stored to .y
 ;---------------------------------------
 ishex
-         sta $02      ; store char
+         pha          ; save char
 
          cmp #$30     ; < 48
          bcc ih2
@@ -1389,7 +1474,7 @@ ih4
 ih2
          sec          ; non-hex
 ih3
-         lda $02      ; restore char
+         pla          ; restore char
          rts
 
 ;---------------------------------------
