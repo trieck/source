@@ -8,13 +8,13 @@ import java.util.List;
 public class Jumble {
 
     private Concordance concordance;
-    
+
     public Jumble() throws IOException {
-        concordance = Concordance.getInstance();        
+        concordance = Concordance.getInstance();
     }
-       
+
     public List<String> solve(String word) {
-                
+
         List<String> solutions = new ArrayList<String>();
 
         WordPerms wp = new WordPerms(word);

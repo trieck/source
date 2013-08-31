@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsl:stylesheet version="1.0" 
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:java="http://xml.apache.org/xslt/java">
+<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:java="http://xml.apache.org/xslt/java">
     <xsl:output method="html" indent="yes" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN"/>
 
     <xsl:template match="/">
@@ -50,13 +50,15 @@
             </xsl:variable>
 
             <xsl:variable name="prevdocid">
-                <xsl:value-of select="java:org.pixielib.content.beans.Search.select(@db, normalize-space($query), $expr)"/>
+                <xsl:value-of
+                        select="java:org.pixielib.content.beans.Search.select(@db, normalize-space($query), $expr)"/>
             </xsl:variable>
 
             <xsl:if test="$prevdocid">
                 <xsl:text>detail.jsp?db=</xsl:text><xsl:value-of select="@db"/>
                 <xsl:text>&amp;docid=</xsl:text><xsl:value-of select="$prevdocid"/>
-                <xsl:text>&amp;query=</xsl:text><xsl:value-of select="java:org.pixielib.content.beans.Context.encode(normalize-space($query))"/>
+                <xsl:text>&amp;query=</xsl:text><xsl:value-of
+                    select="java:org.pixielib.content.beans.Context.encode(normalize-space($query))"/>
             </xsl:if>
 
         </xsl:variable>
@@ -75,13 +77,15 @@
             </xsl:variable>
 
             <xsl:variable name="nextdocid">
-                <xsl:value-of select="java:org.pixielib.content.beans.Search.select(@db, normalize-space($query), $expr)"/>
+                <xsl:value-of
+                        select="java:org.pixielib.content.beans.Search.select(@db, normalize-space($query), $expr)"/>
             </xsl:variable>
 
             <xsl:if test="$nextdocid">
                 <xsl:text>detail.jsp?db=</xsl:text><xsl:value-of select="@db"/>
                 <xsl:text>&amp;docid=</xsl:text><xsl:value-of select="$nextdocid"/>
-                <xsl:text>&amp;query=</xsl:text><xsl:value-of select="java:org.pixielib.content.beans.Context.encode(normalize-space($query))"/>
+                <xsl:text>&amp;query=</xsl:text><xsl:value-of
+                    select="java:org.pixielib.content.beans.Context.encode(normalize-space($query))"/>
             </xsl:if>
         </xsl:variable>
 
@@ -93,7 +97,8 @@
                 <TD CLASS="grey">&#160;</TD>
                 <TD CLASS="grey" align="left">
                     <b class="grey">
-                        <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:<xsl:value-of select="verse"/>
+                        <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:<xsl:value-of
+                            select="verse"/>
                     </b>
                 </TD>
             </TR>
@@ -111,17 +116,31 @@
                 <TD CLASS="grey">&#160;</TD>
                 <TD CLASS="grey">&#160;</TD>
                 <TD CLASS="grey" align="left">
-                    <span><a href="{$resultslink}">Back to Search Results</a></span>
-                    &#160;<span><a href="{$booklink}">Read this Book</a></span>
-                    &#160;<span><a href="{$chapterlink}">Read this Chapter</a></span>
+                    <span>
+                        <a href="{$resultslink}">Back to Search Results</a>
+                    </span>
+                    &#160;
+                    <span>
+                        <a href="{$booklink}">Read this Book</a>
+                    </span>
+                    &#160;
+                    <span>
+                        <a href="{$chapterlink}">Read this Chapter</a>
+                    </span>
                     <xsl:if test="$prevlink">
-                        &#160;<span><a href="{$prevlink}">Previous Verse</a></span>
+                        &#160;
+                        <span>
+                            <a href="{$prevlink}">Previous Verse</a>
+                        </span>
                     </xsl:if>
                     <xsl:if test="$nextlink">
-                        &#160;<span><a href="{$nextlink}">Next Verse</a></span>
+                        &#160;
+                        <span>
+                            <a href="{$nextlink}">Next Verse</a>
+                        </span>
                     </xsl:if>
                 </TD>
-            </TR>            
+            </TR>
         </TABLE>
     </xsl:template>
 

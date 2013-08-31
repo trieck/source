@@ -1,4 +1,4 @@
 @echo off
-start javaw -cp ..\classes org.pixielib.apps.odb.ODBManager
+start javaw -cp ..\dist\pixie.jar org.pixielib.apps.odb.ODBManager
 
 

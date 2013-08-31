@@ -73,7 +73,7 @@ public class Machine {
     private static final int MEANPOINT = Board.VSIZE / 2;
 
     private final List<Point> block = new ArrayList<Point>(); /*
-	 * current "must
+     * current "must
 	 * block" list
 	 */
     private final Board board = Board.getInstance();

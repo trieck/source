@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsl:stylesheet version="1.0" 
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:java="http://xml.apache.org/xslt/java">
-    
+<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:java="http://xml.apache.org/xslt/java">
+
     <xsl:output method="html" indent="yes" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN"/>
 
     <xsl:template match="/">
@@ -31,7 +31,9 @@
     </xsl:template>
 
     <xsl:template match="record">
-        <xsl:variable name="linkdetail">detail.jsp?db=<xsl:value-of select="//results/@db"/>&amp;docid=<xsl:value-of select="@docid"/>&amp;query=<xsl:value-of select="java:org.pixielib.content.beans.Context.encode(//results/@query)"/>
+        <xsl:variable name="linkdetail">detail.jsp?db=<xsl:value-of select="//results/@db"/>&amp;docid=<xsl:value-of
+                select="@docid"/>&amp;query=<xsl:value-of
+                select="java:org.pixielib.content.beans.Context.encode(//results/@query)"/>
         </xsl:variable>
         <TR>
             <TD CLASS="grey">
@@ -40,7 +42,8 @@
             <TD CLASS="grey" align="left">
                 <a href="{$linkdetail}" class="grey">
                     <span class="grey">
-                        <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:<xsl:value-of select="verse"/>
+                        <xsl:value-of select="book"/>&#xa0;<xsl:value-of select="chapter"/>:<xsl:value-of
+                            select="verse"/>
                     </span>
                 </a>
             </TD>

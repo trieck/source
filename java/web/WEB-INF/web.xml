@@ -17,8 +17,8 @@
 -->
 
 <!DOCTYPE web-app
-    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-    "http://java.sun.com/dtd/web-app_2_3.dtd">
+        PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
 
@@ -47,12 +47,12 @@
     -->
 
     <context-param>
-      <param-name>webmaster</param-name>
-      <param-value>trieck@gmail.com</param-value>
-      <description>
-        The EMAIL address of the administrator to whom questions
-        and comments about this application should be addressed.
-      </description>
+        <param-name>webmaster</param-name>
+        <param-value>trieck@gmail.com</param-value>
+        <description>
+            The EMAIL address of the administrator to whom questions
+            and comments about this application should be addressed.
+        </description>
     </context-param>
 
 
@@ -82,15 +82,15 @@
     -->
 
     <servlet>
-      <servlet-name>ContentServlet</servlet-name>
-      <description>        
-      </description>
-      <servlet-class>org.pixielib.content.servlets.ContentServlet</servlet-class>      
+        <servlet-name>ContentServlet</servlet-name>
+        <description>
+        </description>
+        <servlet-class>org.pixielib.content.servlets.ContentServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-      <servlet-name>ContentServlet</servlet-name>
-      <url-pattern>/ContentServlet</url-pattern>
+        <servlet-name>ContentServlet</servlet-name>
+        <url-pattern>/ContentServlet</url-pattern>
     </servlet-mapping>
 
 
@@ -100,7 +100,8 @@
          HttpSession.getMaxInactiveInterval(). -->
 
     <session-config>
-      <session-timeout>30</session-timeout>    <!-- 30 minutes -->
+        <session-timeout>30</session-timeout>
+        <!-- 30 minutes -->
     </session-config>
 
 

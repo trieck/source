@@ -1,2 +1,2 @@
 @echo off
-java -cp ..\classes org.pixielib.pixievm.Machine
+java -cp ..\dist\pixie.jar org.pixielib.pixievm.Machine

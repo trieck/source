@@ -1,2 +1,2 @@
 @echo off
-java -cp ..\classes org.pixielib.xml.XMLRepairer %1
+java -cp ..\dist\pixie.jar org.pixielib.xml.XMLRepairer %1

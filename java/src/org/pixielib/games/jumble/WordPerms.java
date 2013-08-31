@@ -11,7 +11,7 @@ public class WordPerms {
     private String word;
     private int size;       // number of permutations
     private int[] a;        // permutation
-    
+
     public int getSize() {
         return size;
     }
@@ -28,14 +28,14 @@ public class WordPerms {
     }
 
     public String getFirstPerm() {
-        
+
         char[] chars = word.toCharArray();
-        
+
         Arrays.sort(chars);
 
         return String.valueOf(chars);
     }
-        
+
     public String getNextPerm(String s) {
         toArray(s);
 
@@ -44,19 +44,19 @@ public class WordPerms {
 
         return fromArray();
     }
-    
+
     private void toArray(String s) {
-        assert(a.length == s.length());
+        assert (a.length == s.length());
         for (int i = 0; i < s.length(); i++) {
             a[i] = s.charAt(i);
         }
     }
-    
+
     private String fromArray() {
         StringBuilder builder = new StringBuilder();
         builder.setLength(a.length);
         for (int i = 0; i < a.length; i++) {
-            builder.setCharAt(i, (char)a[i]);
+            builder.setCharAt(i, (char) a[i]);
         }
 
         return builder.toString();

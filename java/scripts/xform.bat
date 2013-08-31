@@ -1,3 +1,3 @@
 @echo off
-java -cp ..\classes org.pixielib.xml.XMLTransformer %1 %2
+java -cp ..\dist\pixie.jar org.pixielib.xml.XMLTransformer %1 %2
 

@@ -550,17 +550,8 @@ public class Context implements Serializable {
     }
 
     public String getProperty(String key) {
-
-        String value = "";
-
-        try {
-            Config config = Config.getInstance();
-            value = config.getProperty(key);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Config config = Config.getInstance();
+        String value = config.getProperty(key);
         return value;
     }
 

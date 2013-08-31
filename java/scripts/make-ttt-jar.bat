@@ -1,3 +1,3 @@
 @echo off
-make-jar ttt.jar org.pixielib.games.ttt.TicTacToe ../classes/org/pixielib/games/ttt/
+make-jar ttt.jar org.pixielib.games.ttt.TicTacToe ../build/WEB-INF/classes/org/pixielib/games/ttt/
 

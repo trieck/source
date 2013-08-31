@@ -26,7 +26,7 @@ public class Concordance {
 
         return theInstance;
     }
-    
+
     public boolean lookup(String word) {
         return table.contains(word.toLowerCase());
     }

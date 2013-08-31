@@ -1,3 +1,3 @@
 @echo off
-java -cp ..\classes org.pixielib.apps.odb.ODBClient localhost
+java -cp ..\dist\pixie.jar org.pixielib.apps.odb.ODBClient localhost
 

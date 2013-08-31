@@ -19,11 +19,11 @@ public class Transversal {
         }
         generate();
     }
-    
+
     public int[] get(int i) {
         return combinations[i];
     }
-    
+
     public int cardinality() {
         return C;
     }
@@ -44,7 +44,7 @@ public class Transversal {
         } else {
             for (int m = 0; m < A.get(k); m++) {
                 t[k] = m;
-                generate(k+1);
+                generate(k + 1);
             }
             t[k] = 0;
         }
