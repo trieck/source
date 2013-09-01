@@ -3,35 +3,35 @@ package org.pixielib.util;
 import java.util.ResourceBundle;
 
 public class Config {
-    private ResourceBundle bundle;
-    private static Config instance = null;
+	private ResourceBundle bundle;
+	private static Config instance = null;
 
-    private Config() {
-        bundle = ResourceBundle.getBundle("pixie");
-    }
+	private Config() {
+		bundle = ResourceBundle.getBundle("pixie");
+	}
 
-    public static synchronized Config getInstance() {
+	public static synchronized Config getInstance() {
 
-        if (instance != null)
-            return instance;
+		if (instance != null)
+			return instance;
 
-        instance = new Config();
+		instance = new Config();
 
-        return instance;
-    }
+		return instance;
+	}
 
-    public String getProperty(String k) {
+	public String getProperty(String k) {
 
-        if (bundle == null)
-            return "";
+		if (bundle == null)
+			return "";
 
-        String value = "";
+		String value = "";
 
-        try {
-            value = bundle.getString(k);
-        } catch (Exception ignored) {
-        }
+		try {
+			value = bundle.getString(k);
+		} catch (Exception ignored) {
+		}
 
-        return value.trim();
-    }
+		return value.trim();
+	}
 }

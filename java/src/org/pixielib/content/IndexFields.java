@@ -12,27 +12,27 @@ import java.util.Set;
  */
 public class IndexFields {
 
-    private Set<String> fields;
+	private Set<String> fields;
 
-    public IndexFields(String db) throws IOException {
-        fields = new HashSet<String>();
+	public IndexFields(String db) throws IOException {
+		fields = new HashSet<String>();
 
-        File dir = Repository.getInstance().mapPath(db);
-        String filename = String.format("%s/index.txt", dir.getCanonicalPath());
-        File file = new File(filename).getCanonicalFile();
-        if (!file.canRead()) {
-            throw new IOException(String.format("Unable to read \"%s\".", file.getCanonicalPath()));
-        }
+		File dir = Repository.getInstance().mapPath(db);
+		String filename = String.format("%s/index.txt", dir.getCanonicalPath());
+		File file = new File(filename).getCanonicalFile();
+		if (!file.canRead()) {
+			throw new IOException(String.format("Unable to read \"%s\".", file.getCanonicalPath()));
+		}
 
-        Lexer lexer = new Lexer(new FileReader(file));
+		Lexer lexer = new Lexer(new FileReader(file));
 
-        String token;
-        while ((token = lexer.getToken()).length() > 0) {
-            fields.add(token.toLowerCase());
-        }
-    }
+		String token;
+		while ((token = lexer.getToken()).length() > 0) {
+			fields.add(token.toLowerCase());
+		}
+	}
 
-    public boolean isTopLevel(String field) {
-        return fields.contains(field);
-    }
+	public boolean isTopLevel(String field) {
+		return fields.contains(field);
+	}
 }

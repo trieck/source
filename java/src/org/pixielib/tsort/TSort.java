@@ -12,49 +12,49 @@ import java.util.Iterator;
  */
 public class TSort {
 
-    private final DAG graph;
+	private final DAG graph;
 
-    public TSort() {
-        graph = new DAG();
-    }
+	public TSort() {
+		graph = new DAG();
+	}
 
-    public void makeEdge(String[] tokens) {
-        assert (tokens.length == 2);
+	public void makeEdge(String[] tokens) {
+		assert (tokens.length == 2);
 
-        graph.makeEdge(tokens[0], tokens[1]);
-    }
+		graph.makeEdge(tokens[0], tokens[1]);
+	}
 
-    public Iterator<DAG.Vertex> sort() {
-        return graph.sort();
-    }
+	public Iterator<DAG.Vertex> sort() {
+		return graph.sort();
+	}
 
-    public static void main(String[] args) {
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(
-                System.in));
+	public static void main(String[] args) {
+		final BufferedReader reader = new BufferedReader(new InputStreamReader(
+				System.in));
 
-        final TSort tsort = new TSort();
+		final TSort tsort = new TSort();
 
-        String line;
-        String[] tokens;
+		String line;
+		String[] tokens;
 
-        try {
-            while ((line = reader.readLine()) != null) {
-                tokens = line.split("\\s+");
-                if (tokens.length != 2) {
-                    System.err.println("bad line.");
-                    continue;
-                }
+		try {
+			while ((line = reader.readLine()) != null) {
+				tokens = line.split("\\s+");
+				if (tokens.length != 2) {
+					System.err.println("bad line.");
+					continue;
+				}
 
-                tsort.makeEdge(tokens);
-            }
-        } catch (final IOException e) {
-            System.err.println(e);
-            System.exit(1);
-        }
+				tsort.makeEdge(tokens);
+			}
+		} catch (final IOException e) {
+			System.err.println(e);
+			System.exit(1);
+		}
 
-        final Iterator<DAG.Vertex> vertices = tsort.sort();
-        while (vertices.hasNext()) {
-            System.out.println(vertices.next());
-        }
-    }
+		final Iterator<DAG.Vertex> vertices = tsort.sort();
+		while (vertices.hasNext()) {
+			System.out.println(vertices.next());
+		}
+	}
 }

@@ -12,85 +12,85 @@ import java.io.IOException;
 
 public abstract class Product {
 
-    private String product;     // product
-    private String db;          // database
-    private String query;       // query
-    private String style;       // style
-    private int count;          // search record count
-    private Document results;   // results XML document
+	private String product;     // product
+	private String db;          // database
+	private String query;       // query
+	private String style;       // style
+	private int count;          // search record count
+	private Document results;   // results XML document
 
-    public Product(String product, String db, String query, String style) {
-        this.product = product;
-        this.db = db;
-        this.query = query;
-        this.style = style;
-    }
+	public Product(String product, String db, String query, String style) {
+		this.product = product;
+		this.db = db;
+		this.query = query;
+		this.style = style;
+	}
 
-    public String getProduct() {
-        return product;
-    }
+	public String getProduct() {
+		return product;
+	}
 
-    public String getDatabase() {
-        return db;
-    }
+	public String getDatabase() {
+		return db;
+	}
 
-    public String getQuery() {
-        return query;
-    }
+	public String getQuery() {
+		return query;
+	}
 
-    public String getStyle() {
-        return style;
-    }
+	public String getStyle() {
+		return style;
+	}
 
-    public Document getResults() {
-        return results;
-    }
+	public Document getResults() {
+		return results;
+	}
 
-    protected void setResults(Document doc) {
-        results = doc;
-    }
+	protected void setResults(Document doc) {
+		results = doc;
+	}
 
-    public void getContent() {
+	public void getContent() {
 
-        Context context = Context.getContext();
+		Context context = Context.getContext();
 
-        if (results != null) {
-            try {
-                File f = getStylesheet();
+		if (results != null) {
+			try {
+				File f = getStylesheet();
 
-                CachedTransformer cache = CachedTransformer.getInstance();
-                Transformer transformer = cache.getTransformer(f);
+				CachedTransformer cache = CachedTransformer.getInstance();
+				Transformer transformer = cache.getTransformer(f);
 
-                transformer.transform(new DOMSource(results), new StreamResult(context.getWriter()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+				transformer.transform(new DOMSource(results), new StreamResult(context.getWriter()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (TransformerException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-    private File getStylesheet() throws IOException {
-        String path = getProductDir() + '/' + style.toLowerCase() + ".xsl";
-        File file = new File(path).getCanonicalFile();
-        if (!file.canRead()) {
-            throw new IOException(String.format("can't read \"%s\".", path));
-        }
+	private File getStylesheet() throws IOException {
+		String path = getProductDir() + '/' + style.toLowerCase() + ".xsl";
+		File file = new File(path).getCanonicalFile();
+		if (!file.canRead()) {
+			throw new IOException(String.format("can't read \"%s\".", path));
+		}
 
-        return file;
-    }
+		return file;
+	}
 
-    private String getProductDir() {
-        Context context = Context.getContext();
-        return context.getRealPath("/" + product);
-    }
+	private String getProductDir() {
+		Context context = Context.getContext();
+		return context.getRealPath("/" + product);
+	}
 
-    public int getRecordCount() {
-        return count;
-    }
+	public int getRecordCount() {
+		return count;
+	}
 
-    protected void setRecordCount(int count) {
-        this.count = count;
-    }
+	protected void setRecordCount(int count) {
+		this.count = count;
+	}
 
 }

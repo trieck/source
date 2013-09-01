@@ -1,8 +1,6 @@
 <project name="pixie" default="compile" basedir=".">
 
 		<property file="build.properties"/>
-		<property file="${user.home}/build.properties"/>
-
 		<property name="app.name" value="pixie"/>
 		<property name="app.path" value="/${app.name}"/>
 		<property name="build.home" value="${basedir}/build"/>
@@ -12,7 +10,6 @@
 		<property name="web.home" value="${basedir}/web"/>
 
 		<path id="compile.classpath">
-				<!-- Include all elements that Tomcat exposes to applications -->
 				<fileset dir="${catalina.home}/bin">
 						<include name="*.jar"/>
 				</fileset>
@@ -54,42 +51,29 @@
 				<!-- Copy application resources -->
 				<copy todir="${build.home}/WEB-INF/classes">
 						<fileset dir="${src.home}" excludes="**/*.java"/>
-						<fileset dir="${basedir}/config" includes="pixie.properties"/>
+						<fileset dir="${basedir}/config"/>            
 				</copy>
-
 		</target>
 
 		<target name="dist" depends="compile" description="Create WAR file">
 
 				<!-- Create application WAR file -->
-				<jar jarfile="${dist.home}/${app.name}.war"
-						 basedir="${build.home}"/>
+				<jar jarfile="${dist.home}/${app.name}.war">
+						<fileset dir="${build.home}"/>
+				</jar>
 
 		</target>
-		
-		<target name="dist-jar" depends="compile" description="Create JAR file">
 
+		<target name="dist-jar" depends="compile" description="Create JAR file">
 				<!-- Create application JAR file -->
 				<jar jarfile="${dist.home}/${app.name}.jar"
 						 basedir="${build.home}/WEB-INF/classes"/>
-
 		</target>
-
-		<target name="install" depends="dist"
-						description="Install application to servlet container">
+		
+		<target name="deploy" depends="dist"
+						description="deploy application to servlet container">
 
 				<deploy url="${manager.url}"
-								username="${manager.username}"
-								password="${manager.password}"
-								path="${app.path}"
-								localWar="file://${dist.home}/${app.name}.war"/>
-
-		</target>
-
-		<target name="install-remote" depends="dist"
-						description="Install application to remote servlet container">
-
-				<deploy url="${manager.remote-url}"
 								username="${manager.username}"
 								password="${manager.password}"
 								path="${app.path}"
@@ -106,15 +90,6 @@
 
 		</target>
 
-		<target name="list-remote"
-						description="List installed applications on remote servlet container">
-
-				<list url="${manager.remote-url}"
-							username="${manager.username}"
-							password="${manager.password}"/>
-
-		</target>
-
 		<target name="prepare">
 
 				<!-- Create build directories as needed -->
@@ -122,13 +97,11 @@
 				<mkdir dir="${build.home}/WEB-INF"/>
 				<mkdir dir="${build.home}/WEB-INF/classes"/>
 
-				<!-- Copy static content of this web application -->
 				<copy todir="${build.home}">
 						<fileset dir="${web.home}"/>
 				</copy>
-
+				
 				<mkdir dir="${build.home}/WEB-INF/lib"/>
-
 		</target>
 
 		<target name="reload" depends="compile"
@@ -141,17 +114,7 @@
 
 		</target>
 
-		<target name="reload-remote" depends="compile"
-						description="Reload application on servlet container">
-
-				<reload url="${manager.remote-url}"
-								username="${manager.username}"
-								password="${manager.password}"
-								path="${app.path}"/>
-
-		</target>
-
-		<target name="remove"
+		<target name="undeploy"
 						description="Remove application on servlet container">
 
 				<undeploy url="${manager.url}"
@@ -161,17 +124,6 @@
 
 		</target>
 
-		<target name="remove-remote"
-						description="Remove application on remote servlet container">
-
-				<undeploy url="${manager.remote-url}"
-									username="${manager.username}"
-									password="${manager.password}"
-									path="${app.path}"/>
-
-		</target>
-
-		<target name="reinstall" depends="dist,remove,install"/>
-		<target name="reinstall-remote" depends="dist,remove-remote,install-remote"/>
+		<target name="reinstall" depends="dist,undeploy,deploy"/>
 
 </project>

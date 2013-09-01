@@ -14,131 +14,131 @@ import java.io.RandomAccessFile;
 
 public class Content {
 
-    private Repository repos;
+	private Repository repos;
 
-    public Content() throws IOException {
-        repos = Repository.getInstance();
-    }
+	public Content() throws IOException {
+		repos = Repository.getInstance();
+	}
 
-    public Document search(String db, String q, int start, int count) throws IOException {
+	public Document search(String db, String q, int start, int count) throws IOException {
 
-        Query query = new Query(db);
-        IndexFields fields = new IndexFields(db);
+		Query query = new Query(db);
+		IndexFields fields = new IndexFields(db);
 
-        QueryTerms terms = new QueryTerms(q);
+		QueryTerms terms = new QueryTerms(q);
 
-        AnchorList anchorlist = query.query(q);
-        query.close();
+		AnchorList anchorlist = query.query(q);
+		query.close();
 
-        // set of unique documents for anchor list
-        DocList doclist = anchorlist.documents();
+		// set of unique documents for anchor list
+		DocList doclist = anchorlist.documents();
 
-        DocList pagelist = doclist.slice(start - 1, count);
+		DocList pagelist = doclist.slice(start - 1, count);
 
-        try {
-            Document root = XMLUtil.newDocument();
-            Element results = root.createElement("results");
+		try {
+			Document root = XMLUtil.newDocument();
+			Element results = root.createElement("results");
 
-            results.setAttribute("db", db);
-            results.setAttribute("query", q);
-            results.setAttribute("start", Integer.toString(start));
-            results.setAttribute("count", Integer.toString(doclist.size()));
-            root.appendChild(results);
+			results.setAttribute("db", db);
+			results.setAttribute("query", q);
+			results.setAttribute("start", Integer.toString(start));
+			results.setAttribute("count", Integer.toString(doclist.size()));
+			root.appendChild(results);
 
-            Document doc;
-            long docid;
-            for (int i = 0; i < pagelist.size(); i++) {
-                docid = pagelist.getDoc(i);
-                doc = getDoc(db, docid);
-                doc = Highlighter.highlight(doc, terms, fields);
-                XMLUtil.transferNode(results, root, doc.getDocumentElement());
-            }
+			Document doc;
+			long docid;
+			for (int i = 0; i < pagelist.size(); i++) {
+				docid = pagelist.getDoc(i);
+				doc = getDoc(db, docid);
+				doc = Highlighter.highlight(doc, terms, fields);
+				XMLUtil.transferNode(results, root, doc.getDocumentElement());
+			}
 
-            return root;
-        } catch (ParserConfigurationException e) {
-            throw new IOException(e);
-        } catch (SAXException e) {
-            throw new IOException(e);
-        } catch (XMLStreamException e) {
-            throw new IOException(e);
-        } catch (TransformerException e) {
-            throw new IOException(e);
-        }
-    }
+			return root;
+		} catch (ParserConfigurationException e) {
+			throw new IOException(e);
+		} catch (SAXException e) {
+			throw new IOException(e);
+		} catch (XMLStreamException e) {
+			throw new IOException(e);
+		} catch (TransformerException e) {
+			throw new IOException(e);
+		}
+	}
 
-    public Document getDoc(String db, String query, long ndocid) throws IOException {
+	public Document getDoc(String db, String query, long ndocid) throws IOException {
 
-        QueryTerms terms = new QueryTerms(query);
-        IndexFields fields = new IndexFields(db);
+		QueryTerms terms = new QueryTerms(query);
+		IndexFields fields = new IndexFields(db);
 
-        try {
-            Document doc = getDoc(db, ndocid);
-            doc = Highlighter.highlight(doc, terms, fields);
-            Element root = doc.getDocumentElement();
-            root.setAttribute("db", db);
-            root.setAttribute("query", query);
-            return doc;
-        } catch (ParserConfigurationException e) {
-            throw new IOException(e);
-        } catch (SAXException e) {
-            throw new IOException(e);
-        } catch (XMLStreamException e) {
-            throw new IOException(e);
-        } catch (TransformerException e) {
-            throw new IOException(e);
-        }
-    }
+		try {
+			Document doc = getDoc(db, ndocid);
+			doc = Highlighter.highlight(doc, terms, fields);
+			Element root = doc.getDocumentElement();
+			root.setAttribute("db", db);
+			root.setAttribute("query", query);
+			return doc;
+		} catch (ParserConfigurationException e) {
+			throw new IOException(e);
+		} catch (SAXException e) {
+			throw new IOException(e);
+		} catch (XMLStreamException e) {
+			throw new IOException(e);
+		} catch (TransformerException e) {
+			throw new IOException(e);
+		}
+	}
 
-    private Document getDoc(String db, long ndocid)
-            throws IOException, ParserConfigurationException, SAXException {
+	private Document getDoc(String db, long ndocid)
+			throws IOException, ParserConfigurationException, SAXException {
 
-        DocID docid = new DocID(ndocid);
+		DocID docid = new DocID(ndocid);
 
-        short filenum = docid.getFileNum();
-        int offset = docid.getOffset();
+		short filenum = docid.getFileNum();
+		int offset = docid.getOffset();
 
-        File file = repos.getFile(db, filenum);
+		File file = repos.getFile(db, filenum);
 
-        Document doc = getRecord(file, offset);
-        Element root = doc.getDocumentElement();
-        root.setAttribute("docid", Long.toString(ndocid));
+		Document doc = getRecord(file, offset);
+		Element root = doc.getDocumentElement();
+		root.setAttribute("docid", Long.toString(ndocid));
 
-        return doc;
-    }
+		return doc;
+	}
 
-    public Document getRecord(File file, int offset)
-            throws IOException, ParserConfigurationException, SAXException {
+	public Document getRecord(File file, int offset)
+			throws IOException, ParserConfigurationException, SAXException {
 
-        RandomAccessFile raf = new RandomAccessFile(file, "r");
+		RandomAccessFile raf = new RandomAccessFile(file, "r");
 
-        raf.seek(offset);
+		raf.seek(offset);
 
-        // state machine to extract record in file
-        StringBuilder output = new StringBuilder();
+		// state machine to extract record in file
+		StringBuilder output = new StringBuilder();
 
-        String pattern = "<record></record>";
+		String pattern = "<record></record>";
 
-        int jstar = pattern.lastIndexOf('<');
+		int jstar = pattern.lastIndexOf('<');
 
-        int j = 0;
-        int c;
-        while ((c = raf.read()) != -1) {
-            if (j == pattern.length()) {
-                break;
-            } else if (pattern.charAt(j) == c) {
-                j++;
-            } else if (j >= jstar) {
-                j = jstar;
-            } else {
-                output.setLength(0);
-                j = 0;
-                continue;
-            }
-            output.append((char) c);
-        }
+		int j = 0;
+		int c;
+		while ((c = raf.read()) != -1) {
+			if (j == pattern.length()) {
+				break;
+			} else if (pattern.charAt(j) == c) {
+				j++;
+			} else if (j >= jstar) {
+				j = jstar;
+			} else {
+				output.setLength(0);
+				j = 0;
+				continue;
+			}
+			output.append((char) c);
+		}
 
-        raf.close();
+		raf.close();
 
-        return XMLUtil.parseXML(output.toString());
-    }
+		return XMLUtil.parseXML(output.toString());
+	}
 }

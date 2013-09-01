@@ -13,75 +13,75 @@ import java.util.Map;
 
 public class CachedTransformer {
 
-    /**
-     * the transformer factory
-     */
-    private final TransformerFactory factory;
+	/**
+	 * the transformer factory
+	 */
+	private final TransformerFactory factory;
 
-    /**
-     * underlying map of strings to transformers
-     */
-    private final Map<String, Transformer> table;
+	/**
+	 * underlying map of strings to transformers
+	 */
+	private final Map<String, Transformer> table;
 
-    private Config config;
+	private Config config;
 
-    /**
-     * the singleton instance
-     */
-    private static CachedTransformer instance = null;
+	/**
+	 * the singleton instance
+	 */
+	private static CachedTransformer instance = null;
 
-    private CachedTransformer() throws IOException {
-        factory = TransformerFactory.newInstance();
-        table = new Hashtable<String, Transformer>();
-        config = Config.getInstance();
-    }
+	private CachedTransformer() throws IOException {
+		factory = TransformerFactory.newInstance();
+		table = new Hashtable<String, Transformer>();
+		config = Config.getInstance();
+	}
 
-    public static synchronized CachedTransformer getInstance()
-            throws IOException {
-        if (instance == null) {
-            instance = new CachedTransformer();
-        }
+	public static synchronized CachedTransformer getInstance()
+			throws IOException {
+		if (instance == null) {
+			instance = new CachedTransformer();
+		}
 
-        return instance;
-    }
+		return instance;
+	}
 
-    private Transformer createTransformer(File file)
-            throws IOException, TransformerConfigurationException {
+	private Transformer createTransformer(File file)
+			throws IOException, TransformerConfigurationException {
 
-        Transformer transformer;
+		Transformer transformer;
 
-        // TransfomerFactory is NOT guaranteed to be thread safe
-        synchronized (factory) {
-            transformer = factory.newTransformer(new StreamSource(file));
-        }
+		// TransfomerFactory is NOT guaranteed to be thread safe
+		synchronized (factory) {
+			transformer = factory.newTransformer(new StreamSource(file));
+		}
 
-        String cacheStylesheets = config.getProperty("stylesheet-cache");
-        if (cacheStylesheets.equals("on")) {
-            table.put(file.getCanonicalPath(), transformer);
-        }
+		String cacheStylesheets = config.getProperty("stylesheet-cache");
+		if (cacheStylesheets.equals("on")) {
+			table.put(file.getCanonicalPath(), transformer);
+		}
 
-        return transformer;
-    }
+		return transformer;
+	}
 
-    public Transformer getTransformer(File file)
-            throws IOException, TransformerConfigurationException {
+	public Transformer getTransformer(File file)
+			throws IOException, TransformerConfigurationException {
 
-        // use a normalized naming scheme
-        String filename = file.getCanonicalPath();
+		// use a normalized naming scheme
+		String filename = file.getCanonicalPath();
 
-        Transformer t = null;
+		Transformer t = null;
 
-        String cacheStylesheets = config.getProperty("stylesheet-cache");
-        if (cacheStylesheets.equals("on")) {
-            t = table.get(filename);
-        } else {
-            table.clear();
-        }
+		String cacheStylesheets = config.getProperty("stylesheet-cache");
+		if (cacheStylesheets.equals("on")) {
+			t = table.get(filename);
+		} else {
+			table.clear();
+		}
 
-        if (t == null) {
-            t = createTransformer(file);
-        }
+		if (t == null) {
+			t = createTransformer(file);
+		}
 
-        return t;
-    }
+		return t;
+	}
 }
