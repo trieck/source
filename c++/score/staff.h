@@ -20,8 +20,8 @@ typedef CArray<PANCHOR, PANCHOR> ANCHORARRAY;
 
 /////////////////////////////////////////////////////////////////////////////
 class Staff :
-		public CRect,
-			private ANCHORARRAY {
+	public CRect,
+	private ANCHORARRAY {
 	friend class Measure;
 public:
 	// Construction / Destruction

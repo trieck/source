@@ -16,8 +16,7 @@ typedef struct {
 /////////////////////////////////////////////////////////////////////////////
 // HexEdit window
 
-class HexEdit : public CEdit
-{
+class HexEdit : public CEdit {
 // Construction
 public:
 	HexEdit();

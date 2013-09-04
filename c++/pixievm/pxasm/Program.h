@@ -11,10 +11,10 @@
 #include "SymbolTable.h"
 
 enum DatumType {
-	DT_UNDEF,
-	DT_CONST,
-	DT_SYM,
-	DT_INSTR,
+    DT_UNDEF,
+    DT_CONST,
+    DT_SYM,
+    DT_INSTR,
 };
 
 class Machine;
@@ -25,17 +25,16 @@ typedef Datum (Machine::*Instruction)(void);
 /////////////////////////////////////////////////////////////////////////////
 struct Datum {
 	Datum() : type(DT_UNDEF), instr(NULL) {}
-	DatumType type;	
+	DatumType type;
 	union {
-		word value;		
+		word value;
 		LPSYMBOL sym;
 		Instruction instr;
 	};
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class Program
-{
+class Program {
 public:
 	Program();
 	~Program();
@@ -46,7 +45,7 @@ public:
 	void push(Instruction i);
 	void push(LPSYMBOL s);
 	void push(const Datum &d);
-	
+
 	operator const Datum*() const;
 private:
 	enum { NPROG = 4096 };
@@ -56,7 +55,8 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline Program::operator const Datum*() const {
+inline Program::operator const Datum*() const
+{
 	return m_memory;
 }
 

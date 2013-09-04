@@ -21,7 +21,7 @@ void ImageNormalizer::Normalize(CImage &image)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	int M = ImageMean(image);
 	int V = ImageVariance(image);

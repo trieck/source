@@ -85,16 +85,16 @@ void PenteBoard::renderBoard(CDC *pDC, const CRect & rc)
 			continue;
 
 		PieceBitmap &piece = isWinner(ePoint) ?
-							bmWinner : (
-							entry.getType() == ET_PLAYER_ONE ?
-		                     bmPlayerOne : bmPlayerTwo);
+		                     bmWinner : (
+		                         entry.getType() == ET_PLAYER_ONE ?
+		                         bmPlayerOne : bmPlayerTwo);
 
 		piece.Draw(pDC, pt.x, pt.y);
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-bool PenteBoard::isWinner(const CPoint &aPoint) const 
+bool PenteBoard::isWinner(const CPoint &aPoint) const
 {
 	if (winnerVec == NULL)
 		return false;
@@ -103,7 +103,7 @@ bool PenteBoard::isWinner(const CPoint &aPoint) const
 	for (uint32_t i = 0; i < VSIZE; i++) {
 		pt = winnerVec->entry(i);
 
-		if (aPoint == pt) 
+		if (aPoint == pt)
 			return true;
 	}
 

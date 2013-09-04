@@ -22,9 +22,9 @@
 #define __SYMBOL_H__
 #define TBLSIZE 1103
 typedef enum {
-	opcode,						/* machine opcode */
-	kentry,						/* kernel jump table entry */
-	lentry						/* label entry */
+    opcode,						/* machine opcode */
+    kentry,						/* kernel jump table entry */
+    lentry						/* label entry */
 } Type;
 /* Symbol structure */
 typedef struct Symbol {

@@ -33,7 +33,7 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	CRect				rc;
 	int					wndStyle	=	WS_OVERLAPPED | WS_BORDER | WS_CAPTION |
-	                   WS_SYSMENU | WS_MINIMIZEBOX | FWS_ADDTOTITLE;
+	                                    WS_SYSMENU | WS_MINIMIZEBOX | FWS_ADDTOTITLE;
 	int					wndExStyle	=	WS_EX_OVERLAPPEDWINDOW;
 	int					cyOffset;
 	NONCLIENTMETRICS	ncm;

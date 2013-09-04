@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-//	MIDICOMMON.H : Common MIDI header 
+//	MIDICOMMON.H : Common MIDI header
 //
 //	Copyright(c) 2011, Thomas A. Rieck, All Rights Reserved
 //

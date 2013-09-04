@@ -11,8 +11,7 @@
 #include "OpInfo.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class PxDisassembler
-{
+class PxDisassembler {
 // Construction / Destruction
 public:
 	PxDisassembler();

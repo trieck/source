@@ -17,7 +17,7 @@ const RECT Window::rectDefault = {
 };
 
 Window::Window()
-		: hWnd(0)
+	: hWnd(0)
 {
 }
 

@@ -7,7 +7,7 @@
 // CDigitCtrlMgr
 
 CDigitCtrlMgr :: CDigitCtrlMgr(CDialog* pParent, const UINT CtrlIDs[], const RECT rcs[], UINT nCount)
-		: m_pParent(pParent), m_nCount(nCount)
+	: m_pParent(pParent), m_nCount(nCount)
 {
 	ASSERT_VALID(m_pParent);
 

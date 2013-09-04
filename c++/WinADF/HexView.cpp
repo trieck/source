@@ -14,7 +14,7 @@ END_MESSAGE_MAP()
 IMPLEMENT_DYNCREATE(HexView, BigScrollView)
 
 HexView::HexView(void)
-		: m_pBuffer(0), m_pLine(0), m_nBufferLen(0)
+	: m_pBuffer(0), m_pLine(0), m_nBufferLen(0)
 {
 }
 

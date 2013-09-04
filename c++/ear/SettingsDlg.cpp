@@ -17,7 +17,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 SettingsDlg::SettingsDlg(CWnd* pParent /*=NULL*/)
-		: CDialog(SettingsDlg::IDD, pParent)
+	: CDialog(SettingsDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(SettingsDlg)
 	m_Fifths = FALSE;

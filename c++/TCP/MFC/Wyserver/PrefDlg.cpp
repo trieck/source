@@ -12,7 +12,7 @@ BEGIN_MESSAGE_MAP(CPrefDlg, CDialog)
 END_MESSAGE_MAP()
 
 CPrefDlg :: CPrefDlg(CWnd* pParentWnd) :
-		CDialog(CPrefDlg::IDD, pParentWnd)
+	CDialog(CPrefDlg::IDD, pParentWnd)
 {
 	m_pApp		= NULL;
 	m_pCheck	= NULL;

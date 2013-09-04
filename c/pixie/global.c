@@ -25,30 +25,54 @@ static struct {
 	int kval;
 } keywords[] = {
 	{
-		"print", PRINT}, {
-		"println", PRINTLN}, {
-		"length", LENGTH}, {
-		"shift", SHIFT}, {
-		"unshift", UNSHIFT}, {
-		"push", PUSH}, {
-		"pop", POP}, {
-		"while", WHILE}, {
-		"if", IF}, {
-		"else", ELSE}, {
-		"var", VAR}, {
-		"def", DEF}, {
-		"return", RETURN}, {
-		"break", BREAK}, {
-		"continue", CONTINUE}, {
-		"foreach", FOREACH}, {
-		"in", IN}, {
-		"strlen", STRLEN}, {
-		"substr", SUBSTR}, {
-		"strcat", STRCAT}, {
-		"index", INDEX}, {
-		"asc", ASC}, {
-		"chr", CHR}, {
-		0, 0}
+		"print", PRINT
+	}, {
+		"println", PRINTLN
+	}, {
+		"length", LENGTH
+	}, {
+		"shift", SHIFT
+	}, {
+		"unshift", UNSHIFT
+	}, {
+		"push", PUSH
+	}, {
+		"pop", POP
+	}, {
+		"while", WHILE
+	}, {
+		"if", IF
+	}, {
+		"else", ELSE
+	}, {
+		"var", VAR
+	}, {
+		"def", DEF
+	}, {
+		"return", RETURN
+	}, {
+		"break", BREAK
+	}, {
+		"continue", CONTINUE
+	}, {
+		"foreach", FOREACH
+	}, {
+		"in", IN
+	}, {
+		"strlen", STRLEN
+	}, {
+		"substr", SUBSTR
+	}, {
+		"strcat", STRCAT
+	}, {
+		"index", INDEX
+	}, {
+		"asc", ASC
+	}, {
+		"chr", CHR
+	}, {
+		0, 0
+	}
 };
 
 /* built-ins */
@@ -57,15 +81,24 @@ static struct {
 	int val;
 } bltins[] = {
 	{
-		"sin", SIN}, {
-		"cos", COS}, {
-		"atan", ATAN}, {
-		"log", LOG}, {
-		"log10", LOG10}, {
-		"sqrt", SQRT}, {
-		"int", INT}, {
-		"abs", ABS}, {
-		0, 0}
+		"sin", SIN
+	}, {
+		"cos", COS
+	}, {
+		"atan", ATAN
+	}, {
+		"log", LOG
+	}, {
+		"log10", LOG10
+	}, {
+		"sqrt", SQRT
+	}, {
+		"int", INT
+	}, {
+		"abs", ABS
+	}, {
+		0, 0
+	}
 };
 
 static void globfree(void);

@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="Reg Files">
-      <UniqueIdentifier>{0de69d5a-d601-4790-9cf5-202784c64401}</UniqueIdentifier>
+      <UniqueIdentifier>{e70bd7a0-3371-48c2-b348-5310e0554bb2}</UniqueIdentifier>
       <Extensions>*.reg</Extensions>
     </Filter>
   </ItemGroup>
@@ -152,40 +152,13 @@
     <None Include="res\bootbloc.bin">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="res\closed.ico">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="res\cursor1.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\doc.ico">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\drag.cur">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="res\drive.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\file.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\floppy.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\folder.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\main.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\open.ico">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="res\stdboot3.bbk">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\Toolbar.bmp">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\WinADF.rc2">
@@ -194,11 +167,42 @@
     <None Include="WinADF.reg">
       <Filter>Reg Files</Filter>
     </None>
-    <None Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\closed.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\doc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\drive.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\file.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\floppy.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\folder.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\main.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\open.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinADF.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO.txt" />
   </ItemGroup>
 </Project>

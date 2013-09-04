@@ -44,19 +44,19 @@ typedef unsigned char byte;
 #define hibyte(w) ((byte)(((word)(w) >> 8) & 0xff))
 /* addressing modes */
 typedef enum {
-	acc,	/* accumulator */
-	imm,	/* immediate */
-	zpg,	/* zero page */
-	zpx,	/* zero page, x */
-	zpy,	/* zero page, y */
-	absl,	/* absolute */
-	abx,	/* absolute, x */
-	aby,	/* absolute, y */
-	imp,	/* implied */
-	rel,	/* relative */
-	idx,	/* indirect x */
-	idy,	/* indirect y */
-	ind		/* indirect */
+    acc,	/* accumulator */
+    imm,	/* immediate */
+    zpg,	/* zero page */
+    zpx,	/* zero page, x */
+    zpy,	/* zero page, y */
+    absl,	/* absolute */
+    abx,	/* absolute, x */
+    aby,	/* absolute, y */
+    imp,	/* implied */
+    rel,	/* relative */
+    idx,	/* indirect x */
+    idy,	/* indirect y */
+    ind		/* indirect */
 } addrmode;
 #include "log.h"
 #include "util.h"

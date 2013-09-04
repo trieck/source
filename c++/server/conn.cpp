@@ -27,7 +27,7 @@ Connection::Connection()
 
 /////////////////////////////////////////////////////////////////////////////
 Connection::Connection(SOCKET s)
-		: m_socket(s)
+	: m_socket(s)
 {
 	memset(&m_server, 0, sizeof(SOCKADDR_IN));
 }

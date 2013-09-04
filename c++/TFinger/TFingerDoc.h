@@ -14,8 +14,7 @@
 #include "ImageSkeletonizer.h"
 #include "MinutiaExtractor.h"
 
-class CTFingerDoc : public CDocument
-{
+class CTFingerDoc : public CDocument {
 protected: // create from serialization only
 	CTFingerDoc();
 	DECLARE_DYNCREATE(CTFingerDoc)
@@ -48,7 +47,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 private:
 	GreyscaleBitmap m_bitmap;
-	ImageSegmenter m_segmenter;			
+	ImageSegmenter m_segmenter;
 	GaussianFilter m_filter;
 	ImageNormalizer m_normalizer;
 	ImageBinarizer m_binarizer;
@@ -60,7 +59,7 @@ private:
 
 	BOOL m_segmented;		// image has been segmented
 	BOOL m_normalized;		// image has been normalized
-	BOOL m_filtered;		// image has been filtered	
+	BOOL m_filtered;		// image has been filtered
 	BOOL m_binarized;		// image has been binarized
 	BOOL m_eroded;			// image has been eroded
 	BOOL m_dilated;			// image has been dilated

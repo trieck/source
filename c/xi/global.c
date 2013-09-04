@@ -23,10 +23,14 @@ static struct {
 	int kval;
 } keywords[] = {
 	{
-		"print", PRINT}, {
-		"println", PRINTLN}, {
-		"let", LET}, {
-		0, 0}
+		"print", PRINT
+	}, {
+		"println", PRINTLN
+	}, {
+		"let", LET
+	}, {
+		0, 0
+	}
 };
 
 static void globfree(void);

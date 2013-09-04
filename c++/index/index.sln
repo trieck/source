@@ -1,12 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "index", "index.vcproj", "{3E5D1B86-901A-4798-B497-44D5B6AE827F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{628D204A-0A7A-4F2A-A887-9FC32A22F9B4} = {628D204A-0A7A-4F2A-A887-9FC32A22F9B4}
-	EndProjectSection
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "index", "index.vcxproj", "{3E5D1B86-901A-4798-B497-44D5B6AE827F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JupiterLib", "..\JupiterLib\JupiterLib.vcproj", "{628D204A-0A7A-4F2A-A887-9FC32A22F9B4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JupiterLib", "..\JupiterLib\JupiterLib.vcxproj", "{628D204A-0A7A-4F2A-A887-9FC32A22F9B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

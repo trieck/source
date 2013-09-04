@@ -3,8 +3,7 @@
 #include "Kernel.h"
 #include "MorphologicalOperator.h"
 
-class ImageSkeletonizer : public MorphologicalOperator
-{
+class ImageSkeletonizer : public MorphologicalOperator {
 public:
 	ImageSkeletonizer();
 	~ImageSkeletonizer();

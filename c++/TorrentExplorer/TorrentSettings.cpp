@@ -20,7 +20,7 @@ static char THIS_FILE[]=__FILE__;
 
 //////////////////////////////////////////////////////////////////////
 TorrentSettings::TorrentSettings()
-		: m_pDict(NULL)
+	: m_pDict(NULL)
 {
 	m_pApp = AfxGetApp();
 	ReadSettings();

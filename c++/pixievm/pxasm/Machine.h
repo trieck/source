@@ -17,8 +17,7 @@ class Machine;
 typedef auto_ptr<Machine> MachinePtr;
 
 /////////////////////////////////////////////////////////////////////////////
-class Machine
-{
+class Machine {
 // Construction / destruction
 private:
 	Machine();
@@ -35,7 +34,7 @@ public:
 private:
 	Datum eval();
 	Datum evalsym(LPSYMBOL s);
-	
+
 	// instructions
 	Datum plus();
 	Datum minus();

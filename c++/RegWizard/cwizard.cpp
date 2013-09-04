@@ -10,12 +10,12 @@ BEGIN_MESSAGE_MAP(CWizard, CPropertySheet)
 END_MESSAGE_MAP()
 
 CWizard::CWizard(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
-		:CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
+	:CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 {
 }
 
 CWizard::CWizard(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
-		:CPropertySheet(pszCaption, pParentWnd, iSelectPage)
+	:CPropertySheet(pszCaption, pParentWnd, iSelectPage)
 {
 }
 

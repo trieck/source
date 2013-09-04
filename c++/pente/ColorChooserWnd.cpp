@@ -32,7 +32,7 @@ static POINT pts[] = {
 IMPLEMENT_DYNAMIC(CColorChooserWnd, CWnd)
 
 CColorChooserWnd::CColorChooserWnd()
-		: m_ptSelected(-1,-1)
+	: m_ptSelected(-1,-1)
 {
 }
 

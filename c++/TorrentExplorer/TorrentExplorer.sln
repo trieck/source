@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TorrentExplorer", "TorrentExplorer.vcproj", "{069BD894-B0C7-453D-947B-CB9478AAF8CB}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TorrentExplorer", "TorrentExplorer.vcxproj", "{069BD894-B0C7-453D-947B-CB9478AAF8CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

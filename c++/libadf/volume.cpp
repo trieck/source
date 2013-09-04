@@ -33,9 +33,9 @@ CacheEntry getCacheEntry(dircacheblock_t *block, int32_t *offset);
 
 /////////////////////////////////////////////////////////////////////////////
 Volume::Volume()
-		: blocksize(0), bitmapsize(0), dblocksize(0), firstblock(0), lastblock(0),
-		rootblock(0), type(0), mounted(false), bmtbl(0), bmblocks(0), disk(0),
-		currdir(0), readonly(true)
+	: blocksize(0), bitmapsize(0), dblocksize(0), firstblock(0), lastblock(0),
+	  rootblock(0), type(0), mounted(false), bmtbl(0), bmblocks(0), disk(0),
+	  currdir(0), readonly(true)
 {
 }
 

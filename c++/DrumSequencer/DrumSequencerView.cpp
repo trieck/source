@@ -42,7 +42,7 @@ const LPCTSTR Instruments[] = {
 	_T("High Tom"),
 	_T("Mid Tom"),
 	_T("Low Tom"),
-	_T("Bass Drum")	
+	_T("Bass Drum")
 };
 
 CDrumSequencerView::CDrumSequencerView()
@@ -146,7 +146,7 @@ int CDrumSequencerView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CClientDC dc(this);
 
-	// Create the font	
+	// Create the font
 	LOGFONT lf;
 	memset(&lf, 0, sizeof(LOGFONT));
 	_tcscpy(lf.lfFaceName, _T("Verdana"));

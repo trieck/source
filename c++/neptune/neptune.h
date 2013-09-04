@@ -35,17 +35,17 @@
 extern "C" {
 #endif
 
-	/* Forward Declarations */
+/* Forward Declarations */
 
 #ifndef __IComputer_FWD_DEFINED__
 #define __IComputer_FWD_DEFINED__
-	typedef interface IComputer IComputer;
+typedef interface IComputer IComputer;
 #endif 	/* __IComputer_FWD_DEFINED__ */
 
 
 #ifndef __IStringUtil_FWD_DEFINED__
 #define __IStringUtil_FWD_DEFINED__
-	typedef interface IStringUtil IStringUtil;
+typedef interface IStringUtil IStringUtil;
 #endif 	/* __IStringUtil_FWD_DEFINED__ */
 
 
@@ -81,8 +81,7 @@ extern "C" {
 
 	MIDL_INTERFACE("C7EFC9B2-E499-42a8-A465-AB645A02A77A")
 IComputer :
-	public IUnknown
-	{
+	public IUnknown {
 public:
 		virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_Name(
 		    /* [retval][out] */ BSTR __RPC_FAR *pVal) = 0;
@@ -121,8 +120,7 @@ public:
 		END_INTERFACE
 	} IComputerVtbl;
 
-	interface IComputer
-	{
+	interface IComputer {
 		CONST_VTBL struct IComputerVtbl __RPC_FAR *lpVtbl;
 	};
 
@@ -196,8 +194,7 @@ public:
 
 	MIDL_INTERFACE("77D29F5F-B2B5-48cc-84DC-F71D281ECD77")
 IStringUtil :
-	public IUnknown
-	{
+	public IUnknown {
 public:
 		virtual /* [helpstring][vararg] */ HRESULT STDMETHODCALLTYPE FormatString(
 		    /* [in] */ BSTR fmt,
@@ -232,8 +229,7 @@ public:
 		END_INTERFACE
 	} IStringUtilVtbl;
 
-	interface IStringUtil
-	{
+	interface IStringUtil {
 		CONST_VTBL struct IStringUtilVtbl __RPC_FAR *lpVtbl;
 	};
 
@@ -295,7 +291,7 @@ public:
 #ifdef __cplusplus
 
 	class DECLSPEC_UUID("51017D31-9CEF-42bd-B6C4-2A3270DE3C97")
-				Neptune;
+			Neptune;
 #endif
 #endif /* __NeptuneLib_LIBRARY_DEFINED__ */
 

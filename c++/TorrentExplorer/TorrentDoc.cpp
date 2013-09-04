@@ -34,7 +34,7 @@ END_MESSAGE_MAP()
 // TorrentDoc construction/destruction
 
 TorrentDoc::TorrentDoc()
-		: m_pTorrent(NULL)
+	: m_pTorrent(NULL)
 {
 }
 

@@ -66,7 +66,7 @@ int Assembler::assemble(const char *filename)
 	string output = format("%s.o", basename(filename).c_str());
 	if ((m_pOut = fopen(output.c_str(), "wb")) == NULL) {
 		throw Exception("can't open file \"%s\": %s.", output.c_str(),
-			strerror(errno));
+		                strerror(errno));
 	}
 
 	code->write(m_pOut);

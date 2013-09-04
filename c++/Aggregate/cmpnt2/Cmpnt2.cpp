@@ -59,7 +59,7 @@ struct INondelegatingUnknown {
 // Component
 //
 class CB : public IY,
-			public INondelegatingUnknown {
+	public INondelegatingUnknown {
 public:
 	// Delegating IUnknown methods
 	virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv) {

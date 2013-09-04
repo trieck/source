@@ -52,7 +52,7 @@ BOOL Sequencer::Initialize()
 	MidiMessage msg;
 	msg.SetStatus(PROGRAM_CHANGE(0));
 	msg.SetData(PRG_SYNTH_DRUM);
-	
+
 	if (m_pStream->ShortMessage(msg) != MMSYSERR_NOERROR) {
 		AfxMessageBox(IDS_CANTCHANGEPROGRAM);
 		return FALSE;
@@ -86,7 +86,7 @@ BOOL Sequencer::Play(const Sequence &sequence)
 	result = m_pStream->Restart();
 	if (result != MMSYSERR_NOERROR)
 		return FALSE;
-	
+
 	m_state = Playing;
 
 	return TRUE;
@@ -100,13 +100,13 @@ BOOL Sequencer::Stop()
 	if (m_pStream->Stop() != MMSYSERR_NOERROR)
 		return FALSE;
 
-	m_state = Stopped;	
+	m_state = Stopped;
 
 	return TRUE;
 }
 
 void Sequencer::StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance,
-	DWORD dwParam1, DWORD dwParam2)
+                           DWORD dwParam1, DWORD dwParam2)
 {
 	if (uMsg != MOM_DONE)
 		return;

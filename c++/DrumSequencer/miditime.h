@@ -11,13 +11,13 @@
 /////////////////////////////////////////////////////////////////////////////
 // Duration enumeration
 typedef enum Duration {
-	EmptyNote = 0,
-	WholeNote = 1,
-	HalfNote = 2,
-	QuarterNote = 4,
-	EigthNote = 8,
-	SixteenthNote = 16,
-	ThirtySecondNote = 32
+    EmptyNote = 0,
+    WholeNote = 1,
+    HalfNote = 2,
+    QuarterNote = 4,
+    EigthNote = 8,
+    SixteenthNote = 16,
+    ThirtySecondNote = 32
 };
 
 /////////////////////////////////////////////////////////////////////////////

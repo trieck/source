@@ -13,8 +13,8 @@ END_MESSAGE_MAP()
 
 // Initialize the const static array of bitmaps
 const UINT CDigitCtrl :: nBitmaps[10] = {IDB_DIGIT0, IDB_DIGIT1, IDB_DIGIT2, IDB_DIGIT3,
-                                        IDB_DIGIT4, IDB_DIGIT5, IDB_DIGIT6, IDB_DIGIT7,
-                                        IDB_DIGIT8, IDB_DIGIT9
+                                         IDB_DIGIT4, IDB_DIGIT5, IDB_DIGIT6, IDB_DIGIT7,
+                                         IDB_DIGIT8, IDB_DIGIT9
                                         };
 
 CDigitCtrl :: CDigitCtrl()

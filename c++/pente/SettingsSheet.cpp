@@ -11,13 +11,13 @@
 IMPLEMENT_DYNAMIC(SettingsSheet, CPropertySheet)
 
 SettingsSheet::SettingsSheet(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
-		:CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
+	:CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 {
 	m_pColorsPage = NULL;
 }
 
 SettingsSheet::SettingsSheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
-		:CPropertySheet(pszCaption, pParentWnd, iSelectPage)
+	:CPropertySheet(pszCaption, pParentWnd, iSelectPage)
 {
 }
 

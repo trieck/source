@@ -10,9 +10,9 @@
 
 /* entry types */
 enum {
-	ET_EMPTY = 0,
-	ET_PLAYER_ONE,
-	ET_PLAYER_TWO
+    ET_EMPTY = 0,
+    ET_PLAYER_ONE,
+    ET_PLAYER_TWO
 };
 
 @interface Entry :

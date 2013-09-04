@@ -11,8 +11,7 @@
 
 typedef const unsigned char* LPCBYTE;
 
-class HexDoc : public CDocument
-{
+class HexDoc : public CDocument {
 protected: // create from serialization only
 	HexDoc();
 	DECLARE_DYNCREATE(HexDoc)

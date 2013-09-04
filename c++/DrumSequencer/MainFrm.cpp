@@ -25,8 +25,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_REGISTERED_MESSAGE(AFX_WM_CREATETOOLBAR, &CMainFrame::OnToolbarCreateNew)
 END_MESSAGE_MAP()
 
-static UINT indicators[] =
-{
+static UINT indicators[] = {
 	ID_SEPARATOR,           // status line indicator
 	ID_INDICATOR_CAPS,
 	ID_INDICATOR_NUM,
@@ -58,17 +57,17 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// prevent the menu bar from taking the focus on activation
 	CMFCPopupMenu::SetForceMenuFocus(FALSE);
 
-	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, 
-		WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS) ||
-		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
+	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT,
+	                           WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS) ||
+	        !m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
 	}
-	
+
 	if (!m_wndSettingsPane.Create(NULL, this, rectDefault, FALSE, ID_SETTINGS_PANE, WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP)) {
 		TRACE0("Failed to create settings pane.\n");
 	}
-	
+
 	if (!m_wndStatusBar.Create(this)) {
 		TRACE0("Failed to create status bar\n");
 		return -1;      // fail to create
@@ -92,9 +91,9 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	if (!CFrameWndEx::PreCreateWindow(cs) )
 		return FALSE;
-	
+
 	cs.style &= ~(WS_THICKFRAME | WS_MAXIMIZE | WS_MAXIMIZEBOX);
-	
+
 	return TRUE;
 }
 
@@ -118,8 +117,7 @@ void CMainFrame::Dump(CDumpContext& dc) const
 LRESULT CMainFrame::OnToolbarCreateNew(WPARAM wp,LPARAM lp)
 {
 	LRESULT lres = CFrameWndEx::OnToolbarCreateNew(wp,lp);
-	if (lres == 0)
-	{
+	if (lres == 0) {
 		return 0;
 	}
 
@@ -135,12 +133,11 @@ LRESULT CMainFrame::OnToolbarCreateNew(WPARAM wp,LPARAM lp)
 	return lres;
 }
 
-BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext) 
+BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext)
 {
 	// base class does the real work
 
-	if (!CFrameWndEx::LoadFrame(nIDResource, dwDefaultStyle, pParentWnd, pContext))
-	{
+	if (!CFrameWndEx::LoadFrame(nIDResource, dwDefaultStyle, pParentWnd, pContext)) {
 		return FALSE;
 	}
 
@@ -163,37 +160,37 @@ void CMainFrame::ResizeFrame(void)
 	// make room for the menu bar
 	CRect rcMenu;
 	if (IsWindow(m_wndMenuBar)) {
-		m_wndMenuBar.GetWindowRect(rcMenu);		
+		m_wndMenuBar.GetWindowRect(rcMenu);
 	}
 
 	// make room for the toolbar
 	CRect rcToolbar;
 	if (IsWindow(m_wndToolBar)) {
-		m_wndToolBar.GetWindowRect(rcToolbar);		
+		m_wndToolBar.GetWindowRect(rcToolbar);
 	}
-		
+
 	// make room for the settings pane
 	CRect rcPane;
 	if (IsWindow(m_wndSettingsPane)) {
-		m_wndSettingsPane.GetWindowRect(rcPane);		
+		m_wndSettingsPane.GetWindowRect(rcPane);
 	}
 
 	// make room for the status bar
 	CRect rcStatus;
 	if (IsWindow(m_wndStatusBar)) {
-		m_wndStatusBar.GetWindowRect(rcStatus);		
+		m_wndStatusBar.GetWindowRect(rcStatus);
 	}
 
-	if (IsWindow(m_wndMenuBar) && !m_wndMenuBar.IsFloating() 
-		&& m_wndMenuBar.IsWindowVisible()) {
+	if (IsWindow(m_wndMenuBar) && !m_wndMenuBar.IsFloating()
+	        && m_wndMenuBar.IsWindowVisible()) {
 		if (m_wndMenuBar.GetPaneStyle() & CBRS_ORIENT_HORZ)
 			rc.bottom += rcMenu.Height();
 		else if (m_wndMenuBar.GetPaneStyle() & CBRS_ORIENT_VERT)
 			rc.right += rcMenu.Width();
 	}
 
-	if (IsWindow(m_wndToolBar) && !m_wndToolBar.IsFloating() && 
-		m_wndToolBar.IsWindowVisible()) {
+	if (IsWindow(m_wndToolBar) && !m_wndToolBar.IsFloating() &&
+	        m_wndToolBar.IsWindowVisible()) {
 		if (m_wndToolBar.GetPaneStyle() & CBRS_ORIENT_HORZ)
 			rc.bottom += rcToolbar.Height();
 		else if (m_wndToolBar.GetPaneStyle() & CBRS_ORIENT_VERT)
@@ -201,7 +198,7 @@ void CMainFrame::ResizeFrame(void)
 	}
 
 	if (IsWindow(m_wndSettingsPane) && !m_wndSettingsPane.IsFloating()
-		&& m_wndSettingsPane.IsWindowVisible()) {
+	        && m_wndSettingsPane.IsWindowVisible()) {
 		if (m_wndSettingsPane.GetPaneStyle() & CBRS_ORIENT_HORZ)
 			rc.bottom += rcPane.Height();
 		else if (m_wndSettingsPane.GetPaneStyle() & CBRS_ORIENT_VERT)

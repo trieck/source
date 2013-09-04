@@ -40,8 +40,8 @@ CStringVec SplitPath(LPCSTR path);
 
 //////////////////////////////////////////////////////////////////////
 TorrentMaker::TorrentMaker(ICallable *pCallable, CFile *pFile)
-		: m_hFile(INVALID_HANDLE_VALUE), m_currentFile(-1),
-		m_pCallable(pCallable), m_TotalLength(0), m_Cancel(FALSE)
+	: m_hFile(INVALID_HANDLE_VALUE), m_currentFile(-1),
+	  m_pCallable(pCallable), m_TotalLength(0), m_Cancel(FALSE)
 {
 	// use memory based file if not supplied for writing
 	m_pFile = pFile == NULL ? &m_file : pFile;

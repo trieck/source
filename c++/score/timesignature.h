@@ -12,10 +12,10 @@
 // BeatLength enumeration
 
 typedef enum {
-	EmptyLength = 0,
-	Minim = 2,
-	Crotchet = 4,
-	Quaver = 8
+    EmptyLength = 0,
+    Minim = 2,
+    Crotchet = 4,
+    Quaver = 8
 } BeatLength;
 
 /////////////////////////////////////////////////////////////////////////////

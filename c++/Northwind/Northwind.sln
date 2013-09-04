@@ -1,32 +1,19 @@
-Microsoft Visual Studio Solution File, Format Version 8.00
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Northwind", "Northwind.vcproj", "{3BF16F4F-4313-41E7-B251-F388036E96E5}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Northwind", "Northwind.vcxproj", "{3BF16F4F-4313-41E7-B251-F388036E96E5}"
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 2
-		SccProjectName0 = \u0022$/Source/c++/NORTHWIND\u0022,\u0020VUCAAAAA
-		SccLocalPath0 = .
-		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
-		CanCheckoutShared = false
-		SolutionUniqueID = {5BB64C47-531B-43BA-A31B-5D7B22ED08D3}
-		SccProjectUniqueName1 = Northwind.vcproj
-		SccLocalPath1 = .
-		CanCheckoutShared = false
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
 	EndGlobalSection
-	GlobalSection(SolutionConfiguration) = preSolution
-		Debug = Debug
-		Release = Release
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BF16F4F-4313-41E7-B251-F388036E96E5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3BF16F4F-4313-41E7-B251-F388036E96E5}.Debug|Win32.Build.0 = Debug|Win32
+		{3BF16F4F-4313-41E7-B251-F388036E96E5}.Release|Win32.ActiveCfg = Release|Win32
+		{3BF16F4F-4313-41E7-B251-F388036E96E5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
-	GlobalSection(ProjectConfiguration) = postSolution
-		{3BF16F4F-4313-41E7-B251-F388036E96E5}.Debug.ActiveCfg = Debug|Win32
-		{3BF16F4F-4313-41E7-B251-F388036E96E5}.Debug.Build.0 = Debug|Win32
-		{3BF16F4F-4313-41E7-B251-F388036E96E5}.Release.ActiveCfg = Release|Win32
-		{3BF16F4F-4313-41E7-B251-F388036E96E5}.Release.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-	EndGlobalSection
-	GlobalSection(ExtensibilityAddIns) = postSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

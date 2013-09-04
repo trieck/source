@@ -4,8 +4,7 @@
 
 // SettingsPane
 
-class SettingsPane : public CDockablePane
-{
+class SettingsPane : public CDockablePane {
 	DECLARE_DYNAMIC(SettingsPane)
 
 public:

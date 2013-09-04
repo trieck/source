@@ -2,5 +2,5 @@
 
 # run this with cygwin, not mingw
 #
-find . \( -name *.vcproj -o -name *.dsp \) -exec ./vcupgrade.sh {} \;
+find . \( -name *.vcproj -o -name *.sln \) -exec ./vcupgrade.sh {} \;
 

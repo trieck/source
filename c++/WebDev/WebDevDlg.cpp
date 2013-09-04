@@ -16,15 +16,14 @@ CString LastError();
 
 // CAboutDlg dialog used for App About
 
-class CAboutDlg : public CDialogEx
-{
+class CAboutDlg : public CDialogEx {
 public:
 	CAboutDlg();
 
 // Dialog Data
 	enum { IDD = IDD_ABOUTBOX };
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 // Implementation
@@ -85,14 +84,12 @@ BOOL CWebDevDlg::OnInitDialog()
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
-	if (pSysMenu != NULL)
-	{
+	if (pSysMenu != NULL) {
 		BOOL bNameValid;
 		CString strAboutMenu;
 		bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
 		ASSERT(bNameValid);
-		if (!strAboutMenu.IsEmpty())
-		{
+		if (!strAboutMenu.IsEmpty()) {
 			pSysMenu->AppendMenu(MF_SEPARATOR);
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
@@ -106,7 +103,7 @@ BOOL CWebDevDlg::OnInitDialog()
 	CWebDevApp *pApp = (CWebDevApp*)AfxGetApp();
 	CString webDevPath = pApp->GetProfileString(_T("Settings"), _T("WebDev.Path"));
 	SetDlgItemText(IDC_WEBDEV_PATH, webDevPath);
-		
+
 	USHORT port = pApp->GetProfileInt(_T("Settings"), _T("Port"), 0);
 	SetDlgItemInt(IDC_PORT, port);
 
@@ -121,13 +118,10 @@ BOOL CWebDevDlg::OnInitDialog()
 
 void CWebDevDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
-	{
+	if ((nID & 0xFFF0) == IDM_ABOUTBOX) {
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();
-	}
-	else
-	{
+	} else {
 		CDialogEx::OnSysCommand(nID, lParam);
 	}
 }
@@ -138,8 +132,7 @@ void CWebDevDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CWebDevDlg::OnPaint()
 {
-	if (IsIconic())
-	{
+	if (IsIconic()) {
 		CPaintDC dc(this); // device context for painting
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
@@ -154,9 +147,7 @@ void CWebDevDlg::OnPaint()
 
 		// Draw the icon
 		dc.DrawIcon(x, y, m_hIcon);
-	}
-	else
-	{
+	} else {
 		CDialogEx::OnPaint();
 	}
 }
@@ -175,10 +166,10 @@ void CWebDevDlg::OnBnClickedBrowseWebdev()
 	    _T("All Files (*.*)|*.*||");
 
 	CFileDialog dlg(TRUE, _T("*.exe"), NULL, OFN_HIDEREADONLY | OFN_READONLY,
-		szFilter, this);
+	                szFilter, this);
 	int result = dlg.DoModal();
 	if (result == IDOK) {
-		CString pathName = dlg.GetPathName();		
+		CString pathName = dlg.GetPathName();
 		GetDlgItem(IDC_WEBDEV_PATH)->SetWindowText(pathName);
 	}
 }
@@ -198,7 +189,7 @@ void CWebDevDlg::OnBnClickedBrowseWebsite()
 
 	if (pidl != NULL) {
 		BOOL fRtn = SHGetPathFromIDList(pidl,
-			fileName.GetBuffer(_MAX_PATH));
+		                                fileName.GetBuffer(_MAX_PATH));
 		fileName.ReleaseBuffer();
 		if (fRtn) {
 			GetDlgItem(IDC_WEBSITE_PATH)->SetWindowText(fileName);
@@ -212,20 +203,20 @@ void CWebDevDlg::OnBnClickedOk()
 	CString webDevPath;
 	GetDlgItemText(IDC_WEBDEV_PATH, webDevPath);
 	webDevPath.Trim();
-	
+
 	USHORT port = GetDlgItemInt(IDC_PORT);
-	
+
 	CString webSitePath;
 	GetDlgItemText(IDC_WEBSITE_PATH, webSitePath);
 	webSitePath.Trim();
-	
+
 	CString vPath;
 	GetDlgItemText(IDC_VPATH, vPath);
 	vPath.Trim();
-	
+
 	CString commandLine;
 	commandLine.Format(_T("\"%s\" /port:%u /path:%s /vpath:%s"),
-		(LPCTSTR)webDevPath, port, (LPCTSTR)webSitePath, vPath);
+	                   (LPCTSTR)webDevPath, port, (LPCTSTR)webSitePath, vPath);
 
 	PROCESS_INFORMATION pi;
 	STARTUPINFO si;
@@ -236,22 +227,22 @@ void CWebDevDlg::OnBnClickedOk()
 
 	si.cb = sizeof(STARTUPINFO);
 	BOOL retcode = CreateProcess(NULL,
-		buffer,
-	    NULL,
-	    NULL,
-	    TRUE,
-	    0,
-	    NULL,
-	    NULL,
-	    &si,
-	    &pi);
+	                             buffer,
+	                             NULL,
+	                             NULL,
+	                             TRUE,
+	                             0,
+	                             NULL,
+	                             NULL,
+	                             &si,
+	                             &pi);
 
 	commandLine.ReleaseBuffer();
 
 	if (!retcode) {
 		CString message;
 		message.Format(_T("Failed to launch \"%s\".\n%s"), commandLine,
-			LastError());
+		               LastError());
 		AfxMessageBox(message);
 		return;
 	}
@@ -269,7 +260,7 @@ void CWebDevDlg::OnExit()
 	GetDlgItemText(IDC_WEBDEV_PATH, webDevPath);
 	webDevPath.Trim();
 	pApp->WriteProfileString(_T("Settings"), _T("WebDev.Path"), webDevPath);
-	
+
 	USHORT port = GetDlgItemInt(IDC_PORT);
 	pApp->WriteProfileInt(_T("Settings"), _T("Port"), port);
 
@@ -282,7 +273,7 @@ void CWebDevDlg::OnExit()
 	GetDlgItemText(IDC_VPATH, vPath);
 	vPath.Trim();
 	pApp->WriteProfileString(_T("Settings"), _T("Virtual.Path"), vPath);
-	
+
 	CDialogEx::OnCancel();
 }
 

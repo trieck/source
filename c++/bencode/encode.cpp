@@ -20,7 +20,7 @@ static char END_OBJECT[1] =    { 'e' };
 
 /////////////////////////////////////////////////////////////////////////////
 BEEncoder::BEEncoder(ISequentialStream *pStream)
-		: m_pStream(pStream)
+	: m_pStream(pStream)
 {
 	// Copied pointer so AddRef it
 	m_pStream->AddRef();

@@ -8,11 +8,10 @@
 #ifndef __SYMBOLTABLE_H__
 #define __SYMBOLTABLE_H__
 
-class SymbolTable
-{
+class SymbolTable {
 public:
-    SymbolTable();
-    ~SymbolTable();
+	SymbolTable();
+	~SymbolTable();
 };
 
 #endif // __SYMBOLTABLE_H__

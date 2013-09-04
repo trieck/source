@@ -1,8 +1,7 @@
 #pragma once
 
 /////////////////////////////////////////////////////////////////////////////
-class MeanFilter
-{
+class MeanFilter {
 public:
 	MeanFilter();
 	~MeanFilter();

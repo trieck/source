@@ -41,17 +41,17 @@ void MidiBuffer::Encode(const Sequence & seq)
 {
 	// Determine the size of the buffer needed
 	UINT size = (Sequence::NINSTRUMENTS * Sequence::NSUBS)	/* notes */
-		* 2	/* note-on + note-off */
-		* sizeof(MIDISHORTEVENT)
-		+ sizeof(MIDISHORTEVENT);	// tempo
-	
+	            * 2	/* note-on + note-off */
+	            * sizeof(MIDISHORTEVENT)
+	            + sizeof(MIDISHORTEVENT);	// tempo
+
 	if (size > m_header.dwBufferLength) {
-		Alloc(size);	
+		Alloc(size);
 	}
 
 	LPSTR pdata = m_header.lpData;
 	PutEvent(&pdata, Tempo(100));
-	
+
 	m_header.dwBytesRecorded = sizeof(MIDISHORTEVENT);
 
 	BYTE instrument;
@@ -59,9 +59,9 @@ void MidiBuffer::Encode(const Sequence & seq)
 		for (int j = 0; j < Sequence::NINSTRUMENTS; j++) {
 			instrument = seq.GetInstrument(j);
 			if (seq.GetBeat(i, j)) {
-				PutEvent(&pdata, NoteOn(instrument, 127));				
+				PutEvent(&pdata, NoteOn(instrument, 127));
 			} else {
-				PutEvent(&pdata, NoteOn(instrument, 0));				
+				PutEvent(&pdata, NoteOn(instrument, 0));
 			}
 			m_header.dwBytesRecorded += sizeof(MIDISHORTEVENT);
 		}

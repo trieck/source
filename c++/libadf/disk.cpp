@@ -21,8 +21,8 @@ int32_t getDiskType(uint32_t size);
 
 /////////////////////////////////////////////////////////////////////////////
 Disk::Disk()
-		: type(0), cylinders(0), heads(0), sectors(0), size(0), fp(0),
-		readonly(true)
+	: type(0), cylinders(0), heads(0), sectors(0), size(0), fp(0),
+	  readonly(true)
 {
 }
 

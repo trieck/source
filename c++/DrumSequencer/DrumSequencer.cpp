@@ -80,7 +80,7 @@ BOOL CDrumSequencerApp::InitInstance()
 
 	EnableTaskbarInteraction(FALSE);
 
-	// AfxInitRichEdit2() is required to use RichEdit control	
+	// AfxInitRichEdit2() is required to use RichEdit control
 	// AfxInitRichEdit2();
 
 	// Standard initialization
@@ -92,23 +92,23 @@ BOOL CDrumSequencerApp::InitInstance()
 	// such as the name of your company or organization
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
-	
+
 	InitContextMenuManager();
 	InitKeyboardManager();
 	InitTooltipManager();
 	CMFCToolTipInfo ttParams;
 	ttParams.m_bVislManagerTheme = TRUE;
 	theApp.GetTooltipManager()->SetTooltipParams(AFX_TOOLTIP_TYPE_ALL,
-		RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
+	        RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
 
 	// Register the application's document templates.  Document templates
 	//  serve as the connection between documents, frame windows and views
 	CSingleDocTemplate* pDocTemplate;
 	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CDrumSequencerDoc),
-		RUNTIME_CLASS(CMainFrame),       // main SDI frame window
-		RUNTIME_CLASS(CDrumSequencerView));
+	    IDR_MAINFRAME,
+	    RUNTIME_CLASS(CDrumSequencerDoc),
+	    RUNTIME_CLASS(CMainFrame),       // main SDI frame window
+	    RUNTIME_CLASS(CDrumSequencerView));
 	if (!pDocTemplate)
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
@@ -135,8 +135,7 @@ BOOL CDrumSequencerApp::InitInstance()
 
 // CAboutDlg dialog used for App About
 
-class CAboutDlg : public CDialogEx
-{
+class CAboutDlg : public CDialogEx {
 public:
 	CAboutDlg();
 
@@ -189,7 +188,7 @@ void CDrumSequencerApp::SaveCustomState()
 int CDrumSequencerApp::ExitInstance()
 {
 	m_sequencer.Close();
-	
+
 	return CWinAppEx::ExitInstance();
 }
 

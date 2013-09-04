@@ -25,13 +25,13 @@
 #define __PARSER_H__
 /* lexical token types */
 typedef enum {
-	UNDEF = 0,
-	STR,
-	NUM,
-	LPAREN = '(',
-	RPAREN = ')',
-	COMMA = ',',
-	POUND = '#'
+    UNDEF = 0,
+    STR,
+    NUM,
+    LPAREN = '(',
+    RPAREN = ')',
+    COMMA = ',',
+    POUND = '#'
 } TokenType;
 #define MAXTOK 80
 typedef struct {

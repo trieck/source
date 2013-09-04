@@ -51,7 +51,7 @@ END_MESSAGE_MAP()
 // TorrentView construction/destruction
 
 TorrentView::TorrentView()
-		: m_BinaryView(FALSE), m_DateView(FALSE)
+	: m_BinaryView(FALSE), m_DateView(FALSE)
 {
 }
 

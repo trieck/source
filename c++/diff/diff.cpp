@@ -132,9 +132,9 @@ void diff(LPCTSTR files1, LPCTSTR files2)
 
 		std::ostrstream path1, path2;
 		path1 << dir1 << _T('\\') << *it
-		<< _T('\\') << spec1 << std::ends;
+		      << _T('\\') << spec1 << std::ends;
 		path2 << dir2 << _T('\\') << *it
-		<< _T('\\') << spec1 << std::ends;
+		      << _T('\\') << spec1 << std::ends;
 		diff(path1.str(), path2.str());
 	}
 

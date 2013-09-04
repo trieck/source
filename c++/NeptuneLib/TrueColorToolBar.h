@@ -29,8 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CTrueColorToolBar
 
-class CTrueColorToolBar : public CToolBar
-{
+class CTrueColorToolBar : public CToolBar {
 // Construction
 public:
 	CTrueColorToolBar();
@@ -45,22 +44,22 @@ private:
 		UINT  uMenuID;
 		CWnd* pParent;
 	};
-	
+
 	CArray <stDropDownInfo, stDropDownInfo&> m_lstDropDownButton;
-	
+
 // Operations
 public:
 	BOOL LoadTrueColorToolBar(int  nBtnWidth,
-							  UINT uToolBar,
-							  UINT uToolBarHot		= 0,
-							  UINT uToolBarDisabled = 0);
+	                          UINT uToolBar,
+	                          UINT uToolBarHot		= 0,
+	                          UINT uToolBarDisabled = 0);
 
 	void AddDropDownButton(CWnd* pParent, UINT uButtonID, UINT uMenuID);
 
 private:
 	BOOL SetTrueColorToolBar(UINT uToolBarType,
-		                     UINT uToolBar,
-						     int  nBtnWidth);
+	                         UINT uToolBar,
+	                         int  nBtnWidth);
 
 // Overrides
 	// ClassWizard generated virtual function overrides

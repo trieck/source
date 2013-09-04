@@ -8,7 +8,7 @@
 #include "common.h"
 
 Window::Window()
-		: m_hWnd(0)
+	: m_hWnd(0)
 {
 }
 

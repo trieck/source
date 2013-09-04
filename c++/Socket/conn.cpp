@@ -29,7 +29,7 @@ Connection::Connection() : own(true)
 
 /////////////////////////////////////////////////////////////////////////////
 Connection::Connection(SOCKET s)
-		: m_socket(s), own(true)
+	: m_socket(s), own(true)
 {
 	memset(&m_server, 0, sizeof(SOCKADDR_IN));
 }

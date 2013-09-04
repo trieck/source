@@ -11,7 +11,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 LogFile::LogFile()
-		: hFile(INVALID_HANDLE_VALUE)
+	: hFile(INVALID_HANDLE_VALUE)
 {
 }
 

@@ -339,10 +339,10 @@ DWORD SendMail()
 	LHANDLE lhSession;
 	HMODULE hModule;
 	FARPROC fpMAPILogon,
-	fpMAPIResolveName,
-	fpMAPISendMail,
-	fpMAPILogoff,
-	fpMAPIFree;
+	        fpMAPIResolveName,
+	        fpMAPISendMail,
+	        fpMAPILogoff,
+	        fpMAPIFree;
 
 	LPSTR	lpszMailProfile;
 	LPSTR	lpszPassword;

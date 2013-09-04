@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Entry::Entry() : access(0), blockno(0), days(0), hour(0), mins(0), month(0),
-		parent(0), real(0), secs(0), size(0), type(0), year(0), firstblock(0)
+	parent(0), real(0), secs(0), size(0), type(0), year(0), firstblock(0)
 {
 }
 

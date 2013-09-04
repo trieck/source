@@ -28,7 +28,7 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(BinaryView, CView)
 
 BinaryView::BinaryView()
-		: m_pString(NULL), m_pBuffer(NULL)
+	: m_pString(NULL), m_pBuffer(NULL)
 {
 	m_cyChar = 0;
 	m_cxChar = 0;

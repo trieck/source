@@ -14,7 +14,7 @@ class WorkerThread {
 // Construction / Destruction
 public:
 	WorkerThread(IRunnable* pworker, LPVOID pparam = 0)
-			: worker(pworker), param(pparam) {
+		: worker(pworker), param(pparam) {
 		hThread = CreateThread(NULL, 0, ThreadProc, this,
 		                       CREATE_SUSPENDED, 0);
 	}

@@ -53,7 +53,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // EarDlg dialog
 EarDlg::EarDlg(CWnd* pParent /*=NULL*/)
-		: CDialog(EarDlg::IDD, pParent)
+	: CDialog(EarDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(EarDlg)
 	m_Interval = 0;

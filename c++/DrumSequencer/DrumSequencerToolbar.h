@@ -3,8 +3,7 @@
 
 // DrumSequencerToolbar
 
-class DrumSequencerToolbar : public CMFCToolBar
-{
+class DrumSequencerToolbar : public CMFCToolBar {
 	DECLARE_DYNAMIC(DrumSequencerToolbar)
 
 public:

@@ -146,12 +146,12 @@ void ImageSkeletonizer::Skeletonize(CImage &image, Kernel *pKernel)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	for (int y = 0; y < rows; y++) {
 		for (int x = 0; x < cols; x++) {
 			BYTE &p = pbits[y*pitch+x];
-			
+
 			if (p == 0x00) {	// foreground
 				if (Match(image, pKernel, x, y)) {
 					p = 0xFF;	// background
@@ -167,7 +167,7 @@ void ImageSkeletonizer::ZhangSuen(CImage &image)
 {
 	UINT c;
 
-	do { 
+	do {
 		if ((c = ZhangSuen(image, 1)) == 0)
 			break;
 		c = ZhangSuen(image, 2);
@@ -180,15 +180,15 @@ UINT ImageSkeletonizer::ZhangSuen(CImage &image, int sub)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	CPointVec points;
 	for (int y = 0; y < rows; y++) {
 		for (int x = 0; x < cols; x++) {
 			BYTE &p = pbits[y*pitch+x];
-				
+
 			if (p == 0x00) {	// foreground
-				if (ZhangSuenCond(image, x, y, sub)) {	
+				if (ZhangSuenCond(image, x, y, sub)) {
 					points.push_back(CPoint(x, y));
 				}
 			}
@@ -226,7 +226,7 @@ UINT ImageSkeletonizer::Neighbors(CImage &image, int x, int y)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	CPoint pt;
 	for (int i = 0; i < 8; i++) {
@@ -246,13 +246,13 @@ UINT ImageSkeletonizer::Neighbors(CImage &image, int x, int y)
 UINT ImageSkeletonizer::Transitions(CImage &image, int x, int y)
 {
 	UINT transitions = 0;
-	
+
 	int rows = image.GetHeight();
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 	int intrans = 0;
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	CPoint pt;
 	for (int i = 0; i < 8; i++) {
@@ -279,7 +279,7 @@ bool ImageSkeletonizer::BkgndCond(CImage &image, int x, int y, int sub)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	CPoint pt1 = Neighbor(x, y, 0);
 	CPoint pt3 = Neighbor(x, y, 2);

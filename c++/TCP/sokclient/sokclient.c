@@ -12,9 +12,9 @@ HINSTANCE	hInst;
 SOCKET		sock;
 LPCSTR		lpszClassName	= "SocketClient";
 CONST INT	WINDOW_STYLE	=	WS_SYSMENU |
-                         WS_MINIMIZEBOX |
-                         WS_BORDER |
-                         WS_CAPTION;
+                                WS_MINIMIZEBOX |
+                                WS_BORDER |
+                                WS_CAPTION;
 
 ////////////////////////
 // WinMain Function

@@ -15,9 +15,9 @@ static char THIS_FILE[] = __FILE__;
 // AddEditDlg dialog
 
 AddEditDlg::AddEditDlg(Mode M, LPRECORD rec, CWnd* pParent /*=NULL*/)
-		: CDialog(AddEditDlg::IDD, pParent),
-		_mode(M),
-		_rec(rec)
+	: CDialog(AddEditDlg::IDD, pParent),
+	  _mode(M),
+	  _rec(rec)
 {
 	//{{AFX_DATA_INIT(AddEditDlg)
 	m_Album = _T("");

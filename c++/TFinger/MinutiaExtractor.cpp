@@ -19,7 +19,7 @@ MinutiaVec MinutiaExtractor::Extract(CImage &image)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());		
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	UINT cn;
 	Minutia minutia;
@@ -27,7 +27,7 @@ MinutiaVec MinutiaExtractor::Extract(CImage &image)
 		for (int x = 0; x < cols; x++) {
 			if (pbits[y*pitch+x] == 0xFF)	// background
 				continue;
-			
+
 			cn = CrossingNumber(image, x, y);
 			if (cn == MT_RIDGE_ENDING || cn == MT_RIDGE_BIFUR) {
 				minutia.type = cn;
@@ -56,7 +56,7 @@ UINT MinutiaExtractor::CrossingNumber(CImage &image, int x, int y)
 		pt2 = Neighbor(x, y, i+1);
 
 		p1 = PixelDigit(image, pt1);
-		p2 = PixelDigit(image, pt2);	
+		p2 = PixelDigit(image, pt2);
 
 		cn += abs(p1 - p2);
 	}

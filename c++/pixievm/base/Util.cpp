@@ -128,7 +128,7 @@ string basename(const string &filename)
 	const char *p;
 	if ((p = strrchr(fname, PATH_SEP)) != NULL) {
 		fname = p + 1;
-	} 
+	}
 
 	for ( ; *fname != '\0'; fname++) {
 		if (*fname == SUFFIX_SEP)
@@ -163,7 +163,7 @@ uint32_t hash32(const void *key, uint32_t len)
 		hash *= 16777619;
 		hash ^= k[i];
 	}
-  
+
 	return hash;
 }
 
@@ -179,7 +179,7 @@ uint64_t hash64(const void *key, uint64_t len)
 		hash *= 1099511628211;
 		hash ^= k[i];
 	}
-  
+
 	return hash;
 }
 
@@ -191,7 +191,7 @@ uint32_t counter32()
 	LARGE_INTEGER counter;
 	QueryPerformanceCounter(&counter);
 
-	// avalanche 
+	// avalanche
 	return hash32(&counter.QuadPart, sizeof(uint64_t));
 }
 

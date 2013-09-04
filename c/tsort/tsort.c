@@ -167,7 +167,8 @@ char *s,*t;
  *	node in it
 */
 struct nodelist *
-findloop() {
+findloop()
+{
 	register struct nodelist *i, *j;
 	register struct predlist *p;
 	for (i= &firstnode; i->nextnode!=NULL; i=i->nextnode)

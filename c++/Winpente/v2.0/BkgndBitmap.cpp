@@ -17,7 +17,7 @@ BEGIN_MESSAGE_MAP(CBkgndBitmap, CWnd)
 END_MESSAGE_MAP()
 
 CBkgndBitmap::CBkgndBitmap(HBITMAP hBitmap, HPALETTE hPalette, UINT ResID) :
-		m_hBitmap(hBitmap), m_hPalette(hPalette), m_ResID(ResID)
+	m_hBitmap(hBitmap), m_hPalette(hPalette), m_ResID(ResID)
 {
 	m_pCustomBitmap = NULL;
 	m_fFrameBitmap	= FALSE;

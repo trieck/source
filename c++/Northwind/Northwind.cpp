@@ -123,22 +123,22 @@ int pascal WinMain(HINSTANCE hInstance, HINSTANCE hInstPrevious, LPSTR lpCmdLine
 
 	// Create the list box
 	hWndList =	CreateWindowEx(
-	               WS_EX_CLIENTEDGE,
-	               "LISTBOX",
-	               NULL,
-	               WS_CHILD |
-	               WS_VSCROLL |
-	               WS_VISIBLE |
-	               LBS_NOTIFY |
-	               LBS_NOINTEGRALHEIGHT,
-	               NULL,
-	               NULL,
-	               ((ClientRect.right - ClientRect.left)/2),
-	               (ClientRect.bottom - ClientRect.top),
-	               hWnd,
-	               (HMENU)ID_LISTBOX1,
-	               hInstance,
-	               NULL);
+	                WS_EX_CLIENTEDGE,
+	                "LISTBOX",
+	                NULL,
+	                WS_CHILD |
+	                WS_VSCROLL |
+	                WS_VISIBLE |
+	                LBS_NOTIFY |
+	                LBS_NOINTEGRALHEIGHT,
+	                NULL,
+	                NULL,
+	                ((ClientRect.right - ClientRect.left)/2),
+	                (ClientRect.bottom - ClientRect.top),
+	                hWnd,
+	                (HMENU)ID_LISTBOX1,
+	                hInstance,
+	                NULL);
 
 	// Set font for list box
 	SendMessage(hWndList, WM_SETFONT, (WPARAM)hFont,0);

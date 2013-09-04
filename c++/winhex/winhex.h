@@ -19,8 +19,7 @@
 // See winhex.cpp for the implementation of this class
 //
 
-class HexApp : public CWinApp
-{
+class HexApp : public CWinApp {
 public:
 	HexApp();
 

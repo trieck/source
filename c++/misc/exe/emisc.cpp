@@ -64,7 +64,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 #endif
 		{
 			UnregisterServer(CLSID_Miscellaneous, g_szVerIndProgID,
-			g_szProgID);
+			                 g_szProgID);
 
 			// We are done, so exit.
 			bExit = TRUE;
@@ -77,8 +77,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 #endif
 		{
 			RegisterServer(hInstance, CLSID_Miscellaneous,
-			g_szFriendlyName, g_szVerIndProgID, g_szProgID,
-			LIBID_MiscLib);
+			               g_szFriendlyName, g_szVerIndProgID, g_szProgID,
+			               LIBID_MiscLib);
 
 			// We are done, so exit.
 			bExit = TRUE;

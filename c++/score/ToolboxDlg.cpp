@@ -34,7 +34,7 @@ const static Tool Tools[] = {
 
 
 ToolboxDlg::ToolboxDlg(CWnd * pParent)
-		: CDialog(ToolboxDlg::IDD, pParent)
+	: CDialog(ToolboxDlg::IDD, pParent)
 {
 	ASSERT_VALID(pParent);
 

@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Lexer::Lexer(IPeekableStream *pstream)
-		: stream(pstream), pos(0), offset(0)
+	: stream(pstream), pos(0), offset(0)
 {
 	// pointer copied so AddRef
 	stream->AddRef();

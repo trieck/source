@@ -30,24 +30,24 @@ class Machine;
 typedef void (Machine::*Instr)();
 
 enum Keyword {
-	PROC,
-	FUNC,
-	RETURN,
-	IF,
-	ELSE,
-	WHILE,
-	PRINTF
+    PROC,
+    FUNC,
+    RETURN,
+    IF,
+    ELSE,
+    WHILE,
+    PRINTF
 };
 
 enum SymbolType {
-	undefined = 0,
-	number,
-	variable,
-	keyword,
-	bltin,
-	function,
-	procedure,
-	str
+    undefined = 0,
+    number,
+    variable,
+    keyword,
+    bltin,
+    function,
+    procedure,
+    str
 };
 
 typedef struct {

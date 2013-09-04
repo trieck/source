@@ -9,34 +9,33 @@
 #define __FILESTREAM_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class FileStream : public ISequentialStream
-{
+class FileStream : public ISequentialStream {
 // Construction / Destruction
 public:
-    FileStream();
-    virtual ~FileStream();
+	FileStream();
+	virtual ~FileStream();
 
 // Interface
 	STDMETHODIMP_(ULONG) AddRef(void);
-    STDMETHODIMP_(ULONG) Release(void);
-    STDMETHODIMP QueryInterface(REFIID riid, LPVOID *ppv);
-    
-    STDMETHODIMP Read(/* [out] */ void __RPC_FAR *pv, /* [in]  */ ULONG cb,
-            /* [out] */ ULONG __RPC_FAR *pcbRead);
+	STDMETHODIMP_(ULONG) Release(void);
+	STDMETHODIMP QueryInterface(REFIID riid, LPVOID *ppv);
+
+	STDMETHODIMP Read(/* [out] */ void __RPC_FAR *pv, /* [in]  */ ULONG cb,
+	                              /* [out] */ ULONG __RPC_FAR *pcbRead);
 	STDMETHODIMP Write(/* [in] */ const void __RPC_FAR *pv, /* [in] */ ULONG cb,
-            /* [out]*/ ULONG __RPC_FAR *pcbWritten);
+	                              /* [out]*/ ULONG __RPC_FAR *pcbWritten);
 
 	STDMETHODIMP Close();
 	STDMETHODIMP GetFileSize(PLARGE_INTEGER pFileSize);
 
-	static FileStream *FileStream::Create(LPCTSTR lpFileName, 
-		DWORD dwDesiredAccess, DWORD dwShareMode, 
-		DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes);
+	static FileStream *FileStream::Create(LPCTSTR lpFileName,
+	                                      DWORD dwDesiredAccess, DWORD dwShareMode,
+	                                      DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes);
 
 // Implementation
 private:
-	BOOL Open(LPCTSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, 
-		DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes);
+	BOOL Open(LPCTSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode,
+	          DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes);
 	BOOL ReadBlock();
 	BOOL WriteBlock();
 	void Alloc();

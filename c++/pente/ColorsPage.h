@@ -36,11 +36,11 @@ public:
 
 private:
 	enum {
-		TABLE_COLOR = 1 << 0,
-		BOARD_COLOR = 1 << 1,
-		GRID_COLOR = 1 << 2,
-		PLAYER_ONE_COLOR = 1 << 3,
-		PLAYER_TWO_COLOR = 1 << 4
+	    TABLE_COLOR = 1 << 0,
+	    BOARD_COLOR = 1 << 1,
+	    GRID_COLOR = 1 << 2,
+	    PLAYER_ONE_COLOR = 1 << 3,
+	    PLAYER_TWO_COLOR = 1 << 4
 	};
 	DWORD m_ModFlags;
 

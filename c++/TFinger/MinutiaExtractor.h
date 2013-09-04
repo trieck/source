@@ -4,8 +4,7 @@
 
 typedef std::vector<Minutia> MinutiaVec;
 
-class MinutiaExtractor
-{
+class MinutiaExtractor {
 public:
 	MinutiaExtractor();
 	~MinutiaExtractor();

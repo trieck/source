@@ -1,5 +1,4 @@
-class CAboutDlg : public CDialogImpl<CAboutDlg>
-{
+class CAboutDlg : public CDialogImpl<CAboutDlg> {
 public:
 	enum { IDD = IDD_ABOUTBOX };
 

@@ -3,8 +3,7 @@
 
 // SettingsBar
 
-class SettingsBar : public CDialogBar
-{
+class SettingsBar : public CDialogBar {
 	DECLARE_DYNAMIC(SettingsBar)
 
 public:

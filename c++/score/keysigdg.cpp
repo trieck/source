@@ -17,8 +17,8 @@ static char THIS_FILE[] = __FILE__;
 
 
 KeySignatureDlg::KeySignatureDlg(Measure * pMeasure, CWnd* pParent /*=NULL*/)
-		: m_pMeasure(pMeasure),
-		CDialog(KeySignatureDlg::IDD, pParent)
+	: m_pMeasure(pMeasure),
+	  CDialog(KeySignatureDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(KeySignatureDlg)
 	// NOTE: the ClassWizard will add member initialization here

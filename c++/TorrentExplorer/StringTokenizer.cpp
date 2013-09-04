@@ -18,7 +18,7 @@ static char THIS_FILE[]=__FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 StringTokenizer::StringTokenizer(LPCSTR pinput, LPCSTR pdelim)
-		: delim(pdelim), init(false), nextoken(0)
+	: delim(pdelim), init(false), nextoken(0)
 {
 	input = strdup(pinput);
 }

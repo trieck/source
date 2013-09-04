@@ -10,7 +10,7 @@ IMPLEMENT_DYNAMIC(Player, CObject)
 
 /////////////////////////////////////////////////////////////////////////////
 Player::Player()
-		: captures(0)
+	: captures(0)
 {
 }
 

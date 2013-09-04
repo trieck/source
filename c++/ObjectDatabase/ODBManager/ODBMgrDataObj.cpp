@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 ODBMgrDataObj::ODBMgrDataObj(LPUNKNOWN pUnknown)
-		: m_cRef(0), m_pUnknown(pUnknown)
+	: m_cRef(0), m_pUnknown(pUnknown)
 {
 }
 

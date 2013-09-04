@@ -29,7 +29,7 @@ void DrumSequencerToolbar::OnAfterFloat()
 	CMFCToolBar::OnAfterFloat();
 }
 
-void DrumSequencerToolbar::OnAfterDock(CBasePane* pBar, LPCRECT lpRect, AFX_DOCK_METHOD dockMethod) 
+void DrumSequencerToolbar::OnAfterDock(CBasePane* pBar, LPCRECT lpRect, AFX_DOCK_METHOD dockMethod)
 {
 	CWnd *pWnd = AfxGetMainWnd();
 	if (pWnd->IsKindOf(RUNTIME_CLASS(CFrameWnd))) {

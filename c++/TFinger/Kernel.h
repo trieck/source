@@ -1,8 +1,7 @@
 #pragma once
 
 /////////////////////////////////////////////////////////////////////////////
-class Kernel
-{
+class Kernel {
 private:
 	Kernel(int bsize, const BYTE *data);
 public:
@@ -19,6 +18,7 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline int Kernel::GetBlockSize() const {
+inline int Kernel::GetBlockSize() const
+{
 	return m_blocksize;
 }

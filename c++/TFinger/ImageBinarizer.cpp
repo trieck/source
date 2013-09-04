@@ -23,7 +23,7 @@ void ImageBinarizer::Binarize(CImage &image)
 
 	ULONG threshold = OtsusMethod(image);
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	for (int y = 0; y < rows; y++) {
 		for (int x = 0; x < cols; x++) {
@@ -56,9 +56,9 @@ ULONG ImageBinarizer::OtsusMethod(CImage &image)
 	ULONG wB = 0, wF = 0;
 	float mB, mF;
 	float varMax = 0, varBetween;
-	
+
 	ULONG threshold = 0;
-	
+
 	for (int t = 0; t < 256; t++) {
 		wB += m_histogram[t];	// weight background
 		if (wB == 0) continue;
@@ -72,7 +72,7 @@ ULONG ImageBinarizer::OtsusMethod(CImage &image)
 		mF = (sum - sumB) / wF;	// mean foreground
 
 		// compute between class variance
-		varBetween = (float)wB * (float)wF * (mB - mF) * (mB - mF);	
+		varBetween = (float)wB * (float)wF * (mB - mF) * (mB - mF);
 
 		// check if new maximum found
 		if (varBetween > varMax) {
@@ -94,7 +94,7 @@ void ImageBinarizer::Histogram(CImage &image)
 
 	Reset();
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	BYTE h;
 	for (int y = 0; y < rows; y++) {
@@ -105,5 +105,5 @@ void ImageBinarizer::Histogram(CImage &image)
 				maxlevel = m_histogram[h];
 			}
 		}
-	}	
+	}
 }

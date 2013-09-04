@@ -8,7 +8,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 ProcessEnumerator::ProcessEnumerator()
-		: hModule(NULL)
+	: hModule(NULL)
 {
 	hModule = LoadLibrary(_T("PSAPI"));
 	if (hModule == NULL)

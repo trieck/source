@@ -70,10 +70,12 @@ public:
 
 	virtual void trap(void *data);
 	virtual void handle();
-	
+
 	void setExit(bool f);
 	void disassemble(word address);
-	bool isRunning() const { return !m_exit_mon; }
+	bool isRunning() const {
+		return !m_exit_mon;
+	}
 
 // Implementation
 private:
@@ -86,15 +88,16 @@ private:
 
 	static void sighandler(int signal);
 
-	CommandMap m_commands;			// map of commands 
-	bool m_exit_mon;				// exit flag 
-	bool m_show_notice;				// show notice 
+	CommandMap m_commands;			// map of commands
+	bool m_exit_mon;				// exit flag
+	bool m_show_notice;				// show notice
 	static MonitorPtr instance;		// singleton instance
 };
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
-inline void Monitor::setExit(bool f) {
+inline void Monitor::setExit(bool f)
+{
 	m_exit_mon = f;
 }
 

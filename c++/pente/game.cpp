@@ -16,7 +16,7 @@ IMPLEMENT_SERIAL(PenteGame, CObject, VERSIONABLE_SCHEMA | 1)
 
 /////////////////////////////////////////////////////////////////////////////
 PenteGame::PenteGame()
-		: currentTurn(ET_PLAYER_ONE)
+	: currentTurn(ET_PLAYER_ONE)
 {
 	makePlayers();
 }

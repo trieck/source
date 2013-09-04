@@ -19,9 +19,9 @@ BEGIN_EVENT_TABLE(wxcdioTreeCtrl, wxTreeCtrl)
 END_EVENT_TABLE()
 
 wxcdioTreeCtrl::wxcdioTreeCtrl(wxView *view, wxWindow *parent)
-		: wxTreeCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-		             wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT | wxTR_HIDE_ROOT),
-		m_view(view)
+	: wxTreeCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+	             wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT | wxTR_HIDE_ROOT),
+	m_view(view)
 {
 	wxImageList *imageList = new wxImageList(CX_IMAGE, CY_IMAGE, true, 0);
 

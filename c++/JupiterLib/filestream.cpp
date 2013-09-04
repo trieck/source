@@ -11,7 +11,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 FileStream::FileStream()
-		: hFile(INVALID_HANDLE_VALUE), m_cRef(0)
+	: hFile(INVALID_HANDLE_VALUE), m_cRef(0)
 {
 	// The constructor AddRef's
 	AddRef();

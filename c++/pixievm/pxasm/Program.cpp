@@ -31,7 +31,7 @@ void Program::init()
 void Program::pushop(uint32_t opcode)
 {
 	Instruction i;
-	
+
 	if ((i = Machine::lookup(opcode)) == NULL) {
 		throw Exception("unrecognized opcode %d.", opcode);
 	}

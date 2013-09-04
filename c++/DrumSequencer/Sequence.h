@@ -1,6 +1,5 @@
 #pragma once
-class Sequence : public CObject
-{
+class Sequence : public CObject {
 public:
 	Sequence(void);
 	~Sequence(void);

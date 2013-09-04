@@ -24,7 +24,7 @@ static void ParseResource(LPCSTR input, CString & machine, CString & resource);
 /////////////////////////////////////////////////////////////////////////////
 // ChildView
 ChildView::ChildView()
-		: m_event(TRUE, TRUE)
+	: m_event(TRUE, TRUE)
 {
 	m_pThread = NULL;
 }

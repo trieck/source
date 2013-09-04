@@ -146,58 +146,58 @@ typedef unsigned int yy_size_t;
 
 
 struct yy_buffer_state {
-	FILE *yy_input_file;
+FILE *yy_input_file;
 
-	char *yy_ch_buf;		/* input buffer */
-	char *yy_buf_pos;		/* current position in input buffer */
+char *yy_ch_buf;		/* input buffer */
+char *yy_buf_pos;		/* current position in input buffer */
 
-	/* Size of input buffer in bytes, not including room for EOB
-	 * characters.
-	 */
-	yy_size_t yy_buf_size;
+/* Size of input buffer in bytes, not including room for EOB
+ * characters.
+ */
+yy_size_t yy_buf_size;
 
-	/* Number of characters read into yy_ch_buf, not including EOB
-	 * characters.
-	 */
-	int yy_n_chars;
+/* Number of characters read into yy_ch_buf, not including EOB
+ * characters.
+ */
+int yy_n_chars;
 
-	/* Whether we "own" the buffer - i.e., we know we created it,
-	 * and can realloc() it to grow it, and should free() it to
-	 * delete it.
-	 */
-	int yy_is_our_buffer;
+/* Whether we "own" the buffer - i.e., we know we created it,
+ * and can realloc() it to grow it, and should free() it to
+ * delete it.
+ */
+int yy_is_our_buffer;
 
-	/* Whether this is an "interactive" input source; if so, and
-	 * if we're using stdio for input, then we want to use getc()
-	 * instead of fread(), to make sure we stop fetching input after
-	 * each newline.
-	 */
-	int yy_is_interactive;
+/* Whether this is an "interactive" input source; if so, and
+ * if we're using stdio for input, then we want to use getc()
+ * instead of fread(), to make sure we stop fetching input after
+ * each newline.
+ */
+int yy_is_interactive;
 
-	/* Whether we're considered to be at the beginning of a line.
-	 * If so, '^' rules will be active on the next match, otherwise
-	 * not.
-	 */
-	int yy_at_bol;
+/* Whether we're considered to be at the beginning of a line.
+ * If so, '^' rules will be active on the next match, otherwise
+ * not.
+ */
+int yy_at_bol;
 
-	/* Whether to try to fill the input buffer when we reach the
-	 * end of it.
-	 */
-	int yy_fill_buffer;
+/* Whether to try to fill the input buffer when we reach the
+ * end of it.
+ */
+int yy_fill_buffer;
 
-	int yy_buffer_status;
+int yy_buffer_status;
 #define YY_BUFFER_NEW 0
 #define YY_BUFFER_NORMAL 1
-	/* When an EOF's been seen but there's still some text to process
-	 * then we mark the buffer as YY_EOF_PENDING, to indicate that we
-	 * shouldn't try reading from the input source any more.  We might
-	 * still have a bunch of tokens to match, though, because of
-	 * possible backing-up.
-	 *
-	 * When we actually see the EOF, we change the status to "new"
-	 * (via yyrestart()), so that the user can continue scanning by
-	 * just pointing yyin at a new input file.
-	 */
+/* When an EOF's been seen but there's still some text to process
+ * then we mark the buffer as YY_EOF_PENDING, to indicate that we
+ * shouldn't try reading from the input source any more.  We might
+ * still have a bunch of tokens to match, though, because of
+ * possible backing-up.
+ *
+ * When we actually see the EOF, we change the status to "new"
+ * (via yyrestart()), so that the user can continue scanning by
+ * just pointing yyin at a new input file.
+ */
 #define YY_BUFFER_EOF_PENDING 2
 };
 
@@ -288,8 +288,8 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 #define YY_NUM_RULES 10
 #define YY_END_OF_BUFFER 11
 static yyconst short int yy_accept[21] = {   0,
-        0,    0,   11,    9,    1,    3,    2,    9,    4,    9,
-        6,    1,    2,    8,    5,    0,    4,    7,    6,    0
+                                             0,    0,   11,    9,    1,    3,    2,    9,    4,    9,
+                                             6,    1,    2,    8,    5,    0,    4,    7,    6,    0
                                          } ;
 
 static yyconst int yy_ec[256] = {   0,
@@ -328,29 +328,29 @@ static yyconst int yy_meta[11] = {   0,
                                  } ;
 
 static yyconst short int yy_base[23] = {   0,
-                                       0,    0,   23,   24,   20,   24,    0,    5,    7,   16,
-                                       0,   18,    0,   24,   12,   11,    0,   24,    0,   24,
-                                       14,   13
+                                           0,    0,   23,   24,   20,   24,    0,    5,    7,   16,
+                                           0,   18,    0,   24,   12,   11,    0,   24,    0,   24,
+                                           14,   13
                                        } ;
 
 static yyconst short int yy_def[23] = {   0,
-                                      20,    1,   20,   20,   20,   20,   21,   20,   20,   20,
-                                      22,   20,   21,   20,   20,   20,    9,   20,   22,    0,
-                                      20,   20
+                                          20,    1,   20,   20,   20,   20,   21,   20,   20,   20,
+                                          22,   20,   21,   20,   20,   20,    9,   20,   22,    0,
+                                          20,   20
                                       } ;
 
 static yyconst short int yy_nxt[35] = {   0,
-                                      4,    5,    6,    7,    4,    8,    9,   10,   11,    4,
-                                      14,   15,   16,   17,   13,   19,   13,   15,   15,   12,
-                                      18,   12,   20,    3,   20,   20,   20,   20,   20,   20,
-                                      20,   20,   20,   20
+                                          4,    5,    6,    7,    4,    8,    9,   10,   11,    4,
+                                          14,   15,   16,   17,   13,   19,   13,   15,   15,   12,
+                                          18,   12,   20,    3,   20,   20,   20,   20,   20,   20,
+                                          20,   20,   20,   20
                                       } ;
 
 static yyconst short int yy_chk[35] = {   0,
-                                      1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-                                      8,    8,    9,    9,   21,   22,   21,   16,   15,   12,
-                                      10,    5,    3,   20,   20,   20,   20,   20,   20,   20,
-                                      20,   20,   20,   20
+                                          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+                                          8,    8,    9,    9,   21,   22,   21,   16,   15,   12,
+                                          10,    5,    3,   20,   20,   20,   20,   20,   20,   20,
+                                          20,   20,   20,   20
                                       } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -379,7 +379,7 @@ char *yytext;
 
 int yywrap (void)
 {
-	return 1;
+return 1;
 }
 
 int lineno = 1;
@@ -570,7 +570,7 @@ YY_DECL {
 
 		if ( ! yy_current_buffer )
 			yy_current_buffer =
-			    yy_create_buffer( yyin, YY_BUF_SIZE );
+			yy_create_buffer( yyin, YY_BUF_SIZE );
 
 		yy_load_buffer_state();
 	}
@@ -638,7 +638,8 @@ do_action:	/* This label is used only to access EOF actions. */
 		case 3:
 			YY_RULE_SETUP
 #line 32 ".\\d:\\source\\c\\xi\\lexer.l"
-			{ lineno++;
+			{
+				lineno++;
 			}
 			YY_BREAK
 		case 4:
@@ -646,8 +647,9 @@ do_action:	/* This label is used only to access EOF actions. */
 		case 5:
 			YY_RULE_SETUP
 #line 34 ".\\d:\\source\\c\\xi\\lexer.l"
-			{ yylval.sym = tinstallf(yytext, SCONST | SFLOAT, atof(yytext));
-			  return NUMBER;
+			{
+				yylval.sym = tinstallf(yytext, SCONST | SFLOAT, atof(yytext));
+				return NUMBER;
 			}
 			YY_BREAK
 		case 6:
@@ -675,19 +677,22 @@ do_action:	/* This label is used only to access EOF actions. */
 		case 7:
 			YY_RULE_SETUP
 #line 54 ".\\d:\\source\\c\\xi\\lexer.l"
-			{ return ARROW;
+			{
+				return ARROW;
 			}
 			YY_BREAK
 		case 8:
 			YY_RULE_SETUP
 #line 55 ".\\d:\\source\\c\\xi\\lexer.l"
-			{ return RANGE;
+			{
+				return RANGE;
 			}
 			YY_BREAK
 		case 9:
 			YY_RULE_SETUP
 #line 56 ".\\d:\\source\\c\\xi\\lexer.l"
-			{ return yytext[0];
+			{
+				return yytext[0];
 			}
 			YY_BREAK
 		case 10:

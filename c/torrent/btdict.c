@@ -188,7 +188,8 @@ __int64 bt_dict_int(bt_dict *d, const char *k)
 }
 
 /* retrieve a date value from dictionary */
-struct tm *bt_dict_date(bt_dict *d, const char *k) {
+struct tm *bt_dict_date(bt_dict *d, const char *k)
+{
 	bt_element *v = bt_dict_search(d, k);
 	if (v == NULL) return NULL;
 	if (v->type != ET_INTEGER) return 0;

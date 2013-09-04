@@ -19,9 +19,9 @@ struct ThreadParams {
 IMPLEMENT_DYNAMIC(WaitDlg, CDialog)
 
 WaitDlg::WaitDlg(CWnd* pParent /*=NULL*/)
-		: CDialog(WaitDlg::IDD, pParent),
-		m_nTimer(0), m_hThread(NULL),
-		m_nSize(0), m_nFlags(0), m_Boot(false)
+	: CDialog(WaitDlg::IDD, pParent),
+	  m_nTimer(0), m_hThread(NULL),
+	  m_nSize(0), m_nFlags(0), m_Boot(false)
 {
 }
 

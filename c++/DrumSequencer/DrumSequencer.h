@@ -4,7 +4,7 @@
 #pragma once
 
 #ifndef __AFXWIN_H__
-	#error "include 'stdafx.h' before including this file for PCH"
+#error "include 'stdafx.h' before including this file for PCH"
 #endif
 
 #include "resource.h"       // main symbols
@@ -14,8 +14,7 @@
 // See DrumSequencer.cpp for the implementation of this class
 //
 
-class CDrumSequencerApp : public CWinAppEx
-{
+class CDrumSequencerApp : public CWinAppEx {
 public:
 	CDrumSequencerApp();
 	virtual ~CDrumSequencerApp();
@@ -35,7 +34,7 @@ public:
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
 private:
-	Sequencer m_sequencer;	
+	Sequencer m_sequencer;
 public:
 	virtual int ExitInstance();
 	afx_msg void OnSequencerStop();

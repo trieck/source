@@ -8,8 +8,8 @@ END_EVENT_TABLE()
 
 wxcdioCanvas::wxcdioCanvas(wxView *view, wxFrame *frame, const wxPoint& pos,
                            const wxSize& size, const long style) :
-		wxScrolledWindow(frame, wxID_ANY, pos, size, style), m_treeCtrl(NULL),
-		m_view(view)
+	wxScrolledWindow(frame, wxID_ANY, pos, size, style), m_treeCtrl(NULL),
+	m_view(view)
 {
 	m_treeCtrl = new wxcdioTreeCtrl(view, this);
 

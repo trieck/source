@@ -12,7 +12,7 @@
 #include "OurMacros.h"
 
 CPrefDlg::CPrefDlg(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
-		: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
+	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 {
 	m_pColorPage	= NULL;
 	m_pPiecePage	= NULL;

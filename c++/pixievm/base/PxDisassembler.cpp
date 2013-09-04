@@ -38,7 +38,7 @@ PxDisassembler::PxDisassembler() : ip(0)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-PxDisassembler::~PxDisassembler() 
+PxDisassembler::~PxDisassembler()
 {
 }
 

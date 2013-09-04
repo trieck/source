@@ -27,7 +27,7 @@ void LoadCmd::exec(const stringvec &v)
 		cerr << "? l file" << endl;
 		return;
 	}
-	
+
 	string filename = v[0];
 
 	struct _stat buf;
@@ -48,7 +48,7 @@ void LoadCmd::exec(const stringvec &v)
 	ifs.read((char*)&start, sizeof(word));
 	if (ifs.bad()) {
 		fprintf(stderr, "unable to read from file \"%s\".\n",
-			filename.c_str());
+		        filename.c_str());
 		return;
 	}
 
@@ -59,5 +59,5 @@ void LoadCmd::exec(const stringvec &v)
 	}
 
 	printf("file \"%s\" loaded @ $%.4x-$%.4x.\n", filename.c_str(),
-		start, start + (buf.st_size - sizeof(word)) - 1);
+	       start, start + (buf.st_size - sizeof(word)) - 1);
 }

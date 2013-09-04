@@ -7,8 +7,7 @@
 #define __BOARD_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Board
-{
+class Board {
 public:
 	Board();
 	virtual ~Board();
@@ -19,7 +18,7 @@ public:
 	HRESULT Create(ID2D1RenderTarget *pTarget);
 	void Destroy();
 
-	void Render(ID2D1RenderTarget *pTarget, const CRect &rc); 
+	void Render(ID2D1RenderTarget *pTarget, const CRect &rc);
 private:
 	enum { BOARD_SIZE = 8 };
 	enum { CX_PIECE = 53 };

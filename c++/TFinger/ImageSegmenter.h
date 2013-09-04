@@ -4,8 +4,7 @@
 
 // ImageSegmenter
 
-class ImageSegmenter
-{
+class ImageSegmenter {
 public:
 	ImageSegmenter();
 	virtual ~ImageSegmenter();

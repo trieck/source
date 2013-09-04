@@ -13,7 +13,7 @@ END_EVENT_TABLE()
 wxcdioFrame::wxcdioFrame(wxDocManager *manager, wxFrame *frame,
                          wxWindowID id, const wxString& title, const wxPoint& pos,
                          const wxSize& size, long style, const wxString& name)
-		: wxDocParentFrame(manager, frame, id, title, pos, size, style, name)
+	: wxDocParentFrame(manager, frame, id, title, pos, size, style, name)
 {
 	wxImage::AddHandler(new wxPNGHandler());
 

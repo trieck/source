@@ -12,7 +12,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 tagBlock::tagBlock()
-		: blockno(0), dirty(false), pv(0), size(0), laccess(0)
+	: blockno(0), dirty(false), pv(0), size(0), laccess(0)
 {
 }
 

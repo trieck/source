@@ -12,7 +12,7 @@
 // Constructor
 //
 MidiOutput :: MidiOutput(LPMIDIOUTCAPS pmidicaps, UINT id)
-		: OutputDevice(pmidicaps, id)
+	: OutputDevice(pmidicaps, id)
 {
 }
 

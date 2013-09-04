@@ -147,14 +147,14 @@ public:
 // Implementation
 private:
 	enum Flags {
-		NFLAG = 1 << 7,
-		VFLAG = 1 << 6,
-		UFLAG = 1 << 5,
-		BFLAG = 1 << 4,
-		DFLAG = 1 << 3,
-		IFLAG = 1 << 2,
-		ZFLAG = 1 << 1,
-		CFLAG = 1 << 0
+	    NFLAG = 1 << 7,
+	    VFLAG = 1 << 6,
+	    UFLAG = 1 << 5,
+	    BFLAG = 1 << 4,
+	    DFLAG = 1 << 3,
+	    IFLAG = 1 << 2,
+	    ZFLAG = 1 << 1,
+	    CFLAG = 1 << 0
 	};
 
 	BYTE a, x, y, s, p;

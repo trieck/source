@@ -14,7 +14,7 @@ BEGIN_MESSAGE_MAP(CConnDlg, CDialog)
 END_MESSAGE_MAP()
 
 CConnDlg :: CConnDlg(CWnd* pParentWnd) :
-		CDialog(CConnDlg::IDD, pParentWnd)
+	CDialog(CConnDlg::IDD, pParentWnd)
 {
 }
 

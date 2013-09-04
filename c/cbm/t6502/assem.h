@@ -22,17 +22,17 @@
 #define __ASSEM_H__
 #define MAXTOK 256
 typedef enum {
-	UNDEF = 0,
-	LITERAL,
-	STR,
-	NUM,
-	LPAREN = '(',
-	RPAREN = ')',
-	COMMA = ',',
-	POUND = '#',
-	SEMI = ';',
-	QUOTE = '\'',
-	PSEUDO = '.'
+    UNDEF = 0,
+    LITERAL,
+    STR,
+    NUM,
+    LPAREN = '(',
+    RPAREN = ')',
+    COMMA = ',',
+    POUND = '#',
+    SEMI = ';',
+    QUOTE = '\'',
+    PSEUDO = '.'
 } TokenType;
 typedef struct {
 	TokenType type;

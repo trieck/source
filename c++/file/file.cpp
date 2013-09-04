@@ -13,17 +13,17 @@ static const UINT uniqueID = 0UL;
 const _int64 File::seekFailure = -1;
 
 File::File(LPCTSTR name, File::openMode M)
-		: hFile(NULL),
-		filename(name),
-		mode(M)
+	: hFile(NULL),
+	  filename(name),
+	  mode(M)
 {
 	open();
 }
 
 File::File(HANDLE hfile)
-		: hFile(hfile),
-		filename(_T("")),
-		mode(unknown)
+	: hFile(hfile),
+	  filename(_T("")),
+	  mode(unknown)
 {
 }
 

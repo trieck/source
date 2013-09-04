@@ -868,15 +868,15 @@ extern BOOL Pieces(HWND hDlg, unsigned message,
                    WPARAM wParam, LPARAM lParam)
 {
 	LPCSTR szColors[5]			= {"BLUEBALL", "GREENBALL", "LTBLUEBALL",
-	                        "PURPLEBALL", "REDBALL"
-	                       };
+		"PURPLEBALL", "REDBALL"
+	};
 	UINT PONEPIECE[5]			= {IDC_PLAYERONEPIECE, IDC_PLAYERONEPIECE2,
-	                       IDC_PLAYERONEPIECE3, IDC_PLAYERONEPIECE4,
-	                       IDC_PLAYERONEPIECE5
+	                               IDC_PLAYERONEPIECE3, IDC_PLAYERONEPIECE4,
+	                               IDC_PLAYERONEPIECE5
 	                      };
 	UINT PTWOPIECE[5]			= {IDC_PLAYERTWOPIECE, IDC_PLAYERTWOPIECE2,
-	                       IDC_PLAYERTWOPIECE3, IDC_PLAYERTWOPIECE4,
-	                       IDC_PLAYERTWOPIECE5
+	                               IDC_PLAYERTWOPIECE3, IDC_PLAYERTWOPIECE4,
+	                               IDC_PLAYERTWOPIECE5
 	                      };
 
 	UINT i = 0;

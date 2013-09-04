@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "GreyscaleBitmap.h"
 
-// relative luminance 
+// relative luminance
 #define LUMINANCE(R,G,B)	\
 	(BYTE)((0.2126 * R) + (0.7152 * G) + (0.0722 * B))
 

@@ -92,56 +92,56 @@ bool MinutiaValidator::IsValidBifurcation(const CImage &image, int x, int y)
 		origin.ptLImage.x = m-1;
 		origin.ptLImage.y = n-1;
 		v.push_back(origin);
-	} 
-	
+	}
+
 	if (m_pkernel[0][1] == 0) {
 		origin.ptKernel.x = x;
 		origin.ptKernel.y = y-1;
 		origin.ptLImage.x = m;
 		origin.ptLImage.y = n-1;
 		v.push_back(origin);
-	} 
-	
+	}
+
 	if (m_pkernel[0][2] == 0) {
 		origin.ptKernel.x = x+1;
 		origin.ptKernel.y = y-1;
 		origin.ptLImage.x = m+1;
 		origin.ptLImage.y = n-1;
 		v.push_back(origin);
-	} 
-	
+	}
+
 	if (m_pkernel[1][2] == 0) {
 		origin.ptKernel.x = x+1;
 		origin.ptKernel.y = y;
 		origin.ptLImage.x = m+1;
 		origin.ptLImage.y = n;
 		v.push_back(origin);
-	} 
-	
+	}
+
 	if (m_pkernel[2][2] == 0) {
 		origin.ptKernel.x = x+1;
 		origin.ptKernel.y = y+1;
 		origin.ptLImage.x = m+1;
 		origin.ptLImage.y = n+1;
 		v.push_back(origin);
-	} 
-	
+	}
+
 	if (m_pkernel[2][1] == 0) {
 		origin.ptKernel.x = x;
 		origin.ptKernel.y = y+1;
 		origin.ptLImage.x = m;
 		origin.ptLImage.y = n+1;
 		v.push_back(origin);
-	} 
-	
+	}
+
 	if (m_pkernel[2][0] == 0) {
 		origin.ptKernel.x = x-1;
 		origin.ptKernel.y = y+1;
 		origin.ptLImage.x = m-1;
 		origin.ptLImage.y = n+1;
 		v.push_back(origin);
-	} 
-	
+	}
+
 	if (m_pkernel[1][0] == 0) {
 		origin.ptKernel.x = x-1;
 		origin.ptKernel.y = y;
@@ -153,9 +153,9 @@ bool MinutiaValidator::IsValidBifurcation(const CImage &image, int x, int y)
 	RidgeOriginVec::const_iterator it = v.begin();
 	for (int label = 1; it != v.end(); it++, label++) {
 		const RidgeOrigin &origin = *it;
-		Label(origin.ptLImage.x, origin.ptLImage.y, label);	
-		LabelRidge(image, origin.ptKernel.x, origin.ptKernel.y, 
-			origin.ptLImage.x, origin.ptLImage.y, label);
+		Label(origin.ptLImage.x, origin.ptLImage.y, label);
+		LabelRidge(image, origin.ptKernel.x, origin.ptKernel.y,
+		           origin.ptLImage.x, origin.ptLImage.y, label);
 	}
 
 	if (Transitions(1) != 1)
@@ -183,15 +183,15 @@ void MinutiaValidator::GetKernel(const CImage &image, int x, int y)
 		for (int j = 0, l = x-1; j < 3; j++, l++) {
 			if (IsVisited(l, k))
 				m_pkernel[i][j] = 1;
-			else 
+			else
 				m_pkernel[i][j] = PixelDigit(image, l, k);
 		}
-	}	
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void MinutiaValidator::LabelRidge(const CImage &image, int x, int y, int m, 
-	int n, int label)
+void MinutiaValidator::LabelRidge(const CImage &image, int x, int y, int m,
+                                  int n, int label)
 {
 	GetKernel(image, x, y);
 
@@ -279,13 +279,13 @@ UINT MinutiaValidator::KernelCount() const
 
 	// count black pixels clockwise in 8-neighborhood
 	if (m_pkernel[0][0] == 0) count++;
-    if (m_pkernel[0][1] == 0) count++;
-    if (m_pkernel[0][2] == 0) count++;
-    if (m_pkernel[1][2] == 0) count++;
-    if (m_pkernel[2][2] == 0) count++;
-    if (m_pkernel[2][1] == 0) count++;
-    if (m_pkernel[2][0] == 0) count++;
-    if (m_pkernel[1][0] == 0) count++;
+	if (m_pkernel[0][1] == 0) count++;
+	if (m_pkernel[0][2] == 0) count++;
+	if (m_pkernel[1][2] == 0) count++;
+	if (m_pkernel[2][2] == 0) count++;
+	if (m_pkernel[2][1] == 0) count++;
+	if (m_pkernel[2][0] == 0) count++;
+	if (m_pkernel[1][0] == 0) count++;
 
 	return count;
 }
@@ -295,8 +295,8 @@ bool MinutiaValidator::IsVisited(int x, int y) const
 {
 	CPoint pt(x, y);
 
-	if (std::find(m_visited.begin(), m_visited.end(), pt) 
-		!= m_visited.end()) {
+	if (std::find(m_visited.begin(), m_visited.end(), pt)
+	        != m_visited.end()) {
 		return true;
 	}
 

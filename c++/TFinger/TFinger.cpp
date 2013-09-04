@@ -20,7 +20,7 @@ BEGIN_MESSAGE_MAP(CTFingerApp, CWinAppEx)
 	ON_COMMAND(ID_APP_ABOUT, &CTFingerApp::OnAppAbout)
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
-	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)	
+	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
 END_MESSAGE_MAP()
 
 // CTFingerApp construction
@@ -63,16 +63,16 @@ BOOL CTFingerApp::InitInstance()
 	CMFCToolTipInfo ttParams;
 	ttParams.m_bVislManagerTheme = TRUE;
 	theApp.GetTooltipManager()->SetTooltipParams(AFX_TOOLTIP_TYPE_ALL,
-		RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
+	        RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
 
 	// Register the application's document templates.  Document templates
 	//  serve as the connection between documents, frame windows and views
 	CSingleDocTemplate* pDocTemplate;
 	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CTFingerDoc),
-		RUNTIME_CLASS(CMainFrame),       // main SDI frame window
-		RUNTIME_CLASS(CTFingerView));
+	    IDR_MAINFRAME,
+	    RUNTIME_CLASS(CTFingerDoc),
+	    RUNTIME_CLASS(CMainFrame),       // main SDI frame window
+	    RUNTIME_CLASS(CTFingerView));
 	if (!pDocTemplate)
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
@@ -101,8 +101,7 @@ BOOL CTFingerApp::InitInstance()
 }
 
 // CAboutDlg dialog used for App About
-class CAboutDlg : public CDialog
-{
+class CAboutDlg : public CDialog {
 public:
 	CAboutDlg();
 

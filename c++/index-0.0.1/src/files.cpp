@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Files::Files()
-		: count(0)
+	: count(0)
 {
 	files = new FileInfo[MAXFILES];
 	memset(files, 0, sizeof(FileInfo) * MAXFILES);

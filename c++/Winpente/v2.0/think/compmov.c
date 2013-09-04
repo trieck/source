@@ -632,8 +632,8 @@ BOOL CALLBACK TrajectoryProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 	LV_COLUMN			lvc;
 	LV_ITEM				lvi;
 	LPCTSTR				lpszHeaders[] = {_T("Piece"),
-	                            _T("Path"),
-	                            _T("Coordinates")
+	                                     _T("Path"),
+	                                     _T("Coordinates")
 	                           };
 	LPTRAJECTORYLIST	pTrajectories;
 	TCHAR				szBuffer[256];

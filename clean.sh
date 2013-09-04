@@ -15,7 +15,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # clean MSVC directories
-find . -type d \( -iname "debug" -o -iname "release" -o -iname "*upgrade*" \) -print -exec rm -rf {} \;
+find . -type d \( -iname "debug" -o -iname "release" -o -iname "*upgrade*" -o -iname "*backup*" \) -print -exec rm -rf {} \;
 
 
 

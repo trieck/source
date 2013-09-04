@@ -24,7 +24,7 @@ void VolPropPage::Dump(CDumpContext& dc) const
 
 
 VolPropPage::VolPropPage()
-		: CPropertyPage(VolPropPage::IDD)
+	: CPropertyPage(VolPropPage::IDD)
 {
 
 }

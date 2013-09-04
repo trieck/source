@@ -70,20 +70,16 @@ BOOL CWebDevApp::InitInstance()
 	CWebDevDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
-	{
+	if (nResponse == IDOK) {
 		// TODO: Place code here to handle when the dialog is
 		//  dismissed with OK
-	}
-	else if (nResponse == IDCANCEL)
-	{
+	} else if (nResponse == IDCANCEL) {
 		// TODO: Place code here to handle when the dialog is
 		//  dismissed with Cancel
 	}
 
 	// Delete the shell manager created above.
-	if (pShellManager != NULL)
-	{
+	if (pShellManager != NULL) {
 		delete pShellManager;
 	}
 

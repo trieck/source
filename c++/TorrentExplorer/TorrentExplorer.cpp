@@ -41,7 +41,7 @@ END_MESSAGE_MAP()
 // TorrentExplorer construction
 
 TorrentExplorer::TorrentExplorer()
-		: m_pSettings(NULL), m_pPalette(NULL), m_hMutex(INVALID_HANDLE_VALUE)
+	: m_pSettings(NULL), m_pPalette(NULL), m_hMutex(INVALID_HANDLE_VALUE)
 {
 }
 

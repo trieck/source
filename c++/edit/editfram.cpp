@@ -9,7 +9,7 @@
 #include "editfram.h"
 
 EditFrame::EditFrame(LPCSTR caption, int x, int y, int width, int height)
-		: FrameWindow(caption, x, y, width, height)
+	: FrameWindow(caption, x, y, width, height)
 {
 	RegisterMessages();
 }

@@ -7,6 +7,8 @@ fi
 
 winpath=`cygpath -a -w "$1"`
 
-vcbuild.exe /nologo /nocolor /upgrade "${winpath}"
-echo
+echo "Upgrading ${winpath}..."
+
+devenv.exe /upgrade "${winpath}"
+
 

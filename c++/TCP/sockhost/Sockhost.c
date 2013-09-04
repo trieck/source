@@ -833,7 +833,7 @@ VOID ReceiveCmd(HWND hWndList, INT i)
 	SCREENLINE		sl;
 	CHAR			szBuffer[80];
 	DWORD			nSecPerClust, nBytesPerSec,
-	nNumFreeClust, nTotalNumClust;
+	                nNumFreeClust, nTotalNumClust;
 	DISKINFOSTRUCT	dis;
 
 	// turn off FD_READ event until

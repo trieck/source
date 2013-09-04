@@ -16,13 +16,13 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CSettingsDlg, CPropertySheet)
 
 CSettingsDlg::CSettingsDlg(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
-		: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
+	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 {
 	m_pMiscPage = NULL;
 }
 
 CSettingsDlg::CSettingsDlg(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
-		: CPropertySheet(pszCaption, pParentWnd, iSelectPage)
+	: CPropertySheet(pszCaption, pParentWnd, iSelectPage)
 {
 	m_pMiscPage = NULL;
 }

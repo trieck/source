@@ -6,8 +6,7 @@
 
 
 // CWebDevDlg dialog
-class CWebDevDlg : public CDialogEx
-{
+class CWebDevDlg : public CDialogEx {
 // Construction
 public:
 	CWebDevDlg(CWnd* pParent = NULL);	// standard constructor
@@ -15,7 +14,7 @@ public:
 // Dialog Data
 	enum { IDD = IDD_WEBDEV_DIALOG };
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 
 

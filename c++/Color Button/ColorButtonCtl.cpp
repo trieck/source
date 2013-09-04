@@ -35,14 +35,14 @@ END_MESSAGE_MAP()
 
 BEGIN_DISPATCH_MAP(CColorButtonCtrl, COleControl)
 //{{AFX_DISPATCH_MAP(CColorButtonCtrl)
-DISP_PROPERTY_EX(CColorButtonCtrl, "BevelWidth", GetBevelWidth, SetBevelWidth, VT_I2)
-DISP_STOCKPROP_FONT()
-DISP_STOCKPROP_ENABLED()
-DISP_PROPERTY_EX_ID(CColorButtonCtrl, "BackColor", DISPID_BACKCOLOR, GetBackColor, SetBackColor, VT_COLOR)
-DISP_PROPERTY_EX_ID(CColorButtonCtrl, "ForeColor", DISPID_FORECOLOR, GetForeColor, SetForeColor, VT_COLOR)
-DISP_PROPERTY_EX_ID(CColorButtonCtrl, "Caption", DISPID_CAPTION, GetCaption, SetCaption, VT_BSTR)
+	DISP_PROPERTY_EX(CColorButtonCtrl, "BevelWidth", GetBevelWidth, SetBevelWidth, VT_I2)
+	DISP_STOCKPROP_FONT()
+	DISP_STOCKPROP_ENABLED()
+	DISP_PROPERTY_EX_ID(CColorButtonCtrl, "BackColor", DISPID_BACKCOLOR, GetBackColor, SetBackColor, VT_COLOR)
+	DISP_PROPERTY_EX_ID(CColorButtonCtrl, "ForeColor", DISPID_FORECOLOR, GetForeColor, SetForeColor, VT_COLOR)
+	DISP_PROPERTY_EX_ID(CColorButtonCtrl, "Caption", DISPID_CAPTION, GetCaption, SetCaption, VT_BSTR)
 //}}AFX_DISPATCH_MAP
-DISP_FUNCTION_ID(CColorButtonCtrl, "AboutBox", DISPID_ABOUTBOX, AboutBox, VT_EMPTY, VTS_NONE)
+	DISP_FUNCTION_ID(CColorButtonCtrl, "AboutBox", DISPID_ABOUTBOX, AboutBox, VT_EMPTY, VTS_NONE)
 END_DISPATCH_MAP()
 
 
@@ -51,7 +51,7 @@ END_DISPATCH_MAP()
 
 BEGIN_EVENT_MAP(CColorButtonCtrl, COleControl)
 //{{AFX_EVENT_MAP(CColorButtonCtrl)
-EVENT_STOCK_CLICK()
+	EVENT_STOCK_CLICK()
 //}}AFX_EVENT_MAP
 END_EVENT_MAP()
 

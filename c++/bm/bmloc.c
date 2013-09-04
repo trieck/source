@@ -87,9 +87,9 @@ HBITMAP CreateBitmapFromFile(HDC hDC, LPSTR szFileName)
 ///////////////
 // DlgProc
 BOOL CALLBACK DlgProc(	HWND  hwndDlg,	// handle to dialog box
-                       UINT  uMsg,		// message
-                       WPARAM  wParam,	// first message parameter
-                       LPARAM  lParam)
+                        UINT  uMsg,		// message
+                        WPARAM  wParam,	// first message parameter
+                        LPARAM  lParam)
 {
 	// bitmap filename
 	static char szFileName[_MAX_PATH + _MAX_FNAME + 1];

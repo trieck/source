@@ -12,7 +12,7 @@
 // Constructor
 //
 MidiStream::MidiStream(LPMIDIOUTCAPS pmidicaps, UINT id)
-		: OutputDevice(pmidicaps, id)
+	: OutputDevice(pmidicaps, id)
 {
 }
 

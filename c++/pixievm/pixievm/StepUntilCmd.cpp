@@ -46,13 +46,13 @@ void StepUntilCmd::exec(const stringvec &v)
 		}
 
 		// set instruction pointer
-		cpu->setIP(ip);	
+		cpu->setIP(ip);
 	}
-	
+
 	Monitor *mon = getMonitor();
 
 	g_interrupt.setTrap(this, reinterpret_cast<void*>(ip));
-	mon->setExit(true);	
+	mon->setExit(true);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -66,11 +66,11 @@ void StepUntilCmd::trap(void *data)
 
 	// check whether the last instruction executed was RET
 	// if so, break back into the monitor. Otherwise, keep stepping.
-	
+
 	byte instruction = mem->fetch(ip);
 	if (instruction == RET || mon->isRunning()) {
 		g_interrupt.setMonitorBreak(mon);
-	} else {		
+	} else {
 		ip = cpu->getIP();
 		g_interrupt.setTrap(this, reinterpret_cast<void*>(ip));
 	}

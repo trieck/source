@@ -15,7 +15,7 @@ LONG ODBManager::m_cCount = 0;
 
 /////////////////////////////////////////////////////////////////////////////
 ODBManager::ODBManager()
-		: m_cRef(0)
+	: m_cRef(0)
 {
 	m_pData = new ODBMgrData(this);
 	InterlockedIncrement(&m_cCount);

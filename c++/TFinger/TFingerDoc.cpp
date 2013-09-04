@@ -37,14 +37,14 @@ END_MESSAGE_MAP()
 
 // CTFingerDoc construction/destruction
 CTFingerDoc::CTFingerDoc()
- : m_segmented(FALSE), 
- m_normalized(FALSE),
- m_filtered(FALSE), 
- m_binarized(FALSE), 
- m_eroded(FALSE), 
- m_dilated(FALSE),
- m_skeletonized(FALSE),
- m_extracted(FALSE)
+	: m_segmented(FALSE),
+	  m_normalized(FALSE),
+	  m_filtered(FALSE),
+	  m_binarized(FALSE),
+	  m_eroded(FALSE),
+	  m_dilated(FALSE),
+	  m_skeletonized(FALSE),
+	  m_extracted(FALSE)
 {
 }
 
@@ -68,13 +68,13 @@ CSize CTFingerDoc::GetDocSize() const
 
 	size.cx = m_bitmap.GetWidth();
 	size.cy = m_bitmap.GetHeight();
-	
+
 	return size;
 }
 
 // CTFingerDoc serialization
 void CTFingerDoc::Serialize(CArchive& ar)
-{	
+{
 }
 
 // CTFingerDoc diagnostics
@@ -111,8 +111,8 @@ BOOL CTFingerDoc::OnOpenDocument(LPCTSTR lpszPathName)
 void CTFingerDoc::DeleteContents()
 {
 	m_bitmap.Destroy();
-	m_segmented = m_filtered = m_normalized = m_binarized = m_eroded = 
-		m_dilated = m_skeletonized = m_extracted = FALSE;
+	m_segmented = m_filtered = m_normalized = m_binarized = m_eroded =
+	                               m_dilated = m_skeletonized = m_extracted = FALSE;
 	m_minutia.clear();
 
 	CDocument::DeleteContents();

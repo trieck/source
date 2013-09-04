@@ -41,7 +41,7 @@ public:
 
 	void putWordAt(word location, word w);
 	void putByteAt(word location, byte b);
-	
+
 	word location() const;
 
 	void pass2();

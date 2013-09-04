@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Color Button", "Color Button.vcproj", "{4535F06C-54AA-43AE-8180-D13808B0C939}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Color Button", "Color Button.vcxproj", "{4535F06C-54AA-43AE-8180-D13808B0C939}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -52,92 +52,92 @@ typedef union {
 #define ID 272
 #define KEYWORD 273
 const short yylhs[] = {                                        -1,
-                      0,    0,    0,    1,    1,    2,    2,    2,    2,    2,
-                      2,    2,    2,    3,    4,    4,    5,    5,    6,    6,
-                      6,    7,    7,    8,
+                                                               0,    0,    0,    1,    1,    2,    2,    2,    2,    2,
+                                                               2,    2,    2,    3,    4,    4,    5,    5,    6,    6,
+                                                               6,    7,    7,    8,
                       };
 const short yylen[] = {                                         2,
-                      0,    1,    2,    1,    2,    1,    2,    2,    2,    2,
-                      2,    2,    3,    3,    0,    1,    1,    2,    1,    1,
-                      1,    1,    1,    3,
+                                                                0,    1,    2,    1,    2,    1,    2,    2,    2,    2,
+                                                                2,    2,    3,    3,    0,    1,    1,    2,    1,    1,
+                                                                1,    1,    1,    3,
                       };
 const short yydefred[] = {                                      0,
-                         0,    0,    0,    0,    6,   22,   23,    0,    0,   16,
-                         0,    0,   21,    3,    0,    0,   12,    7,    8,    9,
-                         10,   11,   14,   18,    0,   13,   24,
+                                                                0,    0,    0,    0,    6,   22,   23,    0,    0,   16,
+                                                                0,    0,   21,    3,    0,    0,   12,    7,    8,    9,
+                                                                10,   11,   14,   18,    0,   13,   24,
                          };
 const short yydgoto[] = {                                       2,
-                        3,    8,    5,    9,   10,   11,   12,   13,
+                                                                3,    8,    5,    9,   10,   11,   12,   13,
                         };
 const short yysindex[] = {                                    -73,
-                         -77, -237,  -73,  -37,    0,    0,    0,  -37,  -72,    0,
-                         -77, -243,    0,    0,  -37, -250,    0,    0,    0,    0,
-                         0,    0,    0,    0, -255,    0,    0,
+                                                              -77, -237,  -73,  -37,    0,    0,    0,  -37,  -72,    0,
+                                                              -77, -243,    0,    0,  -37, -250,    0,    0,    0,    0,
+                                                              0,    0,    0,    0, -255,    0,    0,
                          };
 const short yyrindex[] = {                                      3,
-                         -70,    0,    4,    1,    0,    0,    0,  -84,    0,    0,
-                         -69,  -80,    0,    0,    2,    0,    0,    0,    0,    0,
-                         0,    0,    0,    0,    0,    0,    0,
+                                                                -70,    0,    4,    1,    0,    0,    0,  -84,    0,    0,
+                                                                -69,  -80,    0,    0,    2,    0,    0,    0,    0,    0,
+                                                                0,    0,    0,    0,    0,    0,    0,
                          };
 const short yygindex[] = {                                      0,
-                         0,   12,    0,    0,   14,    0,    5,    0,
+                                                                0,   12,    0,    0,   14,    0,    5,    0,
                          };
 #define YYTABLESIZE 260
 const short yytable[] = {                                      22,
-                        4,    5,    1,    2,   20,   18,   19,   19,   19,   21,
-                        20,    4,   20,    1,   15,    6,    7,    1,   14,   25,
-                        23,   26,   15,   17,   24,    0,    0,    0,    0,   27,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    4,    5,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,   19,   19,    0,    0,
-                        20,   20,    0,    6,    7,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,   16,    0,    0,    0,   17,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                        0,    0,    0,    0,    0,    0,    4,    5,    1,    2,
+                                                               4,    5,    1,    2,   20,   18,   19,   19,   19,   21,
+                                                               20,    4,   20,    1,   15,    6,    7,    1,   14,   25,
+                                                               23,   26,   15,   17,   24,    0,    0,    0,    0,   27,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    4,    5,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,   19,   19,    0,    0,
+                                                               20,   20,    0,    6,    7,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,   16,    0,    0,    0,   17,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                                                               0,    0,    0,    0,    0,    0,    4,    5,    1,    2,
                         };
 const short yycheck[] = {                                      37,
-                        0,    0,    0,    0,   42,   43,   91,   45,   93,   47,
-                        91,    0,   93,   91,    3,  271,  272,   91,  256,  263,
-                        93,  272,   93,   93,   11,   -1,   -1,   -1,   -1,   25,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   91,   91,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,  271,  272,   -1,   -1,
-                        271,  272,   -1,  271,  272,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,  269,   -1,   -1,   -1,  273,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-                        -1,   -1,   -1,   -1,   -1,   -1,  256,  256,  256,  256,
+                                                               0,    0,    0,    0,   42,   43,   91,   45,   93,   47,
+                                                               91,    0,   93,   91,    3,  271,  272,   91,  256,  263,
+                                                               93,  272,   93,   93,   11,   -1,   -1,   -1,   -1,   25,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   91,   91,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,  271,  272,   -1,   -1,
+                                                               271,  272,   -1,  271,  272,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,  269,   -1,   -1,   -1,  273,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+                                                               -1,   -1,   -1,   -1,   -1,   -1,  256,  256,  256,  256,
                         };
 #define YYFINAL 2
 #ifndef YYDEBUG
@@ -313,7 +313,7 @@ yyloop:
 			if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
 			if (!yys) yys = "illegal-symbol";
 			printf("%sdebug: state %d, reading %d (%s)\n",
-			       YYPREFIX, yystate, yychar, yys);
+			YYPREFIX, yystate, yychar, yys);
 		}
 #endif
 	}
@@ -385,7 +385,7 @@ yyinrecovery:
 			if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
 			if (!yys) yys = "illegal-symbol";
 			printf("%sdebug: state %d, error recovery discards token %d (%s)\n",
-			       YYPREFIX, yystate, yychar, yys);
+			YYPREFIX, yystate, yychar, yys);
 		}
 #endif
 		yychar = (-1);
@@ -395,90 +395,106 @@ yyreduce:
 #if YYDEBUG
 	if (yydebug)
 		printf("%sdebug: state %d, reducing by rule %d (%s)\n",
-		       YYPREFIX, yystate, yyn, yyrule[yyn]);
+		YYPREFIX, yystate, yyn, yyrule[yyn]);
 #endif
 	yym = yylen[yyn];
 	yyval = yyvsp[1-yym];
 	switch (yyn) {
 	case 2:
 #line 39 ".\parser.y"
-		{ root = mkstmt(MKLIST, yyvsp[0].node);
+		{
+			root = mkstmt(MKLIST, yyvsp[0].node);
 			return 1;
 		}
 		break;
 	case 3:
 #line 41 ".\parser.y"
-		{ yyerrok;
+		{
+			yyerrok;
 		}
 		break;
 	case 5:
 #line 46 ".\parser.y"
-		{ yyval.node = lknodes(yyvsp[-1].node, yyvsp[0].node);
+		{
+			yyval.node = lknodes(yyvsp[-1].node, yyvsp[0].node);
 		}
 		break;
 	case 7:
 #line 51 ".\parser.y"
-		{ yyval.node = mkstmt(PLUS, yyvsp[-1].node);
+		{
+			yyval.node = mkstmt(PLUS, yyvsp[-1].node);
 		}
 		break;
 	case 8:
 #line 53 ".\parser.y"
-		{ yyval.node = mkstmt(SUB, yyvsp[-1].node);
+		{
+			yyval.node = mkstmt(SUB, yyvsp[-1].node);
 		}
 		break;
 	case 9:
 #line 55 ".\parser.y"
-		{ yyval.node = mkstmt(MULT, yyvsp[-1].node);
+		{
+			yyval.node = mkstmt(MULT, yyvsp[-1].node);
 		}
 		break;
 	case 10:
 #line 57 ".\parser.y"
-		{ yyval.node = mkstmt(DIV, yyvsp[-1].node);
+		{
+			yyval.node = mkstmt(DIV, yyvsp[-1].node);
 		}
 		break;
 	case 11:
 #line 59 ".\parser.y"
-		{ yyval.node = mkstmt(MOD, yyvsp[-1].node);
+		{
+			yyval.node = mkstmt(MOD, yyvsp[-1].node);
 		}
 		break;
 	case 12:
 #line 61 ".\parser.y"
-		{ yyval.node = mkstmt(yyvsp[0].sym->subtype, yyvsp[-1].node);
+		{
+			yyval.node = mkstmt(yyvsp[0].sym->subtype, yyvsp[-1].node);
 		}
 		break;
 	case 13:
 #line 63 ".\parser.y"
-		{ yyval.node = mkstmt2(CALL, yyvsp[-2].node, mkleaf(yyvsp[0].sym));
+		{
+			yyval.node = mkstmt2(CALL, yyvsp[-2].node, mkleaf(yyvsp[0].sym));
 		}
 		break;
 	case 14:
 #line 67 ".\parser.y"
-		{ yyval.node = mkstmt(MKLIST, yyvsp[-1].node);
+		{
+			yyval.node = mkstmt(MKLIST, yyvsp[-1].node);
 		}
 		break;
 	case 15:
 #line 71 ".\parser.y"
-		{ yyval.node = 0;
+		{
+			yyval.node = 0;
 		}
 		break;
 	case 18:
 #line 77 ".\parser.y"
-		{ yyval.node = lknodes(yyvsp[-1].node, yyvsp[0].node);
+		{
+			yyval.node = lknodes(yyvsp[-1].node, yyvsp[0].node);
 		}
 		break;
 	case 22:
 #line 86 ".\parser.y"
-		{ yyval.node = mkleaf(yyvsp[0].sym);
+		{
+			yyval.node = mkleaf(yyvsp[0].sym);
 		}
 		break;
 	case 23:
 #line 88 ".\parser.y"
-		{ yyval.node = mkleaf(yyvsp[0].sym);
+		{
+			yyval.node = mkleaf(yyvsp[0].sym);
 		}
 		break;
 	case 24:
 #line 92 ".\parser.y"
-		{ yyval.node = mkstmt2(RANGE, yyvsp[-2].node, yyvsp[0].node);
+		{
+			yyval.node = mkstmt2(RANGE, yyvsp[-2].node, yyvsp[0].node);
 		}
 		break;
 #line 485 ".\parser.c"

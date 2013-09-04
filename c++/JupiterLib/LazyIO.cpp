@@ -16,7 +16,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 LazyIO::LazyIO(uint16_t bsize, uint16_t hsize)
-		: io(bsize, hsize), blocksize(bsize), headersize(hsize), worker(this)
+	: io(bsize, hsize), blocksize(bsize), headersize(hsize), worker(this)
 {
 	hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
 }

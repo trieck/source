@@ -152,7 +152,7 @@ void CWySock :: OnReceive(int nErrorCode)
 	switch (this->Request.cType) {
 		DWORD	dwRtn;
 		DWORD	nSecPerClust, nBytesPerSec,
-		nNumFreeClust, nTotalNumClust;
+		        nNumFreeClust, nTotalNumClust;
 
 	case GET:
 		if (this->Request.cSubType == DISK) {	// disk info

@@ -2,7 +2,7 @@
 //
 // RANDOM.H : Random number generators
 //
-// Quick-and-dirty linear congruential generator 
+// Quick-and-dirty linear congruential generator
 // Based on Numerical Recipes, 2d ed., p. 284.
 //
 // Adapted from Allen Akin.
@@ -40,21 +40,20 @@
 #define __RANDOM_H__
 
 ///////////////////////////////////////////////////////////////////////////////
-class Random32 
-{
+class Random32 {
 public:
 // Construction / Destruction
 	Random32(uint32_t seed): i(seed) {}
 	Random32(): i(1) {}
-	virtual ~Random32(){}
-	
-// Interface		
+	virtual ~Random32() {}
+
+// Interface
 	inline uint32_t next() {
 		i = 1664525 * i + 1013904223;
 		return i;
 	}
-	
-// Implementation	
+
+// Implementation
 private:
 	uint32_t i;
 };
@@ -62,20 +61,19 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 // RandomDouble:  Returns a random floating-point value in the closed
 // interval [0.0, 1.0].
-class RandomDouble : public Random32 
-{
+class RandomDouble : public Random32 {
 public:
 // Construction / Destruction
 	RandomDouble(uint32_t seed):  Random32(seed) {}
 	RandomDouble(): Random32() {}
 	~RandomDouble() {}
-		
+
 // Interface
 	inline double next() {
 		return static_cast<double>(Random32::next()) / 4294967295.0;
 	}
-	
+
 // Implementation
-}; 
+};
 
 #endif // __RANDOM_H__

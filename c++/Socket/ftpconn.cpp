@@ -11,7 +11,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 FTPConnection::FTPConnection()
-		: hInternet(NULL), hConn(NULL)
+	: hInternet(NULL), hConn(NULL)
 {
 }
 
@@ -106,7 +106,7 @@ FTPConnection::FileIteratorPtr FTPConnection::GetIterator(LPCSTR patt)
 
 /////////////////////////////////////////////////////////////////////////////
 FTPConnection::FileIterator::FileIterator(const FTPConnection &rhs, LPCSTR ppatt)
-		: conn(rhs), patt(ppatt), hFind(NULL)
+	: conn(rhs), patt(ppatt), hFind(NULL)
 {
 }
 

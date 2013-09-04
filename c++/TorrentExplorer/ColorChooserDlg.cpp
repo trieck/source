@@ -16,7 +16,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 ColorChooserDlg::ColorChooserDlg(CWnd* pParent /*=NULL*/)
-		: CDialog(ColorChooserDlg::IDD, pParent)
+	: CDialog(ColorChooserDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(ColorChooserDlg)
 	// NOTE: the ClassWizard will add member initialization here

@@ -19,17 +19,17 @@
 extern "C"   {
 #endif
 
-	EXTERN_PROXY_FILE( misc )
+EXTERN_PROXY_FILE( misc )
 
 
-	PROXYFILE_LIST_START
-	/* Start of list */
-	REFERENCE_PROXY_FILE( misc ),
-	/* End of list */
-	PROXYFILE_LIST_END
+PROXYFILE_LIST_START
+/* Start of list */
+REFERENCE_PROXY_FILE( misc ),
+                      /* End of list */
+                      PROXYFILE_LIST_END
 
 
-	DLLDATA_ROUTINES( aProxyFileList, GET_DLL_CLSID )
+                      DLLDATA_ROUTINES( aProxyFileList, GET_DLL_CLSID )
 
 #ifdef __cplusplus
 }  /*extern "C" */

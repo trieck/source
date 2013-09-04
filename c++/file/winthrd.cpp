@@ -6,8 +6,8 @@
 #include "common.h"
 
 WinThread::WinThread()
-		: thread(0),
-		mainWnd(0)
+	: thread(0),
+	  mainWnd(0)
 {
 	currentMessage.message = WM_NULL;
 }

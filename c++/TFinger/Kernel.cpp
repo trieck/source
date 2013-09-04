@@ -3,7 +3,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Kernel::Kernel(int bsize, const BYTE *data)
- : m_blocksize(bsize)
+	: m_blocksize(bsize)
 {
 	m_data = new BYTE[bsize*bsize];
 	memcpy(m_data, data, bsize*bsize);

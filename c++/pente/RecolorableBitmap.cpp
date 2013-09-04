@@ -9,8 +9,8 @@
 // RecolorableBitmap
 
 RecolorableBitmap::RecolorableBitmap(COLORREF nSourceColor)
-		: TransparentBitmap(TRANSPARENT_COLOR), m_dwBmpSize(0), m_Bits(0),
-		m_Color(nSourceColor)
+	: TransparentBitmap(TRANSPARENT_COLOR), m_dwBmpSize(0), m_Bits(0),
+	  m_Color(nSourceColor)
 {
 }
 

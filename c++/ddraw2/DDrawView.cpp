@@ -56,7 +56,7 @@ END_MESSAGE_MAP()
 // DDrawView construction/destruction
 
 DDrawView::DDrawView()
-		: pdds(NULL)
+	: pdds(NULL)
 {
 }
 

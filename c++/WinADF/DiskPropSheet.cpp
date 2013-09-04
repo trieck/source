@@ -17,7 +17,7 @@ static PageDef pagedefs[] = {
 IMPLEMENT_DYNAMIC(DiskPropSheet, CPropertySheet)
 
 DiskPropSheet::DiskPropSheet(CWnd* pParentWnd)
-		: CPropertySheet(_T("Disk Image Information"), pParentWnd, 0), m_pPages(0), m_nPages(0)
+	: CPropertySheet(_T("Disk Image Information"), pParentWnd, 0), m_pPages(0), m_nPages(0)
 {
 }
 

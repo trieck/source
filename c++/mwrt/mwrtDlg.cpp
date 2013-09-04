@@ -68,9 +68,9 @@ static uint32_t getRegType(LPCTSTR t)
 }
 
 CmwrtDlg::CmwrtDlg(CWnd* pParent /*=NULL*/)
-		: CDialog(CmwrtDlg::IDD, pParent)
-		, m_Status(_T(""))
-		, m_Detail(_T(""))
+	: CDialog(CmwrtDlg::IDD, pParent)
+	, m_Status(_T(""))
+	, m_Detail(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }

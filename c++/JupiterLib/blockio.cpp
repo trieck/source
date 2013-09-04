@@ -12,7 +12,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 blockio::blockio(uint16_t bsize, uint16_t hsize)
-		: blocksize(bsize), headersize(hsize)
+	: blocksize(bsize), headersize(hsize)
 {
 }
 

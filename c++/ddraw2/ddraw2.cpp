@@ -29,7 +29,7 @@ END_MESSAGE_MAP()
 // DDrawApp construction
 
 DDrawApp::DDrawApp()
-		: pddraw(NULL)
+	: pddraw(NULL)
 {
 }
 

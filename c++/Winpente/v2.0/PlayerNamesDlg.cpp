@@ -17,7 +17,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 CPlayerNamesDlg::CPlayerNamesDlg(CWnd* pParent /*=NULL*/)
-		: CDialog(CPlayerNamesDlg::IDD, pParent)
+	: CDialog(CPlayerNamesDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CPlayerNamesDlg)
 	// NOTE: the ClassWizard will add member initialization here
@@ -29,7 +29,7 @@ CPlayerNamesDlg::CPlayerNamesDlg(CWnd* pParent /*=NULL*/)
 }
 
 CPlayerNamesDlg::CPlayerNamesDlg(CPenteDoc* pDoc, CWnd* pParent /*=NULL*/)
-		: m_pDoc(pDoc), CDialog(CPlayerNamesDlg::IDD, pParent)
+	: m_pDoc(pDoc), CDialog(CPlayerNamesDlg::IDD, pParent)
 {
 	ASSERT_VALID(m_pDoc);
 

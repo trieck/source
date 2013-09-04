@@ -6,8 +6,7 @@
 
 #include "BeatGrid.h"
 
-class CDrumSequencerView : public CView
-{
+class CDrumSequencerView : public CView {
 protected: // create from serialization only
 	CDrumSequencerView();
 	DECLARE_DYNCREATE(CDrumSequencerView)
@@ -56,6 +55,8 @@ public:
 
 #ifndef _DEBUG  // debug version in DrumSequencerView.cpp
 inline CDrumSequencerDoc* CDrumSequencerView::GetDocument() const
-   { return reinterpret_cast<CDrumSequencerDoc*>(m_pDocument); }
+{
+	return reinterpret_cast<CDrumSequencerDoc*>(m_pDocument);
+}
 #endif
 

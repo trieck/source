@@ -99,7 +99,7 @@ void Monitor::notice() const
 	if (m_show_notice) {
 		cout << "PixieVM Monitor version 0.0.1" << endl
 		     << "Copyright (c) 2006-2009 Thomas A. Rieck" << endl
-			 << "use CTRL+BREAK to break execution." << endl
+		     << "use CTRL+BREAK to break execution." << endl
 		     << "type '?' for help." << endl;
 	}
 }

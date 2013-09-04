@@ -9,12 +9,12 @@
 #include "filestream.h"
 
 /////////////////////////////////////////////////////////////////////////////
-FileStream::FileStream() 
- : m_hFile(INVALID_HANDLE_VALUE), m_cRef(0), m_nbuf(0), m_Flags(0)
- , m_BlockSize(0), m_Access(0),	m_ShareMode(0), m_Disposition(0)
+FileStream::FileStream()
+	: m_hFile(INVALID_HANDLE_VALUE), m_cRef(0), m_nbuf(0), m_Flags(0)
+	, m_BlockSize(0), m_Access(0),	m_ShareMode(0), m_Disposition(0)
 {
-	Alloc(); 
-    AddRef();	// not externally creatable
+	Alloc();
+	AddRef();	// not externally creatable
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -27,7 +27,7 @@ FileStream::~FileStream()
 /////////////////////////////////////////////////////////////////////////////
 ULONG FileStream::AddRef(void)
 {
-    return ++m_cRef;
+	return ++m_cRef;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -44,32 +44,32 @@ ULONG FileStream::Release(void)
 /////////////////////////////////////////////////////////////////////////////
 HRESULT FileStream::QueryInterface(REFIID riid, void** ppv)
 {
-    *ppv = NULL;
+	*ppv = NULL;
 
-    if (riid == IID_IUnknown)
-        *ppv = this;
-    if (riid == IID_ISequentialStream)
-        *ppv = this;
-    
-    if(*ppv) {
-        ((IUnknown*)*ppv)->AddRef();
-        return S_OK;
-    }
+	if (riid == IID_IUnknown)
+		*ppv = this;
+	if (riid == IID_ISequentialStream)
+		*ppv = this;
 
-    return E_NOINTERFACE;
+	if(*ppv) {
+		((IUnknown*)*ppv)->AddRef();
+		return S_OK;
+	}
+
+	return E_NOINTERFACE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 HRESULT FileStream::Read(void *pv, ULONG cb, ULONG* pcbRead)
 {
-    if (pcbRead)
-        *pcbRead = 0;
+	if (pcbRead)
+		*pcbRead = 0;
 
-    if (!pv)
-        return STG_E_INVALIDPOINTER;
+	if (!pv)
+		return STG_E_INVALIDPOINTER;
 
-    if (cb == 0)
-        return S_OK;
+	if (cb == 0)
+		return S_OK;
 
 	uint8_t* p = (uint8_t*)pv;
 	uint32_t k, n = cb;
@@ -79,7 +79,7 @@ HRESULT FileStream::Read(void *pv, ULONG cb, ULONG* pcbRead)
 			if (!ReadBlock())
 				return HRESULT_FROM_WIN32(GetLastError());
 		}
-		
+
 		if (m_nbuf == 0) {	// EOF
 			*pcbRead = cb - n;
 			return S_OK;
@@ -95,7 +95,7 @@ HRESULT FileStream::Read(void *pv, ULONG cb, ULONG* pcbRead)
 
 	*pcbRead = cb;
 
-    return S_OK;
+	return S_OK;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -119,7 +119,7 @@ BOOL FileStream::WriteBlock()
 	// if using non-buffered i/o, buffer size must be a multiple
 	// of the sector size.  In the case of writing a partial block, we must
 	// align the buffer size to a multiple of the sector size.
-	if (m_Flags & FILE_FLAG_NO_BUFFERING) {	
+	if (m_Flags & FILE_FLAG_NO_BUFFERING) {
 		if (DWORD(m_pbuf - m_buf) < m_BlockSize) {	// incomplete block
 			DWORD dwSize = SectorAlign(m_pbuf - m_buf);
 			DWORD dwBump = dwSize - (m_pbuf - m_buf);
@@ -142,11 +142,11 @@ HRESULT FileStream::Write(const void *pv, ULONG cb, ULONG* pcbWritten)
 	if (pcbWritten)
 		*pcbWritten = 0;
 
-    if (!pv)
-        return STG_E_INVALIDPOINTER;
+	if (!pv)
+		return STG_E_INVALIDPOINTER;
 
-    if (cb == 0)
-        return S_OK;
+	if (cb == 0)
+		return S_OK;
 
 	uint8_t* p = (uint8_t*)pv;
 	uint32_t k, n = cb;
@@ -156,7 +156,7 @@ HRESULT FileStream::Write(const void *pv, ULONG cb, ULONG* pcbWritten)
 			if (!WriteBlock())
 				return HRESULT_FROM_WIN32(GetLastError());
 		}
-		
+
 		k = min(n, m_nbuf);
 		memcpy(m_pbuf, p, k);
 		n -= k;
@@ -185,15 +185,15 @@ void FileStream::Free()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-FileStream *FileStream::Create(LPCTSTR lpFileName, DWORD dwDesiredAccess, 
-	DWORD dwShareMode, DWORD dwCreationDisposition, 
-	DWORD dwFlagsAndAttributes) 
+FileStream *FileStream::Create(LPCTSTR lpFileName, DWORD dwDesiredAccess,
+                               DWORD dwShareMode, DWORD dwCreationDisposition,
+                               DWORD dwFlagsAndAttributes)
 {
 	FileStream *pStream = new FileStream();
-	if (!pStream->Open(lpFileName, dwDesiredAccess, dwShareMode, 
-		dwCreationDisposition, dwFlagsAndAttributes)) {
-			pStream->Release();
-			return NULL;		
+	if (!pStream->Open(lpFileName, dwDesiredAccess, dwShareMode,
+	                   dwCreationDisposition, dwFlagsAndAttributes)) {
+		pStream->Release();
+		return NULL;
 	}
 
 	return pStream;
@@ -201,7 +201,7 @@ FileStream *FileStream::Create(LPCTSTR lpFileName, DWORD dwDesiredAccess,
 
 /////////////////////////////////////////////////////////////////////////////
 BOOL FileStream::Open(LPCTSTR lpFileName, DWORD dwDesiredAccess,
- DWORD dwShareMode, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes)
+                      DWORD dwShareMode, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes)
 {
 	Close();
 
@@ -212,12 +212,12 @@ BOOL FileStream::Open(LPCTSTR lpFileName, DWORD dwDesiredAccess,
 	m_Flags = dwFlagsAndAttributes | FILE_FLAG_SEQUENTIAL_SCAN;
 
 	m_hFile = CreateFile(lpFileName, dwDesiredAccess, dwShareMode, NULL,
-		dwCreationDisposition, m_Flags, NULL);
+	                     dwCreationDisposition, m_Flags, NULL);
 	return m_hFile != INVALID_HANDLE_VALUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-HRESULT FileStream::Close() 
+HRESULT FileStream::Close()
 {
 	if (m_hFile != INVALID_HANDLE_VALUE) {
 		// flush file buffers
@@ -227,18 +227,18 @@ HRESULT FileStream::Close()
 				return HRESULT_FROM_WIN32(GetLastError());
 
 			// if using non-buffered i/o, we must truncate the file
-			// if the last block written was not a multiple of the 
+			// if the last block written was not a multiple of the
 			// sector size.
 			if (m_Flags & FILE_FLAG_NO_BUFFERING) {
 				DWORD dwSize = SectorAlign(toWrite);
 				DWORD bump = dwSize - toWrite;
-				
+
 				// close and reopen the file using buffered i/o
 				CloseHandle(m_hFile);
 				m_Flags &= ~FILE_FLAG_NO_BUFFERING;
 
-				m_hFile = CreateFile(m_FileName.c_str(), m_Access, m_ShareMode, 
-					NULL, OPEN_EXISTING, m_Flags, NULL);
+				m_hFile = CreateFile(m_FileName.c_str(), m_Access, m_ShareMode,
+				                     NULL, OPEN_EXISTING, m_Flags, NULL);
 				if (m_hFile == INVALID_HANDLE_VALUE)
 					return HRESULT_FROM_WIN32(GetLastError());
 
@@ -250,10 +250,10 @@ HRESULT FileStream::Close()
 
 				size.QuadPart -= bump;
 
-				DWORD dwPtrLow = SetFilePointer(m_hFile, size.LowPart, 
-					&size.HighPart, FILE_BEGIN);
-				if (dwPtrLow == INVALID_SET_FILE_POINTER && 
-					(GetLastError() != NO_ERROR)) {
+				DWORD dwPtrLow = SetFilePointer(m_hFile, size.LowPart,
+				                                &size.HighPart, FILE_BEGIN);
+				if (dwPtrLow == INVALID_SET_FILE_POINTER &&
+				        (GetLastError() != NO_ERROR)) {
 					return HRESULT_FROM_WIN32(GetLastError());
 				}
 
@@ -273,8 +273,8 @@ HRESULT FileStream::Close()
 HRESULT FileStream::GetFileSize(PLARGE_INTEGER pFileSize)
 {
 	pFileSize->LowPart = ::GetFileSize(m_hFile, (LPDWORD)&pFileSize->HighPart);
-	if (pFileSize->LowPart == INVALID_FILE_SIZE && 
-		(GetLastError() != NO_ERROR)) {
+	if (pFileSize->LowPart == INVALID_FILE_SIZE &&
+	        (GetLastError() != NO_ERROR)) {
 		return HRESULT_FROM_WIN32(GetLastError());
 	}
 

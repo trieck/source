@@ -20,8 +20,8 @@ static const int maxTempo = 400;
 
 
 TempoDlg::TempoDlg(Measure * pMeasure, CWnd* pParent /*=NULL*/)
-		: m_pMeasure(pMeasure),
-		CDialog(TempoDlg::IDD, pParent)
+	: m_pMeasure(pMeasure),
+	  CDialog(TempoDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(TempoDlg)
 	m_Tempo = DEFAULT_TEMPO;

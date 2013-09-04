@@ -7,8 +7,7 @@
 #define MT_RIDGE_BIFUR		(3)
 #define MT_CROSSING			(4)
 
-class Minutia 
-{
+class Minutia {
 public:
 	Minutia();
 	Minutia(const Minutia &rhs);
@@ -17,6 +16,6 @@ public:
 	Minutia &operator = (const Minutia &rhs);
 
 	int type;	// type of minutia
-	int x;		// location		
+	int x;		// location
 	int y;
 };

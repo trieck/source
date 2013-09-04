@@ -9,8 +9,8 @@
 // TransparentBitmap
 
 TransparentBitmap::TransparentBitmap(COLORREF transparent)
-		: m_Transparent(transparent), m_pOldBitmapAnd(NULL), m_pOldBitmapXor(NULL),
-		m_pOldBitmapMem(NULL)
+	: m_Transparent(transparent), m_pOldBitmapAnd(NULL), m_pOldBitmapXor(NULL),
+	  m_pOldBitmapMem(NULL)
 {
 }
 

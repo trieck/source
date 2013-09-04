@@ -27,7 +27,7 @@ int Gx(const CImage &image, int x, int y)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	LPCBYTE pbits = reinterpret_cast<LPCBYTE>(image.GetBits());	
+	LPCBYTE pbits = reinterpret_cast<LPCBYTE>(image.GetBits());
 
 	int sumX = 0;
 
@@ -50,7 +50,7 @@ int Gy(const CImage &image, int x, int y)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	LPCBYTE pbits = reinterpret_cast<LPCBYTE>(image.GetBits());	
+	LPCBYTE pbits = reinterpret_cast<LPCBYTE>(image.GetBits());
 
 	int sumY = 0;
 

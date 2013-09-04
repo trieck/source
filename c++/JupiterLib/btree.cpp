@@ -157,7 +157,7 @@ const uint16_t BTree::minorVer = 0x0001;
 
 /////////////////////////////////////////////////////////////////////////////
 BTree::BTree()
-		: io(PAGE_SIZE, sizeof(FileHeader))
+	: io(PAGE_SIZE, sizeof(FileHeader))
 {
 	memset(&header, 0, sizeof(FileHeader));
 	allocpages();

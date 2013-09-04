@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 Query::Query(BTree &t)
-		: btree(t), m_pStream(NULL)
+	: btree(t), m_pStream(NULL)
 {
 }
 

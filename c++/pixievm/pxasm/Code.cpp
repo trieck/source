@@ -478,7 +478,7 @@ void Code::pushsym(LPSYMBOL s)
 		}
 		break;
 	case ST_OP:	// operator
-		program.pushop(s->opcode);	
+		program.pushop(s->opcode);
 		pushsym(s->args);
 		break;
 	default:

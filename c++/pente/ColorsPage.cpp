@@ -22,7 +22,7 @@ BEGIN_MESSAGE_MAP(CColorsPage, CPropertyPage)
 END_MESSAGE_MAP()
 
 CColorsPage::CColorsPage()
-		: CPropertyPage(CColorsPage::IDD), m_ModFlags(0)
+	: CPropertyPage(CColorsPage::IDD), m_ModFlags(0)
 {
 }
 

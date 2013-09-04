@@ -11,13 +11,13 @@
 ///////////////////////////////////////////////////////////////////////
 // Duration enumeration
 typedef enum {
-	EmptyNote = 0,
-	WholeNote = 1,
-	HalfNote = 2,
-	QuarterNote = 4,
-	EigthNote = 8,
-	SixteenthNote = 16,
-	ThirtySecondNote = 32
+    EmptyNote = 0,
+    WholeNote = 1,
+    HalfNote = 2,
+    QuarterNote = 4,
+    EigthNote = 8,
+    SixteenthNote = 16,
+    ThirtySecondNote = 32
 } Duration;
 
 #define COLOR_WHITE     RGB(255, 255, 255)

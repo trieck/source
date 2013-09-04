@@ -9,20 +9,19 @@
 #define __LIBFILE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class LibraryFile
-{
+class LibraryFile {
 // Construction / Destruction
 public:
 	LibraryFile();
 	virtual ~LibraryFile();
 
-// Interface    
-    void Dump(LPVOID lpBase);
+// Interface
+	void Dump(LPVOID lpBase);
 
 // Implementation
 private:
-	void DumpArchiveMemberHeader(PIMAGE_ARCHIVE_MEMBER_HEADER 
-		pArchHeader, DWORD fileOffset);
+	void DumpArchiveMemberHeader(PIMAGE_ARCHIVE_MEMBER_HEADER
+	                             pArchHeader, DWORD fileOffset);
 	void DumpImportLibraryRecord(IMPORT_OBJECT_HEADER *pImpObjHdr);
 	void DumpFirstLinkerMember(PVOID p);
 	void DumpSecondLinkerMember(PVOID p);

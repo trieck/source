@@ -56,11 +56,11 @@ protected:
 
 private:
 	enum {
-		BKGND_COLOR = 1 << 0,
-		TEXT_COLOR = 1 << 1,
-		GRID_COLOR = 1 << 2,
-		HILIGHT_COLOR = 1 << 3,
-		HILIGHT_BORDER_COLOR = 1 << 4
+	    BKGND_COLOR = 1 << 0,
+	    TEXT_COLOR = 1 << 1,
+	    GRID_COLOR = 1 << 2,
+	    HILIGHT_COLOR = 1 << 3,
+	    HILIGHT_BORDER_COLOR = 1 << 4
 	};
 	DWORD m_ModFlags;
 };

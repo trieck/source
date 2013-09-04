@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libadf", "libadf.vcproj", "{ECE4D6C0-0634-4C7F-9C68-BA992CDF3742}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libadf", "libadf.vcxproj", "{ECE4D6C0-0634-4C7F-9C68-BA992CDF3742}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -20,7 +20,7 @@ void GaborFilter::Apply(CImage &image)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	int gx, gy;
 	int Vx, Vy;
@@ -30,7 +30,8 @@ void GaborFilter::Apply(CImage &image)
 
 	for (int y = 0; y < rows; y++) {
 		for (int x = 0; x < cols; x++) {
-			Vx = 0; Vy = 0;
+			Vx = 0;
+			Vy = 0;
 
 			// estimate the local orientation of block centered at (x, y)
 			for (int j = y - BLOCK_SIZE/2; j <= y + BLOCK_SIZE/2; j++) {
@@ -49,7 +50,7 @@ void GaborFilter::Apply(CImage &image)
 			Px = cos(2 * theta);
 			Py = sin(2 * theta);
 
-			// perform gaussian smoothing 
+			// perform gaussian smoothing
 
 		}
 	}

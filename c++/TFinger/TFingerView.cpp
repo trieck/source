@@ -60,7 +60,7 @@ void CTFingerView::OnDraw(CDC* pDC)
 
 	// draw the image
 	pImage->BitBlt(pDC->GetSafeHdc(), rc.left, rc.top,
-		rc.Width(), rc.Height(), rc.left, rc.top);
+	               rc.Width(), rc.Height(), rc.left, rc.top);
 
 	// draw the minutia
 	const MinutiaVec *pMinutia;
@@ -125,13 +125,13 @@ void CTFingerView::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
 
-	CSize sizeTotal;		
+	CSize sizeTotal;
 	CTFingerDoc* pDoc = GetDocument();
 	if (pDoc != NULL) {
 		sizeTotal = pDoc->GetDocSize();
 	}
 
-	SetScrollSizes(MM_TEXT, sizeTotal);	
+	SetScrollSizes(MM_TEXT, sizeTotal);
 }
 
 int CTFingerView::OnCreate(LPCREATESTRUCT lpCreateStruct)

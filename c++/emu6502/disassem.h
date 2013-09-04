@@ -9,19 +9,19 @@
 #define __DISASSEM_H__
 
 enum Modes {
-	IMMEDIATE = 0,
-	_ABSOLUTE,	/* conflicts with wingdi.h */
-	ZPAGE,
-	ACCUM,
-	IMPLIED,
-	INDX,
-	INDY,
-	ZPAGEX,
-	ABSX,
-	ABSY,
-	IND,
-	ZPAGEY,
-	_RELATIVE	/* conflicts with wingdi.h */
+    IMMEDIATE = 0,
+    _ABSOLUTE,	/* conflicts with wingdi.h */
+    ZPAGE,
+    ACCUM,
+    IMPLIED,
+    INDX,
+    INDY,
+    ZPAGEX,
+    ABSX,
+    ABSY,
+    IND,
+    ZPAGEY,
+    _RELATIVE	/* conflicts with wingdi.h */
 };
 
 typedef struct tagInstruction {

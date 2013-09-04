@@ -16,7 +16,7 @@ static char THIS_FILE[] = __FILE__;
 // CScoresDlg dialog
 
 CScoresDlg::CScoresDlg(CWnd* pParent /*=NULL*/)
-		: CDialog(CScoresDlg::IDD, pParent)
+	: CDialog(CScoresDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CScoresDlg)
 	// NOTE: the ClassWizard will add member initialization here

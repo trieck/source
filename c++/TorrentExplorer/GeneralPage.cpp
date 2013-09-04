@@ -17,7 +17,7 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(GeneralPage, CPropertyPage)
 
 GeneralPage::GeneralPage()
-		: CPropertyPage(GeneralPage::IDD), m_Dirty(FALSE)
+	: CPropertyPage(GeneralPage::IDD), m_Dirty(FALSE)
 {
 	//{{AFX_DATA_INIT(GeneralPage)
 	m_SaveWin = FALSE;

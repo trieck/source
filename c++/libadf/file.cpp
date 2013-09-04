@@ -17,8 +17,8 @@
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, fileheader_t *pheader)
-		: volume(pVol), pos(0), blockpos(0), extentpos(0), nblocks(0),
-		currblock(0), data(&buffer[0]), writemode(false)
+	: volume(pVol), pos(0), blockpos(0), extentpos(0), nblocks(0),
+	  currblock(0), data(&buffer[0]), writemode(false)
 {
 	memcpy(&header, pheader, sizeof(fileheader_t));
 	memset(buffer, 0, BSIZE);
@@ -27,8 +27,8 @@ File::File(Volume *pVol, fileheader_t *pheader)
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, entryblock_t *pEntry)
-		: volume(pVol), pos(0), blockpos(0), extentpos(0), nblocks(0), currblock(0),
-		data(&buffer[0]), writemode(false)
+	: volume(pVol), pos(0), blockpos(0), extentpos(0), nblocks(0), currblock(0),
+	  data(&buffer[0]), writemode(false)
 {
 	memcpy(&header, pEntry, sizeof(fileheader_t));
 	memset(buffer, 0, BSIZE);
@@ -37,8 +37,8 @@ File::File(Volume *pVol, entryblock_t *pEntry)
 
 /////////////////////////////////////////////////////////////////////////////
 File::File(Volume *pVol, const Entry &e)
-		: volume(pVol), pos(0), blockpos(0), nblocks(0), currblock(0),
-		data(&buffer[0]), writemode(false)
+	: volume(pVol), pos(0), blockpos(0), nblocks(0), currblock(0),
+	  data(&buffer[0]), writemode(false)
 {
 	memset(buffer, 0, BSIZE);
 	memset(&extent, 0, sizeof(fileext_t));

@@ -38,7 +38,7 @@ BOOL CDrumSequencerDoc::OnNewDocument()
 
 	// TODO: add reinitialization code here
 	// (SDI documents will reuse this document)
-	
+
 	return TRUE;
 }
 
@@ -76,7 +76,7 @@ void CDrumSequencerDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
 void CDrumSequencerDoc::InitializeSearchContent()
 {
 	CString strSearchContent;
-	// Set search contents from document's data. 
+	// Set search contents from document's data.
 	// The content parts should be separated by ";"
 
 	// For example:  strSearchContent = _T("point;rectangle;circle;ole object;");
@@ -85,16 +85,12 @@ void CDrumSequencerDoc::InitializeSearchContent()
 
 void CDrumSequencerDoc::SetSearchContent(const CString& value)
 {
-	if (value.IsEmpty())
-	{
+	if (value.IsEmpty()) {
 		RemoveChunk(PKEY_Search_Contents.fmtid, PKEY_Search_Contents.pid);
-	}
-	else
-	{
+	} else {
 		CMFCFilterChunkValueImpl *pChunk = NULL;
 		ATLTRY(pChunk = new CMFCFilterChunkValueImpl);
-		if (pChunk != NULL)
-		{
+		if (pChunk != NULL) {
 			pChunk->SetTextValue(PKEY_Search_Contents, value, CHUNK_TEXT);
 			SetChunkValue(pChunk);
 		}
@@ -149,5 +145,5 @@ void CDrumSequencerDoc::OnSequencerPlay()
 
 void CDrumSequencerDoc::OnUpdateFileSave(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(IsModified());	
+	pCmdUI->Enable(IsModified());
 }

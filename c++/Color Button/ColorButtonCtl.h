@@ -78,8 +78,8 @@ protected:
 // Dispatch and event IDs
 public:
 	enum {
-		//{{AFX_DISP_ID(CColorButtonCtrl)
-		dispidBevelWidth = 1L,
-		//}}AFX_DISP_ID
+	    //{{AFX_DISP_ID(CColorButtonCtrl)
+	    dispidBevelWidth = 1L,
+	    //}}AFX_DISP_ID
 	};
 };

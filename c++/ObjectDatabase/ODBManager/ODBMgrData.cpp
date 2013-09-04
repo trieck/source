@@ -12,8 +12,8 @@
 
 /////////////////////////////////////////////////////////////////////////////
 ODBMgrData::ODBMgrData(LPUNKNOWN pUnknown)
-		: m_cRef(0), m_pUnknown(pUnknown), m_pConsoleNameSpace(NULL),
-		m_pConsole(NULL)
+	: m_cRef(0), m_pUnknown(pUnknown), m_pConsoleNameSpace(NULL),
+	  m_pConsole(NULL)
 {
 }
 

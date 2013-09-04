@@ -16,16 +16,16 @@ LPBYTE *AllocMatrix(UINT rows, UINT cols)
 
 	LPDWORD pdwBlock = (LPDWORD)GlobalAlloc(GMEM_FIXED, size);
 
-	*pdwBlock++ = rows;	
+	*pdwBlock++ = rows;
 	*pdwBlock++ = cols;
 
 	LPBYTE *block = (LPBYTE*)pdwBlock;
 
 	for (DWORD i = 0; i < rows; i++) {
 		block[i] = (LPBYTE)GlobalAlloc(GMEM_FIXED, cols * sizeof(BYTE));
-	}	
+	}
 
-	return block;	
+	return block;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@ void FreeMatrix(LPBYTE *m)
 {
 	LPDWORD pdwBlock = REAL_BLOCK(m);
 	DWORD rows = *pdwBlock;
-		
+
 	for (DWORD i = 0; i < rows; i++) {
 		GlobalFree(m[i]);
 	}
@@ -46,7 +46,7 @@ void ClearMatrix(LPBYTE *m)
 	LPDWORD pdwBlock = REAL_BLOCK(m);
 	DWORD rows = *pdwBlock++;
 	DWORD cols = *pdwBlock;
-	
+
 	for (DWORD i = 0; i < rows; i++) {
 		for (DWORD j = 0; j < cols; j++) {
 			m[i][j] = 0;

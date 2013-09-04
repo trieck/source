@@ -11,7 +11,7 @@
 IMPLEMENT_DYNAMIC(OptionsPage, CPropertyPage)
 
 OptionsPage::OptionsPage()
-		: CPropertyPage(OptionsPage::IDD)
+	: CPropertyPage(OptionsPage::IDD)
 {
 	PenteApp *pApp = (PenteApp*)AfxGetApp();
 	m_TwoPlayerGame = pApp->isTwoPlayerGame() ? 0 : 1;

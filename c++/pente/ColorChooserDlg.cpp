@@ -11,7 +11,7 @@
 IMPLEMENT_DYNAMIC(CColorChooserDlg, CDialog)
 
 CColorChooserDlg::CColorChooserDlg(CWnd* pParent /*=NULL*/)
-		: CDialog(CColorChooserDlg::IDD, pParent)
+	: CDialog(CColorChooserDlg::IDD, pParent)
 {
 
 }

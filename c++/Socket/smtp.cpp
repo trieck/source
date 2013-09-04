@@ -20,7 +20,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 SmtpMail::SmtpMail(const char *phost)
-		: host(phost)
+	: host(phost)
 {
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock == INVALID_SOCKET)

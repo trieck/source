@@ -20,7 +20,7 @@ String::String(LPBYTE pdata, INT len)
 
 /////////////////////////////////////////////////////////////////////////////
 String::String(const String &str)
-		: data(NULL), nlen(0)
+	: data(NULL), nlen(0)
 {
 	*this = str;
 }

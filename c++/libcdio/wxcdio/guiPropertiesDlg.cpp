@@ -3,7 +3,7 @@
 #include "util.h"
 
 guiPropertiesDlg::guiPropertiesDlg(wxWindow* parent, iso9660_stat_t *stat)
-		: PropertiesDlg(parent), m_stat(stat)
+	: PropertiesDlg(parent), m_stat(stat)
 {
 	m_rbDirectory->Enable(false);
 	m_rbFile->Enable(false);

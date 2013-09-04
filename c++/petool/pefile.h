@@ -9,15 +9,14 @@
 #define __PEFILE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class PEFile
-{
+class PEFile {
 // Construction / Destruction
 public:
 	PEFile();
 	virtual ~PEFile();
 
-// Interface    
-    static void Dump(LPCTSTR filename);
+// Interface
+	static void Dump(LPCTSTR filename);
 
 // Implementation
 private:

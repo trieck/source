@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 BstrStream::BstrStream()
-		: m_cRef(1), m_Pos(0), m_Size(0), m_Buf(0)	// new creation only
+	: m_cRef(1), m_Pos(0), m_Size(0), m_Buf(0)	// new creation only
 {
 	alloc();
 }

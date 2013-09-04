@@ -14,14 +14,14 @@
 /////////////////////////////////////////////////////////////////////////////
 // Symbol type
 enum SymbolType {
-	ST_UNDEF = 0,		// undefined
-	ST_REG,				// cpu register 
-	ST_INSTRUCTION,		// CPU instruction 
-	ST_ID, 				// identifier 
-	ST_CONST,			// numeric constant 
-	ST_STRING,			// string literal
-	ST_OP,				// operator
-	ST_LIST				// list of symbols
+    ST_UNDEF = 0,		// undefined
+    ST_REG,				// cpu register
+    ST_INSTRUCTION,		// CPU instruction
+    ST_ID, 				// identifier
+    ST_CONST,			// numeric constant
+    ST_STRING,			// string literal
+    ST_OP,				// operator
+    ST_LIST				// list of symbols
 };
 
 class Symbol;
@@ -44,7 +44,7 @@ public:
 		const Instr *instr;	// instruction
 		uint32_t opcode;	// operator code
 		word val16;			// word value
-		byte val8;			// byte value		
+		byte val8;			// byte value
 	};
 	string sval;			// string value
 	Symbol *args;			// operator arguments
@@ -66,10 +66,10 @@ public:
 	static SymbolTable *getInstance();
 	LPSYMBOL install(const string &s);	// undefined
 	LPSYMBOL installs(const string &s);	// string literal
-	LPSYMBOL installw(const string &s, SymbolType type, 
-		uint32_t sub, word value);	// numeric
-	LPSYMBOL installo(uint32_t op, uint32_t sub, 
-		Symbol *args);	// operator
+	LPSYMBOL installw(const string &s, SymbolType type,
+	                  uint32_t sub, word value);	// numeric
+	LPSYMBOL installo(uint32_t op, uint32_t sub,
+	                  Symbol *args);	// operator
 
 	LPSYMBOL lookup(const string &s) const;
 	LPSYMBOL mklist(LPSYMBOL s1, LPSYMBOL s2);

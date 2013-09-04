@@ -11,7 +11,7 @@ IMPLEMENT_DYNAMIC(Computer, PlayerTwo)
 
 /////////////////////////////////////////////////////////////////////////////
 Computer::Computer(Player *popponent)
-		: opponent(popponent)
+	: opponent(popponent)
 {
 	ASSERT_VALID(opponent);
 }

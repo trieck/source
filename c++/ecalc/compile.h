@@ -54,28 +54,28 @@
 #define MAXTOK 256
 
 enum TokenType {
-	UNDEF = 0,		/* undefined token */
-	STR,			/* string literal */
-	NUM,			/* number */
-	SYMBOL,			/* variable / builtin */
-	ARG = '$',		/* argument */
-	PLUS = '+',		/* addition */
-	MINUS = '-',	/* subtraction */
-	MULT = '*',		/* multiply */
-	DIV = '/',		/* division */
-	MOD = '%',		/* modulo */
-	LT = '<',		/* less than */
-	GT = '>',		/* greater than */
-	EQUAL = '=',	/* equal */
-	NOT = '!',		/* not */
-	AND = '&',		/* and */
-	OR = '|',		/* or */
-	LPAREN = '(',	/* left paren */
-	RPAREN = ')',	/* right paren */
-	LBRACE = '{',	/* left brace */
-	RBRACE = '}',	/* right brace */
-	COMMA = ',',	/* comma */
-	EOS = ';'		/* end of statement */
+    UNDEF = 0,		/* undefined token */
+    STR,			/* string literal */
+    NUM,			/* number */
+    SYMBOL,			/* variable / builtin */
+    ARG = '$',		/* argument */
+    PLUS = '+',		/* addition */
+    MINUS = '-',	/* subtraction */
+    MULT = '*',		/* multiply */
+    DIV = '/',		/* division */
+    MOD = '%',		/* modulo */
+    LT = '<',		/* less than */
+    GT = '>',		/* greater than */
+    EQUAL = '=',	/* equal */
+    NOT = '!',		/* not */
+    AND = '&',		/* and */
+    OR = '|',		/* or */
+    LPAREN = '(',	/* left paren */
+    RPAREN = ')',	/* right paren */
+    LBRACE = '{',	/* left brace */
+    RBRACE = '}',	/* right brace */
+    COMMA = ',',	/* comma */
+    EOS = ';'		/* end of statement */
 };
 
 typedef struct {

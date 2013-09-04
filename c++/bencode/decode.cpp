@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 BEDecoder::BEDecoder(IPeekableStream *pStream)
-		: m_pStream(pStream)
+	: m_pStream(pStream)
 {
 	// Copied pointer so AddRef it
 	m_pStream->AddRef();

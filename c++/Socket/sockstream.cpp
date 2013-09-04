@@ -12,7 +12,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 SockStream::SockStream(SOCKET s)
-		: m_sock(s), m_cRef(0)
+	: m_sock(s), m_cRef(0)
 {
 	// The constructor AddRef's
 	AddRef();

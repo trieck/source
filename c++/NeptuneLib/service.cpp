@@ -14,7 +14,7 @@ static const char* usage = "usage: <service> -i -u";
 
 /////////////////////////////////////////////////////////////////////////////
 Service::Service(const char* name)
-		: m_name(name)
+	: m_name(name)
 {
 	m_pThis = this;
 	m_ServiceThreadID = 0UL;

@@ -18,7 +18,7 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(ColorsPage, CPropertyPage)
 
 ColorsPage::ColorsPage()
-		: CPropertyPage(ColorsPage::IDD), m_ModFlags(0)
+	: CPropertyPage(ColorsPage::IDD), m_ModFlags(0)
 {
 	//{{AFX_DATA_INIT(ColorsPage)
 	// NOTE: the ClassWizard will add member initialization here

@@ -23,8 +23,8 @@ typedef struct tagTRAJECTORYLIST	TRAJECTORYLIST;
 typedef struct tagTRAJECTORYLIST*	LPTRAJECTORYLIST;
 typedef struct tagTRAJECTORYLIST**	PPTRAJECTORYLIST;
 
-struct tagTRAJECTORYLIST					// Linked list structure for
-{											// Trajectories for Success
+struct tagTRAJECTORYLIST {				// Linked list structure for
+	// Trajectories for Success
 	INT					nOffset;			// Offset from beginning of path
 	LPTRAJECTORYLIST	pNextTrajectory;
 };
@@ -35,8 +35,8 @@ typedef struct {	// Path structure for pieces
 	LPTRAJECTORYLIST	pTrajectories;
 } PATH, *LPPATH, **PPPATH;
 
-struct tagPIECELIST				// Linked list structure for
-{								// building list of computer pieces
+struct tagPIECELIST {			// Linked list structure for
+	// building list of computer pieces
 	POINT		bPoint;
 	PATH		paths[4];		// The four paths for any given piece
 	LPPIECELIST	pNextPiece;		// Pointer to the next piece in the list

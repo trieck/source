@@ -10,26 +10,26 @@
 class File {
 public:
 	enum openMode {
-		unknown = 0,
-		readOnly,
-		readWrite,
-		create
+	    unknown = 0,
+	    readOnly,
+	    readWrite,
+	    create
 	};
 	enum Console {
-		StdIn = 0,
-		StdOut,
-		StdErr
+	    StdIn = 0,
+	    StdOut,
+	    StdErr
 	};
 	enum Type {
-		unknownType = 0,
-		diskType,
-		charType,
-		pipeType
+	    unknownType = 0,
+	    diskType,
+	    charType,
+	    pipeType
 	};
 	enum moveMethod {
-		begin = 0,
-		current,
-		end
+	    begin = 0,
+	    current,
+	    end
 	};
 	typedef auto_ptr<File> FilePtr;
 

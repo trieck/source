@@ -173,12 +173,12 @@ void ImageEroder::Erode(CImage &image, Kernel *pKernel)
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	for (int y = 0; y < rows; y++) {
 		for (int x = 0; x < cols; x++) {
 			BYTE &p = pbits[y*pitch+x];
-			
+
 			if (p == 0x00) {	// foreground
 				if (Match(image, pKernel, x, y)) {
 					Erode(image, pKernel, x, y);
@@ -188,18 +188,18 @@ void ImageEroder::Erode(CImage &image, Kernel *pKernel)
 	}
 }
 
-void ImageEroder::Erode(CImage &image, Kernel *pKernel, 
-	int x, int y)
+void ImageEroder::Erode(CImage &image, Kernel *pKernel,
+                        int x, int y)
 {
 	int rows = image.GetHeight();
 	int cols = image.GetWidth();
 	int pitch = image.GetPitch();
 
-	int blocksize = pKernel->GetBlockSize();	
+	int blocksize = pKernel->GetBlockSize();
 	int cx = x - ((blocksize-1) / 2);
 	int cy = y - ((blocksize-1) / 2);
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());	
+	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
 	for (int j = cy, l = 0; j < cy + blocksize; j++, l++) {
 		for (int i = cx, k = 0; i < cx + blocksize; i++, k++) {

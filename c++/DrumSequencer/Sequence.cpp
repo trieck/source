@@ -10,7 +10,7 @@ const BYTE SEQ_MARKER[3] = {
 	'S',
 	'E',
 	'Q'
-}; 
+};
 
 // MIDI instruments
 const BYTE INSTRUMENTS[Sequence::NINSTRUMENTS] = {
@@ -65,7 +65,7 @@ void Sequence::Clear(void)
 }
 
 void Sequence::Serialize(CArchive& ar)
-{	
+{
 	BYTE buffer[3];
 
 	if (ar.IsStoring()) {

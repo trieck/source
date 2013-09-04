@@ -31,7 +31,7 @@ END_MESSAGE_MAP()
 // PenteApp construction
 
 PenteApp::PenteApp()
-		: twoPlayerGame(true)
+	: twoPlayerGame(true)
 {
 }
 
@@ -71,9 +71,9 @@ BOOL PenteApp::InitInstance()
 
 	RegisterShellFileTypes(TRUE);
 	RegCloseKey(HKCU);
-	
+
 	EnableShellOpen();
-	
+
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);

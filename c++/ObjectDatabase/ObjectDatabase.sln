@@ -1,22 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ObjectDatabase", "ObjectDatabase.vcproj", "{5F2B4946-0CD5-491A-99FD-B8BDA09E17B4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F4BD7AEA-EDC3-496B-9BCF-2BF776574BE4} = {F4BD7AEA-EDC3-496B-9BCF-2BF776574BE4}
-	EndProjectSection
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ObjectDatabase", "ObjectDatabase.vcxproj", "{5F2B4946-0CD5-491A-99FD-B8BDA09E17B4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JupiterLib", "..\JupiterLib\JupiterLib.vcproj", "{628D204A-0A7A-4F2A-A887-9FC32A22F9B4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JupiterLib", "..\JupiterLib\JupiterLib.vcxproj", "{628D204A-0A7A-4F2A-A887-9FC32A22F9B4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Socket", "..\Socket\Socket.vcproj", "{A9039D92-B069-4A80-AC63-6E65287ABF41}"
-	ProjectSection(ProjectDependencies) = postProject
-		{628D204A-0A7A-4F2A-A887-9FC32A22F9B4} = {628D204A-0A7A-4F2A-A887-9FC32A22F9B4}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Socket", "..\Socket\Socket.vcxproj", "{A9039D92-B069-4A80-AC63-6E65287ABF41}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bencode", "..\bencode\bencode.vcproj", "{F4BD7AEA-EDC3-496B-9BCF-2BF776574BE4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{628D204A-0A7A-4F2A-A887-9FC32A22F9B4} = {628D204A-0A7A-4F2A-A887-9FC32A22F9B4}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bencode", "..\bencode\bencode.vcxproj", "{F4BD7AEA-EDC3-496B-9BCF-2BF776574BE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

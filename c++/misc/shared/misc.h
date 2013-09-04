@@ -54,13 +54,13 @@ public:
 	        LCID lcid,
 	        DISPID* rgDispId);
 	virtual HRESULT		__stdcall Invoke(DISPID dispIdMember,
-	                                  REFIID riid,
-	                                  LCID lcid,
-	                                  WORD wFlags,
-	                                  DISPPARAMS* pDispParams,
-	                                  VARIANT* pVarResult,
-	                                  EXCEPINFO* pExcepInfo,
-	                                  UINT* puArgErr);
+	                                     REFIID riid,
+	                                     LCID lcid,
+	                                     WORD wFlags,
+	                                     DISPPARAMS* pDispParams,
+	                                     VARIANT* pVarResult,
+	                                     EXCEPINFO* pExcepInfo,
+	                                     UINT* puArgErr);
 
 	// IMiscellaneous Methods
 	virtual HRESULT __stdcall GetDate(BSTR*);

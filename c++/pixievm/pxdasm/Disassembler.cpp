@@ -49,7 +49,7 @@ void Disassembler::disassemble(const char *filename)
 	word start;
 	if ((1 != fread(&start, sizeof(word), 1, m_fp))) {
 		throw Exception("can't read from file \"%s\": %s", filename,
-			strerror(errno));
+		                strerror(errno));
 	}
 
 	PxDisassembler::ip = start;

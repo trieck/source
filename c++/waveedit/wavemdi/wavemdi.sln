@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wavemdi", "wavemdi.vcproj", "{42E876EE-A470-4A9D-8C7C-2E48DE50C8A2}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wavemdi", "wavemdi.vcxproj", "{42E876EE-A470-4A9D-8C7C-2E48DE50C8A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

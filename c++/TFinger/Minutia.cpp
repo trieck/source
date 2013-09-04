@@ -2,7 +2,7 @@
 #include "Minutia.h"
 
 Minutia::Minutia()
- : type(MT_ISOLATED), x(0), y(0)
+	: type(MT_ISOLATED), x(0), y(0)
 {
 }
 

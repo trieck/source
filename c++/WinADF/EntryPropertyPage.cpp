@@ -35,7 +35,7 @@ void EntryPropertyPage::Dump(CDumpContext& dc) const
 #endif // _DEBUG
 
 EntryPropertyPage::EntryPropertyPage()
-		: CPropertyPage(EntryPropertyPage::IDD)
+	: CPropertyPage(EntryPropertyPage::IDD)
 {
 
 }

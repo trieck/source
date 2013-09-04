@@ -13,8 +13,8 @@ namespace PECommon {
 /////////////////////////////////////////////////////////////////////////////
 bool IsValidMachineType(WORD wMachineType);
 void DumpHeader(PIMAGE_FILE_HEADER pImageFileHeader);
-void DumpSectionTable(PIMAGE_SECTION_HEADER section, UINT nSections, 
-    BOOL IsEXE);
+void DumpSectionTable(PIMAGE_SECTION_HEADER section, UINT nSections,
+                      BOOL IsEXE);
 } // PECommon
 
 

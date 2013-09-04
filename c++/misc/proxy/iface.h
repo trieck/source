@@ -75,18 +75,17 @@ extern "C" {
 #ifndef __IMiscellaneous_INTERFACE_DEFINED__
 #define __IMiscellaneous_INTERFACE_DEFINED__
 
-	/* interface IMiscellaneous */
-	/* [oleautomation][dual][unique][helpstring][uuid][object] */
+/* interface IMiscellaneous */
+/* [oleautomation][dual][unique][helpstring][uuid][object] */
 
 
-	EXTERN_C const IID IID_IMiscellaneous;
+EXTERN_C const IID IID_IMiscellaneous;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
 
 	MIDL_INTERFACE("813C3190-4E36-11d1-B1D5-000000000000")
 IMiscellaneous :
-	public IDispatch
-	{
+	public IDispatch {
 public:
 		virtual HRESULT STDMETHODCALLTYPE GetDate(
 		    /* [retval][out] */ BSTR *pbstrDate) = 0;
@@ -177,8 +176,7 @@ public:
 		END_INTERFACE
 	} IMiscellaneousVtbl;
 
-	interface IMiscellaneous
-	{
+	interface IMiscellaneous {
 		CONST_VTBL struct IMiscellaneousVtbl *lpVtbl;
 	};
 
@@ -251,7 +249,7 @@ public:
 #ifdef __cplusplus
 
 	class DECLSPEC_UUID("813C3191-4E36-11d1-B1D5-000000000000")
-				Miscellaneous;
+			Miscellaneous;
 #endif
 #endif /* __MiscLib_LIBRARY_DEFINED__ */
 

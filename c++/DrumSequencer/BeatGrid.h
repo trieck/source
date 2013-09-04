@@ -2,8 +2,7 @@
 
 #include "Sequence.h"
 
-class BeatGrid
-{
+class BeatGrid {
 public:
 	BeatGrid(void);
 	~BeatGrid(void);
@@ -13,13 +12,13 @@ public:
 	enum { CY_SUB = 20 };		// height of subdivision
 	enum { CX_OFFSET = 80 };	// horz. border
 	enum { CY_OFFSET = 20 };	// vert. border
-	
+
 	enum { CX_GRID = CX_SUB * Sequence::NSUBS };	// width of grid
 	enum { CY_GRID = CY_SUB * Sequence::NINSTRUMENTS };	// height of grid
 
 private:
 
-	CPen m_thinPen, m_thickPen;	
+	CPen m_thinPen, m_thickPen;
 	CBrush m_bkgBrush;
 	CRgn m_Region;
 	CDC m_MemDC;
@@ -33,6 +32,6 @@ public:
 	static COLORREF GetInstColor(int i);
 	BOOL PointOnGrid(const CPoint &pt);
 	CPoint GetSubdivision(const CPoint& pt);
-	void GetBeatRect(int x, int y, CRect& rc);	
+	void GetBeatRect(int x, int y, CRect& rc);
 };
 

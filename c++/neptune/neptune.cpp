@@ -16,9 +16,9 @@ typedef std::basic_string<TCHAR> tstring;
 
 // token type enumeration
 enum tokenType {
-	TK_EMPTY = 0,
-	TK_INDEX = 1,
-	TK_TEXT = 2
+    TK_EMPTY = 0,
+    TK_INDEX = 1,
+    TK_TEXT = 2
 };
 
 // token structure
@@ -92,7 +92,7 @@ static HRESULT ModuleLoadTypeLib(BSTR* pbstrPath, ITypeLib** ppTypeLib);
 
 /////////////////////////////////////////////////////////////////////////////
 Neptune::Neptune()
-		: m_cRef(1)
+	: m_cRef(1)
 {
 	InterlockedIncrement(&g_cObjects);
 }
@@ -227,7 +227,7 @@ STDMETHODIMP Neptune::get_SystemDirectory(/*[out, retval]*/ BSTR *pVal)
 
 /////////////////////////////////////////////////////////////////////////////
 NeptuneClassFactory::NeptuneClassFactory()
-		: m_cRef(0)
+	: m_cRef(0)
 {
 }
 

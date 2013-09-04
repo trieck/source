@@ -22,7 +22,7 @@ SymbolTablePtr SymbolTable::instance(SymbolTable::getInstance());
 /////////////////////////////////////////////////////////////////////////////
 SymbolTable::SymbolTable()
 {
-	// Group #1 instructions 
+	// Group #1 instructions
 	iinsert("ADC", I1, &INS_ADC);
 	iinsert("AND", I1, &INS_AND);
 	iinsert("BIT", I1, &INS_BIT);
@@ -40,7 +40,7 @@ SymbolTable::SymbolTable()
 	iinsert("SHL", I2, &INS_SHL);
 	iinsert("SHR", I2, &INS_SHR);
 
-	// Group #3 instructions 
+	// Group #3 instructions
 	iinsert("BRK", I3, &INS_BRK);
 	iinsert("CLC", I3, &INS_CLC);
 	iinsert("CLI", I3, &INS_CLI);
@@ -56,11 +56,11 @@ SymbolTable::SymbolTable()
 	iinsert("PUSHA", I3, &INS_PUSHA);
 	iinsert("PUSHF", I3, &INS_PUSHF);
 
-	// Group #4 instructions 
+	// Group #4 instructions
 	iinsert("CALL", I4, &INS_CALL);
 	iinsert("JMP", I4, &INS_JMP);
 
-	// Group #5 instructions 
+	// Group #5 instructions
 	iinsert("JCC", I5, &INS_JCC);
 	iinsert("JCS", I5, &INS_JCS);
 	iinsert("JMI", I5, &INS_JMI);
@@ -70,10 +70,10 @@ SymbolTable::SymbolTable()
 	iinsert("JVS", I5, &INS_JVS);
 	iinsert("JZ", I5, &INS_JZ);
 
-	// Group #6 instructions 
+	// Group #6 instructions
 	iinsert("POP", I6, &INS_POP);
 
-	// Group #7 instructions 
+	// Group #7 instructions
 	iinsert("PUSH", I7, &INS_PUSH);
 
 	// 8-bit registers
@@ -98,7 +98,7 @@ SymbolTable::SymbolTable()
 	idinsert("BYTE", BYTE_PTR);
 	idinsert("WORD", WORD_PTR);
 
-	// pseudo operations 
+	// pseudo operations
 	idinsert(".ORG", DECL_ORG);
 	idinsert(".BYTE", DECL_BYTE);
 	idinsert(".WORD", DECL_WORD);
@@ -191,13 +191,13 @@ LPSYMBOL SymbolTable::installs(const string &s)
 	sym->sub = 0;
 	sym->lineno = yylineno;
 	table[sym->name] = sym;
-	
+
 	return sym;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-LPSYMBOL SymbolTable::installw(const string &s, SymbolType type, 
-	uint32_t sub, word value)
+LPSYMBOL SymbolTable::installw(const string &s, SymbolType type,
+                               uint32_t sub, word value)
 {
 	// numeric
 
@@ -209,7 +209,7 @@ LPSYMBOL SymbolTable::installw(const string &s, SymbolType type,
 		sym->sub = sub;
 		sym->lineno = yylineno;
 		sym->val16 = value;
-		table[s] = sym;		
+		table[s] = sym;
 	}
 
 	return sym;
@@ -223,7 +223,7 @@ LPSYMBOL SymbolTable::installo(uint32_t op, uint32_t sub, Symbol *args)
 	LPSYMBOL sym = new Symbol;
 
 	sym->name = opname(op);
-	sym->type = ST_OP;	
+	sym->type = ST_OP;
 	sym->sub = sub;
 	sym->lineno = yylineno;
 	sym->args = args;		// argument list
@@ -251,7 +251,7 @@ LPSYMBOL SymbolTable::mklist(LPSYMBOL s1, LPSYMBOL s2)
 	if (!ISLIST(s1) && !ISLIST(s2)) {	// make a new list
 		list = new Symbol;
 		list->name = format("LIST:0x%.8X", counter32());
-		list->type = ST_LIST;	
+		list->type = ST_LIST;
 		list->lineno = yylineno;
 		list->vsyms.push_back(s1);
 		list->vsyms.push_back(s2);
@@ -260,7 +260,7 @@ LPSYMBOL SymbolTable::mklist(LPSYMBOL s1, LPSYMBOL s2)
 		list = s1;
 		list->vsyms.push_back(s2);
 	} else if (!ISLIST(s1) && ISLIST(s2)) {	// s2 is an existing list
-		list = s2; 
+		list = s2;
 		list->vsyms.push_back(s1);
 	} else if (s1 != s2) {	// s1 and s2 are distinct existing lists
 		list = s1;	// copy list values from s2 to s1
@@ -308,9 +308,9 @@ string SymbolTable::opname(uint32_t opcode)
 		opname = "unknown";
 	}
 
-	name = format("OPERATOR(%s):0x%.8X", 
-		opname.c_str(),
-		counter);
+	name = format("OPERATOR(%s):0x%.8X",
+	              opname.c_str(),
+	              counter);
 
 	return name;
 }

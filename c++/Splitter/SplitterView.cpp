@@ -16,7 +16,7 @@ END_MESSAGE_MAP()
 
 // Initialize static data members
 LPCTSTR CSplitterView :: szHeaders[4] = {_T("Player One"), _T("Player Two"), _T("Winner"),
-                                        _T("Date Time")
+                                         _T("Date Time")
                                         };
 
 ///////////////////////////////////////////////////////////////////

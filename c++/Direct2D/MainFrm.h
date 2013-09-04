@@ -6,53 +6,50 @@
 
 #include "Board.h"
 
-typedef CWinTraits<WS_OVERLAPPED | 	WS_CAPTION | WS_SYSMENU | 
-	WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_MINIMIZEBOX, WS_EX_APPWINDOW | 
-	WS_EX_WINDOWEDGE> CMainFrameTraits;
+typedef CWinTraits<WS_OVERLAPPED | 	WS_CAPTION | WS_SYSMENU |
+WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_MINIMIZEBOX, WS_EX_APPWINDOW |
+WS_EX_WINDOWEDGE> CMainFrameTraits;
 
 class CMainFrame;
 typedef CFrameWindowImpl<CMainFrame, CWindow, CMainFrameTraits> CMainFrameImpl;
 
-class CMainFrame : 
-	public CMainFrameImpl, 
+class CMainFrame :
+	public CMainFrameImpl,
 	public CUpdateUI<CMainFrame>,
-	public CMessageFilter, public CIdleHandler
-{
+	public CMessageFilter, public CIdleHandler {
 public:
 	DECLARE_FRAME_WND_CLASS(NULL, IDR_MAINFRAME)
 
 	CDirect2DView m_view;
 	CCommandBarCtrl m_CmdBar;
 
-	virtual BOOL PreTranslateMessage(MSG* pMsg)
-	{
+	virtual BOOL PreTranslateMessage(MSG* pMsg) {
 		if(CMainFrameImpl::PreTranslateMessage(pMsg))
 			return TRUE;
 
 		return m_view.PreTranslateMessage(pMsg);
 	}
 
-	virtual BOOL OnIdle()
-	{
+	virtual BOOL OnIdle() {
 		UIUpdateToolBar();
 		return FALSE;
 	}
 
 	BEGIN_UPDATE_UI_MAP(CMainFrame)
-		UPDATE_ELEMENT(ID_VIEW_TOOLBAR, UPDUI_MENUPOPUP)
-		UPDATE_ELEMENT(ID_VIEW_STATUS_BAR, UPDUI_MENUPOPUP)
+	UPDATE_ELEMENT(ID_VIEW_TOOLBAR, UPDUI_MENUPOPUP)
+	UPDATE_ELEMENT(ID_VIEW_STATUS_BAR, UPDUI_MENUPOPUP)
 	END_UPDATE_UI_MAP()
 
 	BEGIN_MSG_MAP(CMainFrame)
-		MSG_WM_CREATE(OnCreate)
-		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
-		COMMAND_ID_HANDLER(ID_APP_EXIT, OnFileExit)
-		COMMAND_ID_HANDLER(ID_FILE_NEW, OnFileNew)
-		COMMAND_ID_HANDLER(ID_VIEW_TOOLBAR, OnViewToolBar)
-		COMMAND_ID_HANDLER(ID_VIEW_STATUS_BAR, OnViewStatusBar)
-		COMMAND_ID_HANDLER(ID_APP_ABOUT, OnAppAbout)
-		CHAIN_MSG_MAP(CUpdateUI<CMainFrame>)
-		CHAIN_MSG_MAP(CMainFrameImpl)
+	MSG_WM_CREATE(OnCreate)
+	MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
+	COMMAND_ID_HANDLER(ID_APP_EXIT, OnFileExit)
+	COMMAND_ID_HANDLER(ID_FILE_NEW, OnFileNew)
+	COMMAND_ID_HANDLER(ID_VIEW_TOOLBAR, OnViewToolBar)
+	COMMAND_ID_HANDLER(ID_VIEW_STATUS_BAR, OnViewStatusBar)
+	COMMAND_ID_HANDLER(ID_APP_ABOUT, OnAppAbout)
+	CHAIN_MSG_MAP(CUpdateUI<CMainFrame>)
+	CHAIN_MSG_MAP(CMainFrameImpl)
 	END_MSG_MAP()
 
 	// Handler prototypes (uncomment arguments if needed):
@@ -60,8 +57,7 @@ public:
 	//	LRESULT CommandHandler(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 	//	LRESULT NotifyHandler(int /*idCtrl*/, LPNMHDR /*pnmh*/, BOOL& /*bHandled*/)
 
-	LRESULT OnCreate(LPCREATESTRUCT pcs)
-	{
+	LRESULT OnCreate(LPCREATESTRUCT pcs) {
 		// create command bar window
 		HWND hWndCmdBar = m_CmdBar.Create(m_hWnd, rcDefault, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
 		// attach menu
@@ -77,9 +73,9 @@ public:
 		AddSimpleReBarBand(hWndCmdBar);
 		AddSimpleReBarBand(hWndToolBar, NULL, TRUE);
 
-		CreateSimpleStatusBar(ATL_IDS_IDLEMESSAGE, WS_CHILD | WS_VISIBLE | 
-			WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
-		
+		CreateSimpleStatusBar(ATL_IDS_IDLEMESSAGE, WS_CHILD | WS_VISIBLE |
+		                      WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
+
 		UIAddToolBar(hWndToolBar);
 		UISetCheck(ID_VIEW_TOOLBAR, 1);
 		UISetCheck(ID_VIEW_STATUS_BAR, 1);
@@ -98,8 +94,7 @@ public:
 		return 0;
 	}
 
-	LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
-	{
+	LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled) {
 		// unregister message filtering and idle updates
 		CMessageLoop* pLoop = _Module.GetMessageLoop();
 		ATLASSERT(pLoop != NULL);
@@ -110,21 +105,18 @@ public:
 		return 1;
 	}
 
-	LRESULT OnFileExit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
-	{
+	LRESULT OnFileExit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
 		PostMessage(WM_CLOSE);
 		return 0;
 	}
 
-	LRESULT OnFileNew(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
-	{
+	LRESULT OnFileNew(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
 		// TODO: add code to initialize document
 
 		return 0;
 	}
 
-	LRESULT OnViewToolBar(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
-	{
+	LRESULT OnViewToolBar(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
 		static BOOL bVisible = TRUE;	// initially visible
 		bVisible = !bVisible;
 		CReBarCtrl rebar = m_hWndToolBar;
@@ -136,8 +128,7 @@ public:
 		return 0;
 	}
 
-	LRESULT OnViewStatusBar(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
-	{
+	LRESULT OnViewStatusBar(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
 		BOOL bVisible = !::IsWindowVisible(m_hWndStatusBar);
 		::ShowWindow(m_hWndStatusBar, bVisible ? SW_SHOWNOACTIVATE : SW_HIDE);
 		UISetCheck(ID_VIEW_STATUS_BAR, bVisible);
@@ -146,17 +137,15 @@ public:
 		return 0;
 	}
 
-	LRESULT OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
-	{
+	LRESULT OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
 		CAboutDlg dlg;
 		dlg.DoModal();
 		return 0;
 	}
 
-	void ResizeFrameByBoard() 
-	{
+	void ResizeFrameByBoard() {
 		CRect rc = Board::GetBoundingRect();
-		
+
 		// make room for the status bar
 		CRect rcStatus;
 		CStatusBarCtrl wndStatus(m_hWndStatusBar);
@@ -171,7 +160,7 @@ public:
 
 		// toolbar is 2nd added band
 		int nBandIndex = rebar.IdToIndex(ATL_IDW_BAND_FIRST + 1);
-		
+
 		REBARBANDINFO rbbi;
 		memset(&rbbi, 0, sizeof(REBARBANDINFO));
 		rbbi.cbSize = sizeof(REBARBANDINFO);
@@ -180,8 +169,8 @@ public:
 
 		if (wndStatus.IsWindowVisible())
 			rc.bottom += rcStatus.Height();
-		
-		if ((rbbi.fStyle & RBBS_HIDDEN) == 0) 
+
+		if ((rbbi.fStyle & RBBS_HIDDEN) == 0)
 			rc.bottom += rcToolbar.Height();
 
 		DWORD style = GetStyle();
@@ -189,6 +178,6 @@ public:
 		AdjustWindowRectEx(&rc, style, TRUE, dwExStyle);
 
 		SetWindowPos(NULL, 0, 0, rc.Width(), rc.Height(),
-			SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);
+		             SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);
 	}
 };

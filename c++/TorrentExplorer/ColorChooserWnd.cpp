@@ -36,7 +36,7 @@ static POINT pts[] = {
 // ColorChooserWnd
 
 ColorChooserWnd::ColorChooserWnd()
-		: m_ptSelected(-1, -1)
+	: m_ptSelected(-1, -1)
 {
 }
 

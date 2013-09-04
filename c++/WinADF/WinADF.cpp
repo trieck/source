@@ -35,8 +35,8 @@ END_MESSAGE_MAP()
 // WinADFApp construction
 
 WinADFApp::WinADFApp()
-		: m_pTextFileViewTemplate(NULL), m_pBinaryFileViewTemplate(NULL),
-		m_pWarningFrame(NULL)
+	: m_pTextFileViewTemplate(NULL), m_pBinaryFileViewTemplate(NULL),
+	  m_pWarningFrame(NULL)
 {
 }
 

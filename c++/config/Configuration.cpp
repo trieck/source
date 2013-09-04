@@ -24,7 +24,7 @@ string trim_right(const string &str);
 
 /////////////////////////////////////////////////////////////////////////////
 Configuration::Configuration(const char *pfile)
-		: filename(pfile)
+	: filename(pfile)
 {
 	// check read permission
 	if (_access(pfile, 04) == -1)

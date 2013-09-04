@@ -172,18 +172,18 @@ VOID CPenteDoc::Serialize(CArchive& ar)
 
 	if (ar.IsStoring()) {
 		ar	<< CPenteDoc::m_nFileMarker
-		<< m_lBackColor
-		<< m_lGridColor
-		<< m_nPlayMode
-		<< m_nCurrentTurn
-		<< m_nPlayerOneCaptures
-		<< m_nPlayerTwoCaptures
-		<< m_nPlayerOneRes
-		<< m_nPlayerTwoRes;
+		    << m_lBackColor
+		    << m_lGridColor
+		    << m_nPlayMode
+		    << m_nCurrentTurn
+		    << m_nPlayerOneCaptures
+		    << m_nPlayerTwoCaptures
+		    << m_nPlayerOneRes
+		    << m_nPlayerTwoRes;
 
 		for (int i = 0, j = 0; i < 19; j++) {
 			ar	<< m_pSquares[i][j].bPiece
-			<< m_pSquares[i][j].rcDims;
+			    << m_pSquares[i][j].rcDims;
 			if (j == 18) {
 				i++;
 				j = -1;
@@ -191,18 +191,18 @@ VOID CPenteDoc::Serialize(CArchive& ar)
 		}
 	} else {
 		ar	>> nTemp
-		>> m_lBackColor
-		>> m_lGridColor
-		>> m_nPlayMode
-		>> m_nCurrentTurn
-		>> m_nPlayerOneCaptures
-		>> m_nPlayerTwoCaptures
-		>> nPlayerOneRes
-		>> nPlayerTwoRes;
+		    >> m_lBackColor
+		    >> m_lGridColor
+		    >> m_nPlayMode
+		    >> m_nCurrentTurn
+		    >> m_nPlayerOneCaptures
+		    >> m_nPlayerTwoCaptures
+		    >> nPlayerOneRes
+		    >> nPlayerTwoRes;
 
 		for (int i = 0, j = 0; i < 19; j++) {
 			ar	>> m_pSquares[i][j].bPiece
-			>> m_pSquares[i][j].rcDims;
+			    >> m_pSquares[i][j].rcDims;
 			if (j == 18) {
 				i++;
 				j = -1;

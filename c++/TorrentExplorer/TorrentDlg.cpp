@@ -45,7 +45,7 @@ CStringVec ParseTrackers(const CString &input);
 
 
 TorrentDlg::TorrentDlg(CWnd* pParent /*=NULL*/)
-		: CDialog(TorrentDlg::IDD, pParent), m_pMaker(NULL)
+	: CDialog(TorrentDlg::IDD, pParent), m_pMaker(NULL)
 {
 	//{{AFX_DATA_INIT(TorrentDlg)
 	m_Trackers = _T("");

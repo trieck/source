@@ -5,12 +5,11 @@
 #include "Sequence.h"
 
 typedef enum SequencerState {
-	Stopped,
-	Playing
+    Stopped,
+    Playing
 };
 
-class Sequencer
-{
+class Sequencer {
 public:
 	Sequencer();
 	~Sequencer();
@@ -26,11 +25,12 @@ private:
 	MidiStream *m_pStream;
 	MidiBuffer m_buffer;
 	SequencerState m_state;
-	
-	static void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, 
-		DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
+
+	static void StreamProc(HMIDISTRM hMidiStream, UINT uMsg,
+	                       DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
 };
 
-inline BOOL Sequencer::IsPlaying() const {
+inline BOOL Sequencer::IsPlaying() const
+{
 	return m_state == Playing;
 }

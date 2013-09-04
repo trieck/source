@@ -1,7 +1,6 @@
 #pragma once
 
-class GaborFilter
-{
+class GaborFilter {
 public:
 	GaborFilter();
 	~GaborFilter();

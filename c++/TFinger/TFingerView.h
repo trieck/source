@@ -4,8 +4,7 @@
 
 #pragma once
 
-class CTFingerView : public CScrollView
-{
+class CTFingerView : public CScrollView {
 protected: // create from serialization only
 	CTFingerView();
 	DECLARE_DYNCREATE(CTFingerView)
@@ -49,6 +48,8 @@ private:
 
 #ifndef _DEBUG  // debug version in TFingerView.cpp
 inline CTFingerDoc* CTFingerView::GetDocument() const
-   { return reinterpret_cast<CTFingerDoc*>(m_pDocument); }
+{
+	return reinterpret_cast<CTFingerDoc*>(m_pDocument);
+}
 #endif
 

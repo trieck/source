@@ -40,8 +40,8 @@
  * file open modes
  */
 enum {
-	OM_READ_ONLY,
-	OM_WRITE
+    OM_READ_ONLY,
+    OM_WRITE
 };
 
 /* Macros for min/max. */

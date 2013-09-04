@@ -11,7 +11,7 @@
 IMPLEMENT_DYNAMIC(NewVolumeDlg, CDialog)
 
 NewVolumeDlg::NewVolumeDlg(CWnd* pParent /*=NULL*/)
-		: CDialog(NewVolumeDlg::IDD, pParent)
+	: CDialog(NewVolumeDlg::IDD, pParent)
 {
 
 }

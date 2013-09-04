@@ -14,7 +14,7 @@ const COLORREF INST_COLORS[Sequence::NINSTRUMENTS] = {
 	RGB(0, 176, 240),
 	RGB(0, 112, 192),
 	RGB(0, 32, 96),
-	RGB(112, 48, 160)	
+	RGB(112, 48, 160)
 };
 
 BeatGrid::BeatGrid(void)
@@ -34,16 +34,16 @@ void BeatGrid::Draw(CDC* pDC)
 {
 	CRect rc;
 	pDC->GetClipBox(rc);
-	
+
 	CBitmap *pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
 
 	CRect aRect(rc);
 	aRect.OffsetRect(-CX_OFFSET, -CY_OFFSET);
 
 	pDC->BitBlt(rc.left, rc.top, rc.Width(), rc.Height(), &m_MemDC,
-		aRect.left, aRect.top, SRCCOPY);
+	            aRect.left, aRect.top, SRCCOPY);
 
-	m_MemDC.SelectObject(pOldBitmap);	
+	m_MemDC.SelectObject(pOldBitmap);
 }
 
 void BeatGrid::CreateBitmap(void)
@@ -134,7 +134,7 @@ BOOL BeatGrid::PointOnGrid(const CPoint &pt)
 {
 	CRect rc;
 	GetDimensions(rc);
-	rc.OffsetRect(CX_OFFSET, CY_OFFSET);	
+	rc.OffsetRect(CX_OFFSET, CY_OFFSET);
 	return rc.PtInRect(pt);
 }
 

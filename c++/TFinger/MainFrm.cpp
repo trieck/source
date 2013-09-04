@@ -27,7 +27,7 @@ static UINT indicators[] = {
 
 // CMainFrame construction/destruction
 CMainFrame::CMainFrame()
-{	
+{
 }
 
 CMainFrame::~CMainFrame()
@@ -41,7 +41,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// set the visual manager used to draw all user interface elements
 	CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows));
-	
+
 	if (!m_wndMenuBar.Create(this)) {
 		TRACE0("Failed to create menubar\n");
 		return -1;      // fail to create
@@ -52,9 +52,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// prevent the menu bar from taking the focus on activation
 	CMFCPopupMenu::SetForceMenuFocus(FALSE);
 
-	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, 
-		WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS) ||
-		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
+	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT,
+	                           WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS) ||
+	        !m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
 	}
@@ -72,7 +72,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	DockPane(&m_wndToolBar);
 
 	CenterWindow();
-	
+
 	return 0;
 }
 

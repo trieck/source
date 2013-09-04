@@ -20,11 +20,11 @@ public:
 
 	// Object types
 	enum ObjectType {
-		BET_UNDEF = 0,
-		BET_INTEGER = 1,
-		BET_STRING = 2,
-		BET_LIST = 3,
-		BET_DICT = 4
+	    BET_UNDEF = 0,
+	    BET_INTEGER = 1,
+	    BET_STRING = 2,
+	    BET_LIST = 3,
+	    BET_DICT = 4
 	};
 
 	virtual ObjectType GetType() const = 0;

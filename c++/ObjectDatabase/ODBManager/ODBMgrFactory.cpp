@@ -13,7 +13,7 @@ LONG ODBMgrFactory::m_cLock = 0;
 
 /////////////////////////////////////////////////////////////////////////////
 ODBMgrFactory::ODBMgrFactory()
-		: m_cRef(0)
+	: m_cRef(0)
 {
 }
 

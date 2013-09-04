@@ -23,9 +23,9 @@ static const int vicinity = 2;                                  // note vicinity
 // Constructor
 //
 Measure::Measure(const Staff * pStaff, const CRect & rc, UINT Clef)
-		: m_ks(0),
-		m_ts(4, Crotchet),
-		m_pStaff(pStaff)
+	: m_ks(0),
+	  m_ts(4, Crotchet),
+	  m_pStaff(pStaff)
 {
 	ASSERT_VALID(m_pStaff);
 	m_pClef = NULL;
