@@ -22,8 +22,8 @@ import java.util.Iterator;
 
 public class Highlighter extends XMLEventHandlerImpl {
 
-	private static XMLInputFactory inFactory = XMLInputFactory.newInstance();
-	private static XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
+	private static final XMLInputFactory inFactory = XMLInputFactory.newInstance();
+	private static final XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
 
 	static {
 		inFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);

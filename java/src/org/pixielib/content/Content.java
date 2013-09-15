@@ -55,13 +55,7 @@ public class Content {
 			}
 
 			return root;
-		} catch (ParserConfigurationException e) {
-			throw new IOException(e);
-		} catch (SAXException e) {
-			throw new IOException(e);
-		} catch (XMLStreamException e) {
-			throw new IOException(e);
-		} catch (TransformerException e) {
+		} catch (ParserConfigurationException | SAXException | XMLStreamException | TransformerException e) {
 			throw new IOException(e);
 		}
 	}
@@ -78,19 +72,13 @@ public class Content {
 			root.setAttribute("db", db);
 			root.setAttribute("query", query);
 			return doc;
-		} catch (ParserConfigurationException e) {
-			throw new IOException(e);
-		} catch (SAXException e) {
-			throw new IOException(e);
-		} catch (XMLStreamException e) {
-			throw new IOException(e);
-		} catch (TransformerException e) {
+		} catch (ParserConfigurationException | SAXException | XMLStreamException | TransformerException e) {
 			throw new IOException(e);
 		}
 	}
 
 	private Document getDoc(String db, long ndocid)
-			throws IOException, ParserConfigurationException, SAXException {
+					throws IOException, ParserConfigurationException, SAXException {
 
 		DocID docid = new DocID(ndocid);
 
@@ -107,37 +95,34 @@ public class Content {
 	}
 
 	public Document getRecord(File file, int offset)
-			throws IOException, ParserConfigurationException, SAXException {
-
-		RandomAccessFile raf = new RandomAccessFile(file, "r");
-
-		raf.seek(offset);
+					throws IOException, ParserConfigurationException, SAXException {
 
 		// state machine to extract record in file
 		StringBuilder output = new StringBuilder();
+		try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
+			raf.seek(offset);
 
-		String pattern = "<record></record>";
+			String pattern = "<record></record>";
 
-		int jstar = pattern.lastIndexOf('<');
+			int jstar = pattern.lastIndexOf('<');
 
-		int j = 0;
-		int c;
-		while ((c = raf.read()) != -1) {
-			if (j == pattern.length()) {
-				break;
-			} else if (pattern.charAt(j) == c) {
-				j++;
-			} else if (j >= jstar) {
-				j = jstar;
-			} else {
-				output.setLength(0);
-				j = 0;
-				continue;
+			int j = 0;
+			int c;
+			while ((c = raf.read()) != -1) {
+				if (j == pattern.length()) {
+					break;
+				} else if (pattern.charAt(j) == c) {
+					j++;
+				} else if (j >= jstar) {
+					j = jstar;
+				} else {
+					output.setLength(0);
+					j = 0;
+					continue;
+				}
+				output.append((char) c);
 			}
-			output.append((char) c);
 		}
-
-		raf.close();
 
 		return XMLUtil.parseXML(output.toString());
 	}

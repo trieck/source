@@ -15,7 +15,7 @@ public class IndexFields {
 	private Set<String> fields;
 
 	public IndexFields(String db) throws IOException {
-		fields = new HashSet<String>();
+		fields = new HashSet<>();
 
 		File dir = Repository.getInstance().mapPath(db);
 		String filename = String.format("%s/index.txt", dir.getCanonicalPath());
