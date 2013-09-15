@@ -21,28 +21,23 @@ import java.util.*;
 public class Context implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	/**
 	 * mapping of threads to object instances
 	 */
 	protected static final Map<Thread, Context> contextTable = Collections
-			.synchronizedMap(new WeakHashMap<Thread, Context>());
-
+					.synchronizedMap(new WeakHashMap<Thread, Context>());
 	/**
 	 * the underlying page context
 	 */
 	protected PageContext context;
-
 	/**
 	 * global symbol table
 	 */
 	protected Map<String, String> symbols;
-
 	/**
 	 * local context map, used to maintain local symbol tables for JSPs
 	 */
 	protected Map<String, Object> locals;
-
 	/**
 	 * instance table
 	 */
@@ -154,7 +149,7 @@ public class Context implements Serializable {
 	/**
 	 * Store a symbol in the symbol table
 	 *
-	 * @param name  the symbol name
+	 * @param name the symbol name
 	 * @param value the symbol value
 	 * @return the value
 	 */
@@ -201,8 +196,9 @@ public class Context implements Serializable {
 	public String[] splitParam(String key, String delim) {
 
 		String value = getParam(key);
-		if (value.length() == 0)
+		if (value.length() == 0) {
 			return new String[]{};
+		}
 
 		StringTokenizer tokenizer = new StringTokenizer(value, delim);
 
@@ -327,8 +323,9 @@ public class Context implements Serializable {
 
 		for (int i = 0; i < cookies.length; i++) {
 			String cname = cookies[i].getName();
-			if (cname.equals(name))
+			if (cname.equals(name)) {
 				return cookies[i];
+			}
 		}
 
 		return null; // cookie not found
@@ -353,8 +350,9 @@ public class Context implements Serializable {
 	 */
 	public String getCookieValue(String name) {
 		Cookie cookie = getCookie(name);
-		if (cookie == null)
+		if (cookie == null) {
 			return "";
+		}
 
 		return cookie.getValue();
 	}
@@ -367,7 +365,7 @@ public class Context implements Serializable {
 	public void forward(String url) {
 		HttpServletRequest request = (HttpServletRequest) context.getRequest();
 		HttpServletResponse response = (HttpServletResponse) context
-				.getResponse();
+						.getResponse();
 
 		try {
 			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
@@ -412,7 +410,7 @@ public class Context implements Serializable {
 	 */
 	public void redirect(String url) {
 		HttpServletResponse response = (HttpServletResponse) context
-				.getResponse();
+						.getResponse();
 		try {
 			response.sendRedirect(url);
 		} catch (IOException e) {
@@ -439,7 +437,7 @@ public class Context implements Serializable {
 	/**
 	 * Set temporary cookie for the domain
 	 *
-	 * @param name  name of the cookie
+	 * @param name name of the cookie
 	 * @param value value of the cookie
 	 */
 	public void setTempCookie(String name, String value) {
@@ -450,8 +448,8 @@ public class Context implements Serializable {
 	/**
 	 * Set Permanent cookie for the domain
 	 *
-	 * @param name    name of the cookie
-	 * @param value   value of the cookie
+	 * @param name name of the cookie
+	 * @param value value of the cookie
 	 * @param seconds duration for the cookie to last
 	 */
 	public void setCookie(String name, String value, int seconds) {
@@ -462,7 +460,7 @@ public class Context implements Serializable {
 
 		// add cookie to response header
 		HttpServletResponse response = (HttpServletResponse) context
-				.getResponse();
+						.getResponse();
 		response.addCookie(cookie);
 	}
 
@@ -508,7 +506,7 @@ public class Context implements Serializable {
 	 * Set an object as a request attribute
 	 *
 	 * @param name the name of the attribute
-	 * @param o    the attribute
+	 * @param o the attribute
 	 */
 	public void setRequestAttribute(String name, Object o) {
 		HttpServletRequest request = (HttpServletRequest) context.getRequest();
@@ -585,5 +583,9 @@ public class Context implements Serializable {
 
 	public Writer getWriter() {
 		return context.getOut();
+	}
+
+	public boolean isSecure() {
+		return context.getRequest().isSecure();
 	}
 }

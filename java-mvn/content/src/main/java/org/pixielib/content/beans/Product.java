@@ -91,4 +91,23 @@ public abstract class Product {
 		this.count = count;
 	}
 
+	protected String getContentURI() {
+		Context context = Context.getContext();
+		
+		StringBuilder url = new StringBuilder();
+
+		if (context.isSecure()) {
+			url.append("https://");
+		} else {
+			url.append("http://");
+		}
+		url.append(context.getServerName());
+		url.append(':');
+		url.append(context.getPort());
+		url.append('/');
+		url.append(context.getContextPath());
+		url.append("/ContentServlet?");
+
+		return url.toString();
+	}
 }
