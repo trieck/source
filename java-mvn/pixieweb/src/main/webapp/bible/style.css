@@ -1,0 +1,67 @@
+body {
+	background-color: DarkRed;
+	border-spacing: 3px;
+	color: CornSilk;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;	
+	padding: 3px;	
+}
+
+a:link { 
+	color: CornSilk; 
+}
+a:visited { 
+	color: CornSilk;
+}
+
+a.navigation { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 11px; 
+	font-weight: normal;
+	color: CornSilk;
+}
+
+.directions { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 12px; 
+	font-weight: bold; 
+	color: CornSilk;
+}
+
+.header {
+	font-family: Arial, Helvetica, sans-serif; 
+	color: CornSilk
+}
+
+h1 {
+	color: CornSilk
+}
+.normal { font : 9pt Arial, San-Serif; }
+
+.searchbutton { 
+	font : 9pt Arial, San-Serif; 
+	color : DarkRed; 
+	font-weight: bold; 
+	background-color : CornSilk; 
+}
+
+.searchresults { font-family: Arial Black, Helvetica, sans-serif; font-size: 16px; font-weight: bold; color: CornSilk; text-decoration: none; }
+.searchquery { font-family: Arial Black, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: CornSilk; text-decoration: none; }
+
+th {
+	background-color:silver;
+}
+
+td {
+	background-color:DarkRed;
+}
+
+.grey {
+	background-color:Gray;
+	font : 9pt Arial, San-Serif;
+}
+
+.cite { font : 9 Arial, Helvetica, sans-serif; font-weight: normal }
+
+.highlight { color: DarkRed; font-weight : bold }
+
