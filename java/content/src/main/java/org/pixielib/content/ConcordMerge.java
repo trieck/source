@@ -97,7 +97,7 @@ public class ConcordMerge {
 	private boolean read(ConcordRecord[] recs) throws IOException {
 
 		for (int i = 0; recs[i] != null; i++) {
-			if (recs[i].term.equals(TERM_EOF)) {
+			if (recs[i].term != null && recs[i].term.equals(TERM_EOF)) {
 				return false;
 			}
 
@@ -139,7 +139,7 @@ public class ConcordMerge {
 	}
 
 	private void write(ConcordRecord[] recs) throws IOException {
-		if (recs[0].term.equals(TERM_EOF)) {
+		if (recs[0].term != null && recs[0].term.equals(TERM_EOF)) {
 			return;
 		}
 
