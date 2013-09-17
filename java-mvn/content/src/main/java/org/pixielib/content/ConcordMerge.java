@@ -8,7 +8,6 @@ public class ConcordMerge {
 
 	private static final int NWAY = 100;                    // number of ways to merge
 	private static final String TERM_EOF = "\uFFFF";        // EOF indictator
-
 	private DataOutputStream out;                           // output stream for merge
 	private ConcordRecord[] records;                        // concordance records for least
 	private int pass;                                       // countdown of pass number
@@ -25,8 +24,9 @@ public class ConcordMerge {
 	private static int countPasses(int argc) {
 		int i = 0;
 
-		if (argc <= NWAY)
+		if (argc <= NWAY) {
 			return 1;
+		}
 
 		while (argc > 0) {
 			i++;
@@ -97,16 +97,18 @@ public class ConcordMerge {
 	private boolean read(ConcordRecord[] recs) throws IOException {
 
 		for (int i = 0; recs[i] != null; i++) {
-			if (recs[i].term.equals(TERM_EOF))
+			if (recs[i].term.equals(TERM_EOF)) {
 				return false;
+			}
 
 			// read term
-			recs[i].term = IOUtil.readString(recs[i].stream);
-			if (recs[i].term.length() == 0) {   // EOF
+			if (recs[i].stream.available() == 0) {	// EOF
 				recs[i].term = TERM_EOF;
 				recs[i].size = 0;
-				continue;
+				continue;				
 			}
+			
+			recs[i].term = recs[i].stream.readUTF();
 
 			// read size of anchor list
 			recs[i].size = recs[i].stream.readInt();
@@ -137,10 +139,11 @@ public class ConcordMerge {
 	}
 
 	private void write(ConcordRecord[] recs) throws IOException {
-		if (recs[0].term.equals(TERM_EOF))
+		if (recs[0].term.equals(TERM_EOF)) {
 			return;
+		}
 
-		IOUtil.writeString(out, recs[0].term);
+		out.writeUTF(recs[0].term);
 
 		int i, size = 0;
 		for (i = 0; recs[i] != null; i++) {

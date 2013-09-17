@@ -1,38 +1,54 @@
 package org.pixielib.content;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashSet;
+import java.io.RandomAccessFile;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 /* Top-level fields for indexing
- * Every repository database must contain
- * an 'index.txt' file used for indexing
  */
 public class IndexFields {
 
 	private Set<String> fields;
 
 	public IndexFields(String db) throws IOException {
-		fields = new HashSet<>();
+		fields = new TreeSet<>();
 
-		File dir = Repository.getInstance().mapPath(db);
-		String filename = String.format("%s/index.txt", dir.getCanonicalPath());
-		File file = new File(filename).getCanonicalFile();
-		if (!file.canRead()) {
-			throw new IOException(String.format("Unable to read \"%s\".", file.getCanonicalPath()));
+		Repository repos = Repository.getInstance();
+
+		File index = repos.getIndexPath(db);
+		try (RandomAccessFile file = new RandomAccessFile(index, "r")) {
+			int magicno = file.readInt();
+			if (magicno != Index.MAGIC_NO) {
+				throw new IOException("file not in index format.");
+			}
+
+			int nfields = file.readInt();					// number of fields
+			while (nfields-- > 0) {
+				fields.add(file.readUTF());											// index field 
+			}
 		}
+	}
 
-		Lexer lexer = new Lexer(new FileReader(file));
-
-		String token;
-		while ((token = lexer.getToken()).length() > 0) {
-			fields.add(token.toLowerCase());
-		}
+	public IndexFields(String[] aFields) {
+		fields = new TreeSet<>();
+		Collection c = Arrays.asList(aFields);
+		fields.addAll(c);
 	}
 
 	public boolean isTopLevel(String field) {
 		return fields.contains(field);
+	}
+
+	public int size() {
+		return fields.size();
+	}
+
+	public Iterator<String> iterator() {
+		return fields.iterator();
 	}
 }

@@ -28,6 +28,13 @@ public class CheckIndex {
 
 			System.out.printf("    Index file size: %s bytes\n", StringUtil.comma(file.length()));
 
+			int nfields = file.readInt();					// number of fields
+			System.out.printf("    Index field count: %s\n", StringUtil.comma(nfields));
+			
+			while (nfields-- > 0) {						
+				file.readUTF();											// index field 
+			}
+		
 			int nterms = file.readInt();
 			System.out.printf("    Index term count: %s\n", StringUtil.comma(nterms));
 

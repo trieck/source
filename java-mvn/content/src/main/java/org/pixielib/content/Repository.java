@@ -11,7 +11,7 @@ public class Repository {
 	private static Repository instance;
 
 	private Repository() throws IOException {
-		config = Config.getInstance();
+		config = new Config("content");
 	}
 
 	public static synchronized Repository getInstance() throws IOException {

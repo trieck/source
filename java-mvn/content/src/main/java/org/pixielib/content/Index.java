@@ -4,12 +4,11 @@ import org.pixielib.util.DoubleHash64;
 
 import java.io.*;
 import java.nio.channels.Channels;
+import java.util.Iterator;
 
 public class Index {
 
 	public static final int MAGIC_NO = 0xc001d00d;  // file magic number
-	private static final int CONC_OFFSET = 24;      // offset to concordance
-
 	private Repository repos;                       // content repository
 	private Concordance concord;                    // term concordance
 
@@ -20,7 +19,7 @@ public class Index {
 
 	/* combine concordance and hash table into final index */
 	@SuppressWarnings("ConvertToTryWithResources")
-	public void write(String db) throws IOException {
+	public void write(String db, IndexFields fields) throws IOException {
 
 		// merge concordance blocks
 		String concordFile = concord.merge();
@@ -32,6 +31,15 @@ public class Index {
 
 		// write file magic number
 		ofile.writeInt(MAGIC_NO);
+
+		// write the number of index fields
+		ofile.writeInt(fields.size());
+
+		// write index fields
+		Iterator<String> it = fields.iterator();
+		while (it.hasNext()) {
+			ofile.writeUTF(it.next());
+		}
 
 		// write the total number of terms
 		long term_count_offset = ofile.getFilePointer();
@@ -45,18 +53,22 @@ public class Index {
 		long hash_table_offset = ofile.getFilePointer();
 		ofile.writeLong(0); // not yet known
 
+		// concordance offset
+		long concord_offset = ofile.getFilePointer();
+		
 		// write terms & anchors
-
 		int n, nterms;
 		String term;
 
 		OutputStream os = Channels.newOutputStream(ofile.getChannel());
-		for (nterms = 0; (term = IOUtil.readString(dis)).length() > 0; nterms++) {
+		for (nterms = 0; dis.available() > 0; nterms++) {
+			term = dis.readUTF();
+
 			// read the anchor list size
 			n = dis.readInt();
 
 			// write the term
-			IOUtil.writeString(os, term);
+			ofile.writeUTF(term);
 
 			// write the anchor list size
 			ofile.writeInt(n);
@@ -98,24 +110,23 @@ public class Index {
 		RandomAccessFile infile = new RandomAccessFile(outfile, "r");
 
 		// seek to the concordance
-		infile.seek(CONC_OFFSET);
+		infile.seek(concord_offset);
 
-		InputStream is = Channels.newInputStream(infile.getChannel());
-
-		long h, offset, term_offset = CONC_OFFSET;
+		long h, offset, term_offset = concord_offset;
 		int vsize;
 		for (long i = 0; i < nterms; i++) {
-			term = IOUtil.readString(is);
+			term = infile.readUTF();
 
 			h = hash(term, tableSize);
 
 			// collisions are resolved via linear-probing
-			for (; ; ) {
+			for (;;) {
 				offset = hash_table_area + (h * 8);
 
 				ofile.seek(offset);
-				if (ofile.readLong() == 0)
+				if (ofile.readLong() == 0) {
 					break;
+				}
 
 				h = (h + 1) % tableSize;
 			}
@@ -130,14 +141,12 @@ public class Index {
 			// next term offset
 			term_offset = infile.getFilePointer();
 		}
-
-		is.close();
 		infile.close();
 		ofile.close();
 	}
 
 	public void insert(String term, long anchor)
-			throws IOException {
+					throws IOException {
 		concord.insert(term, anchor);
 	}
 

@@ -12,7 +12,6 @@ public class InverterRecs {
 	 * default buffer size
 	 */
 	private static final int DEF_BUF_SIZE = 80;
-
 	private InverterRecord[] records;
 	private int size;   // size of table, should be prime
 
@@ -107,8 +106,7 @@ public class InverterRecs {
 		}
 	}
 
-    /* must be compacted first */
-
+	/* must be compacted first */
 	public void sort(int count) {
 		Arrays.sort(records, 0, count);
 	}

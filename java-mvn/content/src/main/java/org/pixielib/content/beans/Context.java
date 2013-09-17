@@ -1,7 +1,5 @@
 package org.pixielib.content.beans;
 
-import org.pixielib.util.Config;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -560,25 +558,6 @@ public class Context implements Serializable {
 
 	public Object getSessionAttribute(String attr) {
 		return getSession().getAttribute(attr);
-	}
-
-	public String getProperty(String key) {
-		Config config = Config.getInstance();
-		String value = config.getProperty(key);
-		return value;
-	}
-
-	public int getIntProperty(String key) {
-		String value = getProperty(key);
-
-		try {
-			int nvalue = Integer.parseInt(value);
-			return nvalue;
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
-
-		return 0;
 	}
 
 	public Writer getWriter() {

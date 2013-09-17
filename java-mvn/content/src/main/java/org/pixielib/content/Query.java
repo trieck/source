@@ -159,7 +159,7 @@ public class Query {
 			f2.seek(offset);
 
 			// read term in concordance
-			sTerm = IOUtil.readString(is);
+			sTerm = DataInputStream.readUTF(f2);
 			if (sTerm.equals(term)) {   // match
 				list.read(is);
 				break;
@@ -182,10 +182,15 @@ public class Query {
 		int magicno = f1.readInt();
 		if (magicno != Index.MAGIC_NO)
 			throw new IOException("index bad file format.");
+		
+		int nfields = f1.readInt();					// number of fields 
+		while (nfields-- > 0) {						
+			f1.readUTF();											// index field 
+		}
+		
+		f1.readInt();												// number of terms
 
-		f1.readInt();  // number of terms
-
-		hash_tbl_size = f1.readLong();     // size of hash table
-		hash_tbl_offset = f1.readLong();   // offset to the hash table
+		hash_tbl_size = f1.readLong();			// size of hash table
+		hash_tbl_offset = f1.readLong();		// offset to the hash table
 	}
 }

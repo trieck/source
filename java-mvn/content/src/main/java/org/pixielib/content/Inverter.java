@@ -53,8 +53,8 @@ public class Inverter {
 		for (int i = 0; i < count; i++) {
 			term = records.getTerm(i);
 			anchors = records.getAnchors(i);
-
-			IOUtil.writeString(dos, term);
+			
+			dos.writeUTF(term);
 			dos.writeInt(anchors.position()); // size of anchor list
 
 			for (int j = 0; j < anchors.position(); j++) {

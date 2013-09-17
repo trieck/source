@@ -73,9 +73,9 @@ public class XMLIndexer extends QParser {
 		}
 	}
 
-	public void load(String db) throws IOException {
+	public void load(String db, String[] aFields) throws IOException {
 
-		fields = new IndexFields(db);    // top-level index fields
+		fields = new IndexFields(aFields);	// top-level index fields
 
 		File dir = repos.mapPath(db);
 		List<File> files = expand(dir);
@@ -87,7 +87,7 @@ public class XMLIndexer extends QParser {
 
 		index = new Index();
 		loadfiles(files);
-		index.write(db);
+		index.write(db, fields);
 	}
 
 	private void loadfiles(List<File> files)
@@ -133,8 +133,8 @@ public class XMLIndexer extends QParser {
 
 	public static void main(String[] args) {
 
-		if (args.length != 1) {
-			System.err.println("usage: XMLIndexer database");
+		if (args.length < 2) {
+			System.err.println("usage: XMLIndexer database fields");
 			System.exit(1);
 		}
 
@@ -142,7 +142,7 @@ public class XMLIndexer extends QParser {
 
 		try {
 			XMLIndexer indexer = new XMLIndexer();
-			indexer.load(args[0]);
+			indexer.load(args[0], Arrays.copyOfRange(args, 1, args.length));
 		} catch (IOException e) {
 			System.err.println(e);
 			System.exit(1);

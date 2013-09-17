@@ -4,20 +4,9 @@ import java.util.ResourceBundle;
 
 public class Config {
 	private ResourceBundle bundle;
-	private static Config instance = null;
 
-	private Config() {
-		bundle = ResourceBundle.getBundle("pixie");
-	}
-
-	public static synchronized Config getInstance() {
-
-		if (instance != null)
-			return instance;
-
-		instance = new Config();
-
-		return instance;
+	public Config(String name) {
+		bundle = ResourceBundle.getBundle(name);
 	}
 
 	public String getProperty(String k) {
@@ -33,5 +22,18 @@ public class Config {
 		}
 
 		return value.trim();
+	}
+	
+	public int getIntProperty(String key) {
+		String value = getProperty(key);
+
+		try {
+			int nvalue = Integer.parseInt(value);
+			return nvalue;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+
+		return 0;
 	}
 }

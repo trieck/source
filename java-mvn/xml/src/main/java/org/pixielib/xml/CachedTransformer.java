@@ -1,7 +1,5 @@
 package org.pixielib.xml;
 
-import org.pixielib.util.Config;
-
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
@@ -17,14 +15,10 @@ public class CachedTransformer {
 	 * the transformer factory
 	 */
 	private final TransformerFactory factory;
-
 	/**
 	 * underlying map of strings to transformers
 	 */
 	private final Map<String, Transformer> table;
-
-	private Config config;
-
 	/**
 	 * the singleton instance
 	 */
@@ -33,11 +27,10 @@ public class CachedTransformer {
 	private CachedTransformer() throws IOException {
 		factory = TransformerFactory.newInstance();
 		table = new Hashtable<String, Transformer>();
-		config = Config.getInstance();
 	}
 
 	public static synchronized CachedTransformer getInstance()
-			throws IOException {
+					throws IOException {
 		if (instance == null) {
 			instance = new CachedTransformer();
 		}
@@ -46,7 +39,7 @@ public class CachedTransformer {
 	}
 
 	private Transformer createTransformer(File file)
-			throws IOException, TransformerConfigurationException {
+					throws IOException, TransformerConfigurationException {
 
 		Transformer transformer;
 
@@ -55,28 +48,18 @@ public class CachedTransformer {
 			transformer = factory.newTransformer(new StreamSource(file));
 		}
 
-		String cacheStylesheets = config.getProperty("stylesheet-cache");
-		if (cacheStylesheets.equals("on")) {
-			table.put(file.getCanonicalPath(), transformer);
-		}
+		table.put(file.getCanonicalPath(), transformer);
 
 		return transformer;
 	}
 
 	public Transformer getTransformer(File file)
-			throws IOException, TransformerConfigurationException {
+					throws IOException, TransformerConfigurationException {
 
 		// use a normalized naming scheme
 		String filename = file.getCanonicalPath();
 
-		Transformer t = null;
-
-		String cacheStylesheets = config.getProperty("stylesheet-cache");
-		if (cacheStylesheets.equals("on")) {
-			t = table.get(filename);
-		} else {
-			table.clear();
-		}
+		Transformer t = table.get(filename);
 
 		if (t == null) {
 			t = createTransformer(file);

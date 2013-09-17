@@ -10,20 +10,20 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
+import org.pixielib.util.Config;
 
 public class Search extends Product {
 
 	private static final XPathFactory factory = XPathFactory.newInstance();
-	int start;     // starting record
-	int pagesize;   // page size
+	private int start;			// starting record
+	private int pagesize;   // page size
+	private Config config;
 
 	private Search(String product, String db, String query, int start, String style) {
 		super(product, db, query, style);
-
-		Context ctxt = Context.getContext();
-
 		this.start = Math.max(1, start);
-		pagesize = ctxt.getIntProperty("pagesize");
+		config = new Config("web");
+		pagesize = config.getIntProperty("pagesize");
 	}
 
 	public static Search DatabaseSearch(String product, String db, String query, int start, String style) {
