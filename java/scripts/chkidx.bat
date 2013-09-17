@@ -1,3 +1,4 @@
 @echo off
-java -cp ..\dist\pixie.jar org.pixielib.content.CheckIndex %1
+call setenv.bat
+java %JAVA_OPTS% -cp %CLASSPATH% org.pixielib.content.CheckIndex %1
 
