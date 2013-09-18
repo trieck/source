@@ -67,7 +67,7 @@ public class XMLSplitter {
 					String.format("could not create directory \"%s\".\n", path));
 		}
 
-		String filename = String.format("%s/%04x.xml", path, docnum);
+		String filename = String.format("%s/%04d.xml", path, docnum);
 
 		return new File(filename);
 	}
