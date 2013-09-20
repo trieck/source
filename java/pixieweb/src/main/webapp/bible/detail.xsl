@@ -54,7 +54,7 @@
                         select="java:org.pixielib.content.beans.Search.select(@db, normalize-space($query), $expr)"/>
             </xsl:variable>
 
-            <xsl:if test="$prevdocid">
+            <xsl:if test="string-length($prevdocid) != 0">
                 <xsl:text>detail.jsp?db=</xsl:text><xsl:value-of select="@db"/>
                 <xsl:text>&amp;docid=</xsl:text><xsl:value-of select="$prevdocid"/>
                 <xsl:text>&amp;query=</xsl:text><xsl:value-of
@@ -81,7 +81,7 @@
                         select="java:org.pixielib.content.beans.Search.select(@db, normalize-space($query), $expr)"/>
             </xsl:variable>
 
-            <xsl:if test="$nextdocid">
+            <xsl:if test="string-length($nextdocid) != 0">
                 <xsl:text>detail.jsp?db=</xsl:text><xsl:value-of select="@db"/>
                 <xsl:text>&amp;docid=</xsl:text><xsl:value-of select="$nextdocid"/>
                 <xsl:text>&amp;query=</xsl:text><xsl:value-of
@@ -127,13 +127,13 @@
                     <span>
                         <a href="{$chapterlink}">Read this Chapter</a>
                     </span>
-                    <xsl:if test="$prevlink">
+                    <xsl:if test="string-length($prevlink) != 0">
                         &#160;
                         <span>
                             <a href="{$prevlink}">Previous Verse</a>
                         </span>
                     </xsl:if>
-                    <xsl:if test="$nextlink">
+                    <xsl:if test="string-length($nextlink) != 0">
                         &#160;
                         <span>
                             <a href="{$nextlink}">Next Verse</a>
