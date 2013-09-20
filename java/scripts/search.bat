@@ -1,3 +1,3 @@
 @echo off
-java -cp ..\dist\pixie.jar org.pixielib.content.Search %1 %2 %3
-
+call setenv.bat
+java %JAVA_OPTS% -cp %CLASSPATH% org.pixielib.content.Search %*

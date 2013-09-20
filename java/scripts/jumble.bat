@@ -1,2 +1,3 @@
 @echo off
-java -Xms64m -Xmx512m -cp ..\dist\pixie.jar org.pixielib.games.jumble.Jumble %1
+call setenv.bat
+java %JAVA_OPTS% -cp %CLASSPATH% org.pixielib.webapps.jumble.Jumble %1

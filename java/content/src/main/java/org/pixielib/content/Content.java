@@ -11,6 +11,8 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 
 public class Content {
 
@@ -99,30 +101,40 @@ public class Content {
 
 		// state machine to extract record in file
 		StringBuilder output = new StringBuilder();
-		try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
-			raf.seek(offset);
-
-			String pattern = "<record></record>";
-
-			int jstar = pattern.lastIndexOf('<');
-
-			int j = 0;
-			int c;
-			while ((c = raf.read()) != -1) {
-				if (j == pattern.length()) {
-					break;
-				} else if (pattern.charAt(j) == c) {
-					j++;
-				} else if (j >= jstar) {
-					j = jstar;
-				} else {
-					output.setLength(0);
-					j = 0;
-					continue;
-				}
-				output.append((char) c);
+		
+		RandomAccessFile raf = new RandomAccessFile(file, "r");
+		raf.seek(offset);
+			
+		FileChannel channel = raf.getChannel();
+		MappedByteBuffer buffer = channel.map(
+						FileChannel.MapMode.READ_ONLY, 0, channel.size());
+		buffer.load();
+    
+		final String pattern = "<record></record>";
+		final int jstar = pattern.lastIndexOf('<');
+		
+		byte c;
+		int j = 0;
+		for (int i = 0; i < buffer.limit(); i++) {
+			c = buffer.get();
+			
+			if (j == pattern.length()) {
+				break;
+			} else if (pattern.charAt(j) == c) {
+				j++;
+			} else if (j >= jstar) {
+				j = jstar;
+			} else {
+				output.setLength(0);
+				j = 0;
+				continue;
 			}
+			output.append((char) c);
 		}
+			
+		buffer.clear();
+		channel.close();
+		raf.close();
 
 		return XMLUtil.parseXML(output.toString());
 	}
