@@ -1,48 +1,48 @@
 body {
-	background-color: DarkRed;
+	background-color: Tan;
 	border-spacing: 3px;
-	color: CornSilk;
+	color: SaddleBrown;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 9pt;	
 	padding: 3px;	
 }
 
 a:link { 
-	color: CornSilk; 
+	color: SaddleBrown; 
 }
 a:visited { 
-	color: CornSilk;
+	color: SaddleBrown;
 }
 
 a.navigation { 
 	font-family: Arial, Helvetica, sans-serif; 
 	font-size: 11px; 
 	font-weight: normal;
-	color: CornSilk;
+	color: SaddleBrown;
 }
 
 .directions { 
 	font-family: Arial, Helvetica, sans-serif; 
 	font-size: 12px; 
 	font-weight: bold; 
-	color: CornSilk;
+	color: SaddleBrown;
 }
 
 .header {
 	font-family: Arial, Helvetica, sans-serif; 
-	color: CornSilk
+	color: SaddleBrown
 }
 
 h1 {
-	color: CornSilk
+	color: SaddleBrown
 }
 .normal { font : 9pt Arial, San-Serif; }
 
 .searchbutton { 
 	font : 9pt Arial, San-Serif; 
-	color : DarkRed; 
+	color : Tan; 
 	font-weight: bold; 
-	background-color : CornSilk; 
+	background-color : SaddleBrown; 
 }
 
 .searchresults { font-family: Arial Black, Helvetica, sans-serif; font-size: 16px; font-weight: bold; color: CornSilk; text-decoration: none; }
@@ -53,15 +53,15 @@ th {
 }
 
 td {
-	background-color:DarkRed;
+	background-color:Tan;
 }
 
 .grey {
-	background-color:Gray;
+	background-color:cornsilk;
 	font : 9pt Arial, San-Serif;
 }
 
-.cite { font : 9 Arial, Helvetica, sans-serif; font-weight: normal }
+.cite { font : Arial, Helvetica, sans-serif; font-weight: normal }
 
-.highlight { color: DarkRed; font-weight : bold }
+.highlight { color: darkred; font-weight : bold }
 
