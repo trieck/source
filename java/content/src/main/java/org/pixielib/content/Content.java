@@ -103,11 +103,9 @@ public class Content {
 		StringBuilder output = new StringBuilder();
 		
 		RandomAccessFile raf = new RandomAccessFile(file, "r");
-		raf.seek(offset);
-			
 		FileChannel channel = raf.getChannel();
 		MappedByteBuffer buffer = channel.map(
-						FileChannel.MapMode.READ_ONLY, 0, channel.size());
+						FileChannel.MapMode.READ_ONLY, offset, channel.size() - offset);
 		buffer.load();
     
 		final String pattern = "<record></record>";
