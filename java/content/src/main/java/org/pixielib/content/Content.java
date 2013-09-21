@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import org.pixielib.util.Timer;
 
 public class Content {
 
@@ -24,6 +25,7 @@ public class Content {
 
 	public Document search(String db, String q, int start, int count) throws IOException {
 
+		Timer timer = new Timer();
 		Query query = new Query(db);
 		IndexFields fields = new IndexFields(db);
 
@@ -55,6 +57,8 @@ public class Content {
 				doc = Highlighter.highlight(doc, terms, fields);
 				XMLUtil.transferNode(results, root, doc.getDocumentElement());
 			}
+			
+			results.setAttribute("query-time", Long.toString(timer.millis()));
 
 			return root;
 		} catch (ParserConfigurationException | SAXException | XMLStreamException | TransformerException e) {

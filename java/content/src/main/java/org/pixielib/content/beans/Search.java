@@ -17,6 +17,7 @@ public class Search extends Product {
 	private static final XPathFactory factory = XPathFactory.newInstance();
 	private int start;			// starting record
 	private int pagesize;   // page size
+	private long queryTime;	// query time
 	private Config config;
 
 	private Search(String product, String db, String query, int start, String style) {
@@ -84,6 +85,8 @@ public class Search extends Product {
 			try {
 				int ncount = Integer.parseInt(element.getAttribute("count"));
 				setRecordCount(ncount);
+				
+				queryTime = Long.parseLong(element.getAttribute("query-time"));
 			} catch (NumberFormatException e) {
 				;
 			}
@@ -157,5 +160,9 @@ public class Search extends Product {
 		String self = context.identity();
 
 		return WebUtils.normalizeUrl(self + "&start=" + N);
+	}
+
+	public long getQueryTime() {
+		return queryTime;
 	}
 }
