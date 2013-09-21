@@ -26,6 +26,8 @@ public class Index {
 
 		File outfile = repos.getIndexPath(db);
 
+		outfile.delete();
+		
 		RandomAccessFile ofile = new RandomAccessFile(outfile, "rw");
 		DataInputStream dis = new DataInputStream(new FileInputStream(concordFile));
 
