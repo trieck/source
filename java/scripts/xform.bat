@@ -1,3 +1,3 @@
 @echo off
-java -cp ..\dist\pixie.jar org.pixielib.xml.XMLTransformer %1 %2
-
+call setenv.bat
+java %JAVA_OPTS% -cp %CLASSPATH% org.pixielib.xml.XMLTransformer %*

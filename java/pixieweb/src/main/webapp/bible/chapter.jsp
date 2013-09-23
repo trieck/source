@@ -68,23 +68,22 @@
 
 		<table border="0" cellspacing="0" cellpadding="2" width="100%">
 			<tr bgcolor="#00619c" height="25">
-				<td border="1" valign="bottom" align="left"><a href="search.jsp?db=<%=db%>" class="navigation">New search</a></td>
+				<td border="1" valign="bottom" align="left" width="20%"><a href="search.jsp?db=<%=db%>" class="navigation">New search</a></td>
 				<% if (results.length() > 0) {%>
-				<td border="1" valign="bottom" align="left"><a href="<%= results%>" class="navigation">Back to Search Results</a></td>
+				<td border="1" valign="bottom" align="left" width="20%"><a href="<%= results%>" class="navigation">Back to Search Results</a></td>
 				<% }%>
 
-				<td valign="bottom">
-					<% if (search.getPrevious().length() > 0) {%>
-					&#xa0;<a title="Previous Page" href="<%= search.getPrevious()%>" class="navigation"><img src="../images/previous.png" border="0"/></a>&#xa0;&#xa0;
-						<% }%>
-						<% if (search.getNext().length() > 0) {%>
-					&#xa0;<a title="Next Page"  href="<%= search.getNext()%>" class="navigation"><img src="../images/next.png" border="0"/></a> &#xa0;&#xa0;
-						<% }%>
-
+				<td valign="bottom" width="60%">
 					<% if (prevChapter.length() > 0) {%>
 					&#xa0;<a title="Previous Chapter" href="<%= prevChapter%>" class="navigation"><img src="../images/prevChapter.png" border="0"/></a>&#xa0;&#xa0;
-						<% }%>
-						<% if (nextChapter.length() > 0) {%>
+					<% }%>
+					<% if (search.getPrevious().length() > 0) {%>
+					&#xa0;<a title="Previous Page" href="<%= search.getPrevious()%>" class="navigation"><img src="../images/previous.png" border="0"/></a>&#xa0;&#xa0;
+					<% }%>
+					<% if (search.getNext().length() > 0) {%>
+					&#xa0;<a title="Next Page"  href="<%= search.getNext()%>" class="navigation"><img src="../images/next.png" border="0"/></a> &#xa0;&#xa0;
+					<% }%>
+					<% if (nextChapter.length() > 0) {%>
 					&#xa0;<a title="Next Chapter"  href="<%= nextChapter%>" class="navigation"><img src="../images/nextChapter.png" border="0"/></a> &#xa0;&#xa0;
 						<% }%>
 				</td>

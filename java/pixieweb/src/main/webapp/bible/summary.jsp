@@ -49,10 +49,10 @@
 
 		<table border="0" cellspacing="0" cellpadding="2" width="100%">
 			<tr bgcolor="#00619c" height="25">
-				<td border="1" valign="bottom" align="left"><a href="search.jsp?db=<%=db%>" class="navigation">New Search</a></td>
-				<td border="1" valign="bottom" align="left"><a href="<%= ModifyLink%>" class="navigation">Modify Search</a></td>
+				<td border="1" valign="bottom" align="left" width="20%"><a href="search.jsp?db=<%=db%>" class="navigation">New Search</a></td>
+				<td border="1" valign="bottom" align="left" width="20%"><a href="<%= ModifyLink%>" class="navigation">Modify Search</a></td>
 
-				<td valign="bottom">
+				<td valign="bottom" width="60%">
 					<% if (search.getPrevious().length() > 0) {%>
 					&#xa0;<a title="Previous Page" href="<%= search.getPrevious()%>" class="navigation"><img src="../images/previous.png" border="0"/></a>&#xa0;&#xa0;
 					<% }%>
