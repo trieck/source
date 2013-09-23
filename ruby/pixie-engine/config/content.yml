@@ -1,0 +1,13 @@
+
+content:
+ # repository location
+ repos: d:/content
+
+index:
+ # number of ways to merge
+ nway: 20
+
+inverter:
+ # maximum number of inverter records
+ maxrecs: 100000
+
