@@ -7,6 +7,8 @@
 #include "Exception.h"
 #include "Util.h"
 
+#define YY_NO_UNISTD_H (1)
+
 #ifdef _MSC_VER
 #include <io.h>
 #endif	// _MSC_VER 
