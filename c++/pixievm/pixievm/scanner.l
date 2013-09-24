@@ -8,6 +8,7 @@
 #include "Util.h"
 
 #define YY_ALWAYS_INTERACTIVE	(1)
+#define YY_NO_UNISTD_H (1)
 
 #ifdef _MSC_VER
 #include <io.h>
