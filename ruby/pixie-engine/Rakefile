@@ -1,0 +1,5 @@
+
+desc 'Index xml content'
+task :xml_index do
+  exec 'jruby bin/xml_index.rb'
+end

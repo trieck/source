@@ -5,13 +5,27 @@ require 'repository'
 class XMLIndexer
 
   def initialize
-    @repos = Repository.new
+    @repos = Repository.instance
     @index = Index.new
-    @fields = IndexFields.new
     @elements = []
   end
 
   def load(db, fields)
-      puts @repos.map_path db
+    @fields = IndexFields.from_fields(fields)
+    dir = @repos.map_path(db)
+    files = expand(dir)
+    if files.length == 0
+      raise IOError, "no content files found in #{dir}."
+    end
+    load_files(files)
+    @index.write(db, @fields)
+  end
+
+  def load_files(files)
+
+  end
+
+  def expand(dir)
+    Dir.glob("#{dir}/**/*.xml")
   end
 end
