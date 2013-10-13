@@ -8,12 +8,14 @@ public:
 	Set();
 	Set(std::initializer_list<T> list);
 	Set(const Set<T>& set);
+	Set(Set<T>&& set);
 	~Set();
 
 	void append(const T& item);
 	void append(const Set<T>& set);
 
 	Set<T>& operator =(const Set<T>& rhs);
+	Set<T>& operator =(Set<T>&& rhs);
 	
 	template <typename U>
 	friend Set<U> operator + (const Set<U>& lhs, const Set<U>& rhs);
@@ -44,6 +46,13 @@ Set<T>::Set(const Set<T>& set)
 
 /////////////////////////////////////////////////////////////////////////////
 template<class T>
+Set<T>::Set(Set<T>&& set)
+{
+	*this = std::move(set);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+template<class T>
 Set<T>::~Set() 
 {
 }
@@ -55,6 +64,18 @@ Set<T>& Set<T>::operator =(const Set<T>& rhs)
 	if (this != &rhs) {
 		vec = rhs.vec;
 	}
+
+	return *this;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+template<class T>
+Set<T>& Set<T>::operator =(Set<T>&& rhs)
+{
+	if (this != &rhs) {
+		vec = std::move(rhs.vec);
+	}
+
 	return *this;
 }
 
