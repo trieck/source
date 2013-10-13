@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Set.h"
 
 // Compile this with VS2013
 
@@ -38,7 +39,8 @@ void foo(T t)
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	Check<long> okCheker; // Check<uint8_t> WON'T COMPILE -- GOOD!
+	Check<long> okChecker; // Check<uint8_t> WON'T COMPILE -- GOOD!
+	okChecker;
 
 	uint64_t a = mul<uint64_t>(3, 4);
 	
@@ -59,6 +61,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	enum myEnum : uint8_t;
 
 	B<Check<int>> b;
+	b;
 
 	// N2930: range based for-loop
 	for (float& x : f)
@@ -69,6 +72,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	enum { Red, Orange, Green };
 	foo(local);
 	foo(Orange);
+
+	Set<int> set1{ 123, 456, 789, 101112 };
+	Set<int> set2{ 456, 789, 101112, 131415 };
+	Set<int> set3 = set1 + set2;
 
 	return 0;
 }
