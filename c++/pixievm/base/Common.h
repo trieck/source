@@ -53,11 +53,11 @@ struct stringless : std::binary_function <string, string, bool> {
 };
 
 #ifndef HIBYTE
-#define HIBYTE(w)           ((w & 0xFF00) >> 8)
+#define HIBYTE(w)				((w & 0xFF00) >> 8)
 #endif // HIBYTE
 
 #ifndef LOBYTE
-#define LOBYTE(w)           (w & 0xFF)
+#define LOBYTE(w)				(w & 0xFF)
 #endif // LOBYTE
 
 #define HINYBBLE(b)			((b & 0xF0) >> 4)

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.20827.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pixievm", "pixievm.vcxproj", "{870A2B25-074C-4B76-8664-B2BBFE2FE72B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "base\base.vcxproj", "{18677942-167D-438E-9A64-8C675E4F885B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "..\base\base.vcxproj", "{18677942-167D-438E-9A64-8C675E4F885B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pxmon", "pxmon\pxmon.vcxproj", "{870A2B25-074C-4B76-8664-B2BBFE2FE72B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PxAsm", "..\pxasm\PxAsm.vcxproj", "{7000E879-FEDC-4BE5-98B3-3EEE21B8C78F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pxasm", "pxasm\pxasm.vcxproj", "{7000E879-FEDC-4BE5-98B3-3EEE21B8C78F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pxdasm", "..\pxdasm\pxdasm.vcxproj", "{0B4E35F6-8A3C-44F2-AC2F-A529F8BB976F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pxdasm", "pxdasm\pxdasm.vcxproj", "{0B4E35F6-8A3C-44F2-AC2F-A529F8BB976F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
