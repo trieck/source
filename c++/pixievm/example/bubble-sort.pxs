@@ -10,41 +10,38 @@
 .org $8800
 
 start:
-		mov c, sort8-data	; length of the list
-		mov d, data			; starting address of list
-		
-		jmp sort8			; jump over data
-		
-data:
-		; data elements to be sorted
-		
-		.byte $ff, $fe, $a0, $33
-		.byte $01, $cc, $8a, $80
+		mov c, dataend-data		; length of the list
+		mov d, data						; starting address of list
 		
 sort8:
-		cmp cl, 0		; empty list ?
-		jz end			; yes, nothing to do
+		cmp cl, 0							; empty list ?
+		jz end								; yes, nothing to do
 sortloop:
-		xor ch, ch		; turn exchange flag off
-        xor x, x		; initialize index register
-        mov bl, cl		; put length of list in element counter
-        dec bl			; last element index
+		xor ch, ch						; turn exchange flag off
+		xor x, x							; initialize index register
+		mov bl, cl						; put length of list in element counter
+		dec bl								; last element index
 nxtel:   
-		mov al, [d+x]	; fetch element
-        inx
-        cmp al, [d+x]	; is it larger than the next element ?
-        jcc chkend
+		mov al, [d+x]					; fetch element
+		inx
+		cmp al, [d+x]					; is it larger than the next element ?
+		jcc chkend
 		jz chkend
-		mov ah, [d+x]	; yes exchange elements
+		mov ah, [d+x]					; yes exchange elements
 		mov [d+x], al
 		dex
 		mov [d+x], ah
 		inx
-		mov ch, $ff		; turn on exchange flag
+		mov ch, $ff						; turn on exchange flag
 chkend:
-		dec bl			; end of list ?
-		jnz nxtel		; no, fetch next element
-		bit ch, ch		; exchange flag still off ?
-		jmi sortloop	; no, go through list again
+		dec bl								; end of list ?
+		jnz nxtel							; no, fetch next element
+		bit ch, ch						; exchange flag still off ?
+		jmi sortloop					; no, go through list again
 end:
-		ret				; yes, list is now ordered
+		ret										; yes, list is now ordered
+
+data: 										; data elements to be sorted
+		.byte $ff, $fe, $a0, $33
+		.byte $01, $cc, $8a, $80
+dataend:

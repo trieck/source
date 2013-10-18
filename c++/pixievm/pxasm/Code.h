@@ -134,7 +134,7 @@ inline bool Code::isGenerating() const  	// has code generation begun?
 /////////////////////////////////////////////////////////////////////////////
 inline word Code::location() const
 {
-	return m_origin + (m_pmem - m_memory);
+	return m_origin + (word)(m_pmem - m_memory);
 }
 
 #endif // __CODE_H__
