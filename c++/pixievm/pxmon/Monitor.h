@@ -88,9 +88,9 @@ private:
 
 	static void sighandler(int signal);
 
-	CommandMap m_commands;			// map of commands
-	bool m_exit_mon;				// exit flag
-	bool m_show_notice;				// show notice
+	CommandMap m_commands;				// map of commands
+	bool m_exit_mon;							// exit flag
+	bool m_show_notice;						// show notice
 	static MonitorPtr instance;		// singleton instance
 };
 /////////////////////////////////////////////////////////////////////////////

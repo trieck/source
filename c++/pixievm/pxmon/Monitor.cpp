@@ -149,11 +149,12 @@ void Monitor::sighandler(int signum)
 	switch (signum) {
 	case SIGBREAK:
 		if (!This->isRunning()) {	// executing code, not in monitor
-			This->setExit(false);	// set back to running to break
+			This->setExit(false);		// set back to running to break
+			signal(SIGBREAK, &Monitor::sighandler);	// re-install
 		} else {
 			cpu->setShutdown(true);	// shut down CPU
-			This->setExit(true);	// exit monitor
-		}
+			This->setExit(true);		// exit monitor
+		}		
 	default:
 		break;
 	};

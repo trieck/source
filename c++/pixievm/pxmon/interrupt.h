@@ -14,13 +14,13 @@
 /////////////////////////////////////////////////////////////////////////////
 // Types of interrupt lines
 enum cpu_int {
-    IK_NONE		= 0,
-    IK_NMI		= 1 << 0,
-    IK_IRQ		= 1 << 1,
-    IK_RESET	= 1 << 2,
-    IK_TRAP		= 1 << 3,
-    IK_MONITOR	= 1 << 4,
-    IK_MONBREAK	= 1 << 5
+	IK_NONE		= 0,
+	IK_NMI		= 1 << 0,
+	IK_IRQ		= 1 << 1,
+	IK_RESET	= 1 << 2,
+	IK_TRAP		= 1 << 3,
+	IK_MONITOR	= 1 << 4,
+	IK_MONBREAK	= 1 << 5
 };
 
 /////////////////////////////////////////////////////////////////////////////
