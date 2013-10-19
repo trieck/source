@@ -20,7 +20,13 @@ extern int yyparse(void);
 extern void yyrestart(FILE *);
 extern FILE *yyin;
 
-/* address of assembly */
+struct yy_buffer_state;
+typedef yy_buffer_state *YY_BUFFER_STATE;
+extern YY_BUFFER_STATE yy_scan_string(const char *str);
+extern void yy_switch_to_buffer(YY_BUFFER_STATE buffer);
+extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
+
+// address of assembly
 word address = 0x0000;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -38,23 +44,56 @@ void MiniAssembler::prompt()
 /////////////////////////////////////////////////////////////////////////////
 void MiniAssembler::assemble(word *start)
 {
-	if (start) {		/* start address supplied */
-		address = *start;
-		init = true;
-	} else if (!init) {	/* not entered */
-		address = CPU::getInstance()->getIP();
-		init = true;
-	}
+	initialize(start);
 
 	for (;;) {
 		prompt();
-		try {
-			if (parse()) break;
-		} catch (const Exception &e) {
-			yyrestart(yyin);
-			cerr << e.getDescription() << endl;
-		}
+		if (!tryParse())
+			break;
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool MiniAssembler::assemble(word *start, const char *str)
+{
+	initialize(start);
+	
+	YY_BUFFER_STATE buffer = yy_scan_string(str);
+	yy_switch_to_buffer(buffer);
+
+	bool result = tryParse();
+
+	yy_delete_buffer(buffer);
+
+	yyrestart(yyin);
+
+	return result;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void MiniAssembler::initialize(word *start)
+{
+	if (start) {				// start addres
+		address = *start;
+		init = true;
+	} else if (!init) {	// not entered
+		address = CPU::getInstance()->getIP();
+		init = true;
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool MiniAssembler::tryParse() 
+{
+	try {
+		if (parse() == 0)
+			return true;
+	} catch (const Exception &e) {
+		yyrestart(yyin);
+		cerr << e.getDescription() << endl;
+	}
+
+	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -61,6 +61,19 @@ Monitor *Monitor::getInstance()
 }
 
 /////////////////////////////////////////////////////////////////////////////
+bool Monitor::assemble(const string &str)
+{
+	bool result = false;
+
+	AssemCmd *assembler = static_cast<AssemCmd*>(m_commands["a"]);
+	if (assembler != NULL) {
+		result = assembler->assemble(str);
+	}
+
+	return result;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 void Monitor::disassemble(word address)
 {
 	// this is a single line convenience method used by the stepper

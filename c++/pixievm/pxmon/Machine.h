@@ -20,12 +20,12 @@ public:
 
 // Interface
 	void init();
-	void run(int argc, char** argv);
+	int run(int argc, char** argv);
 
 // Implementation
 private:
-	void test();
-	void run();
+	int test();
+	int run();
 	void loadROM(const char *filename, word base, word size);
 
 	Memory* memory;				// pointer to memory

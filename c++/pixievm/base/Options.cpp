@@ -22,6 +22,7 @@ public:
 	Options(){}
 	~Options() {}
 
+// Interface
 	void put(const char* name, const char* value = __nil) {
 		options[name] = value;
 	}
@@ -30,7 +31,7 @@ public:
 		return options.find(name) != options.end();
 	}
 
-	string value(const char*name) const {
+	string value(const char* name) const {
 		OptionMap::const_iterator it = options.begin();
 		if (it == options.end())
 			return __nil;
@@ -38,6 +39,7 @@ public:
 		return (*it).second;
 	}
 
+// Implementation
 private:
 	typedef map<string, string, stringless> OptionMap;
 	OptionMap options;

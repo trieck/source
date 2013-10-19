@@ -72,6 +72,7 @@ public:
 	virtual void handle();
 
 	void setExit(bool f);
+	bool assemble(const string &str);
 	void disassemble(word address);
 	bool isRunning() const {
 		return !m_exit_mon;

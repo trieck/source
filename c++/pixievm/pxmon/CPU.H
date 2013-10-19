@@ -79,11 +79,11 @@ public:
 
 // Implementation
 private:
-	enum { NREGS = 8 };		// number of registers
+	enum { NREGS = 8 };			// number of registers
 	static CPUPtr instance;	// singleton instance
-    word regs[NREGS];		// registers
-	Memory *memory;			// memory
-	bool m_shutdown;		// shut down flag
+	word regs[NREGS];				// registers
+	Memory *memory;					// memory
+	bool m_shutdown;				// shut down flag
 };
 /////////////////////////////////////////////////////////////////////////////
 

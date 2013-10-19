@@ -18,13 +18,16 @@ public:
 
 // Interface
 	void assemble(word *start);
+	bool assemble(word *start, const char *str);
 
 // Implementation
 private:
+	void initialize(word *start);
+	bool tryParse();
 	int parse();
 	void prompt();
 
-	bool init;		/* have we been entered ? */
+	bool init;			// have we been entered ?
 	SymbolTable *table;
 };
 /////////////////////////////////////////////////////////////////////////////

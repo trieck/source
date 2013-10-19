@@ -33,3 +33,9 @@ void AssemCmd::exec(const stringvec &v)
 		assembler.assemble(NULL);
 	}
 }
+
+/////////////////////////////////////////////////////////////////////////////
+bool AssemCmd::assemble(const string& str)
+{
+	return assembler.assemble(NULL, str.c_str());
+}

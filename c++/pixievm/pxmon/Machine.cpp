@@ -51,24 +51,33 @@ void Machine::loadROM(const char *filename, word base, word size)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Machine::run(int argc, char** argv)
+int Machine::run(int argc, char** argv)
 {
+	int result;
+
 	Options::options(argc, argv);
 
 	if (Options::isoption("test")) {
-		test();
+		result = test();
 	} else {
-		run();
+		result = run();
 	}
+
+	return result;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Machine::test()
+int Machine::test()
 {
+	Monitor *mon = Monitor::getInstance();
+
+	bool result = mon->assemble("xor al, al\n");
+
+	return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Machine::run()
+int Machine::run()
 {
 	Monitor *mon = Monitor::getInstance();
 
@@ -79,4 +88,6 @@ void Machine::run()
 
 	// run!
 	cpu->run();
+
+	return 0;
 }

@@ -12,14 +12,16 @@
 ////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
+	int result = 0;
+
 	Machine machine;
 
 	try {
 		machine.init();
-		machine.run(argc, argv);
+		result = machine.run(argc, argv);
 	} catch (const Exception & e) {
 		cerr << e.getDescription() << endl;
 		return 1;
 	}
-	return 0;
+	return result;
 }
