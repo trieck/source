@@ -10,10 +10,10 @@ pixie_SOURCES = array.c	\
 	eval.h				\
 	global.c			\
 	global.h			\
-	lex.l				\
+	lex.l				  \
 	main.c				\
-	memcheck.c			\
-	memcheck.h			\
+	memcheck.c		\
+	memcheck.h		\
 	parse.y 			\
 	pixie.c				\
 	pixie.h				\
