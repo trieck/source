@@ -2,7 +2,7 @@
 //
 // DISASSEMBLER.H : PixieVM Disassembler
 //
-// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2013, Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __DISASSEMBLER_H__

@@ -2,7 +2,7 @@
 //
 // EXCEPTION.H : Simple exception class
 //
-// Copyright (c) 2006-2009, Thomas A. Rieck
+// Copyright (c) 2006-2013, Thomas A. Rieck
 // All Rights Reserved
 //
 

@@ -2,7 +2,7 @@
 //
 // DUMPCMD.H : Monitor dump command
 //
-// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2013, Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __DUMPCMD_H__

@@ -2,7 +2,7 @@
 //
 // COMMON.H : Common include
 //
-// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2013, Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __COMMON_H__
@@ -67,7 +67,7 @@ struct stringless : std::binary_function <string, string, bool> {
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
 #define ANON_BEGIN			namespace {
-#define ANON_END			}
+#define ANON_END				}
 
 #undef ASSERT
 #ifdef _DEBUG

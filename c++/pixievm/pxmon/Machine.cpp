@@ -2,7 +2,7 @@
 //
 // MACHINE.CPP : Pixie Virtual Machine
 //
-// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2013, Thomas A. Rieck, All Rights Reserved
 //
 
 #include "Common.h"
@@ -11,6 +11,7 @@
 #include "Exception.h"
 #include "Opcodes.h"
 #include "Monitor.h"
+#include "Options.h"
 
 #define CHARGEN_BASE (0xC000)
 #define CHARGEN_SIZE (0x800)
@@ -50,15 +51,32 @@ void Machine::loadROM(const char *filename, word base, word size)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+void Machine::run(int argc, char** argv)
+{
+	Options::options(argc, argv);
+
+	if (Options::isoption("test")) {
+		test();
+	} else {
+		run();
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void Machine::test()
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
 void Machine::run()
 {
-	// setup global interrupt
 	Monitor *mon = Monitor::getInstance();
 
+	// setup global interrupt
 	g_interrupt.setMonitor(mon);
 	g_interrupt.setTrap(mon);
 	g_interrupt.clearPending(IK_TRAP);
 
+	// run!
 	cpu->run();
 }
-

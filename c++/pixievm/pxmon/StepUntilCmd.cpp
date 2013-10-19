@@ -2,7 +2,7 @@
 //
 // STEPUNTILCMD.CPP : Step until return command
 //
-// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2013, Thomas A. Rieck, All Rights Reserved
 //
 
 #include "common.h"

@@ -15,7 +15,7 @@ use Exporter;
 
 # addressing modes 
 use constant RR8 		=> 0;	
-use constant RR16 		=> RR8 + 1;
+use constant RR16 	=> RR8 + 1;
 use constant RM8		=> RR16 + 1;
 use constant RM16		=> RM8 + 1;
 use constant RA8		=> RM16 + 1;

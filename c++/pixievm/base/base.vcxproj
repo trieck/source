@@ -149,6 +149,14 @@
       <BufferSecurityCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</BufferSecurityCheck>
       <BufferSecurityCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</BufferSecurityCheck>
     </ClCompile>
+    <ClCompile Include="Options.cpp">
+      <BufferSecurityCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</BufferSecurityCheck>
+      <BufferSecurityCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</BufferSecurityCheck>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MinSpace</Optimization>
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Size</FavorSizeOrSpeed>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MinSpace</Optimization>
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Size</FavorSizeOrSpeed>
+    </ClCompile>
     <ClCompile Include="PxDisassembler.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MinSpace</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MinSpace</Optimization>
@@ -173,9 +181,9 @@
     <ClInclude Include="Modes.h" />
     <ClInclude Include="Opcodes.h" />
     <ClInclude Include="Opinfo.h" />
+    <ClInclude Include="options.h" />
     <ClInclude Include="PixieVM.h" />
     <ClInclude Include="PxDisassembler.h" />
-    <ClInclude Include="random.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>

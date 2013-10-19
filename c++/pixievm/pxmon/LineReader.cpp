@@ -2,7 +2,7 @@
 //
 // LINEREADER.CPP : Read lines from input stream
 //
-// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2013, Thomas A. Rieck, All Rights Reserved
 //
 
 #include "common.h"

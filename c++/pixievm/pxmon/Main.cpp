@@ -2,7 +2,7 @@
 //
 // MAIN.CPP : Application entry point
 //
-// Copyright (c) 2006-2009, Thomas A. Rieck, All Rights Reserved
+// Copyright (c) 2006-2013, Thomas A. Rieck, All Rights Reserved
 //
 
 #include "Common.h"
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
 	try {
 		machine.init();
-		machine.run();
+		machine.run(argc, argv);
 	} catch (const Exception & e) {
 		cerr << e.getDescription() << endl;
 		return 1;

@@ -29,6 +29,9 @@
     <ClCompile Include="Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Options.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -55,10 +58,10 @@
     <ClInclude Include="PxDisassembler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="random.h">
+    <ClInclude Include="Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Util.h">
+    <ClInclude Include="options.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
