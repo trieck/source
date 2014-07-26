@@ -22,7 +22,7 @@ void Palette256::load()
 {
 	HRSRC hResource = ::FindResource(AfxGetResourceHandle(),
 	                                 MAKEINTRESOURCE(IDR_DEF_PALETTE),
-	                                 "PALETTE");
+	                                 _T("PALETTE"));
 	if (hResource == NULL)
 		AfxThrowResourceException();
 
@@ -37,7 +37,9 @@ void Palette256::load()
 		AfxThrowResourceException();
 	}
 
-	StringTokenizer tokenizer(pResource, "\r\n");
+	CString strResource(pResource);
+	
+	StringTokenizer tokenizer(strResource, _T("\r\n"));
 	CString tok;
 
 	int red, green, blue;
@@ -46,7 +48,7 @@ void Palette256::load()
 	m_pPalette = new RGBTRIPLE[NUM_PALETTE_COLORS];
 	for (uint8_t i = 0; i < NUM_PALETTE_COLORS
 	        && (tok = tokenizer.next()) != ""; i++) {
-		sscanf(tok, "%d %d %d", &red, &green, &blue);
+		_stscanf(tok, _T("%d %d %d"), &red, &green, &blue);
 		color = RGB(red, green, blue);
 		m_pPalette[i].rgbtRed = (BYTE)red;
 		m_pPalette[i].rgbtGreen = (BYTE)green;

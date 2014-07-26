@@ -41,7 +41,7 @@ BOOL CColorChooserDlg::OnInitDialog()
 
 	if (!m_ColorsWnd.Create(
 	            NULL,
-	            "",
+	            _T(""),
 	            WS_CHILD | WS_VISIBLE,
 	            rectDefault,
 	            this,

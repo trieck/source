@@ -7,7 +7,7 @@
 
 #ifdef _DEBUG
 #undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
+static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif
 
@@ -16,22 +16,22 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
-StringTokenizer::StringTokenizer(LPCSTR pinput, LPCSTR pdelim)
-	: delim(pdelim), init(false), nextoken(0)
+StringTokenizer::StringTokenizer(LPCTSTR pinput, LPCTSTR pdelim)
+: delim(pdelim), init(false), nextoken(0)
 {
-	input = strdup(pinput);
+	input = _tcsdup(pinput);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 StringTokenizer::~StringTokenizer()
 {
-	delete []input;
+	delete [] input;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 CString StringTokenizer::next()
 {
-	const char *ptok;
+	const TCHAR* ptok;
 	if (init)
 		ptok = StringTokenizer::strtok(NULL);
 	else {
@@ -39,63 +39,48 @@ CString StringTokenizer::next()
 		init = true;
 	}
 
-	return ptok == NULL ? "" : ptok;
+	return ptok == NULL ? _T("") : ptok;
 }
 
-// adapted from MS C runtime library, doesn't support multiple threads
+// adapted from MS C runtime library
 //
-LPCSTR StringTokenizer::strtok(LPCSTR string)
+LPTSTR StringTokenizer::strtok(LPTSTR string)
 {
-	LPBYTE str;
-	LPCBYTE ctrl = (LPCBYTE)(LPCSTR)delim;
+	LPTSTR token;
+	LPCTSTR ctl;
 
-	BYTE map[32];
-	int count;
-
-	/* Clear control map */
-	for (count = 0; count < 32; count++)
-		map[count] = 0;
-
-	/* Set bits in delimiter table */
-	do {
-		map[*ctrl >> 3] |= (1 << (*ctrl & 7));
-	} while (*ctrl++);
-
-	/* Initialize str. If string is NULL, set str to the saved
-	 * pointer (i.e., continue breaking tokens out of the string
-	 * from the last strtok call)
-	 */
-	if (string)
-		str = (LPBYTE)string;
-	else
-		str = (LPBYTE)nextoken;
+	// If string==NULL, continue with previous string
+	if (!string)
+		string = nextoken;
 
 	/* Find beginning of token (skip over leading delimiters). Note that
-	 * there is no token if this loop sets str to point to the terminal
-	 * null (*str == '\0')
-	 */
-	while ((map[*str >> 3] & (1 << (*str & 7))) && *str)
-		str++;
+	 * there is no token iff this loop sets string to point to the terminal
+	 * null (*string == '\0') */
+	while (*string) {
+		for (ctl = delim; *ctl && *ctl != *string; ctl++)
+			;
+		if (!*ctl) break;
+		string++;
+	}
 
-	string = (PCHAR)str;
+	token = string;
 
-	/* Find the end of the token. If it is not the end of the string,
-	 * put a null there.
-	 */
-	for ( ; *str; str++)
-		if (map[*str >> 3] & (1 << (*str & 7))) {
-			*str++ = '\0';
+	/* Find the end of the token.If it is not the end of the string,
+	 * put a null there. */
+	for (; *string; string++) {
+		for (ctl = delim; *ctl && *ctl != *string; ctl++)
+			;
+		if (*ctl) {
+			*string++ = '\0';
 			break;
 		}
+	}
 
-	/* Update nextoken (or the corresponding field in the per-thread data
-	 * structure
-	 */
-	nextoken = (PCHAR)str;
+	nextoken = string;
 
-	/* Determine if a token has been found. */
-	if (string == (PCHAR)str)
+	// determine if a token has been found.
+	if (token == string)
 		return NULL;
 	else
-		return string;
+		return token;
 }
