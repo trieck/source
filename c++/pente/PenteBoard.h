@@ -54,7 +54,7 @@ public:
 	enum { DEFAULT_GRID_COLOR		= 0xC0C0C0 };
 	enum { DEFAULT_PLAYER_ONE_COLOR = 0x008000 };
 	enum { DEFAULT_PLAYER_TWO_COLOR = 0x000080 };
-	enum { DEFAULT_WINNER_COLOR		= 0x0000C0 };
+	enum { DEFAULT_WINNER_COLOR		= 0x0080FF };
 
 // Implementation
 private:

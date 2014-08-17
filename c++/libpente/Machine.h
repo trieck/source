@@ -27,6 +27,7 @@ private:
 	bool center(const Vector &v) const;
 	POINT bestMove(const Vector &v) const;
 	POINT mustBlock() const;
+	bool matchBlock(uint8_t player, uint8_t empty, POINT& pt) const;
 	POINT blockMove() const;
 	POINT randomMove() const;
 	const Vector *maxOpponentV() const;

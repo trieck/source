@@ -16,7 +16,7 @@ RecolorableBitmap::RecolorableBitmap(COLORREF nSourceColor)
 
 RecolorableBitmap::~RecolorableBitmap()
 {
-	delete [] m_Bits;
+	FreeBits();
 }
 
 // RecolorableBitmap member functions
@@ -29,8 +29,7 @@ void RecolorableBitmap::Load(UINT nID)
 
 	m_dwBmpSize = ((bm.bmWidth * bm.bmBitsPixel + 31) / 32) * 4 * bm.bmHeight;
 
-	if (m_Bits != NULL)
-		delete [] m_Bits;
+	FreeBits();
 
 	m_Bits = new BYTE[m_dwBmpSize];
 
@@ -78,3 +77,10 @@ COLORREF RecolorableBitmap::getColor() const
 	return m_Color;
 }
 
+void RecolorableBitmap::FreeBits() 
+{
+	if (m_Bits != NULL) 
+		delete [] m_Bits;
+
+	m_Bits = NULL;
+}

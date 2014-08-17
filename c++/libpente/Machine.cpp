@@ -17,7 +17,9 @@ const float PIECE_WEIGHT = 1.0f;
 const float CONT_WEIGHT = 0.5f;
 const uint32_t CENTER = (BOARD_ENTRIES + 1) / 2 - 1;
 const uint32_t MEAN_POINT = VSIZE/2;
+typedef std::vector<POINT> PointVec;
 ANON_END
+
 
 /////////////////////////////////////////////////////////////////////////////
 Machine::Machine() : vectors (Board::instance()->getVectors())
@@ -221,55 +223,58 @@ POINT Machine::bestMove(const Vector &v) const
 /////////////////////////////////////////////////////////////////////////////
 POINT Machine::mustBlock() const
 {
-	/*
-	 * Determine square where we must block
-	 * where the vector contains VSIZE-1 ET_PLAYER_ONE and one ET_EMPTY
-	 */
-	POINT p, q, b, maxP = NIL_MOVE;
-	uint32_t i, type, onecount, ecount;
+	POINT pt;
+
+	if (matchBlock(4, 1, pt))
+		return pt;
+
+	if (matchBlock(3, 2, pt))
+		return pt;
+
+	return NIL_MOVE;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+bool Machine::matchBlock(uint8_t player, uint8_t empty, POINT& pt) const
+{
+	uint32_t i, type;
+	uint8_t p1s, empties;
+	POINT p, maxP;
 	float weight, maxWeight = MIN_WEIGHT;
+	bool matched = false;
+	PointVec candidates;
 
 	VecVec::const_iterator it = vectors.begin();
 	for ( ; it != vectors.end(); it++) {
-		for (i = 0, onecount = 0, ecount = 0; i < VSIZE; i++) {
+		candidates.clear();
+		for (i = 0, p1s = 0, empties = 0; i < VSIZE; i++) {
 			p = (*it).entry(i);
 			type = board->getEntry(p.x, p.y);
-			switch (type) {
-			case ET_PLAYER_ONE:
-				onecount++;
-				break;
-			case ET_EMPTY:
-				ecount++;
-				b = p;
-				break;
+			if (type == ET_PLAYER_ONE) p1s++;
+			if (type == ET_EMPTY) {
+				candidates.push_back(p);
+				empties++;			
 			}
 		}
-
-		if (onecount == VSIZE-1 && ecount == 1) { // must block, b contains the square to block
-			weight = weightPoint(b);
-			if (weight > maxWeight) {
-				maxP = b;
-				maxWeight = weight;
-			}
-		}
-
-		// block contiguous with open ends
-		if (onecount == VSIZE-2 && ecount == 2) {
-			p = (*it).entry(0);
-			q = (*it).entry(VSIZE-1);
-
-			if (board->getEntry(p.x, p.y) == ET_EMPTY &&
-			        board->getEntry(q.x, q.y) == ET_EMPTY) {
-				weight = weightPoint(b);
+		if (p1s == player && empties == empty) {
+			PointVec::const_iterator it2 = candidates.begin();
+			for ( ; it2 != candidates.end(); ++it2) {
+				weight = weightPoint(*it2);
 				if (weight > maxWeight) {
-					maxP = b;
+					maxP = *it2;
 					maxWeight = weight;
 				}
 			}
+			matched = true;
 		}
 	}
 
-	return maxP;
+	if (matched) {
+		pt = maxP;
+		return true;
+	}
+
+	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////

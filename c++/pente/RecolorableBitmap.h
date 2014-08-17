@@ -15,6 +15,7 @@ public:
 	COLORREF getColor() const;
 
 private:
+	void FreeBits();
 	COLORREF m_Color;
 	BYTE *m_Bits;
 	DWORD m_dwBmpSize;

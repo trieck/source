@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -74,7 +72,7 @@ IDB_PIECE               BITMAP                  "res\\piece.bmp"
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR  20, 20
+IDR_MAINFRAME TOOLBAR 20, 20
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -91,7 +89,7 @@ END
 // Menu
 //
 
-IDR_MAINFRAME MENU 
+IDR_MAINFRAME MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -125,7 +123,7 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS 
+IDR_MAINFRAME ACCELERATORS
 BEGIN
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
@@ -146,12 +144,12 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About Pente"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    LTEXT           "Pente version 3.0\nCopyright ©2000-2009\nThomas A. Rieck",IDC_STATIC,21,26,119,29,SS_NOPREFIX
+    LTEXT           "Pente version 3.0.1\nCopyright ©1997-2014\nThomas A. Rieck",IDC_STATIC,21,26,119,29,SS_NOPREFIX
     DEFPUSHBUTTON   "OK",IDOK,127,7,27,14,WS_GROUP
     ICON            IDR_MAINFRAME,IDC_STATIC,7,7,20,20
 END
 
-IDD_COLOR_CHOOSER DIALOG  0, 0, 120, 67
+IDD_COLOR_CHOOSER DIALOG 0, 0, 120, 67
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP
 FONT 8, "MS Shell Dlg"
 BEGIN
@@ -188,7 +186,7 @@ END
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,0,0,1
- PRODUCTVERSION 3,0,0,1
+ PRODUCTVERSION 3,0,0,2
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -207,10 +205,10 @@ BEGIN
             VALUE "FileDescription", "Pente for Windows"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "pente"
-            VALUE "LegalCopyright", "Copyright ©2000-2009"
+            VALUE "LegalCopyright", "Copyright ©1997-2014"
             VALUE "OriginalFilename", "pente.exe"
             VALUE "ProductName", "Pente"
-            VALUE "ProductVersion", "3, 0, 0, 1"
+            VALUE "ProductVersion", "3.0.0.2"
         END
     END
     BLOCK "VarFileInfo"
@@ -226,7 +224,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -275,19 +273,19 @@ IDR_DEF_PALETTE         PALETTE                 "res\\default.pal"
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDR_MAINFRAME           "Pente\n\nPente\nPente Files (*.pte)\n.pte\nPente.Document\nPente Document"
     IDS_SETTINGS            "Settings"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_APP_TITLE       "Pente"
     AFX_IDS_IDLEMESSAGE     "Ready"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_NEW             "Create a new document\nNew"
     ID_FILE_OPEN            "Open an existing document\nOpen"
@@ -296,30 +294,30 @@ BEGIN
     ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
     ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
     ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCSIZE          "Change the window size"
     AFX_IDS_SCMOVE          "Change the window position"
@@ -330,13 +328,13 @@ BEGIN
     AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCRESTORE       "Restore the window to normal size"
     AFX_IDS_SCTASKLIST      "Activate Task List"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
     IDS_TURN                "Player %s's turn"
@@ -344,7 +342,7 @@ BEGIN
     IDS_INVALIDFILEFORMAT   "This file is not a valid Pente game file."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDM_BOARDBKGCOLOR       "Change Board Color\nBoard Color"
     IDM_GRIDCOLOR           "Change Grid Color\nGrid Color"
@@ -352,7 +350,7 @@ BEGIN
     ID_TOOLS_SETTINGS       "Settings\nSettings"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_MRU_FILE1       "Open this document"
     ID_FILE_MRU_FILE2       "Open this document"
@@ -372,7 +370,7 @@ BEGIN
     ID_FILE_MRU_FILE16      "Open this document"
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
