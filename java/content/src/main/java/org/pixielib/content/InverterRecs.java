@@ -8,122 +8,122 @@ import java.util.Arrays;
  */
 public class InverterRecs {
 
-	/**
-	 * default buffer size
-	 */
-	private static final int DEF_BUF_SIZE = 80;
-	private InverterRecord[] records;
-	private int size;   // size of table, should be prime
+    /**
+     * default buffer size
+     */
+    private static final int DEF_BUF_SIZE = 80;
+    private InverterRecord[] records;
+    private int size;   // size of table, should be prime
 
-	private InverterRecs() {
-	}
+    private InverterRecs() {
+    }
 
-	public static InverterRecs allocate(int size) {
-		InverterRecs recs = new InverterRecs();
-		recs.size = size;
-		recs.records = new InverterRecord[size];
-		return recs;
-	}
+    public static InverterRecs allocate(int size) {
+        InverterRecs recs = new InverterRecs();
+        recs.size = size;
+        recs.records = new InverterRecord[size];
+        return recs;
+    }
 
-	public boolean isEmpty(int index) {
-		if (index < 0 || index >= records.length) {
-			throw new IllegalArgumentException();
-		}
+    public boolean isEmpty(int index) {
+        if (index < 0 || index >= records.length) {
+            throw new IllegalArgumentException();
+        }
 
-		return records[index] == null;
-	}
+        return records[index] == null;
+    }
 
-	public String getTerm(int index) {
-		if (index < 0 || index >= records.length) {
-			throw new IllegalArgumentException();
-		}
+    public String getTerm(int index) {
+        if (index < 0 || index >= records.length) {
+            throw new IllegalArgumentException();
+        }
 
-		return records[index].term;
-	}
+        return records[index].term;
+    }
 
-	public LongBuffer getAnchors(int index) {
-		if (index < 0 || index >= records.length) {
-			throw new IllegalArgumentException();
-		}
+    public LongBuffer getAnchors(int index) {
+        if (index < 0 || index >= records.length) {
+            throw new IllegalArgumentException();
+        }
 
-		return records[index].buffer;
-	}
+        return records[index].buffer;
+    }
 
-	public void put(int index, String term) {
-		if (index < 0 || index >= records.length) {
-			throw new IllegalArgumentException();
-		}
+    public void put(int index, String term) {
+        if (index < 0 || index >= records.length) {
+            throw new IllegalArgumentException();
+        }
 
-		assert (records[index] == null);
+        assert (records[index] == null);
 
-		records[index] = new InverterRecord();
-		records[index].buffer = LongBuffer.allocate(DEF_BUF_SIZE);
-		records[index].term = term;
-	}
+        records[index] = new InverterRecord();
+        records[index].buffer = LongBuffer.allocate(DEF_BUF_SIZE);
+        records[index].term = term;
+    }
 
-	public void insert(int index, long anchor) {
-		if (index < 0 || index >= records.length) {
-			throw new IllegalArgumentException();
-		}
+    public void insert(int index, long anchor) {
+        if (index < 0 || index >= records.length) {
+            throw new IllegalArgumentException();
+        }
 
-		assert (records[index] != null);
+        assert (records[index] != null);
 
-		LongBuffer buffer = records[index].buffer;
-		if (buffer.position() > 0) {
-			if (buffer.get(buffer.position() - 1) == anchor) {
-				return; // exists
-			}
+        LongBuffer buffer = records[index].buffer;
+        if (buffer.position() > 0) {
+            if (buffer.get(buffer.position() - 1) == anchor) {
+                return; // exists
+            }
 
-			assert (buffer.get(buffer.position() - 1) < anchor);
-		}
+            assert (buffer.get(buffer.position() - 1) < anchor);
+        }
 
-		if (!buffer.hasRemaining()) { // reallocate
-			reallocate(index);
-			buffer = records[index].buffer;
-		}
+        if (!buffer.hasRemaining()) { // reallocate
+            reallocate(index);
+            buffer = records[index].buffer;
+        }
 
-		buffer.put(anchor);
-	}
+        buffer.put(anchor);
+    }
 
-	public void compact() {
-		for (int i = 0, j = 0; i < records.length; i++) {
-			if (records[i] != null) {
-				continue;
-			}
+    public void compact() {
+        for (int i = 0, j = 0; i < records.length; i++) {
+            if (records[i] != null) {
+                continue;
+            }
 
-			for (; j < records.length; j++) {
-				if (j > i && records[j] != null) {
-					break;
-				}
-			}
+            for (; j < records.length; j++) {
+                if (j > i && records[j] != null) {
+                    break;
+                }
+            }
 
-			if (j >= records.length) {
-				break;
-			}
+            if (j >= records.length) {
+                break;
+            }
 
-			records[i] = records[j];
-			records[j] = null;
-		}
-	}
+            records[i] = records[j];
+            records[j] = null;
+        }
+    }
 
-	/* must be compacted first */
-	public void sort(int count) {
-		Arrays.sort(records, 0, count);
-	}
+    /* must be compacted first */
+    public void sort(int count) {
+        Arrays.sort(records, 0, count);
+    }
 
-	public void clear() {
-		for (int i = 0; i < size; i++) {
-			records[i] = null;
-		}
-	}
+    public void clear() {
+        for (int i = 0; i < size; i++) {
+            records[i] = null;
+        }
+    }
 
-	private void reallocate(int index) {
-		LongBuffer buffer = records[index].buffer;
-		assert (!buffer.hasRemaining());
+    private void reallocate(int index) {
+        LongBuffer buffer = records[index].buffer;
+        assert (!buffer.hasRemaining());
 
-		LongBuffer newBuffer = LongBuffer.allocate(buffer.capacity() * 2);
-		newBuffer.put(buffer.array());
+        LongBuffer newBuffer = LongBuffer.allocate(buffer.capacity() * 2);
+        newBuffer.put(buffer.array());
 
-		records[index].buffer = newBuffer;
-	}
+        records[index].buffer = newBuffer;
+    }
 }

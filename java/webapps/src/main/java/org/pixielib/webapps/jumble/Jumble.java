@@ -7,46 +7,46 @@ import java.util.List;
 
 public class Jumble {
 
-	private Concordance concordance;
+    private Concordance concordance;
 
-	public Jumble() throws IOException {
-		concordance = Concordance.getInstance();
-	}
+    public Jumble() throws IOException {
+        concordance = Concordance.getInstance();
+    }
 
-	public List<String> solve(String word) {
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.err.println("usage: Jumble word");
+            System.exit(1);
+        }
 
-		List<String> solutions = new ArrayList<String>();
+        Iterator<String> it;
 
-		WordPerms wp = new WordPerms(word);
+        try {
+            Jumble jumble = new Jumble();
+            it = jumble.solve(args[0]).iterator();
+            while (it.hasNext()) {
+                System.out.println(it.next());
+            }
+        } catch (IOException e) {
+            System.err.println(e);
+            System.exit(1);
+        }
+    }
 
-		String perm = wp.getFirstPerm();
+    public List<String> solve(String word) {
 
-		do {
-			if (concordance.lookup(perm)) {
-				solutions.add(perm);
-			}
-		} while ((perm = wp.getNextPerm(perm)) != null);
+        List<String> solutions = new ArrayList<String>();
 
-		return solutions;
-	}
+        WordPerms wp = new WordPerms(word);
 
-	public static void main(String[] args) {
-		if (args.length == 0) {
-			System.err.println("usage: Jumble word");
-			System.exit(1);
-		}
+        String perm = wp.getFirstPerm();
 
-		Iterator<String> it;
+        do {
+            if (concordance.lookup(perm)) {
+                solutions.add(perm);
+            }
+        } while ((perm = wp.getNextPerm(perm)) != null);
 
-		try {
-			Jumble jumble = new Jumble();
-			it = jumble.solve(args[0]).iterator();
-			while (it.hasNext()) {
-				System.out.println(it.next());
-			}
-		} catch (IOException e) {
-			System.err.println(e);
-			System.exit(1);
-		}
-	}
+        return solutions;
+    }
 }

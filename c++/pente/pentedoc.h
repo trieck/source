@@ -50,6 +50,7 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
+	void updateBoard(const CPoint& square, const CaptureVec& captures);
 	bool checkWinner();
 
 	void onUpdateTurn(CCmdUI *pCmdUI);

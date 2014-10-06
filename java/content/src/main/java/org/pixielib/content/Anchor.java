@@ -16,48 +16,48 @@ package org.pixielib.content;
  */
 public class Anchor implements Comparable<Anchor> {
 
-	public static final int FILENUM_BITS = 16;
-	public static final int OFFSET_BITS = 32;
-	public static final int WORDNUM_BITS = 16;
+    public static final int FILENUM_BITS = 16;
+    public static final int OFFSET_BITS = 32;
+    public static final int WORDNUM_BITS = 16;
 
-	private long anchorid;
+    private long anchorid;
 
-	public Anchor(long anchorid) {
-		this.anchorid = anchorid;
-	}
+    public Anchor(long anchorid) {
+        this.anchorid = anchorid;
+    }
 
-	public long getAnchorID() {
-		return anchorid;
-	}
+    public static long makeAnchorID(short filenum, int offset, short wordnum) {
 
-	public long getDocID() {
-		return (anchorid >>> (WORDNUM_BITS)) & 0x7FFFFFFF;
-	}
+        assert (filenum < (1 << FILENUM_BITS) - 1);
+        assert (offset < ((long) 1 << OFFSET_BITS) - 1);
+        assert (wordnum < (1 << WORDNUM_BITS) - 1);
 
-	public short getWordNum() {
-		return (short) (anchorid & 0x7FFF);
-	}
+        long anchorid = ((long) (filenum & 0x7FFF) << (OFFSET_BITS + WORDNUM_BITS));
+        anchorid |= ((long) offset & 0x7FFFFFFF) << WORDNUM_BITS;
+        anchorid |= wordnum & 0x7FFF;
+        return anchorid;
+    }
 
-	@Override
-	public int compareTo(Anchor d) {
-		if (getDocID() < d.getDocID())
-			return Integer.MIN_VALUE;
+    public long getAnchorID() {
+        return anchorid;
+    }
 
-		if (getDocID() > d.getDocID())
-			return Integer.MAX_VALUE;
+    public long getDocID() {
+        return (anchorid >>> (WORDNUM_BITS)) & 0x7FFFFFFF;
+    }
 
-		return getWordNum() - d.getWordNum();
-	}
+    public short getWordNum() {
+        return (short) (anchorid & 0x7FFF);
+    }
 
-	public static long makeAnchorID(short filenum, int offset, short wordnum) {
+    @Override
+    public int compareTo(Anchor d) {
+        if (getDocID() < d.getDocID())
+            return Integer.MIN_VALUE;
 
-		assert (filenum < (1 << FILENUM_BITS) - 1);
-		assert (offset < ((long) 1 << OFFSET_BITS) - 1);
-		assert (wordnum < (1 << WORDNUM_BITS) - 1);
+        if (getDocID() > d.getDocID())
+            return Integer.MAX_VALUE;
 
-		long anchorid = ((long) (filenum & 0x7FFF) << (OFFSET_BITS + WORDNUM_BITS));
-		anchorid |= ((long) offset & 0x7FFFFFFF) << WORDNUM_BITS;
-		anchorid |= wordnum & 0x7FFF;
-		return anchorid;
-	}
+        return getWordNum() - d.getWordNum();
+    }
 }

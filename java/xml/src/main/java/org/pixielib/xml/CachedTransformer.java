@@ -11,60 +11,60 @@ import java.util.Map;
 
 public class CachedTransformer {
 
-	/**
-	 * the transformer factory
-	 */
-	private final TransformerFactory factory;
-	/**
-	 * underlying map of strings to transformers
-	 */
-	private final Map<String, Transformer> table;
-	/**
-	 * the singleton instance
-	 */
-	private static CachedTransformer instance = null;
+    /**
+     * the singleton instance
+     */
+    private static CachedTransformer instance = null;
+    /**
+     * the transformer factory
+     */
+    private final TransformerFactory factory;
+    /**
+     * underlying map of strings to transformers
+     */
+    private final Map<String, Transformer> table;
 
-	private CachedTransformer() throws IOException {
-		factory = TransformerFactory.newInstance();
-		table = new Hashtable<String, Transformer>();
-	}
+    private CachedTransformer() throws IOException {
+        factory = TransformerFactory.newInstance();
+        table = new Hashtable<String, Transformer>();
+    }
 
-	public static synchronized CachedTransformer getInstance()
-					throws IOException {
-		if (instance == null) {
-			instance = new CachedTransformer();
-		}
+    public static synchronized CachedTransformer getInstance()
+            throws IOException {
+        if (instance == null) {
+            instance = new CachedTransformer();
+        }
 
-		return instance;
-	}
+        return instance;
+    }
 
-	private Transformer createTransformer(File file)
-					throws IOException, TransformerConfigurationException {
+    private Transformer createTransformer(File file)
+            throws IOException, TransformerConfigurationException {
 
-		Transformer transformer;
+        Transformer transformer;
 
-		// TransfomerFactory is NOT guaranteed to be thread safe
-		synchronized (factory) {
-			transformer = factory.newTransformer(new StreamSource(file));
-		}
+        // TransfomerFactory is NOT guaranteed to be thread safe
+        synchronized (factory) {
+            transformer = factory.newTransformer(new StreamSource(file));
+        }
 
-		table.put(file.getCanonicalPath(), transformer);
+        table.put(file.getCanonicalPath(), transformer);
 
-		return transformer;
-	}
+        return transformer;
+    }
 
-	public Transformer getTransformer(File file)
-					throws IOException, TransformerConfigurationException {
+    public Transformer getTransformer(File file)
+            throws IOException, TransformerConfigurationException {
 
-		// use a normalized naming scheme
-		String filename = file.getCanonicalPath();
+        // use a normalized naming scheme
+        String filename = file.getCanonicalPath();
 
-		Transformer t = table.get(filename);
+        Transformer t = table.get(filename);
 
-		if (t == null) {
-			t = createTransformer(file);
-		}
+        if (t == null) {
+            t = createTransformer(file);
+        }
 
-		return t;
-	}
+        return t;
+    }
 }

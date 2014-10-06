@@ -6,123 +6,115 @@ import java.awt.event.*;
 
 public class Frame extends JFrame {
 
-	private static class WindowCloseManager extends WindowAdapter {
-		@Override
-		public void windowClosing(WindowEvent e) {
-			System.exit(0);
-		}
-	}
+    private static final String MENU_FILE = "File";
+    private static final String ITEM_FILE_EXIT = "Exit";
+    private static final String ITEM_FILE_NEW = "New Game";
+    private static final String MENU_TOOLS = "Tools";
+    private static final String ITEM_TOOLS_OPTIONS = "Options";
+    private static final long serialVersionUID = 1L;
+    private static final String TITLE = "Tic Tac Toe";
+    /** static initialization */
+    static {
+        JFrame.setDefaultLookAndFeelDecorated(true);
+    }
+    private final ActionListener ITEM_FILE_EXIT_LISTENER = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+        }
+    };
+    private final ActionListener ITEM_FILE_NEW_LISTENER = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            TicTacToe game = TicTacToe.getInstance();
+            game.newGame();
+        }
+    };
+    private final ActionListener ITEM_TOOLS_OPTIONS_LISTENER = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            TicTacToe game = TicTacToe.getInstance();
+            int ndepth = game.getDepth();
+            String[] depths = {"1", "2", "4", "9"};
 
-	private static class WindowResizeManager extends ComponentAdapter {
-		@Override
-		public void componentResized(ComponentEvent event) {
-			final Frame theFrame = (Frame) event.getComponent();
-			if (theFrame.theView != null) {
-				final Dimension dim = theFrame.getSize();
-				theFrame.theView.setPreferredSize(dim);
-			}
-		}
-	}
+            String depth = (String) JOptionPane.showInputDialog(Frame.this,
+                    "Game Tree Depth:", "Options",
+                    JOptionPane.QUESTION_MESSAGE, null, depths, String
+                            .valueOf(ndepth));
 
-	private static final String MENU_FILE = "File";
-	private static final String ITEM_FILE_EXIT = "Exit";
-	private static final String ITEM_FILE_NEW = "New Game";
+            if (depth != null) {
+                try {
+                    ndepth = Integer.parseInt(depth);
+                    game.setDepth(ndepth);
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace(System.err);
+                }
+            }
+        }
+    };
+    private View theView = null;
 
-	private static final String MENU_TOOLS = "Tools";
-	private static final String ITEM_TOOLS_OPTIONS = "Options";
+    public Frame() {
+        super(TITLE);
+        setResizable(false);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        addWindowListener(new WindowCloseManager());
+        addComponentListener(new WindowResizeManager());
+        initComponents();
+        setLocationRelativeTo(null);
+    }
 
-	private static final long serialVersionUID = 1L;
+    private void initComponents() {
+        initMenu();
+        final JPanel content = new JPanel(new GridLayout(1, 0));
+        content.setOpaque(true);
 
-	private static final String TITLE = "Tic Tac Toe";
+        theView = new View();
+        content.add(theView);
 
-	/** static initialization */
-	static {
-		JFrame.setDefaultLookAndFeelDecorated(true);
-	}
+        setContentPane(content);
+        pack();
+    }
 
-	private final ActionListener ITEM_FILE_EXIT_LISTENER = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
-		}
-	};
+    private void initMenu() {
+        final JMenuBar bar = new JMenuBar();
 
-	private final ActionListener ITEM_FILE_NEW_LISTENER = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			TicTacToe game = TicTacToe.getInstance();
-			game.newGame();
-		}
-	};
+        JMenu menu = new JMenu(MENU_FILE);
+        menu.setMnemonic(KeyEvent.VK_F);
+        bar.add(menu);
 
-	private final ActionListener ITEM_TOOLS_OPTIONS_LISTENER = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			TicTacToe game = TicTacToe.getInstance();
-			int ndepth = game.getDepth();
-			String[] depths = {"1", "2", "4", "9"};
+        JMenuItem item = new JMenuItem(ITEM_FILE_NEW, KeyEvent.VK_N);
+        item.addActionListener(ITEM_FILE_NEW_LISTENER);
+        menu.add(item);
 
-			String depth = (String) JOptionPane.showInputDialog(Frame.this,
-					"Game Tree Depth:", "Options",
-					JOptionPane.QUESTION_MESSAGE, null, depths, String
-					.valueOf(ndepth));
+        item = new JMenuItem(ITEM_FILE_EXIT, KeyEvent.VK_X);
+        item.addActionListener(ITEM_FILE_EXIT_LISTENER);
+        menu.add(item);
 
-			if (depth != null) {
-				try {
-					ndepth = Integer.parseInt(depth);
-					game.setDepth(ndepth);
-				} catch (NumberFormatException ex) {
-					ex.printStackTrace(System.err);
-				}
-			}
-		}
-	};
+        menu = new JMenu(MENU_TOOLS);
+        menu.setMnemonic(KeyEvent.VK_T);
+        bar.add(menu);
 
-	private View theView = null;
+        item = new JMenuItem(ITEM_TOOLS_OPTIONS, KeyEvent.VK_O);
+        item.addActionListener(ITEM_TOOLS_OPTIONS_LISTENER);
+        menu.add(item);
 
-	public Frame() {
-		super(TITLE);
-		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		addWindowListener(new WindowCloseManager());
-		addComponentListener(new WindowResizeManager());
-		initComponents();
-		setLocationRelativeTo(null);
-	}
+        setJMenuBar(bar);
+    }
 
-	private void initComponents() {
-		initMenu();
-		final JPanel content = new JPanel(new GridLayout(1, 0));
-		content.setOpaque(true);
+    private static class WindowCloseManager extends WindowAdapter {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            System.exit(0);
+        }
+    }
 
-		theView = new View();
-		content.add(theView);
-
-		setContentPane(content);
-		pack();
-	}
-
-	private void initMenu() {
-		final JMenuBar bar = new JMenuBar();
-
-		JMenu menu = new JMenu(MENU_FILE);
-		menu.setMnemonic(KeyEvent.VK_F);
-		bar.add(menu);
-
-		JMenuItem item = new JMenuItem(ITEM_FILE_NEW, KeyEvent.VK_N);
-		item.addActionListener(ITEM_FILE_NEW_LISTENER);
-		menu.add(item);
-
-		item = new JMenuItem(ITEM_FILE_EXIT, KeyEvent.VK_X);
-		item.addActionListener(ITEM_FILE_EXIT_LISTENER);
-		menu.add(item);
-
-		menu = new JMenu(MENU_TOOLS);
-		menu.setMnemonic(KeyEvent.VK_T);
-		bar.add(menu);
-
-		item = new JMenuItem(ITEM_TOOLS_OPTIONS, KeyEvent.VK_O);
-		item.addActionListener(ITEM_TOOLS_OPTIONS_LISTENER);
-		menu.add(item);
-
-		setJMenuBar(bar);
-	}
+    private static class WindowResizeManager extends ComponentAdapter {
+        @Override
+        public void componentResized(ComponentEvent event) {
+            final Frame theFrame = (Frame) event.getComponent();
+            if (theFrame.theView != null) {
+                final Dimension dim = theFrame.getSize();
+                theFrame.theView.setPreferredSize(dim);
+            }
+        }
+    }
 
 }

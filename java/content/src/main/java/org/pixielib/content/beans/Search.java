@@ -1,5 +1,6 @@
 package org.pixielib.content.beans;
 
+import org.pixielib.util.Config;
 import org.pixielib.xml.XMLHttpRequest;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -10,159 +11,158 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
-import org.pixielib.util.Config;
 
 public class Search extends Product {
 
-	private static final XPathFactory factory = XPathFactory.newInstance();
-	private int start;			// starting record
-	private int pagesize;   // page size
-	private long queryTime;	// query time
-	private Config config;
+    private static final XPathFactory factory = XPathFactory.newInstance();
+    private int start;            // starting record
+    private int pagesize;   // page size
+    private long queryTime;    // query time
+    private Config config;
 
-	private Search(String product, String db, String query, int start, String style) {
-		super(product, db, query, style);
-		this.start = Math.max(1, start);
-		config = new Config("web");
-		pagesize = config.getIntProperty("pagesize");
-	}
+    private Search(String product, String db, String query, int start, String style) {
+        super(product, db, query, style);
+        this.start = Math.max(1, start);
+        config = new Config("web");
+        pagesize = config.getIntProperty("pagesize");
+    }
 
-	public static Search DatabaseSearch(String product, String db, String query, int start, String style) {
-		Search search = new Search(product, db, query, start, style);
-		search.doSearch();
-		return search;
-	}
+    public static Search DatabaseSearch(String product, String db, String query, int start, String style) {
+        Search search = new Search(product, db, query, start, style);
+        search.doSearch();
+        return search;
+    }
 
-	public static String select(String db, String query, String expr) {
-		Search search = new Search("", db, query, 1, "");
-		search.doSearch();
-		return search.select(expr);
-	}
+    public static String select(String db, String query, String expr) {
+        Search search = new Search("", db, query, 1, "");
+        search.doSearch();
+        return search.select(expr);
+    }
 
-	private String select(String expr) {
+    private String select(String expr) {
 
-		Document doc;
-		if ((doc = getResults()) == null) {
-			return "";
-		}
+        Document doc;
+        if ((doc = getResults()) == null) {
+            return "";
+        }
 
-		XPath xpath;
-		synchronized (factory) {
-			xpath = factory.newXPath();
-		}
+        XPath xpath;
+        synchronized (factory) {
+            xpath = factory.newXPath();
+        }
 
-		XPathExpression xpathExpr;
-		String results;
+        XPathExpression xpathExpr;
+        String results;
 
-		try {
-			xpathExpr = xpath.compile(expr);
-			results = xpathExpr.evaluate(doc);
-		} catch (XPathExpressionException e) {
-			e.printStackTrace();
-			return "";
-		}
+        try {
+            xpathExpr = xpath.compile(expr);
+            results = xpathExpr.evaluate(doc);
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+            return "";
+        }
 
-		return results;
-	}
+        return results;
+    }
 
-	@SuppressWarnings("empty-statement")
-	private void doSearch() {
+    @SuppressWarnings("empty-statement")
+    private void doSearch() {
 
-		Document doc;
+        Document doc;
 
-		try {
-			doc = XMLHttpRequest.request(getSearchUrl());
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		}
+        try {
+            doc = XMLHttpRequest.request(getSearchUrl());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
 
-		setResults(doc);
-		NodeList results = doc.getElementsByTagName("results");
-		if (results != null && results.getLength() > 0) {
-			Element element = (Element) results.item(0);
+        setResults(doc);
+        NodeList results = doc.getElementsByTagName("results");
+        if (results != null && results.getLength() > 0) {
+            Element element = (Element) results.item(0);
 
-			try {
-				int ncount = Integer.parseInt(element.getAttribute("count"));
-				setRecordCount(ncount);
-				
-				queryTime = Long.parseLong(element.getAttribute("query-time"));
-			} catch (NumberFormatException e) {
-				;
-			}
-		}
-	}
+            try {
+                int ncount = Integer.parseInt(element.getAttribute("count"));
+                setRecordCount(ncount);
 
-	private String getSearchUrl() throws IOException {
-		StringBuilder url = new StringBuilder();
+                queryTime = Long.parseLong(element.getAttribute("query-time"));
+            } catch (NumberFormatException e) {
+                ;
+            }
+        }
+    }
 
-		url.append(getContentURI());
-		url.append("function=search&query=");
-		url.append(Context.encode(getQuery()));
-		url.append("&db=");
-		url.append(getDatabase());
+    private String getSearchUrl() throws IOException {
+        StringBuilder url = new StringBuilder();
 
-		url.append("&start=");
-		url.append(start);
-		url.append("&count=");
-		url.append(pagesize);
+        url.append(getContentURI());
+        url.append("function=search&query=");
+        url.append(Context.encode(getQuery()));
+        url.append("&db=");
+        url.append(getDatabase());
 
-		return url.toString();
-	}
+        url.append("&start=");
+        url.append(start);
+        url.append("&count=");
+        url.append(pagesize);
 
-	/**
-	 * Retrieve the previous page link
-	 *
-	 * @return String the previous page link or empty
-	 */
-	public String getPrevious() {
-		if (getRecordCount() == 0) {
-			return "";
-		}
+        return url.toString();
+    }
 
-		int N = start - pagesize;
-		if (N < 1) {
-			return "";
-		}
+    /**
+     * Retrieve the previous page link
+     *
+     * @return String the previous page link or empty
+     */
+    public String getPrevious() {
+        if (getRecordCount() == 0) {
+            return "";
+        }
 
-		return getPageLink(N);
-	}
+        int N = start - pagesize;
+        if (N < 1) {
+            return "";
+        }
 
-	/**
-	 * Retrieve the next page link
-	 *
-	 * @return String the next page link or empty
-	 */
-	public String getNext() {
+        return getPageLink(N);
+    }
 
-		if (getRecordCount() == 0) {
-			return "";
-		}
+    /**
+     * Retrieve the next page link
+     *
+     * @return String the next page link or empty
+     */
+    public String getNext() {
 
-		int N = start + pagesize;
-		if (N > getRecordCount()) {
-			return "";
-		}
+        if (getRecordCount() == 0) {
+            return "";
+        }
 
-		return getPageLink(N);
-	}
+        int N = start + pagesize;
+        if (N > getRecordCount()) {
+            return "";
+        }
 
-	/**
-	 * Returns query string formattted for pagination
-	 *
-	 * @param N the starting record
-	 * @return String the query formatted for pagination
-	 */
-	public String getPageLink(int N) {
+        return getPageLink(N);
+    }
 
-		Context context = Context.getContext();
+    /**
+     * Returns query string formattted for pagination
+     *
+     * @param N the starting record
+     * @return String the query formatted for pagination
+     */
+    public String getPageLink(int N) {
 
-		String self = context.identity();
+        Context context = Context.getContext();
 
-		return WebUtils.normalizeUrl(self + "&start=" + N);
-	}
+        String self = context.identity();
 
-	public long getQueryTime() {
-		return queryTime;
-	}
+        return WebUtils.normalizeUrl(self + "&start=" + N);
+    }
+
+    public long getQueryTime() {
+        return queryTime;
+    }
 }

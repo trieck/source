@@ -10,73 +10,73 @@ import java.text.DecimalFormat;
 
 public class CheckIndex {
 
-	public CheckIndex() {
-	}
+    public CheckIndex() {
+    }
 
-	public void checkIndex(String db) throws IOException {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.err.println("usage: CheckIndex db");
+            System.exit(1);
+        }
 
-		Repository repos = Repository.getInstance();
+        Timer t = new Timer();
 
-		File index = repos.getIndexPath(db);
-		try (RandomAccessFile file = new RandomAccessFile(index, "r")) {
-			int magicno = file.readInt();
-			if (magicno != Index.MAGIC_NO) {
-				throw new IOException("file not in index format.");
-			}
+        CheckIndex chkindex = new CheckIndex();
 
-			System.out.printf("    Index filename: %s\n", index.getCanonicalPath());
+        try {
+            chkindex.checkIndex(args[0]);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            System.exit(1);
+        }
 
-			System.out.printf("    Index file size: %s bytes\n", StringUtil.comma(file.length()));
+        System.out.printf("\n    elapsed time %s\n", t);
+    }
 
-			int nfields = file.readInt();					// number of fields
-			System.out.printf("    Index field count: %s\n", StringUtil.comma(nfields));
-			
-			while (nfields-- > 0) {						
-				file.readUTF();											// index field 
-			}
-		
-			int nterms = file.readInt();
-			System.out.printf("    Index term count: %s\n", StringUtil.comma(nterms));
+    public void checkIndex(String db) throws IOException {
 
-			long hash_tbl_size = file.readLong();
-			System.out.printf("    Hash table size: 0x%08x\n", hash_tbl_size);
+        Repository repos = Repository.getInstance();
 
-			long hash_tbl_offset = file.readLong();
-			System.out.printf("    Hash table offset: 0x%08x\n", hash_tbl_offset);
+        File index = repos.getIndexPath(db);
+        try (RandomAccessFile file = new RandomAccessFile(index, "r")) {
+            int magicno = file.readInt();
+            if (magicno != Index.MAGIC_NO) {
+                throw new IOException("file not in index format.");
+            }
 
-			// check the hash table
-			file.seek(hash_tbl_offset);
+            System.out.printf("    Index filename: %s\n", index.getCanonicalPath());
 
-			long nfilled = 0;
-			for (long i = 0; i < hash_tbl_size; i++) {
-				if (file.readLong() != 0) {
-					nfilled++;
-				}
-			}
+            System.out.printf("    Index file size: %s bytes\n", StringUtil.comma(file.length()));
 
-			DecimalFormat df = new DecimalFormat("#0.00");
+            int nfields = file.readInt();                    // number of fields
+            System.out.printf("    Index field count: %s\n", StringUtil.comma(nfields));
 
-			System.out.printf("    Hash table fill factor: %s%%\n", df.format(100 * (nfilled / (double) hash_tbl_size)));
-		}
-	}
+            while (nfields-- > 0) {
+                file.readUTF();                                            // index field
+            }
 
-	public static void main(String[] args) {
-		if (args.length != 1) {
-			System.err.println("usage: CheckIndex db");
-			System.exit(1);
-		}
+            int nterms = file.readInt();
+            System.out.printf("    Index term count: %s\n", StringUtil.comma(nterms));
 
-		Timer t = new Timer();
+            long hash_tbl_size = file.readLong();
+            System.out.printf("    Hash table size: 0x%08x\n", hash_tbl_size);
 
-		CheckIndex chkindex = new CheckIndex();
+            long hash_tbl_offset = file.readLong();
+            System.out.printf("    Hash table offset: 0x%08x\n", hash_tbl_offset);
 
-		try {
-			chkindex.checkIndex(args[0]);
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-			System.exit(1);
-		}
+            // check the hash table
+            file.seek(hash_tbl_offset);
 
-		System.out.printf("\n    elapsed time %s\n", t);
-	}
+            long nfilled = 0;
+            for (long i = 0; i < hash_tbl_size; i++) {
+                if (file.readLong() != 0) {
+                    nfilled++;
+                }
+            }
+
+            DecimalFormat df = new DecimalFormat("#0.00");
+
+            System.out.printf("    Hash table fill factor: %s%%\n", df.format(100 * (nfilled / (double) hash_tbl_size)));
+        }
+    }
 }

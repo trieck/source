@@ -3,37 +3,37 @@ package org.pixielib.util;
 import java.util.ResourceBundle;
 
 public class Config {
-	private ResourceBundle bundle;
+    private ResourceBundle bundle;
 
-	public Config(String name) {
-		bundle = ResourceBundle.getBundle(name);
-	}
+    public Config(String name) {
+        bundle = ResourceBundle.getBundle(name);
+    }
 
-	public String getProperty(String k) {
+    public String getProperty(String k) {
 
-		if (bundle == null)
-			return "";
+        if (bundle == null)
+            return "";
 
-		String value = "";
+        String value = "";
 
-		try {
-			value = bundle.getString(k);
-		} catch (Exception ignored) {
-		}
+        try {
+            value = bundle.getString(k);
+        } catch (Exception ignored) {
+        }
 
-		return value.trim();
-	}
-	
-	public int getIntProperty(String key) {
-		String value = getProperty(key);
+        return value.trim();
+    }
 
-		try {
-			int nvalue = Integer.parseInt(value);
-			return nvalue;
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
+    public int getIntProperty(String key) {
+        String value = getProperty(key);
 
-		return 0;
-	}
+        try {
+            int nvalue = Integer.parseInt(value);
+            return nvalue;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 }

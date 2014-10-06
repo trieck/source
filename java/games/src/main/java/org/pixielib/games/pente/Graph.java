@@ -1,38 +1,37 @@
 package org.pixielib.games.pente;
 
 public class Graph {
-	public static final int VT_E = 0;
-	public static final int VT_O = 1;
-	public static final int VT_X = 2;
+    public static final int VT_E = 0;
+    public static final int VT_O = 1;
+    public static final int VT_X = 2;
+    private Vertex[][] vertices = null;
 
-	private class Vertex {
-		private int type;
+    public Graph(int size) {
+        vertices = new Vertex[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                vertices[i][j] = new Vertex();
+            }
+        }
+    }
 
-		public Vertex() {
-			type = VT_E;
-		}
+    public void setVertexType(int m, int n, int type) {
+        vertices[m][n].type = type;
+    }
 
-		public int getType() {
-			return type;
-		}
-	}
+    public int getVertexType(int m, int n) {
+        return vertices[m][n].type;
+    }
 
-	private Vertex[][] vertices = null;
+    private class Vertex {
+        private int type;
 
-	public Graph(int size) {
-		vertices = new Vertex[size][size];
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				vertices[i][j] = new Vertex();
-			}
-		}
-	}
+        public Vertex() {
+            type = VT_E;
+        }
 
-	public void setVertexType(int m, int n, int type) {
-		vertices[m][n].type = type;
-	}
-
-	public int getVertexType(int m, int n) {
-		return vertices[m][n].type;
-	}
+        public int getType() {
+            return type;
+        }
+    }
 }

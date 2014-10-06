@@ -74,20 +74,7 @@ bool PenteDoc::addPiece(const CPoint & square)
 	if (!game.addPiece(square.x, square.y, captures))
 		return false;
 
-	SetModifiedFlag();
-	UpdateAllViews(NULL, MAKELONG(square.x, square.y), game.getBoard());
-
-	CaptureVec::const_iterator it = captures.begin();
-	for ( ; it != captures.end(); it++) {
-		const Capture &capture = *it;
-		const POINT &pt1 = capture.getPoint1();
-		const POINT &pt2 = capture.getPoint2();
-
-		UpdateAllViews(NULL, MAKELONG(pt1.x, pt1.y), game.getBoard());
-		UpdateAllViews(NULL, MAKELONG(pt2.x, pt2.y), game.getBoard());
-	}
-
-	checkWinner();
+	updateBoard(square, captures);
 
 	return true;
 }
@@ -140,6 +127,13 @@ bool PenteDoc::move(CPoint & square)
 	if (!game.move(square, captures))
 		return false;
 
+	updateBoard(square, captures);
+
+	return true;
+}
+
+void PenteDoc::updateBoard(const CPoint& square, const CaptureVec& captures)
+{
 	SetModifiedFlag();
 	UpdateAllViews(NULL, MAKELONG(square.x, square.y), game.getBoard());
 
@@ -154,8 +148,6 @@ bool PenteDoc::move(CPoint & square)
 	}
 
 	checkWinner();
-
-	return true;
 }
 
 void PenteDoc::DeleteContents()

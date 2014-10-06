@@ -22,111 +22,111 @@ import java.util.Iterator;
 
 public class Highlighter extends XMLEventHandlerImpl {
 
-	private static final XMLInputFactory inFactory = XMLInputFactory.newInstance();
-	private static final XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
+    private static final XMLInputFactory inFactory = XMLInputFactory.newInstance();
+    private static final XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
 
-	static {
-		inFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);
-	}
+    static {
+        inFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);
+    }
 
-	private QueryTerms terms;
-	private Writer writer;
-	private XMLStreamWriter stream;
-	private IndexFields fields;
-	private String field = "";   // current element seen during parsing
+    private QueryTerms terms;
+    private Writer writer;
+    private XMLStreamWriter stream;
+    private IndexFields fields;
+    private String field = "";   // current element seen during parsing
 
-	private Highlighter(QueryTerms terms, IndexFields fields) throws XMLStreamException {
-		this.fields = fields;
-		this.terms = terms;
-		writer = new StringWriter();
-		stream = outFactory.createXMLStreamWriter(writer);
-	}
+    private Highlighter(QueryTerms terms, IndexFields fields) throws XMLStreamException {
+        this.fields = fields;
+        this.terms = terms;
+        writer = new StringWriter();
+        stream = outFactory.createXMLStreamWriter(writer);
+    }
 
-	@Override
-	public void startElement(StartElement element) throws XMLStreamException {
-		String sElement = element.getName().toString();
-		if (fields.isTopLevel(sElement))
-			field = sElement;
+    public static Document highlight(Document doc, QueryTerms terms, IndexFields fields)
+            throws ParserConfigurationException, IOException,
+            SAXException, XMLStreamException, TransformerException {
 
-		stream.writeStartElement(sElement);
+        Reader r = XMLTransformer.asReader(doc);
+        XMLEventReader reader = inFactory.createXMLEventReader(r);
+        Highlighter highlighter = new Highlighter(terms, fields);
 
-		Attribute attr;
-		String name, value;
-		for (Iterator it = element.getAttributes(); it.hasNext(); ) {
-			attr = (Attribute) it.next();
-			name = attr.getName().getLocalPart();
-			value = attr.getValue();
-			stream.writeAttribute(name, value);
-		}
-	}
+        XMLEventParser parser = new XMLEventParser();
+        parser.parse(reader, highlighter);
 
-	@Override
-	public void endElement(EndElement element) throws XMLStreamException {
-		stream.writeEndElement();
-	}
+        return highlighter.getOutput();
+    }
 
-	@Override
-	public void characters(Characters chars) throws XMLStreamException {
+    @Override
+    public void startElement(StartElement element) throws XMLStreamException {
+        String sElement = element.getName().toString();
+        if (fields.isTopLevel(sElement))
+            field = sElement;
 
-		String value = chars.toString();
+        stream.writeStartElement(sElement);
 
-		char[] buffer = value.toCharArray();
+        Attribute attr;
+        String name, value;
+        for (Iterator it = element.getAttributes(); it.hasNext(); ) {
+            attr = (Attribute) it.next();
+            name = attr.getName().getLocalPart();
+            value = attr.getValue();
+            stream.writeAttribute(name, value);
+        }
+    }
 
-		StringBuilder token = new StringBuilder();
+    @Override
+    public void endElement(EndElement element) throws XMLStreamException {
+        stream.writeEndElement();
+    }
 
-		for (char c : buffer) {
-			if (Character.isLetterOrDigit(c)) {
-				token.append(c);
-			} else if ((c == '_' || c == '\'') && token.length() > 0) {
-				token.append(c);
-			} else if (token.length() > 0) {
-				if (match(token.toString())) {
-					stream.writeStartElement("highlight");
-					stream.writeCharacters(token.toString());
-					stream.writeEndElement();
-				} else {
-					stream.writeCharacters(token.toString());
-				}
-				token.setLength(0);
-				stream.writeCharacters("" + c);
-			} else {
-				stream.writeCharacters("" + c);
-			}
-		}
+    @Override
+    public void characters(Characters chars) throws XMLStreamException {
 
-		if (token.length() > 0 && match(token.toString())) {
-			stream.writeStartElement("highlight");
-			stream.writeCharacters(token.toString());
-			stream.writeEndElement();
-		} else if (token.length() > 0) {
-			stream.writeCharacters(token.toString());
-		}
-	}
+        String value = chars.toString();
 
-	private boolean match(String value) {
+        char[] buffer = value.toCharArray();
 
-		String restriction = String.format("%s:%s", field, value.toLowerCase());
+        StringBuilder token = new StringBuilder();
 
-		return terms.match(restriction);
-	}
+        for (char c : buffer) {
+            if (Character.isLetterOrDigit(c)) {
+                token.append(c);
+            } else if ((c == '_' || c == '\'') && token.length() > 0) {
+                token.append(c);
+            } else if (token.length() > 0) {
+                if (match(token.toString())) {
+                    stream.writeStartElement("highlight");
+                    stream.writeCharacters(token.toString());
+                    stream.writeEndElement();
+                } else {
+                    stream.writeCharacters(token.toString());
+                }
+                token.setLength(0);
+                stream.writeCharacters("" + c);
+            } else {
+                stream.writeCharacters("" + c);
+            }
+        }
 
-	private Document getOutput()
-			throws ParserConfigurationException, IOException, SAXException {
-		return XMLUtil.parseXML(writer.toString());
-	}
+        if (token.length() > 0 && match(token.toString())) {
+            stream.writeStartElement("highlight");
+            stream.writeCharacters(token.toString());
+            stream.writeEndElement();
+        } else if (token.length() > 0) {
+            stream.writeCharacters(token.toString());
+        }
+    }
 
-	public static Document highlight(Document doc, QueryTerms terms, IndexFields fields)
-			throws ParserConfigurationException, IOException,
-			SAXException, XMLStreamException, TransformerException {
+    private boolean match(String value) {
 
-		Reader r = XMLTransformer.asReader(doc);
-		XMLEventReader reader = inFactory.createXMLEventReader(r);
-		Highlighter highlighter = new Highlighter(terms, fields);
+        String restriction = String.format("%s:%s", field, value.toLowerCase());
 
-		XMLEventParser parser = new XMLEventParser();
-		parser.parse(reader, highlighter);
+        return terms.match(restriction);
+    }
 
-		return highlighter.getOutput();
-	}
+    private Document getOutput()
+            throws ParserConfigurationException, IOException, SAXException {
+        return XMLUtil.parseXML(writer.toString());
+    }
 
 }

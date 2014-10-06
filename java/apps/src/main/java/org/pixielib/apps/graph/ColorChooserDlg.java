@@ -7,18 +7,18 @@ import java.awt.*;
 
 public class ColorChooserDlg extends JDialog implements ChangeListener {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	public ColorChooserDlg(Frame owner) {
-		super(owner, "Color Chooser", true);
+    public ColorChooserDlg(Frame owner) {
+        super(owner, "Color Chooser", true);
 
-		final JPanel content = new JPanel(new BorderLayout());
-		content.setOpaque(true);
-		setContentPane(content);
-		pack();
+        final JPanel content = new JPanel(new BorderLayout());
+        content.setOpaque(true);
+        setContentPane(content);
+        pack();
 
         /*
            * tcc = new JColorChooser();
@@ -28,14 +28,14 @@ public class ColorChooserDlg extends JDialog implements ChangeListener {
            *
            * this.
            */
-	}
+    }
 
-	public void stateChanged(ChangeEvent e) {
-	}
+    public void stateChanged(ChangeEvent e) {
+    }
 
-	public void showModal() {
-		setLocationRelativeTo(getParent());
-		setVisible(true);
+    public void showModal() {
+        setLocationRelativeTo(getParent());
+        setVisible(true);
 
         /*
            * // Make sure we have nice window decorations.
@@ -53,6 +53,6 @@ public class ColorChooserDlg extends JDialog implements ChangeListener {
            *
            * //Display the window. frame.pack(); frame.setVisible(true);
            */
-	}
+    }
 
 }

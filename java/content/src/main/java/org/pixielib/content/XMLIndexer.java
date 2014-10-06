@@ -11,143 +11,143 @@ import java.util.Stack;
 
 public class XMLIndexer extends QParser {
 
-	private Repository repos;       // repository instance
-	private Index index;            // index instance
-	private short filenum;          // current file number while indexing
-	private int offset;             // offset into current file
-	private Stack<String> elements; // stack of elements seen
-	private IndexFields fields;     // set of top-level fields for indexing
+    private Repository repos;       // repository instance
+    private Index index;            // index instance
+    private short filenum;          // current file number while indexing
+    private int offset;             // offset into current file
+    private Stack<String> elements; // stack of elements seen
+    private IndexFields fields;     // set of top-level fields for indexing
 
-	public XMLIndexer() throws IOException {
-		repos = Repository.getInstance();
-		elements = new Stack<>();
-	}
+    public XMLIndexer() throws IOException {
+        repos = Repository.getInstance();
+        elements = new Stack<>();
+    }
 
-	/**
-	 * Process an element while parsing
-	 *
-	 * @param name the name of the tag
-	 * @param tag  the tag value
-	 */
-	@Override
-	public void startElement(String name, String tag) {
-		elements.push(name);
-		if (name.equals("record")) {
-			offset = (int) Math.max(0, getPosition() - tag.length());
-			assert (offset < ((long) 1 << Anchor.OFFSET_BITS - 1));
-		}
-	}
+    public static void main(String[] args) {
 
-	@Override
-	public void endElement() {
-		elements.pop();
-	}
+        if (args.length < 2) {
+            System.err.println("usage: XMLIndexer database fields");
+            System.exit(1);
+        }
 
-	/**
-	 * Process a value while parsing
-	 *
-	 * @param text the text encountered
-	 */
-	@Override
-	public void value(String text) {
+        Timer t = new Timer();
 
-		if (!isTopLevel())
-			return;
+        try {
+            XMLIndexer indexer = new XMLIndexer();
+            indexer.load(args[0], Arrays.copyOfRange(args, 1, args.length));
+        } catch (IOException e) {
+            System.err.println(e);
+            System.exit(1);
+        }
 
-		if ((text = text.trim()).length() == 0)
-			return; // whitespace
+        System.out.printf("    elapsed time %s\n", t);
+    }
 
-		String field = elements.peek();
+    /**
+     * Process an element while parsing
+     *
+     * @param name the name of the tag
+     * @param tag  the tag value
+     */
+    @Override
+    public void startElement(String name, String tag) {
+        elements.push(name);
+        if (name.equals("record")) {
+            offset = (int) Math.max(0, getPosition() - tag.length());
+            assert (offset < ((long) 1 << Anchor.OFFSET_BITS - 1));
+        }
+    }
 
-		Lexer lexer = new Lexer(new StringReader(text));
-		long anchor;
+    @Override
+    public void endElement() {
+        elements.pop();
+    }
 
-		try {
-			String term, tok;
-			for (short i = 0; ((tok = lexer.getToken()).length()) != 0; i++) {
-				term = String.format("%s:%s", field, tok);
-				anchor = Anchor.makeAnchorID(filenum, offset, i);
-				index.insert(term, anchor);
-			}
-		} catch (IOException e) {
-		}
-	}
+    /**
+     * Process a value while parsing
+     *
+     * @param text the text encountered
+     */
+    @Override
+    public void value(String text) {
 
-	public void load(String db, String[] aFields) throws IOException {
+        if (!isTopLevel())
+            return;
 
-		fields = new IndexFields(aFields);	// top-level index fields
+        if ((text = text.trim()).length() == 0)
+            return; // whitespace
 
-		File dir = repos.mapPath(db);
-		List<File> files = expand(dir);
-		if (files.isEmpty())
-			throw new IOException(
-					String.format("no content files found in \"%s\".",
-							dir.getCanonicalPath())
-			);
+        String field = elements.peek();
 
-		index = new Index();
-		loadfiles(files);
-		index.write(db, fields);
-	}
+        Lexer lexer = new Lexer(new StringReader(text));
+        long anchor;
 
-	private void loadfiles(List<File> files)
-			throws IOException {
-		for (File f : files) {
-			setPosition(0);
-			loadfile(f);
-			filenum++;
-		}
-	}
+        try {
+            String term, tok;
+            for (short i = 0; ((tok = lexer.getToken()).length()) != 0; i++) {
+                term = String.format("%s:%s", field, tok);
+                anchor = Anchor.makeAnchorID(filenum, offset, i);
+                index.insert(term, anchor);
+            }
+        } catch (IOException e) {
+        }
+    }
 
-	private void loadfile(File file)
-			throws IOException {
-		setPosition(0);
-		parse(new FileReader(file));
-	}
+    public void load(String db, String[] aFields) throws IOException {
 
-	private List<File> expand(File dir) {
-		List<File> result = new ArrayList<>();
+        fields = new IndexFields(aFields);    // top-level index fields
 
-		// list xml files
-		File[] files = dir.listFiles(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				return name.endsWith(".xml");
-			}
-		}
-		);
+        File dir = repos.mapPath(db);
+        List<File> files = expand(dir);
+        if (files.isEmpty())
+            throw new IOException(
+                    String.format("no content files found in \"%s\".",
+                            dir.getCanonicalPath())
+            );
 
-		result.addAll(Arrays.asList(files));
+        index = new Index();
+        loadfiles(files);
+        index.write(db, fields);
+    }
 
-		return result;
-	}
+    private void loadfiles(List<File> files)
+            throws IOException {
+        for (File f : files) {
+            setPosition(0);
+            loadfile(f);
+            filenum++;
+        }
+    }
 
-	private boolean isTopLevel() {
-		if (elements.size() == 0)
-			return false;
+    private void loadfile(File file)
+            throws IOException {
+        setPosition(0);
+        parse(new FileReader(file));
+    }
 
-		String field = elements.peek();
+    private List<File> expand(File dir) {
+        List<File> result = new ArrayList<>();
 
-		return fields.isTopLevel(field);
-	}
+        // list xml files
+        File[] files = dir.listFiles(new FilenameFilter() {
+                                         @Override
+                                         public boolean accept(File dir, String name) {
+                                             return name.endsWith(".xml");
+                                         }
+                                     }
+        );
 
-	public static void main(String[] args) {
+        result.addAll(Arrays.asList(files));
 
-		if (args.length < 2) {
-			System.err.println("usage: XMLIndexer database fields");
-			System.exit(1);
-		}
+        return result;
+    }
 
-		Timer t = new Timer();
+    private boolean isTopLevel() {
+        if (elements.size() == 0)
+            return false;
 
-		try {
-			XMLIndexer indexer = new XMLIndexer();
-			indexer.load(args[0], Arrays.copyOfRange(args, 1, args.length));
-		} catch (IOException e) {
-			System.err.println(e);
-			System.exit(1);
-		}
+        String field = elements.peek();
 
-		System.out.printf("    elapsed time %s\n", t);
-	}
+        return fields.isTopLevel(field);
+    }
 }

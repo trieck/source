@@ -4,197 +4,197 @@ import java.io.*;
 
 public class BEDecoder {
 
-	/* input stream */
-	private final PushbackInputStream is;
+    /* input stream */
+    private final PushbackInputStream is;
 
-	/**
-	 * Construct a decoder from an input stream
-	 *
-	 * @param s, the input stream
-	 */
-	private BEDecoder(InputStream s) {
-		is = new PushbackInputStream(s);
-	}
+    /**
+     * Construct a decoder from an input stream
+     *
+     * @param s, the input stream
+     */
+    private BEDecoder(InputStream s) {
+        is = new PushbackInputStream(s);
+    }
 
-	/**
-	 * static method to decode a bencoded stream
-	 *
-	 * @return decoded object
-	 * @throws IOException
-	 */
-	public static BEObject decode(InputStream s) throws IOException {
-		final BEDecoder decoder = new BEDecoder(s);
-		return decoder.loadObject();
-	}
+    /**
+     * static method to decode a bencoded stream
+     *
+     * @return decoded object
+     * @throws IOException
+     */
+    public static BEObject decode(InputStream s) throws IOException {
+        final BEDecoder decoder = new BEDecoder(s);
+        return decoder.loadObject();
+    }
 
-	/**
-	 * Load an object from a bencoded stream
-	 *
-	 * @return decoded object
-	 * @throws IOException
-	 */
-	private BEObject loadObject() throws IOException {
-		final int t = getTok();
+    /**
+     * Application entry point
+     *
+     * @param args application arguments
+     */
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.err.println("usage: BEDecoder file");
+            return;
+        }
 
-		switch (t) {
-			case BEObject.BET_DICT:
-				return loadDictionary();
-			case BEObject.BET_INTEGER:
-				return loadInteger();
-			case BEObject.BET_LIST:
-				return loadList();
-			case BEObject.BET_STRING:
-				return loadString();
-		}
+        try {
+            final FileInputStream is = new FileInputStream(args[0]);
+            final BEObject o = BEDecoder.decode(is);
 
-		throw new IOException("unexpected token: \"" + (char) t + "\"");
-	}
+            final FileOutputStream os = new FileOutputStream("d:/tmp/out.benc");
+            BEEncoder.encode(o, os);
 
-	/**
-	 * Load an integer
-	 *
-	 * @return BEInteger
-	 * @throws IOException
-	 */
-	private BEInteger loadInteger() throws IOException {
-		final StringBuffer buf = new StringBuffer();
+        } catch (final FileNotFoundException e) {
+            System.err.println(e);
+            System.exit(-1);
+        } catch (final IOException ioe) {
+            System.err.println(ioe);
+            System.exit(-2);
+        }
 
-		int c;
-		while ((c = is.read()) != 'e' && c != -1) {
-			buf.append((char) c);
-		}
+    }
 
-		return new BEInteger(Long.parseLong(buf.toString()));
-	}
+    /**
+     * Load an object from a bencoded stream
+     *
+     * @return decoded object
+     * @throws IOException
+     */
+    private BEObject loadObject() throws IOException {
+        final int t = getTok();
 
-	/**
-	 * Load a string
-	 *
-	 * @return BEString
-	 * @throws IOException
-	 */
-	private BEString loadString() throws IOException {
-		final StringBuffer blen = new StringBuffer();
+        switch (t) {
+            case BEObject.BET_DICT:
+                return loadDictionary();
+            case BEObject.BET_INTEGER:
+                return loadInteger();
+            case BEObject.BET_LIST:
+                return loadList();
+            case BEObject.BET_STRING:
+                return loadString();
+        }
 
-		int c;
-		while ((c = is.read()) != ':' && c != -1) {
-			blen.append((char) c);
-		}
+        throw new IOException("unexpected token: \"" + (char) t + "\"");
+    }
 
-		final int nlen = Integer.parseInt(blen.toString());
-		final byte[] buf = new byte[nlen];
+    /**
+     * Load an integer
+     *
+     * @return BEInteger
+     * @throws IOException
+     */
+    private BEInteger loadInteger() throws IOException {
+        final StringBuffer buf = new StringBuffer();
 
-		is.read(buf);
+        int c;
+        while ((c = is.read()) != 'e' && c != -1) {
+            buf.append((char) c);
+        }
 
-		return new BEString(buf);
-	}
+        return new BEInteger(Long.parseLong(buf.toString()));
+    }
 
-	/**
-	 * Load a dictionary
-	 *
-	 * @return BEDictionary
-	 * @throws IOException
-	 */
-	private BEDictionary loadDictionary() throws IOException {
+    /**
+     * Load a string
+     *
+     * @return BEString
+     * @throws IOException
+     */
+    private BEString loadString() throws IOException {
+        final StringBuffer blen = new StringBuffer();
 
-		final BEDictionary d = new BEDictionary();
-		BEString k;
-		BEObject v;
+        int c;
+        while ((c = is.read()) != ':' && c != -1) {
+            blen.append((char) c);
+        }
 
-		int c;
-		while ((c = peek()) != 'e' && c != -1) {
-			k = loadString();
-			v = loadObject();
-			d.set(k, v);
-		}
+        final int nlen = Integer.parseInt(blen.toString());
+        final byte[] buf = new byte[nlen];
 
-		is.read();
+        is.read(buf);
 
-		return d;
-	}
+        return new BEString(buf);
+    }
 
-	/**
-	 * Load a list
-	 *
-	 * @return BEList
-	 * @throws IOException
-	 */
-	private BEList loadList() throws IOException {
-		final BEList l = new BEList();
+    /**
+     * Load a dictionary
+     *
+     * @return BEDictionary
+     * @throws IOException
+     */
+    private BEDictionary loadDictionary() throws IOException {
 
-		int c;
-		while ((c = peek()) != 'e' && c != -1) {
-			l.addObject(loadObject());
-		}
+        final BEDictionary d = new BEDictionary();
+        BEString k;
+        BEObject v;
 
-		is.read();
+        int c;
+        while ((c = peek()) != 'e' && c != -1) {
+            k = loadString();
+            v = loadObject();
+            d.set(k, v);
+        }
 
-		return l;
-	}
+        is.read();
 
-	/**
-	 * Get next token from input
-	 *
-	 * @return token id
-	 * @throws IOException
-	 */
-	private int getTok() throws IOException {
-		final int c = is.read();
+        return d;
+    }
 
-		switch (c) {
-			case 'd':
-				return BEObject.BET_DICT;
-			case 'i':
-				return BEObject.BET_INTEGER;
-			case 'l':
-				return BEObject.BET_LIST;
-			default:
-				if (Character.isDigit(c) || c == '-') {
-					is.unread(c);
-					return BEObject.BET_STRING;
-				}
-		}
+    /**
+     * Load a list
+     *
+     * @return BEList
+     * @throws IOException
+     */
+    private BEList loadList() throws IOException {
+        final BEList l = new BEList();
 
-		return c;
-	}
+        int c;
+        while ((c = peek()) != 'e' && c != -1) {
+            l.addObject(loadObject());
+        }
 
-	/**
-	 * Peek one character of the input
-	 *
-	 * @return the peeked character
-	 * @throws IOException
-	 */
-	private int peek() throws IOException {
-		final int c = is.read();
-		is.unread(c);
-		return c;
-	}
+        is.read();
 
-	/**
-	 * Application entry point
-	 *
-	 * @param args application arguments
-	 */
-	public static void main(String[] args) {
-		if (args.length == 0) {
-			System.err.println("usage: BEDecoder file");
-			return;
-		}
+        return l;
+    }
 
-		try {
-			final FileInputStream is = new FileInputStream(args[0]);
-			final BEObject o = BEDecoder.decode(is);
+    /**
+     * Get next token from input
+     *
+     * @return token id
+     * @throws IOException
+     */
+    private int getTok() throws IOException {
+        final int c = is.read();
 
-			final FileOutputStream os = new FileOutputStream("d:/tmp/out.benc");
-			BEEncoder.encode(o, os);
+        switch (c) {
+            case 'd':
+                return BEObject.BET_DICT;
+            case 'i':
+                return BEObject.BET_INTEGER;
+            case 'l':
+                return BEObject.BET_LIST;
+            default:
+                if (Character.isDigit(c) || c == '-') {
+                    is.unread(c);
+                    return BEObject.BET_STRING;
+                }
+        }
 
-		} catch (final FileNotFoundException e) {
-			System.err.println(e);
-			System.exit(-1);
-		} catch (final IOException ioe) {
-			System.err.println(ioe);
-			System.exit(-2);
-		}
+        return c;
+    }
 
-	}
+    /**
+     * Peek one character of the input
+     *
+     * @return the peeked character
+     * @throws IOException
+     */
+    private int peek() throws IOException {
+        final int c = is.read();
+        is.unread(c);
+        return c;
+    }
 }

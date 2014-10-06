@@ -2,12 +2,12 @@ package org.pixielib.pixievm.assembler;
 
 public class ParserException extends Throwable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	public ParserException(String ex) {
-		super(ex);
-	}
+    public ParserException(String ex) {
+        super(ex);
+    }
 }

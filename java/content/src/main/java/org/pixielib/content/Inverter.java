@@ -9,90 +9,90 @@ import java.nio.LongBuffer;
 
 public class Inverter {
 
-	private static final int MAX_COUNT = 100000;    // max. number of index records
+    private static final int MAX_COUNT = 100000;    // max. number of index records
 
-	private InverterRecs records;   // hash table of records
-	private int count;              // number of records in table
-	private int size;               // size of hash table, should be prime
+    private InverterRecs records;   // hash table of records
+    private int count;              // number of records in table
+    private int size;               // size of hash table, should be prime
 
-	public Inverter() {
-		size = (int) Prime.prime(MAX_COUNT);
-		count = 0;
-	}
+    public Inverter() {
+        size = (int) Prime.prime(MAX_COUNT);
+        count = 0;
+    }
 
-	public int getCount() {
-		return count;
-	}
+    public int getCount() {
+        return count;
+    }
 
-	public boolean isFull() {
-		return count >= MAX_COUNT;
-	}
+    public boolean isFull() {
+        return count >= MAX_COUNT;
+    }
 
-	private void compact() {
-		records.compact();
-	}
+    private void compact() {
+        records.compact();
+    }
 
-	private void sort() {
-		records.sort(count);
-	}
+    private void sort() {
+        records.sort(count);
+    }
 
-	private void clear() {
-		records.clear();
-		count = 0;
-	}
+    private void clear() {
+        records.clear();
+        count = 0;
+    }
 
-	public void write(OutputStream os) throws IOException {
-		compact();
-		sort();
+    public void write(OutputStream os) throws IOException {
+        compact();
+        sort();
 
-		final DataOutputStream dos = new DataOutputStream(os);
+        final DataOutputStream dos = new DataOutputStream(os);
 
-		String term;
-		LongBuffer anchors;
+        String term;
+        LongBuffer anchors;
 
-		for (int i = 0; i < count; i++) {
-			term = records.getTerm(i);
-			anchors = records.getAnchors(i);
-			
-			dos.writeUTF(term);
-			dos.writeInt(anchors.position()); // size of anchor list
+        for (int i = 0; i < count; i++) {
+            term = records.getTerm(i);
+            anchors = records.getAnchors(i);
 
-			for (int j = 0; j < anchors.position(); j++) {
-				dos.writeLong(anchors.get(j));
-			}
-		}
+            dos.writeUTF(term);
+            dos.writeInt(anchors.position()); // size of anchor list
 
-		clear();
-	}
+            for (int j = 0; j < anchors.position(); j++) {
+                dos.writeLong(anchors.get(j));
+            }
+        }
 
-	public void insert(String term, long anchor) {
+        clear();
+    }
 
-		if (records == null) {
-			alloc();
-		}
+    public void insert(String term, long anchor) {
 
-		int i = lookup(term);
+        if (records == null) {
+            alloc();
+        }
 
-		if (records.isEmpty(i)) {
-			records.put(i, term);
-			count++;
-		}
+        int i = lookup(term);
 
-		records.insert(i, anchor);
-	}
+        if (records.isEmpty(i)) {
+            records.put(i, term);
+            count++;
+        }
 
-	private void alloc() {
-		records = InverterRecs.allocate(size);
-	}
+        records.insert(i, anchor);
+    }
 
-	private int lookup(String term) {
+    private void alloc() {
+        records = InverterRecs.allocate(size);
+    }
 
-		int i = (Hash32.hash(term) & 0x7FFFFFFF) % size;
+    private int lookup(String term) {
 
-		while (!records.isEmpty(i) && !records.getTerm(i).equals(term)) {
-			i = (i + 1) % size;
-		}
+        int i = (Hash32.hash(term) & 0x7FFFFFFF) % size;
 
-		return i;
-	}
+        while (!records.isEmpty(i) && !records.getTerm(i).equals(term)) {
+            i = (i + 1) % size;
+        }
+
+        return i;
+    }
 }

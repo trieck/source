@@ -9,135 +9,135 @@ import java.util.TreeSet;
 
 public class AnchorList {
 
-	private ArrayList<Long> anchors = new ArrayList<>();
+    private ArrayList<Long> anchors = new ArrayList<>();
 
-	public AnchorList() {
-	}
+    public AnchorList() {
+    }
 
-	public int size() {
-		return anchors.size();
-	}
+    public static AnchorList intersection(AnchorList set1, AnchorList set2) {
+        AnchorList output = new AnchorList();
 
-	/**
-	 * Return the unique set of documents in the anchor list
-	 *
-	 * @return the set of unique documents
-	 */
-	public DocList documents() {
-		Set<Long> documents = new TreeSet<>();
+        Anchor left, right;
 
-		Anchor a;
-		for (int i = 0; i < anchors.size(); i++) {
-			a = getAnchor(i);
-			documents.add(a.getDocID());
-		}
+        int i = 0, j = 0, m = set1.size(), n = set2.size();
+        long leftdoc, rightdoc;
 
-		DocList list = new DocList();
-		list.addAll(documents);
+        while (i != m && j != n) {
+            left = set1.getAnchor(i);
+            right = set2.getAnchor(j);
 
-		return list;
-	}
+            leftdoc = left.getDocID();
+            rightdoc = right.getDocID();
 
-	public Anchor getAnchor(int index) {
-		return new Anchor(anchors.get(index));
-	}
+            if (leftdoc < rightdoc) {
+                i++;
+            } else if (leftdoc > rightdoc) {
+                j++;
+            } else {    // intersection is defined by same document
+                output.add(left);
+                i++;
+                j++;
+            }
+        }
 
-	public void read(InputStream is) throws IOException {
+        return output;
+    }
 
-		DataInputStream dis = new DataInputStream(is);
+    public static AnchorList adjacent(AnchorList set1, AnchorList set2) {
 
-		int size = dis.readInt();   // size of anchor list
-		if (size <= 0) {
-			throw new IOException("bad anchor list size.");
-		}
+        AnchorList output = new AnchorList();
 
-		byte[] buffer = new byte[size * 8];
+        Anchor left, right;
 
-		int nread = dis.read(buffer);
-		if (nread != buffer.length) {
-			throw new IOException("unable to read anchor list.");
-		}
+        int i = 0, j = 0, k, m = set1.size(), n = set2.size();
 
-		anchors.clear();
-		anchors.ensureCapacity(size);
+        while (i != m && j != n) {
+            left = set1.getAnchor(i);
+            right = set2.getAnchor(j);
 
-		long anchor;
-		for (int i = 0; i < size; i++) {    // convert byte array to long
-			anchor = ((long) (buffer[i * 8] & 0xFF)) << 56
-							| ((long) (buffer[i * 8 + 1] & 0xFF)) << 48
-							| ((long) (buffer[i * 8 + 2] & 0xFF)) << 40
-							| ((long) (buffer[i * 8 + 3] & 0xFF)) << 32
-							| ((long) (buffer[i * 8 + 4] & 0xFF)) << 24
-							| ((long) (buffer[i * 8 + 5] & 0xFF)) << 16
-							| ((long) (buffer[i * 8 + 6] & 0xFF)) << 8
-							| ((long) (buffer[i * 8 + 7] & 0xFF));
-			anchors.add(anchor);
-		}
-	}
+            k = left.compareTo(right);
+            if (k == -1) { // adjacent is defined only when right > left
+                output.add(right);
+                i++;
+            } else if (k < 0) {
+                i++;
+            } else if (k > 0) {
+                j++;
+            } else {
+                i++;
+                j++;
+            }
+        }
 
-	public void add(long l) {
-		anchors.add(l);
-	}
+        return output;
+    }
 
-	public void add(Anchor anchor) {
-		add(anchor.getAnchorID());
-	}
+    public int size() {
+        return anchors.size();
+    }
 
-	public static AnchorList intersection(AnchorList set1, AnchorList set2) {
-		AnchorList output = new AnchorList();
+    /**
+     * Return the unique set of documents in the anchor list
+     *
+     * @return the set of unique documents
+     */
+    public DocList documents() {
+        Set<Long> documents = new TreeSet<>();
 
-		Anchor left, right;
+        Anchor a;
+        for (int i = 0; i < anchors.size(); i++) {
+            a = getAnchor(i);
+            documents.add(a.getDocID());
+        }
 
-		int i = 0, j = 0, m = set1.size(), n = set2.size();
-		long leftdoc, rightdoc;
+        DocList list = new DocList();
+        list.addAll(documents);
 
-		while (i != m && j != n) {
-			left = set1.getAnchor(i);
-			right = set2.getAnchor(j);
+        return list;
+    }
 
-			leftdoc = left.getDocID();
-			rightdoc = right.getDocID();
+    public Anchor getAnchor(int index) {
+        return new Anchor(anchors.get(index));
+    }
 
-			if (leftdoc < rightdoc) {
-				i++;
-			} else if (leftdoc > rightdoc) {
-				j++;
-			} else {    // intersection is defined by same document
-				output.add(left);
-				i++;
-				j++;
-			}
-		}
+    public void read(InputStream is) throws IOException {
 
-		return output;
-	}
+        DataInputStream dis = new DataInputStream(is);
 
-	public static AnchorList adjacent(AnchorList set1, AnchorList set2) {
+        int size = dis.readInt();   // size of anchor list
+        if (size <= 0) {
+            throw new IOException("bad anchor list size.");
+        }
 
-		AnchorList output = new AnchorList();
+        byte[] buffer = new byte[size * 8];
 
-		Anchor left, right;
+        int nread = dis.read(buffer);
+        if (nread != buffer.length) {
+            throw new IOException("unable to read anchor list.");
+        }
 
-		int i = 0, j = 0, k, m = set1.size(), n = set2.size();
+        anchors.clear();
+        anchors.ensureCapacity(size);
 
-		while (i != m && j != n) {
-			left = set1.getAnchor(i);
-			right = set2.getAnchor(j);
+        long anchor;
+        for (int i = 0; i < size; i++) {    // convert byte array to long
+            anchor = ((long) (buffer[i * 8] & 0xFF)) << 56
+                    | ((long) (buffer[i * 8 + 1] & 0xFF)) << 48
+                    | ((long) (buffer[i * 8 + 2] & 0xFF)) << 40
+                    | ((long) (buffer[i * 8 + 3] & 0xFF)) << 32
+                    | ((long) (buffer[i * 8 + 4] & 0xFF)) << 24
+                    | ((long) (buffer[i * 8 + 5] & 0xFF)) << 16
+                    | ((long) (buffer[i * 8 + 6] & 0xFF)) << 8
+                    | ((long) (buffer[i * 8 + 7] & 0xFF));
+            anchors.add(anchor);
+        }
+    }
 
-			k = left.compareTo(right);
-			if (k == -1) { // adjacent is defined only when right > left
-				output.add(right);
-				i++;
-			} else if (k < 0) {
-				i++;
-			} else if (k > 0) {
-				j++;
-			} else {
-				i++;
-				j++;
-			}
-		}
+    public void add(long l) {
+        anchors.add(l);
+    }
 
-		return output;
-	}
+    public void add(Anchor anchor) {
+        add(anchor.getAnchorID());
+    }
 }

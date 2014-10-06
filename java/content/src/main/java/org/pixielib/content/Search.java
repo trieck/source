@@ -11,53 +11,53 @@ import java.io.IOException;
 
 public class Search {
 
-	public Search() {
-	}
+    public Search() {
+    }
 
-	public void search(String db, String query, int nrecs) throws IOException,
-			ParserConfigurationException, TransformerException {
+    @SuppressWarnings("empty-statement")
+    public static void main(String[] args) {
 
-		Content content = new Content();
-		Document doc = content.search(db, query, 1, nrecs);
+        int nrecs = 25;
 
-		XMLTransformer.transform(new DOMSource(doc), System.out);
-	}
+        if (args.length < 2) {
+            System.err.println("usage: Search db \"phrase\" [records]");
+            System.exit(1);
+        }
 
-	@SuppressWarnings("empty-statement")
-	public static void main(String[] args) {
+        if (args.length == 3) {
+            try {
+                nrecs = Integer.parseInt(args[2]);
+            } catch (NumberFormatException e) {
+                ;
+            }
+        }
 
-		int nrecs = 25;
+        Timer t = new Timer();
 
-		if (args.length < 2) {
-			System.err.println("usage: Search db \"phrase\" [records]");
-			System.exit(1);
-		}
+        Search search = new Search();
 
-		if (args.length == 3) {
-			try {
-				nrecs = Integer.parseInt(args[2]);
-			} catch (NumberFormatException e) {
-				;
-			}
-		}
+        try {
+            search.search(args[0], args[1], nrecs);
+        } catch (IOException e) {
+            System.err.println(e);
+            System.exit(1);
+        } catch (TransformerException e) {
+            System.err.println(e);
+            System.exit(2);
+        } catch (ParserConfigurationException e) {
+            System.err.println(e);
+            System.exit(3);
+        }
 
-		Timer t = new Timer();
+        System.out.printf("\n    elapsed time %s\n", t);
+    }
 
-		Search search = new Search();
+    public void search(String db, String query, int nrecs) throws IOException,
+            ParserConfigurationException, TransformerException {
 
-		try {
-			search.search(args[0], args[1], nrecs);
-		} catch (IOException e) {
-			System.err.println(e);
-			System.exit(1);
-		} catch (TransformerException e) {
-			System.err.println(e);
-			System.exit(2);
-		} catch (ParserConfigurationException e) {
-			System.err.println(e);
-			System.exit(3);
-		}
+        Content content = new Content();
+        Document doc = content.search(db, query, 1, nrecs);
 
-		System.out.printf("\n    elapsed time %s\n", t);
-	}
+        XMLTransformer.transform(new DOMSource(doc), System.out);
+    }
 }

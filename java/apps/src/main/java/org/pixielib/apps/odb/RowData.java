@@ -2,61 +2,58 @@ package org.pixielib.apps.odb;
 
 public class RowData {
 
-	private String id;
+    private String id;
+    private String val;
+    private int type;
+    private long createDate;
+    private long lastAccessed;
+    public RowData(String id, String val, int type, long createDate,
+                   long lastAccessed) {
+        this.id = id;
+        this.val = val;
+        this.type = type;
+        this.createDate = createDate;
+        this.lastAccessed = lastAccessed;
+    }
 
-	public String getVal() {
-		return val;
-	}
+    public String getVal() {
+        return val;
+    }
 
-	public void setVal(String val) {
-		this.val = val;
-	}
+    public void setVal(String val) {
+        this.val = val;
+    }
 
-	private String val;
+    public String getId() {
+        return id;
+    }
 
-	private int type;
-	private long createDate;
-	private long lastAccessed;
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public RowData(String id, String val, int type, long createDate,
-	               long lastAccessed) {
-		this.id = id;
-		this.val = val;
-		this.type = type;
-		this.createDate = createDate;
-		this.lastAccessed = lastAccessed;
-	}
+    public int getType() {
+        return type;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public void setType(int type) {
+        this.type = type;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public long getCreateDate() {
+        return createDate;
+    }
 
-	public int getType() {
-		return type;
-	}
+    public void setCreateDate(long createDate) {
+        this.createDate = createDate;
+    }
 
-	public void setType(int type) {
-		this.type = type;
-	}
+    public long getLastAccessed() {
+        return lastAccessed;
+    }
 
-	public long getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(long createDate) {
-		this.createDate = createDate;
-	}
-
-	public long getLastAccessed() {
-		return lastAccessed;
-	}
-
-	public void setLastAccessed(long lastAccessed) {
-		this.lastAccessed = lastAccessed;
-	}
+    public void setLastAccessed(long lastAccessed) {
+        this.lastAccessed = lastAccessed;
+    }
 
 }

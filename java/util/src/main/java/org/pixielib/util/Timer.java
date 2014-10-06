@@ -5,61 +5,61 @@ import java.text.MessageFormat;
 
 public class Timer {
 
-	private long start;
-	private DecimalFormat df = new DecimalFormat("#00");
+    private long start;
+    private DecimalFormat df = new DecimalFormat("#00");
 
-	public Timer() {
-		start = System.currentTimeMillis();
-	}
-	
-	public long millis() {
-		long end = System.currentTimeMillis();
-		return end - start;		
-	}
+    public Timer() {
+        start = System.currentTimeMillis();
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder output = new StringBuilder();
+    @SuppressWarnings("empty-statement")
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.err.println("usage: Timer millis");
+            System.exit(1);
+        }
 
-		long diff = millis();
+        Timer t = new Timer();
 
-		long hours = (diff / 1000) / 3600;
-		long minutes = (diff / 1000 % 3600) / 60;
-		long seconds = (diff / 1000) % 60;
-		long hundreths = (diff % 1000) / 10;
+        try {
+            Thread.sleep(Integer.parseInt(args[0]));
+        } catch (InterruptedException e) {
+            ;
+        } catch (NumberFormatException e) {
+            ;
+        }
 
-		if (hours != 0) {
-			output.append(MessageFormat.format("{0}:{1}:{2} hours",
-					new Object[]{df.format(hours), df.format(minutes), df.format(seconds)}));
-		} else if (minutes != 0) {
-			output.append(MessageFormat.format("{0}:{1} minutes",
-					new Object[]{df.format(minutes), df.format(seconds)}));
-		} else {
-			output.append(MessageFormat.format("{0}:{1} seconds",
-					new Object[]{df.format(seconds), df.format(hundreths)}));
-		}
+        System.out.println(t);
+    }
 
-		return output.toString();
-	}
+    public long millis() {
+        long end = System.currentTimeMillis();
+        return end - start;
+    }
 
-	@SuppressWarnings("empty-statement")
-	public static void main(String[] args) {
-		if (args.length == 0) {
-			System.err.println("usage: Timer millis");
-			System.exit(1);
-		}
+    @Override
+    public String toString() {
+        StringBuilder output = new StringBuilder();
 
-		Timer t = new Timer();
+        long diff = millis();
 
-		try {
-			Thread.sleep(Integer.parseInt(args[0]));
-		} catch (InterruptedException e) {
-			;
-		} catch (NumberFormatException e) {
-			;
-		}
+        long hours = (diff / 1000) / 3600;
+        long minutes = (diff / 1000 % 3600) / 60;
+        long seconds = (diff / 1000) % 60;
+        long hundreths = (diff % 1000) / 10;
 
-		System.out.println(t);
-	}
+        if (hours != 0) {
+            output.append(MessageFormat.format("{0}:{1}:{2} hours",
+                    new Object[]{df.format(hours), df.format(minutes), df.format(seconds)}));
+        } else if (minutes != 0) {
+            output.append(MessageFormat.format("{0}:{1} minutes",
+                    new Object[]{df.format(minutes), df.format(seconds)}));
+        } else {
+            output.append(MessageFormat.format("{0}:{1} seconds",
+                    new Object[]{df.format(seconds), df.format(hundreths)}));
+        }
+
+        return output.toString();
+    }
 
 }

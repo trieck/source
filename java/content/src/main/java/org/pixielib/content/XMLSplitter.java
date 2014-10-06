@@ -18,101 +18,101 @@ import java.io.IOException;
 
 public class XMLSplitter {
 
-	private static final int DEFAULT_REC_SIZE = 1000;   // number of records to split on
+    private static final int DEFAULT_REC_SIZE = 1000;   // number of records to split on
 
-	public XMLSplitter() {
-	}
+    public XMLSplitter() {
+    }
 
-	public void split(String xml_file, String path, int recsize)
-			throws IOException, ParserConfigurationException,
-			TransformerException, SAXException {
+    public static void main(String[] args) {
+        if (args.length < 2) {
+            System.err.println("usage: XMLSplitter xml-file output-path [record-size]");
+            System.exit(1);
+        }
 
-		Document doc = XMLUtil.parseXML(new File(xml_file));
+        Timer t = new Timer();
 
-		NodeList elements = doc.getElementsByTagName("record");
-		if (elements.getLength() == 0)
-			throw new IOException("no record elements found.");
+        int nrecsize = DEFAULT_REC_SIZE;
 
-		Document records = makeDocument();
-		Node element;
-		int i, j;
-		for (i = 0, j = 0; i < elements.getLength(); i++) {
-			element = elements.item(i);
+        XMLSplitter splitter = new XMLSplitter();
 
-			if (i > 0 && i % recsize == 0) {
-				writeDoc(path, records, ++j);
-				records = makeDocument();
-			} else {
-				XMLUtil.transferNode(records.getDocumentElement(), records, element);
-			}
-		}
+        try {
+            if (args.length > 2) {
+                nrecsize = Integer.parseInt(args[2]);
+            }
+            splitter.split(args[0], args[1], nrecsize);
+        } catch (IOException e) {
+            System.err.println(e);
+            System.exit(1);
+        } catch (ParserConfigurationException e) {
+            System.err.println(e);
+            System.exit(2);
+        } catch (SAXException e) {
+            System.err.println(e);
+            System.exit(3);
+        } catch (TransformerException e) {
+            System.err.println(e);
+            System.exit(4);
+        } catch (NumberFormatException e) {
+            System.err.println(e);
+            System.exit(5);
+        }
 
-		if (i > 0 && (i - 1) % recsize != 0) {
-			writeDoc(path, records, ++j);
-		}
-	}
+        System.out.printf("    elapsed time %s\n", t);
+    }
 
-	private Document makeDocument() throws ParserConfigurationException {
-		Document doc = XMLUtil.newDocument();
-		Element element = doc.createElement("records");
-		doc.appendChild(element);
-		return doc;
-	}
+    public void split(String xml_file, String path, int recsize)
+            throws IOException, ParserConfigurationException,
+            TransformerException, SAXException {
 
-	private File makeFile(String path, int docnum) throws IOException {
-		// ensure the root path exists
-		File f = new File(path);
-		if (!f.exists() && !f.mkdir()) {
-			throw new IOException(
-					String.format("could not create directory \"%s\".\n", path));
-		}
+        Document doc = XMLUtil.parseXML(new File(xml_file));
 
-		String filename = String.format("%s/%04d.xml", path, docnum);
+        NodeList elements = doc.getElementsByTagName("record");
+        if (elements.getLength() == 0)
+            throw new IOException("no record elements found.");
 
-		return new File(filename);
-	}
+        Document records = makeDocument();
+        Node element;
+        int i, j;
+        for (i = 0, j = 0; i < elements.getLength(); i++) {
+            element = elements.item(i);
 
-	private void writeDoc(String path, Document doc, int docnum)
-			throws IOException, ParserConfigurationException,
-			TransformerException {
-		File file = makeFile(path, docnum);
-		XMLTransformer.transform(new DOMSource(doc), new FileWriter(file));
-	}
+            if (i > 0 && i % recsize == 0) {
+                writeDoc(path, records, ++j);
+                records = makeDocument();
+            } else {
+                XMLUtil.transferNode(records.getDocumentElement(), records, element);
+            }
+        }
 
-	public static void main(String[] args) {
-		if (args.length < 2) {
-			System.err.println("usage: XMLSplitter xml-file output-path [record-size]");
-			System.exit(1);
-		}
+        if (i > 0 && (i - 1) % recsize != 0) {
+            writeDoc(path, records, ++j);
+        }
+    }
 
-		Timer t = new Timer();
+    private Document makeDocument() throws ParserConfigurationException {
+        Document doc = XMLUtil.newDocument();
+        Element element = doc.createElement("records");
+        doc.appendChild(element);
+        return doc;
+    }
 
-		int nrecsize = DEFAULT_REC_SIZE;
+    private File makeFile(String path, int docnum) throws IOException {
+        // ensure the root path exists
+        File f = new File(path);
+        if (!f.exists() && !f.mkdir()) {
+            throw new IOException(
+                    String.format("could not create directory \"%s\".\n", path));
+        }
 
-		XMLSplitter splitter = new XMLSplitter();
+        String filename = String.format("%s/%04d.xml", path, docnum);
 
-		try {
-			if (args.length > 2) {
-				nrecsize = Integer.parseInt(args[2]);
-			}
-			splitter.split(args[0], args[1], nrecsize);
-		} catch (IOException e) {
-			System.err.println(e);
-			System.exit(1);
-		} catch (ParserConfigurationException e) {
-			System.err.println(e);
-			System.exit(2);
-		} catch (SAXException e) {
-			System.err.println(e);
-			System.exit(3);
-		} catch (TransformerException e) {
-			System.err.println(e);
-			System.exit(4);
-		} catch (NumberFormatException e) {
-			System.err.println(e);
-			System.exit(5);
-		}
+        return new File(filename);
+    }
 
-		System.out.printf("    elapsed time %s\n", t);
-	}
+    private void writeDoc(String path, Document doc, int docnum)
+            throws IOException, ParserConfigurationException,
+            TransformerException {
+        File file = makeFile(path, docnum);
+        XMLTransformer.transform(new DOMSource(doc), new FileWriter(file));
+    }
 }

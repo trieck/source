@@ -12,34 +12,34 @@ import java.io.IOException;
 
 public class DocumentHandler implements ContentHandler {
 
-	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-		String db = request.getParameter("db");
-		String query = request.getParameter("query");
-		String docid = request.getParameter("docid");
+        String db = request.getParameter("db");
+        String query = request.getParameter("query");
+        String docid = request.getParameter("docid");
 
-		query = query == null ? "" : query;
+        query = query == null ? "" : query;
 
-		if (db == null || docid == null)
-			throw new IllegalArgumentException("required argument not supplied.");
+        if (db == null || docid == null)
+            throw new IllegalArgumentException("required argument not supplied.");
 
-		long ndocid;
+        long ndocid;
 
-		try {
-			ndocid = Long.parseLong(docid);
-		} catch (NumberFormatException e) {
-			throw new ServletException(e);
-		}
+        try {
+            ndocid = Long.parseLong(docid);
+        } catch (NumberFormatException e) {
+            throw new ServletException(e);
+        }
 
-		Content content = new Content();
-		Document doc = content.getDoc(db, query, ndocid);
+        Content content = new Content();
+        Document doc = content.getDoc(db, query, ndocid);
 
-		try {
-			XMLTransformer.transform(new DOMSource(doc), response.getOutputStream());
-		} catch (TransformerException e) {
-			throw new ServletException(e);
-		}
-	}
+        try {
+            XMLTransformer.transform(new DOMSource(doc), response.getOutputStream());
+        } catch (TransformerException e) {
+            throw new ServletException(e);
+        }
+    }
 }

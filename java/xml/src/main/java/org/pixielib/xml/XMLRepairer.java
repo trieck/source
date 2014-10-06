@@ -12,67 +12,67 @@ import java.util.regex.Pattern;
 
 public class XMLRepairer {
 
-	private static final Pattern INVALID_XML_CHARS = Pattern.compile(
-			"[^\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]");
+    private static final Pattern INVALID_XML_CHARS = Pattern.compile(
+            "[^\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]");
 
-	private static List<File> expand(File dir) {
-		List<File> result = new ArrayList<File>();
+    private static List<File> expand(File dir) {
+        List<File> result = new ArrayList<File>();
 
-		// list xml files
-		File[] files = dir.listFiles(new FilenameFilter() {
-			public boolean accept(File dir, String name) {
-				return name.endsWith(".xml");
-			}
-		}
-		);
+        // list xml files
+        File[] files = dir.listFiles(new FilenameFilter() {
+                                         public boolean accept(File dir, String name) {
+                                             return name.endsWith(".xml");
+                                         }
+                                     }
+        );
 
-		result.addAll(Arrays.asList(files));
+        result.addAll(Arrays.asList(files));
 
-		return result;
-	}
+        return result;
+    }
 
-	public void repair(String path)
-			throws IOException {
+    public static void main(String[] args) {
+        if (args.length < 1) {
+            System.err.println("usage: XMLRepairer path");
+            System.exit(1);
+        }
 
-		File dir = new File(path);
-		if (!dir.isDirectory()) {
-			throw new IOException(String.format("\"%s\" is not a directory.",
-					dir.getCanonicalPath()));
-		}
+        XMLRepairer repairer = new XMLRepairer();
 
-		List<File> files = expand(dir);
-		if (files.size() == 0) {
-			throw new IOException(
-					String.format("no xml files found in \"%s\".",
-							dir.getCanonicalPath())
-			);
-		}
+        try {
+            repairer.repair(args[0]);
+        } catch (IOException e) {
+            System.err.println(e);
+            System.exit(2);
+        }
+    }
 
-		for (File f : files) {
-			repair(f);
-		}
-	}
+    public void repair(String path)
+            throws IOException {
 
-	public void repair(File file)
-			throws IOException {
-		String xml = FileUtil.readFile(file.getCanonicalPath());
-		xml = INVALID_XML_CHARS.matcher(xml).replaceAll("");
-		FileUtil.writeFile(file.getCanonicalPath(), xml);
-	}
+        File dir = new File(path);
+        if (!dir.isDirectory()) {
+            throw new IOException(String.format("\"%s\" is not a directory.",
+                    dir.getCanonicalPath()));
+        }
 
-	public static void main(String[] args) {
-		if (args.length < 1) {
-			System.err.println("usage: XMLRepairer path");
-			System.exit(1);
-		}
+        List<File> files = expand(dir);
+        if (files.size() == 0) {
+            throw new IOException(
+                    String.format("no xml files found in \"%s\".",
+                            dir.getCanonicalPath())
+            );
+        }
 
-		XMLRepairer repairer = new XMLRepairer();
+        for (File f : files) {
+            repair(f);
+        }
+    }
 
-		try {
-			repairer.repair(args[0]);
-		} catch (IOException e) {
-			System.err.println(e);
-			System.exit(2);
-		}
-	}
+    public void repair(File file)
+            throws IOException {
+        String xml = FileUtil.readFile(file.getCanonicalPath());
+        xml = INVALID_XML_CHARS.matcher(xml).replaceAll("");
+        FileUtil.writeFile(file.getCanonicalPath(), xml);
+    }
 }

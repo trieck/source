@@ -10,18 +10,18 @@ import java.net.URLConnection;
 
 public class XMLHttpRequest {
 
-	public static Document request(String sURL)
-			throws IOException {
+    public static Document request(String sURL)
+            throws IOException {
 
-		URL url = new URL(sURL);
-		URLConnection uc = url.openConnection();
+        URL url = new URL(sURL);
+        URLConnection uc = url.openConnection();
 
-		try {
-			return XMLUtil.parseXML(uc.getInputStream());
-		} catch (ParserConfigurationException e) {
-			throw new IOException(e);
-		} catch (SAXException e) {
-			throw new IOException(e);
-		}
-	}
+        try {
+            return XMLUtil.parseXML(uc.getInputStream());
+        } catch (ParserConfigurationException e) {
+            throw new IOException(e);
+        } catch (SAXException e) {
+            throw new IOException(e);
+        }
+    }
 }

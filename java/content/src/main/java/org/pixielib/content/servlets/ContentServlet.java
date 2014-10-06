@@ -16,60 +16,59 @@ import java.util.Map;
 
 public class ContentServlet extends HttpServlet {
 
-	private Map<String, ContentHandler> handlers;    // content handlers
+    private Map<String, ContentHandler> handlers;    // content handlers
 
-	@Override
-	public void init(ServletConfig config) {
-		handlers = new HashMap<>();
-		handlers.put("search", new SearchHandler());
-		handlers.put("getdoc", new DocumentHandler());
-	}
+    /**
+     * * Construct an error description as an xml document
+     * * @param error the error
+     * * @return the xml document
+     */
+    private static String xmlerror(String error) {
+        StringBuilder output = new StringBuilder();
+        output.append("<?xml version=\"1.0\"?>");
+        output.append("<error><![CDATA[ ");
+        output.append(error);
+        output.append(" ]]></error>");
+        return output.toString();
+    }
 
-	/**
-	 *
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("text/xml");
+    @Override
+    public void init(ServletConfig config) {
+        handlers = new HashMap<>();
+        handlers.put("search", new SearchHandler());
+        handlers.put("getdoc", new DocumentHandler());
+    }
 
-		PrintWriter output = new PrintWriter(response.getOutputStream());
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/xml");
 
-		try {
-			String function = request.getParameter("function");
-			if (function == null)
-				throw new IllegalArgumentException("function not supplied.");
+        PrintWriter output = new PrintWriter(response.getOutputStream());
 
-			ContentHandler handler = handlers.get(function);
-			if (handler == null)
-				throw new IllegalArgumentException("function not supported.");
+        try {
+            String function = request.getParameter("function");
+            if (function == null)
+                throw new IllegalArgumentException("function not supplied.");
 
-			handler.handle(request, response);
+            ContentHandler handler = handlers.get(function);
+            if (handler == null)
+                throw new IllegalArgumentException("function not supported.");
 
-		} catch (IllegalArgumentException | ServletException | IOException e) {
-			output.print(xmlerror(e.toString()));
-			System.err.println(e);
-		} finally {
-			output.flush();
-			output.close();
-		}
-	}
+            handler.handle(request, response);
 
-	/**
-	 * * Construct an error description as an xml document
-	 * * @param error the error
-	 * * @return the xml document
-	 */
-	private static String xmlerror(String error) {
-		StringBuilder output = new StringBuilder();
-		output.append("<?xml version=\"1.0\"?>");
-		output.append("<error><![CDATA[ ");
-		output.append(error);
-		output.append(" ]]></error>");
-		return output.toString();
-	}
+        } catch (IllegalArgumentException | ServletException | IOException e) {
+            output.print(xmlerror(e.toString()));
+            System.err.println(e);
+        } finally {
+            output.flush();
+            output.close();
+        }
+    }
 }

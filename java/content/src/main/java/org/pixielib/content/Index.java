@@ -8,151 +8,151 @@ import java.util.Iterator;
 
 public class Index {
 
-	public static final int MAGIC_NO = 0xc001d00d;  // file magic number
-	private Repository repos;                       // content repository
-	private Concordance concord;                    // term concordance
+    public static final int MAGIC_NO = 0xc001d00d;  // file magic number
+    private Repository repos;                       // content repository
+    private Concordance concord;                    // term concordance
 
-	public Index() throws IOException {
-		concord = new Concordance();
-		repos = Repository.getInstance();
-	}
+    public Index() throws IOException {
+        concord = new Concordance();
+        repos = Repository.getInstance();
+    }
 
-	/* combine concordance and hash table into final index */
-	@SuppressWarnings("ConvertToTryWithResources")
-	public void write(String db, IndexFields fields) throws IOException {
+    public static long hash(String term, long size) {
+        return (DoubleHash64.hash(term) & 0x7FFFFFFFFFFFFFFFL) % size;
+    }
 
-		// merge concordance blocks
-		String concordFile = concord.merge();
+    /* combine concordance and hash table into final index */
+    @SuppressWarnings("ConvertToTryWithResources")
+    public void write(String db, IndexFields fields) throws IOException {
 
-		File outfile = repos.getIndexPath(db);
+        // merge concordance blocks
+        String concordFile = concord.merge();
 
-		outfile.delete();
-		
-		RandomAccessFile ofile = new RandomAccessFile(outfile, "rw");
-		DataInputStream dis = new DataInputStream(new FileInputStream(concordFile));
+        File outfile = repos.getIndexPath(db);
 
-		// write file magic number
-		ofile.writeInt(MAGIC_NO);
+        outfile.delete();
 
-		// write the number of index fields
-		ofile.writeInt(fields.size());
+        RandomAccessFile ofile = new RandomAccessFile(outfile, "rw");
+        DataInputStream dis = new DataInputStream(new FileInputStream(concordFile));
 
-		// write index fields
-		Iterator<String> it = fields.iterator();
-		while (it.hasNext()) {
-			ofile.writeUTF(it.next());
-		}
+        // write file magic number
+        ofile.writeInt(MAGIC_NO);
 
-		// write the total number of terms
-		long term_count_offset = ofile.getFilePointer();
-		ofile.writeInt(0); // not yet known
+        // write the number of index fields
+        ofile.writeInt(fields.size());
 
-		// write the size of the hash table
-		long hash_table_size_offset = ofile.getFilePointer();
-		ofile.writeLong(0); // not yet known
+        // write index fields
+        Iterator<String> it = fields.iterator();
+        while (it.hasNext()) {
+            ofile.writeUTF(it.next());
+        }
 
-		// write the offset to the hash table
-		long hash_table_offset = ofile.getFilePointer();
-		ofile.writeLong(0); // not yet known
+        // write the total number of terms
+        long term_count_offset = ofile.getFilePointer();
+        ofile.writeInt(0); // not yet known
 
-		// concordance offset
-		long concord_offset = ofile.getFilePointer();
-		
-		// write terms & anchors
-		int n, nterms;
-		String term;
+        // write the size of the hash table
+        long hash_table_size_offset = ofile.getFilePointer();
+        ofile.writeLong(0); // not yet known
 
-		OutputStream os = Channels.newOutputStream(ofile.getChannel());
-		for (nterms = 0; dis.available() > 0; nterms++) {
-			term = dis.readUTF();
+        // write the offset to the hash table
+        long hash_table_offset = ofile.getFilePointer();
+        ofile.writeLong(0); // not yet known
 
-			// read the anchor list size
-			n = dis.readInt();
+        // concordance offset
+        long concord_offset = ofile.getFilePointer();
 
-			// write the term
-			ofile.writeUTF(term);
+        // write terms & anchors
+        int n, nterms;
+        String term;
 
-			// write the anchor list size
-			ofile.writeInt(n);
+        OutputStream os = Channels.newOutputStream(ofile.getChannel());
+        for (nterms = 0; dis.available() > 0; nterms++) {
+            term = dis.readUTF();
 
-			// transfer the anchor list
-			IOUtil.transfer(dis, os, n * 8);
-		}
+            // read the anchor list size
+            n = dis.readInt();
 
-		dis.close();
+            // write the term
+            ofile.writeUTF(term);
 
-		// generate the hash table
+            // write the anchor list size
+            ofile.writeInt(n);
 
-		// hash table location
-		long hash_table_area = ofile.getFilePointer();
+            // transfer the anchor list
+            IOUtil.transfer(dis, os, n * 8);
+        }
 
-		// write the total term count
-		ofile.seek(term_count_offset);
-		ofile.writeInt(nterms);
+        dis.close();
 
-		// compute the size of the hash table and store it
-		long tableSize = Prime.prime(nterms);
-		ofile.seek(hash_table_size_offset);
-		ofile.writeLong(tableSize);
+        // generate the hash table
 
-		// write the offset to the hash table
-		ofile.seek(hash_table_offset);
-		ofile.writeLong(hash_table_area);
-		ofile.seek(hash_table_area); // jump back
+        // hash table location
+        long hash_table_area = ofile.getFilePointer();
 
-		// expand file to make space for hash table
-		long newLength = ofile.length() + (tableSize * 8);
-		ofile.setLength(newLength);
+        // write the total term count
+        ofile.seek(term_count_offset);
+        ofile.writeInt(nterms);
 
-		// need to ensure the hash table is empty
-		IOUtil.fill(os, tableSize * 8, (byte) 0);
+        // compute the size of the hash table and store it
+        long tableSize = Prime.prime(nterms);
+        ofile.seek(hash_table_size_offset);
+        ofile.writeLong(tableSize);
 
-		// we need two file pointers to the output file
-		// in order to generate the hash table
-		RandomAccessFile infile = new RandomAccessFile(outfile, "r");
+        // write the offset to the hash table
+        ofile.seek(hash_table_offset);
+        ofile.writeLong(hash_table_area);
+        ofile.seek(hash_table_area); // jump back
 
-		// seek to the concordance
-		infile.seek(concord_offset);
+        // expand file to make space for hash table
+        long newLength = ofile.length() + (tableSize * 8);
+        ofile.setLength(newLength);
 
-		long h, offset, term_offset = concord_offset;
-		int vsize;
-		for (long i = 0; i < nterms; i++) {
-			term = infile.readUTF();
+        // need to ensure the hash table is empty
+        IOUtil.fill(os, tableSize * 8, (byte) 0);
 
-			h = hash(term, tableSize);
+        // we need two file pointers to the output file
+        // in order to generate the hash table
+        RandomAccessFile infile = new RandomAccessFile(outfile, "r");
 
-			// collisions are resolved via linear-probing
-			for (;;) {
-				offset = hash_table_area + (h * 8);
+        // seek to the concordance
+        infile.seek(concord_offset);
 
-				ofile.seek(offset);
-				if (ofile.readLong() == 0) {
-					break;
-				}
+        long h, offset, term_offset = concord_offset;
+        int vsize;
+        for (long i = 0; i < nterms; i++) {
+            term = infile.readUTF();
 
-				h = (h + 1) % tableSize;
-			}
+            h = hash(term, tableSize);
 
-			ofile.seek(offset);
-			ofile.writeLong(term_offset);
+            // collisions are resolved via linear-probing
+            for (; ; ) {
+                offset = hash_table_area + (h * 8);
 
-			// anchor list size
-			vsize = infile.readInt() * 8;
-			infile.skipBytes(vsize);
+                ofile.seek(offset);
+                if (ofile.readLong() == 0) {
+                    break;
+                }
 
-			// next term offset
-			term_offset = infile.getFilePointer();
-		}
-		infile.close();
-		ofile.close();
-	}
+                h = (h + 1) % tableSize;
+            }
 
-	public void insert(String term, long anchor)
-					throws IOException {
-		concord.insert(term, anchor);
-	}
+            ofile.seek(offset);
+            ofile.writeLong(term_offset);
 
-	public static long hash(String term, long size) {
-		return (DoubleHash64.hash(term) & 0x7FFFFFFFFFFFFFFFL) % size;
-	}
+            // anchor list size
+            vsize = infile.readInt() * 8;
+            infile.skipBytes(vsize);
+
+            // next term offset
+            term_offset = infile.getFilePointer();
+        }
+        infile.close();
+        ofile.close();
+    }
+
+    public void insert(String term, long anchor)
+            throws IOException {
+        concord.insert(term, anchor);
+    }
 }

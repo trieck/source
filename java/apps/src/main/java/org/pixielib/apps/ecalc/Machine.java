@@ -4,193 +4,184 @@ import java.util.Stack;
 
 public class Machine {
 
-	private static Machine instance; // Singleton instance
-	private final Stack<Datum> machinestack; // Machine stack
+    private static Machine instance; // Singleton instance
+    /**
+     * Addition instruction
+     */
+    public final Instruction plus = new Instruction() {
+        public void execute() throws MachineException {
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
-	/**
-	 * Private ctor
-	 */
-	private Machine() {
-		machinestack = new Stack<Datum>();
-		new Stack<Object>();
-	}
+            Datum d3 = new Datum();
+            d3.value = d1.value + d2.value;
 
-	/**
-	 * Singleton
-	 *
-	 * @return the singleton instance
-	 */
-	public static Machine getInstance() {
-		if (instance != null) {
-			return instance;
-		}
-		return (instance = new Machine());
-	}
+            machinestack.push(d3);
+        }
+    };
+    /**
+     * Subtraction instruction
+     */
+    public final Instruction minus = new Instruction() {
+        public void execute() throws MachineException {
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
-	/**
-	 * Run the machine
-	 *
-	 * @param input the program as a string
-	 */
-	public void run(String input) {
-		final Compiler compiler = new Compiler();
+            Datum d3 = new Datum();
+            d3.value = d2.value - d1.value;
 
-		try {
-			exec(compiler.compile(input));
-		} catch (final CompilerException ce) {
-			;
-		} catch (final MachineException me) {
-			;
-		}
-	}
+            machinestack.push(d3);
+        }
+    };
+    /**
+     * Unary minus instruction
+     */
+    public final Instruction unaryminus = new Instruction() {
+        public void execute() throws MachineException {
+            Datum d = machinestack.pop();
+            d.value = -d.value;
+            machinestack.push(d);
+        }
+    };
+    /**
+     * Multiply instruction
+     */
+    public final Instruction mult = new Instruction() {
+        public void execute() throws MachineException {
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
-	/**
-	 * Execute a program
-	 *
-	 * @program the program
-	 */
-	private void exec(Program program) throws MachineException {
+            Datum d3 = new Datum();
+            d3.value = d1.value * d2.value;
 
-	}
+            machinestack.push(d3);
+        }
+    };
+    /**
+     * Divide instruction
+     */
+    public final Instruction divide = new Instruction() {
+        public void execute() throws MachineException {
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
-	/**
-	 * Addition instruction
-	 */
-	public final Instruction plus = new Instruction() {
-		public void execute() throws MachineException {
-			Datum d1 = machinestack.pop();
-			Datum d2 = machinestack.pop();
+            if (d1.value == 0) {
+                throw new MachineException(MachineException.ME_DIV_BY_ZERO);
+            }
 
-			Datum d3 = new Datum();
-			d3.value = d1.value + d2.value;
+            Datum d3 = new Datum();
+            d3.value = d2.value / d1.value;
 
-			machinestack.push(d3);
-		}
-	};
+            machinestack.push(d3);
+        }
+    };
+    /**
+     * Modulo instruction
+     */
+    public final Instruction mod = new Instruction() {
+        public void execute() throws MachineException {
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
-	/**
-	 * Subtraction instruction
-	 */
-	public final Instruction minus = new Instruction() {
-		public void execute() throws MachineException {
-			Datum d1 = machinestack.pop();
-			Datum d2 = machinestack.pop();
+            if (d1.value == 0) {
+                throw new MachineException(MachineException.ME_DIV_BY_ZERO);
+            }
 
-			Datum d3 = new Datum();
-			d3.value = d2.value - d1.value;
+            Datum d3 = new Datum();
+            d3.value = d2.value % d1.value;
 
-			machinestack.push(d3);
-		}
-	};
+            machinestack.push(d3);
+        }
+    };
+    /**
+     * Exponent instruction
+     */
+    public final Instruction pow = new Instruction() {
+        public void execute() throws MachineException {
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
-	/**
-	 * Unary minus instruction
-	 */
-	public final Instruction unaryminus = new Instruction() {
-		public void execute() throws MachineException {
-			Datum d = machinestack.pop();
-			d.value = -d.value;
-			machinestack.push(d);
-		}
-	};
+            Datum d3 = new Datum();
+            d3.value = Math.pow(d2.value, d1.value);
 
-	/**
-	 * Multiply instruction
-	 */
-	public final Instruction mult = new Instruction() {
-		public void execute() throws MachineException {
-			Datum d1 = machinestack.pop();
-			Datum d2 = machinestack.pop();
+            machinestack.push(d3);
+        }
+    };
+    /**
+     * Variable assignment
+     */
+    public final Instruction assign = new Instruction() {
+        public void execute() throws MachineException {
+            Datum d1 = machinestack.pop();
+            Datum d2 = machinestack.pop();
 
-			Datum d3 = new Datum();
-			d3.value = d1.value * d2.value;
+            if (d2.symbol == null) {
+                throw new MachineException(MachineException.ME_ASSIGNLITERAL);
+            }
+            if (d2.symbol.getType() != Symbol.ST_VAR
+                    && d2.symbol.getType() != Symbol.ST_UNDEF) {
+                throw new MachineException(MachineException.ME_NONVARASSIGN);
+            }
 
-			machinestack.push(d3);
-		}
-	};
+            d2.symbol.setValue(d1.value);
+            d2.symbol.setType(Symbol.ST_VAR);
 
-	/**
-	 * Divide instruction
-	 */
-	public final Instruction divide = new Instruction() {
-		public void execute() throws MachineException {
-			Datum d1 = machinestack.pop();
-			Datum d2 = machinestack.pop();
+            machinestack.push(d1);
+        }
+    };
+    /**
+     * Pop top value from machine stack
+     */
+    public final Instruction pop = new Instruction() {
+        public void execute() throws MachineException {
+            machinestack.pop();
+        }
+    };
+    private final Stack<Datum> machinestack; // Machine stack
 
-			if (d1.value == 0) {
-				throw new MachineException(MachineException.ME_DIV_BY_ZERO);
-			}
+    /**
+     * Private ctor
+     */
+    private Machine() {
+        machinestack = new Stack<Datum>();
+        new Stack<Object>();
+    }
 
-			Datum d3 = new Datum();
-			d3.value = d2.value / d1.value;
+    /**
+     * Singleton
+     *
+     * @return the singleton instance
+     */
+    public static Machine getInstance() {
+        if (instance != null) {
+            return instance;
+        }
+        return (instance = new Machine());
+    }
 
-			machinestack.push(d3);
-		}
-	};
+    /**
+     * Run the machine
+     *
+     * @param input the program as a string
+     */
+    public void run(String input) {
+        final Compiler compiler = new Compiler();
 
-	/**
-	 * Modulo instruction
-	 */
-	public final Instruction mod = new Instruction() {
-		public void execute() throws MachineException {
-			Datum d1 = machinestack.pop();
-			Datum d2 = machinestack.pop();
+        try {
+            exec(compiler.compile(input));
+        } catch (final CompilerException ce) {
+            ;
+        } catch (final MachineException me) {
+            ;
+        }
+    }
 
-			if (d1.value == 0) {
-				throw new MachineException(MachineException.ME_DIV_BY_ZERO);
-			}
+    /**
+     * Execute a program
+     *
+     * @program the program
+     */
+    private void exec(Program program) throws MachineException {
 
-			Datum d3 = new Datum();
-			d3.value = d2.value % d1.value;
-
-			machinestack.push(d3);
-		}
-	};
-
-	/**
-	 * Exponent instruction
-	 */
-	public final Instruction pow = new Instruction() {
-		public void execute() throws MachineException {
-			Datum d1 = machinestack.pop();
-			Datum d2 = machinestack.pop();
-
-			Datum d3 = new Datum();
-			d3.value = Math.pow(d2.value, d1.value);
-
-			machinestack.push(d3);
-		}
-	};
-
-	/**
-	 * Variable assignment
-	 */
-	public final Instruction assign = new Instruction() {
-		public void execute() throws MachineException {
-			Datum d1 = machinestack.pop();
-			Datum d2 = machinestack.pop();
-
-			if (d2.symbol == null) {
-				throw new MachineException(MachineException.ME_ASSIGNLITERAL);
-			}
-			if (d2.symbol.getType() != Symbol.ST_VAR
-					&& d2.symbol.getType() != Symbol.ST_UNDEF) {
-				throw new MachineException(MachineException.ME_NONVARASSIGN);
-			}
-
-			d2.symbol.setValue(d1.value);
-			d2.symbol.setType(Symbol.ST_VAR);
-
-			machinestack.push(d1);
-		}
-	};
-
-	/**
-	 * Pop top value from machine stack
-	 */
-	public final Instruction pop = new Instruction() {
-		public void execute() throws MachineException {
-			machinestack.pop();
-		}
-	};
+    }
 }
