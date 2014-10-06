@@ -32,7 +32,7 @@ public class IndexFields {
 
     public IndexFields(String[] aFields) {
         fields = new TreeSet<>();
-        Collection c = Arrays.asList(aFields);
+        Collection<String> c = Arrays.asList(aFields);
         fields.addAll(c);
     }
 

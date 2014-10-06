@@ -21,13 +21,13 @@ public class WebUtils {
         String prefix = input.substring(0, n + 1);
         String suffix = input.substring(n + 1);
 
-        Hashtable table = parseQueryString(suffix);
+        Hashtable<String, String[]> table = parseQueryString(suffix);
         HashMap<String, String> processed = new HashMap<>();
         String[] values;
 
         StringBuffer name = new StringBuffer();
         StringBuffer value = new StringBuffer();
-        StringBuffer output = new StringBuffer();
+        StringBuilder output = new StringBuilder();
 
         StringBuffer field = name;
 
@@ -40,7 +40,7 @@ public class WebUtils {
                         if (output.length() > 0) output.append('&');
                         output.append(name.toString());
                         output.append('=');
-                        values = (String[]) table.get(name.toString());
+                        values = table.get(name.toString());
                         if (values != null && values.length > 0) {
                             output.append(Context.encode(values[values.length - 1]));
                         }
@@ -63,7 +63,7 @@ public class WebUtils {
             if (output.length() > 0) output.append('&');
             output.append(name.toString());
             output.append('=');
-            values = (String[]) table.get(name.toString());
+            values = table.get(name.toString());
             if (values != null && values.length > 0) {
                 output.append(Context.encode(values[values.length - 1]));
             }
@@ -92,14 +92,14 @@ public class WebUtils {
      * @return a HashTable object built from the parsed key-value pairs
      * @throws IllegalArgumentException - if the query string is invalid
      */
-    private static Hashtable parseQueryString(String s)
+    private static Hashtable<String, String[]> parseQueryString(String s)
             throws IllegalArgumentException {
         String valArray[];
 
         if (s == null) {
             throw new IllegalArgumentException();
         }
-        Hashtable ht = new Hashtable();
+        Hashtable<String, String[]> ht = new Hashtable<String, String[]>();
         StringTokenizer st = new StringTokenizer(s, "&");
         while (st.hasMoreTokens()) {
             String key, val;
@@ -115,7 +115,7 @@ public class WebUtils {
             }
 
             if (ht.containsKey(key)) {
-                String oldVals[] = (String[]) ht.get(key);
+                String oldVals[] = ht.get(key);
                 valArray = new String[oldVals.length + 1];
                 System.arraycopy(oldVals, 0, valArray, 0, oldVals.length);
                 valArray[oldVals.length] = val;
