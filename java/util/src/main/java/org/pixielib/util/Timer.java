@@ -23,7 +23,7 @@ public class Timer {
 
         try {
             Thread.sleep(Integer.parseInt(args[0]));
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
             ;
         } catch (NumberFormatException e) {
             ;

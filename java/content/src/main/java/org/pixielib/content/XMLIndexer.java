@@ -89,7 +89,7 @@ public class XMLIndexer extends QParser {
                 anchor = Anchor.makeAnchorID(filenum, offset, i);
                 index.insert(term, anchor);
             }
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
     }
 
@@ -130,12 +130,11 @@ public class XMLIndexer extends QParser {
 
         // list xml files
         File[] files = dir.listFiles(new FilenameFilter() {
-                                         @Override
-                                         public boolean accept(File dir, String name) {
-                                             return name.endsWith(".xml");
-                                         }
-                                     }
-        );
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".xml");
+            }
+        });
 
         result.addAll(Arrays.asList(files));
 
