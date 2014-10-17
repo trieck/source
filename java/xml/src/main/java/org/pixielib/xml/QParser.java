@@ -63,7 +63,7 @@ public abstract class QParser {
 
     protected void parse() throws IOException {
 
-        int c;
+        int c, save;
         char[] buffer;
         String tag, name;
 
@@ -78,8 +78,10 @@ public abstract class QParser {
 
             switch (buffer[0]) {
                 case '/':   // end tag
+                    save = type;
                     endTag();
-                    endElement();
+                    if (save != EMPTYTAG)
+                        endElement();
                     break;
                 case '!':   // xml comment
                     if (buffer[1] == '-' && buffer[2] == '-') {
