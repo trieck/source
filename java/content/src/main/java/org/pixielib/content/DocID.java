@@ -8,11 +8,11 @@ public class DocID {
         this.docid = docid;
     }
 
-    public short getFileNum() {
-        return (short) ((docid >>> Anchor.OFFSET_BITS) & 0x7FFF);
+    public int getFileNum() {
+        return (int) (docid >>> (Anchor.OFFSET_BITS) & 0xFF);
     }
 
     public int getOffset() {
-        return (int) (docid & 0x7FFFFFFF);
+        return (int) (docid & 0x3FFFFFFFL);
     }
 }

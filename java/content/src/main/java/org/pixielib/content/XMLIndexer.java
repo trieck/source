@@ -13,9 +13,10 @@ public class XMLIndexer extends QParser {
 
     private Repository repos;       // repository instance
     private Index index;            // index instance
-    private short filenum;          // current file number while indexing
-    private int offset;             // offset into current file
-    private Stack<String> elements; // stack of elements seen
+    private int filenum;            // current file number while indexing
+    private int rec_offset;         // record offset into current file
+    private int field_num;          // current top-level field number
+    private Stack<Field> elements;  // stack of fields while indexing
     private IndexFields fields;     // set of top-level fields for indexing
 
     public XMLIndexer() throws IOException {
@@ -51,15 +52,28 @@ public class XMLIndexer extends QParser {
      */
     @Override
     public void startElement(String name, String tag) {
-        elements.push(name);
+        elements.push(new Field(name));
+
         if (name.equals("record")) {
-            offset = (int) Math.max(0, getPosition() - tag.length());
-            assert (offset < ((long) 1 << Anchor.OFFSET_BITS - 1));
+            rec_offset = (int) Math.max(0, getPosition() - tag.length());
+            field_num = -1;
+            assert (rec_offset < ((long) 1 << (Anchor.OFFSET_BITS)));
+        } else if (rec_offset > 0) {
+            if (isTopLevel()) {
+                field_num++;
+                assert (field_num < (1 << (Anchor.FIELDNUM_BITS)));
+            }
         }
     }
 
     @Override
     public void endElement() {
+        Field field = elements.peek();
+        if (field.getName().equals("record")) {
+            rec_offset = 0;
+            field_num = -1;
+        }
+
         elements.pop();
     }
 
@@ -71,26 +85,29 @@ public class XMLIndexer extends QParser {
     @Override
     public void value(String text) {
 
-        if (!isTopLevel())
-            return;
+        if (field_num == -1 || !isTopLevel())
+            return; // no top-level field
 
         if ((text = text.trim()).length() == 0)
             return; // whitespace
 
-        String field = elements.peek();
+        Field field = elements.peek();
+        int word_num = field.getWordCount();
 
         Lexer lexer = new Lexer(new StringReader(text));
         long anchor;
 
         try {
             String term, tok;
-            for (short i = 0; ((tok = lexer.getToken()).length()) != 0; i++) {
-                term = String.format("%s:%s", field, tok);
-                anchor = Anchor.makeAnchorID(filenum, offset, i);
+            while ((tok = lexer.getToken()).length() != 0) {
+                term = String.format("%s:%s", field.getName(), tok);
+                anchor = Anchor.makeAnchorID(filenum, rec_offset, field_num, word_num++);
                 index.insert(term, anchor);
             }
         } catch (IOException ignored) {
         }
+
+        field.setWordCount(word_num);
     }
 
     public void load(String db, String[] aFields) throws IOException {
@@ -116,6 +133,7 @@ public class XMLIndexer extends QParser {
             setPosition(0);
             loadfile(f);
             filenum++;
+            assert (filenum < (1 << (Anchor.FILENUM_BITS)));
         }
     }
 
@@ -145,8 +163,8 @@ public class XMLIndexer extends QParser {
         if (elements.size() == 0)
             return false;
 
-        String field = elements.peek();
+        Field field = elements.peek();
 
-        return fields.isTopLevel(field);
+        return fields.isTopLevel(field.getName());
     }
 }

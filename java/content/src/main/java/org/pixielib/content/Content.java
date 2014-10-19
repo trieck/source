@@ -88,7 +88,7 @@ public class Content {
 
         DocID docid = new DocID(ndocid);
 
-        short filenum = docid.getFileNum();
+        int filenum = docid.getFileNum();
         int offset = docid.getOffset();
 
         File file = repos.getFile(db, filenum);
