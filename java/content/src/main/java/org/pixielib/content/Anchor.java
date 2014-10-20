@@ -31,12 +31,12 @@ public class Anchor implements Comparable<Anchor> {
     public static long makeAnchorID(int filenum, long offset, int fieldnum, int wordnum) {
 
         assert (filenum < (1 << FILENUM_BITS));
-        assert (offset < ((long) 1 << OFFSET_BITS));
+        assert (offset < (1 << OFFSET_BITS));
         assert (fieldnum < (1 << FIELDNUM_BITS));
         assert (wordnum < (1 << WORDNUM_BITS));
 
         long anchorid = ((long) (filenum & 0xFF) << (OFFSET_BITS + FIELDNUM_BITS + WORDNUM_BITS));
-        anchorid |= (offset & 0x3FFFFFFFL) << (FIELDNUM_BITS + WORDNUM_BITS);
+        anchorid |= (offset & 0x3FFFFFFF) << (FIELDNUM_BITS + WORDNUM_BITS);
         anchorid |= (fieldnum & 0x3FF) << WORDNUM_BITS;
         anchorid |= wordnum & 0xFFFF;
 

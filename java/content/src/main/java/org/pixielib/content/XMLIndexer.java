@@ -57,11 +57,11 @@ public class XMLIndexer extends QParser {
         if (name.equals("record")) {
             rec_offset = (int) Math.max(0, getPosition() - tag.length());
             field_num = -1;
-            assert (rec_offset < ((long) 1 << (Anchor.OFFSET_BITS)));
+            assert (rec_offset < ((long) 1 << Anchor.OFFSET_BITS));
         } else if (rec_offset > 0) {
             if (isTopLevel()) {
                 field_num++;
-                assert (field_num < (1 << (Anchor.FIELDNUM_BITS)));
+                assert (field_num < (1 << Anchor.FIELDNUM_BITS));
             }
         }
     }
