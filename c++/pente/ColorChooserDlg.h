@@ -5,23 +5,23 @@
 // CColorChooserDlg dialog
 
 class CColorChooserDlg : public CDialog {
-	DECLARE_DYNAMIC(CColorChooserDlg)
+    DECLARE_DYNAMIC(CColorChooserDlg)
 
 public:
-	CColorChooserDlg(CWnd* pParent = NULL);   // standard constructor
-	virtual ~CColorChooserDlg();
+    CColorChooserDlg(CWnd* pParent = NULL);   // standard constructor
+    virtual ~CColorChooserDlg();
 
-	COLORREF GetSelectedColor() const;
+    COLORREF GetSelectedColor() const;
 
 // Dialog Data
-	enum { IDD = IDD_COLOR_CHOOSER };
+    enum { IDD = IDD_COLOR_CHOOSER };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 private:
-	CColorChooserWnd m_ColorsWnd;
+    CColorChooserWnd m_ColorsWnd;
 public:
-	virtual BOOL OnInitDialog();
+    virtual BOOL OnInitDialog();
 };

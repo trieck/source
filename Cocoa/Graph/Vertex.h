@@ -10,11 +10,11 @@
 
 @interface Vertex :
 NSObject {
-	BOOL selected;			// is selected?
-	int x, y;				// coordinates
-	NSBezierPath *path;		// path
-	NSColor *color;			// color of vertex
-	NSMutableArray *edges;	// array of edges
+    BOOL selected;			// is selected?
+    int x, y;				// coordinates
+    NSBezierPath *path;		// path
+    NSColor *color;			// color of vertex
+    NSMutableArray *edges;	// array of edges
 }
 
 - (id)initWithCoords:

@@ -13,24 +13,24 @@
 /////////////////////////////////////////////////////////////////////////////
 class CacheEntry {
 public:
-	CacheEntry();
-	CacheEntry(const CacheEntry &entry);
-	~CacheEntry();
+    CacheEntry();
+    CacheEntry(const CacheEntry &entry);
+    ~CacheEntry();
 
 // Interface
-	CacheEntry &operator =(const CacheEntry &e);
+    CacheEntry &operator =(const CacheEntry &e);
 
 // Implementation
 public:
-	uint32_t header;	// entry block
-	uint32_t size;		// file size. 0 for directory
-	uint32_t protect;	// protection flags
-	uint16_t days;		// date
-	uint16_t mins;		// time
-	uint16_t ticks;		// 1/50 secod
-	int8_t type;		// ST_DIR, ST_FILE, ST_LFILE, ST_LDIR, ST_LSOFT;
-	string name;		// entry name
-	string comment;		// entry comment
+    uint32_t header;	// entry block
+    uint32_t size;		// file size. 0 for directory
+    uint32_t protect;	// protection flags
+    uint16_t days;		// date
+    uint16_t mins;		// time
+    uint16_t ticks;		// 1/50 secod
+    int8_t type;		// ST_DIR, ST_FILE, ST_LFILE, ST_LDIR, ST_LSOFT;
+    string name;		// entry name
+    string comment;		// entry comment
 };
 
 #endif // __CACHEENTRY_H__

@@ -5,14 +5,14 @@
 
 class ImageEroder : public MorphologicalOperator {
 public:
-	ImageEroder();
-	~ImageEroder();
+    ImageEroder();
+    ~ImageEroder();
 
-	void Erode(CImage &image);
+    void Erode(CImage &image);
 private:
-	void Erode(CImage &image, Kernel *pKernel);
-	void Erode(CImage &image, Kernel *pKernel, int x, int y);
+    void Erode(CImage &image, Kernel *pKernel);
+    void Erode(CImage &image, Kernel *pKernel, int x, int y);
 
-	typedef std::vector<Kernel*> KernelVec;
-	KernelVec m_kernels;
+    typedef std::vector<Kernel*> KernelVec;
+    KernelVec m_kernels;
 };

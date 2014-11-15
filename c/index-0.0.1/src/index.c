@@ -35,31 +35,31 @@ FILE *fpin = NULL;
  */
 void mkindex(int nfiles, char **files)
 {
-	int i;
+    int i;
 
-	atexit(cleanup);
+    atexit(cleanup);
 
-	/* open concordance */
-	/*if ((concord = concord_open("index.dat", OM_WRITE)) == NULL) {
-	   error("unable to open index.dat");
-	   } */
+    /* open concordance */
+    /*if ((concord = concord_open("index.dat", OM_WRITE)) == NULL) {
+       error("unable to open index.dat");
+       } */
 
-	for (i = 0; i < nfiles; i++, filenum++) {
-		infile = files[i];
-		if ((fpin = fopen(files[i], "r")) == NULL) {
-			error("unable to open file \"%s\".", files[i]);
-		}
-		parse();
+    for (i = 0; i < nfiles; i++, filenum++) {
+        infile = files[i];
+        if ((fpin = fopen(files[i], "r")) == NULL) {
+            error("unable to open file \"%s\".", files[i]);
+        }
+        parse();
 
-		fclose(fpin);
-		fpin = NULL;
-	}
+        fclose(fpin);
+        fpin = NULL;
+    }
 
-	/* close concordance     */
-	if (concord != NULL) {
-		concord_close(concord);
-		concord = NULL;
-	}
+    /* close concordance     */
+    if (concord != NULL) {
+        concord_close(concord);
+        concord = NULL;
+    }
 }
 
 /*
@@ -67,10 +67,10 @@ void mkindex(int nfiles, char **files)
  */
 void parse(void)
 {
-	const char *tok;
-	while ((tok = gettok()) != NULL) {
-		concord_insert(concord, tok, filenum);
-	}
+    const char *tok;
+    while ((tok = gettok()) != NULL) {
+        concord_insert(concord, tok, filenum);
+    }
 }
 
 /*
@@ -78,17 +78,17 @@ void parse(void)
  */
 void cleanup(void)
 {
-	/*
-	 * close current input file
-	 */
-	if (fpin != NULL) {
-		fclose(fpin);
-		fpin = NULL;
-	}
+    /*
+     * close current input file
+     */
+    if (fpin != NULL) {
+        fclose(fpin);
+        fpin = NULL;
+    }
 
-	/* close concordance */
-	if (concord != NULL) {
-		concord_close(concord);
-		concord = NULL;
-	}
+    /* close concordance */
+    if (concord != NULL) {
+        concord_close(concord);
+        concord = NULL;
+    }
 }

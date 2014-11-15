@@ -19,70 +19,70 @@ class CPicture;
 
 class CLabelControl : public CWnd {
 protected:
-	DECLARE_DYNCREATE(CLabelControl)
+    DECLARE_DYNCREATE(CLabelControl)
 public:
-	CLSID const& GetClsid() {
-		static CLSID const clsid
-		    = { 0x978c9e23, 0xd4b0, 0x11ce, { 0xbf, 0x2d, 0x0, 0xaa, 0x0, 0x3f, 0x40, 0xd0 } };
-		return clsid;
-	}
-	virtual BOOL Create(LPCTSTR lpszClassName,
-	                    LPCTSTR lpszWindowName, DWORD dwStyle,
-	                    const RECT& rect,
-	                    CWnd* pParentWnd, UINT nID,
-	                    CCreateContext* pContext = NULL) {
-		return CreateControl(GetClsid(), lpszWindowName, dwStyle, rect, pParentWnd, nID);
-	}
+    CLSID const& GetClsid() {
+        static CLSID const clsid
+            = { 0x978c9e23, 0xd4b0, 0x11ce, { 0xbf, 0x2d, 0x0, 0xaa, 0x0, 0x3f, 0x40, 0xd0 } };
+        return clsid;
+    }
+    virtual BOOL Create(LPCTSTR lpszClassName,
+                        LPCTSTR lpszWindowName, DWORD dwStyle,
+                        const RECT& rect,
+                        CWnd* pParentWnd, UINT nID,
+                        CCreateContext* pContext = NULL) {
+        return CreateControl(GetClsid(), lpszWindowName, dwStyle, rect, pParentWnd, nID);
+    }
 
-	BOOL Create(LPCTSTR lpszWindowName, DWORD dwStyle,
-	            const RECT& rect, CWnd* pParentWnd, UINT nID,
-	            CFile* pPersist = NULL, BOOL bStorage = FALSE,
-	            BSTR bstrLicKey = NULL) {
-		return CreateControl(GetClsid(), lpszWindowName, dwStyle, rect, pParentWnd, nID,
-		                     pPersist, bStorage, bstrLicKey);
-	}
+    BOOL Create(LPCTSTR lpszWindowName, DWORD dwStyle,
+                const RECT& rect, CWnd* pParentWnd, UINT nID,
+                CFile* pPersist = NULL, BOOL bStorage = FALSE,
+                BSTR bstrLicKey = NULL) {
+        return CreateControl(GetClsid(), lpszWindowName, dwStyle, rect, pParentWnd, nID,
+                             pPersist, bStorage, bstrLicKey);
+    }
 
 // Attributes
 public:
 
 // Operations
 public:
-	void SetAutoSize(BOOL bNewValue);
-	BOOL GetAutoSize();
-	void SetBackColor(long nNewValue);
-	long GetBackColor();
-	void SetBackStyle(long nNewValue);
-	long GetBackStyle();
-	void SetBorderColor(long nNewValue);
-	long GetBorderColor();
-	void SetBorderStyle(long nNewValue);
-	long GetBorderStyle();
-	void SetCaption(LPCTSTR lpszNewValue);
-	CString GetCaption();
-	void SetEnabled(BOOL bNewValue);
-	BOOL GetEnabled();
-	void SetRefFont(LPDISPATCH newValue);
-	COleFont GetFont();
-	void SetForeColor(long nNewValue);
-	long GetForeColor();
-	void SetMouseIcon(LPDISPATCH newValue);
-	void SetRefMouseIcon(LPDISPATCH newValue);
-	CPicture GetMouseIcon();
-	void SetMousePointer(long nNewValue);
-	long GetMousePointer();
-	void SetPicture(LPDISPATCH newValue);
-	void SetRefPicture(LPDISPATCH newValue);
-	CPicture GetPicture();
-	void SetPicturePosition(long nNewValue);
-	long GetPicturePosition();
-	void SetSpecialEffect(long nNewValue);
-	long GetSpecialEffect();
-	void SetTextAlign(long nNewValue);
-	long GetTextAlign();
-	void SetWordWrap(BOOL bNewValue);
-	BOOL GetWordWrap();
-	void SetAccelerator(LPCTSTR lpszNewValue);
-	CString GetAccelerator();
+    void SetAutoSize(BOOL bNewValue);
+    BOOL GetAutoSize();
+    void SetBackColor(long nNewValue);
+    long GetBackColor();
+    void SetBackStyle(long nNewValue);
+    long GetBackStyle();
+    void SetBorderColor(long nNewValue);
+    long GetBorderColor();
+    void SetBorderStyle(long nNewValue);
+    long GetBorderStyle();
+    void SetCaption(LPCTSTR lpszNewValue);
+    CString GetCaption();
+    void SetEnabled(BOOL bNewValue);
+    BOOL GetEnabled();
+    void SetRefFont(LPDISPATCH newValue);
+    COleFont GetFont();
+    void SetForeColor(long nNewValue);
+    long GetForeColor();
+    void SetMouseIcon(LPDISPATCH newValue);
+    void SetRefMouseIcon(LPDISPATCH newValue);
+    CPicture GetMouseIcon();
+    void SetMousePointer(long nNewValue);
+    long GetMousePointer();
+    void SetPicture(LPDISPATCH newValue);
+    void SetRefPicture(LPDISPATCH newValue);
+    CPicture GetPicture();
+    void SetPicturePosition(long nNewValue);
+    long GetPicturePosition();
+    void SetSpecialEffect(long nNewValue);
+    long GetSpecialEffect();
+    void SetTextAlign(long nNewValue);
+    long GetTextAlign();
+    void SetWordWrap(BOOL bNewValue);
+    BOOL GetWordWrap();
+    void SetAccelerator(LPCTSTR lpszNewValue);
+    CString GetAccelerator();
 };
 
 //{{AFX_INSERT_LOCATION}}

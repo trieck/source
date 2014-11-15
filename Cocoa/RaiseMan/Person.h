@@ -10,8 +10,8 @@
 
 @interface Person :
 NSObject <NSCoding> {
-	NSString *personName;
-	float expectedRaise;
+    NSString *personName;
+    float expectedRaise;
 }
 - (NSString *)personName;
 - (void)setPersonName:

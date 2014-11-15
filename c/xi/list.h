@@ -14,14 +14,14 @@
 
 /* node in the list */
 typedef struct ListNode {
-	PSYMBOL sym;
-	struct ListNode *prev, *next;
+    PSYMBOL sym;
+    struct ListNode *prev, *next;
 } ListNode, *PLISTNODE;
 
 /* linked list structure */
 typedef struct LinkedList {
-	unsigned size;
-	PLISTNODE head, tail;
+    unsigned size;
+    PLISTNODE head, tail;
 } LinkedList, *PLIST;
 
 PLIST listalloc(void);

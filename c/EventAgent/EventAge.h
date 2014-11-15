@@ -12,14 +12,14 @@
 #include <mapi.h>
 
 typedef struct tagEVENTRECORD {
-	DWORD	EventID;
-	TCHAR	szEventDate[128];
-	TCHAR	szEventType[50];
-	TCHAR	szSourceName[255];
-	TCHAR	szComputerName[255];
-	WORD	numStrings;
-	LPCSTR	pStrings[255];
-	TCHAR	pMessage[1024];
+    DWORD	EventID;
+    TCHAR	szEventDate[128];
+    TCHAR	szEventType[50];
+    TCHAR	szSourceName[255];
+    TCHAR	szComputerName[255];
+    WORD	numStrings;
+    LPCSTR	pStrings[255];
+    TCHAR	pMessage[1024];
 } EVENTRECORD;
 
 void	main (void);

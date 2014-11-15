@@ -46,49 +46,49 @@ class MusicApp : public CWinApp
 
 public:
 
-	MusicApp();
+    MusicApp();
 
-	~MusicApp();
+    ~MusicApp();
 
 
 
 // Overrides
 
-	// ClassWizard generated virtual function overrides
+    // ClassWizard generated virtual function overrides
 
-	//{{AFX_VIRTUAL(MusicApp)
+    //{{AFX_VIRTUAL(MusicApp)
 
 public:
 
-	virtual BOOL InitInstance();
+    virtual BOOL InitInstance();
 
-	virtual int ExitInstance();
+    virtual int ExitInstance();
 
-	//}}AFX_VIRTUAL
+    //}}AFX_VIRTUAL
 
 
 
-	CDaoDatabase* database();
+    CDaoDatabase* database();
 
 
 
 // Implementation
 
-	//{{AFX_MSG(MusicApp)
+    //{{AFX_MSG(MusicApp)
 
-	afx_msg void OnAddRecord();
+    afx_msg void OnAddRecord();
 
-	afx_msg void OnDeleteRecord();
+    afx_msg void OnDeleteRecord();
 
-	//}}AFX_MSG
+    //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 
 private:
 
-	CDaoDatabase *db;
+    CDaoDatabase *db;
 
-	static LPCTSTR databasePath;
+    static LPCTSTR databasePath;
 
 };
 
@@ -97,7 +97,7 @@ private:
 inline CDaoDatabase* MusicApp::database()
 {
 
-	return db;
+    return db;
 
 }
 

@@ -14,8 +14,8 @@ BOOL APIENTRY DllMain(HANDLE hModule,
                       DWORD dwReason,
                       LPVOID lpReserved)
 {
-	if (dwReason == DLL_PROCESS_ATTACH)
-		g_hModule = hModule;
+    if (dwReason == DLL_PROCESS_ATTACH)
+        g_hModule = hModule;
 
-	return TRUE;
+    return TRUE;
 }

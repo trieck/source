@@ -13,7 +13,7 @@
 class CScores : public CObject {
 // Construction
 public:
-	CScores();
+    CScores();
 
 // Attributes
 public:
@@ -22,30 +22,30 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CScores)
-	//}}AFX_VIRTUAL
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CScores)
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	BOOL	FlushScores();
-	BOOL	GetScoreItem(INT nIndex, INT nItem, CString&);
-	INT		GetScoreCount();
-	BOOL	AddScore(const CString &);
-	BOOL	Init();
-	virtual ~CScores();
+    BOOL	FlushScores();
+    BOOL	GetScoreItem(INT nIndex, INT nItem, CString&);
+    INT		GetScoreCount();
+    BOOL	AddScore(const CString &);
+    BOOL	Init();
+    virtual ~CScores();
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	VOID			BuildScoresArray();
+    VOID			BuildScoresArray();
 protected:
-	BOOL UpdateRegistry();
-	BOOL			m_fInitialized;
-	CStringArray *	m_pScoresArray;
+    BOOL UpdateRegistry();
+    BOOL			m_fInitialized;
+    CStringArray *	m_pScoresArray;
 
-	//{{AFX_MSG(CScores)
-	// NOTE - the ClassWizard will add and remove member functions here.
-	//}}AFX_MSG
+    //{{AFX_MSG(CScores)
+    // NOTE - the ClassWizard will add and remove member functions here.
+    //}}AFX_MSG
 };
 
 /////////////////////////////////////////////////////////////////////////////

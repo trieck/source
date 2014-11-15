@@ -11,36 +11,36 @@
 /////////////////////////////////////////////////////////////////////////////
 class Connection {
 public:
-	// Construction / Destruction
-	Connection();
+    // Construction / Destruction
+    Connection();
 protected:
-	Connection(SOCKET s);
+    Connection(SOCKET s);
 public:
-	virtual ~Connection();
+    virtual ~Connection();
 
-	// Interface
-	bool connect(const char *host, int port);
-	bool send(const char *str) const;
-	int receive(char *buffer, size_t size) const;
-	bool bind();
-	bool listen(int port, int backlog = 5);
-	int pendingBytes() const;
+    // Interface
+    bool connect(const char *host, int port);
+    bool send(const char *str) const;
+    int receive(char *buffer, size_t size) const;
+    bool bind();
+    bool listen(int port, int backlog = 5);
+    int pendingBytes() const;
 
-	typedef auto_ptr<Connection> ConnectionPtr;
-	ConnectionPtr accept() const;
+    typedef auto_ptr<Connection> ConnectionPtr;
+    ConnectionPtr accept() const;
 
-	inline operator SOCKET() const {
-		return m_socket;
-	}
+    inline operator SOCKET() const {
+        return m_socket;
+    }
 
-	static string getSocketError();
+    static string getSocketError();
 
-	// Implementation
+    // Implementation
 private:
-	bool gethost(const char *host, int port);
-	void close();
-	SOCKET m_socket;
-	SOCKADDR_IN m_server;
+    bool gethost(const char *host, int port);
+    void close();
+    SOCKET m_socket;
+    SOCKADDR_IN m_server;
 };
 /////////////////////////////////////////////////////////////////////////////
 

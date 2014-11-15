@@ -20,48 +20,48 @@ typedef enum {
 // ScoreDoc document
 class ScoreDoc : public CDocument {
 protected:
-	ScoreDoc();           // protected constructor used by dynamic creation
-	DECLARE_DYNCREATE(ScoreDoc)
+    ScoreDoc();           // protected constructor used by dynamic creation
+    DECLARE_DYNCREATE(ScoreDoc)
 
 // Attributes
 public:
-	void SelectMeasure (Measure * pMeasure);
-	BOOL AddNote(Measure * pMeasure, Note * pNote);
-	BOOL RemoveNote(Measure * pMeasure, Note * pNote);
-	BOOL ModifyNote(Measure * pMeasure, Note * pNote, const Tool & tool);
+    void SelectMeasure (Measure * pMeasure);
+    BOOL AddNote(Measure * pMeasure, Note * pNote);
+    BOOL RemoveNote(Measure * pMeasure, Note * pNote);
+    BOOL ModifyNote(Measure * pMeasure, Note * pNote, const Tool & tool);
 
 // Operations
 public:
-	inline const Staff * GetStaff() const {
-		return &m_Staff;
-	}
+    inline const Staff * GetStaff() const {
+        return &m_Staff;
+    }
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(ScoreDoc)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(ScoreDoc)
 public:
-	virtual void Serialize(CArchive& ar);   // overridden for document i/o
-	virtual void DeleteContents();
+    virtual void Serialize(CArchive& ar);   // overridden for document i/o
+    virtual void DeleteContents();
 protected:
-	virtual BOOL OnNewDocument();
-	//}}AFX_VIRTUAL
+    virtual BOOL OnNewDocument();
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~ScoreDoc();
+    virtual ~ScoreDoc();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	//{{AFX_MSG(ScoreDoc)
-	afx_msg void OnUpdateFileSave(CCmdUI* pCmdUI);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(ScoreDoc)
+    afx_msg void OnUpdateFileSave(CCmdUI* pCmdUI);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 
-	void DeselectAllMeasures();
-	Staff m_Staff; // The staff
+    void DeselectAllMeasures();
+    Staff m_Staff; // The staff
 };
 
 //{{AFX_INSERT_LOCATION}}

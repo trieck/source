@@ -6,23 +6,23 @@
 ///////////////////////////////////////////////////////////////////////
 class MidiBuffer {
 public:
-	// Construction / Destruction
-	MidiBuffer();
-	virtual ~MidiBuffer();
+    // Construction / Destruction
+    MidiBuffer();
+    virtual ~MidiBuffer();
 
-	// Interface
-	operator MIDIHDR* () {
-		return &m_header;
-	}
+    // Interface
+    operator MIDIHDR* () {
+        return &m_header;
+    }
 
-	// Implementation
+    // Implementation
 protected:
-	void Alloc(UINT nSize);
-	void Free();
+    void Alloc(UINT nSize);
+    void Free();
 
 private:
-	MIDIHDR m_header;
+    MIDIHDR m_header;
 public:
-	void Encode(const Sequence & seq);
+    void Encode(const Sequence & seq);
 };
 

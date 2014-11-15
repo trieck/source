@@ -48,14 +48,14 @@ TorrentParser::~TorrentParser()
 /////////////////////////////////////////////////////////////////////////////
 LPDICTIONARY TorrentParser::Parse(CArchive &ar)
 {
-	if (!ar.IsLoading())
-		return NULL;
+    if (!ar.IsLoading())
+        return NULL;
 
-	CFile *fp = ar.GetFile();
-	if (fp == NULL)
-		return NULL;
+    CFile *fp = ar.GetFile();
+    if (fp == NULL)
+        return NULL;
 
-	return LoadDictionary(fp);
+    return LoadDictionary(fp);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -65,157 +65,157 @@ namespace {	// anonymous
 /////////////////////////////////////////////////////////////////////////////
 LPDICTIONARY LoadDictionary(CFile *fp)
 {
-	LPTORRENTOBJECT element = LoadElement(fp);
-	if (element->GetElementType() != ET_DICT)	// not a dictionary
-		AfxThrowArchiveException(CArchiveException::badIndex);
+    LPTORRENTOBJECT element = LoadElement(fp);
+    if (element->GetElementType() != ET_DICT)	// not a dictionary
+        AfxThrowArchiveException(CArchiveException::badIndex);
 
-	return (LPDICTIONARY)element;
+    return (LPDICTIONARY)element;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 LPTORRENTOBJECT LoadElement(CFile *fp)
 {
-	int t = Gettok(fp);
+    int t = Gettok(fp);
 
-	switch (t) {
-	case ET_DICT:
-		return dictionary(fp);
-	case ET_INTEGER:
-		return integer(fp);
-	case ET_LIST:
-		return list(fp);
-	case ET_STRING:
-		return string(fp);
-	default:
-		AfxThrowArchiveException(CArchiveException::badIndex);
-	}
+    switch (t) {
+    case ET_DICT:
+        return dictionary(fp);
+    case ET_INTEGER:
+        return integer(fp);
+    case ET_LIST:
+        return list(fp);
+    case ET_STRING:
+        return string(fp);
+    default:
+        AfxThrowArchiveException(CArchiveException::badIndex);
+    }
 
-	return NULL;
+    return NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 int Peek(CFile *fp)
 {
-	int c = Getch(fp);
-	if (c == EOF)
-		return EOF;
+    int c = Getch(fp);
+    if (c == EOF)
+        return EOF;
 
-	fp->Seek(-1, CFile::current);
+    fp->Seek(-1, CFile::current);
 
-	return c;
+    return c;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 int Getch(CFile *fp)
 {
-	unsigned char buf[1];
-	if (!fp->Read(buf, 1))
-		return EOF;
+    unsigned char buf[1];
+    if (!fp->Read(buf, 1))
+        return EOF;
 
-	return buf[0];
+    return buf[0];
 }
 
 /////////////////////////////////////////////////////////////////////////////
 int Gettok(CFile *fp)
 {
-	int c = Peek(fp);
+    int c = Peek(fp);
 
-	switch (c) {
-	case 'd':
-		Getch(fp);
-		return ET_DICT;
-	case 'i':
-		Getch(fp);
-		return ET_INTEGER;
-	case 'l':
-		Getch(fp);
-		return ET_LIST;
-	default:
-		if (isdigit(c))
-			return ET_STRING;
-	}
+    switch (c) {
+    case 'd':
+        Getch(fp);
+        return ET_DICT;
+    case 'i':
+        Getch(fp);
+        return ET_INTEGER;
+    case 'l':
+        Getch(fp);
+        return ET_LIST;
+    default:
+        if (isdigit(c))
+            return ET_STRING;
+    }
 
-	Getch(fp);
+    Getch(fp);
 
-	return c;
+    return c;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 LPDICTIONARY dictionary(CFile *fp)
 {
-	LPDICTIONARY d = new Dictionary();
-	LPSTRING k;
-	LPTORRENTOBJECT v;
+    LPDICTIONARY d = new Dictionary();
+    LPSTRING k;
+    LPTORRENTOBJECT v;
 
-	int c;
-	while ((c = Peek(fp)) != 'e' && c != EOF) {
-		k = string(fp);
-		v = LoadElement(fp);
-		d->Set(*k, v);
-		delete k;
-	}
+    int c;
+    while ((c = Peek(fp)) != 'e' && c != EOF) {
+        k = string(fp);
+        v = LoadElement(fp);
+        d->Set(*k, v);
+        delete k;
+    }
 
-	c = Getch(fp);	// 'e'
+    c = Getch(fp);	// 'e'
 
-	return d;
+    return d;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 LPINTEGER integer(CFile *fp)
 {
-	CString output;
+    CString output;
 
-	int c;
-	while ((c = Peek(fp)) != 'e' && c != EOF) {
-		output += (TCHAR)Getch(fp);
-	}
+    int c;
+    while ((c = Peek(fp)) != 'e' && c != EOF) {
+        output += (TCHAR)Getch(fp);
+    }
 
-	Getch(fp);	// 'e'
+    Getch(fp);	// 'e'
 
-	return new Integer(_atoi64(output));
+    return new Integer(_atoi64(output));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 LPLIST list(CFile *fp)
 {
-	LPLIST list = new List();
+    LPLIST list = new List();
 
-	int c;
-	while ((c = Peek(fp)) != 'e' && c != EOF) {
-		list->append(LoadElement(fp));
-	}
+    int c;
+    while ((c = Peek(fp)) != 'e' && c != EOF) {
+        list->append(LoadElement(fp));
+    }
 
-	Getch(fp);	// 'e'
+    Getch(fp);	// 'e'
 
-	return list;
+    return list;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 LPSTRING string(CFile *fp)
 {
-	int c;
-	CString slen;
+    int c;
+    CString slen;
 
-	while ((c = Peek(fp)) != ':' && c != EOF) {
-		slen += (TCHAR)Getch(fp);
-	}
+    while ((c = Peek(fp)) != ':' && c != EOF) {
+        slen += (TCHAR)Getch(fp);
+    }
 
-	int length = atoi(slen);
+    int length = atoi(slen);
 
-	CString s;
-	LPSTR buf = s.GetBufferSetLength(length);
+    CString s;
+    LPSTR buf = s.GetBufferSetLength(length);
 
-	Getch(fp);	// ':'
+    Getch(fp);	// ':'
 
-	for (int i = 0; i < length; i++) {
-		int c = Getch(fp);
-		if (c == EOF)
-			AfxThrowFileException(CFileException::endOfFile);
-		*buf++ = (char)c;
-	}
+    for (int i = 0; i < length; i++) {
+        int c = Getch(fp);
+        if (c == EOF)
+            AfxThrowFileException(CFileException::endOfFile);
+        *buf++ = (char)c;
+    }
 
 
-	return new String(s, length);
+    return new String(s, length);
 }
 
 }	// anonymous

@@ -15,44 +15,44 @@
 class CScoresDlg : public CDialog {
 // Construction
 public:
-	CScoresDlg(CWnd* pParent = NULL);   // standard constructor
-	virtual ~CScoresDlg();
+    CScoresDlg(CWnd* pParent = NULL);   // standard constructor
+    virtual ~CScoresDlg();
 
-	static int CALLBACK CompareFunc (LPARAM, LPARAM, LPARAM);
+    static int CALLBACK CompareFunc (LPARAM, LPARAM, LPARAM);
 
 // Dialog Data
-	//{{AFX_DATA(CScoresDlg)
-	enum { IDD = IDD_SCORES};
-	// NOTE: the ClassWizard will add data members here
-	//}}AFX_DATA
+    //{{AFX_DATA(CScoresDlg)
+    enum { IDD = IDD_SCORES};
+    // NOTE: the ClassWizard will add data members here
+    //}}AFX_DATA
 
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CScoresDlg)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CScoresDlg)
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+    //}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	VOID	InsertItems();
-	VOID	InsertHeaders();
+    VOID	InsertItems();
+    VOID	InsertHeaders();
 
-	inline	CListCtrl& GetListCtrl() {
-		return * (CListCtrl*) GetDlgItem(IDC_SCORES);
-	}
+    inline	CListCtrl& GetListCtrl() {
+        return * (CListCtrl*) GetDlgItem(IDC_SCORES);
+    }
 
-	CScores *				m_pScores;
-	CScoresPreviewFrame *	m_pFrame;
+    CScores *				m_pScores;
+    CScoresPreviewFrame *	m_pFrame;
 
-	VOID	afx_msg	OnPreview();
+    VOID	afx_msg	OnPreview();
 
-	// Generated message map functions
-	//{{AFX_MSG(CScoresDlg)
-	virtual BOOL OnInitDialog();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    // Generated message map functions
+    //{{AFX_MSG(CScoresDlg)
+    virtual BOOL OnInitDialog();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 //{{AFX_INSERT_LOCATION}}

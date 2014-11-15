@@ -12,12 +12,12 @@
 class Win32Pipe {
 public:
 // Construction / Destruction
-	Win32Pipe();
-	~Win32Pipe();
+    Win32Pipe();
+    ~Win32Pipe();
 
 // Implementation
 private:
-	HANDLE hPipe;
+    HANDLE hPipe;
 };
 /////////////////////////////////////////////////////////////////////////////
 

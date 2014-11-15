@@ -15,11 +15,11 @@
 
 class CSplitterApp : public CWinApp {
 public:
-	CSplitterApp();
-	virtual ~CSplitterApp();
+    CSplitterApp();
+    virtual ~CSplitterApp();
 
-	// Overrides
-	virtual BOOL InitInstance();
+    // Overrides
+    virtual BOOL InitInstance();
 };
 
 /////////////////////////////////////////////////////////////////////////////

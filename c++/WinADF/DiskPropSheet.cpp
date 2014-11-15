@@ -8,8 +8,8 @@
 #include "VolPropPage.h"
 
 static PageDef pagedefs[] = {
-	{ RUNTIME_CLASS(DiskPropPage), IDD_DISK_PROPPAGE },
-	{ RUNTIME_CLASS(VolPropPage), IDD_VOL_PROPPAGE }
+    { RUNTIME_CLASS(DiskPropPage), IDD_DISK_PROPPAGE },
+    { RUNTIME_CLASS(VolPropPage), IDD_VOL_PROPPAGE }
 };
 
 // DiskPropSheet
@@ -17,35 +17,35 @@ static PageDef pagedefs[] = {
 IMPLEMENT_DYNAMIC(DiskPropSheet, CPropertySheet)
 
 DiskPropSheet::DiskPropSheet(CWnd* pParentWnd)
-	: CPropertySheet(_T("Disk Image Information"), pParentWnd, 0), m_pPages(0), m_nPages(0)
+    : CPropertySheet(_T("Disk Image Information"), pParentWnd, 0), m_pPages(0), m_nPages(0)
 {
 }
 
 DiskPropSheet::~DiskPropSheet()
 {
-	for (uint32_t i = 0; i < m_nPages; i++) {
-		CPropertyPage *pPage = m_pPages[i];
-		delete pPage;
-	}
+    for (uint32_t i = 0; i < m_nPages; i++) {
+        CPropertyPage *pPage = m_pPages[i];
+        delete pPage;
+    }
 
-	if (m_pPages != NULL)
-		delete m_pPages;
+    if (m_pPages != NULL)
+        delete m_pPages;
 }
 
 void DiskPropSheet::BuildPropPageArray()
 {
-	m_nPages = sizeof(pagedefs) / sizeof(PageDef);
+    m_nPages = sizeof(pagedefs) / sizeof(PageDef);
 
-	m_pPages = new CPropertyPage*[m_nPages];
+    m_pPages = new CPropertyPage*[m_nPages];
 
-	for (uint32_t i = 0; i < m_nPages; i++) {
-		m_pPages[i] = (CPropertyPage*)pagedefs[i].Class->CreateObject();
-		ASSERT_VALID(m_pPages[i]);
-		m_pPages[i]->Construct(pagedefs[i].id, 0);
-		AddPage(m_pPages[i]);
-	}
+    for (uint32_t i = 0; i < m_nPages; i++) {
+        m_pPages[i] = (CPropertyPage*)pagedefs[i].Class->CreateObject();
+        ASSERT_VALID(m_pPages[i]);
+        m_pPages[i]->Construct(pagedefs[i].id, 0);
+        AddPage(m_pPages[i]);
+    }
 
-	CPropertySheet::BuildPropPageArray();
+    CPropertySheet::BuildPropPageArray();
 }
 
 
@@ -57,9 +57,9 @@ END_MESSAGE_MAP()
 
 BOOL DiskPropSheet::OnInitDialog()
 {
-	BOOL bResult = CPropertySheet::OnInitDialog();
+    BOOL bResult = CPropertySheet::OnInitDialog();
 
-	GetDlgItem(IDCANCEL)->ModifyStyle(WS_VISIBLE, 0);
+    GetDlgItem(IDCANCEL)->ModifyStyle(WS_VISIBLE, 0);
 
-	return bResult;
+    return bResult;
 }

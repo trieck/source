@@ -8,22 +8,22 @@
 
 // CPropertyPage derived class
 class CPageThree : public CPropertyPage {
-	DECLARE_DYNCREATE(CPageThree);
+    DECLARE_DYNCREATE(CPageThree);
 
 public:
-	CPageThree();
-	~CPageThree();
-	CProgressCtrl* m_pProgress;
+    CPageThree();
+    ~CPageThree();
+    CProgressCtrl* m_pProgress;
 protected:
-	virtual LRESULT OnWizardBack();
-	virtual BOOL OnWizardFinish();
-	virtual BOOL OnInitDialog();
-	// message handlers
-	afx_msg void OnPaint();
+    virtual LRESULT OnWizardBack();
+    virtual BOOL OnWizardFinish();
+    virtual BOOL OnInitDialog();
+    // message handlers
+    afx_msg void OnPaint();
 private:
-	enum {IDD = IDD_PAGETHREE};
+    enum {IDD = IDD_PAGETHREE};
 
-	DECLARE_MESSAGE_MAP();
+    DECLARE_MESSAGE_MAP();
 };
 
 #endif // __CPAGETHREE_H__

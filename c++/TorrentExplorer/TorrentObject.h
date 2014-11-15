@@ -19,22 +19,22 @@
 
 class TorrentObject : public CObject {
 public:
-	TorrentObject();
-	virtual ~TorrentObject();
+    TorrentObject();
+    virtual ~TorrentObject();
 
 // Attributes
 public:
-	virtual int GetElementType() const = 0;
+    virtual int GetElementType() const = 0;
 
 // Operations
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(TorrentObject)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(TorrentObject)
 public:
-	//}}AFX_VIRTUAL
-	//}}AFX_VIRTUAL
+    //}}AFX_VIRTUAL
+    //}}AFX_VIRTUAL
 
 // Implementation
 private:

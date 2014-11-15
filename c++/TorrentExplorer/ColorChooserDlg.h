@@ -15,35 +15,35 @@
 class ColorChooserDlg : public CDialog {
 // Construction
 public:
-	COLORREF GetSelectedColor() const;
-	ColorChooserDlg(CWnd* pParent = NULL);   // standard constructor
+    COLORREF GetSelectedColor() const;
+    ColorChooserDlg(CWnd* pParent = NULL);   // standard constructor
 
 // Dialog Data
-	//{{AFX_DATA(ColorChooserDlg)
-	enum { IDD = IDD_COLOR_CHOOSER };
-	// NOTE: the ClassWizard will add data members here
-	//}}AFX_DATA
+    //{{AFX_DATA(ColorChooserDlg)
+    enum { IDD = IDD_COLOR_CHOOSER };
+    // NOTE: the ClassWizard will add data members here
+    //}}AFX_DATA
 
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(ColorChooserDlg)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(ColorChooserDlg)
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	virtual void OnOK();
-	virtual void OnCancel();
-	//}}AFX_VIRTUAL
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+    virtual void OnOK();
+    virtual void OnCancel();
+    //}}AFX_VIRTUAL
 
 // Implementation
 protected:
 
-	// Generated message map functions
-	//{{AFX_MSG(ColorChooserDlg)
-	virtual BOOL OnInitDialog();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    // Generated message map functions
+    //{{AFX_MSG(ColorChooserDlg)
+    virtual BOOL OnInitDialog();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	ColorChooserWnd m_ColorsWnd;
+    ColorChooserWnd m_ColorsWnd;
 };
 
 //{{AFX_INSERT_LOCATION}}

@@ -17,14 +17,14 @@
 
 class CDocViewDoc : public CDocument {
 protected:
-	DECLARE_DYNCREATE(CDocViewDoc)
+    DECLARE_DYNCREATE(CDocViewDoc)
 
 public:
-	CDocViewDoc();
-	virtual ~CDocViewDoc();
+    CDocViewDoc();
+    virtual ~CDocViewDoc();
 
-	// Overrides
-	virtual BOOL OnNewDocument();
+    // Overrides
+    virtual BOOL OnNewDocument();
 };
 
 ///////////////////////////////////////////////////////////////////

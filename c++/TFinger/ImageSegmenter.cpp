@@ -34,34 +34,34 @@ ImageSegmenter::~ImageSegmenter()
 //
 void ImageSegmenter::Segment(CImage &image)
 {
-	int rows = image.GetHeight();
-	int cols = image.GetWidth();
-	int pitch = image.GetPitch();
+    int rows = image.GetHeight();
+    int cols = image.GetWidth();
+    int pitch = image.GetPitch();
 
-	for (int y = 0; y < rows; y += BLOCK_SIZE) {
-		for (int x = 0; x < cols; x += BLOCK_SIZE) {
-			VarianceThreshold(image, x, y);
-		}
-	}
+    for (int y = 0; y < rows; y += BLOCK_SIZE) {
+        for (int x = 0; x < cols; x += BLOCK_SIZE) {
+            VarianceThreshold(image, x, y);
+        }
+    }
 }
 
 void ImageSegmenter::VarianceThreshold(CImage &image, int x, int y)
 {
-	int rows = image.GetHeight();
-	int cols = image.GetWidth();
-	int pitch = image.GetPitch();
+    int rows = image.GetHeight();
+    int cols = image.GetWidth();
+    int pitch = image.GetPitch();
 
-	ULONG v = VarianceBlock(image, x, y, BLOCK_SIZE);
+    ULONG v = VarianceBlock(image, x, y, BLOCK_SIZE);
 
-	LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
+    LPBYTE pbits = reinterpret_cast<LPBYTE>(image.GetBits());
 
-	for (int j = y; j < y + BLOCK_SIZE && j < rows; j++) {
-		for (int i = x; i < x + BLOCK_SIZE && i < cols; i++) {
-			BYTE &p = pbits[j*pitch+i];
-			if (v <= VARIANCE_THRESHOLD)
-				p = 0xFF;	// white
-		}
-	}
+    for (int j = y; j < y + BLOCK_SIZE && j < rows; j++) {
+        for (int i = x; i < x + BLOCK_SIZE && i < cols; i++) {
+            BYTE &p = pbits[j*pitch+i];
+            if (v <= VARIANCE_THRESHOLD)
+                p = 0xFF;	// white
+        }
+    }
 }
 
 

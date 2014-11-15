@@ -16,167 +16,167 @@ static char THIS_FILE[] = __FILE__;
 
 CScores::CScores()
 {
-	m_pScoresArray	= NULL;
-	m_fInitialized	= FALSE;
+    m_pScoresArray	= NULL;
+    m_fInitialized	= FALSE;
 }
 
 CScores::~CScores()
 {
-	if (m_pScoresArray) {
-		m_pScoresArray->RemoveAll();
-		delete m_pScoresArray;
-	}
+    if (m_pScoresArray) {
+        m_pScoresArray->RemoveAll();
+        delete m_pScoresArray;
+    }
 }
 
 BOOL CScores::Init()
 {
-	if (m_fInitialized) {
-		return FALSE;
-	}
+    if (m_fInitialized) {
+        return FALSE;
+    }
 
-	m_pScoresArray	= new CStringArray;
-	ASSERT_VALID(m_pScoresArray);
+    m_pScoresArray	= new CStringArray;
+    ASSERT_VALID(m_pScoresArray);
 
-	// Parse score items and build array
-	BuildScoresArray();
+    // Parse score items and build array
+    BuildScoresArray();
 
-	m_fInitialized = TRUE;
+    m_fInitialized = TRUE;
 
-	return TRUE;
+    return TRUE;
 }
 
 BOOL CScores::AddScore(const CString& strScore)
 {
-	BOOL fRtn = FALSE;
+    BOOL fRtn = FALSE;
 
-	if (!m_fInitialized) {
-		return fRtn;
-	}
+    if (!m_fInitialized) {
+        return fRtn;
+    }
 
-	ASSERT(m_pScoresArray);
-	m_pScoresArray->Add(strScore);
+    ASSERT(m_pScoresArray);
+    m_pScoresArray->Add(strScore);
 
-	fRtn = UpdateRegistry();
+    fRtn = UpdateRegistry();
 
-	return fRtn;
+    return fRtn;
 }
 
 VOID CScores::BuildScoresArray()
 {
-	INT		nPos;
-	LPBYTE	pData;
+    INT		nPos;
+    LPBYTE	pData;
 
-	ASSERT_VALID(m_pScoresArray);
+    ASSERT_VALID(m_pScoresArray);
 
-	m_pScoresArray->RemoveAll();
+    m_pScoresArray->RemoveAll();
 
-	if (CPenteApp::GetRegistryInformation(_T("bin"), _T("Scores"), &pData, REG_BINARY)) {
-		CString strScores((LPCTSTR)pData);
+    if (CPenteApp::GetRegistryInformation(_T("bin"), _T("Scores"), &pData, REG_BINARY)) {
+        CString strScores((LPCTSTR)pData);
 
-		delete pData;
+        delete pData;
 
-		while ((nPos = strScores.Find('\n')) != -1) {
-			CString strItem = strScores.Left(nPos);
+        while ((nPos = strScores.Find('\n')) != -1) {
+            CString strItem = strScores.Left(nPos);
 
-			VERIFY(!strItem.IsEmpty());
+            VERIFY(!strItem.IsEmpty());
 
-			m_pScoresArray->Add(strItem);
+            m_pScoresArray->Add(strItem);
 
-			strScores = strScores.Mid(nPos + 1);
-		}
-	}
+            strScores = strScores.Mid(nPos + 1);
+        }
+    }
 }
 
 INT CScores::GetScoreCount()
 {
-	INT nItems = -1;
+    INT nItems = -1;
 
-	if (!m_fInitialized) {
-		return nItems;
-	}
+    if (!m_fInitialized) {
+        return nItems;
+    }
 
-	if (m_pScoresArray) {
-		nItems = m_pScoresArray->GetSize();
-	}
+    if (m_pScoresArray) {
+        nItems = m_pScoresArray->GetSize();
+    }
 
-	return nItems;
+    return nItems;
 }
 
 BOOL CScores::GetScoreItem(INT nIndex, INT nItem, CString& strItem)
 {
-	// Initialize out parameter
-	strItem = _T("");
+    // Initialize out parameter
+    strItem = _T("");
 
-	if (!m_fInitialized) {
-		return FALSE;
-	}
+    if (!m_fInitialized) {
+        return FALSE;
+    }
 
-	ASSERT(m_pScoresArray);
+    ASSERT(m_pScoresArray);
 
-	if (nIndex < 0 || nIndex > m_pScoresArray->GetSize()) {
-		return FALSE;
-	}
+    if (nIndex < 0 || nIndex > m_pScoresArray->GetSize()) {
+        return FALSE;
+    }
 
-	if (nItem < 0 || nItem > 4) {
-		return FALSE;
-	}
+    if (nItem < 0 || nItem > 4) {
+        return FALSE;
+    }
 
-	CString strScoreString;
+    CString strScoreString;
 
-	strScoreString = m_pScoresArray->GetAt(nIndex);
+    strScoreString = m_pScoresArray->GetAt(nIndex);
 
-	INT nPos;
-	INT nCount = 0;
+    INT nPos;
+    INT nCount = 0;
 
-	while ((nPos = strScoreString.Find('\t')) != -1) {
-		CString strTemp = strScoreString.Left(nPos);
-		VERIFY(!strTemp.IsEmpty());
+    while ((nPos = strScoreString.Find('\t')) != -1) {
+        CString strTemp = strScoreString.Left(nPos);
+        VERIFY(!strTemp.IsEmpty());
 
-		if (nCount == nItem) {
-			strItem = strTemp;
-			break;
-		}
+        if (nCount == nItem) {
+            strItem = strTemp;
+            break;
+        }
 
-		strScoreString = strScoreString.Mid(nPos + 1);
-		nCount++;
-	}
+        strScoreString = strScoreString.Mid(nPos + 1);
+        nCount++;
+    }
 
-	return (!strItem.IsEmpty());
+    return (!strItem.IsEmpty());
 }
 
 BOOL CScores::FlushScores()
 {
-	BOOL fRtn = FALSE;
+    BOOL fRtn = FALSE;
 
-	if (!m_fInitialized) {
-		return fRtn;
-	}
+    if (!m_fInitialized) {
+        return fRtn;
+    }
 
-	m_pScoresArray->RemoveAll();
+    m_pScoresArray->RemoveAll();
 
-	UpdateRegistry();
+    UpdateRegistry();
 
-	fRtn = TRUE;
+    fRtn = TRUE;
 
-	return fRtn;
+    return fRtn;
 }
 
 BOOL CScores::UpdateRegistry()
 {
-	BOOL fRtn = FALSE;
+    BOOL fRtn = FALSE;
 
-	ASSERT(m_pScoresArray);
+    ASSERT(m_pScoresArray);
 
-	CString strScores;
+    CString strScores;
 
-	for (INT i = 0; i < m_pScoresArray->GetSize(); i++) {
-		strScores += m_pScoresArray->GetAt(i) + '\n';
-	}
+    for (INT i = 0; i < m_pScoresArray->GetSize(); i++) {
+        strScores += m_pScoresArray->GetAt(i) + '\n';
+    }
 
-	// Update the scores in the registry
-	UINT nLength = strScores.GetLength() == 0 ? 1 : strScores.GetLength();
+    // Update the scores in the registry
+    UINT nLength = strScores.GetLength() == 0 ? 1 : strScores.GetLength();
 
-	fRtn = CPenteApp::UpdateRegistryInformation(_T("bin"), _T("Scores"), (LPBYTE)(LPCTSTR)strScores, REG_BINARY, nLength);
+    fRtn = CPenteApp::UpdateRegistryInformation(_T("bin"), _T("Scores"), (LPBYTE)(LPCTSTR)strScores, REG_BINARY, nLength);
 
-	return fRtn;
+    return fRtn;
 }

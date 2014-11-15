@@ -9,13 +9,13 @@
 
 class Minutia {
 public:
-	Minutia();
-	Minutia(const Minutia &rhs);
-	~Minutia();
+    Minutia();
+    Minutia(const Minutia &rhs);
+    ~Minutia();
 
-	Minutia &operator = (const Minutia &rhs);
+    Minutia &operator = (const Minutia &rhs);
 
-	int type;	// type of minutia
-	int x;		// location
-	int y;
+    int type;	// type of minutia
+    int x;		// location
+    int y;
 };

@@ -9,10 +9,10 @@
 #define __FRAME_H__
 
 typedef struct {
-	const Symbol *sp;	// symbol table entry
-	const Instr *retpc;	// where to resume after return
-	Datum * argn;		// n-th argument on the stack
-	int nargs;			// number of arguments
+    const Symbol *sp;	// symbol table entry
+    const Instr *retpc;	// where to resume after return
+    Datum * argn;		// n-th argument on the stack
+    int nargs;			// number of arguments
 } Frame;
 
 #define NFRAME 1024
@@ -21,18 +21,18 @@ typedef struct {
 class FrameStack {
 public:
 // Construction / Destruction
-	FrameStack();
-	~FrameStack();
+    FrameStack();
+    ~FrameStack();
 
 // Interface
-	Frame pop();
-	void push(const Frame &);
-	void reset();
+    Frame pop();
+    void push(const Frame &);
+    void reset();
 
-	Frame * framep;
+    Frame * framep;
 protected:
 // Implementation
-	Frame frame[NFRAME];
+    Frame frame[NFRAME];
 };
 
 /////////////////////////////////////////////////////////////////////////////

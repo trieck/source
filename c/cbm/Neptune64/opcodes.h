@@ -31,9 +31,9 @@ typedef void (*pinstr)(void);
  * instruction structure
  */
 typedef struct {
-	const char **name;	/* pointer to name */
-	addrmode mode;		/* addressing mode */
-	pinstr fnc;			/* function ptr called during execution */
+    const char **name;	/* pointer to name */
+    addrmode mode;		/* addressing mode */
+    pinstr fnc;			/* function ptr called during execution */
 } Instr;
 extern const Instr* instructions[INSTRUCTIONS];
 #endif /* __OPCODES_H__ */

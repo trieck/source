@@ -4,7 +4,7 @@
 
 @interface Foo :
 NSObject {
-	IBOutlet id textField;
+    IBOutlet id textField;
 }
 - (IBAction)generate:
 (id)sender;

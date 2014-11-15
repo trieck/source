@@ -24,33 +24,33 @@
 #define ID_STATUS				101
 
 typedef struct {
-	char szPlayerOne[16];
-	char szPlayerTwo[16];
-	char szWinner[16];
-	char szTime[25];
+    char szPlayerOne[16];
+    char szPlayerTwo[16];
+    char szWinner[16];
+    char szTime[25];
 } GAME, *LPGAME;
 
 typedef struct {
-	int piece;							/* Current Piece */
-	RECT bRect;						    /* Rectangle coordinates */
+    int piece;							/* Current Piece */
+    RECT bRect;						    /* Rectangle coordinates */
 } BOX, *LPBOX;
 
 typedef struct {
-	int p1_captures;					/* # of Green Captures */
-	int p2_captures;					/* # of Red Captures */
-	int current_turn;					/* Current Turn */
-	int game_option;					/* Game Option */
-	BOX box[19][19];					/* Array of Rectangles */
+    int p1_captures;					/* # of Green Captures */
+    int p2_captures;					/* # of Red Captures */
+    int current_turn;					/* Current Turn */
+    int game_option;					/* Game Option */
+    BOX box[19][19];					/* Array of Rectangles */
 } BOARD, *LPBOARD;
 
 typedef struct {
-	int piece[19][19];					/* Which Piece */
-	int info[4];						/* Current turn, captures, option*/
+    int piece[19][19];					/* Which Piece */
+    int info[4];						/* Current turn, captures, option*/
 } GAMEFILE, *LPGAMEFILE;
 
 struct MOVES {						/* linked list structure of possible MOVES */
-	POINT mPoint;
-	struct MOVES *next;
+    POINT mPoint;
+    struct MOVES *next;
 };
 
 typedef struct MOVES ** PPMOVES;

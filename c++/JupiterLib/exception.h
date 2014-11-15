@@ -11,23 +11,23 @@
 /////////////////////////////////////////////////////////////////////////////
 class Exception {
 public:
-	Exception(const string &msg) {
-		description = msg;
-	}
-	Exception(const Exception & E) {
-		*this = E;
-	}
-	Exception(const char *fmt, ...);
-	Exception & operator = (const Exception & E) {
-		if (this != & E)
-			description = E.description;
-		return *this;
-	}
-	string getDescription() const {
-		return description;
-	}
+    Exception(const string &msg) {
+        description = msg;
+    }
+    Exception(const Exception & E) {
+        *this = E;
+    }
+    Exception(const char *fmt, ...);
+    Exception & operator = (const Exception & E) {
+        if (this != & E)
+            description = E.description;
+        return *this;
+    }
+    string getDescription() const {
+        return description;
+    }
 private:
-	string description;
+    string description;
 };
 /////////////////////////////////////////////////////////////////////////////
 

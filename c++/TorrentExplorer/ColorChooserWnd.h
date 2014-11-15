@@ -13,7 +13,7 @@
 class ColorChooserWnd : public CWnd {
 // Construction
 public:
-	ColorChooserWnd();
+    ColorChooserWnd();
 
 // Attributes
 public:
@@ -22,35 +22,35 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(ColorChooserWnd)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(ColorChooserWnd)
 public:
 protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	//}}AFX_VIRTUAL
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	COLORREF GetSelectedColor() const;
-	virtual ~ColorChooserWnd();
+    COLORREF GetSelectedColor() const;
+    virtual ~ColorChooserWnd();
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	//{{AFX_MSG(ColorChooserWnd)
-	afx_msg void OnPaint();
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnSysColorChange();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(ColorChooserWnd)
+    afx_msg void OnPaint();
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+    afx_msg void OnSysColorChange();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	void PaintBitmap();
+    void PaintBitmap();
 
-	CRgn m_Region;
-	CDC m_MemDC;
-	CBitmap m_Bitmap;
-	COLORREF m_Shadow, m_Hilight, m_BtnFace;
-	CPoint m_ptSelected;
+    CRgn m_Region;
+    CDC m_MemDC;
+    CBitmap m_Bitmap;
+    COLORREF m_Shadow, m_Hilight, m_BtnFace;
+    CPoint m_ptSelected;
 };
 
 /////////////////////////////////////////////////////////////////////////////

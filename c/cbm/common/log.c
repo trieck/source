@@ -33,57 +33,57 @@ extern const char *log_file_name;
  */
 void error(const char *format, ...)
 {
-	char buffer[BUFFERSIZE], fmtbuff[BUFFERSIZE];
-	va_list arglist;
+    char buffer[BUFFERSIZE], fmtbuff[BUFFERSIZE];
+    va_list arglist;
 
-	strcpy(fmtbuff, "error: ");
-	strcat(fmtbuff, format);
+    strcpy(fmtbuff, "error: ");
+    strcat(fmtbuff, format);
 
-	va_start(arglist, format);
-	vsprintf(buffer, fmtbuff, arglist);
-	va_end(arglist);
+    va_start(arglist, format);
+    vsprintf(buffer, fmtbuff, arglist);
+    va_end(arglist);
 
-	write_log_entry(buffer);
+    write_log_entry(buffer);
 
-	exit(1);
+    exit(1);
 }
 /*
  * log warning
  */
 void warning(const char *format, ...)
 {
-	char buffer[BUFFERSIZE];
-	va_list arglist;
+    char buffer[BUFFERSIZE];
+    va_list arglist;
 
-	va_start(arglist, format);
-	vsprintf(buffer, format, arglist);
-	va_end(arglist);
+    va_start(arglist, format);
+    vsprintf(buffer, format, arglist);
+    va_end(arglist);
 
-	write_log_entry(buffer);
+    write_log_entry(buffer);
 }
 /*
  * append log file entry record
  */
 void write_log_entry(const char *entry)
 {
-	if (NULL != log_file_name) {
-		char tmpbuf[128];
-		time_t ltime;
-		struct tm *today;
+    if (NULL != log_file_name) {
+        char tmpbuf[128];
+        time_t ltime;
+        struct tm *today;
 
-		FILE *fp = fopen(log_file_name, "a");
-		if (NULL == fp)
-			return;	/* could not open log file */
+        FILE *fp = fopen(log_file_name, "a");
+        if (NULL == fp)
+            return;	/* could not open log file */
 
-		time(&ltime);
-		today = localtime(&ltime);
+        time(&ltime);
+        today = localtime(&ltime);
 
-		/* format current time as string */
-		strftime(tmpbuf, sizeof(tmpbuf),
-		         "%m/%d/%Y %H:%M:%S", today);
+        /* format current time as string */
+        strftime(tmpbuf, sizeof(tmpbuf),
+                 "%m/%d/%Y %H:%M:%S", today);
 
-		fprintf(fp, "%s %s", tmpbuf, entry);
+        fprintf(fp, "%s %s", tmpbuf, entry);
 
-		fclose(fp);
-	} else fputs(entry, stderr);
+        fclose(fp);
+    } else fputs(entry, stderr);
 }

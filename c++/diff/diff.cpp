@@ -38,22 +38,22 @@ END_ANONYMOUS
 /////////////////////////////////////////////////////////////////////////////
 int _tmain(int argc, TCHAR *argv[])
 {
-	if (argc < 3) {
-		std::cerr << usage << std::endl;
-		return 1;
-	}
+    if (argc < 3) {
+        std::cerr << usage << std::endl;
+        return 1;
+    }
 
-	argc--;
-	argv++;
+    argc--;
+    argv++;
 
-	if (!isspec(argv[0]) || !isspec(argv[1])) {
-		std::cerr << usage << std::endl;
-		return 1;
-	}
+    if (!isspec(argv[0]) || !isspec(argv[1])) {
+        std::cerr << usage << std::endl;
+        return 1;
+    }
 
-	diff(argv[0], argv[1]);
+    diff(argv[0], argv[1]);
 
-	return 0;
+    return 0;
 }
 
 BEGIN_ANONYMOUS
@@ -61,219 +61,219 @@ BEGIN_ANONYMOUS
 /////////////////////////////////////////////////////////////////////////////
 bool isspec(LPCTSTR pdir)
 {
-	WIN32_FIND_DATA data;
+    WIN32_FIND_DATA data;
 
-	HANDLE hFinder = ::FindFirstFile(pdir, &data);
-	if (hFinder == INVALID_HANDLE_VALUE)
-		return false;	// not found
+    HANDLE hFinder = ::FindFirstFile(pdir, &data);
+    if (hFinder == INVALID_HANDLE_VALUE)
+        return false;	// not found
 
-	::FindClose(hFinder);
+    ::FindClose(hFinder);
 
-	return true;
+    return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 tstring dirname(LPCTSTR files)
 {
-	size_t len = _tcslen(files);
+    size_t len = _tcslen(files);
 
-	for (int i = len - 1; i >= 0; i--)
-		if (files[i] == _T('\\'))
-			return tstring(files, i);
+    for (int i = len - 1; i >= 0; i--)
+        if (files[i] == _T('\\'))
+            return tstring(files, i);
 
-	return _T("");
+    return _T("");
 }
 
 /////////////////////////////////////////////////////////////////////////////
 tstring specname(LPCTSTR files)
 {
-	size_t len = _tcslen(files);
+    size_t len = _tcslen(files);
 
-	for (int i = len - 1; i >= 0; i--)
-		if (files[i] == _T('\\'))
-			return tstring(files + i + 1);
+    for (int i = len - 1; i >= 0; i--)
+        if (files[i] == _T('\\'))
+            return tstring(files + i + 1);
 
-	return _T("");
+    return _T("");
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void diff(LPCTSTR files1, LPCTSTR files2)
 {
-	// don't compare identical specs
-	if (_tcscmp(files1, files2) == 0)
-		return;
+    // don't compare identical specs
+    if (_tcscmp(files1, files2) == 0)
+        return;
 
-	tstring dir1 = dirname(files1);
-	tstring dir2 = dirname(files2);
+    tstring dir1 = dirname(files1);
+    tstring dir2 = dirname(files2);
 
-	tstring spec1 = specname(files1);
-	tstring spec2 = specname(files2);
+    tstring spec1 = specname(files1);
+    tstring spec2 = specname(files2);
 
-	std::cout << std::endl << _T('[') << dir1.c_str() << _T(']') << _T('\t')
-	          << _T('[') << dir2.c_str() << _T(']') << std::endl;
+    std::cout << std::endl << _T('[') << dir1.c_str() << _T(']') << _T('\t')
+              << _T('[') << dir2.c_str() << _T(']') << std::endl;
 
-	compare(files1, files2);
+    compare(files1, files2);
 
-	stringvec subdirs1, subdirs2;
+    stringvec subdirs1, subdirs2;
 
-	subdirs1 = subdirs(dir1.c_str());
-	subdirs2 = subdirs(dir2.c_str());
+    subdirs1 = subdirs(dir1.c_str());
+    subdirs2 = subdirs(dir2.c_str());
 
-	// compare against first specification
-	stringvec::const_iterator it = subdirs1.begin();
+    // compare against first specification
+    stringvec::const_iterator it = subdirs1.begin();
 
-	for ( ; it != subdirs1.end(); it++) {
-		stringvec::const_iterator I = std::find(subdirs2.begin(), subdirs2.end(), *it);
-		if (I == subdirs2.end()) {
-			std::cout << _T('[') << *it << _T(']') << _T('\t')
-			          << _T("not found") << std::endl;
-			continue;
-		}
+    for ( ; it != subdirs1.end(); it++) {
+        stringvec::const_iterator I = std::find(subdirs2.begin(), subdirs2.end(), *it);
+        if (I == subdirs2.end()) {
+            std::cout << _T('[') << *it << _T(']') << _T('\t')
+                      << _T("not found") << std::endl;
+            continue;
+        }
 
-		std::ostrstream path1, path2;
-		path1 << dir1 << _T('\\') << *it
-		      << _T('\\') << spec1 << std::ends;
-		path2 << dir2 << _T('\\') << *it
-		      << _T('\\') << spec1 << std::ends;
-		diff(path1.str(), path2.str());
-	}
+        std::ostrstream path1, path2;
+        path1 << dir1 << _T('\\') << *it
+              << _T('\\') << spec1 << std::ends;
+        path2 << dir2 << _T('\\') << *it
+              << _T('\\') << spec1 << std::ends;
+        diff(path1.str(), path2.str());
+    }
 
-	// compare against second specification
-	for (it = subdirs2.begin(); it != subdirs2.end(); it++) {
-		stringvec::const_iterator I = std::find(subdirs1.begin(), subdirs1.end(), *it);
-		if (I == subdirs1.end()) {
-			std::cout << _T("not found") << _T('\t') << _T('[') << *it << _T(']')
-			          << std::endl;
-		}
-	}
+    // compare against second specification
+    for (it = subdirs2.begin(); it != subdirs2.end(); it++) {
+        stringvec::const_iterator I = std::find(subdirs1.begin(), subdirs1.end(), *it);
+        if (I == subdirs1.end()) {
+            std::cout << _T("not found") << _T('\t') << _T('[') << *it << _T(']')
+                      << std::endl;
+        }
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////
 stringvec subdirs(LPCTSTR dir)
 {
-	stringvec output;
-	WIN32_FIND_DATA data;
-	tstring dirname(dir);
+    stringvec output;
+    WIN32_FIND_DATA data;
+    tstring dirname(dir);
 
-	if (dirname[dirname.length() - 1] != _T('\\'))
-		dirname += _T('\\');
-	dirname += _T('*');
+    if (dirname[dirname.length() - 1] != _T('\\'))
+        dirname += _T('\\');
+    dirname += _T('*');
 
-	HANDLE hFinder = ::FindFirstFile(dirname.c_str(), &data);
-	if (hFinder == INVALID_HANDLE_VALUE)
-		return output;
+    HANDLE hFinder = ::FindFirstFile(dirname.c_str(), &data);
+    if (hFinder == INVALID_HANDLE_VALUE)
+        return output;
 
-	while (::FindNextFile(hFinder, &data)) {
-		if (_tcscmp(data.cFileName, _T(".")) == 0)
-			continue;
+    while (::FindNextFile(hFinder, &data)) {
+        if (_tcscmp(data.cFileName, _T(".")) == 0)
+            continue;
 
-		if (_tcscmp(data.cFileName, _T("..")) == 0)
-			continue;
+        if (_tcscmp(data.cFileName, _T("..")) == 0)
+            continue;
 
-		if (data.dwFileAttributes &  FILE_ATTRIBUTE_DIRECTORY)
-			output.push_back(data.cFileName);
-	}
+        if (data.dwFileAttributes &  FILE_ATTRIBUTE_DIRECTORY)
+            output.push_back(data.cFileName);
+    }
 
-	::FindClose(hFinder);
+    ::FindClose(hFinder);
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void compare(LPCTSTR files1, LPCTSTR files2)
 {
-	stringvec v1 = expand(files1);
-	stringvec v2 = expand(files2);
+    stringvec v1 = expand(files1);
+    stringvec v2 = expand(files2);
 
-	stringvec::const_iterator it = v1.begin();
+    stringvec::const_iterator it = v1.begin();
 
-	// compare against first spec
-	for ( ; it != v1.end(); it++) {
-		std::cout << (*it).c_str() << _T('\t');
+    // compare against first spec
+    for ( ; it != v1.end(); it++) {
+        std::cout << (*it).c_str() << _T('\t');
 
-		stringvec::const_iterator I = std::find(v2.begin(), v2.end(), *it);
-		if (I == v2.end()) {
-			std::cout << _T("not found");
-		} else {
-			std::cout << (*it).c_str();
-			tstring path1 = dirname(files1) + _T('\\') + *it;
-			tstring path2 = dirname(files2) + _T('\\') + *it;
-			std::cout << _T('\t');
-			compareFiles(path1.c_str(), path2.c_str());
-		}
+        stringvec::const_iterator I = std::find(v2.begin(), v2.end(), *it);
+        if (I == v2.end()) {
+            std::cout << _T("not found");
+        } else {
+            std::cout << (*it).c_str();
+            tstring path1 = dirname(files1) + _T('\\') + *it;
+            tstring path2 = dirname(files2) + _T('\\') + *it;
+            std::cout << _T('\t');
+            compareFiles(path1.c_str(), path2.c_str());
+        }
 
-		std::cout << std::endl;
-	}
+        std::cout << std::endl;
+    }
 
-	// compare against second spec
-	for (it = v2.begin(); it != v2.end(); it++) {
-		stringvec::const_iterator I = std::find(v1.begin(), v1.end(), *it);
-		if (I == v1.end()) {
-			std::cout << _T("not found");
-			std::cout << _T('\t') << (*it).c_str() << std::endl;
-		}
-	}
+    // compare against second spec
+    for (it = v2.begin(); it != v2.end(); it++) {
+        stringvec::const_iterator I = std::find(v1.begin(), v1.end(), *it);
+        if (I == v1.end()) {
+            std::cout << _T("not found");
+            std::cout << _T('\t') << (*it).c_str() << std::endl;
+        }
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////
 stringvec expand(LPCTSTR dir)
 {
-	stringvec output;
-	WIN32_FIND_DATA data;
+    stringvec output;
+    WIN32_FIND_DATA data;
 
-	HANDLE hFinder = ::FindFirstFile(dir, &data);
-	if (hFinder == INVALID_HANDLE_VALUE)
-		return output;
+    HANDLE hFinder = ::FindFirstFile(dir, &data);
+    if (hFinder == INVALID_HANDLE_VALUE)
+        return output;
 
-	while (::FindNextFile(hFinder, &data)) {
-		if (data.dwFileAttributes &  FILE_ATTRIBUTE_DIRECTORY)
-			continue;
-		if (data.dwFileAttributes & FILE_ATTRIBUTE_NORMAL)
-			output.push_back(data.cFileName);
-		if (data.dwFileAttributes & FILE_ATTRIBUTE_COMPRESSED)
-			output.push_back(data.cFileName);
-	}
+    while (::FindNextFile(hFinder, &data)) {
+        if (data.dwFileAttributes &  FILE_ATTRIBUTE_DIRECTORY)
+            continue;
+        if (data.dwFileAttributes & FILE_ATTRIBUTE_NORMAL)
+            output.push_back(data.cFileName);
+        if (data.dwFileAttributes & FILE_ATTRIBUTE_COMPRESSED)
+            output.push_back(data.cFileName);
+    }
 
-	::FindClose(hFinder);
+    ::FindClose(hFinder);
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void compareFiles(LPCTSTR file1, LPCTSTR file2)
 {
-	FILE *fp1, *fp2;
+    FILE *fp1, *fp2;
 
-	fp1 = fopen(file1, _T("rb"));
-	if (fp1 == NULL)
-		return;
+    fp1 = fopen(file1, _T("rb"));
+    if (fp1 == NULL)
+        return;
 
-	fp2 = fopen(file2, _T("rb"));
-	if (fp2 == NULL) {
-		fclose(fp1);
-		return;
-	}
+    fp2 = fopen(file2, _T("rb"));
+    if (fp2 == NULL) {
+        fclose(fp1);
+        return;
+    }
 
-	int len = _filelength(_fileno(fp1));
+    int len = _filelength(_fileno(fp1));
 
-	int offset = 0, c1, c2;
-	while ((c1 = fgetc(fp1)) != EOF) {
-		c2 = fgetc(fp2);
-		if (c2 == EOF)
-			break;
+    int offset = 0, c1, c2;
+    while ((c1 = fgetc(fp1)) != EOF) {
+        c2 = fgetc(fp2);
+        if (c2 == EOF)
+            break;
 
-		if (c1 != c2)
-			break;
+        if (c1 != c2)
+            break;
 
-		++offset;
-	}
+        ++offset;
+    }
 
-	if (offset != len) {
-		fprintf(stdout, _T("files differ at offset 0x%x"), offset);
-	}
+    if (offset != len) {
+        fprintf(stdout, _T("files differ at offset 0x%x"), offset);
+    }
 
-	fclose(fp1);
-	fclose(fp2);
+    fclose(fp1);
+    fclose(fp2);
 }
 
 END_ANONYMOUS

@@ -4,20 +4,20 @@
 // DisassemFrame frame
 
 class DisassemFrame : public CMiniFrameWnd {
-	DECLARE_DYNCREATE(DisassemFrame)
+    DECLARE_DYNCREATE(DisassemFrame)
 protected:
-	DisassemFrame();           // protected constructor used by dynamic creation
-	virtual ~DisassemFrame();
+    DisassemFrame();           // protected constructor used by dynamic creation
+    virtual ~DisassemFrame();
 
 protected:
-	DECLARE_MESSAGE_MAP()
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+    DECLARE_MESSAGE_MAP()
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 public:
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 
 private:
-	CStatusBar m_wndStatusBar;
+    CStatusBar m_wndStatusBar;
 };
 
 

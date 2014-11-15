@@ -13,42 +13,42 @@
 // CScoresPreviewFrame frame
 
 class CScoresPreviewFrame : public CFrameWnd {
-	DECLARE_DYNCREATE(CScoresPreviewFrame)
+    DECLARE_DYNCREATE(CScoresPreviewFrame)
 public:
-	CScoresPreviewFrame();
-	virtual ~CScoresPreviewFrame();
+    CScoresPreviewFrame();
+    virtual ~CScoresPreviewFrame();
 
 // Attributes
 public:
 
 // Operations
 public:
-	CStatusBar * GetStatusBar();
-	inline CDC* GetPrinterDC() {
-		return m_pPrinterDC;
-	}
+    CStatusBar * GetStatusBar();
+    inline CDC* GetPrinterDC() {
+        return m_pPrinterDC;
+    }
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CScoresPreviewFrame)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CScoresPreviewFrame)
 protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	//}}AFX_VIRTUAL
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    //}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	CStatusBar			m_StatusBar;
-	CScoresPreviewWnd * m_pClientWnd;
-	CButton *			m_pPrintButton;
-	CDC	*				m_pPrinterDC;
+    CStatusBar			m_StatusBar;
+    CScoresPreviewWnd * m_pClientWnd;
+    CButton *			m_pPrintButton;
+    CDC	*				m_pPrinterDC;
 
-	// Generated message map functions
-	//{{AFX_MSG(CScoresPreviewFrame)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnPaint();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    // Generated message map functions
+    //{{AFX_MSG(CScoresPreviewFrame)
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnSize(UINT nType, int cx, int cy);
+    afx_msg void OnPaint();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

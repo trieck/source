@@ -24,14 +24,14 @@
 
 class CWySock : public CAsyncSocket {
 protected:
-	REQUEST Request;
+    REQUEST Request;
 public:
-	UINT	State;
-	TCHAR	IPAddress[16];
-	CWySock();
-	~CWySock();
-	virtual void OnAccept(int nErrorCode);
-	virtual void OnClose(int nErrorCode);
-	virtual void OnReceive(int nErrorCode);
+    UINT	State;
+    TCHAR	IPAddress[16];
+    CWySock();
+    ~CWySock();
+    virtual void OnAccept(int nErrorCode);
+    virtual void OnClose(int nErrorCode);
+    virtual void OnReceive(int nErrorCode);
 };
 #endif //__WYSOCK_H__

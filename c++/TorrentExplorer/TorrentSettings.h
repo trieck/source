@@ -13,20 +13,20 @@
 
 class TorrentSettings {
 public:
-	TorrentSettings();
-	virtual ~TorrentSettings();
+    TorrentSettings();
+    virtual ~TorrentSettings();
 
-	void Flush();
+    void Flush();
 
-	LPTORRENTOBJECT GetValue(LPCSTR key) const;
-	void SetValue(LPCSTR key, LPTORRENTOBJECT v);
+    LPTORRENTOBJECT GetValue(LPCSTR key) const;
+    void SetValue(LPCSTR key, LPTORRENTOBJECT v);
 
 private:
-	void ReadSettings();
-	void Delete();
+    void ReadSettings();
+    void Delete();
 
-	CWinApp *m_pApp;
-	LPDICTIONARY m_pDict;
+    CWinApp *m_pApp;
+    LPDICTIONARY m_pDict;
 };
 
 #endif // !defined(AFX_TORRENTSETTINGS_H__5E28CFB3_FC4D_4A03_97A1_8C55B9B83C2F__INCLUDED_)

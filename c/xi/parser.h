@@ -20,8 +20,8 @@
 #define ID 272
 #define KEYWORD 273
 typedef union {
-	PNODE node;		/* node in parse tree */
-	PSYMBOL sym;	/* symbol table pointer */
-	int n;			/* token id */
+    PNODE node;		/* node in parse tree */
+    PSYMBOL sym;	/* symbol table pointer */
+    int n;			/* token id */
 } YYSTYPE;
 extern YYSTYPE yylval;

@@ -21,8 +21,8 @@
 #include "common.h"
 #include "extern.h"
 typedef struct _extern {
-	char *name;					/* name of external */
-	struct _extern *next;		/* next external */
+    char *name;					/* name of external */
+    struct _extern *next;		/* next external */
 } Extern;
 static Extern *externals;		/* external list */
 extern int lineno;				/* current line number */
@@ -34,7 +34,7 @@ static Extern *extern_lookup(const char *name);
  */
 void extern_init(void)
 {
-	externals = extern_alloc();
+    externals = extern_alloc();
 }
 
 /*
@@ -42,9 +42,9 @@ void extern_init(void)
  */
 Extern *extern_alloc(void)
 {
-	Extern *pextern = (Extern *) malloc(sizeof(Extern));
-	memset(pextern, 0, sizeof(Extern));
-	return pextern;
+    Extern *pextern = (Extern *) malloc(sizeof(Extern));
+    memset(pextern, 0, sizeof(Extern));
+    return pextern;
 }
 
 /*
@@ -52,17 +52,17 @@ Extern *extern_alloc(void)
  */
 void extern_free(void)
 {
-	Extern *pextern = externals;
-	while (pextern != NULL) {
-		Extern *pnext = pextern->next;
+    Extern *pextern = externals;
+    while (pextern != NULL) {
+        Extern *pnext = pextern->next;
 
-		if (pextern->name != NULL)
-			free(pextern->name);
+        if (pextern->name != NULL)
+            free(pextern->name);
 
-		free(pextern);
+        free(pextern);
 
-		pextern = pnext;
-	}
+        pextern = pnext;
+    }
 }
 
 /*
@@ -70,18 +70,18 @@ void extern_free(void)
  */
 void extern_insert(const char *name)
 {
-	Extern *pextern = extern_lookup(name);
-	if (pextern != NULL) {
-		warning("external declaration %s already declared at line %d.\n",
-		        name, lineno);
-		return;
-	}
+    Extern *pextern = extern_lookup(name);
+    if (pextern != NULL) {
+        warning("external declaration %s already declared at line %d.\n",
+                name, lineno);
+        return;
+    }
 
-	/* insert at front of list */
-	pextern = extern_alloc();
-	pextern->name = strcopy(name);
-	pextern->next = externals;
-	externals = pextern;
+    /* insert at front of list */
+    pextern = extern_alloc();
+    pextern->name = strcopy(name);
+    pextern->next = externals;
+    externals = pextern;
 }
 
 /*
@@ -89,13 +89,13 @@ void extern_insert(const char *name)
  */
 Extern *extern_lookup(const char *name)
 {
-	Extern *pextern = externals;
-	while (pextern != NULL) {
-		if (pextern->name && strcmp(pextern->name, name) == 0)
-			return pextern;
+    Extern *pextern = externals;
+    while (pextern != NULL) {
+        if (pextern->name && strcmp(pextern->name, name) == 0)
+            return pextern;
 
-		pextern = pextern->next;
-	}
+        pextern = pextern->next;
+    }
 
-	return NULL;
+    return NULL;
 }

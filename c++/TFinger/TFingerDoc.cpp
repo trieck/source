@@ -15,36 +15,36 @@
 IMPLEMENT_DYNCREATE(CTFingerDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CTFingerDoc, CDocument)
-	ON_UPDATE_COMMAND_UI(ID_IMAGE_SEGMENT, &CTFingerDoc::OnUpdateImageSegment)
-	ON_COMMAND(ID_IMAGE_SEGMENT, &CTFingerDoc::OnImageSegment)
-	ON_UPDATE_COMMAND_UI(ID_IMAGE_BINARIZE, &CTFingerDoc::OnUpdateImageBinarize)
-	ON_COMMAND(ID_IMAGE_BINARIZE, &CTFingerDoc::OnImageBinarize)
-	ON_COMMAND(ID_IMAGE_ERODE, &CTFingerDoc::OnImageErode)
-	ON_UPDATE_COMMAND_UI(ID_IMAGE_ERODE, &CTFingerDoc::OnUpdateImageErode)
-	ON_UPDATE_COMMAND_UI(ID_FILE_CLOSE, &CTFingerDoc::OnUpdateFileClose)
-	ON_COMMAND(ID_FILE_CLOSE, &CTFingerDoc::OnFileClose)
-	ON_COMMAND(ID_IMAGE_DILATE, &CTFingerDoc::OnImageDilate)
-	ON_UPDATE_COMMAND_UI(ID_IMAGE_DILATE, &CTFingerDoc::OnUpdateImageDilate)
-	ON_COMMAND(ID_IMAGE_SKELETONIZE, &CTFingerDoc::OnImageSkeletonize)
-	ON_UPDATE_COMMAND_UI(ID_IMAGE_SKELETONIZE, &CTFingerDoc::OnUpdateImageSkeletonize)
-	ON_COMMAND(ID_IMAGE_EXTRACTMINUTIA, &CTFingerDoc::OnImageExtractMinutia)
-	ON_UPDATE_COMMAND_UI(ID_IMAGE_EXTRACTMINUTIA, &CTFingerDoc::OnUpdateImageExtractMinutia)
-	ON_COMMAND(ID_IMAGE_NORMALIZE, &CTFingerDoc::OnImageNormalize)
-	ON_UPDATE_COMMAND_UI(ID_IMAGE_NORMALIZE, &CTFingerDoc::OnUpdateImageNormalize)
-	ON_COMMAND(ID_IMAGE_FILTER, &CTFingerDoc::OnImageFilter)
-	ON_UPDATE_COMMAND_UI(ID_IMAGE_FILTER, &CTFingerDoc::OnUpdateImageFilter)
+    ON_UPDATE_COMMAND_UI(ID_IMAGE_SEGMENT, &CTFingerDoc::OnUpdateImageSegment)
+    ON_COMMAND(ID_IMAGE_SEGMENT, &CTFingerDoc::OnImageSegment)
+    ON_UPDATE_COMMAND_UI(ID_IMAGE_BINARIZE, &CTFingerDoc::OnUpdateImageBinarize)
+    ON_COMMAND(ID_IMAGE_BINARIZE, &CTFingerDoc::OnImageBinarize)
+    ON_COMMAND(ID_IMAGE_ERODE, &CTFingerDoc::OnImageErode)
+    ON_UPDATE_COMMAND_UI(ID_IMAGE_ERODE, &CTFingerDoc::OnUpdateImageErode)
+    ON_UPDATE_COMMAND_UI(ID_FILE_CLOSE, &CTFingerDoc::OnUpdateFileClose)
+    ON_COMMAND(ID_FILE_CLOSE, &CTFingerDoc::OnFileClose)
+    ON_COMMAND(ID_IMAGE_DILATE, &CTFingerDoc::OnImageDilate)
+    ON_UPDATE_COMMAND_UI(ID_IMAGE_DILATE, &CTFingerDoc::OnUpdateImageDilate)
+    ON_COMMAND(ID_IMAGE_SKELETONIZE, &CTFingerDoc::OnImageSkeletonize)
+    ON_UPDATE_COMMAND_UI(ID_IMAGE_SKELETONIZE, &CTFingerDoc::OnUpdateImageSkeletonize)
+    ON_COMMAND(ID_IMAGE_EXTRACTMINUTIA, &CTFingerDoc::OnImageExtractMinutia)
+    ON_UPDATE_COMMAND_UI(ID_IMAGE_EXTRACTMINUTIA, &CTFingerDoc::OnUpdateImageExtractMinutia)
+    ON_COMMAND(ID_IMAGE_NORMALIZE, &CTFingerDoc::OnImageNormalize)
+    ON_UPDATE_COMMAND_UI(ID_IMAGE_NORMALIZE, &CTFingerDoc::OnUpdateImageNormalize)
+    ON_COMMAND(ID_IMAGE_FILTER, &CTFingerDoc::OnImageFilter)
+    ON_UPDATE_COMMAND_UI(ID_IMAGE_FILTER, &CTFingerDoc::OnUpdateImageFilter)
 END_MESSAGE_MAP()
 
 // CTFingerDoc construction/destruction
 CTFingerDoc::CTFingerDoc()
-	: m_segmented(FALSE),
-	  m_normalized(FALSE),
-	  m_filtered(FALSE),
-	  m_binarized(FALSE),
-	  m_eroded(FALSE),
-	  m_dilated(FALSE),
-	  m_skeletonized(FALSE),
-	  m_extracted(FALSE)
+    : m_segmented(FALSE),
+      m_normalized(FALSE),
+      m_filtered(FALSE),
+      m_binarized(FALSE),
+      m_eroded(FALSE),
+      m_dilated(FALSE),
+      m_skeletonized(FALSE),
+      m_extracted(FALSE)
 {
 }
 
@@ -54,22 +54,22 @@ CTFingerDoc::~CTFingerDoc()
 
 BOOL CTFingerDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
+    if (!CDocument::OnNewDocument())
+        return FALSE;
 
-	return TRUE;
+    return TRUE;
 }
 
 CSize CTFingerDoc::GetDocSize() const
 {
-	CSize size;
-	if (m_bitmap.IsNull())
-		return CSize(0, 0);
+    CSize size;
+    if (m_bitmap.IsNull())
+        return CSize(0, 0);
 
-	size.cx = m_bitmap.GetWidth();
-	size.cy = m_bitmap.GetHeight();
+    size.cx = m_bitmap.GetWidth();
+    size.cy = m_bitmap.GetHeight();
 
-	return size;
+    return size;
 }
 
 // CTFingerDoc serialization
@@ -82,12 +82,12 @@ void CTFingerDoc::Serialize(CArchive& ar)
 #ifdef _DEBUG
 void CTFingerDoc::AssertValid() const
 {
-	CDocument::AssertValid();
+    CDocument::AssertValid();
 }
 
 void CTFingerDoc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+    CDocument::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -95,155 +95,155 @@ void CTFingerDoc::Dump(CDumpContext& dc) const
 // CTFingerDoc commands
 BOOL CTFingerDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	if (!CDocument::OnOpenDocument(lpszPathName))
-		return FALSE;
+    if (!CDocument::OnOpenDocument(lpszPathName))
+        return FALSE;
 
-	if (!m_bitmap.LoadBitmap(lpszPathName)) {
-		CString prompt;
-		AfxFormatString1(prompt, IDS_CANTLOADBMP, lpszPathName);
-		AfxMessageBox(prompt, MB_ICONEXCLAMATION);
-		return FALSE;
-	}
+    if (!m_bitmap.LoadBitmap(lpszPathName)) {
+        CString prompt;
+        AfxFormatString1(prompt, IDS_CANTLOADBMP, lpszPathName);
+        AfxMessageBox(prompt, MB_ICONEXCLAMATION);
+        return FALSE;
+    }
 
-	return TRUE;
+    return TRUE;
 }
 
 void CTFingerDoc::DeleteContents()
 {
-	m_bitmap.Destroy();
-	m_segmented = m_filtered = m_normalized = m_binarized = m_eroded =
-	                               m_dilated = m_skeletonized = m_extracted = FALSE;
-	m_minutia.clear();
+    m_bitmap.Destroy();
+    m_segmented = m_filtered = m_normalized = m_binarized = m_eroded =
+                                   m_dilated = m_skeletonized = m_extracted = FALSE;
+    m_minutia.clear();
 
-	CDocument::DeleteContents();
+    CDocument::DeleteContents();
 }
 
 CImage *CTFingerDoc::GetBitmap()
 {
-	if (m_bitmap.IsNull())
-		return NULL;
+    if (m_bitmap.IsNull())
+        return NULL;
 
-	return &m_bitmap;
+    return &m_bitmap;
 }
 
 const MinutiaVec *CTFingerDoc::GetMinutia() const
 {
-	if (m_minutia.size() == 0)
-		return NULL;
+    if (m_minutia.size() == 0)
+        return NULL;
 
-	return &m_minutia;
+    return &m_minutia;
 }
 
 void CTFingerDoc::OnFileClose()
 {
-	AfxGetApp()->OnCmdMsg(ID_FILE_NEW, 0, NULL, NULL);
-	UpdateAllViews(NULL);
+    AfxGetApp()->OnCmdMsg(ID_FILE_NEW, 0, NULL, NULL);
+    UpdateAllViews(NULL);
 }
 
 void CTFingerDoc::OnUpdateImageSegment(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && !m_segmented);
+    pCmdUI->Enable(!m_bitmap.IsNull() && !m_segmented);
 }
 
 void CTFingerDoc::OnImageSegment()
 {
-	CWaitCursor cursor;
-	m_segmenter.Segment(m_bitmap);
-	m_segmented = TRUE;
-	UpdateAllViews(NULL);
+    CWaitCursor cursor;
+    m_segmenter.Segment(m_bitmap);
+    m_segmented = TRUE;
+    UpdateAllViews(NULL);
 }
 void CTFingerDoc::OnUpdateImageBinarize(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && m_filtered && !m_binarized);
+    pCmdUI->Enable(!m_bitmap.IsNull() && m_filtered && !m_binarized);
 }
 
 void CTFingerDoc::OnImageBinarize()
 {
-	CWaitCursor cursor;
-	m_binarizer.Binarize(m_bitmap);
-	m_binarized = TRUE;
-	UpdateAllViews(NULL);
+    CWaitCursor cursor;
+    m_binarizer.Binarize(m_bitmap);
+    m_binarized = TRUE;
+    UpdateAllViews(NULL);
 }
 
 void CTFingerDoc::OnImageErode()
 {
-	CWaitCursor cursor;
-	m_eroder.Erode(m_bitmap);
-	m_eroded = TRUE;
-	UpdateAllViews(NULL);
+    CWaitCursor cursor;
+    m_eroder.Erode(m_bitmap);
+    m_eroded = TRUE;
+    UpdateAllViews(NULL);
 }
 
 void CTFingerDoc::OnUpdateImageErode(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && m_binarized && !m_eroded);
+    pCmdUI->Enable(!m_bitmap.IsNull() && m_binarized && !m_eroded);
 }
 
 void CTFingerDoc::OnUpdateFileClose(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull());
+    pCmdUI->Enable(!m_bitmap.IsNull());
 }
 
 void CTFingerDoc::OnImageDilate()
 {
-	CWaitCursor cursor;
-	m_dilater.Dilate(m_bitmap);
-	m_dilated = TRUE;
-	UpdateAllViews(NULL);
+    CWaitCursor cursor;
+    m_dilater.Dilate(m_bitmap);
+    m_dilated = TRUE;
+    UpdateAllViews(NULL);
 }
 
 void CTFingerDoc::OnUpdateImageDilate(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && m_eroded && !m_dilated);
+    pCmdUI->Enable(!m_bitmap.IsNull() && m_eroded && !m_dilated);
 }
 
 void CTFingerDoc::OnImageSkeletonize()
 {
-	CWaitCursor cursor;
-	m_skeletonizer.Skeletonize(m_bitmap);
-	m_skeletonized = TRUE;
-	UpdateAllViews(NULL);
+    CWaitCursor cursor;
+    m_skeletonizer.Skeletonize(m_bitmap);
+    m_skeletonized = TRUE;
+    UpdateAllViews(NULL);
 }
 
 void CTFingerDoc::OnUpdateImageSkeletonize(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && m_dilated && !m_skeletonized);
+    pCmdUI->Enable(!m_bitmap.IsNull() && m_dilated && !m_skeletonized);
 }
 
 void CTFingerDoc::OnImageExtractMinutia()
 {
-	CWaitCursor cursor;
-	m_minutia = m_extractor.Extract(m_bitmap);
-	m_extracted = TRUE;
-	UpdateAllViews(NULL);
+    CWaitCursor cursor;
+    m_minutia = m_extractor.Extract(m_bitmap);
+    m_extracted = TRUE;
+    UpdateAllViews(NULL);
 }
 
 void CTFingerDoc::OnUpdateImageExtractMinutia(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && m_skeletonized && !m_extracted);
+    pCmdUI->Enable(!m_bitmap.IsNull() && m_skeletonized && !m_extracted);
 }
 
 void CTFingerDoc::OnImageNormalize()
 {
-	CWaitCursor cursor;
-	m_normalizer.Normalize(m_bitmap);
-	m_normalized = TRUE;
-	UpdateAllViews(NULL);
+    CWaitCursor cursor;
+    m_normalizer.Normalize(m_bitmap);
+    m_normalized = TRUE;
+    UpdateAllViews(NULL);
 }
 
 void CTFingerDoc::OnUpdateImageNormalize(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && m_segmented && !m_normalized);
+    pCmdUI->Enable(!m_bitmap.IsNull() && m_segmented && !m_normalized);
 }
 
 void CTFingerDoc::OnImageFilter()
 {
-	CWaitCursor cursor;
-	m_filter.Filter(m_bitmap);
-	m_filtered = TRUE;
-	UpdateAllViews(NULL);
+    CWaitCursor cursor;
+    m_filter.Filter(m_bitmap);
+    m_filtered = TRUE;
+    UpdateAllViews(NULL);
 }
 
 void CTFingerDoc::OnUpdateImageFilter(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(!m_bitmap.IsNull() && m_normalized && !m_filtered);
+    pCmdUI->Enable(!m_bitmap.IsNull() && m_normalized && !m_filtered);
 }

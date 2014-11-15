@@ -13,18 +13,18 @@
 
 class List : public TorrentObject {
 public:
-	List();
-	virtual ~List();
+    List();
+    virtual ~List();
 
-	void append(LPTORRENTOBJECT t);
-	UINT size() const;
-	LPTORRENTOBJECT GetAt(UINT n) const;
-	virtual int GetElementType() const {
-		return ET_LIST;
-	}
+    void append(LPTORRENTOBJECT t);
+    UINT size() const;
+    LPTORRENTOBJECT GetAt(UINT n) const;
+    virtual int GetElementType() const {
+        return ET_LIST;
+    }
 
 private:
-	CList<LPTORRENTOBJECT, LPTORRENTOBJECT> list;
+    CList<LPTORRENTOBJECT, LPTORRENTOBJECT> list;
 };
 
 typedef List *LPLIST;

@@ -24,41 +24,41 @@ static void tfree(void);
 /* allocate and initialize temporary symbol table */
 void tinit(void)
 {
-	mcatexit(tfree);
-	symbols = maketab();
+    mcatexit(tfree);
+    symbols = maketab();
 }
 
 /* lookup s in symbol table */
 Symbol *tlookup(const char *s)
 {
-	return lookup(symbols, s);
+    return lookup(symbols, s);
 }
 
 /* install s in symbol table */
 Symbol *tinstall(const char *s, int t, int sub, double d)
 {
-	Symbol *sym;
+    Symbol *sym;
 
-	if ((sym = tlookup(s)))
-		return sym;
+    if ((sym = tlookup(s)))
+        return sym;
 
-	return install(symbols, s, t, sub, d);
+    return install(symbols, s, t, sub, d);
 }
 
 /* install string s in symbol table */
 Symbol *tinstalls(const char *s, const char *v)
 {
-	Symbol *sym;
+    Symbol *sym;
 
-	if ((sym = tlookup(s)))
-		return sym;
+    if ((sym = tlookup(s)))
+        return sym;
 
-	return installs(symbols, s, v);
+    return installs(symbols, s, v);
 }
 
 /* free temporary symbol table */
 void tfree(void)
 {
-	tabfree(symbols);
-	symbols = 0;
+    tabfree(symbols);
+    symbols = 0;
 }

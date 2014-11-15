@@ -28,9 +28,9 @@ class MainFrame : public CFrameWnd
 
 protected: // create from serialization only
 
-	MainFrame();
+    MainFrame();
 
-	DECLARE_DYNCREATE(MainFrame)
+    DECLARE_DYNCREATE(MainFrame)
 
 
 
@@ -48,13 +48,13 @@ public:
 
 // Overrides
 
-	// ClassWizard generated virtual function overrides
+    // ClassWizard generated virtual function overrides
 
-	//{{AFX_VIRTUAL(MainFrame)
+    //{{AFX_VIRTUAL(MainFrame)
 
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
-	//}}AFX_VIRTUAL
+    //}}AFX_VIRTUAL
 
 
 
@@ -62,13 +62,13 @@ public:
 
 public:
 
-	virtual ~MainFrame();
+    virtual ~MainFrame();
 
 #ifdef _DEBUG
 
-	virtual void AssertValid() const;
+    virtual void AssertValid() const;
 
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void Dump(CDumpContext& dc) const;
 
 #endif
 
@@ -76,11 +76,11 @@ public:
 
 protected:  // control bar embedded members
 
-	CStatusBar  m_wndStatusBar;
+    CStatusBar  m_wndStatusBar;
 
-	CReBar      m_wndReBar;
+    CReBar      m_wndReBar;
 
-	CDialogBar  m_wndDlgBar;
+    CDialogBar  m_wndDlgBar;
 
 
 
@@ -88,13 +88,13 @@ protected:  // control bar embedded members
 
 protected:
 
-	//{{AFX_MSG(MainFrame)
+    //{{AFX_MSG(MainFrame)
 
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 
-	//}}AFX_MSG
+    //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 
 };
 

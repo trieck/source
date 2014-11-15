@@ -15,39 +15,39 @@
 class Program {
 public:
 // Construction / Destruction
-	Program();
-	Program (const Program &);
-	~Program();
+    Program();
+    Program (const Program &);
+    ~Program();
 
 // Interface
-	void init();
-	Program & operator = (const Program &);
-	const Instr * code (Instr instruction);
-	const Instr * code (const Symbol * data);
-	const Instr * set(const Instr * offset, Instr instr);
-	const Instr * setjumpat (const Instr * offset);
-	void define(const char *, SymbolType type);
+    void init();
+    Program & operator = (const Program &);
+    const Instr * code (Instr instruction);
+    const Instr * code (const Symbol * data);
+    const Instr * set(const Instr * offset, Instr instr);
+    const Instr * setjumpat (const Instr * offset);
+    void define(const char *, SymbolType type);
 
-	operator const Instr* () const;
-	const Instr * operator++(int);	// postfix
+    operator const Instr* () const;
+    const Instr * operator++(int);	// postfix
 private:
 // Implementation
 
-	Instr memory[NPROG];
-	Instr * pmem;
-	Instr * pbase;
+    Instr memory[NPROG];
+    Instr * pmem;
+    Instr * pbase;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 
 inline Program::operator const Instr * () const
 {
-	return pbase;
+    return pbase;
 }
 
 inline const Instr * Program::operator++(int)
 {
-	return pmem++;
+    return pmem++;
 }
 
 #endif // __PROGRAM_H__

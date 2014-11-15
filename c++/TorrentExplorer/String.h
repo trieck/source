@@ -13,28 +13,28 @@
 
 class String : public TorrentObject {
 public:
-	String();
-	String(const String &s);
-	String(const CString &s);
-	String(const char *p, int nlen);
+    String();
+    String(const String &s);
+    String(const CString &s);
+    String(const char *p, int nlen);
 
-	virtual ~String();
+    virtual ~String();
 
-	String &operator =(const String &s);
-	operator LPCSTR() const;
-	operator const CString&() const;
+    String &operator =(const String &s);
+    operator LPCSTR() const;
+    operator const CString&() const;
 
-	virtual int GetElementType() const {
-		return ET_STRING;
-	}
+    virtual int GetElementType() const {
+        return ET_STRING;
+    }
 
-	int GetLength() const {
-		return data.GetLength();
-	}
+    int GetLength() const {
+        return data.GetLength();
+    }
 
-	char CharAt(int n) const;
+    char CharAt(int n) const;
 private:
-	CString data;
+    CString data;
 };
 
 typedef String *LPSTRING;

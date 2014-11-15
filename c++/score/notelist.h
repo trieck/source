@@ -14,24 +14,24 @@
 /////////////////////////////////////////////////////////////////////////////
 class NoteList : public CList <Note *, Note *> {
 public:
-	// Construction / Destruction
-	NoteList();
-	NoteList(const NoteList &);
-	virtual ~NoteList();
+    // Construction / Destruction
+    NoteList();
+    NoteList(const NoteList &);
+    virtual ~NoteList();
 
-	// Interface
-	NoteList & operator = (const NoteList &);
-	void Clear();
-	BOOL ismember(const Note *) const;
-	Note * find(BYTE) const;
-	Duration GetDuration() const;
-	BOOL Remove(Note *);
-	void Serialize(CArchive & ar);
-	int GetX() const;
+    // Interface
+    NoteList & operator = (const NoteList &);
+    void Clear();
+    BOOL ismember(const Note *) const;
+    Note * find(BYTE) const;
+    Duration GetDuration() const;
+    BOOL Remove(Note *);
+    void Serialize(CArchive & ar);
+    int GetX() const;
 
-	// Implementation
+    // Implementation
 protected:
-	DECLARE_SERIAL(NoteList)
+    DECLARE_SERIAL(NoteList)
 };
 /////////////////////////////////////////////////////////////////////////////
 

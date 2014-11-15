@@ -51,19 +51,19 @@ enum SymbolType {
 };
 
 typedef struct {
-	SymbolType type;
-	union {
-		double value;			// variable
-		Keyword keyword;		// keyword name
-		Instr instruction;		// built in
-		Instr * defn;			// function / proc
-		char str[MAXSTRING];	// string
-	};
+    SymbolType type;
+    union {
+        double value;			// variable
+        Keyword keyword;		// keyword name
+        Instr instruction;		// built in
+        Instr * defn;			// function / proc
+        char str[MAXSTRING];	// string
+    };
 } Symbol;
 
 typedef union {
-	double value;
-	Symbol * symbol;
+    double value;
+    Symbol * symbol;
 } Datum;
 
 #endif // __COMMON_H__

@@ -20,25 +20,25 @@ typedef vector<UINT64> DocVector;
 class Query {
 // Construction / Destruction
 public:
-	Query(BTree &t);
-	virtual ~Query();
+    Query(BTree &t);
+    virtual ~Query();
 
 // Interface
-	DocVector query(IPeekableStream *pStream);
+    DocVector query(IPeekableStream *pStream);
 
 // Implementation
 private:
-	DocVector expr();
-	DocVector lookup(const string &term);
-	DocVector conj(const DocVector &left,
-	               const DocVector &right, int distance) const;
-	int getc();
-	int lookahead();
+    DocVector expr();
+    DocVector lookup(const string &term);
+    DocVector conj(const DocVector &left,
+                   const DocVector &right, int distance) const;
+    int getc();
+    int lookahead();
 
-	string term();
+    string term();
 
-	BTree &btree;
-	IPeekableStream *m_pStream;
+    BTree &btree;
+    IPeekableStream *m_pStream;
 };
 /////////////////////////////////////////////////////////////////////////////
 

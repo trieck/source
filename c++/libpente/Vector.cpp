@@ -11,13 +11,13 @@
 /////////////////////////////////////////////////////////////////////////////
 Vector::Vector()
 {
-	clear();
+    clear();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Vector::Vector(const Vector &rhs)
 {
-	*this = rhs;
+    *this = rhs;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -28,30 +28,30 @@ Vector::~Vector()
 /////////////////////////////////////////////////////////////////////////////
 Vector & Vector::operator =(const Vector &rhs)
 {
-	if (this != &rhs) {
-		memcpy(v, rhs.v, sizeof(POINT) * VSIZE);
-	};
+    if (this != &rhs) {
+        memcpy(v, rhs.v, sizeof(POINT) * VSIZE);
+    };
 
-	return *this;
+    return *this;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Vector::clear()
 {
-	memset(v, ET_EMPTY, sizeof(POINT) * VSIZE);
+    memset(v, ET_EMPTY, sizeof(POINT) * VSIZE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 POINT Vector::entry(uint32_t index) const
 {
-	return v[index % VSIZE];
+    return v[index % VSIZE];
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Vector::setEntry(uint32_t index, uint32_t x, uint32_t y)
 {
-	POINT pt;
-	pt.x = x;
-	pt.y = y;
-	v[index % VSIZE] = pt;
+    POINT pt;
+    pt.x = x;
+    pt.y = y;
+    v[index % VSIZE] = pt;
 }

@@ -12,11 +12,11 @@
 class GetHandler : public IHandler {
 // Construction / Destruction
 public:
-	GetHandler();
-	virtual ~GetHandler();
+    GetHandler();
+    virtual ~GetHandler();
 
 // Interface
-	void Call(LPDICTIONARY request, LPDICTIONARY response);
+    void Call(LPDICTIONARY request, LPDICTIONARY response);
 
 // Implementation
 private:

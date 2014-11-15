@@ -11,15 +11,15 @@
 
 class CWtlView : public CWindowImpl<CWtlView, CTreeViewCtrl> {
 public:
-	DECLARE_WND_SUPERCLASS(NULL, CTreeViewCtrl::GetWndClassName())
+    DECLARE_WND_SUPERCLASS(NULL, CTreeViewCtrl::GetWndClassName())
 
-	BOOL PreTranslateMessage(MSG* pMsg) {
-		pMsg;
-		return FALSE;
-	}
+    BOOL PreTranslateMessage(MSG* pMsg) {
+        pMsg;
+        return FALSE;
+    }
 
-	BEGIN_MSG_MAP(CWtlView)
-	END_MSG_MAP()
+    BEGIN_MSG_MAP(CWtlView)
+    END_MSG_MAP()
 };
 
 

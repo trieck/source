@@ -28,7 +28,7 @@ InputDevices::~InputDevices()
 //
 UINT InputDevices::Count() const
 {
-	return ::midiInGetNumDevs();
+    return ::midiInGetNumDevs();
 }
 
 //
@@ -36,11 +36,11 @@ UINT InputDevices::Count() const
 //
 MidiDevice * InputDevices::GetDevice(UINT device) const
 {
-	MIDIINCAPS caps;
-	MMRESULT result = ::midiInGetDevCaps(device, &caps, sizeof(MIDIINCAPS));
-	if (result != MMSYSERR_NOERROR)
-		return NULL;
+    MIDIINCAPS caps;
+    MMRESULT result = ::midiInGetDevCaps(device, &caps, sizeof(MIDIINCAPS));
+    if (result != MMSYSERR_NOERROR)
+        return NULL;
 
-	return new InputDevice(&caps, device);
+    return new InputDevice(&caps, device);
 
 }

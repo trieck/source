@@ -14,7 +14,7 @@
 // IADFHandler interface
 class IADFHandler {
 public:
-	virtual void handle(const string &) const = 0;
+    virtual void handle(const string &) const = 0;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -24,23 +24,23 @@ typedef auto_ptr<HandlerRegistrar> HandlerRegistrarPtr;
 
 class HandlerRegistrar {
 private:
-	HandlerRegistrar();
+    HandlerRegistrar();
 public:
-	virtual ~HandlerRegistrar();
+    virtual ~HandlerRegistrar();
 
-	static HandlerRegistrar *getInstance();
-	void add(IADFHandler *pHandler);
+    static HandlerRegistrar *getInstance();
+    void add(IADFHandler *pHandler);
 
-	typedef vector<IADFHandler*> IADFHandlerVec;
-	typedef IADFHandlerVec::const_iterator IADFHandlerIterator;
+    typedef vector<IADFHandler*> IADFHandlerVec;
+    typedef IADFHandlerVec::const_iterator IADFHandlerIterator;
 
-	IADFHandlerIterator iterator();
-	IADFHandlerIterator end();
+    IADFHandlerIterator iterator();
+    IADFHandlerIterator end();
 private:
-	static HandlerRegistrarPtr instance;
+    static HandlerRegistrarPtr instance;
 
 
-	IADFHandlerVec handlers;
+    IADFHandlerVec handlers;
 };
 
 #endif // __ADFHANDLE_H__

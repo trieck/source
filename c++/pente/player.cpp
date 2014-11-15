@@ -10,24 +10,24 @@ IMPLEMENT_DYNAMIC(Player, CObject)
 
 /////////////////////////////////////////////////////////////////////////////
 Player::Player()
-	: captures(0)
+    : captures(0)
 {
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Player::Player(const Player & player)
 {
-	*this = player;
+    *this = player;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Player & Player::operator = (const Player & player)
 {
-	if (this != &player) {
-		captures = player.captures;
-	}
+    if (this != &player) {
+        captures = player.captures;
+    }
 
-	return *this;
+    return *this;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -38,9 +38,9 @@ Player::~Player()
 /////////////////////////////////////////////////////////////////////////////
 void Player::Serialize(CArchive & ar)
 {
-	if (ar.IsStoring()) {
-		ar << captures;
-	} else {
-		ar >> captures;
-	}
+    if (ar.IsStoring()) {
+        ar << captures;
+    } else {
+        ar >> captures;
+    }
 }

@@ -13,19 +13,19 @@
 
 class CPrefDlg : public CDialog {
 private:
-	CButton*	m_pCheck;
-	CEdit*		m_pLogPath;
-	CWysApp*	m_pApp;
+    CButton*	m_pCheck;
+    CEdit*		m_pLogPath;
+    CWysApp*	m_pApp;
 protected:
-	virtual BOOL OnInitDialog();
-	afx_msg void OnEnableLogging();
-	afx_msg void OnOK();
-	enum { IDD = IDD_PREFERENCES };
+    virtual BOOL OnInitDialog();
+    afx_msg void OnEnableLogging();
+    afx_msg void OnOK();
+    enum { IDD = IDD_PREFERENCES };
 public:
-	CPrefDlg(CWnd* pParentWnd = NULL);
-	~CPrefDlg();
+    CPrefDlg(CWnd* pParentWnd = NULL);
+    ~CPrefDlg();
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 #endif // __PREFDLG_H___

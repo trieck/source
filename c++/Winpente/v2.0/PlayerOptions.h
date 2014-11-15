@@ -12,21 +12,21 @@
 #include "ResDll\resource.h"
 
 class CPlayerOptionsDlg : public CDialog {
-	DECLARE_DYNCREATE(CPlayerOptionsDlg);
+    DECLARE_DYNCREATE(CPlayerOptionsDlg);
 
 public:
-	CPlayerOptionsDlg();
-	~CPlayerOptionsDlg();
+    CPlayerOptionsDlg();
+    ~CPlayerOptionsDlg();
 
 protected:
-	virtual BOOL	OnInitDialog();
-	virtual void	OnOK();
+    virtual BOOL	OnInitDialog();
+    virtual void	OnOK();
 private:
-	enum {IDD = IDD_PLAYER};
+    enum {IDD = IDD_PLAYER};
 
-	afx_msg void	OnPaint();
+    afx_msg void	OnPaint();
 
-	DECLARE_MESSAGE_MAP();
+    DECLARE_MESSAGE_MAP();
 };
 
 #endif // __PLAYEROPTIONS_H_

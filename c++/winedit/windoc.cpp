@@ -18,8 +18,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(WinEditDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(WinEditDoc, CDocument)
-	//{{AFX_MSG_MAP(WinEditDoc)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(WinEditDoc)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -35,12 +35,12 @@ WinEditDoc::~WinEditDoc()
 
 BOOL WinEditDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
+    if (!CDocument::OnNewDocument())
+        return FALSE;
 
-	((CEditView*)m_viewList.GetHead())->SetWindowText(NULL);
+    ((CEditView*)m_viewList.GetHead())->SetWindowText(NULL);
 
-	return TRUE;
+    return TRUE;
 }
 
 
@@ -50,7 +50,7 @@ BOOL WinEditDoc::OnNewDocument()
 
 void WinEditDoc::Serialize(CArchive& ar)
 {
-	((CEditView*)m_viewList.GetHead())->SerializeRaw(ar);
+    ((CEditView*)m_viewList.GetHead())->SerializeRaw(ar);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -59,12 +59,12 @@ void WinEditDoc::Serialize(CArchive& ar)
 #ifdef _DEBUG
 void WinEditDoc::AssertValid() const
 {
-	CDocument::AssertValid();
+    CDocument::AssertValid();
 }
 
 void WinEditDoc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+    CDocument::Dump(dc);
 }
 #endif //_DEBUG
 

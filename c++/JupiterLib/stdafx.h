@@ -36,9 +36,9 @@ typedef vector<string> stringvec;
 // case insensitive string comparison
 //
 struct stringless : std::binary_function <string, string, bool> {
-	bool operator () (const string & _X, const string & _Y) const {
-		return (stricmp(_X.c_str(), _Y.c_str()) > 0);
-	}
+    bool operator () (const string & _X, const string & _Y) const {
+        return (stricmp(_X.c_str(), _Y.c_str()) > 0);
+    }
 };
 
 typedef map<string, string, stringless> stringmap;
@@ -48,7 +48,7 @@ typedef map<string, string, stringless> stringmap;
 DECLARE_INTERFACE(IRunnable)
 {
 public:
-	virtual DWORD Execute(LPVOID) PURE;
+    virtual DWORD Execute(LPVOID) PURE;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -56,8 +56,8 @@ public:
 DECLARE_INTERFACE_(IPeekableStream, ISequentialStream)
 {
 public:
-	virtual HRESULT STDMETHODCALLTYPE Peek(void *pv, ULONG cb,
-	                                       ULONG *pcbRead) PURE;
+    virtual HRESULT STDMETHODCALLTYPE Peek(void *pv, ULONG cb,
+                                           ULONG *pcbRead) PURE;
 };
 
 typedef CComPtr<IPeekableStream> IPeekableStreamPtr;
@@ -68,7 +68,7 @@ template <typename T>
 DECLARE_INTERFACE(ICallable)
 {
 public:
-	virtual void Call(T*) PURE;
+    virtual void Call(T*) PURE;
 };
 
 /////////////////////////////////////////////////////////////////////////////

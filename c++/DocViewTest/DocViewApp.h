@@ -16,11 +16,11 @@
 
 class CDocViewApp : public CWinApp {
 public:
-	CDocViewApp();
-	virtual ~CDocViewApp();
+    CDocViewApp();
+    virtual ~CDocViewApp();
 
-	// Overrides
-	virtual BOOL InitInstance();
+    // Overrides
+    virtual BOOL InitInstance();
 };
 
 /////////////////////////////////////////////////////////////////////////////

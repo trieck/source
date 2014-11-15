@@ -17,32 +17,32 @@
 
 class CDocViewView : public CView {
 protected:
-	CDocViewView();
-	DECLARE_DYNCREATE(CDocViewView)
+    CDocViewView();
+    DECLARE_DYNCREATE(CDocViewView)
 
 // Attributes
 public:
-	CDocViewDoc* GetDocument();
+    CDocViewDoc* GetDocument();
 
 // Overrides
 public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-	virtual void OnInitialUpdate();
-	virtual BOOL PreCreateWindow(CREATESTRUCT&);
+    virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+    virtual void OnInitialUpdate();
+    virtual BOOL PreCreateWindow(CREATESTRUCT&);
 // Implementation
 public:
-	virtual ~CDocViewView();
+    virtual ~CDocViewView();
 
 protected:
-	// message map entries
-	afx_msg	INT	OnCreate(LPCREATESTRUCT);
+    // message map entries
+    afx_msg	INT	OnCreate(LPCREATESTRUCT);
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 inline CDocViewDoc* CDocViewView::GetDocument()
 {
-	return (CDocViewDoc*)m_pDocument;
+    return (CDocViewDoc*)m_pDocument;
 }
 
 ///////////////////////////////////////////////////////////////////

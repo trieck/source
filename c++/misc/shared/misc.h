@@ -38,59 +38,59 @@ class CImpISupportErrorInfo;
 class CMiscellaneous : public IMiscellaneous {
 public:
 
-	friend CImpISupportErrorInfo;
+    friend CImpISupportErrorInfo;
 
-	// IUnknown Methods
-	virtual HRESULT 	__stdcall QueryInterface(REFIID iid, PPVOID ppv);
-	virtual ULONG		__stdcall AddRef();
-	virtual ULONG		__stdcall Release();
+    // IUnknown Methods
+    virtual HRESULT 	__stdcall QueryInterface(REFIID iid, PPVOID ppv);
+    virtual ULONG		__stdcall AddRef();
+    virtual ULONG		__stdcall Release();
 
-	// IDispatch Methods
-	virtual HRESULT		__stdcall GetTypeInfoCount(UINT* pctInfo);
-	virtual HRESULT		__stdcall GetTypeInfo(UINT nTypeInfo, LCID, LPTYPEINFO* ppITypeInfo);
-	virtual HRESULT		__stdcall GetIDsOfNames(REFIID riid,
-	        LPOLESTR* rgzNames,
-	        UINT cNames,
-	        LCID lcid,
-	        DISPID* rgDispId);
-	virtual HRESULT		__stdcall Invoke(DISPID dispIdMember,
-	                                     REFIID riid,
-	                                     LCID lcid,
-	                                     WORD wFlags,
-	                                     DISPPARAMS* pDispParams,
-	                                     VARIANT* pVarResult,
-	                                     EXCEPINFO* pExcepInfo,
-	                                     UINT* puArgErr);
+    // IDispatch Methods
+    virtual HRESULT		__stdcall GetTypeInfoCount(UINT* pctInfo);
+    virtual HRESULT		__stdcall GetTypeInfo(UINT nTypeInfo, LCID, LPTYPEINFO* ppITypeInfo);
+    virtual HRESULT		__stdcall GetIDsOfNames(REFIID riid,
+            LPOLESTR* rgzNames,
+            UINT cNames,
+            LCID lcid,
+            DISPID* rgDispId);
+    virtual HRESULT		__stdcall Invoke(DISPID dispIdMember,
+                                         REFIID riid,
+                                         LCID lcid,
+                                         WORD wFlags,
+                                         DISPPARAMS* pDispParams,
+                                         VARIANT* pVarResult,
+                                         EXCEPINFO* pExcepInfo,
+                                         UINT* puArgErr);
 
-	// IMiscellaneous Methods
-	virtual HRESULT __stdcall GetDate(BSTR*);
-	virtual HRESULT __stdcall GetTime(BSTR*);
-	virtual HRESULT __stdcall GetDateTime(BSTR*);
-	virtual HRESULT __stdcall GetDriveSpace(const BSTR, __int64*);
-	virtual HRESULT __stdcall EnumDrives(BSTR*);
+    // IMiscellaneous Methods
+    virtual HRESULT __stdcall GetDate(BSTR*);
+    virtual HRESULT __stdcall GetTime(BSTR*);
+    virtual HRESULT __stdcall GetDateTime(BSTR*);
+    virtual HRESULT __stdcall GetDriveSpace(const BSTR, __int64*);
+    virtual HRESULT __stdcall EnumDrives(BSTR*);
 
-	// Initialization
-	HRESULT Init(HMODULE);
+    // Initialization
+    HRESULT Init(HMODULE);
 
-	// Constructor
-	CMiscellaneous(PFNDESTROYED);
+    // Constructor
+    CMiscellaneous(PFNDESTROYED);
 
-	// Destructor
-	~CMiscellaneous();
+    // Destructor
+    ~CMiscellaneous();
 
-	static LONG GetComponentCount () {
-		return m_cComponents;
-	}
+    static LONG GetComponentCount () {
+        return m_cComponents;
+    }
 
 private:
-	// Reference count
-	LONG					m_cRef;
-	static LONG				m_cComponents;
-	PFNDESTROYED			m_pfnDestroy;
-	LPTYPEINFO				m_pITypeInfo;
-	CImpISupportErrorInfo*	m_pISupportErrorInfo;
+    // Reference count
+    LONG					m_cRef;
+    static LONG				m_cComponents;
+    PFNDESTROYED			m_pfnDestroy;
+    LPTYPEINFO				m_pITypeInfo;
+    CImpISupportErrorInfo*	m_pISupportErrorInfo;
 protected:
-	HRESULT GenerateError(LPCTSTR);
+    HRESULT GenerateError(LPCTSTR);
 };
 
 typedef CMiscellaneous* LPMISCELLANEOUS;
@@ -101,31 +101,31 @@ typedef CMiscellaneous* LPMISCELLANEOUS;
 //
 class CImpISupportErrorInfo : public ISupportErrorInfo {
 public:
-	CImpISupportErrorInfo(LPMISCELLANEOUS pIMisc) : m_cRef(0) {
-		m_pIMisc = pIMisc;
-	}
-	~CImpISupportErrorInfo() {}
+    CImpISupportErrorInfo(LPMISCELLANEOUS pIMisc) : m_cRef(0) {
+        m_pIMisc = pIMisc;
+    }
+    ~CImpISupportErrorInfo() {}
 
-	// IUnknown Methods
-	virtual HRESULT 	__stdcall QueryInterface(REFIID iid, PPVOID ppv) {
-		return m_pIMisc->QueryInterface(iid, ppv);
-	}
-	virtual ULONG		__stdcall AddRef() {
-		InterlockedIncrement(&m_cRef);
-		return m_pIMisc->AddRef();
-	}
-	virtual ULONG		__stdcall Release() {
-		InterlockedDecrement(&m_cRef);
-		return m_pIMisc->Release();
-	}
+    // IUnknown Methods
+    virtual HRESULT 	__stdcall QueryInterface(REFIID iid, PPVOID ppv) {
+        return m_pIMisc->QueryInterface(iid, ppv);
+    }
+    virtual ULONG		__stdcall AddRef() {
+        InterlockedIncrement(&m_cRef);
+        return m_pIMisc->AddRef();
+    }
+    virtual ULONG		__stdcall Release() {
+        InterlockedDecrement(&m_cRef);
+        return m_pIMisc->Release();
+    }
 
-	// ISupportErrorInfo Methods
-	virtual HRESULT __stdcall InterfaceSupportsErrorInfo(REFIID riid) {
-		return (riid == IID_IMiscellaneous) ? S_OK : S_FALSE;
-	}
+    // ISupportErrorInfo Methods
+    virtual HRESULT __stdcall InterfaceSupportsErrorInfo(REFIID riid) {
+        return (riid == IID_IMiscellaneous) ? S_OK : S_FALSE;
+    }
 protected:
-	LPMISCELLANEOUS m_pIMisc;	// Back pointer to the object
-	LONG 			m_cRef;
+    LPMISCELLANEOUS m_pIMisc;	// Back pointer to the object
+    LONG 			m_cRef;
 };
 
 /////////////////////////////////////////////
@@ -134,25 +134,25 @@ protected:
 //
 class CFactory : public IClassFactory {
 public:
-	// IUnknown methods
-	virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv);
-	virtual ULONG	__stdcall AddRef();
-	virtual ULONG 	__stdcall Release();
+    // IUnknown methods
+    virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv);
+    virtual ULONG	__stdcall AddRef();
+    virtual ULONG 	__stdcall Release();
 
-	// IClassFactory methods
-	virtual HRESULT __stdcall CreateInstance(LPUNKNOWN pUnknownOuter,
-	        REFIID iid,
-	        PPVOID ppv);
-	virtual HRESULT __stdcall LockServer(BOOL bLock);
+    // IClassFactory methods
+    virtual HRESULT __stdcall CreateInstance(LPUNKNOWN pUnknownOuter,
+            REFIID iid,
+            PPVOID ppv);
+    virtual HRESULT __stdcall LockServer(BOOL bLock);
 
-	// Constructor
-	CFactory () : m_cRef(1) {}
+    // Constructor
+    CFactory () : m_cRef(1) {}
 
-	// Destructor
-	~CFactory() {}
+    // Destructor
+    ~CFactory() {}
 
 private:
-	LONG m_cRef;
+    LONG m_cRef;
 };
 
 

@@ -11,11 +11,11 @@
 
 class TorrentParser {
 private:
-	TorrentParser();
-	virtual ~TorrentParser();
+    TorrentParser();
+    virtual ~TorrentParser();
 
 public:
-	static LPDICTIONARY Parse(CArchive &ar);
+    static LPDICTIONARY Parse(CArchive &ar);
 };
 
 #endif // !defined(AFX_TORRENTPARSER_H__D00A29C7_17DD_4D2B_B663_91F8595F7CD6__INCLUDED_)

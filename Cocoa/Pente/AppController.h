@@ -6,9 +6,9 @@
 
 @interface AppController :
 NSObject {
-	IBOutlet View *view;
-	Board *board;
-	Machine *machine;
+    IBOutlet View *view;
+    Board *board;
+    Machine *machine;
 }
 - (IBAction)newGame:
 (id)sender;

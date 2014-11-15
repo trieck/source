@@ -35,8 +35,8 @@ typedef enum {
 } TokenType;
 #define MAXTOK 80
 typedef struct {
-	TokenType type;
-	char value[MAXTOK];
+    TokenType type;
+    char value[MAXTOK];
 } Token;
 Token gettok(const char **ppin);
 #endif /* __PARSER_H__ */

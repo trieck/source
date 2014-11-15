@@ -13,7 +13,7 @@
 class CScoresPreviewWnd : public CWnd {
 // Construction
 public:
-	CScoresPreviewWnd();
+    CScoresPreviewWnd();
 
 // Attributes
 public:
@@ -22,29 +22,29 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CScoresPreviewWnd)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CScoresPreviewWnd)
 protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	//}}AFX_VIRTUAL
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CScoresPreviewWnd();
+    virtual ~CScoresPreviewWnd();
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	VOID DrawData(CDC* pDC, INT, INT);
-	VOID DrawPage(CDC*, INT, INT);
-	VOID DrawPreview(CDC*, INT, INT);
+    VOID DrawData(CDC* pDC, INT, INT);
+    VOID DrawPage(CDC*, INT, INT);
+    VOID DrawPreview(CDC*, INT, INT);
 
-	CFont m_Font;
+    CFont m_Font;
 
-	//{{AFX_MSG(CScoresPreviewWnd)
-	afx_msg void OnPaint();
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(CScoresPreviewWnd)
+    afx_msg void OnPaint();
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

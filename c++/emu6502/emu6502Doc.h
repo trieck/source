@@ -12,8 +12,8 @@
 
 class Emu6502Doc : public CDocument {
 protected: // create from serialization only
-	Emu6502Doc();
-	DECLARE_DYNCREATE(Emu6502Doc)
+    Emu6502Doc();
+    DECLARE_DYNCREATE(Emu6502Doc)
 
 // Attributes
 public:
@@ -22,28 +22,28 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(Emu6502Doc)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(Emu6502Doc)
 public:
-	virtual BOOL OnNewDocument();
-	virtual void Serialize(CArchive& ar);
-	//}}AFX_VIRTUAL
+    virtual BOOL OnNewDocument();
+    virtual void Serialize(CArchive& ar);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~Emu6502Doc();
+    virtual ~Emu6502Doc();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(Emu6502Doc)
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(Emu6502Doc)
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

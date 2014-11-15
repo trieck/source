@@ -46,12 +46,12 @@
 #define get_carry_flag()				\
 	(cpu.sr & CARRY_FLAG)
 typedef struct {
-	word pc;	/* program counter */
-	byte sp;	/* stack pointer */
-	byte a;		/* accumulator */
-	byte x;		/* x register */
-	byte y;		/* y register */
-	byte sr;	/* status register */
+    word pc;	/* program counter */
+    byte sp;	/* stack pointer */
+    byte a;		/* accumulator */
+    byte x;		/* x register */
+    byte y;		/* y register */
+    byte sr;	/* status register */
 } Cpu;
 extern Cpu cpu;
 /***************************************************************************/

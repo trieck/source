@@ -12,11 +12,11 @@
 class PEFile {
 // Construction / Destruction
 public:
-	PEFile();
-	virtual ~PEFile();
+    PEFile();
+    virtual ~PEFile();
 
 // Interface
-	static void Dump(LPCTSTR filename);
+    static void Dump(LPCTSTR filename);
 
 // Implementation
 private:

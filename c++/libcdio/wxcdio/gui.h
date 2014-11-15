@@ -35,13 +35,13 @@ class AboutDlg : public wxDialog {
 private:
 
 protected:
-	wxStaticBitmap* m_bmCD;
-	wxStaticText* m_label;
-	wxButton* m_ok;
+    wxStaticBitmap* m_bmCD;
+    wxStaticText* m_label;
+    wxButton* m_ok;
 
 public:
-	AboutDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("About wxCDIO"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 278,197 ), long style = wxDEFAULT_DIALOG_STYLE );
-	~AboutDlg();
+    AboutDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("About wxCDIO"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 278,197 ), long style = wxDEFAULT_DIALOG_STYLE );
+    ~AboutDlg();
 
 };
 
@@ -52,22 +52,22 @@ class PropertiesDlg : public wxDialog {
 private:
 
 protected:
-	wxStaticText* m_staticText5;
-	wxStaticText* m_stCreated;
-	wxStaticText* m_staticText7;
-	wxStaticText* m_stLSN;
-	wxStaticText* m_staticText9;
-	wxStaticText* m_stSize;
-	wxStaticText* m_staticText11;
-	wxStaticText* m_stSectors;
-	wxStaticText* m_staticText15;
-	wxRadioButton* m_rbDirectory;
-	wxRadioButton* m_rbFile;
-	wxButton* m_OK;
+    wxStaticText* m_staticText5;
+    wxStaticText* m_stCreated;
+    wxStaticText* m_staticText7;
+    wxStaticText* m_stLSN;
+    wxStaticText* m_staticText9;
+    wxStaticText* m_stSize;
+    wxStaticText* m_staticText11;
+    wxStaticText* m_stSectors;
+    wxStaticText* m_staticText15;
+    wxRadioButton* m_rbDirectory;
+    wxRadioButton* m_rbFile;
+    wxButton* m_OK;
 
 public:
-	PropertiesDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 299,267 ), long style = wxDEFAULT_DIALOG_STYLE );
-	~PropertiesDlg();
+    PropertiesDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 299,267 ), long style = wxDEFAULT_DIALOG_STYLE );
+    ~PropertiesDlg();
 
 };
 

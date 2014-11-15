@@ -3,9 +3,9 @@
 /////////////////////////////////////////////////////////////////////////////
 class MeanFilter {
 public:
-	MeanFilter();
-	~MeanFilter();
+    MeanFilter();
+    ~MeanFilter();
 
-	void Filter(CImage &image);
+    void Filter(CImage &image);
 
 };

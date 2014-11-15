@@ -22,8 +22,8 @@ int tokenval;	/* value of token attribute */
 int lineno;
 
 struct entry {	/* form of symbol table entry */
-	char *lexptr;
-	int token;
+    char *lexptr;
+    int token;
 };
 
 struct entry symtable[];	/* symbol table */

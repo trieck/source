@@ -14,49 +14,49 @@
 class MainFrame : public CFrameWnd {
 
 protected: // create from serialization only
-	MainFrame();
-	DECLARE_DYNCREATE(MainFrame)
+    MainFrame();
+    DECLARE_DYNCREATE(MainFrame)
 // Attributes
 public:
 // Operations
 public:
-	PenteBar & getPenteBar();
+    PenteBar & getPenteBar();
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(MainFrame)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(MainFrame)
 public:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual void RecalcLayout(BOOL bNotify = TRUE);
-	//}}AFX_VIRTUAL
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual void RecalcLayout(BOOL bNotify = TRUE);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~MainFrame();
+    virtual ~MainFrame();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 // Generated message map functions
 protected:
-	//{{AFX_MSG(MainFrame)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
-	afx_msg void onUpdateCaptures(CCmdUI *pCmdUI);
-	afx_msg LRESULT OnAppSettingChange(WPARAM wParam, LPARAM lParam);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(MainFrame)
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
+    afx_msg void onUpdateCaptures(CCmdUI *pCmdUI);
+    afx_msg LRESULT OnAppSettingChange(WPARAM wParam, LPARAM lParam);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	PenteBar statusBar;
-	GripperBar toolBar;
-	void adjustFrameByBoard();
+    PenteBar statusBar;
+    GripperBar toolBar;
+    void adjustFrameByBoard();
 };
 /////////////////////////////////////////////////////////////////////////////
 
 inline PenteBar & MainFrame::getPenteBar()
 {
-	return statusBar;
+    return statusBar;
 }
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

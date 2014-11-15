@@ -20,32 +20,32 @@ typedef std::auto_ptr<NetResourceEnum> LPNETRESOURCEENUM;
 class NetResourceEnum : public NETRESOURCE {
 // Construction / Destruction
 protected:
-	NetResourceEnum(LPNETRESOURCE);
-	NetResourceEnum(HANDLE);
+    NetResourceEnum(LPNETRESOURCE);
+    NetResourceEnum(HANDLE);
 public:
-	virtual ~NetResourceEnum();
+    virtual ~NetResourceEnum();
 
 // Interface
-	DWORD count() const;
-	LPNETRESOURCEENUM GetAt(DWORD index);
+    DWORD count() const;
+    LPNETRESOURCEENUM GetAt(DWORD index);
 
 protected:
 // Implementation
-	void InitializeRes();
-	void FillBuffers();
+    void InitializeRes();
+    void FillBuffers();
 
 private:
-	HANDLE m_hEnum;			// enumeration handle
-	LPNETRESOURCE m_pres;	// array of network resources
-	DWORD m_buffers;		// number of entires in m_pres
+    HANDLE m_hEnum;			// enumeration handle
+    LPNETRESOURCE m_pres;	// array of network resources
+    DWORD m_buffers;		// number of entires in m_pres
 
-	friend LPNETRESOURCEENUM GetRootEnum();
+    friend LPNETRESOURCEENUM GetRootEnum();
 };
 /////////////////////////////////////////////////////////////////////////////
 
 inline DWORD NetResourceEnum::count() const
 {
-	return m_buffers;
+    return m_buffers;
 }
 
 // global helpers

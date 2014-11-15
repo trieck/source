@@ -14,19 +14,19 @@
 class Stack {
 public:
 // Construction / Destruction
-	Stack();
-	~Stack();
+    Stack();
+    ~Stack();
 
 // Interface
-	const Datum & top();
-	Datum pop();
-	void push (const Datum &);
-	void reset();
+    const Datum & top();
+    Datum pop();
+    void push (const Datum &);
+    void reset();
 
-	Datum * stackp;
+    Datum * stackp;
 protected:
 // Implementation
-	Datum data[NSTACK];
+    Datum data[NSTACK];
 };
 
 /////////////////////////////////////////////////////////////////////////////

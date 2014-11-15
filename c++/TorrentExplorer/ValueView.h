@@ -12,8 +12,8 @@
 
 class ValueView : public CListView {
 protected:
-	ValueView();           // protected constructor used by dynamic creation
-	DECLARE_DYNCREATE(ValueView)
+    ValueView();           // protected constructor used by dynamic creation
+    DECLARE_DYNCREATE(ValueView)
 
 // Attributes
 public:
@@ -22,32 +22,32 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(ValueView)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(ValueView)
 protected:
-	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
-	//}}AFX_VIRTUAL
+    virtual void OnDraw(CDC* pDC);      // overridden to draw this view
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+    //}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	virtual ~ValueView();
+    virtual ~ValueView();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	//{{AFX_MSG(ValueView)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg LRESULT OnSettingChange(WPARAM wParam, LPARAM lParam);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(ValueView)
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg LRESULT OnSettingChange(WPARAM wParam, LPARAM lParam);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 
 private:
-	void InsertInt(LPINTEGER i, LONG lHint);
+    void InsertInt(LPINTEGER i, LONG lHint);
 };
 
 /////////////////////////////////////////////////////////////////////////////

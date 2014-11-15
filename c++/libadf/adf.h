@@ -102,176 +102,176 @@
 /////////////////////////////////////////////////////////////////////////////
 // boot block structure
 struct bootblock_t {
-	char type[4];					/* 'D''O''S' + flags */
-	uint32_t checksum;				/* checksum */
-	uint32_t rootblock;				/* rootblock = 880 for DD and HD */
-	uint8_t code[BOOTBLOCKSIZE-12];	/* bootblock code */
+    char type[4];					/* 'D''O''S' + flags */
+    uint32_t checksum;				/* checksum */
+    uint32_t rootblock;				/* rootblock = 880 for DD and HD */
+    uint8_t code[BOOTBLOCKSIZE-12];	/* bootblock code */
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // root block structure
 struct rootblock_t {
-	int32_t type;					/* primary block type = T_HEADER */
-	int32_t key;					/* UNUSED */
-	int32_t highseq;				/* UNUSED */
-	int32_t tblsize;				/* hash table size (= BSIZE/4 - 56), floppy disk = 0x48 */
-	int32_t firstdata;				/* UNUSED */
-	uint32_t checksum;				/* root block checksum */
-	int32_t tbl[HT_SIZE];			/* hash table */
-	int32_t bmflag;					/* bitmap flag, -1 means VALID */
-	int32_t bmpages[BM_SIZE];		/* bitmap block pointers */
-	int32_t bmext;					/* first bitmap extension block (hard disks only) */
-	int32_t cdays;					/* filesystem creation date: days since 1 jan 78 */
-	int32_t cmins;					/* filesystem creation time: minutes past midnight */
-	int32_t cticks;					/* filesystem creation time: 1/50 sec past last minute */
-	int8_t namelen;					/* volume name length */
-	char diskname[MAXNAMELEN+1];	/* volume name */
-	int8_t r2[8];					/* RESERVED (= 0) */
-	int32_t days;					/* last root alteration date: days since 1 jan 78 */
-	int32_t mins;					/* hours and minutes in minutes past midnight */
-	int32_t ticks;					/* ticks (1/50 sec) past last minute */
-	int32_t codays;					/* last disk alteration date: days since 1 jan 78 */
-	int32_t comins;					/* hours and minutes in minutes past midnight */
-	int32_t coticks;				/* ticks (1/50 sec) past last minute */
-	int32_t nextsamehash;			/* UNUSED (= 0) */
-	int32_t parent;					/* UNUSED (= 0) */
-	int32_t extension;				/* FFS: first directory cache block, 0 otherwise */
-	int32_t sectype;				/* block secondary type = ST_ROOT */
+    int32_t type;					/* primary block type = T_HEADER */
+    int32_t key;					/* UNUSED */
+    int32_t highseq;				/* UNUSED */
+    int32_t tblsize;				/* hash table size (= BSIZE/4 - 56), floppy disk = 0x48 */
+    int32_t firstdata;				/* UNUSED */
+    uint32_t checksum;				/* root block checksum */
+    int32_t tbl[HT_SIZE];			/* hash table */
+    int32_t bmflag;					/* bitmap flag, -1 means VALID */
+    int32_t bmpages[BM_SIZE];		/* bitmap block pointers */
+    int32_t bmext;					/* first bitmap extension block (hard disks only) */
+    int32_t cdays;					/* filesystem creation date: days since 1 jan 78 */
+    int32_t cmins;					/* filesystem creation time: minutes past midnight */
+    int32_t cticks;					/* filesystem creation time: 1/50 sec past last minute */
+    int8_t namelen;					/* volume name length */
+    char diskname[MAXNAMELEN+1];	/* volume name */
+    int8_t r2[8];					/* RESERVED (= 0) */
+    int32_t days;					/* last root alteration date: days since 1 jan 78 */
+    int32_t mins;					/* hours and minutes in minutes past midnight */
+    int32_t ticks;					/* ticks (1/50 sec) past last minute */
+    int32_t codays;					/* last disk alteration date: days since 1 jan 78 */
+    int32_t comins;					/* hours and minutes in minutes past midnight */
+    int32_t coticks;				/* ticks (1/50 sec) past last minute */
+    int32_t nextsamehash;			/* UNUSED (= 0) */
+    int32_t parent;					/* UNUSED (= 0) */
+    int32_t extension;				/* FFS: first directory cache block, 0 otherwise */
+    int32_t sectype;				/* block secondary type = ST_ROOT */
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // file header block structure
 struct fileheader_t {
-	int32_t type;						/* primary block type = T_HEADER */
-	int32_t key;						/* current block number */
-	int32_t nblocks;					/* number of data blocks in this header block */
-	int32_t datasize;					/* UNUSED (= 0) */
-	int32_t firstblock;					/* pointer to first data block */
-	uint32_t checksum;					/* checksum */
-	int32_t datablocks[MAX_DATABLK];	/* data block pointers (first at BSIZE-204). size = (BSIZE/4)-56 */
-	int32_t r1;							/* RESERVED (= 0) */
-	int32_t r2;							/* RESERVED (= 0) */
-	int32_t access;						/* protection flags (set to 0 by default) */
-	uint32_t bytesize;					/* file size in bytes */
-	uint8_t commlen;					/* file comment length */
-	char comment[MAXCOMMLEN+1];			/* comment (max. 79 chars permitted) */
-	int8_t r3[11];						/* RESERVED (= 0) */
-	int32_t	days;						/* date of last change (days since 1 jan 78) */
-	int32_t mins;						/* time of last change (mins since midnight) */
-	int32_t ticks;						/* time of last change (1/50ths of a second since last min) */
-	uint8_t namelen;					/* filename length */
-	char filename[MAXNAMELEN+1];		/* filename (max. 30 chars permitted) */
-	int32_t r4;							/* RESERVED (= 0) */
-	int32_t real;						/* UNUSED (= 0) */
-	int32_t nextlink;					/* linked list of hard link (first = newest) */
-	int32_t r5[5];						/* RESERVED (= 0) */
-	int32_t nexthash;					/* next entry with same hash */
-	int32_t parent;						/* parent directory */
-	int32_t extension;					/* pointer to first extension block */
-	int32_t sectype;					/* secondary type = ST_FILE */
+    int32_t type;						/* primary block type = T_HEADER */
+    int32_t key;						/* current block number */
+    int32_t nblocks;					/* number of data blocks in this header block */
+    int32_t datasize;					/* UNUSED (= 0) */
+    int32_t firstblock;					/* pointer to first data block */
+    uint32_t checksum;					/* checksum */
+    int32_t datablocks[MAX_DATABLK];	/* data block pointers (first at BSIZE-204). size = (BSIZE/4)-56 */
+    int32_t r1;							/* RESERVED (= 0) */
+    int32_t r2;							/* RESERVED (= 0) */
+    int32_t access;						/* protection flags (set to 0 by default) */
+    uint32_t bytesize;					/* file size in bytes */
+    uint8_t commlen;					/* file comment length */
+    char comment[MAXCOMMLEN+1];			/* comment (max. 79 chars permitted) */
+    int8_t r3[11];						/* RESERVED (= 0) */
+    int32_t	days;						/* date of last change (days since 1 jan 78) */
+    int32_t mins;						/* time of last change (mins since midnight) */
+    int32_t ticks;						/* time of last change (1/50ths of a second since last min) */
+    uint8_t namelen;					/* filename length */
+    char filename[MAXNAMELEN+1];		/* filename (max. 30 chars permitted) */
+    int32_t r4;							/* RESERVED (= 0) */
+    int32_t real;						/* UNUSED (= 0) */
+    int32_t nextlink;					/* linked list of hard link (first = newest) */
+    int32_t r5[5];						/* RESERVED (= 0) */
+    int32_t nexthash;					/* next entry with same hash */
+    int32_t parent;						/* parent directory */
+    int32_t extension;					/* pointer to first extension block */
+    int32_t sectype;					/* secondary type = ST_FILE */
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // file header extension block structure
 struct fileext_t {
-	int32_t type;						/* primary block type = T_LIST */
-	int32_t key;						/* self pointer */
-	int32_t highseq;					/* number of data block pointers stored */
-	int32_t datasize;					/* UNUSED (= 0) */
-	int32_t firstdata;					/* UNUSED (= 0) */
-	uint32_t checksum;					/* checksum */
-	int32_t blocks[MAX_DATABLK];		/* data block pointer (first at BSIZE-204). size = (BSIZE/4) - 56 */
-	int32_t	r[45];						/* RESERVED	*/
-	int32_t info;						/* UNUSED (= 0) */
-	int32_t nexthash;					/* UNUSED (= 0) */
-	int32_t parent;						/* file header block */
-	int32_t extension;					/* next file header extension block. 0 for the last */
-	int32_t sectype;					/* secondary block type = ST_FILE */
+    int32_t type;						/* primary block type = T_LIST */
+    int32_t key;						/* self pointer */
+    int32_t highseq;					/* number of data block pointers stored */
+    int32_t datasize;					/* UNUSED (= 0) */
+    int32_t firstdata;					/* UNUSED (= 0) */
+    uint32_t checksum;					/* checksum */
+    int32_t blocks[MAX_DATABLK];		/* data block pointer (first at BSIZE-204). size = (BSIZE/4) - 56 */
+    int32_t	r[45];						/* RESERVED	*/
+    int32_t info;						/* UNUSED (= 0) */
+    int32_t nexthash;					/* UNUSED (= 0) */
+    int32_t parent;						/* file header block */
+    int32_t extension;					/* next file header extension block. 0 for the last */
+    int32_t sectype;					/* secondary block type = ST_FILE */
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // directory block structure
 struct dirblock_t {
-	int32_t	type;						/* primary block type = T_HEADER */
-	int32_t	key;						/* self pointer */
-	int32_t	highseq;					/* UNUSED (= 0 */
-	int32_t	tblsize;					/* UNUSED (= 0) */
-	int32_t	r1;							/* RESERVED (= 0) */
-	uint32_t checksum;					/* checksum */
-	int32_t	tbl[HT_SIZE];				/* hash table (entry block number). size = (BSIZE/4) - 56 */
-	int32_t	r2[2];						/* RESERVED */
-	int32_t	access;						/* protection flags (set to 0 by default) */
-	int32_t	r4;							/* RESERVED (= 0) */
-	int8_t commlen;						/* directory comment length */
-	char comment[MAXCOMMLEN+1];			/* comment (max. 79 chars permitted) */
-	int8_t r5[11];						/* UNUSED (= 0) */
-	int32_t	days;						/* last access date (days since 1 jan 78) */
-	int32_t	mins;						/* last access time (mins since midnight) */
-	int32_t	ticks;						/* last access time (1/50ths of a second since last min) */
-	int8_t namelen;						/* directory name length */
-	char dirname[MAXNAMELEN+1];			/* directory name (max. 30 chars permitted) */
-	int32_t	r6;							/* RESERVED (=0) */
-	int32_t	real;						/* UNUSED (=0) */
-	int32_t	nextlink;					/* FFS: linked list of hard links (first = newest) */
-	int32_t	r7[5];						/* RESERVED (=0) */
-	int32_t	nextsamehash;				/* next entry pointer with same hash */
-	int32_t	parent;						/* parent directory */
-	int32_t	extension;					/* FFS: first directory cache block */
-	int32_t	sectype;					/* secondary type = ST_DIR */
+    int32_t	type;						/* primary block type = T_HEADER */
+    int32_t	key;						/* self pointer */
+    int32_t	highseq;					/* UNUSED (= 0 */
+    int32_t	tblsize;					/* UNUSED (= 0) */
+    int32_t	r1;							/* RESERVED (= 0) */
+    uint32_t checksum;					/* checksum */
+    int32_t	tbl[HT_SIZE];				/* hash table (entry block number). size = (BSIZE/4) - 56 */
+    int32_t	r2[2];						/* RESERVED */
+    int32_t	access;						/* protection flags (set to 0 by default) */
+    int32_t	r4;							/* RESERVED (= 0) */
+    int8_t commlen;						/* directory comment length */
+    char comment[MAXCOMMLEN+1];			/* comment (max. 79 chars permitted) */
+    int8_t r5[11];						/* UNUSED (= 0) */
+    int32_t	days;						/* last access date (days since 1 jan 78) */
+    int32_t	mins;						/* last access time (mins since midnight) */
+    int32_t	ticks;						/* last access time (1/50ths of a second since last min) */
+    int8_t namelen;						/* directory name length */
+    char dirname[MAXNAMELEN+1];			/* directory name (max. 30 chars permitted) */
+    int32_t	r6;							/* RESERVED (=0) */
+    int32_t	real;						/* UNUSED (=0) */
+    int32_t	nextlink;					/* FFS: linked list of hard links (first = newest) */
+    int32_t	r7[5];						/* RESERVED (=0) */
+    int32_t	nextsamehash;				/* next entry pointer with same hash */
+    int32_t	parent;						/* parent directory */
+    int32_t	extension;					/* FFS: first directory cache block */
+    int32_t	sectype;					/* secondary type = ST_DIR */
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // old file system data block structure
 struct ofsblock_t {
-	int32_t type;				/* primary block type = T_DATA */
-	int32_t key;				/* pointer to file header block */
-	int32_t seqnum;				/* file data block number (first is 1) */
-	int32_t size;				/* data size (<= BSIZE-24) */
-	int32_t next;				/* next data block (0 for last) */
-	uint32_t checksum;			/* checksum */
-	uint8_t data[OFS_DBSIZE];	/* file data  */
+    int32_t type;				/* primary block type = T_DATA */
+    int32_t key;				/* pointer to file header block */
+    int32_t seqnum;				/* file data block number (first is 1) */
+    int32_t size;				/* data size (<= BSIZE-24) */
+    int32_t next;				/* next data block (0 for last) */
+    uint32_t checksum;			/* checksum */
+    uint8_t data[OFS_DBSIZE];	/* file data  */
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // bitmap block structure
 struct bitmapblock_t {
-	uint32_t checksum;			/* checksum */
-	uint32_t map[BM_MAPSIZE];	/* map */
+    uint32_t checksum;			/* checksum */
+    uint32_t map[BM_MAPSIZE];	/* map */
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // bitmap extension block structure
 struct bitmapextblock_t {
-	int32_t pages[BM_MAPSIZE];	/* bitmap block pointers */
-	int32_t next;				/* next block (0 for last) */
+    int32_t pages[BM_MAPSIZE];	/* bitmap block pointers */
+    int32_t next;				/* next block (0 for last) */
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // link block structure
 struct linkblock_t {
-	int32_t type;				/* primary block type = T_HEADER */
-	int32_t key;				/* self pointer */
-	int32_t r1[3];				/* RESERVED (= 0) */
-	uint32_t checksum;			/* checksum */
-	char realName[64];			/* Hard Link: UNUSED (= 0). Size = (BSIZE/4) - 54. For floppy disk = 74.
+    int32_t type;				/* primary block type = T_HEADER */
+    int32_t key;				/* self pointer */
+    int32_t r1[3];				/* RESERVED (= 0) */
+    uint32_t checksum;			/* checksum */
+    char realName[64];			/* Hard Link: UNUSED (= 0). Size = (BSIZE/4) - 54. For floppy disk = 74.
 								 * Soft Link: Path name to referenced object. Size = (BSIZE - 224) - 1).
                 				 * For floppy disk = 288 - 1 chars */
-	int32_t r2[83];				/* RESERVED (= 0) */
-	int32_t	days;				/* last access date (days since 1 jan 78) */
-	int32_t mins;				/* last access time (mins since midnight) */
-	int32_t ticks;				/* last access time (1/50ths of a second since last min) */
-	uint8_t namelen;			/* link name length */
-	char name[MAXNAMELEN+1];	/* link name */
-	int32_t r3;					/* RESERVED (= 0) */
-	int32_t realentry;			/* Hard Link: FFS: pointer to "real" file or directory.
+    int32_t r2[83];				/* RESERVED (= 0) */
+    int32_t	days;				/* last access date (days since 1 jan 78) */
+    int32_t mins;				/* last access time (mins since midnight) */
+    int32_t ticks;				/* last access time (1/50ths of a second since last min) */
+    uint8_t namelen;			/* link name length */
+    char name[MAXNAMELEN+1];	/* link name */
+    int32_t r3;					/* RESERVED (= 0) */
+    int32_t realentry;			/* Hard Link: FFS: pointer to "real" file or directory.
 								 * Soft Link: UNUSED (= 0) */
-	int32_t next;				/* Hard Link: FFS : linked list of hardlinks (first = newest).
+    int32_t next;				/* Hard Link: FFS : linked list of hardlinks (first = newest).
 								 * Soft Link: UNUSED (= 0) */
-	int32_t r4[5];				/* RESERVED (= 0) */
-	int32_t nextsamehash;		/* next entry ptr with same hash */
-	int32_t parent;				/* parent directory */
-	int32_t r5;					/* RESERVED (= 0) */
-	int32_t sectype;			/* secondary block type:
+    int32_t r4[5];				/* RESERVED (= 0) */
+    int32_t nextsamehash;		/* next entry ptr with same hash */
+    int32_t parent;				/* parent directory */
+    int32_t r5;					/* RESERVED (= 0) */
+    int32_t sectype;			/* secondary block type:
 								 * Hard Link: ST_LINKFILE or T_LINKDIR.
 								 * Soft Link: ST_SOFTLINK */
 };
@@ -279,43 +279,43 @@ struct linkblock_t {
 /////////////////////////////////////////////////////////////////////////////
 // directory cache block structure
 struct dircacheblock_t {
-	int32_t type;					/* T_DIRC */
-	int32_t key;					/* self pointer */
-	int32_t parent;					/* parent directory */
-	int32_t nrecs;					/* number of entry records in this block */
-	int32_t next;					/* directory cache linked list */
-	uint32_t checksum;				/* checksum */
-	uint8_t records[OFS_DBSIZE];	/* list of entries */
+    int32_t type;					/* T_DIRC */
+    int32_t key;					/* self pointer */
+    int32_t parent;					/* parent directory */
+    int32_t nrecs;					/* number of entry records in this block */
+    int32_t next;					/* directory cache linked list */
+    uint32_t checksum;				/* checksum */
+    uint8_t records[OFS_DBSIZE];	/* list of entries */
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // file/directory/link
 struct entryblock_t {
-	int32_t type;				/* T_HEADER == 2 */
-	int32_t key;				/* current block number */
-	int32_t r1[2];
-	int32_t firstblock;			/* pointer to first data block */
-	uint32_t checksum;
-	int32_t tbl[HT_SIZE];
-	int32_t r2[2];
-	int32_t access;				/* bit0=del, 1=modif, 2=write, 3=read */
-	int32_t bytesize;
-	uint8_t commlen;
-	char comment[MAXCOMMLEN+1];
-	char r3[11];
-	int32_t days;
-	int32_t mins;
-	int32_t ticks;
-	uint8_t namelen;
-	char name[MAXNAMELEN+1];
-	int32_t r4;
-	int32_t realentry;
-	int32_t nextlink;
-	int32_t r5[5];
-	int32_t nextsamehash;
-	int32_t parent;
-	int32_t extension;
-	int32_t sectype;
+    int32_t type;				/* T_HEADER == 2 */
+    int32_t key;				/* current block number */
+    int32_t r1[2];
+    int32_t firstblock;			/* pointer to first data block */
+    uint32_t checksum;
+    int32_t tbl[HT_SIZE];
+    int32_t r2[2];
+    int32_t access;				/* bit0=del, 1=modif, 2=write, 3=read */
+    int32_t bytesize;
+    uint8_t commlen;
+    char comment[MAXCOMMLEN+1];
+    char r3[11];
+    int32_t days;
+    int32_t mins;
+    int32_t ticks;
+    uint8_t namelen;
+    char name[MAXNAMELEN+1];
+    int32_t r4;
+    int32_t realentry;
+    int32_t nextlink;
+    int32_t r5[5];
+    int32_t nextsamehash;
+    int32_t parent;
+    int32_t extension;
+    int32_t sectype;
 };
 
 #endif // __ADF_H__

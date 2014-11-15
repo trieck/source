@@ -28,40 +28,40 @@ typedef std::vector<Vector> VecVec;
 class Board {
 // Construction / Destruction
 private:
-	Board();
+    Board();
 public:
-	virtual ~Board();
+    virtual ~Board();
 
 // Interface
-	typedef std::auto_ptr<Board> BoardPtr;
-	static Board *instance();
+    typedef std::auto_ptr<Board> BoardPtr;
+    static Board *instance();
 
-	uint32_t getEntry(uint32_t x, uint32_t y) const;
-	void setEntry(uint32_t x, uint32_t y, uint32_t type);
-	void remove(uint32_t x, uint32_t y);
-	void clear();
-	UInt32EntryMapEnum enumEntries();
-	EntryVec empty();
-	const VecVec &getVectors() const;
-	const Vector* winner(uint32_t &nplayer) const;
-	uint32_t size() const {
-		return (uint32_t)rep.size();
-	}
-	void getCaptures(uint32_t x, uint32_t y, CaptureVec &captures);
+    uint32_t getEntry(uint32_t x, uint32_t y) const;
+    void setEntry(uint32_t x, uint32_t y, uint32_t type);
+    void remove(uint32_t x, uint32_t y);
+    void clear();
+    UInt32EntryMapEnum enumEntries();
+    EntryVec empty();
+    const VecVec &getVectors() const;
+    const Vector* winner(uint32_t &nplayer) const;
+    uint32_t size() const {
+        return (uint32_t)rep.size();
+    }
+    void getCaptures(uint32_t x, uint32_t y, CaptureVec &captures);
 
 // Implementation
 private:
-	void generate();
+    void generate();
 
-	static BoardPtr This;
-	UInt32EntryMap rep;
-	VecVec vectors;
+    static BoardPtr This;
+    UInt32EntryMap rep;
+    VecVec vectors;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 inline const VecVec &Board::getVectors() const
 {
-	return vectors;
+    return vectors;
 }
 
 #endif /* __BOARD_H__ */

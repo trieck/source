@@ -15,9 +15,9 @@
 //
 DWORD MidiTime :: BPMToMicroseconds(DWORD bpm)
 {
-	// Convert from Beats Per Minute
-	// to Microseconds Per Quarter Note
-	return DWORD(60000000 / float(bpm));
+    // Convert from Beats Per Minute
+    // to Microseconds Per Quarter Note
+    return DWORD(60000000 / float(bpm));
 }
 
 //
@@ -25,9 +25,9 @@ DWORD MidiTime :: BPMToMicroseconds(DWORD bpm)
 //
 DWORD MidiTime :: MicrosecondsToBPM(DWORD microseconds)
 {
-	// Convert from Microseconds Per Quarter Note
-	// to Beats Per Minute
-	return (DWORD)(1 / (microseconds / 1000000 / 60));
+    // Convert from Microseconds Per Quarter Note
+    // to Beats Per Minute
+    return (DWORD)(1 / (microseconds / 1000000 / 60));
 }
 
 //
@@ -35,6 +35,6 @@ DWORD MidiTime :: MicrosecondsToBPM(DWORD microseconds)
 //
 BYTE MidiTime :: DurationToTicks(Duration duration)
 {
-	return BYTE(DEFAULT_PPQN * 4 * float(1) / duration);
+    return BYTE(DEFAULT_PPQN * 4 * float(1) / duration);
 }
 

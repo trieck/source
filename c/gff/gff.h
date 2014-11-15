@@ -37,26 +37,26 @@ typedef long long T_INT64;
 
 /* GFF header */
 typedef struct tagGffHeader {
-	char FileType[4];				/* "DLG ", "ITP", etc. */
-	char FileVersion[4];			/* "V3.2" */
-	unsigned StructOffset;			/* Offset of Struct array as bytes */
-	unsigned StructCount;			/* Number of elements in the Struct array */
-	unsigned FieldOffset;			/* Offset of Field array as bytes */
-	unsigned FieldCount;			/* Number of elements in the Field array */
-	unsigned LabelOffset;			/* Offset of Label array as bytes */
-	unsigned LabelCount;			/* Number of elements in the Label array */
-	unsigned FieldDataOffset;		/* Offset of Field Data as bytes */
-	unsigned FieldDataCount;		/* Number of bytes in Field Data block */
-	unsigned FieldIndicesOffset;	/* Offset of Field Indices array as bytes */
-	unsigned FieldIndicesCount;		/* Number of bytes in Field Indices array */
-	unsigned ListIndicesOffset;		/* Offset of List Indices array as bytes */
-	unsigned ListIndicesCount;		/* Number of bytes in ListIndicesArray */
+    char FileType[4];				/* "DLG ", "ITP", etc. */
+    char FileVersion[4];			/* "V3.2" */
+    unsigned StructOffset;			/* Offset of Struct array as bytes */
+    unsigned StructCount;			/* Number of elements in the Struct array */
+    unsigned FieldOffset;			/* Offset of Field array as bytes */
+    unsigned FieldCount;			/* Number of elements in the Field array */
+    unsigned LabelOffset;			/* Offset of Label array as bytes */
+    unsigned LabelCount;			/* Number of elements in the Label array */
+    unsigned FieldDataOffset;		/* Offset of Field Data as bytes */
+    unsigned FieldDataCount;		/* Number of bytes in Field Data block */
+    unsigned FieldIndicesOffset;	/* Offset of Field Indices array as bytes */
+    unsigned FieldIndicesCount;		/* Number of bytes in Field Indices array */
+    unsigned ListIndicesOffset;		/* Offset of List Indices array as bytes */
+    unsigned ListIndicesCount;		/* Number of bytes in ListIndicesArray */
 } GffHeader;
 
 /* Struct type */
 typedef struct tagStruct {
-	unsigned Type;					/* Programmer defined id */
-	unsigned DataOrDataOffset;		/* If FieldCount = 1, this is an index
+    unsigned Type;					/* Programmer defined id */
+    unsigned DataOrDataOffset;		/* If FieldCount = 1, this is an index
 										into the Field Array.
 									 	If FieldCount > 1, this is a byte
 									 	offset into the Field Indices
@@ -65,14 +65,14 @@ typedef struct tagStruct {
 										equal to FieldCount. Each one of these DWORDs
 										is an index into the Field Array.
 									*/
-	unsigned FieldCount;			/* Number of fields in this struct */
+    unsigned FieldCount;			/* Number of fields in this struct */
 } Struct;
 
 /* Field type */
 typedef struct tagField {
-	unsigned FieldType;				/* Field data type */
-	unsigned LabelIndex;			/* Index into the Label array */
-	unsigned DataOrDataOffset;		/* If FieldType is a simple data type
+    unsigned FieldType;				/* Field data type */
+    unsigned LabelIndex;			/* Index into the Label array */
+    unsigned DataOrDataOffset;		/* If FieldType is a simple data type
 										then this is the value actual of
 										the field.  If FieldType is a complex
 										data type , then this is
@@ -102,40 +102,40 @@ enum FTYPE {
 
 /* simple character string type */
 typedef struct tagCExoString {
-	unsigned Size;
-	char *Str;
+    unsigned Size;
+    char *Str;
 } CExoString;
 
 /* localized substring */
 typedef struct tagCExoLocSubString {
-	int StringID;
-	int StrLength;
-	char *Str;
+    int StringID;
+    int StrLength;
+    char *Str;
 } CExoLocSubString;
 
 /* localized string */
 typedef struct tagCExoLocString {
-	unsigned Size;
-	unsigned StrRef;	/* index into user's dialog.tlk file,
+    unsigned Size;
+    unsigned StrRef;	/* index into user's dialog.tlk file,
 							which contains a list of almost all
 							the localized text in the game and toolset.
 							if StrRef = 0xFFFFFFFF, then LocString
 							does not reference dialog.tlk at all.
 						*/
-	unsigned StrCount;
-	CExoLocSubString *SubStrs;
+    unsigned StrCount;
+    CExoLocSubString *SubStrs;
 } CExoLocString;
 
 /* used to store filename */
 typedef struct tagCResRef {
-	unsigned char Size;
-	char Str[GFF_CRESREFMAX];
+    unsigned char Size;
+    char Str[GFF_CRESREFMAX];
 } CResRef;
 
 /* VOID data */
 typedef struct tagVoid {
-	unsigned Size;
-	unsigned char *Ptr;
+    unsigned Size;
+    unsigned char *Ptr;
 } Void;
 
 #endif /* __GFF_H__ */

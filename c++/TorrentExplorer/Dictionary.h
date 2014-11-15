@@ -13,21 +13,21 @@
 
 class Dictionary : public TorrentObject {
 public:
-	Dictionary();
-	virtual ~Dictionary();
-	void Set(LPCSTR k, LPTORRENTOBJECT v);
-	LPTORRENTOBJECT Get(LPCSTR k) const;
-	LPCSTR GetString(LPCSTR k) const;
+    Dictionary();
+    virtual ~Dictionary();
+    void Set(LPCSTR k, LPTORRENTOBJECT v);
+    LPTORRENTOBJECT Get(LPCSTR k) const;
+    LPCSTR GetString(LPCSTR k) const;
 
-	KeyVec GetKeys() const;
-	KeyVec GetKeysSorted() const;
+    KeyVec GetKeys() const;
+    KeyVec GetKeysSorted() const;
 
-	virtual int GetElementType() const {
-		return ET_DICT;
-	}
+    virtual int GetElementType() const {
+        return ET_DICT;
+    }
 
 private:
-	CMap<CString, LPCSTR, LPTORRENTOBJECT, LPTORRENTOBJECT> map;
+    CMap<CString, LPCSTR, LPTORRENTOBJECT, LPTORRENTOBJECT> map;
 };
 
 typedef Dictionary *LPDICTIONARY;

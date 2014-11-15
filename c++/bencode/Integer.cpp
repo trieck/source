@@ -17,7 +17,7 @@ Integer::Integer(INT64 v) : val(v)
 /////////////////////////////////////////////////////////////////////////////
 Integer::Integer(const Integer &i)
 {
-	*this = i;
+    *this = i;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -28,22 +28,22 @@ Integer::~Integer()
 /////////////////////////////////////////////////////////////////////////////
 Integer &Integer::operator =(const Integer &rhs)
 {
-	if (this != &rhs) {
-		val = rhs.val;
-	}
+    if (this != &rhs) {
+        val = rhs.val;
+    }
 
-	return *this;
+    return *this;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 LPBEOBJECT Integer::Copy() const
 {
-	return new Integer(*this);
+    return new Integer(*this);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Global helper functions
 LPINTEGER MakeInteger(INT64 val)
 {
-	return new Integer(val);
+    return new Integer(val);
 }

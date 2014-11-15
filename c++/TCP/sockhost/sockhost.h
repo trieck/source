@@ -42,20 +42,20 @@
 #define	SERVICE_NAME	"merlin"
 
 typedef struct { // socket info structure
-	SOCKET	sdVal;
-	INT		iState;
-	CHAR	IPAddress[16];
-	REQUEST	Request;
+    SOCKET	sdVal;
+    INT		iState;
+    CHAR	IPAddress[16];
+    REQUEST	Request;
 } SDSTRUCT, *LPSDSTRUCT ;
 
 typedef struct { // screen line structure
-	COLORREF	uColor;
-	CHAR		szText[255];
+    COLORREF	uColor;
+    CHAR		szText[255];
 } SCREENLINE, *LPSCREENLINE;
 
 typedef struct {	// logging structure
-	BOOL		bIsLogging;
-	CHAR		szFileName[_MAX_PATH + _MAX_FNAME];
+    BOOL		bIsLogging;
+    CHAR		szFileName[_MAX_PATH + _MAX_FNAME];
 } LOGSTRUCT, *LPLOGSTRUCT, **PPLOGSTRUCT;
 
 typedef struct tm* LPTIME;

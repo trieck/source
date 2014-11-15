@@ -21,27 +21,27 @@
 
 class Emu6502App : public CWinApp {
 public:
-	Emu6502App();
+    Emu6502App();
 
 // Interface
-	void RegisterConstruct(int id, CWnd *pWnd);
-	void RegisterDestruct(int id);
-	CWnd *GetState(int id);
+    void RegisterConstruct(int id, CWnd *pWnd);
+    void RegisterDestruct(int id);
+    CWnd *GetState(int id);
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(Emu6502App)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(Emu6502App)
 public:
-	virtual BOOL InitInstance();
-	//}}AFX_VIRTUAL
+    virtual BOOL InitInstance();
+    //}}AFX_VIRTUAL
 
 // Implementation
-	//{{AFX_MSG(Emu6502App)
-	afx_msg void OnAppAbout();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(Emu6502App)
+    afx_msg void OnAppAbout();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	CMap<int, int, CWnd*, CWnd*> states;
+    CMap<int, int, CWnd*, CWnd*> states;
 };
 
 

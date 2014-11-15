@@ -13,43 +13,43 @@
 class CDigitCtrl : public CWnd {
 // Construction
 public:
-	CDigitCtrl();
+    CDigitCtrl();
 
 // Attributes
 public:
 
-	// Operations
+    // Operations
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CDigitCtrl)
-	//}}AFX_VIRTUAL
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CDigitCtrl)
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	VOID SetBackColor(COLORREF lColor);
-	BOOL			SetValue(UINT);
-	inline	UINT	GetCurrentDigit() {
-		return m_nCurrentDigit;
-	}
-	virtual VOID	DrawDigit(CDC*);
-	VOID			SetNextDigit();
-	virtual			~CDigitCtrl();
+    VOID SetBackColor(COLORREF lColor);
+    BOOL			SetValue(UINT);
+    inline	UINT	GetCurrentDigit() {
+        return m_nCurrentDigit;
+    }
+    virtual VOID	DrawDigit(CDC*);
+    VOID			SetNextDigit();
+    virtual			~CDigitCtrl();
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	COLORREF m_lBackColor;
-	afx_msg	VOID	OnPaint();
+    COLORREF m_lBackColor;
+    afx_msg	VOID	OnPaint();
 
-	//{{AFX_MSG(CDigitCtrl)
-	// NOTE - the ClassWizard will add and remove member functions here.
-	//}}AFX_MSG
+    //{{AFX_MSG(CDigitCtrl)
+    // NOTE - the ClassWizard will add and remove member functions here.
+    //}}AFX_MSG
 private:
-	UINT	m_nCurrentDigit;
-	static	const UINT nBitmaps[10];
+    UINT	m_nCurrentDigit;
+    static	const UINT nBitmaps[10];
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

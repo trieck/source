@@ -11,9 +11,9 @@
 
 @interface MyDocument :
 NSDocument {
-	NSMutableArray *employees;
-	IBOutlet NSTableView *tableView;
-	IBOutlet NSButton *deleteButton;
+    NSMutableArray *employees;
+    IBOutlet NSTableView *tableView;
+    IBOutlet NSButton *deleteButton;
 }
 
 // Action methods

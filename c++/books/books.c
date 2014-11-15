@@ -13,12 +13,12 @@
 * represents a book
 */
 typedef struct Book {
-	char title[100];
-	char author[100];
-	char isbn[20];
-	int year;
-	struct Book *left;
-	struct Book *right;
+    char title[100];
+    char author[100];
+    char isbn[20];
+    int year;
+    struct Book *left;
+    struct Book *right;
 } Book;
 
 /*
@@ -45,63 +45,63 @@ static void viewBooks(Book *root);
 
 int main(int argc, char *argv[])
 {
-	const char **pargs = argv;
-	argv++;
-	argc--;
+    const char **pargs = argv;
+    argv++;
+    argc--;
 
-	atexit(cleanup);
+    atexit(cleanup);
 
-	if (argc < 1) {
-		fprintf(stderr, usage);
-		return 1;
-	}
+    if (argc < 1) {
+        fprintf(stderr, usage);
+        return 1;
+    }
 
-	/* read the database into memory */
-	readDb();
+    /* read the database into memory */
+    readDb();
 
-	/* parse command line arguments */
-	for ( ; *pargs; pargs++) {
-		switch (pargs[0][0]) {
-		case '-':
-			if (pargs[0][1] == 'A') {
-				/* display all books */
-				viewBooks(books);
-			} else if (pargs[0][1] == 'l') {
-				/* lookup the book by title */
-				Book *B;
-				if (argc < 2) {
-					fprintf(stderr, usage);
-					return 1;
-				}
-				B = lookupBook(books, *(++pargs));
-				if (B == NULL)
-					fprintf(stderr, "\ncould not find book.\n");
-				else printBook(B);
-				argc--;
-				argc--;
-			} else if (pargs[0][1] == 'a') {
-				/* add a book */
-				Book book;
-				if (argc < 4) {
-					fprintf(stderr, usage);
-					return 1;
-				}
-				strcpy(book.title, *(++pargs));
-				strcpy(book.author, *(++pargs));
-				strcpy(book.isbn, *(++pargs));
-				book.year = atoi(*(++pargs));
-				addBook(&books, &book);
-				printBook(&book);
-				argc--;
-				argc -= 4;
-			}
-			break;
-		default:
-			break;
-		}
-	}
+    /* parse command line arguments */
+    for ( ; *pargs; pargs++) {
+        switch (pargs[0][0]) {
+        case '-':
+            if (pargs[0][1] == 'A') {
+                /* display all books */
+                viewBooks(books);
+            } else if (pargs[0][1] == 'l') {
+                /* lookup the book by title */
+                Book *B;
+                if (argc < 2) {
+                    fprintf(stderr, usage);
+                    return 1;
+                }
+                B = lookupBook(books, *(++pargs));
+                if (B == NULL)
+                    fprintf(stderr, "\ncould not find book.\n");
+                else printBook(B);
+                argc--;
+                argc--;
+            } else if (pargs[0][1] == 'a') {
+                /* add a book */
+                Book book;
+                if (argc < 4) {
+                    fprintf(stderr, usage);
+                    return 1;
+                }
+                strcpy(book.title, *(++pargs));
+                strcpy(book.author, *(++pargs));
+                strcpy(book.isbn, *(++pargs));
+                book.year = atoi(*(++pargs));
+                addBook(&books, &book);
+                printBook(&book);
+                argc--;
+                argc -= 4;
+            }
+            break;
+        default:
+            break;
+        }
+    }
 
-	return 0;
+    return 0;
 }
 
 /*
@@ -110,14 +110,14 @@ int main(int argc, char *argv[])
  */
 void cleanup(void)
 {
-	if (NULL != books) {
-		FILE *fp = fopen(filename, "w+");
-		if (NULL != fp) {
-			writeDb(books, fp);
-			fclose(fp);
-		}
-		freeBook(books);
-	}
+    if (NULL != books) {
+        FILE *fp = fopen(filename, "w+");
+        if (NULL != fp) {
+            writeDb(books, fp);
+            fclose(fp);
+        }
+        freeBook(books);
+    }
 }
 
 /*
@@ -125,29 +125,29 @@ void cleanup(void)
  */
 void addBook(Book **root, Book *book)
 {
-	int M;
-	Book *B = *root;
+    int M;
+    Book *B = *root;
 
-	if (*root == NULL) {
-		*root = allocBook();
-		strcpy((*root)->title, book->title);
-		strcpy((*root)->author, book->author);
-		strcpy((*root)->isbn, book->isbn);
-		(*root)->year = book->year;
-		return;	// we inserted the book
-	}
+    if (*root == NULL) {
+        *root = allocBook();
+        strcpy((*root)->title, book->title);
+        strcpy((*root)->author, book->author);
+        strcpy((*root)->isbn, book->isbn);
+        (*root)->year = book->year;
+        return;	// we inserted the book
+    }
 
-	// compare the title descriptions
-	M = stricmp(book->title, B->title);
-	if (M < 0) {
-		addBook(&B->left, book);
-	} else if (M >= 1) {
-		addBook(&B->right, book);
-	} else {
-		// they're the same
-		fprintf(stderr, "\nyou cannot add duplicate items.\n");
-		return;
-	}
+    // compare the title descriptions
+    M = stricmp(book->title, B->title);
+    if (M < 0) {
+        addBook(&B->left, book);
+    } else if (M >= 1) {
+        addBook(&B->right, book);
+    } else {
+        // they're the same
+        fprintf(stderr, "\nyou cannot add duplicate items.\n");
+        return;
+    }
 }
 
 /*
@@ -155,15 +155,15 @@ void addBook(Book **root, Book *book)
  */
 Book * allocBook()
 {
-	Book *B = (Book*)malloc(sizeof(Book));
-	if (NULL == B) {
-		fprintf(stderr, "could not allocate a book!\n");
-		exit(-1);
-	}
+    Book *B = (Book*)malloc(sizeof(Book));
+    if (NULL == B) {
+        fprintf(stderr, "could not allocate a book!\n");
+        exit(-1);
+    }
 
-	memset(B, 0, sizeof(Book));
+    memset(B, 0, sizeof(Book));
 
-	return B;
+    return B;
 }
 
 /*
@@ -171,11 +171,11 @@ Book * allocBook()
  */
 void freeBook(Book *B)
 {
-	if (B != NULL) {
-		freeBook(B->left);
-		freeBook(B->right);
-		free(B);
-	}
+    if (B != NULL) {
+        freeBook(B->left);
+        freeBook(B->right);
+        free(B);
+    }
 }
 
 /*
@@ -183,18 +183,18 @@ void freeBook(Book *B)
  */
 Book * lookupBook(Book *root, const char *title)
 {
-	int M;
+    int M;
 
-	if (NULL == root)
-		return NULL;
+    if (NULL == root)
+        return NULL;
 
-	M = stricmp(title, root->title);
-	if (M < 0)
-		return lookupBook(root->left, title);
-	else if (M >= 1)
-		return lookupBook(root->right, title);
+    M = stricmp(title, root->title);
+    if (M < 0)
+        return lookupBook(root->left, title);
+    else if (M >= 1)
+        return lookupBook(root->right, title);
 
-	return root;
+    return root;
 }
 
 /*
@@ -202,19 +202,19 @@ Book * lookupBook(Book *root, const char *title)
  */
 void writeDb(Book *book, FILE *fp)
 {
-	if (NULL != book) {
-		fprintf(fp, "%d\1%s%d\1%s%d\1%s%d\1",
-		        strlen(book->title),
-		        book->title,
-		        strlen(book->author),
-		        book->author,
-		        strlen(book->isbn),
-		        book->isbn,
-		        book->year);
+    if (NULL != book) {
+        fprintf(fp, "%d\1%s%d\1%s%d\1%s%d\1",
+                strlen(book->title),
+                book->title,
+                strlen(book->author),
+                book->author,
+                strlen(book->isbn),
+                book->isbn,
+                book->year);
 
-		writeDb(book->left, fp);
-		writeDb(book->right, fp);
-	}
+        writeDb(book->left, fp);
+        writeDb(book->right, fp);
+    }
 }
 
 /*
@@ -222,18 +222,18 @@ void writeDb(Book *book, FILE *fp)
  */
 void readDb(void)
 {
-	FILE *fp;
+    FILE *fp;
 
-	fp = fopen(filename, "r");
-	if (NULL == fp) {
-		fprintf(stderr, "warning: database file not found.\n");
-		return;	// empty or not found
-	}
+    fp = fopen(filename, "r");
+    if (NULL == fp) {
+        fprintf(stderr, "warning: database file not found.\n");
+        return;	// empty or not found
+    }
 
-	while (readRecord(fp))
-		;
+    while (readRecord(fp))
+        ;
 
-	fclose(fp);
+    fclose(fp);
 }
 
 /*
@@ -241,38 +241,38 @@ void readDb(void)
  */
 int readRecord(FILE *fp)
 {
-	int c, len;
-	Book b;
-	b.left = b.right = NULL;
+    int c, len;
+    Book b;
+    b.left = b.right = NULL;
 
-	/* check for eof, since we don't know file size */
-	c = fgetc(fp);
-	if (EOF == c)
-		return 0;
+    /* check for eof, since we don't know file size */
+    c = fgetc(fp);
+    if (EOF == c)
+        return 0;
 
-	ungetc(c, fp);
+    ungetc(c, fp);
 
-	fscanf(fp, "%d", &len);
-	fgetc(fp);	// throw away terminator
-	fread(b.title, len, 1, fp);
-	b.title[len] = '\0';
+    fscanf(fp, "%d", &len);
+    fgetc(fp);	// throw away terminator
+    fread(b.title, len, 1, fp);
+    b.title[len] = '\0';
 
-	fscanf(fp, "%d", &len);
-	fgetc(fp);	// throw away terminator
-	fread(b.author, len, 1, fp);
-	b.author[len] = '\0';
+    fscanf(fp, "%d", &len);
+    fgetc(fp);	// throw away terminator
+    fread(b.author, len, 1, fp);
+    b.author[len] = '\0';
 
-	fscanf(fp, "%d", &len);
-	fgetc(fp);	// throw away terminator
-	fread(b.isbn, len, 1, fp);
-	b.isbn[len] = '\0';
+    fscanf(fp, "%d", &len);
+    fgetc(fp);	// throw away terminator
+    fread(b.isbn, len, 1, fp);
+    b.isbn[len] = '\0';
 
-	fscanf(fp, "%d", &b.year);
-	fgetc(fp);	// throw away terminator
+    fscanf(fp, "%d", &b.year);
+    fgetc(fp);	// throw away terminator
 
-	addBook(&books, &b);
+    addBook(&books, &b);
 
-	return 1;
+    return 1;
 }
 
 /*
@@ -280,10 +280,10 @@ int readRecord(FILE *fp)
  */
 void printBook(Book *book)
 {
-	printf("\nTitle:\t\t%s\n", book->title);
-	printf("Author:\t\t%s\n", book->author);
-	printf("ISBN:\t\t%s\n", book->isbn);
-	printf("Year Published:\t%d\n", book->year);
+    printf("\nTitle:\t\t%s\n", book->title);
+    printf("Author:\t\t%s\n", book->author);
+    printf("ISBN:\t\t%s\n", book->isbn);
+    printf("Year Published:\t%d\n", book->year);
 }
 
 /*
@@ -291,11 +291,11 @@ void printBook(Book *book)
  */
 void viewBooks(Book *root)
 {
-	if (root == NULL)
-		return;
+    if (root == NULL)
+        return;
 
-	printBook(root);
+    printBook(root);
 
-	viewBooks(root->left);
-	viewBooks(root->right);
+    viewBooks(root->left);
+    viewBooks(root->right);
 }

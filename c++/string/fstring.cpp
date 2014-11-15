@@ -12,78 +12,78 @@
 
 String::String()
 {
-	AllocBuffer();
+    AllocBuffer();
 }
 
 String::~String()
 {
-	delete [] buffer;
+    delete [] buffer;
 }
 
 String::String(const String & str)
 {
-	AllocBuffer(max(str.nlen, BUFFSIZE));
-	strcpy(buffer, str.buffer);
-	nlen = str.nlen;
+    AllocBuffer(max(str.nlen, BUFFSIZE));
+    strcpy(buffer, str.buffer);
+    nlen = str.nlen;
 }
 
 String::String(const char *pstr)
 {
-	size_t len = strlen(pstr);
-	AllocBuffer(max(len, BUFFSIZE));
-	strcpy(buffer, pstr);
-	nlen = len;
+    size_t len = strlen(pstr);
+    AllocBuffer(max(len, BUFFSIZE));
+    strcpy(buffer, pstr);
+    nlen = len;
 }
 
 String & String::operator = (const String & rhs)
 {
-	if (this != &rhs) {
-		AllocBuffer(max(rhs.nlen, BUFFSIZE));
-		strcpy(buffer, rhs.buffer);
-		nlen = rhs.nlen;
-	}
+    if (this != &rhs) {
+        AllocBuffer(max(rhs.nlen, BUFFSIZE));
+        strcpy(buffer, rhs.buffer);
+        nlen = rhs.nlen;
+    }
 
-	return *this;
+    return *this;
 }
 
 String & String::operator += (const String & rhs)
 {
-	if (size - nlen < rhs.nlen + 1)
-		Realloc(size * 2);
+    if (size - nlen < rhs.nlen + 1)
+        Realloc(size * 2);
 
-	strcpy(buffer + nlen, rhs.buffer);
-	nlen += rhs.nlen;
+    strcpy(buffer + nlen, rhs.buffer);
+    nlen += rhs.nlen;
 
-	return *this;
+    return *this;
 }
 
 bool String::operator == (const String & rhs)
 {
-	return strcmp(buffer, rhs.buffer) == 0;
+    return strcmp(buffer, rhs.buffer) == 0;
 }
 
 void String::AllocBuffer(size_t len)
 {
-	// room for null terminator
-	buffer = new char[len + 1];
-	buffer[0] = '\0';
-	nlen = 0;
-	size = len;
+    // room for null terminator
+    buffer = new char[len + 1];
+    buffer[0] = '\0';
+    nlen = 0;
+    size = len;
 }
 
 void String::Realloc(size_t nsize)
 {
-	String tmp = *this;
-	delete [] buffer;
-	AllocBuffer(nsize);
-	strcpy(buffer, tmp.buffer);
-	nlen = tmp.nlen;
+    String tmp = *this;
+    delete [] buffer;
+    AllocBuffer(nsize);
+    strcpy(buffer, tmp.buffer);
+    nlen = tmp.nlen;
 }
 
 // global operators
 String operator +(const String & lhs, const String & rhs)
 {
-	String tmp = lhs;
-	tmp += rhs;
-	return tmp;
+    String tmp = lhs;
+    tmp += rhs;
+    return tmp;
 }

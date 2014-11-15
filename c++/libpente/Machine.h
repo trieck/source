@@ -14,26 +14,26 @@
 class Machine {
 // Construction / Destruction
 public:
-	Machine();
-	~Machine();
+    Machine();
+    ~Machine();
 
 // Interface
-	POINT move();
+    POINT move();
 
 // Implementation
 private:
-	float weightVector(const Vector &v) const;
-	float weightPoint(const POINT &pt) const;
-	bool center(const Vector &v) const;
-	POINT bestMove(const Vector &v) const;
-	POINT mustBlock() const;
-	bool matchBlock(uint8_t player, uint8_t empty, POINT& pt) const;
-	POINT blockMove() const;
-	POINT randomMove() const;
-	const Vector *maxOpponentV() const;
-	uint32_t contiguity(const Vector &v) const;
-	const VecVec &vectors;
-	Board *board;
+    float weightVector(const Vector &v) const;
+    float weightPoint(const POINT &pt) const;
+    bool center(const Vector &v) const;
+    POINT bestMove(const Vector &v) const;
+    POINT mustBlock() const;
+    bool matchBlock(uint8_t player, uint8_t empty, POINT& pt) const;
+    POINT blockMove() const;
+    POINT randomMove() const;
+    const Vector *maxOpponentV() const;
+    uint32_t contiguity(const Vector &v) const;
+    const VecVec &vectors;
+    Board *board;
 };
 
 #endif // __MACHINE_H__

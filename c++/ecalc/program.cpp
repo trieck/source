@@ -19,8 +19,8 @@ static void fatalerror(const char* error);
 //
 Program::Program()
 {
-	memory[0] = STOP;
-	pbase = pmem = memory;
+    memory[0] = STOP;
+    pbase = pmem = memory;
 }
 
 //
@@ -35,9 +35,9 @@ Program::~Program()
 //
 Program::Program (const Program & prog)
 {
-	memcpy(memory, prog.memory, NPROG * sizeof(Instr));
-	pmem = memory + (prog.pmem - prog.memory);
-	pbase = memory + (prog.pbase - prog.memory);
+    memcpy(memory, prog.memory, NPROG * sizeof(Instr));
+    pmem = memory + (prog.pmem - prog.memory);
+    pbase = memory + (prog.pbase - prog.memory);
 }
 
 //
@@ -45,13 +45,13 @@ Program::Program (const Program & prog)
 //
 Program & Program::operator = (const Program & prog)
 {
-	if (this != &prog) {
-		memcpy(memory, prog.memory, NPROG * sizeof(Instr));
-		pmem = memory + (prog.pmem - prog.memory);
-		pbase = memory + (prog.pbase - prog.memory);
-	}
+    if (this != &prog) {
+        memcpy(memory, prog.memory, NPROG * sizeof(Instr));
+        pmem = memory + (prog.pmem - prog.memory);
+        pbase = memory + (prog.pbase - prog.memory);
+    }
 
-	return *this;
+    return *this;
 }
 
 //
@@ -59,7 +59,7 @@ Program & Program::operator = (const Program & prog)
 //
 void Program::init()
 {
-	pmem = pbase;
+    pmem = pbase;
 }
 
 //
@@ -67,12 +67,12 @@ void Program::init()
 //
 const Instr * Program::code(Instr instruction)
 {
-	if (pmem >= &memory[NPROG])
-		fatalerror ("memory overflow.");
+    if (pmem >= &memory[NPROG])
+        fatalerror ("memory overflow.");
 
-	*pmem = instruction;
+    *pmem = instruction;
 
-	return pmem++;
+    return pmem++;
 }
 
 //
@@ -80,9 +80,9 @@ const Instr * Program::code(Instr instruction)
 //
 const Instr * Program::code(const Symbol * data)
 {
-	Instr instruction = * reinterpret_cast<Instr*>(&data);
+    Instr instruction = * reinterpret_cast<Instr*>(&data);
 
-	return code(instruction);
+    return code(instruction);
 }
 
 //
@@ -90,9 +90,9 @@ const Instr * Program::code(const Symbol * data)
 //
 const Instr * Program::set(const Instr * offset, Instr instruction)
 {
-	const Instr * pmem = memory;
+    const Instr * pmem = memory;
 
-	return &(memory[offset - pmem] = instruction);
+    return &(memory[offset - pmem] = instruction);
 }
 
 //
@@ -100,11 +100,11 @@ const Instr * Program::set(const Instr * offset, Instr instruction)
 //
 const Instr * Program::setjumpat (const Instr * offset)
 {
-	Instr i = * reinterpret_cast<Instr*>(&pmem);
+    Instr i = * reinterpret_cast<Instr*>(&pmem);
 
-	const Instr * pmem = memory;
+    const Instr * pmem = memory;
 
-	return &(memory[offset - pmem] = i);
+    return &(memory[offset - pmem] = i);
 }
 
 //
@@ -113,8 +113,8 @@ const Instr * Program::setjumpat (const Instr * offset)
 //
 void Program::define(const char *name, SymbolType type)
 {
-	symbols.install(name, type, pbase);
-	pbase = pmem;
+    symbols.install(name, type, pbase);
+    pbase = pmem;
 }
 
 // Helper functions
@@ -124,6 +124,6 @@ void Program::define(const char *name, SymbolType type)
 //
 void fatalerror(const char *error)
 {
-	cerr << error << endl;
-	exit (-1);
+    cerr << error << endl;
+    exit (-1);
 }

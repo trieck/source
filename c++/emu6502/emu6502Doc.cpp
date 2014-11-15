@@ -18,8 +18,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(Emu6502Doc, CDocument)
 
 BEGIN_MESSAGE_MAP(Emu6502Doc, CDocument)
-	//{{AFX_MSG_MAP(Emu6502Doc)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(Emu6502Doc)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -35,12 +35,12 @@ Emu6502Doc::~Emu6502Doc()
 
 BOOL Emu6502Doc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
+    if (!CDocument::OnNewDocument())
+        return FALSE;
 
-	((CEditView*)m_viewList.GetHead())->SetWindowText(NULL);
+    ((CEditView*)m_viewList.GetHead())->SetWindowText(NULL);
 
-	return TRUE;
+    return TRUE;
 }
 
 
@@ -50,7 +50,7 @@ BOOL Emu6502Doc::OnNewDocument()
 
 void Emu6502Doc::Serialize(CArchive& ar)
 {
-	((CEditView*)m_viewList.GetHead())->SerializeRaw(ar);
+    ((CEditView*)m_viewList.GetHead())->SerializeRaw(ar);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -59,12 +59,12 @@ void Emu6502Doc::Serialize(CArchive& ar)
 #ifdef _DEBUG
 void Emu6502Doc::AssertValid() const
 {
-	CDocument::AssertValid();
+    CDocument::AssertValid();
 }
 
 void Emu6502Doc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+    CDocument::Dump(dc);
 }
 #endif //_DEBUG
 

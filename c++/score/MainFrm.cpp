@@ -19,17 +19,17 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(MainFrame, CFrameWnd)
 
 BEGIN_MESSAGE_MAP(MainFrame, CFrameWnd)
-	//{{AFX_MSG_MAP(MainFrame)
-	ON_WM_CREATE()
-	ON_CBN_SELCHANGE(IDC_CB_INSTRUMENT, OnInstrumentChange)
-	ON_WM_INITMENUPOPUP()
-	ON_WM_CLOSE()
-	ON_WM_DROPFILES()
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(MainFrame)
+    ON_WM_CREATE()
+    ON_CBN_SELCHANGE(IDC_CB_INSTRUMENT, OnInstrumentChange)
+    ON_WM_INITMENUPOPUP()
+    ON_WM_CLOSE()
+    ON_WM_DROPFILES()
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 static UINT indicators[] = {
-	ID_SEPARATOR,           // status line indicator
+    ID_SEPARATOR,           // status line indicator
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -45,57 +45,57 @@ MainFrame::~MainFrame()
 
 int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
-		return -1;
+    if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
+        return -1;
 
-	if (!m_wndToolBar.CreateEx(this) ||
-	        !m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
-		TRACE0("Failed to create toolbar\n");
-		return -1;      // fail to create
-	}
+    if (!m_wndToolBar.CreateEx(this) ||
+            !m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
+        TRACE0("Failed to create toolbar\n");
+        return -1;      // fail to create
+    }
 
-	if (!m_wndDlgBar.Create(this, IDR_MAINFRAME,
-	                        CBRS_ALIGN_TOP, AFX_IDW_DIALOGBAR)) {
-		TRACE0("Failed to create dialogbar\n");
-		return -1;		// fail to create
-	}
+    if (!m_wndDlgBar.Create(this, IDR_MAINFRAME,
+                            CBRS_ALIGN_TOP, AFX_IDW_DIALOGBAR)) {
+        TRACE0("Failed to create dialogbar\n");
+        return -1;		// fail to create
+    }
 
-	if (!m_wndReBar.Create(this) ||
-	        !m_wndReBar.AddBar(&m_wndToolBar) ||
-	        !m_wndReBar.AddBar(&m_wndDlgBar)) {
-		TRACE0("Failed to create rebar\n");
-		return -1;      // fail to create
-	}
+    if (!m_wndReBar.Create(this) ||
+            !m_wndReBar.AddBar(&m_wndToolBar) ||
+            !m_wndReBar.AddBar(&m_wndDlgBar)) {
+        TRACE0("Failed to create rebar\n");
+        return -1;      // fail to create
+    }
 
-	if (!m_wndStatusBar.Create(this) ||
-	        !m_wndStatusBar.SetIndicators(indicators,
-	                                      sizeof(indicators)/sizeof(UINT))) {
-		TRACE0("Failed to create status bar\n");
-		return -1;      // fail to create
-	}
+    if (!m_wndStatusBar.Create(this) ||
+            !m_wndStatusBar.SetIndicators(indicators,
+                                          sizeof(indicators)/sizeof(UINT))) {
+        TRACE0("Failed to create status bar\n");
+        return -1;      // fail to create
+    }
 
-	m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() |
-	                         CBRS_TOOLTIPS | CBRS_FLYBY);
+    m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() |
+                             CBRS_TOOLTIPS | CBRS_FLYBY);
 
-	BuildInstruments();
-	SetActiveInstrument();
+    BuildInstruments();
+    SetActiveInstrument();
 
-	CenterWindow();
+    CenterWindow();
 
-	return 0;
+    return 0;
 }
 
 BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	if ( !CFrameWnd::PreCreateWindow(cs) )
-		return FALSE;
+    if ( !CFrameWnd::PreCreateWindow(cs) )
+        return FALSE;
 
-	cs.cx = 500;
-	cs.cy = 400;
+    cs.cx = 500;
+    cs.cy = 400;
 
-	cs.dwExStyle &= ~WS_EX_CLIENTEDGE;
+    cs.dwExStyle &= ~WS_EX_CLIENTEDGE;
 
-	return TRUE;
+    return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -104,12 +104,12 @@ BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
 #ifdef _DEBUG
 void MainFrame::AssertValid() const
 {
-	CFrameWnd::AssertValid();
+    CFrameWnd::AssertValid();
 }
 
 void MainFrame::Dump(CDumpContext& dc) const
 {
-	CFrameWnd::Dump(dc);
+    CFrameWnd::Dump(dc);
 }
 
 #endif //_DEBUG
@@ -122,32 +122,32 @@ void MainFrame::Dump(CDumpContext& dc) const
 //
 void MainFrame::BuildInstruments()
 {
-	CComboBox * pInstruments =
-	    (CComboBox *)m_wndDlgBar.GetDlgItem(IDC_CB_INSTRUMENT);
-	ASSERT_VALID(pInstruments);
+    CComboBox * pInstruments =
+        (CComboBox *)m_wndDlgBar.GetDlgItem(IDC_CB_INSTRUMENT);
+    ASSERT_VALID(pInstruments);
 
-	HRSRC hResource = ::FindResource(AfxGetResourceHandle(),
-	                                 MAKEINTRESOURCE(IDR_INSTRUMENTS),
-	                                 "TEXT");
-	ASSERT(hResource != NULL);
+    HRSRC hResource = ::FindResource(AfxGetResourceHandle(),
+                                     MAKEINTRESOURCE(IDR_INSTRUMENTS),
+                                     "TEXT");
+    ASSERT(hResource != NULL);
 
-	HGLOBAL hGlobal = ::LoadResource(AfxGetResourceHandle(), hResource);
-	ASSERT(hGlobal != NULL);
+    HGLOBAL hGlobal = ::LoadResource(AfxGetResourceHandle(), hResource);
+    ASSERT(hGlobal != NULL);
 
-	LPCSTR pResource = (LPCSTR)::LockResource(hGlobal);
-	ASSERT(pResource != NULL);
-	LPSTR pdata = strdup(pResource);
+    LPCSTR pResource = (LPCSTR)::LockResource(hGlobal);
+    ASSERT(pResource != NULL);
+    LPSTR pdata = strdup(pResource);
 
-	LPCSTR ptok = strtok(pdata, "\r\n");
-	while (ptok != NULL) {
-		pInstruments->AddString(ptok);
-		ptok = strtok(NULL, "\r\n");
-	}
+    LPCSTR ptok = strtok(pdata, "\r\n");
+    while (ptok != NULL) {
+        pInstruments->AddString(ptok);
+        ptok = strtok(NULL, "\r\n");
+    }
 
-	if (pdata != NULL) delete [] pdata;
+    if (pdata != NULL) delete [] pdata;
 
-	if (pInstruments->GetCount() > 0)
-		pInstruments->SetCurSel(0);
+    if (pInstruments->GetCount() > 0)
+        pInstruments->SetCurSel(0);
 }
 
 //
@@ -155,16 +155,16 @@ void MainFrame::BuildInstruments()
 //
 void MainFrame::SetActiveInstrument()
 {
-	ScoreApp * pApp = (ScoreApp*)AfxGetApp();
-	ASSERT_VALID(pApp);
+    ScoreApp * pApp = (ScoreApp*)AfxGetApp();
+    ASSERT_VALID(pApp);
 
-	BYTE instrument = pApp->GetInstrument();
+    BYTE instrument = pApp->GetInstrument();
 
-	CComboBox * pInstruments =
-	    (CComboBox *)m_wndDlgBar.GetDlgItem(IDC_CB_INSTRUMENT);
-	ASSERT_VALID(pInstruments);
+    CComboBox * pInstruments =
+        (CComboBox *)m_wndDlgBar.GetDlgItem(IDC_CB_INSTRUMENT);
+    ASSERT_VALID(pInstruments);
 
-	pInstruments->SetCurSel(instrument);
+    pInstruments->SetCurSel(instrument);
 }
 
 //
@@ -172,16 +172,16 @@ void MainFrame::SetActiveInstrument()
 //
 void MainFrame::OnInstrumentChange()
 {
-	ScoreApp * pApp = (ScoreApp*)AfxGetApp();
-	ASSERT_VALID(pApp);
+    ScoreApp * pApp = (ScoreApp*)AfxGetApp();
+    ASSERT_VALID(pApp);
 
-	CComboBox * pInstruments =
-	    (CComboBox *)m_wndDlgBar.GetDlgItem(IDC_CB_INSTRUMENT);
-	ASSERT_VALID(pInstruments);
+    CComboBox * pInstruments =
+        (CComboBox *)m_wndDlgBar.GetDlgItem(IDC_CB_INSTRUMENT);
+    ASSERT_VALID(pInstruments);
 
-	int index = pInstruments->GetCurSel();
+    int index = pInstruments->GetCurSel();
 
-	pApp->SetInstrument((BYTE)index);
+    pApp->SetInstrument((BYTE)index);
 }
 
 //
@@ -189,7 +189,7 @@ void MainFrame::OnInstrumentChange()
 //
 void MainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
-	CFrameWnd::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+    CFrameWnd::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 }
 
 //
@@ -197,12 +197,12 @@ void MainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 //
 void MainFrame::OnClose()
 {
-	ScoreApp * pApp = (ScoreApp*)AfxGetApp();
-	ASSERT_VALID(pApp);
+    ScoreApp * pApp = (ScoreApp*)AfxGetApp();
+    ASSERT_VALID(pApp);
 
-	pApp->Stop();
+    pApp->Stop();
 
-	CFrameWnd::OnClose();
+    CFrameWnd::OnClose();
 }
 
 //
@@ -210,11 +210,11 @@ void MainFrame::OnClose()
 //
 void MainFrame::OnDropFiles(HDROP hDropInfo)
 {
-	ScoreApp * pApp = (ScoreApp*)AfxGetApp();
-	ASSERT_VALID(pApp);
+    ScoreApp * pApp = (ScoreApp*)AfxGetApp();
+    ASSERT_VALID(pApp);
 
-	pApp->Stop();
+    pApp->Stop();
 
-	CFrameWnd::OnDropFiles(hDropInfo);
+    CFrameWnd::OnDropFiles(hDropInfo);
 }
 

@@ -6,19 +6,19 @@
 
 class RecolorableBitmap : public TransparentBitmap {
 public:
-	RecolorableBitmap(COLORREF nSourceColor);
-	virtual ~RecolorableBitmap();
+    RecolorableBitmap(COLORREF nSourceColor);
+    virtual ~RecolorableBitmap();
 
-	void Load(UINT nID);
+    void Load(UINT nID);
 
-	void setColor(COLORREF nColor);
-	COLORREF getColor() const;
+    void setColor(COLORREF nColor);
+    COLORREF getColor() const;
 
 private:
-	void FreeBits();
-	COLORREF m_Color;
-	BYTE *m_Bits;
-	DWORD m_dwBmpSize;
+    void FreeBits();
+    COLORREF m_Color;
+    BYTE *m_Bits;
+    DWORD m_dwBmpSize;
 };
 
 

@@ -30,45 +30,45 @@ ODBService::~ODBService()
 /////////////////////////////////////////////////////////////////////////////
 BOOL ODBService::OnInit()
 {
-	if (S_OK != pool.Initialize())
-		return FALSE;
+    if (S_OK != pool.Initialize())
+        return FALSE;
 
-	if (!conn.listen(LISTEN_PORT, SOMAXCONN)) {
-		EventLog::logerr("ODBService::Init() listen error : %s",
-		                 lasterror().c_str());
-		return FALSE;
-	}
+    if (!conn.listen(LISTEN_PORT, SOMAXCONN)) {
+        EventLog::logerr("ODBService::Init() listen error : %s",
+                         lasterror().c_str());
+        return FALSE;
+    }
 
-	return TRUE;
+    return TRUE;
 }
 
 void ODBService::Run()
 {
-	// Perform actual work in a separate thread
-	WorkerThread worker(this);
-	worker.Start();
+    // Perform actual work in a separate thread
+    WorkerThread worker(this);
+    worker.Start();
 
-	// Call the base class implementation
-	Service::Run();
+    // Call the base class implementation
+    Service::Run();
 }
 
 void ODBService::OnStop()
 {
-	pool.Shutdown();
-	Service::OnStop();
+    pool.Shutdown();
+    Service::OnStop();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 DWORD ODBService::Execute(LPVOID pdata)
 {
-	for (;;) {
-		Connection remote = conn.accept();
-		if (!remote.valid())
-			continue;
+    for (;;) {
+        Connection remote = conn.accept();
+        if (!remote.valid())
+            continue;
 
-		remote.release();	// ownership in another thread
-		pool.QueueRequest(&remote);
-	}
+        remote.release();	// ownership in another thread
+        pool.QueueRequest(&remote);
+    }
 
-	return 0;
+    return 0;
 }

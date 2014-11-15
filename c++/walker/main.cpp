@@ -12,24 +12,24 @@
 /////////////////////////////////////////////////////////////////////////////
 void usage()
 {
-	cerr << "usage: walk idxfile" << endl;
-	exit(1);
+    cerr << "usage: walk idxfile" << endl;
+    exit(1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
-	if (argc < 2) usage();
+    if (argc < 2) usage();
 
-	Walker walker;
+    Walker walker;
 
-	try {
-		walker.walk(argv[1]);
-	} catch (RCEXCEPTION e) {
-		cerr << e.getDescription() << endl;
-		return 1;
-	}
+    try {
+        walker.walk(argv[1]);
+    } catch (RCEXCEPTION e) {
+        cerr << e.getDescription() << endl;
+        return 1;
+    }
 
-	return 0;
+    return 0;
 }
 

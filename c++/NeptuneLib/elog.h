@@ -9,9 +9,9 @@
 #define __ELOG_H__
 
 namespace EventLog {
-void logerr(const char *format, ...);
-void logwarn(const char *format, ...);
-void loginfo(const char *format, ...);
+void logerr(LPCTSTR format, ...);
+void logwarn(LPCTSTR format, ...);
+void loginfo(LPCTSTR format, ...);
 };
 
 #endif // __ELOG_H__

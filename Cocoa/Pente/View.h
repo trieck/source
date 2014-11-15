@@ -15,13 +15,13 @@
 
 @interface View :
 NSView {
-	NSBezierPath *grid;				// grid bezier path
-	NSBezierPath *polygon;
-	Board *board;					// board
-	AppController *appController;	// controller
-	NSSize squareSize;
-	NSColor *bkgndColor, *playerOneColor, *playerTwoColor, *winnerColor;
-	Vector *winner;
+    NSBezierPath *grid;				// grid bezier path
+    NSBezierPath *polygon;
+    Board *board;					// board
+    AppController *appController;	// controller
+    NSSize squareSize;
+    NSColor *bkgndColor, *playerOneColor, *playerTwoColor, *winnerColor;
+    Vector *winner;
 }
 
 - (void) redrawSquare:

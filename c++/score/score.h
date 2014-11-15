@@ -21,52 +21,52 @@
 
 class ScoreApp : public CWinApp {
 public:
-	ScoreApp();
-	~ScoreApp();
+    ScoreApp();
+    ~ScoreApp();
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(ScoreApp)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(ScoreApp)
 public:
-	virtual CDocument* OpenDocumentFile(LPCTSTR lpszFileName);
+    virtual CDocument* OpenDocumentFile(LPCTSTR lpszFileName);
 protected:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
-	//}}AFX_VIRTUAL
+    virtual BOOL InitInstance();
+    virtual int ExitInstance();
+    //}}AFX_VIRTUAL
 
 // Implementation
 
 public:
-	BOOL Stop() const;
-	BOOL PlayStaff(const Staff *);
-	BOOL PlayMeasure(const Measure *);
-	BOOL PlayNote(const Note *) const;
-	BOOL ReleaseNote(const Note *) const;
-	void PumpMessages();
-	BOOL SetInstrument (BYTE b);
-	BYTE GetInstrument() const {
-		return m_instrument;
-	}
-	BOOL IsPlaying() const;
+    BOOL Stop() const;
+    BOOL PlayStaff(const Staff *);
+    BOOL PlayMeasure(const Measure *);
+    BOOL PlayNote(const Note *) const;
+    BOOL ReleaseNote(const Note *) const;
+    void PumpMessages();
+    BOOL SetInstrument (BYTE b);
+    BYTE GetInstrument() const {
+        return m_instrument;
+    }
+    BOOL IsPlaying() const;
 
 protected:
-	//{{AFX_MSG(ScoreApp)
-	afx_msg void OnAppAbout();
-	afx_msg void OnSettings();
-	afx_msg void OnStop();
-	afx_msg void OnFileNew();
-	afx_msg void OnFileOpen();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(ScoreApp)
+    afx_msg void OnAppAbout();
+    afx_msg void OnSettings();
+    afx_msg void OnStop();
+    afx_msg void OnFileNew();
+    afx_msg void OnFileOpen();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 
 protected:
-	BOOL InitializeStream();
-	void LoadSettings();
-	void SaveSettings() const;
+    BOOL InitializeStream();
+    void LoadSettings();
+    void SaveSettings() const;
 
-	MidiStream * m_pStream;     // MIDI output stream
-	Sequencer * m_pSequencer;   // MIDI sequencer
-	BYTE m_instrument;			// MIDI instrument
+    MidiStream * m_pStream;     // MIDI output stream
+    Sequencer * m_pSequencer;   // MIDI sequencer
+    BYTE m_instrument;			// MIDI instrument
 };
 
 /////////////////////////////////////////////////////////////////////////////

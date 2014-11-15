@@ -14,16 +14,16 @@
 /////////////////////////////////////////////////////////////////////////////
 class MidiDevices {
 public:
-	// Construction / Destruction
-	MidiDevices();
-	virtual ~MidiDevices();
+    // Construction / Destruction
+    MidiDevices();
+    virtual ~MidiDevices();
 
-	// Interface
-	virtual UINT Count() const = 0;
-	virtual MidiDevice * GetDevice(UINT) const = 0;
+    // Interface
+    virtual UINT Count() const = 0;
+    virtual MidiDevice * GetDevice(UINT) const = 0;
 
 protected:
-	// Implementation
+    // Implementation
 };
 /////////////////////////////////////////////////////////////////////////////
 

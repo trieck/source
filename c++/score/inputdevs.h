@@ -13,15 +13,15 @@
 /////////////////////////////////////////////////////////////////////////////
 class InputDevices : public MidiDevices {
 public:
-	// Construction / Destruction
-	InputDevices();
-	virtual ~InputDevices();
+    // Construction / Destruction
+    InputDevices();
+    virtual ~InputDevices();
 
-	// Interface
-	UINT Count() const;
-	MidiDevice * GetDevice(UINT) const;
+    // Interface
+    UINT Count() const;
+    MidiDevice * GetDevice(UINT) const;
 protected:
-	// Implementation
+    // Implementation
 };
 /////////////////////////////////////////////////////////////////////////////
 

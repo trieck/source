@@ -19,43 +19,43 @@ namespace EventLog {
 /////////////////////////////////////////////////////////////////////////////
 void logerr(const char *format, ...)
 {
-	va_list arglist;
-	va_start(arglist, format);
+    va_list arglist;
+    va_start(arglist, format);
 
-	char msg[MAXMSG];
-	vsprintf(msg, format, arglist);
+    char msg[MAXMSG];
+    vsprintf(msg, format, arglist);
 
-	va_end (arglist);
+    va_end (arglist);
 
-	log(msg, EVENTLOG_ERROR_TYPE);
+    log(msg, EVENTLOG_ERROR_TYPE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void logwarn(const char *format, ...)
 {
-	va_list arglist;
-	va_start(arglist, format);
+    va_list arglist;
+    va_start(arglist, format);
 
-	char msg[MAXMSG];
-	vsprintf(msg, format, arglist);
+    char msg[MAXMSG];
+    vsprintf(msg, format, arglist);
 
-	va_end (arglist);
+    va_end (arglist);
 
-	log(msg, EVENTLOG_WARNING_TYPE);
+    log(msg, EVENTLOG_WARNING_TYPE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void loginfo(const char *format, ...)
 {
-	va_list arglist;
-	va_start(arglist, format);
+    va_list arglist;
+    va_start(arglist, format);
 
-	char msg[MAXMSG];
-	vsprintf(msg, format, arglist);
+    char msg[MAXMSG];
+    vsprintf(msg, format, arglist);
 
-	va_end (arglist);
+    va_end (arglist);
 
-	log(msg, EVENTLOG_INFORMATION_TYPE);
+    log(msg, EVENTLOG_INFORMATION_TYPE);
 }
 
 }	// namespace
@@ -63,21 +63,21 @@ void loginfo(const char *format, ...)
 /////////////////////////////////////////////////////////////////////////////
 BOOL log(const char* message, WORD type)
 {
-	string machine = machinename();
-	string module = modulename();
-	string source = filename(module.c_str());
+    string machine = machinename();
+    string module = modulename();
+    string source = filename(module.c_str());
 
-	// Register the event source
-	HANDLE hEventLog = RegisterEventSource(machine.c_str(), source.c_str());
-	if (hEventLog == NULL)
-		return FALSE;
+    // Register the event source
+    HANDLE hEventLog = RegisterEventSource(machine.c_str(), source.c_str());
+    if (hEventLog == NULL)
+        return FALSE;
 
-	// Report the event
-	BOOL f = ::ReportEvent(hEventLog, type, CAT_ELOG, EVMSG_GENERIC,
-	                       NULL, 1, 0, &message, NULL);
+    // Report the event
+    BOOL f = ::ReportEvent(hEventLog, type, CAT_ELOG, EVMSG_GENERIC,
+                           NULL, 1, 0, &message, NULL);
 
-	// Deregister the event source
-	DeregisterEventSource(hEventLog);
+    // Deregister the event source
+    DeregisterEventSource(hEventLog);
 
-	return f;
+    return f;
 }

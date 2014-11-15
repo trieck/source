@@ -28,24 +28,24 @@ static int log2(int N);
  */
 int main(void)
 {
-	int j, k, n;
+    int j, k, n;
 
-	for (;;) {
-		printf("Number 1: ");
-		n = scanf("%d", &j);
-		if (1 != n)
-			break;
+    for (;;) {
+        printf("Number 1: ");
+        n = scanf("%d", &j);
+        if (1 != n)
+            break;
 
-		printf("Number 2: ");
-		n = scanf("%d", &k);
-		if (1 != n)
-			break;
+        printf("Number 2: ");
+        n = scanf("%d", &k);
+        if (1 != n)
+            break;
 
-		n = multiply(j, k);
-		printf("%d * %d = %d\n", j, k, n);
-	}
+        n = multiply(j, k);
+        printf("%d * %d = %d\n", j, k, n);
+    }
 
-	return 0;
+    return 0;
 }
 
 /*
@@ -53,16 +53,16 @@ int main(void)
  */
 int multiply(int j, int k)
 {
-	int m;
+    int m;
 
-	/*
-	 * first, find greatest power of 2 less than k
-	 */
-	m = gp2l(k);
-	if (-1 == m) 	/* k is a power of 2, so result is j << klog2  */
-		return j << log2(k);
+    /*
+     * first, find greatest power of 2 less than k
+     */
+    m = gp2l(k);
+    if (-1 == m) 	/* k is a power of 2, so result is j << klog2  */
+        return j << log2(k);
 
-	return (j << log2(m)) + multiply(j, k - m);
+    return (j << log2(m)) + multiply(j, k - m);
 }
 
 /*
@@ -70,16 +70,16 @@ int multiply(int j, int k)
  */
 int gp2l(int N)
 {
-	int i, j, k;
+    int i, j, k;
 
-	for (i = 0; (j = (1 << i)) <= N; i++) {
-		if (j == N)
-			return -1;	/* N is power of 2 */
+    for (i = 0; (j = (1 << i)) <= N; i++) {
+        if (j == N)
+            return -1;	/* N is power of 2 */
 
-		k = j;	/* greatest power of 2 less than N */
-	}
+        k = j;	/* greatest power of 2 less than N */
+    }
 
-	return k;
+    return k;
 }
 
 /*
@@ -89,12 +89,12 @@ int gp2l(int N)
  */
 int log2(int N)
 {
-	int i = 0;
+    int i = 0;
 
-	while ((N >>= 1) > 0)
-		++i;
+    while ((N >>= 1) > 0)
+        ++i;
 
-	return i;
+    return i;
 }
 
 

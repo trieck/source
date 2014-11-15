@@ -11,30 +11,30 @@
 /////////////////////////////////////////////////////////////////////////////
 class List : public BEObject {
 private:
-	// Construction / Destruction
-	List();
+    // Construction / Destruction
+    List();
 public:
-	List(const List &l);
-	~List();
+    List(const List &l);
+    ~List();
 
 // Interface
-	List &operator =(const List &rhs);
+    List &operator =(const List &rhs);
 
-	virtual ObjectType GetType() const {
-		return BET_LIST;
-	}
-	virtual LPBEOBJECT Copy() const;
+    virtual ObjectType GetType() const {
+        return BET_LIST;
+    }
+    virtual LPBEOBJECT Copy() const;
 
-	void AddObject(LPBEOBJECT o);
-	LPBEOBJECT Get(unsigned index) const;
-	unsigned size() const {
-		return list.size();
-	}
+    void AddObject(LPBEOBJECT o);
+    LPBEOBJECT Get(unsigned index) const;
+    unsigned size() const {
+        return list.size();
+    }
 
 // Implementation
 private:
-	vector<LPBEOBJECT> list;
-	friend List *MakeList();
+    vector<LPBEOBJECT> list;
+    friend List *MakeList();
 };
 /////////////////////////////////////////////////////////////////////////////
 

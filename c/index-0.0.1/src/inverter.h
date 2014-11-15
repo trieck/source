@@ -10,12 +10,12 @@
 
 /* inverter structure */
 struct Inverter {
-	uint32_t count;		/* number of terms */
-	uint32_t size;		/* size of internal hash table */
-	uint32_t maxpool;	/* maximum ammount of pool memory allowed */
-	char **record;		/* array of pointers to document lists */
-	char *pool;		/* memory allocation pool */
-	char *ppool;		/* pointer to next available byte */
+    uint32_t count;		/* number of terms */
+    uint32_t size;		/* size of internal hash table */
+    uint32_t maxpool;	/* maximum ammount of pool memory allowed */
+    char **record;		/* array of pointers to document lists */
+    char *pool;		/* memory allocation pool */
+    char *ppool;		/* pointer to next available byte */
 };
 
 typedef struct Inverter Inverter_t;

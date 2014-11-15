@@ -7,12 +7,12 @@
 class GaussianElimination {
 // Construction / Destuction
 private:
-	GaussianElimination();
-	~GaussianElimination();
+    GaussianElimination();
+    ~GaussianElimination();
 
 // Interface
 public:
-	static Matrix solve(const Matrix &A);
+    static Matrix solve(const Matrix &A);
 
 // Implementation
 private:

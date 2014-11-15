@@ -11,9 +11,9 @@ IMPLEMENT_DYNAMIC(Computer, PlayerTwo)
 
 /////////////////////////////////////////////////////////////////////////////
 Computer::Computer(Player *popponent)
-	: opponent(popponent)
+    : opponent(popponent)
 {
-	ASSERT_VALID(opponent);
+    ASSERT_VALID(opponent);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -24,12 +24,12 @@ Computer::~Computer()
 /////////////////////////////////////////////////////////////////////////////
 bool Computer::getMove(CPoint & pt)
 {
-	POINT aPoint = machine.move();
-	if (!isNilMove(aPoint)) {
-		pt = aPoint;
-		return true;
-	}
+    POINT aPoint = machine.move();
+    if (!isNilMove(aPoint)) {
+        pt = aPoint;
+        return true;
+    }
 
-	return false;
+    return false;
 }
 

@@ -15,77 +15,77 @@
 class ScoreView : public CScrollView {
 // Construction
 protected:
-	ScoreView();
+    ScoreView();
 
 // Attributes
 public:
 public:
-	ScoreDoc* GetDocument();
+    ScoreDoc* GetDocument();
 
 // Operations
 public:
-	void SetTool(Tool * pTool);
-	inline const Tool * GetTool() const {
-		return &m_Tool;
-	}
+    void SetTool(Tool * pTool);
+    inline const Tool * GetTool() const {
+        return &m_Tool;
+    }
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(ScoreView)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(ScoreView)
 public:
-	virtual void OnInitialUpdate();
+    virtual void OnInitialUpdate();
 protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual void OnDraw(CDC* pDC);
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
-	//}}AFX_VIRTUAL
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual void OnDraw(CDC* pDC);
+    virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~ScoreView();
+    virtual ~ScoreView();
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	//{{AFX_MSG(ScoreView)
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
-	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
-	afx_msg void OnUpdatePlayMeasure(CCmdUI* pCmdUI);
-	afx_msg void OnPlayMeasure();
-	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
-	afx_msg void OnMode(UINT);
-	afx_msg void OnUpdateMode(CCmdUI* pCmdUI);
-	afx_msg void OnPlayAll();
-	afx_msg void OnUpdatePlayAll(CCmdUI* pCmdUI);
-	afx_msg void OnSetMeasureTempo();
-	afx_msg void OnUpdateSetMeasureTempo(CCmdUI* pCmdUI);
-	afx_msg void OnToolbox();
-	afx_msg void OnKeySignature();
-	afx_msg void OnUpdateKeySignature(CCmdUI* pCmdUI);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-	DECLARE_DYNCREATE(ScoreView)
+    //{{AFX_MSG(ScoreView)
+    afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+    afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+    afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+    afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
+    afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+    afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+    afx_msg void OnUpdatePlayMeasure(CCmdUI* pCmdUI);
+    afx_msg void OnPlayMeasure();
+    afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
+    afx_msg void OnMode(UINT);
+    afx_msg void OnUpdateMode(CCmdUI* pCmdUI);
+    afx_msg void OnPlayAll();
+    afx_msg void OnUpdatePlayAll(CCmdUI* pCmdUI);
+    afx_msg void OnSetMeasureTempo();
+    afx_msg void OnUpdateSetMeasureTempo(CCmdUI* pCmdUI);
+    afx_msg void OnToolbox();
+    afx_msg void OnKeySignature();
+    afx_msg void OnUpdateKeySignature(CCmdUI* pCmdUI);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
+    DECLARE_DYNCREATE(ScoreView)
 
-	void InvalidateNote(const Note *);
-	void DPtoLP(CPoint &);
-	BOOL AddNote(Measure *, const CPoint &);
-	BOOL ModifyNote(Note *);
+    void InvalidateNote(const Note *);
+    void DPtoLP(CPoint &);
+    BOOL AddNote(Measure *, const CPoint &);
+    BOOL ModifyNote(Note *);
 
-	Note * m_pLastNote;             // The last note played
-	Tool m_Tool;                    // The current tool
-	Note * m_pSelectedNote;         // The currently selected note
-	Measure * m_pSelectedMeasure;   // The currently selected measure
-	CPoint m_ptPrev;                // Previously selected point
-	UINT m_nMode;                   // Selection mode
+    Note * m_pLastNote;             // The last note played
+    Tool m_Tool;                    // The current tool
+    Note * m_pSelectedNote;         // The currently selected note
+    Measure * m_pSelectedMeasure;   // The currently selected measure
+    CPoint m_ptPrev;                // Previously selected point
+    UINT m_nMode;                   // Selection mode
 };
 
 #ifndef _DEBUG  // debug version in Compound ScoreView.cpp
 inline ScoreDoc* ScoreView::GetDocument()
 {
-	return (ScoreDoc*)m_pDocument;
+    return (ScoreDoc*)m_pDocument;
 }
 #endif
 

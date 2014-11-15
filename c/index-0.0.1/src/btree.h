@@ -12,8 +12,8 @@
  * item struct
  */
 struct Item {
-	uint64_t key;
-	uint64_t val;
+    uint64_t key;
+    uint64_t val;
 };
 
 typedef struct Item Item_t;
@@ -26,9 +26,9 @@ typedef struct Item Item_t;
  * cell struct
  */
 struct Cell {
-	uint64_t next;		/* link to next subpage */
-	uint64_t key;		/* key for a cell */
-	uint64_t val;		/* value for a cell */
+    uint64_t next;		/* link to next subpage */
+    uint64_t key;		/* key for a cell */
+    uint64_t val;		/* value for a cell */
 } PACK_ONE;
 
 typedef struct Cell Cell_t;
@@ -37,9 +37,9 @@ typedef struct Cell Cell_t;
  * page header
  */
 struct PageHeader {
-	uint8_t flags;		/* page flags */
-	uint64_t pageno;	/* page number */
-	uint16_t cells;		/* number of cells on the page */
+    uint8_t flags;		/* page flags */
+    uint64_t pageno;	/* page number */
+    uint16_t cells;		/* number of cells on the page */
 } PACK_ONE;
 
 typedef struct PageHeader PageHeader_t;
@@ -48,8 +48,8 @@ typedef struct PageHeader PageHeader_t;
  * page definition
  */
 struct Page {
-	PageHeader_t header;	/* page header */
-	Cell_t data[1];		/* page data */
+    PageHeader_t header;	/* page header */
+    Cell_t data[1];		/* page data */
 } PACK_ONE;
 
 typedef struct Page Page_t;
@@ -72,10 +72,10 @@ enum { MAXV = -1 };
  * btree definition
  */
 struct BTree {
-	uint64_t npages;	/* # of pages */
-	FILE *fp;		/* file pointer */
-	Page_t *pages[MAXDEPTH];	/* pages in memory */
-	Page_t *frame[2];	/* spare frames for page split */
+    uint64_t npages;	/* # of pages */
+    FILE *fp;		/* file pointer */
+    Page_t *pages[MAXDEPTH];	/* pages in memory */
+    Page_t *frame[2];	/* spare frames for page split */
 };
 
 typedef struct BTree BTree_t;

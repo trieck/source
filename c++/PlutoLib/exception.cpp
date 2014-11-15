@@ -11,13 +11,13 @@
 /////////////////////////////////////////////////////////////////////////////
 Exception::Exception(const TCHAR *fmt, ...)
 {
-	va_list arglist;
-	va_start(arglist, fmt);
+    va_list arglist;
+    va_start(arglist, fmt);
 
-	TCHAR buff[1000];
-	_vsntprintf(buff, 1000, fmt, arglist);
+    TCHAR buff[1000];
+    _vsntprintf(buff, 1000, fmt, arglist);
 
-	va_end (arglist);
+    va_end (arglist);
 
-	m_description = buff;
+    m_description = buff;
 }

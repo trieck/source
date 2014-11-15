@@ -15,26 +15,26 @@
 // The CMainFrame frame window class
 class CMainFrame : public CMDIFrameWnd {
 public:
-	CMainFrame();
-	virtual ~CMainFrame();
+    CMainFrame();
+    virtual ~CMainFrame();
 
-	static UINT m_nIndicators[];
+    static UINT m_nIndicators[];
 
 protected: // create from serialization only
 
-	virtual BOOL PreCreateWindow(CREATESTRUCT&);
+    virtual BOOL PreCreateWindow(CREATESTRUCT&);
 
-	// message map entries
-	afx_msg	INT		OnCreate(LPCREATESTRUCT);
-	afx_msg VOID	OnSize(UINT, INT, INT);
-	afx_msg VOID	OnExit ();
-	afx_msg VOID	OnDeviceInformation();
+    // message map entries
+    afx_msg	INT		OnCreate(LPCREATESTRUCT);
+    afx_msg VOID	OnSize(UINT, INT, INT);
+    afx_msg VOID	OnExit ();
+    afx_msg VOID	OnDeviceInformation();
 
-	CToolBar	m_ToolBar;
-	CStatusBar	m_wndStatus;
+    CToolBar	m_ToolBar;
+    CStatusBar	m_wndStatus;
 
-	DECLARE_DYNCREATE(CMainFrame)
-	DECLARE_MESSAGE_MAP()
+    DECLARE_DYNCREATE(CMainFrame)
+    DECLARE_MESSAGE_MAP()
 };
 
 ///////////////////////////////////////////////////////////////////

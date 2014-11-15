@@ -20,7 +20,7 @@ using std::endl;
 
 void trace(LPCSTR msg)
 {
-	cout << "Component 2:\t" << msg << endl ;
+    cout << "Component 2:\t" << msg << endl ;
 }
 
 ///////////////////////////////////
@@ -48,10 +48,10 @@ const char g_szProgID[] 		= "Aggregation.Component2.1";
 // Nondelegating IUnknown interface  @N
 //
 struct INondelegatingUnknown {
-	virtual HRESULT __stdcall
-	NondelegatingQueryInterface(REFIID, PPVOID) = 0;
-	virtual ULONG __stdcall NondelegatingAddRef() = 0;
-	virtual ULONG __stdcall NondelegatingRelease() = 0;
+    virtual HRESULT __stdcall
+    NondelegatingQueryInterface(REFIID, PPVOID) = 0;
+    virtual ULONG __stdcall NondelegatingAddRef() = 0;
+    virtual ULONG __stdcall NondelegatingRelease() = 0;
 };
 
 /////////////////////////////////////
@@ -59,46 +59,46 @@ struct INondelegatingUnknown {
 // Component
 //
 class CB : public IY,
-	public INondelegatingUnknown {
+    public INondelegatingUnknown {
 public:
-	// Delegating IUnknown methods
-	virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv) {
-		trace ("Delegate QueryInterface.");
-		return m_pUnknownOuter->QueryInterface(iid, ppv);
-	}
+    // Delegating IUnknown methods
+    virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv) {
+        trace ("Delegate QueryInterface.");
+        return m_pUnknownOuter->QueryInterface(iid, ppv);
+    }
 
-	virtual ULONG __stdcall AddRef() {
-		trace ("Delegate AddRef.");
-		return m_pUnknownOuter->AddRef();
-	}
+    virtual ULONG __stdcall AddRef() {
+        trace ("Delegate AddRef.");
+        return m_pUnknownOuter->AddRef();
+    }
 
-	virtual ULONG __stdcall Release() {
-		trace ("Delegate release");
-		return m_pUnknownOuter->Release();
-	}
+    virtual ULONG __stdcall Release() {
+        trace ("Delegate release");
+        return m_pUnknownOuter->Release();
+    }
 
-	// Nondelegating IUnknown methods
-	virtual HRESULT __stdcall NondelegatingQueryInterface(REFIID iid, PPVOID);
-	virtual ULONG	__stdcall NondelegatingAddRef();
-	virtual ULONG	__stdcall NondelegatingRelease();
+    // Nondelegating IUnknown methods
+    virtual HRESULT __stdcall NondelegatingQueryInterface(REFIID iid, PPVOID);
+    virtual ULONG	__stdcall NondelegatingAddRef();
+    virtual ULONG	__stdcall NondelegatingRelease();
 
-	// IY Methods
-	virtual void __stdcall Fy() {
-		trace("Fy");
-	}
+    // IY Methods
+    virtual void __stdcall Fy() {
+        trace("Fy");
+    }
 
-	// Constructor
-	CB(LPUNKNOWN m_pUnknownOuter);
+    // Constructor
+    CB(LPUNKNOWN m_pUnknownOuter);
 
-	// Destructor
-	~CB();
+    // Destructor
+    ~CB();
 
 private:
-	// Reference count
-	LONG m_cRef;
+    // Reference count
+    LONG m_cRef;
 
-	// Pointer to outer component's IUnknown
-	LPUNKNOWN m_pUnknownOuter;
+    // Pointer to outer component's IUnknown
+    LPUNKNOWN m_pUnknownOuter;
 };
 
 //
@@ -106,34 +106,34 @@ private:
 //
 HRESULT __stdcall CB :: NondelegatingQueryInterface(REFIID iid, PPVOID ppv)
 {
-	if (iid == IID_IUnknown) {
-		// !!! CAST IS VERY IMPORTANT !!!
-		*ppv = static_cast<INondelegatingUnknown*>(this);
-	} else if (iid == IID_IY)
-		*ppv = static_cast<IY*>(this);
-	else {
-		*ppv = NULL;
-		return E_NOINTERFACE;
-	}
+    if (iid == IID_IUnknown) {
+        // !!! CAST IS VERY IMPORTANT !!!
+        *ppv = static_cast<INondelegatingUnknown*>(this);
+    } else if (iid == IID_IY)
+        *ppv = static_cast<IY*>(this);
+    else {
+        *ppv = NULL;
+        return E_NOINTERFACE;
+    }
 
-	reinterpret_cast<LPUNKNOWN>(*ppv)->AddRef();
+    reinterpret_cast<LPUNKNOWN>(*ppv)->AddRef();
 
-	return S_OK;
+    return S_OK;
 }
 
 ULONG __stdcall CB :: NondelegatingAddRef()
 {
-	return InterlockedIncrement(&m_cRef);
+    return InterlockedIncrement(&m_cRef);
 }
 
 ULONG __stdcall CB :: NondelegatingRelease()
 {
-	if (InterlockedDecrement(&m_cRef) == 0) {
-		delete this;
-		return 0;
-	}
+    if (InterlockedDecrement(&m_cRef) == 0) {
+        delete this;
+        return 0;
+    }
 
-	return m_cRef;
+    return m_cRef;
 }
 
 //
@@ -141,17 +141,17 @@ ULONG __stdcall CB :: NondelegatingRelease()
 //
 CB :: CB(LPUNKNOWN pUnknownOuter) : m_cRef(1)
 {
-	::InterlockedIncrement(&g_cComponents);
+    ::InterlockedIncrement(&g_cComponents);
 
-	if (pUnknownOuter == NULL) {
-		trace ("Not aggregating; delegate to nondelegating IUnknown.");
-		m_pUnknownOuter = reinterpret_cast<LPUNKNOWN>
-		                  (static_cast<INondelegatingUnknown*>
-		                   (this));
-	} else {
-		trace ("Aggregating; delegate to outer IUnknown.");
-		m_pUnknownOuter = pUnknownOuter;
-	}
+    if (pUnknownOuter == NULL) {
+        trace ("Not aggregating; delegate to nondelegating IUnknown.");
+        m_pUnknownOuter = reinterpret_cast<LPUNKNOWN>
+                          (static_cast<INondelegatingUnknown*>
+                           (this));
+    } else {
+        trace ("Aggregating; delegate to outer IUnknown.");
+        m_pUnknownOuter = pUnknownOuter;
+    }
 }
 
 //
@@ -159,8 +159,8 @@ CB :: CB(LPUNKNOWN pUnknownOuter) : m_cRef(1)
 //
 CB :: ~CB()
 {
-	InterlockedDecrement(&g_cComponents);
-	trace("Destroy self.");
+    InterlockedDecrement(&g_cComponents);
+    trace("Destroy self.");
 }
 
 /////////////////////////////////////////////
@@ -169,25 +169,25 @@ CB :: ~CB()
 //
 class CFactory : public IClassFactory {
 public:
-	// IUnknown methods
-	virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv);
-	virtual ULONG	__stdcall AddRef();
-	virtual ULONG __stdcall Release();
+    // IUnknown methods
+    virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv);
+    virtual ULONG	__stdcall AddRef();
+    virtual ULONG __stdcall Release();
 
-	// IClassFactory methods
-	virtual HRESULT __stdcall CreateInstance(LPUNKNOWN pUnknownOuter,
-	        REFIID iid,
-	        PPVOID ppv);
-	virtual HRESULT __stdcall LockServer(BOOL bLock);
+    // IClassFactory methods
+    virtual HRESULT __stdcall CreateInstance(LPUNKNOWN pUnknownOuter,
+            REFIID iid,
+            PPVOID ppv);
+    virtual HRESULT __stdcall LockServer(BOOL bLock);
 
-	// Constructor
-	CFactory () : m_cRef(1) {}
+    // Constructor
+    CFactory () : m_cRef(1) {}
 
-	// Destructor
-	~CFactory() {}
+    // Destructor
+    ~CFactory() {}
 
 private:
-	LONG m_cRef;
+    LONG m_cRef;
 };
 
 //
@@ -195,30 +195,30 @@ private:
 //
 HRESULT __stdcall CFactory :: QueryInterface(REFIID iid, PPVOID ppv)
 {
-	if ((iid == IID_IUnknown) || (iid == IID_IClassFactory))
-		*ppv = static_cast<LPCLASSFACTORY>(this);
-	else {
-		*ppv = NULL;
-		return E_NOINTERFACE;
-	}
+    if ((iid == IID_IUnknown) || (iid == IID_IClassFactory))
+        *ppv = static_cast<LPCLASSFACTORY>(this);
+    else {
+        *ppv = NULL;
+        return E_NOINTERFACE;
+    }
 
-	reinterpret_cast<LPUNKNOWN>(*ppv)->AddRef();
+    reinterpret_cast<LPUNKNOWN>(*ppv)->AddRef();
 
-	return S_OK;
+    return S_OK;
 }
 
 ULONG CFactory :: AddRef()
 {
-	return ::InterlockedIncrement(&m_cRef);
+    return ::InterlockedIncrement(&m_cRef);
 }
 
 ULONG CFactory :: Release()
 {
-	if (InterlockedDecrement(&m_cRef) == 0) {
-		delete this;
-		return 0;
-	}
-	return m_cRef;
+    if (InterlockedDecrement(&m_cRef) == 0) {
+        delete this;
+        return 0;
+    }
+    return m_cRef;
 }
 
 //
@@ -227,32 +227,32 @@ ULONG CFactory :: Release()
 HRESULT __stdcall CFactory :: CreateInstance(LPUNKNOWN pUnknownOuter,
         REFIID iid, PPVOID ppv)
 {
-	HRESULT hr = E_FAIL;
+    HRESULT hr = E_FAIL;
 
-	// Cannot aggregate
-	if ((pUnknownOuter != NULL) && (iid != IID_IUnknown))
-		return CLASS_E_NOAGGREGATION;
+    // Cannot aggregate
+    if ((pUnknownOuter != NULL) && (iid != IID_IUnknown))
+        return CLASS_E_NOAGGREGATION;
 
-	// Create component
-	CB* pB = new CB(pUnknownOuter);
-	if (!pB)
-		return E_OUTOFMEMORY;
+    // Create component
+    CB* pB = new CB(pUnknownOuter);
+    if (!pB)
+        return E_OUTOFMEMORY;
 
-	// Get the requested interface
-	hr = pB->NondelegatingQueryInterface(iid, ppv);
-	pB->NondelegatingRelease();
-	return hr;
+    // Get the requested interface
+    hr = pB->NondelegatingQueryInterface(iid, ppv);
+    pB->NondelegatingRelease();
+    return hr;
 }
 
 // LockServer
 HRESULT __stdcall CFactory :: LockServer(BOOL bLock)
 {
-	if (bLock)
-		InterlockedIncrement(&g_cServerLocks);
-	else
-		InterlockedDecrement(&g_cServerLocks);
+    if (bLock)
+        InterlockedIncrement(&g_cServerLocks);
+    else
+        InterlockedDecrement(&g_cServerLocks);
 
-	return S_OK;
+    return S_OK;
 }
 
 //////////////////////////////////////////////////
@@ -262,10 +262,10 @@ HRESULT __stdcall CFactory :: LockServer(BOOL bLock)
 
 STDAPI DllCanUnloadNow()
 {
-	if ((g_cComponents == 0) && (g_cServerLocks == 0))
-		return S_OK;
-	else
-		return S_FALSE;
+    if ((g_cComponents == 0) && (g_cServerLocks == 0))
+        return S_OK;
+    else
+        return S_FALSE;
 }
 
 
@@ -276,20 +276,20 @@ STDAPI DllGetClassObject(REFCLSID clsid,
                          REFIID iid,
                          PPVOID ppv)
 {
-	// Can we create this component
-	if (clsid != CLSID_Component2)
-		return CLASS_E_CLASSNOTAVAILABLE;
+    // Can we create this component
+    if (clsid != CLSID_Component2)
+        return CLASS_E_CLASSNOTAVAILABLE;
 
-	// Create class factory
-	CFactory* pFactory = new CFactory;
-	if (!pFactory)
-		return E_OUTOFMEMORY;
+    // Create class factory
+    CFactory* pFactory = new CFactory;
+    if (!pFactory)
+        return E_OUTOFMEMORY;
 
-	// Get requested interface
-	HRESULT hr = pFactory->QueryInterface(iid, ppv);
-	pFactory->Release();
+    // Get requested interface
+    HRESULT hr = pFactory->QueryInterface(iid, ppv);
+    pFactory->Release();
 
-	return hr;
+    return hr;
 }
 
 //
@@ -297,18 +297,18 @@ STDAPI DllGetClassObject(REFCLSID clsid,
 //
 STDAPI DllRegisterServer()
 {
-	return RegisterServer(g_hModule,
-	                      CLSID_Component2,
-	                      g_szFriendlyName,
-	                      g_szVerIndProgID,
-	                      g_szProgID);
+    return RegisterServer(g_hModule,
+                          CLSID_Component2,
+                          g_szFriendlyName,
+                          g_szVerIndProgID,
+                          g_szProgID);
 }
 
 STDAPI DllUnregisterServer()
 {
-	return UnregisterServer(CLSID_Component2,
-	                        g_szVerIndProgID,
-	                        g_szProgID);
+    return UnregisterServer(CLSID_Component2,
+                            g_szVerIndProgID,
+                            g_szProgID);
 }
 
 //////////////////////////////////////////
@@ -319,10 +319,10 @@ BOOL APIENTRY DllMain(HINSTANCE hModule,
                       DWORD dwReason,
                       LPVOID lpReserved)
 {
-	if (dwReason == DLL_PROCESS_ATTACH)
-		g_hModule = hModule;
+    if (dwReason == DLL_PROCESS_ATTACH)
+        g_hModule = hModule;
 
-	return TRUE;
+    return TRUE;
 }
 
 

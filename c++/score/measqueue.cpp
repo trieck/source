@@ -31,7 +31,7 @@ MeasureQueue::~MeasureQueue()
 //
 void MeasureQueue::clear()
 {
-	while (!empty())
-		pop();
+    while (!empty())
+        pop();
 }
 

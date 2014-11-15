@@ -6,32 +6,32 @@
 
 class wxcdioTreeCtrl : public wxTreeCtrl {
 public:
-	wxcdioTreeCtrl(wxView *view, wxWindow *parent);
-	~wxcdioTreeCtrl();
+    wxcdioTreeCtrl(wxView *view, wxWindow *parent);
+    ~wxcdioTreeCtrl();
 
-	void OnItemMenu(wxTreeEvent& event);
-	void OnItemExpanding(wxTreeEvent &event);
-	void OnItemExpanded(wxTreeEvent &event);
-	void OnItemCollapsed(wxTreeEvent &event);
+    void OnItemMenu(wxTreeEvent& event);
+    void OnItemExpanding(wxTreeEvent &event);
+    void OnItemExpanded(wxTreeEvent &event);
+    void OnItemCollapsed(wxTreeEvent &event);
 
-	void rebuild(isoimage *image);
+    void rebuild(isoimage *image);
 
 private:
-	void buildChildren(isoimage *image, const wxTreeItemId &item);
-	wxString GetAbsolutePath(const wxTreeItemId &item) const;
+    void buildChildren(isoimage *image, const wxTreeItemId &item);
+    wxString GetAbsolutePath(const wxTreeItemId &item) const;
 
-	void ShowMenu(wxcdioNode *item, const wxPoint &pt);
-	void OnExtract(wxCommandEvent&);
-	void OnProperties(wxCommandEvent&);
+    void ShowMenu(wxcdioNode *item, const wxPoint &pt);
+    void OnExtract(wxCommandEvent&);
+    void OnProperties(wxCommandEvent&);
 
-	void ExtractEntry(iso9660_stat_t *stat, const wxString &filename);
+    void ExtractEntry(iso9660_stat_t *stat, const wxString &filename);
 
-	enum { CX_IMAGE = 16 };
-	enum { CY_IMAGE = 16 };
+    enum { CX_IMAGE = 16 };
+    enum { CY_IMAGE = 16 };
 
-	DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 
-	wxView *m_view;
+    wxView *m_view;
 };
 
 

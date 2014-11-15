@@ -14,7 +14,7 @@
 
 @interface Board :
 NSObject {
-	NSMapTable *rep;
+    NSMapTable *rep;
 }
 
 - (uint32_t)entry:

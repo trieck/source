@@ -15,52 +15,52 @@ LONG ODBManager::m_cCount = 0;
 
 /////////////////////////////////////////////////////////////////////////////
 ODBManager::ODBManager()
-	: m_cRef(0)
+    : m_cRef(0)
 {
-	m_pData = new ODBMgrData(this);
-	InterlockedIncrement(&m_cCount);
+    m_pData = new ODBMgrData(this);
+    InterlockedIncrement(&m_cCount);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 ODBManager::~ODBManager()
 {
-	delete m_pData;
-	InterlockedDecrement(&m_cCount);
+    delete m_pData;
+    InterlockedDecrement(&m_cCount);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 STDMETHODIMP ODBManager::QueryInterface(REFIID riid, LPVOID *ppv)
 {
-	*ppv = NULL;
+    *ppv = NULL;
 
-	if (riid == IID_IUnknown)
-		*ppv = this;
+    if (riid == IID_IUnknown)
+        *ppv = this;
 
-	if (riid == IID_IComponentData)
-		*ppv = m_pData;
+    if (riid == IID_IComponentData)
+        *ppv = m_pData;
 
-	if (*ppv) {
-		((LPUNKNOWN)*ppv)->AddRef();
-		return S_OK;
-	}
+    if (*ppv) {
+        ((LPUNKNOWN)*ppv)->AddRef();
+        return S_OK;
+    }
 
-	return E_NOINTERFACE;
+    return E_NOINTERFACE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 STDMETHODIMP_(ULONG) ODBManager::AddRef()
 {
-	return InterlockedIncrement(&m_cRef);
+    return InterlockedIncrement(&m_cRef);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 STDMETHODIMP_(ULONG) ODBManager::Release()
 {
-	if (InterlockedDecrement(&m_cRef) == 0) {
-		delete this;
-		return 0;
-	}
+    if (InterlockedDecrement(&m_cRef) == 0) {
+        delete this;
+        return 0;
+    }
 
-	return m_cRef;
+    return m_cRef;
 }
 

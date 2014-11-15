@@ -12,23 +12,23 @@
 class ODBManager : public IUnknown {
 // Construction / Destruction
 public:
-	ODBManager();
-	virtual ~ODBManager();
+    ODBManager();
+    virtual ~ODBManager();
 
 // Interface
-	static LONG GetObjectCount() {
-		return m_cCount;
-	}
+    static LONG GetObjectCount() {
+        return m_cCount;
+    }
 
-	// IUnknown members
-	STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
-	STDMETHODIMP_(ULONG) AddRef();
-	STDMETHODIMP_(ULONG) Release();
+    // IUnknown members
+    STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
+    STDMETHODIMP_(ULONG) AddRef();
+    STDMETHODIMP_(ULONG) Release();
 
 private:
-	IComponentData *m_pData;	// component data
-	static LONG m_cCount;		// object count
-	LONG m_cRef;				// reference count
+    IComponentData *m_pData;	// component data
+    static LONG m_cCount;		// object count
+    LONG m_cRef;				// reference count
 };
 
 /////////////////////////////////////////////////////////////////////////////

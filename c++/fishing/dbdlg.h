@@ -8,9 +8,9 @@
 
 /////////////////////////////////////////////////////////////////////////////
 typedef struct {
-	HWND parent;
-	DLGPROC proc;
-	HWND hWnd;
+    HWND parent;
+    DLGPROC proc;
+    HWND hWnd;
 } DbDialog;
 
 DbDialog * createDbDialog(void);

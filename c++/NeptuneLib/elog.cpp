@@ -12,72 +12,72 @@
 
 #define MAXMSG 4096
 
-static BOOL log(const char* message, WORD type);
+static BOOL log(LPCTSTR message, WORD type);
 
 namespace EventLog {
 
 /////////////////////////////////////////////////////////////////////////////
-void logerr(const char *format, ...)
+void logerr(LPCTSTR format, ...)
 {
-	va_list arglist;
-	va_start(arglist, format);
+    va_list arglist;
+    va_start(arglist, format);
 
-	char msg[MAXMSG];
-	vsprintf(msg, format, arglist);
+    TCHAR msg[MAXMSG];
+    _vstprintf(msg, format, arglist);
 
-	va_end (arglist);
+    va_end (arglist);
 
-	log(msg, EVENTLOG_ERROR_TYPE);
+    log(msg, EVENTLOG_ERROR_TYPE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void logwarn(const char *format, ...)
+void logwarn(LPCTSTR format, ...)
 {
-	va_list arglist;
-	va_start(arglist, format);
+    va_list arglist;
+    va_start(arglist, format);
 
-	char msg[MAXMSG];
-	vsprintf(msg, format, arglist);
+    TCHAR msg[MAXMSG];
+    _vstprintf(msg, format, arglist);
 
-	va_end (arglist);
+    va_end (arglist);
 
-	log(msg, EVENTLOG_WARNING_TYPE);
+    log(msg, EVENTLOG_WARNING_TYPE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void loginfo(const char *format, ...)
+void loginfo(LPCTSTR format, ...)
 {
-	va_list arglist;
-	va_start(arglist, format);
+    va_list arglist;
+    va_start(arglist, format);
 
-	char msg[MAXMSG];
-	vsprintf(msg, format, arglist);
+    TCHAR msg[MAXMSG];
+    _vstprintf(msg, format, arglist);
 
-	va_end (arglist);
+    va_end (arglist);
 
-	log(msg, EVENTLOG_INFORMATION_TYPE);
+    log(msg, EVENTLOG_INFORMATION_TYPE);
 }
 
 }	// namespace
 
 /////////////////////////////////////////////////////////////////////////////
-BOOL log(const char* message, WORD type)
+BOOL log(LPCTSTR message, WORD type)
 {
-	string machine = machinename();
-	string module = modulename();
-	string source = filename(module.c_str());
+    tstring machine = machinename();
+    tstring module = modulename();
+    tstring source = filename(module.c_str());
 
-	// Register the event source
-	HANDLE hEventLog = RegisterEventSource(machine.c_str(), source.c_str());
-	if (hEventLog == NULL)
-		return FALSE;
+    // Register the event source
+    HANDLE hEventLog = RegisterEventSource(machine.c_str(), source.c_str());
+    if (hEventLog == NULL)
+        return FALSE;
 
-	// Report the event
-	BOOL f = ::ReportEvent(hEventLog, type, CAT_ELOG, EVMSG_GENERIC,
-	                       NULL, 1, 0, &message, NULL);
+    // Report the event
+    BOOL f = ::ReportEvent(hEventLog, type, CAT_ELOG, EVMSG_GENERIC,
+                           NULL, 1, 0, &message, NULL);
 
-	// Deregister the event source
-	DeregisterEventSource(hEventLog);
+    // Deregister the event source
+    DeregisterEventSource(hEventLog);
 
-	return f;
+    return f;
 }

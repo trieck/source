@@ -11,10 +11,10 @@ static void usage(void);
  */
 int main(int argc, char *argv[])
 {
-	if (argc < 3)
-		usage();
+    if (argc < 3)
+        usage();
 
-	return 0;
+    return 0;
 }
 
 /*
@@ -22,6 +22,6 @@ int main(int argc, char *argv[])
  */
 void usage(void)
 {
-	fprintf(stderr, "usage: 65link files output\n");
-	exit(1);
+    fprintf(stderr, "usage: 65link files output\n");
+    exit(1);
 }

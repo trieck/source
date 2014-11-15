@@ -22,35 +22,35 @@ typedef enum {
 // TimeSignature class
 class TimeSignature {
 public:
-	// Construction / Destruction
-	TimeSignature();
-	TimeSignature(int, BeatLength);
-	virtual ~TimeSignature();
+    // Construction / Destruction
+    TimeSignature();
+    TimeSignature(int, BeatLength);
+    virtual ~TimeSignature();
 
-	// Interface
-	void SetTimeSignature (int, BeatLength);
-	void GetTimeSignature(int &, BeatLength &) const;
+    // Interface
+    void SetTimeSignature (int, BeatLength);
+    void GetTimeSignature(int &, BeatLength &) const;
 
-	inline void SetBeats(int beats) {
-		m_beats = beats;
-	}
-	inline int GetBeats() const {
-		return m_beats;
-	}
+    inline void SetBeats(int beats) {
+        m_beats = beats;
+    }
+    inline int GetBeats() const {
+        return m_beats;
+    }
 
-	inline void SetLength(BeatLength length) {
-		m_length = length;
-	}
-	inline BeatLength GetLength() const {
-		return m_length;
-	}
+    inline void SetLength(BeatLength length) {
+        m_length = length;
+    }
+    inline BeatLength GetLength() const {
+        return m_length;
+    }
 
-	float GetDuration() const;
+    float GetDuration() const;
 
-	// Implementation
+    // Implementation
 protected:
-	int m_beats;
-	BeatLength m_length;
+    int m_beats;
+    BeatLength m_length;
 };
 
 /////////////////////////////////////////////////////////////////////////////

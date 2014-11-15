@@ -13,39 +13,39 @@
 class FileStream : public IPeekableStream {
 // Construction / Destruction
 private:
-	FileStream();
+    FileStream();
 public:
-	virtual ~FileStream();
+    virtual ~FileStream();
 
 // Interface
-	static FileStream *Create(LPCSTR lpFileName,
-	                          DWORD dwDesiredAccess,
-	                          DWORD dwShareMode,
-	                          DWORD dwCreationDisposition,
-	                          DWORD dwFlagsAndAttributes);
+    static FileStream *Create(LPCSTR lpFileName,
+                              DWORD dwDesiredAccess,
+                              DWORD dwShareMode,
+                              DWORD dwCreationDisposition,
+                              DWORD dwFlagsAndAttributes);
 
-	// inherited methods
-	STDMETHODIMP_(ULONG) AddRef(void);
-	STDMETHODIMP_(ULONG) Release(void);
-	STDMETHODIMP QueryInterface(REFIID riid, LPVOID *ppv);
+    // inherited methods
+    STDMETHODIMP_(ULONG) AddRef(void);
+    STDMETHODIMP_(ULONG) Release(void);
+    STDMETHODIMP QueryInterface(REFIID riid, LPVOID *ppv);
 
-	STDMETHODIMP Read(/* [out] */ void __RPC_FAR *pv, /* [in]  */ ULONG cb,
-	                              /* [out] */ ULONG __RPC_FAR *pcbRead);
-	STDMETHODIMP Peek(/* [out] */ void __RPC_FAR *pv, /* [in]  */ ULONG cb,
-	                              /* [out] */ ULONG __RPC_FAR *pcbRead);
-	STDMETHODIMP Write(/* [in] */ const void __RPC_FAR *pv, /* [in] */ ULONG cb,
-	                              /* [out]*/ ULONG __RPC_FAR *pcbWritten);
+    STDMETHODIMP Read(/* [out] */ void __RPC_FAR *pv, /* [in]  */ ULONG cb,
+                                  /* [out] */ ULONG __RPC_FAR *pcbRead);
+    STDMETHODIMP Peek(/* [out] */ void __RPC_FAR *pv, /* [in]  */ ULONG cb,
+                                  /* [out] */ ULONG __RPC_FAR *pcbRead);
+    STDMETHODIMP Write(/* [in] */ const void __RPC_FAR *pv, /* [in] */ ULONG cb,
+                                  /* [out]*/ ULONG __RPC_FAR *pcbWritten);
 
 // Implementation
 private:
-	BOOL Open(LPCSTR lpFileName, DWORD dwDesiredAccess,
-	          DWORD dwShareMode, DWORD dwCreationDisposition,
-	          DWORD dwFlagsAndAttributes);
+    BOOL Open(LPCSTR lpFileName, DWORD dwDesiredAccess,
+              DWORD dwShareMode, DWORD dwCreationDisposition,
+              DWORD dwFlagsAndAttributes);
 
-	void Close();
+    void Close();
 
-	ULONG m_cRef;	// reference count
-	HANDLE hFile;
+    ULONG m_cRef;	// reference count
+    HANDLE hFile;
 };
 /////////////////////////////////////////////////////////////////////////////
 

@@ -13,18 +13,18 @@ IMPLEMENT_DYNCREATE(VolPropPage, CPropertyPage)
 #ifdef _DEBUG
 void VolPropPage::AssertValid() const
 {
-	CPropertyPage::AssertValid();
+    CPropertyPage::AssertValid();
 }
 
 void VolPropPage::Dump(CDumpContext& dc) const
 {
-	CPropertyPage::Dump(dc);
+    CPropertyPage::Dump(dc);
 }
 #endif // _DEBUG
 
 
 VolPropPage::VolPropPage()
-	: CPropertyPage(VolPropPage::IDD)
+    : CPropertyPage(VolPropPage::IDD)
 {
 
 }
@@ -35,8 +35,8 @@ VolPropPage::~VolPropPage()
 
 void VolPropPage::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_FULL, m_FullProgress);
+    CPropertyPage::DoDataExchange(pDX);
+    DDX_Control(pDX, IDC_FULL, m_FullProgress);
 }
 
 
@@ -48,45 +48,45 @@ END_MESSAGE_MAP()
 
 BOOL VolPropPage::OnInitDialog()
 {
-	CPropertyPage::OnInitDialog();
+    CPropertyPage::OnInitDialog();
 
-	WinADFDoc *pDoc = (WinADFDoc*)MDIGetActiveDoc();
-	ASSERT_VALID(pDoc);
-	ASSERT(pDoc->IsKindOf(RUNTIME_CLASS(WinADFDoc)));
+    WinADFDoc *pDoc = (WinADFDoc*)MDIGetActiveDoc();
+    ASSERT_VALID(pDoc);
+    ASSERT(pDoc->IsKindOf(RUNTIME_CLASS(WinADFDoc)));
 
-	Volume *pVol = pDoc->GetVolume();
-	GetDlgItem(IDC_VOLNAME)->SetWindowText(pVol->getName().c_str());
+    Volume *pVol = pDoc->GetVolume();
+    GetDlgItem(IDC_VOLNAME)->SetWindowText(pVol->getName().c_str());
 
-	int8_t type = pVol->getType();
+    int8_t type = pVol->getType();
 
-	CButton *pButton = (CButton*)GetDlgItem(IDC_FFS);
-	pButton->SetCheck(isFFS(type));
+    CButton *pButton = (CButton*)GetDlgItem(IDC_FFS);
+    pButton->SetCheck(isFFS(type));
 
-	pButton = (CButton*)GetDlgItem(IDC_INTL);
-	pButton->SetCheck(isINTL(type));
+    pButton = (CButton*)GetDlgItem(IDC_INTL);
+    pButton->SetCheck(isINTL(type));
 
-	pButton = (CButton*)GetDlgItem(IDC_DIRCACHE);
-	pButton->SetCheck(isDIRCACHE(type));
+    pButton = (CButton*)GetDlgItem(IDC_DIRCACHE);
+    pButton->SetCheck(isDIRCACHE(type));
 
-	uint32_t totalblocks = (pVol->getLastBlock()+1) - pVol->getFirstBlock();
-	uint32_t totalcap = totalblocks * BSIZE;
+    uint32_t totalblocks = (pVol->getLastBlock()+1) - pVol->getFirstBlock();
+    uint32_t totalcap = totalblocks * BSIZE;
 
-	CString fmt;
-	fmt.Format("%s KB", comma(totalcap / 1024).c_str());
-	GetDlgItem(IDC_VOL_TOTAL)->SetWindowText(fmt);
+    CString fmt;
+    fmt.Format("%s KB", comma(totalcap / 1024).c_str());
+    GetDlgItem(IDC_VOL_TOTAL)->SetWindowText(fmt);
 
-	uint32_t freeblocks = pVol->freeblocks();
-	uint32_t freecap = freeblocks * BSIZE;
+    uint32_t freeblocks = pVol->freeblocks();
+    uint32_t freecap = freeblocks * BSIZE;
 
-	fmt.Format("%s KB", comma(freecap / 1024).c_str());
-	GetDlgItem(IDC_VOL_FREE)->SetWindowText(fmt);
+    fmt.Format("%s KB", comma(freecap / 1024).c_str());
+    GetDlgItem(IDC_VOL_FREE)->SetWindowText(fmt);
 
-	uint32_t full =  totalblocks - freeblocks;
+    uint32_t full =  totalblocks - freeblocks;
 
-	m_FullProgress.SetRange32(0, totalblocks);
-	m_FullProgress.SetPos(full);
-	m_FullProgress.SendMessage(PBM_SETBARCOLOR, 0, COLOR_PURPLE);
+    m_FullProgress.SetRange32(0, totalblocks);
+    m_FullProgress.SetPos(full);
+    m_FullProgress.SendMessage(PBM_SETBARCOLOR, 0, COLOR_PURPLE);
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+    return TRUE;  // return TRUE unless you set the focus to a control
+    // EXCEPTION: OCX Property Pages should return FALSE
 }

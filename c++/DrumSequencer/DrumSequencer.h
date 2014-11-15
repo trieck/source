@@ -16,31 +16,31 @@
 
 class CDrumSequencerApp : public CWinAppEx {
 public:
-	CDrumSequencerApp();
-	virtual ~CDrumSequencerApp();
+    CDrumSequencerApp();
+    virtual ~CDrumSequencerApp();
 
 // Overrides
 public:
-	virtual BOOL InitInstance();
+    virtual BOOL InitInstance();
 
 // Implementation
-	UINT  m_nAppLook;
-	BOOL  m_bHiColorIcons;
+    UINT  m_nAppLook;
+    BOOL  m_bHiColorIcons;
 
-	virtual void PreLoadState();
-	virtual void LoadCustomState();
-	virtual void SaveCustomState();
+    virtual void PreLoadState();
+    virtual void LoadCustomState();
+    virtual void SaveCustomState();
 
-	afx_msg void OnAppAbout();
-	DECLARE_MESSAGE_MAP()
+    afx_msg void OnAppAbout();
+    DECLARE_MESSAGE_MAP()
 private:
-	Sequencer m_sequencer;
+    Sequencer m_sequencer;
 public:
-	virtual int ExitInstance();
-	afx_msg void OnSequencerStop();
-	BOOL Play(const Sequence & sequence);
-	afx_msg void OnUpdateSequencerPlay(CCmdUI *pCmdUI);
-	afx_msg void OnUpdateSequencerStop(CCmdUI *pCmdUI);
+    virtual int ExitInstance();
+    afx_msg void OnSequencerStop();
+    BOOL Play(const Sequence & sequence);
+    afx_msg void OnUpdateSequencerPlay(CCmdUI *pCmdUI);
+    afx_msg void OnUpdateSequencerStop(CCmdUI *pCmdUI);
 };
 
 extern CDrumSequencerApp theApp;

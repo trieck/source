@@ -28,9 +28,9 @@ extern Node *root;
 
 #line 16 ".\parser.y"
 typedef union {
-	PNODE node;		/* node in parse tree */
-	PSYMBOL sym;	/* symbol table pointer */
-	int n;			/* token id */
+    PNODE node;		/* node in parse tree */
+    PSYMBOL sym;	/* symbol table pointer */
+    int n;			/* token id */
 } YYSTYPE;
 #line 36 ".\parser.c"
 #define YYERRCODE 256
@@ -146,42 +146,42 @@ const short yycheck[] = {                                      37,
 #define YYMAXTOKEN 273
 #if YYDEBUG
 const char * const yyname[] = {
-	"end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,"'%'",0,0,0,0,"'*'","'+'",0,"'-'",0,"'/'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"'['",0,"']'",0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	"FIRSTTOKEN","PLUS","SUB","MULT","DIV","MOD","RANGE","MKLIST","PRINT","PRINTLN",
-	"LET","LASTTOKEN","ARROW","CALL","NUMBER","ID","KEYWORD",
+    "end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,"'%'",0,0,0,0,"'*'","'+'",0,"'-'",0,"'/'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"'['",0,"']'",0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    "FIRSTTOKEN","PLUS","SUB","MULT","DIV","MOD","RANGE","MKLIST","PRINT","PRINTLN",
+    "LET","LASTTOKEN","ARROW","CALL","NUMBER","ID","KEYWORD",
 };
 const char * const yyrule[] = {
-	"$accept : prog",
-	"prog :",
-	"prog : stmts",
-	"prog : prog error",
-	"stmts : expr",
-	"stmts : stmts expr",
-	"expr : list",
-	"expr : expr '+'",
-	"expr : expr '-'",
-	"expr : expr '*'",
-	"expr : expr '/'",
-	"expr : expr '%'",
-	"expr : expr KEYWORD",
-	"expr : expr ARROW ID",
-	"list : '[' items ']'",
-	"items :",
-	"items : item_list",
-	"item_list : member",
-	"item_list : member item_list",
-	"member : expr",
-	"member : primary",
-	"member : range",
-	"primary : NUMBER",
-	"primary : ID",
-	"range : primary RANGE primary",
+    "$accept : prog",
+    "prog :",
+    "prog : stmts",
+    "prog : prog error",
+    "stmts : expr",
+    "stmts : stmts expr",
+    "expr : list",
+    "expr : expr '+'",
+    "expr : expr '-'",
+    "expr : expr '*'",
+    "expr : expr '/'",
+    "expr : expr '%'",
+    "expr : expr KEYWORD",
+    "expr : expr ARROW ID",
+    "list : '[' items ']'",
+    "items :",
+    "items : item_list",
+    "item_list : member",
+    "item_list : member item_list",
+    "member : expr",
+    "member : primary",
+    "member : range",
+    "primary : NUMBER",
+    "primary : ID",
+    "range : primary RANGE primary",
 };
 #endif
 #if YYDEBUG
@@ -218,40 +218,40 @@ int yystacksize;
 /* parse error */
 int yyerror(const char *s)
 {
-	error("%s near line no %d.", s, lineno);
-	return 0;
+    error("%s near line no %d.", s, lineno);
+    return 0;
 }
 
 #line 226 ".\parser.c"
 /* allocate initial stack or double stack size, up to YYMAXDEPTH */
 static int yygrowstack()
 {
-	int newsize, i;
-	short *newss;
-	YYSTYPE *newvs;
+    int newsize, i;
+    short *newss;
+    YYSTYPE *newvs;
 
-	if ((newsize = yystacksize) == 0)
-		newsize = YYINITSTACKSIZE;
-	else if (newsize >= YYMAXDEPTH)
-		return -1;
-	else if ((newsize *= 2) > YYMAXDEPTH)
-		newsize = YYMAXDEPTH;
-	i = yyssp - yyss;
-	newss = yyss ? (short *)realloc(yyss, newsize * sizeof *newss) :
-	        (short *)malloc(newsize * sizeof *newss);
-	if (newss == NULL)
-		return -1;
-	yyss = newss;
-	yyssp = newss + i;
-	newvs = yyvs ? (YYSTYPE *)realloc(yyvs, newsize * sizeof *newvs) :
-	        (YYSTYPE *)malloc(newsize * sizeof *newvs);
-	if (newvs == NULL)
-		return -1;
-	yyvs = newvs;
-	yyvsp = newvs + i;
-	yystacksize = newsize;
-	yysslim = yyss + newsize - 1;
-	return 0;
+    if ((newsize = yystacksize) == 0)
+        newsize = YYINITSTACKSIZE;
+    else if (newsize >= YYMAXDEPTH)
+        return -1;
+    else if ((newsize *= 2) > YYMAXDEPTH)
+        newsize = YYMAXDEPTH;
+    i = yyssp - yyss;
+    newss = yyss ? (short *)realloc(yyss, newsize * sizeof *newss) :
+            (short *)malloc(newsize * sizeof *newss);
+    if (newss == NULL)
+        return -1;
+    yyss = newss;
+    yyssp = newss + i;
+    newvs = yyvs ? (YYSTYPE *)realloc(yyvs, newsize * sizeof *newvs) :
+            (YYSTYPE *)malloc(newsize * sizeof *newvs);
+    if (newvs == NULL)
+        return -1;
+    yyvs = newvs;
+    yyvsp = newvs + i;
+    yystacksize = newsize;
+    yysslim = yyss + newsize - 1;
+    return 0;
 }
 
 #define YYABORT goto yyabort
@@ -283,270 +283,270 @@ static int yygrowstack()
 int
 yyparse (YYPARSE_PARAM_ARG)
 YYPARSE_PARAM_DECL {
-	register int yym, yyn, yystate;
+    register int yym, yyn, yystate;
 #if YYDEBUG
-	register const char *yys;
+    register const char *yys;
 
-	if ((yys = getenv("YYDEBUG"))) {
-		yyn = *yys;
-		if (yyn >= '0' && yyn <= '9')
-			yydebug = yyn - '0';
-	}
+    if ((yys = getenv("YYDEBUG"))) {
+        yyn = *yys;
+        if (yyn >= '0' && yyn <= '9')
+            yydebug = yyn - '0';
+    }
 #endif
 
-	yynerrs = 0;
-	yyerrflag = 0;
-	yychar = (-1);
+    yynerrs = 0;
+    yyerrflag = 0;
+    yychar = (-1);
 
-	if (yyss == NULL && yygrowstack()) goto yyoverflow;
-	yyssp = yyss;
-	yyvsp = yyvs;
-	*yyssp = yystate = 0;
+    if (yyss == NULL && yygrowstack()) goto yyoverflow;
+    yyssp = yyss;
+    yyvsp = yyvs;
+    *yyssp = yystate = 0;
 
 yyloop:
-	if ((yyn = yydefred[yystate])) goto yyreduce;
-	if (yychar < 0) {
-		if ((yychar = yylex()) < 0) yychar = 0;
+    if ((yyn = yydefred[yystate])) goto yyreduce;
+    if (yychar < 0) {
+        if ((yychar = yylex()) < 0) yychar = 0;
 #if YYDEBUG
-		if (yydebug) {
-			yys = 0;
-			if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-			if (!yys) yys = "illegal-symbol";
-			printf("%sdebug: state %d, reading %d (%s)\n",
-			YYPREFIX, yystate, yychar, yys);
-		}
+        if (yydebug) {
+            yys = 0;
+            if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
+            if (!yys) yys = "illegal-symbol";
+            printf("%sdebug: state %d, reading %d (%s)\n",
+            YYPREFIX, yystate, yychar, yys);
+        }
 #endif
-	}
-	if ((yyn = yysindex[yystate]) && (yyn += yychar) >= 0 &&
-	        yyn <= YYTABLESIZE && yycheck[yyn] == yychar) {
+    }
+    if ((yyn = yysindex[yystate]) && (yyn += yychar) >= 0 &&
+            yyn <= YYTABLESIZE && yycheck[yyn] == yychar) {
 #if YYDEBUG
-		if (yydebug)
-			printf("%sdebug: state %d, shifting to state %d\n",
-			       YYPREFIX, yystate, yytable[yyn]);
+        if (yydebug)
+            printf("%sdebug: state %d, shifting to state %d\n",
+                   YYPREFIX, yystate, yytable[yyn]);
 #endif
-		if (yyssp >= yysslim && yygrowstack()) {
-			goto yyoverflow;
-		}
-		*++yyssp = yystate = yytable[yyn];
-		*++yyvsp = yylval;
-		yychar = (-1);
-		if (yyerrflag > 0)  --yyerrflag;
-		goto yyloop;
-	}
-	if ((yyn = yyrindex[yystate]) && (yyn += yychar) >= 0 &&
-	        yyn <= YYTABLESIZE && yycheck[yyn] == yychar) {
-		yyn = yytable[yyn];
-		goto yyreduce;
-	}
-	if (yyerrflag) goto yyinrecovery;
+        if (yyssp >= yysslim && yygrowstack()) {
+            goto yyoverflow;
+        }
+        *++yyssp = yystate = yytable[yyn];
+        *++yyvsp = yylval;
+        yychar = (-1);
+        if (yyerrflag > 0)  --yyerrflag;
+        goto yyloop;
+    }
+    if ((yyn = yyrindex[yystate]) && (yyn += yychar) >= 0 &&
+            yyn <= YYTABLESIZE && yycheck[yyn] == yychar) {
+        yyn = yytable[yyn];
+        goto yyreduce;
+    }
+    if (yyerrflag) goto yyinrecovery;
 #if defined(lint) || defined(__GNUC__)
-	goto yynewerror;
+    goto yynewerror;
 #endif
 yynewerror:
-	yyerror("syntax error");
+    yyerror("syntax error");
 #if defined(lint) || defined(__GNUC__)
-	goto yyerrlab;
+    goto yyerrlab;
 #endif
 yyerrlab:
-	++yynerrs;
+    ++yynerrs;
 yyinrecovery:
-	if (yyerrflag < 3) {
-		yyerrflag = 3;
-		for (;;) {
-			if ((yyn = yysindex[*yyssp]) && (yyn += YYERRCODE) >= 0 &&
-			        yyn <= YYTABLESIZE && yycheck[yyn] == YYERRCODE) {
+    if (yyerrflag < 3) {
+        yyerrflag = 3;
+        for (;;) {
+            if ((yyn = yysindex[*yyssp]) && (yyn += YYERRCODE) >= 0 &&
+                    yyn <= YYTABLESIZE && yycheck[yyn] == YYERRCODE) {
 #if YYDEBUG
-				if (yydebug)
-					printf("%sdebug: state %d, error recovery shifting\
+                if (yydebug)
+                    printf("%sdebug: state %d, error recovery shifting\
  to state %d\n", YYPREFIX, *yyssp, yytable[yyn]);
 #endif
-				if (yyssp >= yysslim && yygrowstack()) {
-					goto yyoverflow;
-				}
-				*++yyssp = yystate = yytable[yyn];
-				*++yyvsp = yylval;
-				goto yyloop;
-			} else {
+                if (yyssp >= yysslim && yygrowstack()) {
+                    goto yyoverflow;
+                }
+                *++yyssp = yystate = yytable[yyn];
+                *++yyvsp = yylval;
+                goto yyloop;
+            } else {
 #if YYDEBUG
-				if (yydebug)
-					printf("%sdebug: error recovery discarding state %d\n",
-					       YYPREFIX, *yyssp);
+                if (yydebug)
+                    printf("%sdebug: error recovery discarding state %d\n",
+                           YYPREFIX, *yyssp);
 #endif
-				if (yyssp <= yyss) goto yyabort;
-				--yyssp;
-				--yyvsp;
-			}
-		}
-	} else {
-		if (yychar == 0) goto yyabort;
+                if (yyssp <= yyss) goto yyabort;
+                --yyssp;
+                --yyvsp;
+            }
+        }
+    } else {
+        if (yychar == 0) goto yyabort;
 #if YYDEBUG
-		if (yydebug) {
-			yys = 0;
-			if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-			if (!yys) yys = "illegal-symbol";
-			printf("%sdebug: state %d, error recovery discards token %d (%s)\n",
-			YYPREFIX, yystate, yychar, yys);
-		}
+        if (yydebug) {
+            yys = 0;
+            if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
+            if (!yys) yys = "illegal-symbol";
+            printf("%sdebug: state %d, error recovery discards token %d (%s)\n",
+            YYPREFIX, yystate, yychar, yys);
+        }
 #endif
-		yychar = (-1);
-		goto yyloop;
-	}
+        yychar = (-1);
+        goto yyloop;
+    }
 yyreduce:
 #if YYDEBUG
-	if (yydebug)
-		printf("%sdebug: state %d, reducing by rule %d (%s)\n",
-		YYPREFIX, yystate, yyn, yyrule[yyn]);
+    if (yydebug)
+        printf("%sdebug: state %d, reducing by rule %d (%s)\n",
+        YYPREFIX, yystate, yyn, yyrule[yyn]);
 #endif
-	yym = yylen[yyn];
-	yyval = yyvsp[1-yym];
-	switch (yyn) {
-	case 2:
+    yym = yylen[yyn];
+    yyval = yyvsp[1-yym];
+    switch (yyn) {
+    case 2:
 #line 39 ".\parser.y"
-		{
-			root = mkstmt(MKLIST, yyvsp[0].node);
-			return 1;
-		}
-		break;
-	case 3:
+        {
+            root = mkstmt(MKLIST, yyvsp[0].node);
+            return 1;
+        }
+        break;
+    case 3:
 #line 41 ".\parser.y"
-		{
-			yyerrok;
-		}
-		break;
-	case 5:
+        {
+            yyerrok;
+        }
+        break;
+    case 5:
 #line 46 ".\parser.y"
-		{
-			yyval.node = lknodes(yyvsp[-1].node, yyvsp[0].node);
-		}
-		break;
-	case 7:
+        {
+            yyval.node = lknodes(yyvsp[-1].node, yyvsp[0].node);
+        }
+        break;
+    case 7:
 #line 51 ".\parser.y"
-		{
-			yyval.node = mkstmt(PLUS, yyvsp[-1].node);
-		}
-		break;
-	case 8:
+        {
+            yyval.node = mkstmt(PLUS, yyvsp[-1].node);
+        }
+        break;
+    case 8:
 #line 53 ".\parser.y"
-		{
-			yyval.node = mkstmt(SUB, yyvsp[-1].node);
-		}
-		break;
-	case 9:
+        {
+            yyval.node = mkstmt(SUB, yyvsp[-1].node);
+        }
+        break;
+    case 9:
 #line 55 ".\parser.y"
-		{
-			yyval.node = mkstmt(MULT, yyvsp[-1].node);
-		}
-		break;
-	case 10:
+        {
+            yyval.node = mkstmt(MULT, yyvsp[-1].node);
+        }
+        break;
+    case 10:
 #line 57 ".\parser.y"
-		{
-			yyval.node = mkstmt(DIV, yyvsp[-1].node);
-		}
-		break;
-	case 11:
+        {
+            yyval.node = mkstmt(DIV, yyvsp[-1].node);
+        }
+        break;
+    case 11:
 #line 59 ".\parser.y"
-		{
-			yyval.node = mkstmt(MOD, yyvsp[-1].node);
-		}
-		break;
-	case 12:
+        {
+            yyval.node = mkstmt(MOD, yyvsp[-1].node);
+        }
+        break;
+    case 12:
 #line 61 ".\parser.y"
-		{
-			yyval.node = mkstmt(yyvsp[0].sym->subtype, yyvsp[-1].node);
-		}
-		break;
-	case 13:
+        {
+            yyval.node = mkstmt(yyvsp[0].sym->subtype, yyvsp[-1].node);
+        }
+        break;
+    case 13:
 #line 63 ".\parser.y"
-		{
-			yyval.node = mkstmt2(CALL, yyvsp[-2].node, mkleaf(yyvsp[0].sym));
-		}
-		break;
-	case 14:
+        {
+            yyval.node = mkstmt2(CALL, yyvsp[-2].node, mkleaf(yyvsp[0].sym));
+        }
+        break;
+    case 14:
 #line 67 ".\parser.y"
-		{
-			yyval.node = mkstmt(MKLIST, yyvsp[-1].node);
-		}
-		break;
-	case 15:
+        {
+            yyval.node = mkstmt(MKLIST, yyvsp[-1].node);
+        }
+        break;
+    case 15:
 #line 71 ".\parser.y"
-		{
-			yyval.node = 0;
-		}
-		break;
-	case 18:
+        {
+            yyval.node = 0;
+        }
+        break;
+    case 18:
 #line 77 ".\parser.y"
-		{
-			yyval.node = lknodes(yyvsp[-1].node, yyvsp[0].node);
-		}
-		break;
-	case 22:
+        {
+            yyval.node = lknodes(yyvsp[-1].node, yyvsp[0].node);
+        }
+        break;
+    case 22:
 #line 86 ".\parser.y"
-		{
-			yyval.node = mkleaf(yyvsp[0].sym);
-		}
-		break;
-	case 23:
+        {
+            yyval.node = mkleaf(yyvsp[0].sym);
+        }
+        break;
+    case 23:
 #line 88 ".\parser.y"
-		{
-			yyval.node = mkleaf(yyvsp[0].sym);
-		}
-		break;
-	case 24:
+        {
+            yyval.node = mkleaf(yyvsp[0].sym);
+        }
+        break;
+    case 24:
 #line 92 ".\parser.y"
-		{
-			yyval.node = mkstmt2(RANGE, yyvsp[-2].node, yyvsp[0].node);
-		}
-		break;
+        {
+            yyval.node = mkstmt2(RANGE, yyvsp[-2].node, yyvsp[0].node);
+        }
+        break;
 #line 485 ".\parser.c"
-	}
-	yyssp -= yym;
-	yystate = *yyssp;
-	yyvsp -= yym;
-	yym = yylhs[yyn];
-	if (yystate == 0 && yym == 0) {
+    }
+    yyssp -= yym;
+    yystate = *yyssp;
+    yyvsp -= yym;
+    yym = yylhs[yyn];
+    if (yystate == 0 && yym == 0) {
 #if YYDEBUG
-		if (yydebug)
-			printf("%sdebug: after reduction, shifting from state 0 to\
+        if (yydebug)
+            printf("%sdebug: after reduction, shifting from state 0 to\
  state %d\n", YYPREFIX, YYFINAL);
 #endif
-		yystate = YYFINAL;
-		*++yyssp = YYFINAL;
-		*++yyvsp = yyval;
-		if (yychar < 0) {
-			if ((yychar = yylex()) < 0) yychar = 0;
+        yystate = YYFINAL;
+        *++yyssp = YYFINAL;
+        *++yyvsp = yyval;
+        if (yychar < 0) {
+            if ((yychar = yylex()) < 0) yychar = 0;
 #if YYDEBUG
-			if (yydebug) {
-				yys = 0;
-				if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-				if (!yys) yys = "illegal-symbol";
-				printf("%sdebug: state %d, reading %d (%s)\n",
-				       YYPREFIX, YYFINAL, yychar, yys);
-			}
+            if (yydebug) {
+                yys = 0;
+                if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
+                if (!yys) yys = "illegal-symbol";
+                printf("%sdebug: state %d, reading %d (%s)\n",
+                       YYPREFIX, YYFINAL, yychar, yys);
+            }
 #endif
-		}
-		if (yychar == 0) goto yyaccept;
-		goto yyloop;
-	}
-	if ((yyn = yygindex[yym]) && (yyn += yystate) >= 0 &&
-	        yyn <= YYTABLESIZE && yycheck[yyn] == yystate)
-		yystate = yytable[yyn];
-	else
-		yystate = yydgoto[yym];
+        }
+        if (yychar == 0) goto yyaccept;
+        goto yyloop;
+    }
+    if ((yyn = yygindex[yym]) && (yyn += yystate) >= 0 &&
+            yyn <= YYTABLESIZE && yycheck[yyn] == yystate)
+        yystate = yytable[yyn];
+    else
+        yystate = yydgoto[yym];
 #if YYDEBUG
-	if (yydebug)
-		printf("%sdebug: after reduction, shifting from state %d \
+    if (yydebug)
+        printf("%sdebug: after reduction, shifting from state %d \
 to state %d\n", YYPREFIX, *yyssp, yystate);
 #endif
-	if (yyssp >= yysslim && yygrowstack()) {
-		goto yyoverflow;
-	}
-	*++yyssp = yystate;
-	*++yyvsp = yyval;
-	goto yyloop;
+    if (yyssp >= yysslim && yygrowstack()) {
+        goto yyoverflow;
+    }
+    *++yyssp = yystate;
+    *++yyvsp = yyval;
+    goto yyloop;
 yyoverflow:
-	yyerror("yacc stack overflow");
+    yyerror("yacc stack overflow");
 yyabort:
-	return (1);
+    return (1);
 yyaccept:
-	return (0);
+    return (0);
 }

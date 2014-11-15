@@ -40,9 +40,9 @@ typedef std::vector<CString> CStringVec;
 typedef const unsigned char* LPCBYTE;
 
 struct StringPtrLess {
-	bool operator()(LPCSTR left, LPCSTR right) {
-		return strcmp(left, right) < 0;
-	}
+    bool operator()(LPCSTR left, LPCSTR right) {
+        return strcmp(left, right) < 0;
+    }
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ struct StringPtrLess {
 DECLARE_INTERFACE(ICallable)
 {
 public:
-	virtual void Call(DWORD param) PURE;
+    virtual void Call(DWORD param) PURE;
 };
 
 //{{AFX_INSERT_LOCATION}}

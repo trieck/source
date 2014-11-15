@@ -36,54 +36,54 @@
 
 class EarApp : public CWinApp {
 public:
-	EarApp();
-	~EarApp();
+    EarApp();
+    ~EarApp();
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(EarApp)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(EarApp)
 public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
-	virtual int DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt);
-	//}}AFX_VIRTUAL
+    virtual BOOL InitInstance();
+    virtual int ExitInstance();
+    virtual int DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt);
+    //}}AFX_VIRTUAL
 
 // Implementation
 
-	//{{AFX_MSG(EarApp)
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(EarApp)
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 
 public:
-	BOOL Play(MidiBuffer *pbuff);
-	BOOL Stop();
-	BOOL SetInstrument(BYTE b);
-	int GetIntervals() const;
-	void SetIntervals(int i);
-	int GetInstrument() const;
+    BOOL Play(MidiBuffer *pbuff);
+    BOOL Stop();
+    BOOL SetInstrument(BYTE b);
+    int GetIntervals() const;
+    void SetIntervals(int i);
+    int GetInstrument() const;
 protected:
-	BOOL InitializeStream();
+    BOOL InitializeStream();
 private:
-	MidiStream *m_pStream;
-	int m_Intervals;
-	BOOL m_instrument;
+    MidiStream *m_pStream;
+    int m_Intervals;
+    BOOL m_instrument;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 
 inline int EarApp::GetIntervals() const
 {
-	return m_Intervals;
+    return m_Intervals;
 }
 
 inline void EarApp::SetIntervals(int intervals)
 {
-	m_Intervals = intervals;
+    m_Intervals = intervals;
 }
 
 inline int EarApp::GetInstrument() const
 {
-	return m_instrument;
+    return m_instrument;
 }
 
 //{{AFX_INSERT_LOCATION}}

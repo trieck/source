@@ -12,52 +12,52 @@
 
 /////////////////////////////////////////////////////////////////////////////
 class OutputDevice : public MidiDevice, private MIDIOUTCAPS {
-	friend class OutputDevices;
+    friend class OutputDevices;
 
 protected:
-	// Construction / Destruction
-	OutputDevice(LPMIDIOUTCAPS, UINT);
+    // Construction / Destruction
+    OutputDevice(LPMIDIOUTCAPS, UINT);
 public:
-	virtual ~OutputDevice();
+    virtual ~OutputDevice();
 
-	// Interface
-	inline WORD GetMid() const {
-		return wMid;
-	}
-	inline WORD GetPid() const {
-		return wPid;
-	}
-	inline MMVERSION GetVersion() const {
-		return vDriverVersion;
-	}
-	inline CString GetProduct () const {
-		return szPname;
-	}
-	inline WORD GetTechnology() const {
-		return wTechnology;
-	}
-	inline WORD GetVoices() const {
-		return wVoices;
-	}
-	inline WORD GetNotes() const {
-		return wNotes;
-	}
-	inline WORD GetChannelMask() const {
-		return wChannelMask;
-	}
-	inline DWORD GetSupport() const {
-		return dwSupport;
-	}
-	inline BOOL IsOpen() const {
-		return m_handle != NULL;
-	}
+    // Interface
+    inline WORD GetMid() const {
+        return wMid;
+    }
+    inline WORD GetPid() const {
+        return wPid;
+    }
+    inline MMVERSION GetVersion() const {
+        return vDriverVersion;
+    }
+    inline CString GetProduct () const {
+        return szPname;
+    }
+    inline WORD GetTechnology() const {
+        return wTechnology;
+    }
+    inline WORD GetVoices() const {
+        return wVoices;
+    }
+    inline WORD GetNotes() const {
+        return wNotes;
+    }
+    inline WORD GetChannelMask() const {
+        return wChannelMask;
+    }
+    inline DWORD GetSupport() const {
+        return dwSupport;
+    }
+    inline BOOL IsOpen() const {
+        return m_handle != NULL;
+    }
 
-	static CString GetErrorText(MMRESULT);
+    static CString GetErrorText(MMRESULT);
 
-	virtual MMRESULT Open() = 0;
-	virtual MMRESULT Close();
+    virtual MMRESULT Open() = 0;
+    virtual MMRESULT Close();
 
-	// Implementation
+    // Implementation
 protected:
 };
 /////////////////////////////////////////////////////////////////////////////

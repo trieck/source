@@ -12,11 +12,11 @@
 class CreateHandler : public IHandler {
 // Construction / Destruction
 public:
-	CreateHandler();
-	virtual ~CreateHandler();
+    CreateHandler();
+    virtual ~CreateHandler();
 
 // Interface
-	void Call(LPDICTIONARY request, LPDICTIONARY response);
+    void Call(LPDICTIONARY request, LPDICTIONARY response);
 
 // Implementation
 private:

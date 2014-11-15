@@ -13,22 +13,22 @@
 class BTreeImpl {
 // Construction / Destruction
 public:
-	BTreeImpl();
-	~BTreeImpl();
+    BTreeImpl();
+    ~BTreeImpl();
 
 // Interface
-	BOOL open(LPCSTR filename, OpenMode m);
-	void close();
+    BOOL open(LPCSTR filename, OpenMode m);
+    void close();
 
-	string search(const string &key);
-	void insert(const string &key, const string &val);
-	BOOL append(const string &key, const string &val);
+    string search(const string &key);
+    void insert(const string &key, const string &val);
+    BOOL append(const string &key, const string &val);
 
-	void writeStats(std::ostream &os) const;
+    void writeStats(std::ostream &os) const;
 
 // Implementation
 private:
-	BTree btree;
+    BTree btree;
 };
 
 /////////////////////////////////////////////////////////////////////////////

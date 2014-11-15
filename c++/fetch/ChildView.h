@@ -17,7 +17,7 @@
 class ChildView : public CListView {
 // Construction
 public:
-	ChildView();
+    ChildView();
 
 // Attributes
 public:
@@ -26,37 +26,37 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(ChildView)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(ChildView)
 public:
-	virtual void OnInitialUpdate();
+    virtual void OnInitialUpdate();
 protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	//}}AFX_VIRTUAL
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~ChildView();
+    virtual ~ChildView();
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	void InsertHeaders();
-	BOOL IsSearching() const;
-	static UINT PerformSearch(LPVOID);
+    void InsertHeaders();
+    BOOL IsSearching() const;
+    static UINT PerformSearch(LPVOID);
 
-	//{{AFX_MSG(ChildView)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSearch();
-	afx_msg void OnUpdateSearch(CCmdUI* pCmdUI);
-	afx_msg void OnStop();
-	afx_msg void OnUpdateStop(CCmdUI* pCmdUI);
-	afx_msg LRESULT OnSearchComplete(WPARAM, LPARAM);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(ChildView)
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnSearch();
+    afx_msg void OnUpdateSearch(CCmdUI* pCmdUI);
+    afx_msg void OnStop();
+    afx_msg void OnUpdateStop(CCmdUI* pCmdUI);
+    afx_msg LRESULT OnSearchComplete(WPARAM, LPARAM);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	CImageList m_ImageList;
-	CWinThread *m_pThread;
-	CEvent m_event;
+    CImageList m_ImageList;
+    CWinThread *m_pThread;
+    CEvent m_event;
 };
 
 /////////////////////////////////////////////////////////////////////////////

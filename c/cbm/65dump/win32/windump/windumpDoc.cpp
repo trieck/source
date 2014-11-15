@@ -18,8 +18,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(WindumpDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(WindumpDoc, CDocument)
-	//{{AFX_MSG_MAP(WindumpDoc)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(WindumpDoc)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -35,10 +35,10 @@ WindumpDoc::~WindumpDoc()
 
 BOOL WindumpDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
+    if (!CDocument::OnNewDocument())
+        return FALSE;
 
-	return TRUE;
+    return TRUE;
 }
 
 
@@ -48,9 +48,9 @@ BOOL WindumpDoc::OnNewDocument()
 
 void WindumpDoc::Serialize(CArchive& ar)
 {
-	if (ar.IsStoring()) {
-	} else {
-	}
+    if (ar.IsStoring()) {
+    } else {
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -59,12 +59,12 @@ void WindumpDoc::Serialize(CArchive& ar)
 #ifdef _DEBUG
 void WindumpDoc::AssertValid() const
 {
-	CDocument::AssertValid();
+    CDocument::AssertValid();
 }
 
 void WindumpDoc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+    CDocument::Dump(dc);
 }
 #endif //_DEBUG
 

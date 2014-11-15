@@ -31,6 +31,6 @@ TorrentWriter::~TorrentWriter()
 
 void TorrentWriter::Write(LPDICTIONARY torrent, CArchive &ar)
 {
-	TorrentMaker maker(NULL, ar.GetFile());
-	maker.Make(torrent);
+    TorrentMaker maker(NULL, ar.GetFile());
+    maker.Make(torrent);
 }

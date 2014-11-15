@@ -9,78 +9,78 @@
 // RecolorableBitmap
 
 RecolorableBitmap::RecolorableBitmap(COLORREF nSourceColor)
-	: TransparentBitmap(TRANSPARENT_COLOR), m_dwBmpSize(0), m_Bits(0),
-	  m_Color(nSourceColor)
+    : TransparentBitmap(TRANSPARENT_COLOR), m_dwBmpSize(0), m_Bits(0),
+      m_Color(nSourceColor)
 {
 }
 
 RecolorableBitmap::~RecolorableBitmap()
 {
-	FreeBits();
+    FreeBits();
 }
 
 // RecolorableBitmap member functions
 void RecolorableBitmap::Load(UINT nID)
 {
-	LoadBitmap(nID);
+    LoadBitmap(nID);
 
-	BITMAP bm;
-	GetBitmap(&bm);
+    BITMAP bm;
+    GetBitmap(&bm);
 
-	m_dwBmpSize = ((bm.bmWidth * bm.bmBitsPixel + 31) / 32) * 4 * bm.bmHeight;
+    m_dwBmpSize = ((bm.bmWidth * bm.bmBitsPixel + 31) / 32) * 4 * bm.bmHeight;
 
-	FreeBits();
+    FreeBits();
 
-	m_Bits = new BYTE[m_dwBmpSize];
+    m_Bits = new BYTE[m_dwBmpSize];
 
-	Repaint();
+    Repaint();
 }
 
 void RecolorableBitmap::setColor(COLORREF nColor)
 {
-	if (GetBitmapBits(m_dwBmpSize, m_Bits) != m_dwBmpSize)
-		AfxThrowResourceException();
+    if (GetBitmapBits(m_dwBmpSize, m_Bits) != m_dwBmpSize)
+        AfxThrowResourceException();
 
-	for (uint32_t i = 0; i < m_dwBmpSize; i++) {
-		BYTE &b = m_Bits[i++];
-		BYTE &g = m_Bits[i++];
-		BYTE &r = m_Bits[i++];
-		BYTE z = m_Bits[i];
+    for (uint32_t i = 0; i < m_dwBmpSize; i++) {
+        BYTE &b = m_Bits[i++];
+        BYTE &g = m_Bits[i++];
+        BYTE &r = m_Bits[i++];
+        BYTE z = m_Bits[i];
 
-		COLORREF dwColor = RGB(r, g, b);
-		if (dwColor == m_Color) {
-			r = GetRValue(nColor);
-			g = GetGValue(nColor);
-			b = GetBValue(nColor);
-		}
-	}
+        COLORREF dwColor = RGB(r, g, b);
+        if (dwColor == m_Color) {
+            r = GetRValue(nColor);
+            g = GetGValue(nColor);
+            b = GetBValue(nColor);
+        }
+    }
 
-	BITMAP bm;
-	GetBitmap(&bm);
+    BITMAP bm;
+    GetBitmap(&bm);
 
-	if (!DeleteObject())
-		AfxThrowResourceException();
+    if (!DeleteObject())
+        AfxThrowResourceException();
 
-	if (!CreateBitmapIndirect(&bm))
-		AfxThrowResourceException();
+    if (!CreateBitmapIndirect(&bm))
+        AfxThrowResourceException();
 
-	if (SetBitmapBits(m_dwBmpSize, m_Bits) != m_dwBmpSize)
-		AfxThrowResourceException();
+    if (SetBitmapBits(m_dwBmpSize, m_Bits) != m_dwBmpSize)
+        AfxThrowResourceException();
 
-	Repaint();
+    Repaint();
 
-	m_Color = nColor;
+    m_Color = nColor;
 }
 
 COLORREF RecolorableBitmap::getColor() const
 {
-	return m_Color;
+    return m_Color;
 }
 
-void RecolorableBitmap::FreeBits() 
+void RecolorableBitmap::FreeBits()
 {
-	if (m_Bits != NULL) 
-		delete [] m_Bits;
+    if (m_Bits != NULL)
+        delete [] m_Bits;
 
-	m_Bits = NULL;
+    m_Bits = NULL;
 }

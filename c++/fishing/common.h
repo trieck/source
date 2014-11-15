@@ -11,9 +11,9 @@
 #include <tchar.h>
 
 typedef struct {
-	TCHAR server[_MAX_FNAME];
-	TCHAR uid[_MAX_FNAME];
-	TCHAR pwd[_MAX_FNAME];
+    TCHAR server[_MAX_FNAME];
+    TCHAR uid[_MAX_FNAME];
+    TCHAR pwd[_MAX_FNAME];
 } DbInfo;
 
 extern DbInfo dbinfo;	// database settings

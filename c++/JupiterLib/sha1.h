@@ -24,18 +24,18 @@
 class SHA1 {
 // Construction / Destruction
 public:
-	SHA1(const string &s);
-	~SHA1();
+    SHA1(const string &s);
+    ~SHA1();
 
 // Interface
-	string toHexString() const;
-	operator LPCSTR() const {
-		return digest;
-	}
+    string toHexString() const;
+    operator LPCSTR() const {
+        return digest;
+    }
 
 // Implementation
 private:
-	char digest[SHA1_DIGEST_SIZE];
+    char digest[SHA1_DIGEST_SIZE];
 };
 
 /////////////////////////////////////////////////////////////////////////////

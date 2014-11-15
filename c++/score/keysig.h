@@ -14,24 +14,24 @@
 class KeySignature : protected tagKeySignature {
 public:
 // Construction / Destruction
-	KeySignature(int index);
-	~KeySignature();
+    KeySignature(int index);
+    ~KeySignature();
 
 // Interface
-	BOOL ismodifier(const KeyNote *) const;
-	Modifier getmodifier(char keyname) const;
-	int GetIndex() const {
-		return m_index;
-	}
-	void assign(int index);
-	void Render(CDC * pDC, int cx, int cy) const;
-	CSize GetSize() const;
+    BOOL ismodifier(const KeyNote *) const;
+    Modifier getmodifier(char keyname) const;
+    int GetIndex() const {
+        return m_index;
+    }
+    void assign(int index);
+    void Render(CDC * pDC, int cx, int cy) const;
+    CSize GetSize() const;
 protected:
 // Implementation
-	void SetBitmap();
+    void SetBitmap();
 
-	int m_index;		// index of key signatures array
-	CBitmap * m_pbm;	// key signature bitmap
+    int m_index;		// index of key signatures array
+    CBitmap * m_pbm;	// key signature bitmap
 };
 /////////////////////////////////////////////////////////////////////////////
 

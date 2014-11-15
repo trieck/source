@@ -15,40 +15,40 @@
 
 class WinADFApp : public CWinApp {
 public:
-	WinADFApp();
+    WinADFApp();
 
 
 // Overrides
 public:
-	virtual BOOL InitInstance();
+    virtual BOOL InitInstance();
 
 // Implementation
-	afx_msg void OnAppAbout();
-	afx_msg void OnFileNew();
-	afx_msg void OnFileOpen();
+    afx_msg void OnAppAbout();
+    afx_msg void OnFileNew();
+    afx_msg void OnFileOpen();
 
-	DECLARE_MESSAGE_MAP()
-	virtual int DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt);
+    DECLARE_MESSAGE_MAP()
+    virtual int DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt);
 
 protected:
-	CMultiDocTemplate *m_pTextFileViewTemplate;
-	CMultiDocTemplate *m_pBinaryFileViewTemplate;
+    CMultiDocTemplate *m_pTextFileViewTemplate;
+    CMultiDocTemplate *m_pBinaryFileViewTemplate;
 public:
-	void ShowTextFileView(CDocument *pDoc);
-	void ShowBinaryFileView(CDocument *pDoc);
+    void ShowTextFileView(CDocument *pDoc);
+    void ShowBinaryFileView(CDocument *pDoc);
 private:
-	void CreateWarningWnd();
-	WarningFrame *m_pWarningFrame;
+    void CreateWarningWnd();
+    WarningFrame *m_pWarningFrame;
 public:
-	afx_msg void OnViewWarnings();
-	afx_msg void OnUpdateViewWarnings(CCmdUI *pCmdUI);
+    afx_msg void OnViewWarnings();
+    afx_msg void OnUpdateViewWarnings(CCmdUI *pCmdUI);
 };
 
 extern WinADFApp theApp;
 
 struct PageDef {
-	CRuntimeClass* Class;
-	UINT id;
+    CRuntimeClass* Class;
+    UINT id;
 };
 
 // utility functions

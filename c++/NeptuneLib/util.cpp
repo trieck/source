@@ -13,437 +13,400 @@
 #include <sys/stat.h>
 
 /////////////////////////////////////////////////////////////////////////////
-string tempname()
+tstring tempname()
 {
-	char path[MAX_PATH] = { 0 };
-	char filename[MAX_PATH] = { 0 };
+    TCHAR path[MAX_PATH] = { 0 };
+    TCHAR filename[MAX_PATH] = { 0 };
 
-	GetTempPath(MAX_PATH, path);
-	GetTempFileName(path, "", 0, filename);
+    GetTempPath(MAX_PATH, path);
+    GetTempFileName(path, _T(""), 0, filename);
 
-	return filename;
+    return filename;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-stringvec expand(const char* arg)
+tstringvec expand(LPCTSTR arg)
 {
-	stringvec doclist;
-	string dir = dirname(arg);
+    tstringvec doclist;
+    tstring dir = dirname(arg);
 
-	struct _finddata_t file;
-	long h = _findfirst(arg, &file);
+    struct _tfinddata_t file;
+    long h = _tfindfirst(arg, &file);
 
-	if (h == -1)
-		return doclist;
+    if (h == -1)
+        return doclist;
 
-	do {
-		if (file.attrib & _A_SUBDIR)
-			continue;
+    do {
+        if (file.attrib & _A_SUBDIR)
+            continue;
 
-		doclist.push_back(lower(dir + file.name));
-	} while (_findnext(h, &file) == 0);
+        doclist.push_back(lower(dir + file.name));
+    } while (_tfindnext(h, &file) == 0);
 
-	_findclose(h);
+    _findclose(h);
 
-	return doclist;
+    return doclist;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-stringvec rexpand(const char* arg)
+tstringvec rexpand(LPCTSTR arg)
 {
-	char patt[MAX_PATH + _MAX_FNAME + 1];
+    TCHAR patt[MAX_PATH + _MAX_FNAME + 1];
 
-	stringvec doclist, tmplist;
-	string dir = dirname(arg);
-	string pattern = arg;
+    tstringvec doclist, tmplist;
+    tstring dir = dirname(arg);
+    tstring pattern = arg;
 
-	string::size_type N = pattern.find_last_of('\\');
-	if (N != string::npos)
-		pattern = pattern.substr(++N);
+    tstring::size_type N = pattern.find_last_of('\\');
+    if (N != tstring::npos)
+        pattern = pattern.substr(++N);
 
-	struct _finddata_t file;
-	long h = _findfirst(arg, &file);
+    struct _tfinddata_t file;
+    long h = _tfindfirst(arg, &file);
 
-	if (h == -1) { // no pattern match try subdirectories
-		sprintf(patt, "%s*", dir.c_str());
-		h = _findfirst(patt, &file);
-		if (h == -1)
-			return doclist;
+    if (h == -1) { // no pattern match try subdirectories
+        _stprintf(patt, _T("%s*"), dir.c_str());
+        h = _tfindfirst(patt, &file);
+        if (h == -1)
+            return doclist;
 
-		do {
-			if (strcmp(file.name, ".") == 0)
-				continue;
-			if (strcmp(file.name, "..") == 0)
-				continue;
+        do {
+            if (_tcscmp(file.name, _T(".")) == 0)
+                continue;
+            if (_tcscmp(file.name, _T("..")) == 0)
+                continue;
 
-			if (file.attrib & _A_SUBDIR) {
-				sprintf(patt, "%s%s\\%s", dir.c_str(), file.name,
-				        pattern.c_str());
-				tmplist = rexpand(patt);
-				doclist.insert(doclist.end(), tmplist.begin(),
-				               tmplist.end());
-			}
+            if (file.attrib & _A_SUBDIR) {
+                _stprintf(patt, _T("%s%s\\%s"), dir.c_str(), file.name,
+                    pattern.c_str());
+                tmplist = rexpand(patt);
+                doclist.insert(doclist.end(), tmplist.begin(),
+                    tmplist.end());
+            }
 
-		} while (_findnext(h, &file) == 0);
+        } while (_tfindnext(h, &file) == 0);
 
-		_findclose(h);
+        _findclose(h);
 
-		return doclist;
-	}
+        return doclist;
+    }
 
-	do {
-		if (strcmp(file.name, ".") == 0)
-			continue;
-		if (strcmp(file.name, "..") == 0)
-			continue;
+    do {
+        if (_tcscmp(file.name, _T(".")) == 0)
+            continue;
+        if (_tcscmp(file.name, _T("..")) == 0)
+            continue;
 
-		if (file.attrib & _A_SUBDIR) {
-			sprintf(patt, "%s%s\\%s", dir.c_str(), file.name,
-			        pattern.c_str());
-			tmplist = rexpand(patt);
-			doclist.insert(doclist.end(), tmplist.begin(),
-			               tmplist.end());
-			continue;
-		}
+        if (file.attrib & _A_SUBDIR) {
+            _stprintf(patt, _T("%s%s\\%s"), dir.c_str(), file.name,
+                pattern.c_str());
+            tmplist = rexpand(patt);
+            doclist.insert(doclist.end(), tmplist.begin(),
+                tmplist.end());
+            continue;
+        }
 
-		doclist.push_back(lower(dir + file.name));
+        doclist.push_back(lower(dir + file.name));
 
-	} while (_findnext(h, &file) == 0);
+    } while (_tfindnext(h, &file) == 0);
 
-	_findclose(h);
+    _findclose(h);
 
-	return doclist;
+    return doclist;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string dirname(const char* path)
+tstring dirname(LPCTSTR path)
 {
-	char drive[_MAX_DRIVE] = { 0 };
-	char dir[_MAX_PATH] = { 0 };
+    TCHAR drive[_MAX_DRIVE] = { 0 };
+    TCHAR dir[_MAX_PATH] = { 0 };
 
-	_splitpath(path, drive, dir, NULL, NULL);
+    _tsplitpath(path, drive, dir, NULL, NULL);
 
-	return string(drive) + dir;
+    return tstring(drive) + dir;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string fullpath(const char *path)
+tstring fullpath(const TCHAR *path)
 {
-	char buffer[_MAX_PATH + _MAX_FNAME + 1];
-	buffer[0] = '\0';
+    TCHAR buffer[_MAX_PATH + _MAX_FNAME + 1];
+    buffer[0] = '\0';
 
-	_fullpath(buffer, path, _MAX_PATH + _MAX_FNAME);
+    _tfullpath(buffer, path, _MAX_PATH + _MAX_FNAME);
 
-	return buffer;
+    return buffer;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string filename(const char* path)
+tstring filename(LPCTSTR path)
 {
-	char filename[_MAX_FNAME] = { 0 };
-	char ext[_MAX_EXT] = { 0 };
-	char output[_MAX_FNAME + _MAX_EXT + 1];
+    TCHAR filename[_MAX_FNAME] = { 0 };
+    TCHAR ext[_MAX_EXT] = { 0 };
+    TCHAR output[_MAX_FNAME + _MAX_EXT + 1];
 
-	_splitpath(path, NULL, NULL, filename, ext);
+    _tsplitpath(path, NULL, NULL, filename, ext);
 
-	sprintf(output, "%s%s", filename, ext);
+    _stprintf(output, _T("%s%s"), filename, ext);
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string basename(const char* path)
+tstring basename(LPCTSTR path)
 {
-	char drive[_MAX_DRIVE] = { 0 };
-	char dir[_MAX_PATH] = { 0 };
-	char file[_MAX_FNAME] = { 0 };
-	char output[_MAX_DRIVE + _MAX_PATH + _MAX_FNAME + 1];
+    TCHAR drive[_MAX_DRIVE] = { 0 };
+    TCHAR dir[_MAX_PATH] = { 0 };
+    TCHAR file[_MAX_FNAME] = { 0 };
+    TCHAR output[_MAX_DRIVE + _MAX_PATH + _MAX_FNAME + 1];
 
-	string name = filename(path);
+    tstring name = filename(path);
 
-	_splitpath(name.c_str(), drive, dir, file, NULL);
+    _tsplitpath(name.c_str(), drive, dir, file, NULL);
 
-	sprintf(output, "%s%s%s", drive, dir, file);
+    _stprintf(output, _T("%s%s%s"), drive, dir, file);
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string extname(const char* path)
+tstring extname(LPCTSTR path)
 {
-	char ext[_MAX_EXT] = { 0 };
+    TCHAR ext[_MAX_EXT] = { 0 };
 
-	_splitpath(path, NULL, NULL, NULL, ext);
+    _tsplitpath(path, NULL, NULL, NULL, ext);
 
-	return ext;
+    return ext;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string layout(const char *path)
+tstring modulename()
 {
-	string dir = programdir() + "layouts\\";
-	string n = basename(path);
+    TCHAR path[_MAX_PATH + _MAX_FNAME + 1] = { 0 };
 
-	unsigned i;
-	for (i = 0; i < n.size(); i++)
-		if (ispunct(n[i]))
-			break;
+    MEMORY_BASIC_INFORMATION mbi;
+    VirtualQuery(programdir, &mbi, sizeof(mbi));
 
-	if (i == n.length())
-		throw Exception("path name %s must start with a state abbreviation.",
-		                path);
+    GetModuleFileName((HINSTANCE)mbi.AllocationBase, path,
+        _MAX_PATH + _MAX_FNAME);
 
-	n = n.substr(i + 1);
-	string filename = dir + n + ".txt";
-
-	return filename;
+    return path;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string modulename()
+tstring modulebasename()
 {
-	char path[_MAX_PATH + _MAX_FNAME + 1] = { 0 };
-
-	MEMORY_BASIC_INFORMATION mbi;
-	VirtualQuery(programdir, &mbi, sizeof(mbi));
-
-	GetModuleFileName((HINSTANCE)mbi.AllocationBase,
-	                  path, _MAX_PATH + _MAX_FNAME);
-
-	return path;
+    return basename(modulename().c_str());
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string modulebasename()
+tstring programdir()
 {
-	return basename(modulename().c_str());
+    return lower(dirname(modulename().c_str()));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string programdir()
+tstring itoa(int n)
 {
-	return lower(dirname(modulename().c_str()));
+    static const int len = 20;
+    TCHAR buffer[len] = { 0 };
+
+    _itot(n, buffer, 10);
+
+    return buffer;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string itoa(int n)
+tstring trim(const TCHAR *str)
 {
-	static const int len = 20;
-	char buffer[len] = { 0 };
-
-	_itoa(n, buffer, 10);
-
-	return buffer;
+    return trim_left(trim_right(str).c_str());
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string trim(const char *str)
+tstring trim_left(const TCHAR *str)
 {
-	return trim_left(trim_right(str).c_str());
+    size_t len, idx;
+
+    len = _tcslen(str);
+
+    for (idx = 0; idx < len; idx++) {
+        if (!isspace(str[idx]))
+            break;
+    }
+
+    return &str[idx];
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string trim_left(const char *str)
+tstring trim_right(const TCHAR *str)
 {
-	size_t len, idx;
+    size_t idx = _tcslen(str);
 
-	len = strlen(str);
+    if (idx == 0)
+        return _T("");
 
-	for (idx = 0; idx < len; idx++) {
-		if (!isspace(str[idx]))
-			break;
-	}
+    for (idx--; isspace(str[idx]); idx--)
+        ;
 
-	return &str[idx];
+    return tstring(str, idx + 1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string trim_right(const char *str)
+tstring comma(INT64 i)
 {
-	size_t idx = strlen(str);
+    tstring output;
 
-	if (idx == 0)
-		return "";
+    TCHAR buff[MAX_PATH];
+    _stprintf(buff, _T("%I64u"), i);
 
-	for (idx--; isspace(str[idx]); idx--)
-		;
+    int n = _tcslen(buff);
 
-	return string(str, idx + 1);
+    for (int j = n - 1, k = 1; j >= 0; j--, k++) {
+        output += buff[j];
+        if (k % 3 == 0 && j > 0 && j < n - 1)
+            output += ',';
+    }
+
+    std::reverse(output.begin(), output.end());
+
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string comma(INT64 i)
+tstring lower(const tstring & input)
 {
-	string output;
+    tstring output;
 
-	char buff[MAX_PATH];
-	sprintf(buff,"%I64u", i);
+    size_t N = input.length();
+    output.resize(N);
 
-	int n = strlen(buff);
+    unsigned i;
+    for (i = 0; i < N; i++)
+        output[i] = tolower(input[i]);
 
-	for (int j = n - 1, k = 1; j >= 0; j--, k++) {
-		output += buff[j];
-		if (k % 3 == 0 && j > 0 && j < n - 1)
-			output += ',';
-	}
-
-	std::reverse(output.begin(), output.end());
-
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string lower(const string & input)
+tstring upper(const tstring & input)
 {
-	string output;
+    tstring output;
 
-	size_t N = input.length();
-	output.resize(N);
+    size_t N = input.length();
+    output.resize(N);
 
-	unsigned i;
-	for (i = 0; i < N; i++)
-		output[i] = tolower(input[i]);
+    unsigned i;
+    for (i = 0; i < N; i++)
+        output[i] = toupper(input[i]);
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string upper(const string & input)
+tstring lasterror()
 {
-	string output;
+    tstring output;
 
-	size_t N = input.length();
-	output.resize(N);
+    TCHAR *pmsg = NULL;
 
-	unsigned i;
-	for (i = 0; i < N; i++)
-		output[i] = toupper(input[i]);
+    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+        NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR)&pmsg, 0, NULL);
 
-	return output;
+    if (pmsg != NULL) {
+        int N = _tcslen(pmsg);
+        if (N > 1 && pmsg[N - 1] == '\n')
+            pmsg[N - 1] = '\0';
+
+        if (N > 1 && pmsg[N - 2] == '\r')
+            pmsg[N - 2] = '\0';
+
+        output = pmsg;
+
+        LocalFree(pmsg);
+    }
+
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string lasterror()
+tstring fileload(const tstring &file)
 {
-	string output;
+    // read in a file into a tstring using the "big gulp" method
+    int fd = _topen(file.c_str(), _O_RDONLY | _O_BINARY | _O_SEQUENTIAL);
 
-	char *pmsg = NULL;
+    if (fd == -1)
+        return _T("");
 
-	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
-	              NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-	              (LPTSTR)&pmsg, 0, NULL);
+    struct stat status;
+    fstat(fd, &status);
 
-	if (pmsg != NULL) {
-		int N = strlen(pmsg);
-		if (N > 1 && pmsg[N - 1] == '\n')
-			pmsg[N - 1] = '\0';
+    TCHAR* pbuf = new TCHAR[status.st_size + 1];
 
-		if (N > 1 && pmsg[N - 2] == '\r')
-			pmsg[N - 2] = '\0';
+    int nread = read(fd, pbuf, status.st_size);
 
-		output = pmsg;
+    pbuf[nread] = '\0';
 
-		LocalFree(pmsg);
-	}
+    tstring output = pbuf;
+    delete[] pbuf;
 
-	return output;
+    close(fd);
+
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string fileload(const string &file)
+tstring xmlescape(const tstring &input)
 {
-	// read in a file into a string using the "big gulp" method
-	int fd = open(file.c_str(), _O_RDONLY | _O_BINARY | _O_SEQUENTIAL);
+    tstring output;
 
-	if (fd == -1)
-		return "";
+    const TCHAR *pin = input.c_str();
 
-	struct stat status;
-	fstat(fd, &status);
+    while (*pin) {
+        if (*pin == '"') {
+            output += _T("&quot;");
+            pin++;
+        }
+        else if (*pin == '<') {
+            output += _T("&lt;");
+            pin++;
+        }
+        else if (*pin == '>') {
+            output += _T("&gt;");
+            pin++;
+        }
+        else if (*pin == '&') {
+            output += _T("&amp;");
+            pin++;
+        }
+        else {
+            output += *pin++;
+        }
+    }
 
-	char* pbuf = new char[status.st_size + 1];
-
-	int nread = read(fd, pbuf, status.st_size);
-
-	pbuf[nread] = '\0';
-
-	string output = pbuf;
-	delete [] pbuf;
-
-	close(fd);
-
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string xmlescape(const string &input)
+tstring machinename()
 {
-	string output;
+    DWORD len = MAX_COMPUTERNAME_LENGTH;
+    TCHAR cname[MAX_COMPUTERNAME_LENGTH + 1];
 
-	const char *pin = input.c_str();
+    GetComputerName(cname, &len);
 
-	while (*pin) {
-		if (*pin == '"') {
-			output += "&quot;";
-			pin++;
-		} else if (*pin == '<') {
-			output += "&lt;";
-			pin++;
-		} else if (*pin == '>') {
-			output += "&gt;";
-			pin++;
-		} else if (*pin == '&') {
-			output += "&amp;";
-			pin++;
-		} else {
-			output += *pin++;
-		}
-	}
-
-	return output;
+    return cname;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-string machinename()
+tstring format(const TCHAR *fmt, ...)
 {
-	DWORD len = MAX_COMPUTERNAME_LENGTH;
-	char cname[MAX_COMPUTERNAME_LENGTH + 1];
+    va_list arglist;
+    va_start(arglist, fmt);
 
-	GetComputerName(cname, &len);
+    TCHAR buf[8000];
+    _vstprintf(buf, fmt, arglist);
 
-	return cname;
-}
+    va_end(arglist);
 
-/////////////////////////////////////////////////////////////////////////////
-string format(const char *fmt, ...)
-{
-	va_list arglist;
-	va_start(arglist, fmt);
-
-	char buf[8000];
-	vsprintf(buf, fmt, arglist);
-
-	va_end (arglist);
-
-	return buf;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-string uni2ansi(const wchar_t *pwstr)
-{
-	size_t N = wcslen(pwstr);
-
-	char *pstr = new char[N + 1];
-
-	int result = ::WideCharToMultiByte(CP_ACP, 0, pwstr, -1, pstr,
-	                                   N + 1, NULL, NULL);
-	if (result == 0) {
-		delete [] pstr;
-		return "";
-	}
-
-	string output = pstr;
-	delete [] pstr;
-
-	return output;
+    return buf;
 }

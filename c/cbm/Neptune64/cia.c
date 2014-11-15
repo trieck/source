@@ -24,22 +24,22 @@
 #include "common.h"
 #include "cia.h"
 typedef struct {
-	byte pra;		/* data register a */
-	byte prb;		/* data register b */
-	byte ddra;		/* data direction register a */
-	byte ddrb;		/* data direction register b */
-	byte talo;		/* timer a low byte */
-	byte tahi;		/* timer a high byte */
-	byte tblo;		/* timer b low byte */
-	byte tbhi;		/* timer b high byte */
-	byte tod_tenth;	/* time of day clock */
-	byte tod_sec;
-	byte tod_min;
-	byte tod_hr;
-	byte sdr;		/* serial data register */
-	byte icr;		/* interrupt control register */
-	byte cra;		/* control register a */
-	byte crb;		/* control register b */
+    byte pra;		/* data register a */
+    byte prb;		/* data register b */
+    byte ddra;		/* data direction register a */
+    byte ddrb;		/* data direction register b */
+    byte talo;		/* timer a low byte */
+    byte tahi;		/* timer a high byte */
+    byte tblo;		/* timer b low byte */
+    byte tbhi;		/* timer b high byte */
+    byte tod_tenth;	/* time of day clock */
+    byte tod_sec;
+    byte tod_min;
+    byte tod_hr;
+    byte sdr;		/* serial data register */
+    byte icr;		/* interrupt control register */
+    byte cra;		/* control register a */
+    byte crb;		/* control register b */
 } CIA;
 static CIA cia1, cia2;
 /*
@@ -47,15 +47,15 @@ static CIA cia1, cia2;
  */
 void cia_init(void)
 {
-	memset(&cia1, 0, sizeof(CIA));
-	memset(&cia2, 0, sizeof(CIA));
+    memset(&cia1, 0, sizeof(CIA));
+    memset(&cia2, 0, sizeof(CIA));
 }
 /*
  * read a byte from cia1
  */
 byte cia1_read(word address)
 {
-	return 0;
+    return 0;
 }
 /*
  * store a byte at cia1
@@ -68,7 +68,7 @@ void cia1_store(word address, byte value)
  */
 byte cia2_read(word address)
 {
-	return 0;
+    return 0;
 }
 /*
  * store a byte at cia2

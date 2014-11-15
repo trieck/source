@@ -11,15 +11,15 @@
 /////////////////////////////////////////////////////////////////////////////
 Entry::Entry() : type(ET_EMPTY)
 {
-	memset(&pt, 0, sizeof(POINT));
+    memset(&pt, 0, sizeof(POINT));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-Entry::Entry(const POINT &aPoint, uint32_t ntype)  
+Entry::Entry(const POINT &aPoint, uint32_t ntype)
 {
-	pt.x = aPoint.x % BOARD_SIZE; 
-	pt.y = aPoint.y % BOARD_SIZE;
-	type = ntype % (ET_PLAYER_TWO+1);
+    pt.x = aPoint.x % BOARD_SIZE;
+    pt.y = aPoint.y % BOARD_SIZE;
+    type = ntype % (ET_PLAYER_TWO+1);
 }
 
 /////////////////////////////////////////////////////////////////////////////

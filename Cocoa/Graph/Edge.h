@@ -11,7 +11,7 @@
 
 @interface Edge :
 NSObject {
-	Vertex *v, *w;
+    Vertex *v, *w;
 }
 
 - (id)initWithVertex:

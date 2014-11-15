@@ -17,19 +17,19 @@
 
 /////////////////////////////////////////////////////////////////////////////
 struct ADFDate {
-	int32_t year;
-	int32_t month;
-	int32_t days;
+    int32_t year;
+    int32_t month;
+    int32_t days;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 struct ADFDateTime {
-	int32_t year;
-	int32_t month;
-	int32_t day;
-	int32_t hour;
-	int32_t min;
-	int32_t sec;
+    int32_t year;
+    int32_t month;
+    int32_t day;
+    int32_t hour;
+    int32_t min;
+    int32_t sec;
 };
 
 /////////////////////////////////////////////////////////////////////////////

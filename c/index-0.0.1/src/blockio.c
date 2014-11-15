@@ -15,15 +15,15 @@ extern int __cdecl _fseeki64(FILE * stream, __int64 offset, int whence);
 /* read a block */
 int readblock(FILE * fp, uint64_t blockno, void *buf)
 {
-	uint64_t offset = blockno * BLOCK_SIZE;
+    uint64_t offset = blockno * BLOCK_SIZE;
 
-	if (FSEEK(fp, offset, SEEK_SET) == EOF)
-		return 0;	/* can't seek */
+    if (FSEEK(fp, offset, SEEK_SET) == EOF)
+        return 0;	/* can't seek */
 
-	if (fread(buf, BLOCK_SIZE, 1, fp) != 1)
-		return 0;	/* can't read */
+    if (fread(buf, BLOCK_SIZE, 1, fp) != 1)
+        return 0;	/* can't read */
 
-	return 1;
+    return 1;
 }
 
 /*
@@ -31,25 +31,25 @@ int readblock(FILE * fp, uint64_t blockno, void *buf)
  */
 int writeblock(FILE * fp, uint64_t blockno, const void *buf)
 {
-	uint64_t offset = blockno * BLOCK_SIZE;
+    uint64_t offset = blockno * BLOCK_SIZE;
 
-	if (FSEEK(fp, offset, SEEK_SET) == EOF)
-		return 0;	/* can't seek */
+    if (FSEEK(fp, offset, SEEK_SET) == EOF)
+        return 0;	/* can't seek */
 
-	if (fwrite(buf, BLOCK_SIZE, 1, fp) != 1)
-		return 0;	/* can't write */
+    if (fwrite(buf, BLOCK_SIZE, 1, fp) != 1)
+        return 0;	/* can't write */
 
-	return 1;
+    return 1;
 }
 
 /* insert a block */
 int insertblock(FILE * fp, const void *buf)
 {
-	if (FSEEK(fp, 0, SEEK_END) == EOF)
-		return 0;	/* can't seek */
+    if (FSEEK(fp, 0, SEEK_END) == EOF)
+        return 0;	/* can't seek */
 
-	if (fwrite(buf, BLOCK_SIZE, 1, fp) != 1)
-		return 0;	/* can't write */
+    if (fwrite(buf, BLOCK_SIZE, 1, fp) != 1)
+        return 0;	/* can't write */
 
-	return 1;
+    return 1;
 }

@@ -4,14 +4,14 @@
 
 class ImageDilater : public MorphologicalOperator {
 public:
-	ImageDilater();
-	~ImageDilater();
+    ImageDilater();
+    ~ImageDilater();
 
-	void Dilate(CImage &image);
+    void Dilate(CImage &image);
 private:
-	void Dilate(CImage &image, Kernel *pKernel);
-	void Dilate(CImage &image, Kernel *pKernel, int x, int y);
+    void Dilate(CImage &image, Kernel *pKernel);
+    void Dilate(CImage &image, Kernel *pKernel, int x, int y);
 
-	typedef std::vector<Kernel*> KernelVec;
-	KernelVec m_kernels;
+    typedef std::vector<Kernel*> KernelVec;
+    KernelVec m_kernels;
 };

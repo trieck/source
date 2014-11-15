@@ -14,15 +14,15 @@
  */
 int main(int argc, char *argv[])
 {
-	char *p;
+    char *p;
 
-	struct queue *q = qalloc();
+    struct queue *q = qalloc();
 
-	while (argc--) qput(q, *argv++);
+    while (argc--) qput(q, *argv++);
 
-	while ((p = qget(q))) printf("%s\n", p);
+    while ((p = qget(q))) printf("%s\n", p);
 
-	qfree(q);
+    qfree(q);
 
-	return 0;
+    return 0;
 }

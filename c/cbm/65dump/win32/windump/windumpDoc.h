@@ -12,8 +12,8 @@
 
 class WindumpDoc : public CDocument {
 protected: // create from serialization only
-	WindumpDoc();
-	DECLARE_DYNCREATE(WindumpDoc)
+    WindumpDoc();
+    DECLARE_DYNCREATE(WindumpDoc)
 
 // Attributes
 public:
@@ -22,28 +22,28 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(WindumpDoc)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(WindumpDoc)
 public:
-	virtual BOOL OnNewDocument();
-	virtual void Serialize(CArchive& ar);
-	//}}AFX_VIRTUAL
+    virtual BOOL OnNewDocument();
+    virtual void Serialize(CArchive& ar);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~WindumpDoc();
+    virtual ~WindumpDoc();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(WindumpDoc)
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(WindumpDoc)
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

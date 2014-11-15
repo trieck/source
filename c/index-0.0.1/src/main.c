@@ -13,7 +13,7 @@
  */
 void usage(void)
 {
-	error("usage: index files");
+    error("usage: index files");
 }
 
 /*
@@ -21,10 +21,10 @@ void usage(void)
  */
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		usage();
+    if (argc < 2)
+        usage();
 
-	mkindex(--argc, ++argv);
+    mkindex(--argc, ++argv);
 
-	return 0;
+    return 0;
 }

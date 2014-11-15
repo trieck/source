@@ -24,10 +24,10 @@ IMPLEMENT_DYNCREATE (ScoreView, CScrollView)
 
 ScoreView::ScoreView()
 {
-	m_Tool.button = IDC_QUARTERNOTE;
-	m_Tool.icon = IDI_QUARTERNOTE;
-	m_Tool.cursor = IDC_QNOTE;
-	m_Tool.user = QuarterNote;
+    m_Tool.button = IDC_QUARTERNOTE;
+    m_Tool.icon = IDI_QUARTERNOTE;
+    m_Tool.cursor = IDC_QNOTE;
+    m_Tool.user = QuarterNote;
 }
 
 ScoreView::~ScoreView()
@@ -35,33 +35,33 @@ ScoreView::~ScoreView()
 }
 
 BEGIN_MESSAGE_MAP(ScoreView, CScrollView)
-	//{{AFX_MSG_MAP(ScoreView)
-	ON_WM_ERASEBKGND()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_LBUTTONUP()
-	ON_WM_SETCURSOR()
-	ON_WM_MOUSEMOVE()
-	ON_WM_CONTEXTMENU()
-	ON_UPDATE_COMMAND_UI(IDM_PLAYMEASURE, OnUpdatePlayMeasure)
-	ON_COMMAND(IDM_PLAYMEASURE, OnPlayMeasure)
-	ON_WM_LBUTTONDBLCLK()
-	ON_COMMAND(IDM_PLAYALL, OnPlayAll)
-	ON_UPDATE_COMMAND_UI(IDM_PLAYALL, OnUpdatePlayAll)
-	ON_COMMAND(IDM_SETMEASURETEMPO, OnSetMeasureTempo)
-	ON_UPDATE_COMMAND_UI(IDM_SETMEASURETEMPO, OnUpdateSetMeasureTempo)
-	ON_COMMAND(IDM_TOOLBOX, OnToolbox)
-	ON_COMMAND(IDM_KEYSIGNATURE, OnKeySignature)
-	ON_UPDATE_COMMAND_UI(IDM_KEYSIGNATURE, OnUpdateKeySignature)
-	//}}AFX_MSG_MAP
-	ON_UPDATE_COMMAND_UI_RANGE(IDM_SELECT, IDM_ERASENOTE, OnUpdateMode)
-	ON_COMMAND_RANGE(IDM_SELECT, IDM_ERASENOTE, OnMode)
+    //{{AFX_MSG_MAP(ScoreView)
+    ON_WM_ERASEBKGND()
+    ON_WM_LBUTTONDOWN()
+    ON_WM_LBUTTONUP()
+    ON_WM_SETCURSOR()
+    ON_WM_MOUSEMOVE()
+    ON_WM_CONTEXTMENU()
+    ON_UPDATE_COMMAND_UI(IDM_PLAYMEASURE, OnUpdatePlayMeasure)
+    ON_COMMAND(IDM_PLAYMEASURE, OnPlayMeasure)
+    ON_WM_LBUTTONDBLCLK()
+    ON_COMMAND(IDM_PLAYALL, OnPlayAll)
+    ON_UPDATE_COMMAND_UI(IDM_PLAYALL, OnUpdatePlayAll)
+    ON_COMMAND(IDM_SETMEASURETEMPO, OnSetMeasureTempo)
+    ON_UPDATE_COMMAND_UI(IDM_SETMEASURETEMPO, OnUpdateSetMeasureTempo)
+    ON_COMMAND(IDM_TOOLBOX, OnToolbox)
+    ON_COMMAND(IDM_KEYSIGNATURE, OnKeySignature)
+    ON_UPDATE_COMMAND_UI(IDM_KEYSIGNATURE, OnUpdateKeySignature)
+    //}}AFX_MSG_MAP
+    ON_UPDATE_COMMAND_UI_RANGE(IDM_SELECT, IDM_ERASENOTE, OnUpdateMode)
+    ON_COMMAND_RANGE(IDM_SELECT, IDM_ERASENOTE, OnMode)
 END_MESSAGE_MAP()
 
 #ifdef _DEBUG
 ScoreDoc* ScoreView::GetDocument() // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(ScoreDoc)));
-	return (ScoreDoc*)m_pDocument;
+    ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(ScoreDoc)));
+    return (ScoreDoc*)m_pDocument;
 }
 #endif //_DEBUG
 
@@ -70,15 +70,15 @@ ScoreDoc* ScoreView::GetDocument() // non-debug version is inline
 
 BOOL ScoreView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	if (!CView::PreCreateWindow(cs))
-		return FALSE;
+    if (!CView::PreCreateWindow(cs))
+        return FALSE;
 
-	cs.dwExStyle |= WS_EX_CLIENTEDGE;
-	cs.style &= ~WS_BORDER;
-	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS,
-	                                   ::LoadCursor(NULL, IDC_ARROW), NULL, NULL);
+    cs.dwExStyle |= WS_EX_CLIENTEDGE;
+    cs.style &= ~WS_BORDER;
+    cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS,
+                                       ::LoadCursor(NULL, IDC_ARROW), NULL, NULL);
 
-	return TRUE;
+    return TRUE;
 }
 
 //
@@ -86,7 +86,7 @@ BOOL ScoreView::PreCreateWindow(CREATESTRUCT& cs)
 //
 void ScoreView::OnDraw(CDC* pDC)
 {
-	GetDocument()->GetStaff()->Render(pDC);
+    GetDocument()->GetStaff()->Render(pDC);
 }
 
 //
@@ -94,9 +94,9 @@ void ScoreView::OnDraw(CDC* pDC)
 //
 void ScoreView::SetTool(Tool * pTool)
 {
-	ASSERT(pTool != NULL);
+    ASSERT(pTool != NULL);
 
-	m_Tool = *pTool;
+    m_Tool = *pTool;
 }
 
 //
@@ -104,12 +104,12 @@ void ScoreView::SetTool(Tool * pTool)
 //
 BOOL ScoreView::OnEraseBkgnd(CDC* pDC)
 {
-	CRect rc;
-	GetClientRect(rc);
+    CRect rc;
+    GetClientRect(rc);
 
-	pDC->FillSolidRect(rc, COLOR_WHITE);
+    pDC->FillSolidRect(rc, COLOR_WHITE);
 
-	return CView::OnEraseBkgnd(pDC);
+    return CView::OnEraseBkgnd(pDC);
 }
 
 //
@@ -117,48 +117,48 @@ BOOL ScoreView::OnEraseBkgnd(CDC* pDC)
 //
 void ScoreView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	ScoreApp * pApp = (ScoreApp*)AfxGetApp();
-	ASSERT_VALID(pApp);
+    ScoreApp * pApp = (ScoreApp*)AfxGetApp();
+    ASSERT_VALID(pApp);
 
-	ScoreDoc * pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
+    ScoreDoc * pDoc = GetDocument();
+    ASSERT_VALID(pDoc);
 
-	const Staff * pStaff = pDoc->GetStaff();
-	ASSERT(pStaff != NULL);
+    const Staff * pStaff = pDoc->GetStaff();
+    ASSERT(pStaff != NULL);
 
-	DPtoLP(point);
+    DPtoLP(point);
 
-	Measure * pMeasure = pStaff->GetMeasure(point);
-	if (pMeasure == NULL)
-		return;
+    Measure * pMeasure = pStaff->GetMeasure(point);
+    if (pMeasure == NULL)
+        return;
 
-	// Move the note on the measure
-	if (m_nMode == IDM_SELECT) {
-		Note * pNote = pMeasure->GetNote(point);
-		if (pNote != NULL) {
-			m_pSelectedNote = pNote;
-			m_ptPrev = m_pSelectedNote->GetPos();
-			SetCapture();
-		}
-	}
-	// Add / modify a note on the measure
-	else if (m_nMode == IDM_ADDNOTE) {
-		if (m_Tool.type == NoteTool)
-			AddNote(pMeasure, point);
-		else if (m_Tool.type == ModifierTool) {
-			Note * pNote = pMeasure->GetNote(point);
-			if (pNote != NULL)
-				pDoc->ModifyNote(pMeasure, pNote, m_Tool);
-		}
-	}
-	// Erase a note
-	else if (m_nMode == IDM_ERASENOTE) {
-		Note * pNote = pMeasure->GetNote(point);
-		if (pNote != NULL)
-			pDoc->RemoveNote(pMeasure, pNote);
-	}
+    // Move the note on the measure
+    if (m_nMode == IDM_SELECT) {
+        Note * pNote = pMeasure->GetNote(point);
+        if (pNote != NULL) {
+            m_pSelectedNote = pNote;
+            m_ptPrev = m_pSelectedNote->GetPos();
+            SetCapture();
+        }
+    }
+    // Add / modify a note on the measure
+    else if (m_nMode == IDM_ADDNOTE) {
+        if (m_Tool.type == NoteTool)
+            AddNote(pMeasure, point);
+        else if (m_Tool.type == ModifierTool) {
+            Note * pNote = pMeasure->GetNote(point);
+            if (pNote != NULL)
+                pDoc->ModifyNote(pMeasure, pNote, m_Tool);
+        }
+    }
+    // Erase a note
+    else if (m_nMode == IDM_ERASENOTE) {
+        Note * pNote = pMeasure->GetNote(point);
+        if (pNote != NULL)
+            pDoc->RemoveNote(pMeasure, pNote);
+    }
 
-	CScrollView::OnLButtonDown(nFlags, point);
+    CScrollView::OnLButtonDown(nFlags, point);
 }
 
 //
@@ -166,51 +166,51 @@ void ScoreView::OnLButtonDown(UINT nFlags, CPoint point)
 //
 void ScoreView::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	CWnd * pWnd = CWnd::GetCapture();
-	if (pWnd == NULL || *pWnd != *this)
-		return;
+    CWnd * pWnd = CWnd::GetCapture();
+    if (pWnd == NULL || *pWnd != *this)
+        return;
 
-	DPtoLP(point);
+    DPtoLP(point);
 
-	ScoreApp * pApp = (ScoreApp*)AfxGetApp();
-	ASSERT_VALID(pApp);
+    ScoreApp * pApp = (ScoreApp*)AfxGetApp();
+    ASSERT_VALID(pApp);
 
-	const Staff * pStaff = GetDocument()->GetStaff();
-	ASSERT(pStaff != NULL);
+    const Staff * pStaff = GetDocument()->GetStaff();
+    ASSERT(pStaff != NULL);
 
-	// Have we selected a note?
-	if (m_pSelectedNote != NULL) {
-		// Invalidate the previous note
-		Note note;
-		note.SetPos(m_ptPrev);
-		InvalidateNote(&note);
+    // Have we selected a note?
+    if (m_pSelectedNote != NULL) {
+        // Invalidate the previous note
+        Note note;
+        note.SetPos(m_ptPrev);
+        InvalidateNote(&note);
 
-		// Move the selected note
-		PANCHOR pAnchor= pStaff->GetAnchor(point);
-		if (pAnchor != NULL) {
-			CPoint pt;
-			pt.x = m_ptPrev.x;
-			pt.y = pAnchor->cy;
-			InvalidateNote(m_pSelectedNote);
-			m_pSelectedNote->SetPos(pt);
-			m_pSelectedNote->SetData(pAnchor->data);
-			m_pSelectedNote->SetName(pAnchor->name);
-			m_pSelectedNote->SetModifier(NULL);
-			InvalidateNote(m_pSelectedNote);
-			GetDocument()->SetModifiedFlag();
-		}
-		m_pSelectedNote = NULL;
-		memset(&m_ptPrev, 0, sizeof(CPoint));
-	}
-	// Are we playing a note?
-	else if (m_pLastNote != NULL) {
-		pApp->ReleaseNote(m_pLastNote);
-		m_pLastNote;
-	}
+        // Move the selected note
+        PANCHOR pAnchor= pStaff->GetAnchor(point);
+        if (pAnchor != NULL) {
+            CPoint pt;
+            pt.x = m_ptPrev.x;
+            pt.y = pAnchor->cy;
+            InvalidateNote(m_pSelectedNote);
+            m_pSelectedNote->SetPos(pt);
+            m_pSelectedNote->SetData(pAnchor->data);
+            m_pSelectedNote->SetName(pAnchor->name);
+            m_pSelectedNote->SetModifier(NULL);
+            InvalidateNote(m_pSelectedNote);
+            GetDocument()->SetModifiedFlag();
+        }
+        m_pSelectedNote = NULL;
+        memset(&m_ptPrev, 0, sizeof(CPoint));
+    }
+    // Are we playing a note?
+    else if (m_pLastNote != NULL) {
+        pApp->ReleaseNote(m_pLastNote);
+        m_pLastNote;
+    }
 
-	ReleaseCapture();
+    ReleaseCapture();
 
-	CScrollView::OnLButtonUp(nFlags, point);
+    CScrollView::OnLButtonUp(nFlags, point);
 }
 
 //
@@ -218,22 +218,22 @@ void ScoreView::OnLButtonUp(UINT nFlags, CPoint point)
 //
 void ScoreView::InvalidateNote(const Note * pNote)
 {
-	ASSERT(pNote != NULL);
+    ASSERT(pNote != NULL);
 
-	CClientDC dc(this);
-	OnPrepareDC(&dc);
+    CClientDC dc(this);
+    OnPrepareDC(&dc);
 
-	CRect rc, rcModifier;
-	pNote->GetRect(rc);
-	pNote->GetModifierRect(rcModifier);
+    CRect rc, rcModifier;
+    pNote->GetRect(rc);
+    pNote->GetModifierRect(rcModifier);
 
-	rc.UnionRect(rc, rcModifier);
+    rc.UnionRect(rc, rcModifier);
 
-	dc.LPtoDP(rc);
+    dc.LPtoDP(rc);
 
-	if (dc.RectVisible(rc)) {
-		InvalidateRect(&rc);
-	}
+    if (dc.RectVisible(rc)) {
+        InvalidateRect(&rc);
+    }
 }
 
 //
@@ -241,24 +241,24 @@ void ScoreView::InvalidateNote(const Note * pNote)
 //
 BOOL ScoreView::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
-	CPoint pt;
-	GetCursorPos(&pt);
-	DPtoLP(pt);
-	ScreenToClient(&pt);
+    CPoint pt;
+    GetCursorPos(&pt);
+    DPtoLP(pt);
+    ScreenToClient(&pt);
 
-	const Staff * pStaff = GetDocument()->GetStaff();
-	ASSERT(pStaff != NULL);
+    const Staff * pStaff = GetDocument()->GetStaff();
+    ASSERT(pStaff != NULL);
 
-	if (m_nMode != IDM_SELECT && pStaff->GetMeasure(pt) != NULL) {
-		UINT cursor = m_nMode == IDM_ADDNOTE ? m_Tool.cursor : IDC_ERASENOTE;
-		HCURSOR hCursor = (HCURSOR)Neptune::LoadImage(cursor, IMAGE_CURSOR);
-		ASSERT(hCursor != NULL);
-		::SetCursor(hCursor);
+    if (m_nMode != IDM_SELECT && pStaff->GetMeasure(pt) != NULL) {
+        UINT cursor = m_nMode == IDM_ADDNOTE ? m_Tool.cursor : IDC_ERASENOTE;
+        HCURSOR hCursor = (HCURSOR)Neptune::LoadImage(cursor, IMAGE_CURSOR);
+        ASSERT(hCursor != NULL);
+        ::SetCursor(hCursor);
 
-		return TRUE;
-	}
+        return TRUE;
+    }
 
-	return CScrollView::OnSetCursor(pWnd, nHitTest, message);
+    return CScrollView::OnSetCursor(pWnd, nHitTest, message);
 }
 
 //
@@ -266,15 +266,15 @@ BOOL ScoreView::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 //
 void ScoreView::OnToolbox()
 {
-	if (CWnd::FindWindow(NULL, "Toolbox") != NULL)
-		return; // Existing toolbox window
+    if (CWnd::FindWindow(NULL, "Toolbox") != NULL)
+        return; // Existing toolbox window
 
-	ToolboxDlg * pDlg = new ToolboxDlg(this);
-	ASSERT_VALID(pDlg);
+    ToolboxDlg * pDlg = new ToolboxDlg(this);
+    ASSERT_VALID(pDlg);
 
-	pDlg->Create(IDD_TOOLBOX);
-	pDlg->ShowWindow(SW_SHOW);
-	pDlg->UpdateWindow();
+    pDlg->Create(IDD_TOOLBOX);
+    pDlg->ShowWindow(SW_SHOW);
+    pDlg->UpdateWindow();
 }
 
 //
@@ -282,25 +282,25 @@ void ScoreView::OnToolbox()
 //
 void ScoreView::OnInitialUpdate()
 {
-	CScrollView::OnInitialUpdate();
+    CScrollView::OnInitialUpdate();
 
-	m_pLastNote = NULL;
-	m_nMode = IDM_SELECT;
-	m_Tool.type = NoteTool;
-	m_Tool.button = IDC_QUARTERNOTE;
-	m_Tool.icon = IDI_QUARTERNOTE;
-	m_Tool.cursor = IDC_QNOTE;
-	m_Tool.user = QuarterNote;
-	m_pSelectedNote = NULL;
-	m_pSelectedMeasure = NULL;
-	m_ptPrev.x = 0;
-	m_ptPrev.y = 0;
+    m_pLastNote = NULL;
+    m_nMode = IDM_SELECT;
+    m_Tool.type = NoteTool;
+    m_Tool.button = IDC_QUARTERNOTE;
+    m_Tool.icon = IDI_QUARTERNOTE;
+    m_Tool.cursor = IDC_QNOTE;
+    m_Tool.user = QuarterNote;
+    m_pSelectedNote = NULL;
+    m_pSelectedMeasure = NULL;
+    m_ptPrev.x = 0;
+    m_ptPrev.y = 0;
 
-	const Staff * pStaff = GetDocument()->GetStaff();
-	ASSERT(pStaff != NULL);
+    const Staff * pStaff = GetDocument()->GetStaff();
+    ASSERT(pStaff != NULL);
 
-	int cx = borderOffset + pStaff->Width();
-	SetScrollSizes(MM_TEXT, CSize(cx, 100));
+    int cx = borderOffset + pStaff->Width();
+    SetScrollSizes(MM_TEXT, CSize(cx, 100));
 }
 
 //
@@ -308,27 +308,27 @@ void ScoreView::OnInitialUpdate()
 //
 void ScoreView::OnMouseMove(UINT nFlags, CPoint point)
 {
-	CWnd * pWnd = CWnd::GetCapture();
-	if (!pWnd || *pWnd != *this || !m_pSelectedNote)
-		return;
+    CWnd * pWnd = CWnd::GetCapture();
+    if (!pWnd || *pWnd != *this || !m_pSelectedNote)
+        return;
 
-	DPtoLP(point);
+    DPtoLP(point);
 
-	// Invalidate the previous move
-	Note note = *m_pSelectedNote;
-	note.SetPos(m_ptPrev);
-	InvalidateNote(&note);
-	UpdateWindow();
+    // Invalidate the previous move
+    Note note = *m_pSelectedNote;
+    note.SetPos(m_ptPrev);
+    InvalidateNote(&note);
+    UpdateWindow();
 
-	// Set the new position and render the note
-	m_ptPrev.y = point.y;
-	note.SetPos(m_ptPrev);
+    // Set the new position and render the note
+    m_ptPrev.y = point.y;
+    note.SetPos(m_ptPrev);
 
-	CClientDC dc(this);
-	OnPrepareDC(&dc);
-	note.Render(&dc);
+    CClientDC dc(this);
+    OnPrepareDC(&dc);
+    note.Render(&dc);
 
-	CScrollView::OnMouseMove(nFlags, point);
+    CScrollView::OnMouseMove(nFlags, point);
 }
 
 //
@@ -336,23 +336,23 @@ void ScoreView::OnMouseMove(UINT nFlags, CPoint point)
 //
 void ScoreView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
-	if (m_nMode != IDM_SELECT)
-		return; // Only accept a context menu with selection
+    if (m_nMode != IDM_SELECT)
+        return; // Only accept a context menu with selection
 
-	ScreenToClient(&point);
+    ScreenToClient(&point);
 
-	CMenu menu;
-	menu.LoadMenu(IDR_CONTEXTMENU);
+    CMenu menu;
+    menu.LoadMenu(IDR_CONTEXTMENU);
 
-	CMenu * pSubMenu = menu.GetSubMenu(0);
-	ASSERT_VALID(pSubMenu);
+    CMenu * pSubMenu = menu.GetSubMenu(0);
+    ASSERT_VALID(pSubMenu);
 
-	ClientToScreen(&point);
+    ClientToScreen(&point);
 
-	pSubMenu->TrackPopupMenu(
-	    TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON,
-	    point.x, point.y,
-	    GetParentFrame());
+    pSubMenu->TrackPopupMenu(
+        TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON,
+        point.x, point.y,
+        GetParentFrame());
 }
 
 //
@@ -360,14 +360,14 @@ void ScoreView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 //
 void ScoreView::OnUpdatePlayMeasure(CCmdUI* pCmdUI)
 {
-	ASSERT(pCmdUI != NULL);
+    ASSERT(pCmdUI != NULL);
 
-	ScoreApp * pApp = (ScoreApp *)AfxGetApp();
-	ASSERT_VALID(pApp);
+    ScoreApp * pApp = (ScoreApp *)AfxGetApp();
+    ASSERT_VALID(pApp);
 
-	if (m_pSelectedMeasure != NULL)
-		pCmdUI->Enable(m_pSelectedMeasure->HasData() && !pApp->IsPlaying());
-	else pCmdUI->Enable(FALSE);
+    if (m_pSelectedMeasure != NULL)
+        pCmdUI->Enable(m_pSelectedMeasure->HasData() && !pApp->IsPlaying());
+    else pCmdUI->Enable(FALSE);
 }
 
 //
@@ -375,10 +375,10 @@ void ScoreView::OnUpdatePlayMeasure(CCmdUI* pCmdUI)
 //
 void ScoreView::DPtoLP(CPoint & pt)
 {
-	CClientDC dc(this);
-	OnPrepareDC(&dc);
+    CClientDC dc(this);
+    OnPrepareDC(&dc);
 
-	dc.DPtoLP(&pt);
+    dc.DPtoLP(&pt);
 }
 
 //
@@ -386,12 +386,12 @@ void ScoreView::DPtoLP(CPoint & pt)
 //
 void ScoreView::OnPlayMeasure()
 {
-	CWaitCursor cursor;
+    CWaitCursor cursor;
 
-	ASSERT(m_pSelectedMeasure != NULL);
+    ASSERT(m_pSelectedMeasure != NULL);
 
-	ScoreApp * pApp = (ScoreApp*)AfxGetApp();
-	pApp->PlayMeasure(m_pSelectedMeasure);
+    ScoreApp * pApp = (ScoreApp*)AfxGetApp();
+    pApp->PlayMeasure(m_pSelectedMeasure);
 }
 
 //
@@ -399,18 +399,18 @@ void ScoreView::OnPlayMeasure()
 //
 void ScoreView::OnLButtonDblClk(UINT /*nFlags*/, CPoint point)
 {
-	if (m_nMode != IDM_SELECT)
-		return; // Only accept a selection with select
+    if (m_nMode != IDM_SELECT)
+        return; // Only accept a selection with select
 
-	DPtoLP(point);
+    DPtoLP(point);
 
-	const Staff * pStaff = GetDocument()->GetStaff();
-	ASSERT(pStaff != NULL);
+    const Staff * pStaff = GetDocument()->GetStaff();
+    ASSERT(pStaff != NULL);
 
-	m_pSelectedMeasure = pStaff->GetMeasure(point);
+    m_pSelectedMeasure = pStaff->GetMeasure(point);
 
-	// Select the measure
-	GetDocument()->SelectMeasure(m_pSelectedMeasure);
+    // Select the measure
+    GetDocument()->SelectMeasure(m_pSelectedMeasure);
 }
 
 //
@@ -418,9 +418,9 @@ void ScoreView::OnLButtonDblClk(UINT /*nFlags*/, CPoint point)
 //
 void ScoreView::OnUpdateMode(CCmdUI* pCmdUI)
 {
-	ASSERT(pCmdUI != NULL);
+    ASSERT(pCmdUI != NULL);
 
-	pCmdUI->SetRadio(pCmdUI->m_nID == m_nMode);
+    pCmdUI->SetRadio(pCmdUI->m_nID == m_nMode);
 }
 
 //
@@ -428,7 +428,7 @@ void ScoreView::OnUpdateMode(CCmdUI* pCmdUI)
 //
 void ScoreView::OnMode(UINT nID)
 {
-	m_nMode = nID;
+    m_nMode = nID;
 }
 
 //
@@ -436,10 +436,10 @@ void ScoreView::OnMode(UINT nID)
 //
 void ScoreView::OnPlayAll()
 {
-	ScoreApp * pApp = (ScoreApp*)AfxGetApp();
-	ASSERT_VALID(pApp);
+    ScoreApp * pApp = (ScoreApp*)AfxGetApp();
+    ASSERT_VALID(pApp);
 
-	pApp->PlayStaff(GetDocument()->GetStaff());
+    pApp->PlayStaff(GetDocument()->GetStaff());
 }
 
 //
@@ -447,10 +447,10 @@ void ScoreView::OnPlayAll()
 //
 void ScoreView::OnUpdatePlayAll(CCmdUI* pCmdUI)
 {
-	ScoreApp * pApp = (ScoreApp*)AfxGetApp();
-	ASSERT_VALID(pApp);
+    ScoreApp * pApp = (ScoreApp*)AfxGetApp();
+    ASSERT_VALID(pApp);
 
-	pCmdUI->Enable(!pApp->IsPlaying());
+    pCmdUI->Enable(!pApp->IsPlaying());
 }
 
 //
@@ -458,10 +458,10 @@ void ScoreView::OnUpdatePlayAll(CCmdUI* pCmdUI)
 //
 void ScoreView::OnSetMeasureTempo()
 {
-	TempoDlg dlg(m_pSelectedMeasure, this);
+    TempoDlg dlg(m_pSelectedMeasure, this);
 
-	if (dlg.DoModal() == IDOK)
-		GetDocument()->SetModifiedFlag();
+    if (dlg.DoModal() == IDOK)
+        GetDocument()->SetModifiedFlag();
 }
 
 //
@@ -469,9 +469,9 @@ void ScoreView::OnSetMeasureTempo()
 //
 void ScoreView::OnUpdateSetMeasureTempo(CCmdUI* pCmdUI)
 {
-	ASSERT(pCmdUI != NULL);
+    ASSERT(pCmdUI != NULL);
 
-	pCmdUI->Enable(m_pSelectedMeasure != NULL);
+    pCmdUI->Enable(m_pSelectedMeasure != NULL);
 }
 
 //
@@ -479,27 +479,27 @@ void ScoreView::OnUpdateSetMeasureTempo(CCmdUI* pCmdUI)
 //
 void ScoreView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
-	if (pHint != NULL) {
-		CClientDC dc(this);
-		OnPrepareDC(&dc);
+    if (pHint != NULL) {
+        CClientDC dc(this);
+        OnPrepareDC(&dc);
 
-		CRect rc;
-		switch (lHint) {
-		case measureHint:
-			((Measure *)pHint)->Render(&dc);
-			GetDocument()->GetStaff()->Render(&dc);
-			break;
-		case noteHint:
-			((Note *)pHint)->Render(&dc);
-			break;
-		case modifierHint:
-			((Note *)pHint)->GetModifierRect(rc);
-			rc.OffsetRect(-GetScrollPosition());
-			InvalidateRect(rc);
-		default:
-			break;
-		}
-	} else CScrollView::OnUpdate(pSender, lHint, pHint);
+        CRect rc;
+        switch (lHint) {
+        case measureHint:
+            ((Measure *)pHint)->Render(&dc);
+            GetDocument()->GetStaff()->Render(&dc);
+            break;
+        case noteHint:
+            ((Note *)pHint)->Render(&dc);
+            break;
+        case modifierHint:
+            ((Note *)pHint)->GetModifierRect(rc);
+            rc.OffsetRect(-GetScrollPosition());
+            InvalidateRect(rc);
+        default:
+            break;
+        }
+    } else CScrollView::OnUpdate(pSender, lHint, pHint);
 }
 
 //
@@ -507,33 +507,33 @@ void ScoreView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 //
 BOOL ScoreView::AddNote(Measure * pMeasure, const CPoint & pt)
 {
-	ASSERT_VALID(pMeasure);
+    ASSERT_VALID(pMeasure);
 
-	PANCHOR pAnchor = pMeasure->GetStaff()->GetAnchor(pt);
-	ASSERT(pAnchor != NULL);
+    PANCHOR pAnchor = pMeasure->GetStaff()->GetAnchor(pt);
+    ASSERT(pAnchor != NULL);
 
-	Note * pNote = new Note();
-	ASSERT(pNote != NULL);
+    Note * pNote = new Note();
+    ASSERT(pNote != NULL);
 
-	pNote->SetIcon((HICON)Neptune::LoadImage(m_Tool.icon, IMAGE_ICON));
-	pNote->SetData(pAnchor->data);
-	pNote->SetName(pAnchor->name);
-	pNote->SetPos(CPoint(pt.x, pAnchor->cy));
-	pNote->SetDuration(Duration(m_Tool.user));
+    pNote->SetIcon((HICON)Neptune::LoadImage(m_Tool.icon, IMAGE_ICON));
+    pNote->SetData(pAnchor->data);
+    pNote->SetName(pAnchor->name);
+    pNote->SetPos(CPoint(pt.x, pAnchor->cy));
+    pNote->SetDuration(Duration(m_Tool.user));
 
-	// Attempt to add the note to the document
-	if (GetDocument()->AddNote(pMeasure, pNote)) {
-		ScoreApp * pApp = (ScoreApp *)AfxGetApp();
-		ASSERT_VALID(pApp);
-		pApp->PlayNote(pNote);
-		m_pLastNote = pNote;
-		SetCapture();
-		return TRUE;
-	}
+    // Attempt to add the note to the document
+    if (GetDocument()->AddNote(pMeasure, pNote)) {
+        ScoreApp * pApp = (ScoreApp *)AfxGetApp();
+        ASSERT_VALID(pApp);
+        pApp->PlayNote(pNote);
+        m_pLastNote = pNote;
+        SetCapture();
+        return TRUE;
+    }
 
-	delete pNote;
+    delete pNote;
 
-	return FALSE;
+    return FALSE;
 }
 
 //
@@ -541,13 +541,13 @@ BOOL ScoreView::AddNote(Measure * pMeasure, const CPoint & pt)
 //
 void ScoreView::OnKeySignature()
 {
-	KeySignatureDlg dlg(m_pSelectedMeasure, this);
+    KeySignatureDlg dlg(m_pSelectedMeasure, this);
 
-	if (dlg.DoModal() == IDOK) {
-		GetDocument()->UpdateAllViews(NULL,
-		                              0, NULL);
-		GetDocument()->SetModifiedFlag();
-	}
+    if (dlg.DoModal() == IDOK) {
+        GetDocument()->UpdateAllViews(NULL,
+                                      0, NULL);
+        GetDocument()->SetModifiedFlag();
+    }
 }
 
 //
@@ -555,8 +555,8 @@ void ScoreView::OnKeySignature()
 //
 void ScoreView::OnUpdateKeySignature(CCmdUI* pCmdUI)
 {
-	ASSERT(pCmdUI != NULL);
+    ASSERT(pCmdUI != NULL);
 
-	pCmdUI->Enable(m_pSelectedMeasure != NULL);
+    pCmdUI->Enable(m_pSelectedMeasure != NULL);
 }
 

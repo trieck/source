@@ -12,9 +12,9 @@
 
 @interface Machine :
 NSObject {
-	/* all initially feasible vectors */
-	NSMutableArray *vectors;
-	Board *board;
+    /* all initially feasible vectors */
+    NSMutableArray *vectors;
+    Board *board;
 }
 
 - (Point)move;

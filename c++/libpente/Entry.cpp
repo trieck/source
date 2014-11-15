@@ -11,21 +11,21 @@
 /////////////////////////////////////////////////////////////////////////////
 Entry::Entry() : type(ET_EMPTY)
 {
-	memset(&pt, 0, sizeof(POINT));
+    memset(&pt, 0, sizeof(POINT));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Entry::Entry(const Entry &rhs)
 {
-	*this = rhs;
+    *this = rhs;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Entry::Entry(const POINT &aPoint, uint32_t ntype)
 {
-	pt.x = aPoint.x % BOARD_SIZE;
-	pt.y = aPoint.y % BOARD_SIZE;
-	type = ntype % (ET_PLAYER_TWO+1);
+    pt.x = aPoint.x % BOARD_SIZE;
+    pt.y = aPoint.y % BOARD_SIZE;
+    type = ntype % (ET_PLAYER_TWO+1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -36,10 +36,10 @@ Entry::~Entry()
 /////////////////////////////////////////////////////////////////////////////
 Entry &Entry::operator=(const Entry &rhs)
 {
-	if (this != &rhs) {
-		pt = rhs.pt;
-		type = rhs.type;
-	}
+    if (this != &rhs) {
+        pt = rhs.pt;
+        type = rhs.type;
+    }
 
-	return *this;
+    return *this;
 }

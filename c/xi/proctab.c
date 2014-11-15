@@ -19,14 +19,14 @@
 
 /* procedure table */
 proc proctab[TBLSIZE] = {
-	arith,						/* PLUS */
-	arith,						/* SUB */
-	arith,						/* MULT */
-	arith,						/* DIV */
-	arith,						/* MOD */
-	range,						/* RANGE */
-	mklist,						/* MKLIST */
-	print,						/* PRINT */
-	println,					/* PRINTLN */
-	let,						/* LET */
+    arith,						/* PLUS */
+    arith,						/* SUB */
+    arith,						/* MULT */
+    arith,						/* DIV */
+    arith,						/* MOD */
+    range,						/* RANGE */
+    mklist,						/* MKLIST */
+    print,						/* PRINT */
+    println,					/* PRINTLN */
+    let,						/* LET */
 };

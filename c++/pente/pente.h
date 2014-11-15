@@ -20,38 +20,38 @@
 
 class PenteApp : public CWinApp {
 public:
-	PenteApp();
-	virtual ~PenteApp();
+    PenteApp();
+    virtual ~PenteApp();
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(PenteApp)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(PenteApp)
 public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
-	//}}AFX_VIRTUAL
+    virtual BOOL InitInstance();
+    virtual int ExitInstance();
+    //}}AFX_VIRTUAL
 
-	bool isTwoPlayerGame() const;
-	void setTwoPlayerGame(bool bTwoPlayerGame);
+    bool isTwoPlayerGame() const;
+    void setTwoPlayerGame(bool bTwoPlayerGame);
 // Implementation
-	//{{AFX_MSG(PenteApp)
-	afx_msg void OnAppAbout();
-	afx_msg void OnFileNew();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(PenteApp)
+    afx_msg void OnAppAbout();
+    afx_msg void OnFileNew();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	bool twoPlayerGame;
+    bool twoPlayerGame;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 inline bool PenteApp::isTwoPlayerGame() const
 {
-	return twoPlayerGame;
+    return twoPlayerGame;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 inline void PenteApp::setTwoPlayerGame(bool bTwoPlayerGame)
 {
-	twoPlayerGame = bTwoPlayerGame;
+    twoPlayerGame = bTwoPlayerGame;
 }
 
 //{{AFX_INSERT_LOCATION}}

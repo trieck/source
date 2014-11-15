@@ -12,7 +12,7 @@
 class CDigitCtrlMgr : public CObject {
 // Construction
 public:
-	CDigitCtrlMgr(CDialog*, const UINT Ctrls[], const RECT rcs[], UINT nCount);
+    CDigitCtrlMgr(CDialog*, const UINT Ctrls[], const RECT rcs[], UINT nCount);
 
 // Attributes
 public:
@@ -21,28 +21,28 @@ protected:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CDigitCtrlMgr)
-	//}}AFX_VIRTUAL
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CDigitCtrlMgr)
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	UINT GetCount();
-	CDigitCtrl* GetControl(UINT);
-	BOOL	SetValue(CString&);
-	BOOL	Advance(UINT);
-	virtual ~CDigitCtrlMgr();
+    UINT GetCount();
+    CDigitCtrl* GetControl(UINT);
+    BOOL	SetValue(CString&);
+    BOOL	Advance(UINT);
+    virtual ~CDigitCtrlMgr();
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	//{{AFX_MSG(CDigitCtrlMgr)
-	// NOTE - the ClassWizard will add and remove member functions here.
-	//}}AFX_MSG
+    //{{AFX_MSG(CDigitCtrlMgr)
+    // NOTE - the ClassWizard will add and remove member functions here.
+    //}}AFX_MSG
 
 private:
-	CDialog*	m_pParent;							// Parent dialog box
-	const UINT	m_nCount;							// Number of controls
-	CObArray*	m_pArray;							// Array to hold digit controls
+    CDialog*	m_pParent;							// Parent dialog box
+    const UINT	m_nCount;							// Number of controls
+    CObArray*	m_pArray;							// Array to hold digit controls
 };
 
 /////////////////////////////////////////////////////////////////////////////

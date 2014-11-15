@@ -12,8 +12,8 @@ WinApp *pApp = NULL;
 
 WinApp::WinApp()
 {
-	pApp = this;
-	m_nExitCode = 0;
+    pApp = this;
+    m_nExitCode = 0;
 }
 
 WinApp::~WinApp()
@@ -22,39 +22,39 @@ WinApp::~WinApp()
 
 int WinApp::Run()
 {
-	MSG msg;
+    MSG msg;
 
-	while (GetMessage(&msg, (HWND) NULL, 0, 0)) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
+    while (GetMessage(&msg, (HWND) NULL, 0, 0)) {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
 
-	m_nExitCode = msg.wParam;
+    m_nExitCode = msg.wParam;
 
-	return ExitInstance();
+    return ExitInstance();
 }
 
 int WinApp::ExitInstance()
 {
-	// Return the exit code to the system.
-	return m_nExitCode;
+    // Return the exit code to the system.
+    return m_nExitCode;
 }
 
 // main entry point
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                    LPSTR command, int nCmdShow)
 {
-	ASSERT(pApp != NULL);
+    ASSERT(pApp != NULL);
 
-	pApp->m_hInstance = hInstance;
-	pApp->m_command = command;
-	pApp->m_nCmdShow = nCmdShow;
+    pApp->m_hInstance = hInstance;
+    pApp->m_command = command;
+    pApp->m_nCmdShow = nCmdShow;
 
-	if (!pApp->InitInstance())
-		return 0;
+    if (!pApp->InitInstance())
+        return 0;
 
-	if (!pApp->Run())
-		return 0;
+    if (!pApp->Run())
+        return 0;
 
-	return pApp->ExitInstance();
+    return pApp->ExitInstance();
 }

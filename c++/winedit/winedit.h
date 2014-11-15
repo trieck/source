@@ -21,20 +21,20 @@
 
 class WinEditApp : public CWinApp {
 public:
-	WinEditApp();
+    WinEditApp();
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(WinEditApp)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(WinEditApp)
 public:
-	virtual BOOL InitInstance();
-	//}}AFX_VIRTUAL
+    virtual BOOL InitInstance();
+    //}}AFX_VIRTUAL
 
 // Implementation
-	//{{AFX_MSG(WinEditApp)
-	afx_msg void OnAppAbout();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(WinEditApp)
+    afx_msg void OnAppAbout();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 

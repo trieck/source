@@ -11,7 +11,7 @@
 IMPLEMENT_DYNAMIC(CColorChooserDlg, CDialog)
 
 CColorChooserDlg::CColorChooserDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CColorChooserDlg::IDD, pParent)
+    : CDialog(CColorChooserDlg::IDD, pParent)
 {
 
 }
@@ -22,7 +22,7 @@ CColorChooserDlg::~CColorChooserDlg()
 
 void CColorChooserDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+    CDialog::DoDataExchange(pDX);
 }
 
 
@@ -34,34 +34,34 @@ END_MESSAGE_MAP()
 
 BOOL CColorChooserDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+    CDialog::OnInitDialog();
 
-	CRect rectDefault(CW_USEDEFAULT, CW_USEDEFAULT,
-	                  CW_USEDEFAULT, CW_USEDEFAULT);
+    CRect rectDefault(CW_USEDEFAULT, CW_USEDEFAULT,
+                      CW_USEDEFAULT, CW_USEDEFAULT);
 
-	if (!m_ColorsWnd.Create(
-	            NULL,
-	            _T(""),
-	            WS_CHILD | WS_VISIBLE,
-	            rectDefault,
-	            this,
-	            IDC_COLOR_CHOOSER))
-		return FALSE;
+    if (!m_ColorsWnd.Create(
+                NULL,
+                _T(""),
+                WS_CHILD | WS_VISIBLE,
+                rectDefault,
+                this,
+                IDC_COLOR_CHOOSER))
+        return FALSE;
 
-	CRect rc, rcParent;
-	m_ColorsWnd.GetWindowRect(rc);
-	m_pParentWnd->GetWindowRect(rcParent);
+    CRect rc, rcParent;
+    m_ColorsWnd.GetWindowRect(rc);
+    m_pParentWnd->GetWindowRect(rcParent);
 
-	AdjustWindowRectEx(&rc, GetStyle(), FALSE, GetExStyle());
-	SetWindowPos(NULL, rcParent.left, rcParent.bottom,
-	             rc.Width(), rc.Height(), 0);
+    AdjustWindowRectEx(&rc, GetStyle(), FALSE, GetExStyle());
+    SetWindowPos(NULL, rcParent.left, rcParent.bottom,
+                 rc.Width(), rc.Height(), 0);
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+    return TRUE;  // return TRUE unless you set the focus to a control
+    // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 
 COLORREF CColorChooserDlg::GetSelectedColor() const
 {
-	return m_ColorsWnd.GetSelectedColor();
+    return m_ColorsWnd.GetSelectedColor();
 }

@@ -26,9 +26,9 @@
 #define __SYMBOL_H__
 /* symbol table entry */
 typedef struct Symbol {
-	char *name;
-	const instr *instr;
-	struct Symbol *next;
+    char *name;
+    const instr *instr;
+    struct Symbol *next;
 } Symbol;
 typedef Symbol * PSYMBOL;
 typedef PSYMBOL * SymbolTable;

@@ -16,44 +16,44 @@ Database::Database()
 /////////////////////////////////////////////////////////////////////////////
 Database::~Database()
 {
-	close();
+    close();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Database::open(LPCTSTR uid, LPCTSTR pwd, LPCTSTR connStr) throw()
 {
-	close();
+    close();
 
-	m_Conn.CreateInstance(__uuidof(ADODB::Connection));
-	m_Conn->Open(connStr, uid, pwd, NULL);
+    m_Conn.CreateInstance(__uuidof(ADODB::Connection));
+    m_Conn->Open(connStr, uid, pwd, NULL);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Database::open(LPCTSTR provider, LPCTSTR path) throw()
 {
-	close();
+    close();
 
-	m_Conn.CreateInstance(__uuidof(ADODB::Connection));
-	m_Conn->PutProvider(provider);
-	m_Conn->Open(path, (BSTR)NULL, (BSTR)NULL, NULL);
+    m_Conn.CreateInstance(__uuidof(ADODB::Connection));
+    m_Conn->PutProvider(provider);
+    m_Conn->Open(path, (BSTR)NULL, (BSTR)NULL, NULL);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 RecPtr Database::execute(LPCTSTR command) throw()
 {
-	RecPtr results;
+    RecPtr results;
 
-	if (m_Conn == NULL)
-		return results;
+    if (m_Conn == NULL)
+        return results;
 
-	return m_Conn->Execute(command, NULL, 0);
+    return m_Conn->Execute(command, NULL, 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Database::close() throw()
 {
-	if (m_Conn != NULL) {
-		m_Conn->raw_Close();	// might not be open
-		m_Conn.Release();
-	}
+    if (m_Conn != NULL) {
+        m_Conn->raw_Close();	// might not be open
+        m_Conn.Release();
+    }
 }

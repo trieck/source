@@ -20,18 +20,18 @@ typedef ADODB::FieldPtr FieldPtr;
 class Database {
 // Construction / Destruction
 public:
-	Database();
-	~Database();
+    Database();
+    ~Database();
 
 // Interface
-	void open(LPCTSTR uid, LPCTSTR pwd, LPCTSTR connStr) throw();
-	void open(LPCTSTR provider, LPCTSTR path) throw();
-	void close() throw();
-	RecPtr execute(LPCTSTR command) throw();
+    void open(LPCTSTR uid, LPCTSTR pwd, LPCTSTR connStr) throw();
+    void open(LPCTSTR provider, LPCTSTR path) throw();
+    void close() throw();
+    RecPtr execute(LPCTSTR command) throw();
 
 // Implementation
 private:
-	ConnPtr m_Conn;
+    ConnPtr m_Conn;
 };
 
 /////////////////////////////////////////////////////////////////////////////

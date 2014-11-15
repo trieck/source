@@ -25,8 +25,8 @@ enum Modes {
 };
 
 typedef struct tagInstruction {
-	LPCTSTR mnemonic;
-	Modes mode;
+    LPCTSTR mnemonic;
+    Modes mode;
 } Instruction;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -34,18 +34,18 @@ class Disassembler {
 
 // Construction / Destruction
 public:
-	Disassembler();
-	~Disassembler();
+    Disassembler();
+    ~Disassembler();
 
 // Interface
-	CString Get(USHORT &address);
+    CString Get(USHORT &address);
 
 // Implementation
 private:
-	void init();
-	CString FormatInstruction(const Instruction *pInstr, BYTE b,
-	                          USHORT &address);
-	CString FormatInstruction(const Instruction *pInstr, USHORT &address);
+    void init();
+    CString FormatInstruction(const Instruction *pInstr, BYTE b,
+                              USHORT &address);
+    CString FormatInstruction(const Instruction *pInstr, USHORT &address);
 };
 
 #endif // __DISASSEM_H__

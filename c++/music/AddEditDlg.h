@@ -34,35 +34,35 @@ class AddEditDlg : public CDialog
 
 public:
 
-	enum Mode {
+    enum Mode {
 
-	    addMode,
+        addMode,
 
-	    editMode
+        editMode
 
-	};
+    };
 
 // Construction
 
-	AddEditDlg(Mode M, LPRECORD rec, CWnd* pParent = NULL);   // standard constructor
+    AddEditDlg(Mode M, LPRECORD rec, CWnd* pParent = NULL);   // standard constructor
 
 
 
 // Dialog Data
 
-	//{{AFX_DATA(AddEditDlg)
+    //{{AFX_DATA(AddEditDlg)
 
-	enum { IDD = IDD_ADDEDITRECORD };
+    enum { IDD = IDD_ADDEDITRECORD };
 
-	CString	m_Album;
+    CString	m_Album;
 
-	CString	m_Artist;
+    CString	m_Artist;
 
-	CString	m_Label;
+    CString	m_Label;
 
-	UINT	m_Year;
+    UINT	m_Year;
 
-	//}}AFX_DATA
+    //}}AFX_DATA
 
 
 
@@ -70,15 +70,15 @@ public:
 
 // Overrides
 
-	// ClassWizard generated virtual function overrides
+    // ClassWizard generated virtual function overrides
 
-	//{{AFX_VIRTUAL(AddEditDlg)
+    //{{AFX_VIRTUAL(AddEditDlg)
 
 protected:
 
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
-	//}}AFX_VIRTUAL
+    //}}AFX_VIRTUAL
 
 
 
@@ -88,25 +88,25 @@ protected:
 
 
 
-	// Generated message map functions
+    // Generated message map functions
 
-	//{{AFX_MSG(AddEditDlg)
+    //{{AFX_MSG(AddEditDlg)
 
-	virtual BOOL OnInitDialog();
+    virtual BOOL OnInitDialog();
 
-	afx_msg void OnNewArtist();
+    afx_msg void OnNewArtist();
 
-	virtual void OnOK();
+    virtual void OnOK();
 
-	//}}AFX_MSG
+    //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 
 private:
 
-	Mode _mode;
+    Mode _mode;
 
-	LPRECORD _rec;
+    LPRECORD _rec;
 
 };
 

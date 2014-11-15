@@ -13,7 +13,7 @@
 // CmwrtApp
 
 BEGIN_MESSAGE_MAP(CmwrtApp, CWinApp)
-	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
+    ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
@@ -21,8 +21,8 @@ END_MESSAGE_MAP()
 
 CmwrtApp::CmwrtApp()
 {
-	// TODO: add construction code here,
-	// Place all significant initialization in InitInstance
+    // TODO: add construction code here,
+    // Place all significant initialization in InitInstance
 }
 
 
@@ -35,54 +35,54 @@ CmwrtApp theApp;
 
 BOOL CmwrtApp::InitInstance()
 {
-	// InitCommonControlsEx() is required on Windows XP if an application
-	// manifest specifies use of ComCtl32.dll version 6 or later to enable
-	// visual styles.  Otherwise, any window creation will fail.
-	INITCOMMONCONTROLSEX InitCtrls;
-	InitCtrls.dwSize = sizeof(InitCtrls);
-	// Set this to include all the common control classes you want to use
-	// in your application.
-	InitCtrls.dwICC = ICC_WIN95_CLASSES;
-	InitCommonControlsEx(&InitCtrls);
+    // InitCommonControlsEx() is required on Windows XP if an application
+    // manifest specifies use of ComCtl32.dll version 6 or later to enable
+    // visual styles.  Otherwise, any window creation will fail.
+    INITCOMMONCONTROLSEX InitCtrls;
+    InitCtrls.dwSize = sizeof(InitCtrls);
+    // Set this to include all the common control classes you want to use
+    // in your application.
+    InitCtrls.dwICC = ICC_WIN95_CLASSES;
+    InitCommonControlsEx(&InitCtrls);
 
-	CWinApp::InitInstance();
+    CWinApp::InitInstance();
 
-	if (!AfxOleInit())
-		return FALSE;
+    if (!AfxOleInit())
+        return FALSE;
 
-	// Standard initialization
-	SetRegistryKey(_T("Rieck Enterprises"));
+    // Standard initialization
+    SetRegistryKey(_T("Rieck Enterprises"));
 
-	CmwrtDlg dlg;
-	m_pMainWnd = &dlg;
-	dlg.DoModal();
+    CmwrtDlg dlg;
+    m_pMainWnd = &dlg;
+    dlg.DoModal();
 
-	return FALSE;
+    return FALSE;
 }
 
 // Helper functions
 /////////////////////////////////////////////////////////////////////////////
 CString LastError()
 {
-	CString output;
+    CString output;
 
-	LPTSTR pmsg = NULL;
+    LPTSTR pmsg = NULL;
 
-	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
-	              NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-	              (LPTSTR)&pmsg, 0, NULL);
+    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
+                  NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                  (LPTSTR)&pmsg, 0, NULL);
 
-	if (pmsg != NULL) {
-		uint32_t N = _tcslen(pmsg);
-		if (N > 1 && pmsg[N - 1] == _T('\n'))
-			pmsg[N - 1] = _T('\0');
+    if (pmsg != NULL) {
+        uint32_t N = _tcslen(pmsg);
+        if (N > 1 && pmsg[N - 1] == _T('\n'))
+            pmsg[N - 1] = _T('\0');
 
-		if (N > 1 && pmsg[N - 2] == _T('\r'))
-			pmsg[N - 2] = _T('\0');
+        if (N > 1 && pmsg[N - 2] == _T('\r'))
+            pmsg[N - 2] = _T('\0');
 
-		output = pmsg;
-		LocalFree(pmsg);
-	}
+        output = pmsg;
+        LocalFree(pmsg);
+    }
 
-	return output;
+    return output;
 }

@@ -19,18 +19,18 @@ static const int staffWidth = 519;          // Width of staff
 static const BYTE base = 64;                // E above middle C
 
 typedef struct {
-	char note;
-	BYTE interval;
+    char note;
+    BYTE interval;
 } NoteInterval;
 
 static const NoteInterval NoteIntervals [] = {
-	'E', 1,
-	'F', 2,
-	'G', 2,
-	'A', 2,
-	'B', 1,
-	'C', 2,
-	'D', 2
+    'E', 1,
+    'F', 2,
+    'G', 2,
+    'A', 2,
+    'B', 1,
+    'C', 2,
+    'D', 2
 };
 
 IMPLEMENT_SERIAL(Staff, CObject, VERSIONABLE_SCHEMA)
@@ -40,16 +40,16 @@ IMPLEMENT_SERIAL(Staff, CObject, VERSIONABLE_SCHEMA)
 //
 Staff::Staff()
 {
-	this->left = borderOffset;
-	this->top = borderOffset;
-	this->right = this->left + staffWidth;
-	this->bottom = this->top + ((numLines - 1) * lineHeight);
+    this->left = borderOffset;
+    this->top = borderOffset;
+    this->right = this->left + staffWidth;
+    this->bottom = this->top + ((numLines - 1) * lineHeight);
 
-	m_Measures.SetSize(3);
+    m_Measures.SetSize(3);
 
-	SetSize(numLines + numSpaces);
-	BuildAnchors();
-	BuildMeasures();
+    SetSize(numLines + numSpaces);
+    BuildAnchors();
+    BuildMeasures();
 }
 
 //
@@ -57,8 +57,8 @@ Staff::Staff()
 //
 Staff::~Staff()
 {
-	RemoveAnchors();
-	RemoveMeasures();
+    RemoveAnchors();
+    RemoveMeasures();
 }
 
 //
@@ -66,13 +66,13 @@ Staff::~Staff()
 //
 void Staff::Clear()
 {
-	// Remove all the notes from the measures
-	for (int i = 0; i < GetMeasureCount(); i++) {
-		Measure * pMeasure = m_Measures.GetAt(i);
-		ASSERT_VALID(pMeasure);
+    // Remove all the notes from the measures
+    for (int i = 0; i < GetMeasureCount(); i++) {
+        Measure * pMeasure = m_Measures.GetAt(i);
+        ASSERT_VALID(pMeasure);
 
-		pMeasure->Clear();
-	}
+        pMeasure->Clear();
+    }
 }
 
 //
@@ -80,28 +80,28 @@ void Staff::Clear()
 //
 void Staff::BuildAnchors()
 {
-	int Count = GetSize();
-	int mx = sizeof(NoteIntervals) / sizeof(NoteInterval);
+    int Count = GetSize();
+    int mx = sizeof(NoteIntervals) / sizeof(NoteInterval);
 
-	int b = base;
+    int b = base;
 
-	for (int i = 0; i < Count; i++) {
-		PANCHOR pAnchor = new Anchor();
-		ASSERT(pAnchor != NULL);
+    for (int i = 0; i < Count; i++) {
+        PANCHOR pAnchor = new Anchor();
+        ASSERT(pAnchor != NULL);
 
-		pAnchor->name = NoteIntervals [i % mx].note;
-		pAnchor->data = (BYTE)b;
+        pAnchor->name = NoteIntervals [i % mx].note;
+        pAnchor->data = (BYTE)b;
 
-		// Is this a ledger line?
-		if (i % 2 == 0)
-			pAnchor->cy = bottom - (i / 2) * lineHeight;
-		else
-			pAnchor->cy = bottom - lineHeight / 2 - (i - 1) / 2 * lineHeight;
+        // Is this a ledger line?
+        if (i % 2 == 0)
+            pAnchor->cy = bottom - (i / 2) * lineHeight;
+        else
+            pAnchor->cy = bottom - lineHeight / 2 - (i - 1) / 2 * lineHeight;
 
-		SetAt(i, pAnchor);
+        SetAt(i, pAnchor);
 
-		b += NoteIntervals[i % mx].interval;
-	}
+        b += NoteIntervals[i % mx].interval;
+    }
 }
 
 //
@@ -109,25 +109,25 @@ void Staff::BuildAnchors()
 //
 void Staff::BuildMeasures()
 {
-	int Measures = GetMeasureCount();
-	ASSERT(Measures != 0);
+    int Measures = GetMeasureCount();
+    ASSERT(Measures != 0);
 
-	int measureWidth = this->Width() / Measures;
+    int measureWidth = this->Width() / Measures;
 
-	CRect rc;
-	rc.left = this->left;
-	rc.right = this->left + measureWidth;
-	rc.top = this->top;
-	rc.bottom = this->bottom;
+    CRect rc;
+    rc.left = this->left;
+    rc.right = this->left + measureWidth;
+    rc.top = this->top;
+    rc.bottom = this->bottom;
 
-	for (int i = 0; i < Measures; i++) {
-		Measure * pMeasure = new Measure(this, rc, i == 0 ? IDB_TREBLECLEF : 0);
-		ASSERT(pMeasure != NULL);
-		m_Measures.SetAt(i, pMeasure);
+    for (int i = 0; i < Measures; i++) {
+        Measure * pMeasure = new Measure(this, rc, i == 0 ? IDB_TREBLECLEF : 0);
+        ASSERT(pMeasure != NULL);
+        m_Measures.SetAt(i, pMeasure);
 
-		rc.left = rc.right;
-		rc.right = rc.left + measureWidth;
-	}
+        rc.left = rc.right;
+        rc.right = rc.left + measureWidth;
+    }
 }
 
 //
@@ -135,18 +135,18 @@ void Staff::BuildMeasures()
 //
 Measure * Staff::GetMeasure(const CPoint & pt) const
 {
-	int Count = GetMeasureCount();
-	for (int i = 0; i < Count; i++) {
-		Measure * pMeasure = m_Measures.GetAt(i);
-		ASSERT(pMeasure != NULL);
+    int Count = GetMeasureCount();
+    for (int i = 0; i < Count; i++) {
+        Measure * pMeasure = m_Measures.GetAt(i);
+        ASSERT(pMeasure != NULL);
 
-		CRect rc = *pMeasure;
-		rc.InflateRect(0, leeway);
-		if (rc.PtInRect(pt))
-			return pMeasure;
-	}
+        CRect rc = *pMeasure;
+        rc.InflateRect(0, leeway);
+        if (rc.PtInRect(pt))
+            return pMeasure;
+    }
 
-	return NULL;
+    return NULL;
 }
 
 //
@@ -154,27 +154,27 @@ Measure * Staff::GetMeasure(const CPoint & pt) const
 //
 void Staff::Render (CDC * pDC) const
 {
-	ASSERT_VALID(pDC);
+    ASSERT_VALID(pDC);
 
-	// Render the Measures
-	RenderMeasures(pDC);
+    // Render the Measures
+    RenderMeasures(pDC);
 
-	CPen aPen(PS_SOLID, 1, penColor);
-	CPen * pOldPen = pDC->SelectObject(&aPen);
+    CPen aPen(PS_SOLID, 1, penColor);
+    CPen * pOldPen = pDC->SelectObject(&aPen);
 
-	CPoint ptStart (this->left, this->top);
-	CPoint ptEnd (this->right, this->top);
-	pDC->MoveTo(ptStart);
+    CPoint ptStart (this->left, this->top);
+    CPoint ptEnd (this->right, this->top);
+    pDC->MoveTo(ptStart);
 
-	// Draw the staff lines
-	for (int i = 0; i < numLines; i++) {
-		pDC->LineTo(ptEnd);
-		ptStart.y += lineHeight;
-		ptEnd.y += lineHeight;
-		pDC->MoveTo(ptStart);
-	}
+    // Draw the staff lines
+    for (int i = 0; i < numLines; i++) {
+        pDC->LineTo(ptEnd);
+        ptStart.y += lineHeight;
+        ptEnd.y += lineHeight;
+        pDC->MoveTo(ptStart);
+    }
 
-	pDC->SelectObject(pOldPen);
+    pDC->SelectObject(pOldPen);
 }
 
 //
@@ -182,14 +182,14 @@ void Staff::Render (CDC * pDC) const
 //
 void Staff::RenderMeasures(CDC * pDC) const
 {
-	ASSERT_VALID(pDC);
+    ASSERT_VALID(pDC);
 
-	int Count = GetMeasureCount();
-	for (int i = 0; i < Count; i++) {
-		Measure * pMeasure = m_Measures.GetAt(i);
-		ASSERT(pMeasure != NULL);
-		pMeasure->Render(pDC);
-	}
+    int Count = GetMeasureCount();
+    for (int i = 0; i < Count; i++) {
+        Measure * pMeasure = m_Measures.GetAt(i);
+        ASSERT(pMeasure != NULL);
+        pMeasure->Render(pDC);
+    }
 }
 
 //
@@ -197,19 +197,19 @@ void Staff::RenderMeasures(CDC * pDC) const
 //
 PANCHOR Staff::GetAnchor(const CPoint & pt) const
 {
-	// Does this point land on a ledger line
-	int line = PtOnLedgerLine(pt);
-	if (line != -1) {
-		return GetAt((numLines - line - 1) * 2);
-	}
+    // Does this point land on a ledger line
+    int line = PtOnLedgerLine(pt);
+    if (line != -1) {
+        return GetAt((numLines - line - 1) * 2);
+    }
 
-	// Does this point land on a space
-	int space = PtOnSpace(pt);
-	if (space != -1) {
-		return GetAt ((numSpaces - space - 1) * 2 + 1);
-	}
+    // Does this point land on a space
+    int space = PtOnSpace(pt);
+    if (space != -1) {
+        return GetAt ((numSpaces - space - 1) * 2 + 1);
+    }
 
-	return NULL;
+    return NULL;
 }
 
 //
@@ -217,15 +217,15 @@ PANCHOR Staff::GetAnchor(const CPoint & pt) const
 //
 int Staff::PtOnLedgerLine(const CPoint & pt) const
 {
-	for (int i = 0; i < numLines; i++) {
-		if (pt.x >= this->left &&
-		        pt.x <= this->right &&
-		        (pt.y >= this->top + (i * lineHeight) - leeway &&
-		         pt.y <= this->top + (i * lineHeight) + leeway))
-			return i;
-	}
+    for (int i = 0; i < numLines; i++) {
+        if (pt.x >= this->left &&
+                pt.x <= this->right &&
+                (pt.y >= this->top + (i * lineHeight) - leeway &&
+                 pt.y <= this->top + (i * lineHeight) + leeway))
+            return i;
+    }
 
-	return -1;
+    return -1;
 }
 
 //
@@ -233,15 +233,15 @@ int Staff::PtOnLedgerLine(const CPoint & pt) const
 //
 int Staff::PtOnSpace(const CPoint & pt) const
 {
-	for (int i = 0; i < numSpaces; i++) {
-		if (pt.x >= this->left &&
-		        pt.x <= this->right &&
-		        (pt.y >= this->top + (i * lineHeight) + leeway &&
-		         pt.y <= this->top + ((i + 1) * lineHeight) - leeway))
-			return i;
-	}
+    for (int i = 0; i < numSpaces; i++) {
+        if (pt.x >= this->left &&
+                pt.x <= this->right &&
+                (pt.y >= this->top + (i * lineHeight) + leeway &&
+                 pt.y <= this->top + ((i + 1) * lineHeight) - leeway))
+            return i;
+    }
 
-	return -1;
+    return -1;
 }
 
 //
@@ -249,15 +249,15 @@ int Staff::PtOnSpace(const CPoint & pt) const
 //
 void Staff::RemoveAnchors()
 {
-	int Count = GetSize();
+    int Count = GetSize();
 
-	for (int i = 0; i < Count; i++) {
-		PANCHOR pAnchor = GetAt(i);
-		if (pAnchor != NULL)
-			delete pAnchor;
-	}
+    for (int i = 0; i < Count; i++) {
+        PANCHOR pAnchor = GetAt(i);
+        if (pAnchor != NULL)
+            delete pAnchor;
+    }
 
-	RemoveAll();
+    RemoveAll();
 }
 
 //
@@ -265,14 +265,14 @@ void Staff::RemoveAnchors()
 //
 void Staff::RemoveMeasures()
 {
-	int Count = GetMeasureCount();
+    int Count = GetMeasureCount();
 
-	for (int i = 0; i < Count; i ++) {
-		Measure * pMeasure = m_Measures.GetAt(i);
-		if (pMeasure != NULL)
-			delete pMeasure;
-	}
-	m_Measures.RemoveAll();
+    for (int i = 0; i < Count; i ++) {
+        Measure * pMeasure = m_Measures.GetAt(i);
+        if (pMeasure != NULL)
+            delete pMeasure;
+    }
+    m_Measures.RemoveAll();
 }
 
 //
@@ -280,12 +280,12 @@ void Staff::RemoveMeasures()
 //
 void Staff::DeselectAllMeasures ()
 {
-	int Count = GetMeasureCount();
-	for (int i = 0; i < Count; i++) {
-		Measure * pMeasure = m_Measures.GetAt(i);
-		ASSERT(pMeasure != NULL);
-		pMeasure->Select(FALSE);
-	}
+    int Count = GetMeasureCount();
+    for (int i = 0; i < Count; i++) {
+        Measure * pMeasure = m_Measures.GetAt(i);
+        ASSERT(pMeasure != NULL);
+        pMeasure->Select(FALSE);
+    }
 }
 
 //
@@ -293,9 +293,9 @@ void Staff::DeselectAllMeasures ()
 //
 void Staff::Serialize(CArchive & ar)
 {
-	CObject::Serialize(ar);
+    CObject::Serialize(ar);
 
-	for (int i = 0; i < GetMeasureCount(); i++)
-		m_Measures.GetAt(i)->Serialize(ar);
+    for (int i = 0; i < GetMeasureCount(); i++)
+        m_Measures.GetAt(i)->Serialize(ar);
 
 }

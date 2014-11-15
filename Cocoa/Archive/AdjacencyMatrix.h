@@ -11,8 +11,8 @@
 
 @interface AdjacencyMatrix :
 NSObject {
-	int **adj;	// representation
-	int count;	// entries
+    int **adj;	// representation
+    int count;	// entries
 }
 
 - (id)initWithCount:

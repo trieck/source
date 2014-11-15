@@ -15,7 +15,7 @@
 IMPLEMENT_DYNCREATE(CPlayerOptionsDlg, CDialog);
 
 BEGIN_MESSAGE_MAP(CPlayerOptionsDlg, CDialog)
-	ON_WM_PAINT()
+    ON_WM_PAINT()
 END_MESSAGE_MAP()
 
 CPlayerOptionsDlg :: CPlayerOptionsDlg() : CDialog(CPlayerOptionsDlg::IDD)
@@ -28,38 +28,38 @@ CPlayerOptionsDlg :: ~CPlayerOptionsDlg()
 
 BOOL CPlayerOptionsDlg :: OnInitDialog()
 {
-	CMainFrame* pFrame = (CMainFrame*)(AfxGetApp()->GetMainWnd());
-	ASSERT_VALID (pFrame);
+    CMainFrame* pFrame = (CMainFrame*)(AfxGetApp()->GetMainWnd());
+    ASSERT_VALID (pFrame);
 
-	CPenteDoc* pDoc = (CPenteDoc*)(pFrame->GetActiveDocument());
-	ASSERT_VALID(pDoc);
+    CPenteDoc* pDoc = (CPenteDoc*)(pFrame->GetActiveDocument());
+    ASSERT_VALID(pDoc);
 
-	UINT nSelection = (pDoc->GetPlayMode() == PLAYER_VS_PLAYER ?
-	                   IDC_PLAYERVSPLAYER : IDC_PLAYERVSCOMPUTER);
+    UINT nSelection = (pDoc->GetPlayMode() == PLAYER_VS_PLAYER ?
+                       IDC_PLAYERVSPLAYER : IDC_PLAYERVSCOMPUTER);
 
-	CheckDlgButton(nSelection, 1);
+    CheckDlgButton(nSelection, 1);
 
-	return CDialog::OnInitDialog();
+    return CDialog::OnInitDialog();
 }
 
 VOID CPlayerOptionsDlg :: OnOK()
 {
-	CMainFrame* pFrame = (CMainFrame*)(AfxGetApp()->GetMainWnd());
-	ASSERT_VALID (pFrame);
+    CMainFrame* pFrame = (CMainFrame*)(AfxGetApp()->GetMainWnd());
+    ASSERT_VALID (pFrame);
 
-	CPenteDoc* pDoc = (CPenteDoc*)(pFrame->GetActiveDocument());
-	ASSERT_VALID(pDoc);
+    CPenteDoc* pDoc = (CPenteDoc*)(pFrame->GetActiveDocument());
+    ASSERT_VALID(pDoc);
 
-	if (IsDlgButtonChecked(IDC_PLAYERVSPLAYER))
-		pDoc->SetPlayMode(PLAYER_VS_PLAYER);
-	else
-		pDoc->SetPlayMode(PLAYER_VS_COMPUTER);
+    if (IsDlgButtonChecked(IDC_PLAYERVSPLAYER))
+        pDoc->SetPlayMode(PLAYER_VS_PLAYER);
+    else
+        pDoc->SetPlayMode(PLAYER_VS_COMPUTER);
 
-	CDialog::OnOK();
+    CDialog::OnOK();
 }
 
 VOID CPlayerOptionsDlg :: OnPaint()
 {
-	CDialog::OnPaint();
+    CDialog::OnPaint();
 }
 

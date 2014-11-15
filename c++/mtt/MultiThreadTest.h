@@ -20,11 +20,11 @@
 #define WM_SETPARAM (WM_USER + 1)
 
 typedef struct {
-	INT			iShape;
-	CHAR		szClassName[20];
-	WNDPROC		wndProc;
-	HWND		hWnd;
-	HANDLE		hEvent;
+    INT			iShape;
+    CHAR		szClassName[20];
+    WNDPROC		wndProc;
+    HWND		hWnd;
+    HANDLE		hEvent;
 } PARAM, *PPARAM;
 
 BOOL InitApplication(HINSTANCE hInstance);

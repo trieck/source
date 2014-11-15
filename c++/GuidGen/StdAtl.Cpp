@@ -3,5 +3,3 @@
 //	stdatl.obj will contain the pre-compiled type information
 
 #include "stdatl.h"
-
-#include <atlimpl.cpp>

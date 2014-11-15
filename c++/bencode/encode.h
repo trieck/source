@@ -12,30 +12,30 @@
 class BEEncoder {
 // Construction / Destruction
 private:
-	BEEncoder(ISequentialStream *pStream);
+    BEEncoder(ISequentialStream *pStream);
 public:
-	virtual ~BEEncoder();
+    virtual ~BEEncoder();
 
 // Interface
-	static BOOL encode(LPBEOBJECT pObject, ISequentialStream *pStream);
+    static BOOL encode(LPBEOBJECT pObject, ISequentialStream *pStream);
 
 // Implementation
 private:
-	BOOL EncodeObject(LPBEOBJECT pObject);
-	BOOL EncodeDict(LPDICTIONARY d);
-	BOOL EncodeList(LPLIST l);
-	BOOL EncodeInt(LPINTEGER i);
-	BOOL EncodeString(LPSTRING s);
-	BOOL BeginDictionary();
-	BOOL BeginList();
-	BOOL BeginInteger();
-	BOOL EndObject();
-	BOOL Write(void *pv, INT nlen);
-	BOOL WriteRawString(LPSTRING s);
-	BOOL WriteRawInt(INT64 i);
-	BOOL WriteChar(char c);
+    BOOL EncodeObject(LPBEOBJECT pObject);
+    BOOL EncodeDict(LPDICTIONARY d);
+    BOOL EncodeList(LPLIST l);
+    BOOL EncodeInt(LPINTEGER i);
+    BOOL EncodeString(LPSTRING s);
+    BOOL BeginDictionary();
+    BOOL BeginList();
+    BOOL BeginInteger();
+    BOOL EndObject();
+    BOOL Write(void *pv, INT nlen);
+    BOOL WriteRawString(LPSTRING s);
+    BOOL WriteRawInt(INT64 i);
+    BOOL WriteChar(char c);
 
-	ISequentialStream *m_pStream;
+    ISequentialStream *m_pStream;
 };
 /////////////////////////////////////////////////////////////////////////////
 

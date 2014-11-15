@@ -15,23 +15,23 @@
 #include "ResDll\resource.h"
 
 class CPrefDlg : public CPropertySheet {
-	friend CBkgndPage;
+    friend CBkgndPage;
 
-	// Construction / Destruction
+    // Construction / Destruction
 public:
-	CPrefDlg(UINT nIDCaption, CWnd* pParentWnd = NULL,
-	         UINT iSelectPage = 0);
-	virtual ~CPrefDlg();
-	VOID	Init();
+    CPrefDlg(UINT nIDCaption, CWnd* pParentWnd = NULL,
+             UINT iSelectPage = 0);
+    virtual ~CPrefDlg();
+    VOID	Init();
 protected:
-	VOID	BuildPages();
-	virtual BOOL OnInitDialog();
+    VOID	BuildPages();
+    virtual BOOL OnInitDialog();
 protected:
-	CColorPage* m_pColorPage;
-	CPiecePage* m_pPiecePage;
-	CBkgndPage* m_pBkgndPage;
-	HBITMAP		m_hBitmaps[6];		// Used for Background page
-	HPALETTE	m_hPalettes[6];
+    CColorPage* m_pColorPage;
+    CPiecePage* m_pPiecePage;
+    CBkgndPage* m_pBkgndPage;
+    HBITMAP		m_hBitmaps[6];		// Used for Background page
+    HPALETTE	m_hPalettes[6];
 };
 
 #endif // __PREF_DLG_H

@@ -23,32 +23,32 @@
 
 /////////////////////////////////////////////////////////////////////////////
 class Exception {
-	friend ostream & operator << (ostream & os, const Exception & e);
+    friend ostream & operator << (ostream & os, const Exception & e);
 public:
-	Exception(int);
-	Exception(const Exception &);
-	~Exception() {};
+    Exception(int);
+    Exception(const Exception &);
+    ~Exception() {};
 
-	Exception & operator = (const Exception &);
+    Exception & operator = (const Exception &);
 protected:
-	int ncode;
-	string desc;
+    int ncode;
+    string desc;
 };
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
 class Warning : public Exception {
 public:
-	Warning(int);
-	~Warning() {}
+    Warning(int);
+    ~Warning() {}
 };
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
 class Error : public Exception {
 public:
-	Error(int);
-	~Error() {}
+    Error(int);
+    ~Error() {}
 };
 /////////////////////////////////////////////////////////////////////////////
 

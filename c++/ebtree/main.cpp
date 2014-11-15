@@ -22,83 +22,83 @@
 /////////////////////////////////////////////////////////////////////////////
 UINT randomInt(UINT lo, UINT hi)
 {
-	double r = double(rand()) / RAND_MAX;
-	return lo + UINT(r * (hi - lo));
+    double r = double(rand()) / RAND_MAX;
+    return lo + UINT(r * (hi - lo));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 char randomChar()
 {
-	return (char)randomInt(32, 126);
+    return (char)randomInt(32, 126);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 char randomAlpha()
 {
-	return (char)randomInt(65, 91);
+    return (char)randomInt(65, 91);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string randomKey()
 {
-	string output;
+    string output;
 
-	int nlen = randomInt(256, 256);
-	output.resize(nlen);
+    int nlen = randomInt(256, 256);
+    output.resize(nlen);
 
-	for (int i = 0; i < nlen; i++) {
-		output[i] = randomChar();
-	}
+    for (int i = 0; i < nlen; i++) {
+        output[i] = randomChar();
+    }
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string randomVal(int min, int max)
 {
-	string output;
+    string output;
 
-	UINT nlen = randomInt(min, max);
-	nlen = min(nlen, MAXLEN);
-	output.resize(nlen);
+    UINT nlen = randomInt(min, max);
+    nlen = min(nlen, MAXLEN);
+    output.resize(nlen);
 
-	for (UINT i = 0; i < nlen; i++) {
-		output[i] = randomAlpha();
-	}
+    for (UINT i = 0; i < nlen; i++) {
+        output[i] = randomAlpha();
+    }
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
-	if (argc < 5) {
-		cerr << "usage: ebtree filename minval maxval iterations" << endl;
-		exit(1);
-	}
+    if (argc < 5) {
+        cerr << "usage: ebtree filename minval maxval iterations" << endl;
+        exit(1);
+    }
 
-	HiresTimer timer;
-	srand(GetTickCount());
+    HiresTimer timer;
+    srand(GetTickCount());
 
-	BTreeImpl tree;
-	tree.open(argv[1], OM_CREATE);
+    BTreeImpl tree;
+    tree.open(argv[1], OM_CREATE);
 
-	string key, val;
+    string key, val;
 
-	int i;
-	int minval = atoi(argv[2]);
-	int maxval = atoi(argv[3]);
-	int n = atoi(argv[4]);
-	for (i = 0; i < n; i++) {
-		string key = randomKey();
-		string val = randomVal(minval, maxval);
-		tree.insert(key, val);
-	}
+    int i;
+    int minval = atoi(argv[2]);
+    int maxval = atoi(argv[3]);
+    int n = atoi(argv[4]);
+    for (i = 0; i < n; i++) {
+        string key = randomKey();
+        string val = randomVal(minval, maxval);
+        tree.insert(key, val);
+    }
 
-	tree.writeStats(cout);
-	tree.close();
+    tree.writeStats(cout);
+    tree.close();
 
-	cout << "   elapsed time " << timer << endl;
+    cout << "   elapsed time " << timer << endl;
 
-	return 0;
+    return 0;
 }

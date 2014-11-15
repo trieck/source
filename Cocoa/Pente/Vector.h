@@ -12,7 +12,7 @@
 
 @interface Vector :
 NSObject {
-	Point v[VSIZE];
+    Point v[VSIZE];
 }
 
 - (Point)entry:

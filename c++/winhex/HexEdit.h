@@ -8,9 +8,9 @@
 //
 
 typedef struct {
-	UINT nChar;
-	UINT nRepCnt;
-	UINT nFlags;
+    UINT nChar;
+    UINT nRepCnt;
+    UINT nFlags;
 } charStruct;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -19,44 +19,44 @@ typedef struct {
 class HexEdit : public CEdit {
 // Construction
 public:
-	HexEdit();
+    HexEdit();
 
 // Attributes
 public:
 
 // Operations
 public:
-	void SetTextColor(COLORREF clrText);
-	void SetBkColor(COLORREF clrBkgnd);
+    void SetTextColor(COLORREF clrText);
+    void SetBkColor(COLORREF clrBkgnd);
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(HexEdit)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(HexEdit)
 public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
+    virtual BOOL PreTranslateMessage(MSG* pMsg);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~HexEdit();
+    virtual ~HexEdit();
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	//{{AFX_MSG(HexEdit)
-	afx_msg HBRUSH CtlColor(CDC* pDC, UINT nCtlColor);
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
-	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
-	afx_msg void OnMaxtext();
-	//}}AFX_MSG
+    //{{AFX_MSG(HexEdit)
+    afx_msg HBRUSH CtlColor(CDC* pDC, UINT nCtlColor);
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+    afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
+    afx_msg void OnMaxtext();
+    //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 
 private:
-	COLORREF m_clrText;
-	COLORREF m_clrBkgnd;
-	CBrush m_brBkgnd;
-	charStruct m_LastChar;
+    COLORREF m_clrText;
+    COLORREF m_clrBkgnd;
+    CBrush m_brBkgnd;
+    charStruct m_LastChar;
 };
 
 /////////////////////////////////////////////////////////////////////////////

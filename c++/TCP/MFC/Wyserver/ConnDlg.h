@@ -12,14 +12,14 @@
 
 class CConnDlg : public CDialog {
 protected:
-	virtual BOOL OnInitDialog();
-	afx_msg void OnRefresh();
-	afx_msg void OnKillSocket();
-	enum { IDD = IDD_ACTIVECONN };
+    virtual BOOL OnInitDialog();
+    afx_msg void OnRefresh();
+    afx_msg void OnKillSocket();
+    enum { IDD = IDD_ACTIVECONN };
 public:
-	CConnDlg(CWnd* pParentWnd = NULL);
-	~CConnDlg();
+    CConnDlg(CWnd* pParentWnd = NULL);
+    ~CConnDlg();
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 #endif // __CONNDLG_H__

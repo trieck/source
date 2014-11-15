@@ -28,14 +28,14 @@ typedef enum {
 } Type;
 /* Symbol structure */
 typedef struct Symbol {
-	char *name;
-	Type type;
-	union {
-		const Instr *instr;
-		word kjmp;
-		word mem;
-	} u;
-	struct Symbol *next;
+    char *name;
+    Type type;
+    union {
+        const Instr *instr;
+        word kjmp;
+        word mem;
+    } u;
+    struct Symbol *next;
 } Symbol;
 typedef Symbol *PSYMBOL;
 typedef PSYMBOL *SymbolTable;

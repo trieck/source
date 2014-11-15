@@ -14,20 +14,20 @@
 class Vector {
 // Construction / Destruction
 public:
-	Vector();
-	Vector(const Vector &rhs);
-	~Vector();
+    Vector();
+    Vector(const Vector &rhs);
+    ~Vector();
 
 // Interface
-	Vector & operator = (const Vector &rhs);
+    Vector & operator = (const Vector &rhs);
 
-	void clear();
-	POINT entry(uint32_t index) const;
-	void setEntry(uint32_t index, uint32_t m, uint32_t n);
+    void clear();
+    POINT entry(uint32_t index) const;
+    void setEntry(uint32_t index, uint32_t m, uint32_t n);
 
 // Implementation
 private:
-	POINT v[VSIZE];
+    POINT v[VSIZE];
 };
 
 #endif // __VECTOR_H__

@@ -12,14 +12,14 @@
 class EditApp : public WinApp {
 // Construction / Destruction
 public:
-	EditApp();
-	~EditApp();
+    EditApp();
+    ~EditApp();
 
 // Interface
 
 // Implementation
 protected:
-	BOOL InitInstance();
+    BOOL InitInstance();
 private:
 };
 /////////////////////////////////////////////////////////////////////////////

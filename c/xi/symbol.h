@@ -30,15 +30,15 @@ struct LinkedList;
 
 /* symbol table entry */
 typedef struct Symbol {
-	char *name;					/* name of symbol */
-	int type;					/* type of symbol */
-	int subtype;				/* sub-type of symbol */
-	union u {
-		char *sval;				/* string value */
-		double fval;			/* floating point value */
-		struct LinkedList *lval;	/* linked list */
-	} u;
-	struct Symbol *next;		/* next symbol if chained */
+    char *name;					/* name of symbol */
+    int type;					/* type of symbol */
+    int subtype;				/* sub-type of symbol */
+    union u {
+        char *sval;				/* string value */
+        double fval;			/* floating point value */
+        struct LinkedList *lval;	/* linked list */
+    } u;
+    struct Symbol *next;		/* next symbol if chained */
 } Symbol, *PSYMBOL, **PPSYMBOL;
 
 typedef PPSYMBOL SymbolTable;

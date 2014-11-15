@@ -21,20 +21,20 @@
 
 class WindumpApp : public CWinApp {
 public:
-	WindumpApp();
+    WindumpApp();
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(WindumpApp)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(WindumpApp)
 public:
-	virtual BOOL InitInstance();
-	//}}AFX_VIRTUAL
+    virtual BOOL InitInstance();
+    //}}AFX_VIRTUAL
 
 // Implementation
-	//{{AFX_MSG(WindumpApp)
-	afx_msg void OnAppAbout();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(WindumpApp)
+    afx_msg void OnAppAbout();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 

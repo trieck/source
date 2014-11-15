@@ -12,11 +12,11 @@
 
 /* dictionary */
 typedef struct bt_dict {
-	char *key;				/* key of node */
-	bt_element *val;		/* value of node */
-	int red;				/* coloring */
-	struct bt_dict *left;	/* left link */
-	struct bt_dict *right;	/* right link */
+    char *key;				/* key of node */
+    bt_element *val;		/* value of node */
+    int red;				/* coloring */
+    struct bt_dict *left;	/* left link */
+    struct bt_dict *right;	/* right link */
 } bt_dict;
 
 /* allocate a dictionary */

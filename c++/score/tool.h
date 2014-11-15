@@ -18,11 +18,11 @@ typedef enum {
 
 /////////////////////////////////////////////////////////////////////////////
 typedef struct {
-	ToolType type;          // tool type
-	UINT button;            // button identifier
-	UINT icon;              // icon identifier
-	UINT cursor;            // cursor identifier
-	LONG user;				// custom data
+    ToolType type;          // tool type
+    UINT button;            // button identifier
+    UINT icon;              // icon identifier
+    UINT cursor;            // cursor identifier
+    LONG user;				// custom data
 } Tool;
 /////////////////////////////////////////////////////////////////////////////
 

@@ -6,9 +6,9 @@
 
 @interface AppController :
 NSObject {
-	IBOutlet GraphView *myView;		// current view
-	Graph *graph;					// graph
-	Vertex *selected1, *selected2;	// currently selected vertices
+    IBOutlet GraphView *myView;		// current view
+    Graph *graph;					// graph
+    Vertex *selected1, *selected2;	// currently selected vertices
 }
 
 - (Graph*)graph;

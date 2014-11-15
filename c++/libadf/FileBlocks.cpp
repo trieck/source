@@ -14,14 +14,14 @@
 /////////////////////////////////////////////////////////////////////////////
 FileBlocks::FileBlocks() : header(0)
 {
-	data.reserve(MAX_DATABLK);
-	extens.reserve(MAX_DATABLK);
+    data.reserve(MAX_DATABLK);
+    extens.reserve(MAX_DATABLK);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 FileBlocks::FileBlocks(const FileBlocks &blocks)
 {
-	*this = blocks;
+    *this = blocks;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -32,48 +32,48 @@ FileBlocks::~FileBlocks()
 /////////////////////////////////////////////////////////////////////////////
 FileBlocks &FileBlocks::operator = (const FileBlocks &blocks)
 {
-	if (this != &blocks) {
-		header = blocks.header;
-		extens = blocks.extens;
-		data = blocks.data;
-	}
+    if (this != &blocks) {
+        header = blocks.header;
+        extens = blocks.extens;
+        data = blocks.data;
+    }
 
-	return *this;
+    return *this;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void FileBlocks::addExten(uint32_t blockno)
 {
-	extens.push_back(blockno);
+    extens.push_back(blockno);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
 void FileBlocks::addData(uint32_t blockno)
 {
-	data.push_back(blockno);
+    data.push_back(blockno);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 block_iterator FileBlocks::getExtenBegin() const
 {
-	return extens.begin();
+    return extens.begin();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 block_iterator FileBlocks::getExtenEnd() const
 {
-	return extens.end();
+    return extens.end();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 block_iterator FileBlocks::getDataBegin() const
 {
-	return data.begin();
+    return data.begin();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 block_iterator FileBlocks::getDataEnd() const
 {
-	return data.end();
+    return data.end();
 }

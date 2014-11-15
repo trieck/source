@@ -4,24 +4,24 @@
 // DiskPropPage dialog
 
 class DiskPropPage : public CPropertyPage {
-	DECLARE_DYNCREATE(DiskPropPage)
+    DECLARE_DYNCREATE(DiskPropPage)
 
 public:
-	DiskPropPage();
-	virtual ~DiskPropPage();
+    DiskPropPage();
+    virtual ~DiskPropPage();
 
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 // Dialog Data
-	enum { IDD = IDD_DISK_PROPPAGE };
+    enum { IDD = IDD_DISK_PROPPAGE };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 public:
-	virtual BOOL OnInitDialog();
+    virtual BOOL OnInitDialog();
 };

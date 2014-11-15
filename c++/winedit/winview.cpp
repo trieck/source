@@ -19,9 +19,9 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(WinEditView, CEditView)
 
 BEGIN_MESSAGE_MAP(WinEditView, CEditView)
-	//{{AFX_MSG_MAP(WinEditView)
-	ON_WM_CREATE()
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(WinEditView)
+    ON_WM_CREATE()
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -37,11 +37,11 @@ WinEditView::~WinEditView()
 
 BOOL WinEditView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	BOOL bPreCreated = CEditView::PreCreateWindow(cs);
+    BOOL bPreCreated = CEditView::PreCreateWindow(cs);
 
-	cs.style |= WS_HSCROLL | WS_VSCROLL;
+    cs.style |= WS_HSCROLL | WS_VSCROLL;
 
-	return bPreCreated;
+    return bPreCreated;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -49,8 +49,8 @@ BOOL WinEditView::PreCreateWindow(CREATESTRUCT& cs)
 
 void WinEditView::OnDraw(CDC* pDC)
 {
-	WinEditDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
+    WinEditDoc* pDoc = GetDocument();
+    ASSERT_VALID(pDoc);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -59,18 +59,18 @@ void WinEditView::OnDraw(CDC* pDC)
 #ifdef _DEBUG
 void WinEditView::AssertValid() const
 {
-	CEditView::AssertValid();
+    CEditView::AssertValid();
 }
 
 void WinEditView::Dump(CDumpContext& dc) const
 {
-	CEditView::Dump(dc);
+    CEditView::Dump(dc);
 }
 
 WinEditDoc* WinEditView::GetDocument() // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WinEditDoc)));
-	return (WinEditDoc*)m_pDocument;
+    ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WinEditDoc)));
+    return (WinEditDoc*)m_pDocument;
 }
 #endif //_DEBUG
 
@@ -79,32 +79,32 @@ WinEditDoc* WinEditView::GetDocument() // non-debug version is inline
 
 int WinEditView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CEditView::OnCreate(lpCreateStruct) == -1)
-		return -1;
+    if (CEditView::OnCreate(lpCreateStruct) == -1)
+        return -1;
 
-	CClientDC dc(this);
+    CClientDC dc(this);
 
-	// Create the font
-	LOGFONT lf;
-	memset(&lf, 0, sizeof(LOGFONT));
-	strcpy(lf.lfFaceName, GetProfileString("font", "FaceName"));
-	lf.lfItalic = GetProfileInt("font", "Italic");
-	lf.lfWeight = GetProfileInt("font", "Bold") == 1 ? FW_BOLD : FW_NORMAL;
-	lf.lfCharSet = DEFAULT_CHARSET;
-	lf.lfHeight = -MulDiv(GetProfileInt("font", "PointSize"),
-	                      dc.GetDeviceCaps(LOGPIXELSY), 72);
+    // Create the font
+    LOGFONT lf;
+    memset(&lf, 0, sizeof(LOGFONT));
+    strcpy(lf.lfFaceName, GetProfileString("font", "FaceName"));
+    lf.lfItalic = GetProfileInt("font", "Italic");
+    lf.lfWeight = GetProfileInt("font", "Bold") == 1 ? FW_BOLD : FW_NORMAL;
+    lf.lfCharSet = DEFAULT_CHARSET;
+    lf.lfHeight = -MulDiv(GetProfileInt("font", "PointSize"),
+                          dc.GetDeviceCaps(LOGPIXELSY), 72);
 
-	if (!m_font.CreateFontIndirect(&lf))
-		return -1;
+    if (!m_font.CreateFontIndirect(&lf))
+        return -1;
 
-	SetFont(&m_font);
+    SetFont(&m_font);
 
-	return 0;
+    return 0;
 }
 
 void WinEditView::OnInitialUpdate()
 {
-	CEditView::OnInitialUpdate();
+    CEditView::OnInitialUpdate();
 }
 
 void WinEditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)

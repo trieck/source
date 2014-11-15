@@ -16,43 +16,43 @@
 class EarDlg : public CDialog {
 // Construction
 public:
-	EarDlg(CWnd* pParent = NULL);	// standard constructor
+    EarDlg(CWnd* pParent = NULL);	// standard constructor
 
 // Dialog Data
-	//{{AFX_DATA(EarDlg)
-	enum { IDD = IDD_EAR_DIALOG };
-	int		m_Interval;
-	CString	m_Output;
-	//}}AFX_DATA
+    //{{AFX_DATA(EarDlg)
+    enum { IDD = IDD_EAR_DIALOG };
+    int		m_Interval;
+    CString	m_Output;
+    //}}AFX_DATA
 
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(EarDlg)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(EarDlg)
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	//}}AFX_VIRTUAL
+    virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
+    //}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	void CreateInterval();
+    void CreateInterval();
 
-	// Generated message map functions
-	//{{AFX_MSG(EarDlg)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
-	afx_msg void OnSettings();
-	afx_msg void OnListen();
-	virtual void OnCancel();
-	afx_msg void OnEnter();
-	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    // Generated message map functions
+    //{{AFX_MSG(EarDlg)
+    virtual BOOL OnInitDialog();
+    afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+    afx_msg void OnSettings();
+    afx_msg void OnListen();
+    virtual void OnCancel();
+    afx_msg void OnEnter();
+    afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 
 private:
-	HICON m_hIcon;
-	MidiBuffer m_buffer;
-	IntervalEnum m_MidiInterval;
-	int m_correct;
-	int m_incorrect;
+    HICON m_hIcon;
+    MidiBuffer m_buffer;
+    IntervalEnum m_MidiInterval;
+    int m_correct;
+    int m_incorrect;
 };
 
 //{{AFX_INSERT_LOCATION}}

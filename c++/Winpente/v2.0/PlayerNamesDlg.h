@@ -16,49 +16,49 @@
 class CPlayerNamesDlg : public CDialog {
 // Construction
 public:
-	CPlayerNamesDlg(CWnd* pParent = NULL);   // standard constructor
-	CPlayerNamesDlg(CPenteDoc* pDoc, CWnd* pParent = NULL);
-	virtual ~CPlayerNamesDlg();
+    CPlayerNamesDlg(CWnd* pParent = NULL);   // standard constructor
+    CPlayerNamesDlg(CPenteDoc* pDoc, CWnd* pParent = NULL);
+    virtual ~CPlayerNamesDlg();
 // Dialog Data
-	//{{AFX_DATA(CPlayerNamesDlg)
-	enum { IDD = IDD_PLAYERNAMES };
-	// NOTE: the ClassWizard will add data members here
-	//}}AFX_DATA
+    //{{AFX_DATA(CPlayerNamesDlg)
+    enum { IDD = IDD_PLAYERNAMES };
+    // NOTE: the ClassWizard will add data members here
+    //}}AFX_DATA
 
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CPlayerNamesDlg)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CPlayerNamesDlg)
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+    //}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	inline CComboBox&	GetPlayerOneNameList() {
-		return * (CComboBox*) GetDlgItem(IDC_PLAYERONENAME);
-	}
-	inline CComboBox&	GetPlayerTwoNameList() {
-		return * (CComboBox*) GetDlgItem(IDC_PLAYERTWONAME);
-	}
-	inline CButton&		GetTwoPlayerGame() {
-		return * (CButton*) GetDlgItem(IDC_TWOPLAYERGAME);
-	}
+    inline CComboBox&	GetPlayerOneNameList() {
+        return * (CComboBox*) GetDlgItem(IDC_PLAYERONENAME);
+    }
+    inline CComboBox&	GetPlayerTwoNameList() {
+        return * (CComboBox*) GetDlgItem(IDC_PLAYERTWONAME);
+    }
+    inline CButton&		GetTwoPlayerGame() {
+        return * (CButton*) GetDlgItem(IDC_TWOPLAYERGAME);
+    }
 
-	CPenteDoc *		m_pDoc;
-	LPTSTR			m_lpszComputerName;
-	LPTSTR			m_lpszUserName;
+    CPenteDoc *		m_pDoc;
+    LPTSTR			m_lpszComputerName;
+    LPTSTR			m_lpszUserName;
 
-	CPlayers *		m_pPlayers;
+    CPlayers *		m_pPlayers;
 
-	afx_msg VOID OnTwoPlayerGame();
+    afx_msg VOID OnTwoPlayerGame();
 
-	// Generated message map functions
-	//{{AFX_MSG(CPlayerNamesDlg)
-	virtual BOOL OnInitDialog();
-	virtual VOID OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    // Generated message map functions
+    //{{AFX_MSG(CPlayerNamesDlg)
+    virtual BOOL OnInitDialog();
+    virtual VOID OnOK();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 //{{AFX_INSERT_LOCATION}}

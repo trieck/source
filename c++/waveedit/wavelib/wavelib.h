@@ -22,27 +22,27 @@ DECLARE_MY_GUIDS
 class CWaveLib : public IWaveLib {
 public:
 
-	// IUnknown methods
-	virtual HRESULT __stdcall QueryInterface(REFIID, PPVOID);
-	virtual ULONG	__stdcall AddRef();
-	virtual ULONG	__stdcall Release();
+    // IUnknown methods
+    virtual HRESULT __stdcall QueryInterface(REFIID, PPVOID);
+    virtual ULONG	__stdcall AddRef();
+    virtual ULONG	__stdcall Release();
 
-	// IWaveLib Methods
-	virtual HRESULT __stdcall GetInputDevices(PPSAFEARRAY);
-	virtual HRESULT __stdcall GetOutputDevices(PPSAFEARRAY);
-	virtual HRESULT __stdcall GetDeviceInCaps(UINT, WAVEINCAPS **);
-	virtual HRESULT __stdcall GetDeviceOutCaps(UINT, WAVEOUTCAPS **);
+    // IWaveLib Methods
+    virtual HRESULT __stdcall GetInputDevices(PPSAFEARRAY);
+    virtual HRESULT __stdcall GetOutputDevices(PPSAFEARRAY);
+    virtual HRESULT __stdcall GetDeviceInCaps(UINT, WAVEINCAPS **);
+    virtual HRESULT __stdcall GetDeviceOutCaps(UINT, WAVEOUTCAPS **);
 
-	static inline LONG GetComponentCount() {
-		return m_cComponents;
-	}
+    static inline LONG GetComponentCount() {
+        return m_cComponents;
+    }
 
-	CWaveLib();
-	~CWaveLib();
+    CWaveLib();
+    ~CWaveLib();
 
 protected:
-	LONG m_cRef;				// internal reference count
-	static LONG m_cComponents;	// Component count
+    LONG m_cRef;				// internal reference count
+    static LONG m_cComponents;	// Component count
 };
 
 /////////////////////////////////////////////
@@ -51,25 +51,25 @@ protected:
 //
 class CFactory : public IClassFactory {
 public:
-	// IUnknown methods
-	virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv);
-	virtual ULONG	__stdcall AddRef();
-	virtual ULONG 	__stdcall Release();
+    // IUnknown methods
+    virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv);
+    virtual ULONG	__stdcall AddRef();
+    virtual ULONG 	__stdcall Release();
 
-	// IClassFactory methods
-	virtual HRESULT __stdcall CreateInstance(LPUNKNOWN pUnknownOuter,
-	        REFIID iid,
-	        PPVOID ppv);
-	virtual HRESULT __stdcall LockServer(BOOL bLock);
+    // IClassFactory methods
+    virtual HRESULT __stdcall CreateInstance(LPUNKNOWN pUnknownOuter,
+            REFIID iid,
+            PPVOID ppv);
+    virtual HRESULT __stdcall LockServer(BOOL bLock);
 
-	// Constructor
-	CFactory () : m_cRef(1) {}
+    // Constructor
+    CFactory () : m_cRef(1) {}
 
-	// Destructor
-	~CFactory() {}
+    // Destructor
+    ~CFactory() {}
 
 private:
-	LONG m_cRef;
+    LONG m_cRef;
 };
 
 #endif // __WAVELIB_H__

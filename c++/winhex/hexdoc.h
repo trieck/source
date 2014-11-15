@@ -13,8 +13,8 @@ typedef const unsigned char* LPCBYTE;
 
 class HexDoc : public CDocument {
 protected: // create from serialization only
-	HexDoc();
-	DECLARE_DYNCREATE(HexDoc)
+    HexDoc();
+    DECLARE_DYNCREATE(HexDoc)
 
 // Attributes
 public:
@@ -23,53 +23,53 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(HexDoc)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(HexDoc)
 public:
-	virtual BOOL OnNewDocument();
-	virtual void Serialize(CArchive& ar);
-	virtual void DeleteContents();
-	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
-	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
-	//}}AFX_VIRTUAL
+    virtual BOOL OnNewDocument();
+    virtual void Serialize(CArchive& ar);
+    virtual void DeleteContents();
+    virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
+    virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~HexDoc();
+    virtual ~HexDoc();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
-	LPCBYTE GetData() const;
-	UINT GetDataSize() const;
-	void SetData(UINT offset, BYTE data);
+    LPCBYTE GetData() const;
+    UINT GetDataSize() const;
+    void SetData(UINT offset, BYTE data);
 protected:
-	void Load(CArchive & ar);
-	void Save(CArchive & ar);
-	void UpdateHexView();
+    void Load(CArchive & ar);
+    void Save(CArchive & ar);
+    void UpdateHexView();
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(HexDoc)
-	afx_msg void OnUpdateFileSave(CCmdUI* pCmdUI);
-	afx_msg void OnUpdateDocumentSize(CCmdUI* pCmdUI);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(HexDoc)
+    afx_msg void OnUpdateFileSave(CCmdUI* pCmdUI);
+    afx_msg void OnUpdateDocumentSize(CCmdUI* pCmdUI);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	BYTE *m_pdata;
-	UINT m_nsize;
+    BYTE *m_pdata;
+    UINT m_nsize;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 
 inline LPCBYTE HexDoc::GetData() const
 {
-	return m_pdata;
+    return m_pdata;
 }
 
 inline UINT HexDoc::GetDataSize() const
 {
-	return m_nsize;
+    return m_nsize;
 }
 
 //{{AFX_INSERT_LOCATION}}

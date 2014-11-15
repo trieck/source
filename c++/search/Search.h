@@ -19,18 +19,18 @@
 class Search {
 // Construction / Destruction
 public:
-	Search(LPCSTR filename);
-	virtual ~Search();
+    Search(LPCSTR filename);
+    virtual ~Search();
 
 // Interface
-	DocVector search(LPCSTR q);
+    DocVector search(LPCSTR q);
 
 // Implementation
 private:
-	void open(LPCSTR filename);
-	void close();
+    void open(LPCSTR filename);
+    void close();
 
-	BTree btree;
+    BTree btree;
 };
 /////////////////////////////////////////////////////////////////////////////
 

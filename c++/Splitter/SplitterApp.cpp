@@ -27,30 +27,30 @@ CSplitterApp::~CSplitterApp()
 
 BOOL CSplitterApp::InitInstance()
 {
-	//
-	// Register the application's document template
-	//
-	CSingleDocTemplate* pDocTemplate;
+    //
+    // Register the application's document template
+    //
+    CSingleDocTemplate* pDocTemplate;
 
-	pDocTemplate = new CSingleDocTemplate(
-	    IDR_MAINFRAME,
-	    RUNTIME_CLASS(CSplitterDoc),
-	    RUNTIME_CLASS(CMainFrame),      // main SDI frame window
-	    RUNTIME_CLASS(CSplitterView));
+    pDocTemplate = new CSingleDocTemplate(
+        IDR_MAINFRAME,
+        RUNTIME_CLASS(CSplitterDoc),
+        RUNTIME_CLASS(CMainFrame),      // main SDI frame window
+        RUNTIME_CLASS(CSplitterView));
 
-	AddDocTemplate(pDocTemplate);
+    AddDocTemplate(pDocTemplate);
 
-	// Parse command line (this is required by doc/view)
-	CCommandLineInfo cmdInfo;
-	ParseCommandLine(cmdInfo);
+    // Parse command line (this is required by doc/view)
+    CCommandLineInfo cmdInfo;
+    ParseCommandLine(cmdInfo);
 
-	// Dispatch commands specified on the command line
-	if (!ProcessShellCommand(cmdInfo))
-		return FALSE;
+    // Dispatch commands specified on the command line
+    if (!ProcessShellCommand(cmdInfo))
+        return FALSE;
 
-	ASSERT_VALID(this->m_pMainWnd);
+    ASSERT_VALID(this->m_pMainWnd);
 
-	return TRUE;
+    return TRUE;
 }
 
 ///////////////////////////////////////////////////////////////////

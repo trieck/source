@@ -23,7 +23,7 @@ BinaryFileView::~BinaryFileView()
 }
 
 BEGIN_MESSAGE_MAP(BinaryFileView, HexView)
-	ON_WM_CREATE()
+    ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 
@@ -31,7 +31,7 @@ END_MESSAGE_MAP()
 
 void BinaryFileView::OnDraw(CDC* pDC)
 {
-	HexView::OnDraw(pDC);
+    HexView::OnDraw(pDC);
 }
 
 
@@ -40,20 +40,20 @@ void BinaryFileView::OnDraw(CDC* pDC)
 #ifdef _DEBUG
 void BinaryFileView::AssertValid() const
 {
-	HexView::AssertValid();
+    HexView::AssertValid();
 }
 
 #ifndef _WIN32_WCE
 void BinaryFileView::Dump(CDumpContext& dc) const
 {
-	HexView::Dump(dc);
+    HexView::Dump(dc);
 }
 #endif
 
 WinADFDoc* BinaryFileView::GetDocument() const // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WinADFDoc)));
-	return (WinADFDoc*)m_pDocument;
+    ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WinADFDoc)));
+    return (WinADFDoc*)m_pDocument;
 }
 
 #endif //_DEBUG
@@ -63,33 +63,33 @@ WinADFDoc* BinaryFileView::GetDocument() const // non-debug version is inline
 
 int BinaryFileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (HexView::OnCreate(lpCreateStruct) == -1)
-		return -1;
+    if (HexView::OnCreate(lpCreateStruct) == -1)
+        return -1;
 
-	m_Font.CreatePointFont(90, _T("Courier New"));
+    m_Font.CreatePointFont(90, _T("Courier New"));
 
-	WinADFDoc *pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
+    WinADFDoc *pDoc = GetDocument();
+    ASSERT_VALID(pDoc);
 
-	Volume *pVol = pDoc->GetVolume();
-	ASSERT(pVol != NULL);
+    Volume *pVol = pDoc->GetVolume();
+    ASSERT(pVol != NULL);
 
-	const Entry *pEntry = pDoc->GetEntry();
-	ASSERT(pEntry != NULL);
+    const Entry *pEntry = pDoc->GetEntry();
+    ASSERT(pEntry != NULL);
 
-	m_nBufferLen = pEntry->size;
+    m_nBufferLen = pEntry->size;
 
-	try {
-		FilePtr file = pVol->openfile(*pEntry);
-		m_pBuffer = new uint8_t[m_nBufferLen];
-		file->read(m_nBufferLen, m_pBuffer);
-	} catch (const ADFException &e) {
-		AfxMessageBox(e.getDescription().c_str());
-		return -1;
-	}
+    try {
+        FilePtr file = pVol->openfile(*pEntry);
+        m_pBuffer = new uint8_t[m_nBufferLen];
+        file->read(m_nBufferLen, m_pBuffer);
+    } catch (const ADFException &e) {
+        AfxMessageBox(e.getDescription().c_str());
+        return -1;
+    }
 
-	SetSizes();
+    SetSizes();
 
-	return 0;
+    return 0;
 }
 

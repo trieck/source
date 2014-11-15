@@ -15,33 +15,33 @@
 // The CSplitterView view class
 class CSplitterView : public CListView {
 protected:
-	CSplitterView();
-	DECLARE_DYNCREATE(CSplitterView)
+    CSplitterView();
+    DECLARE_DYNCREATE(CSplitterView)
 
 // Attributes
 public:
-	CSplitterDoc* GetDocument();
+    CSplitterDoc* GetDocument();
 
 // Overrides
 public:
-	virtual void OnInitialUpdate();
-	virtual BOOL PreCreateWindow(CREATESTRUCT&);
+    virtual void OnInitialUpdate();
+    virtual BOOL PreCreateWindow(CREATESTRUCT&);
 // Implementation
 public:
-	virtual ~CSplitterView();
+    virtual ~CSplitterView();
 
 protected:
-	// message map entries
-	afx_msg	INT	OnCreate(LPCREATESTRUCT);
+    // message map entries
+    afx_msg	INT	OnCreate(LPCREATESTRUCT);
 protected:
-	static LPCTSTR szHeaders[4];
+    static LPCTSTR szHeaders[4];
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 inline CSplitterDoc* CSplitterView::GetDocument()
 {
-	return (CSplitterDoc*)m_pDocument;
+    return (CSplitterDoc*)m_pDocument;
 }
 
 ///////////////////////////////////////////////////////////////////

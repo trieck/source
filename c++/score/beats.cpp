@@ -14,14 +14,14 @@
 template <>
 void AFXAPI SerializeElements <NoteList *> ( CArchive& ar, NoteList ** ppNoteList, int nCount)
 {
-	ASSERT(ppNoteList != NULL);
+    ASSERT(ppNoteList != NULL);
 
-	if (ar.IsLoading()) {
-		*ppNoteList = new NoteList;
-	}
+    if (ar.IsLoading()) {
+        *ppNoteList = new NoteList;
+    }
 
-	ASSERT_VALID(*ppNoteList);
-	(*ppNoteList)->Serialize(ar);
+    ASSERT_VALID(*ppNoteList);
+    (*ppNoteList)->Serialize(ar);
 }
 
 IMPLEMENT_SERIAL(Beats, CObject, VERSIONABLE_SCHEMA)
@@ -38,7 +38,7 @@ Beats::Beats()
 //
 Beats::~Beats()
 {
-	clear();
+    clear();
 }
 
 //
@@ -46,13 +46,13 @@ Beats::~Beats()
 //
 void Beats::insert(Note * pNote)
 {
-	ASSERT_VALID(pNote);
+    ASSERT_VALID(pNote);
 
-	NoteList * pNoteList = new NoteList;
-	ASSERT_VALID(pNoteList);
+    NoteList * pNoteList = new NoteList;
+    ASSERT_VALID(pNoteList);
 
-	pNoteList->AddTail(pNote);
-	AddTail(pNoteList);
+    pNoteList->AddTail(pNote);
+    AddTail(pNoteList);
 }
 
 //
@@ -60,16 +60,16 @@ void Beats::insert(Note * pNote)
 //
 BOOL Beats::remove(NoteList * pNoteList)
 {
-	ASSERT_VALID(pNoteList);
+    ASSERT_VALID(pNoteList);
 
-	POSITION pos = Find(pNoteList);
-	while (pos != NULL) {
-		RemoveAt(pos);
-		delete pNoteList;
-		return TRUE;
-	}
+    POSITION pos = Find(pNoteList);
+    while (pos != NULL) {
+        RemoveAt(pos);
+        delete pNoteList;
+        return TRUE;
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 //
@@ -77,15 +77,15 @@ BOOL Beats::remove(NoteList * pNoteList)
 //
 void Beats::clear()
 {
-	POSITION pos = GetHeadPosition();
-	while (pos != NULL) {
-		NoteList * pList = GetNext(pos);
-		ASSERT_VALID(pList);
+    POSITION pos = GetHeadPosition();
+    while (pos != NULL) {
+        NoteList * pList = GetNext(pos);
+        ASSERT_VALID(pList);
 
-		delete pList;
-	}
+        delete pList;
+    }
 
-	RemoveAll();
+    RemoveAll();
 }
 
 //
@@ -93,27 +93,27 @@ void Beats::clear()
 //
 NoteList * Beats::find(const Note * pNote, POSITION & rpos)
 {
-	ASSERT_VALID(pNote);
+    ASSERT_VALID(pNote);
 
-	rpos = NULL;
-	POSITION pos = GetHeadPosition();
-	while (pos != NULL) {
-		NoteList * pNoteList = GetNext(pos);
-		ASSERT_VALID(pNoteList);
+    rpos = NULL;
+    POSITION pos = GetHeadPosition();
+    while (pos != NULL) {
+        NoteList * pNoteList = GetNext(pos);
+        ASSERT_VALID(pNoteList);
 
-		POSITION notepos = pNoteList->GetHeadPosition();
-		while (notepos != NULL) {
-			Note * pNextNote = pNoteList->GetNext(notepos);
-			ASSERT_VALID(pNextNote);
+        POSITION notepos = pNoteList->GetHeadPosition();
+        while (notepos != NULL) {
+            Note * pNextNote = pNoteList->GetNext(notepos);
+            ASSERT_VALID(pNextNote);
 
-			if (pNextNote == pNote) {
-				rpos = pos;
-				return pNoteList;
-			}
-		}
-	}
+            if (pNextNote == pNote) {
+                rpos = pos;
+                return pNoteList;
+            }
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
 
 //
@@ -121,14 +121,14 @@ NoteList * Beats::find(const Note * pNote, POSITION & rpos)
 // insert after a position
 POSITION Beats::splice(POSITION pos, Note * pNote)
 {
-	ASSERT_VALID(pNote);
+    ASSERT_VALID(pNote);
 
-	NoteList * pNoteList = new NoteList;
-	ASSERT_VALID(pNoteList);
+    NoteList * pNoteList = new NoteList;
+    ASSERT_VALID(pNoteList);
 
-	pNoteList->AddTail(pNote);
+    pNoteList->AddTail(pNote);
 
-	return InsertAfter(pos, pNoteList);
+    return InsertAfter(pos, pNoteList);
 }
 
 //
@@ -136,22 +136,22 @@ POSITION Beats::splice(POSITION pos, Note * pNote)
 //
 void Beats::Serialize(CArchive & ar)
 {
-	CObject::Serialize(ar);
+    CObject::Serialize(ar);
 
-	if (ar.IsStoring()) {
-		ar.WriteCount(m_nCount);
-		for (CNode* pNode = m_pNodeHead; pNode != NULL; pNode = pNode->pNext) {
-			ASSERT(AfxIsValidAddress(pNode, sizeof(CNode)));
-			SerializeElements<NoteList *>(ar, &pNode->data, 1);
-		}
-	} else {
-		DWORD nNewCount = ar.ReadCount();
-		while (nNewCount--) {
-			NoteList * newData;
-			SerializeElements<NoteList *>(ar, &newData, 1);
-			AddTail(newData);
-		}
-	}
+    if (ar.IsStoring()) {
+        ar.WriteCount(m_nCount);
+        for (CNode* pNode = m_pNodeHead; pNode != NULL; pNode = pNode->pNext) {
+            ASSERT(AfxIsValidAddress(pNode, sizeof(CNode)));
+            SerializeElements<NoteList *>(ar, &pNode->data, 1);
+        }
+    } else {
+        DWORD nNewCount = ar.ReadCount();
+        while (nNewCount--) {
+            NoteList * newData;
+            SerializeElements<NoteList *>(ar, &newData, 1);
+            AddTail(newData);
+        }
+    }
 }
 
 

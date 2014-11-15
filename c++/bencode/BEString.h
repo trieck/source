@@ -11,36 +11,36 @@
 /////////////////////////////////////////////////////////////////////////////
 class String : public BEObject {
 private:
-	// Construction / Destruction
-	String(LPBYTE data, INT len);
+    // Construction / Destruction
+    String(LPBYTE data, INT len);
 public:
-	String(const String &str);
-	~String();
+    String(const String &str);
+    ~String();
 
 // Interface
-	String &operator = (const String &rhs);
+    String &operator = (const String &rhs);
 
-	virtual ObjectType GetType() const {
-		return BET_STRING;
-	}
-	virtual LPBEOBJECT Copy() const;
+    virtual ObjectType GetType() const {
+        return BET_STRING;
+    }
+    virtual LPBEOBJECT Copy() const;
 
-	INT GetLength() const {
-		return nlen;
-	}
-	LPBYTE GetData() const {
-		return data;
-	}
-	BYTE GetAt(int i) const;
+    INT GetLength() const {
+        return nlen;
+    }
+    LPBYTE GetData() const {
+        return data;
+    }
+    BYTE GetAt(int i) const;
 
-	operator string() const;
+    operator string() const;
 
 // Implementation
 private:
-	LPBYTE data;
-	INT nlen;
-	friend String *MakeString(LPBYTE data, INT nLen);
-	friend String *MakeString(LPCSTR pstr);
+    LPBYTE data;
+    INT nlen;
+    friend String *MakeString(LPBYTE data, INT nLen);
+    friend String *MakeString(LPCSTR pstr);
 };
 /////////////////////////////////////////////////////////////////////////////
 

@@ -19,14 +19,14 @@ IMPLEMENT_DYNCREATE(CColorButtonCtrl, COleControl)
 // Message map
 
 BEGIN_MESSAGE_MAP(CColorButtonCtrl, COleControl)
-	//{{AFX_MSG_MAP(CColorButtonCtrl)
-	ON_WM_LBUTTONDBLCLK()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_LBUTTONUP()
-	ON_WM_MOUSEMOVE()
-	ON_WM_KILLFOCUS()
-	ON_WM_SETFOCUS()
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(CColorButtonCtrl)
+    ON_WM_LBUTTONDBLCLK()
+    ON_WM_LBUTTONDOWN()
+    ON_WM_LBUTTONUP()
+    ON_WM_MOUSEMOVE()
+    ON_WM_KILLFOCUS()
+    ON_WM_SETFOCUS()
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -35,14 +35,14 @@ END_MESSAGE_MAP()
 
 BEGIN_DISPATCH_MAP(CColorButtonCtrl, COleControl)
 //{{AFX_DISPATCH_MAP(CColorButtonCtrl)
-	DISP_PROPERTY_EX(CColorButtonCtrl, "BevelWidth", GetBevelWidth, SetBevelWidth, VT_I2)
-	DISP_STOCKPROP_FONT()
-	DISP_STOCKPROP_ENABLED()
-	DISP_PROPERTY_EX_ID(CColorButtonCtrl, "BackColor", DISPID_BACKCOLOR, GetBackColor, SetBackColor, VT_COLOR)
-	DISP_PROPERTY_EX_ID(CColorButtonCtrl, "ForeColor", DISPID_FORECOLOR, GetForeColor, SetForeColor, VT_COLOR)
-	DISP_PROPERTY_EX_ID(CColorButtonCtrl, "Caption", DISPID_CAPTION, GetCaption, SetCaption, VT_BSTR)
+    DISP_PROPERTY_EX(CColorButtonCtrl, "BevelWidth", GetBevelWidth, SetBevelWidth, VT_I2)
+    DISP_STOCKPROP_FONT()
+    DISP_STOCKPROP_ENABLED()
+    DISP_PROPERTY_EX_ID(CColorButtonCtrl, "BackColor", DISPID_BACKCOLOR, GetBackColor, SetBackColor, VT_COLOR)
+    DISP_PROPERTY_EX_ID(CColorButtonCtrl, "ForeColor", DISPID_FORECOLOR, GetForeColor, SetForeColor, VT_COLOR)
+    DISP_PROPERTY_EX_ID(CColorButtonCtrl, "Caption", DISPID_CAPTION, GetCaption, SetCaption, VT_BSTR)
 //}}AFX_DISPATCH_MAP
-	DISP_FUNCTION_ID(CColorButtonCtrl, "AboutBox", DISPID_ABOUTBOX, AboutBox, VT_EMPTY, VTS_NONE)
+    DISP_FUNCTION_ID(CColorButtonCtrl, "AboutBox", DISPID_ABOUTBOX, AboutBox, VT_EMPTY, VTS_NONE)
 END_DISPATCH_MAP()
 
 
@@ -51,7 +51,7 @@ END_DISPATCH_MAP()
 
 BEGIN_EVENT_MAP(CColorButtonCtrl, COleControl)
 //{{AFX_EVENT_MAP(CColorButtonCtrl)
-	EVENT_STOCK_CLICK()
+    EVENT_STOCK_CLICK()
 //}}AFX_EVENT_MAP
 END_EVENT_MAP()
 
@@ -97,20 +97,20 @@ IMPLEMENT_OLECTLTYPE(CColorButtonCtrl, IDS_COLORBUTTON, _dwColorButtonOleMisc)
 
 BOOL CColorButtonCtrl::CColorButtonCtrlFactory::UpdateRegistry(BOOL bRegister)
 {
-	if (bRegister)
-		return AfxOleRegisterControlClass(
-		           AfxGetInstanceHandle(),
-		           m_clsid,
-		           m_lpszProgID,
-		           IDS_COLORBUTTON,
-		           IDB_COLORBUTTON,
-		           FALSE,                      //  Not insertable
-		           _dwColorButtonOleMisc,
-		           _tlid,
-		           _wVerMajor,
-		           _wVerMinor);
-	else
-		return AfxOleUnregisterClass(m_clsid, m_lpszProgID);
+    if (bRegister)
+        return AfxOleRegisterControlClass(
+                   AfxGetInstanceHandle(),
+                   m_clsid,
+                   m_lpszProgID,
+                   IDS_COLORBUTTON,
+                   IDB_COLORBUTTON,
+                   FALSE,                      //  Not insertable
+                   _dwColorButtonOleMisc,
+                   _tlid,
+                   _wVerMajor,
+                   _wVerMinor);
+    else
+        return AfxOleUnregisterClass(m_clsid, m_lpszProgID);
 }
 
 
@@ -119,10 +119,10 @@ BOOL CColorButtonCtrl::CColorButtonCtrlFactory::UpdateRegistry(BOOL bRegister)
 
 CColorButtonCtrl::CColorButtonCtrl()
 {
-	InitializeIIDs(&IID_DColorButton, &IID_DColorButtonEvents);
+    InitializeIIDs(&IID_DColorButton, &IID_DColorButtonEvents);
 
-	// initialize data members
-	m_bDown = FALSE;
+    // initialize data members
+    m_bDown = FALSE;
 }
 
 
@@ -140,7 +140,7 @@ CColorButtonCtrl::~CColorButtonCtrl()
 void CColorButtonCtrl::OnDraw(
     CDC* pdc, const CRect& rcBounds, const CRect& rcInvalid)
 {
-	DrawControl(*pdc, (CRect&)rcBounds);
+    DrawControl(*pdc, (CRect&)rcBounds);
 }
 
 
@@ -149,15 +149,15 @@ void CColorButtonCtrl::OnDraw(
 
 void CColorButtonCtrl::DoPropExchange(CPropExchange* pPX)
 {
-	ExchangeVersion(pPX, MAKELONG(_wVerMinor, _wVerMajor));
+    ExchangeVersion(pPX, MAKELONG(_wVerMinor, _wVerMajor));
 
-	COleControl::DoPropExchange(pPX);
+    COleControl::DoPropExchange(pPX);
 
-	// Call PX_ functions for each persistent custom property.
-	PX_Short(pPX, _T("BevelWidth"), m_BevelWidth, 2);
-	PX_Color(pPX, _T("BackColor"), m_BackColor, ::GetSysColor(COLOR_BTNFACE));
-	PX_Color(pPX, _T("ForeColor"), m_ForeColor, ::GetSysColor(COLOR_BTNTEXT));
-	PX_String(pPX, _T("Caption"), m_sCaption, AmbientDisplayName());
+    // Call PX_ functions for each persistent custom property.
+    PX_Short(pPX, _T("BevelWidth"), m_BevelWidth, 2);
+    PX_Color(pPX, _T("BackColor"), m_BackColor, ::GetSysColor(COLOR_BTNFACE));
+    PX_Color(pPX, _T("ForeColor"), m_ForeColor, ::GetSysColor(COLOR_BTNTEXT));
+    PX_String(pPX, _T("Caption"), m_sCaption, AmbientDisplayName());
 }
 
 
@@ -166,7 +166,7 @@ void CColorButtonCtrl::DoPropExchange(CPropExchange* pPX)
 
 void CColorButtonCtrl::OnResetState()
 {
-	COleControl::OnResetState();  // Resets defaults found in DoPropExchange
+    COleControl::OnResetState();  // Resets defaults found in DoPropExchange
 }
 
 
@@ -175,8 +175,8 @@ void CColorButtonCtrl::OnResetState()
 
 void CColorButtonCtrl::AboutBox()
 {
-	CDialog dlgAbout(IDD_ABOUTBOX_COLORBUTTON);
-	dlgAbout.DoModal();
+    CDialog dlgAbout(IDD_ABOUTBOX_COLORBUTTON);
+    dlgAbout.DoModal();
 }
 
 
@@ -185,356 +185,356 @@ void CColorButtonCtrl::AboutBox()
 
 void CColorButtonCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
-	OnLButtonDown(nFlags, point);
+    OnLButtonDown(nFlags, point);
 }
 
 void CColorButtonCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	// call the base class handler
-	COleControl::OnLButtonDown(nFlags, point);
+    // call the base class handler
+    COleControl::OnLButtonDown(nFlags, point);
 
-	CRect rc;
-	CDC* pDC = GetDC();
+    CRect rc;
+    CDC* pDC = GetDC();
 
-	// set down flag
-	m_bDown = TRUE;
+    // set down flag
+    m_bDown = TRUE;
 
-	// set mouse capture
-	SetCapture();
+    // set mouse capture
+    SetCapture();
 
-	GetClientRect(&rc);
+    GetClientRect(&rc);
 
-	DrawButtonDown(pDC, rc);
+    DrawButtonDown(pDC, rc);
 
-	ReleaseDC(pDC);
+    ReleaseDC(pDC);
 }
 
 void CColorButtonCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	CRect rc;
-	CDC* pDC = GetDC();
+    CRect rc;
+    CDC* pDC = GetDC();
 
-	// set down flag
-	m_bDown = FALSE;
+    // set down flag
+    m_bDown = FALSE;
 
-	// release mouse capture
-	ReleaseCapture();
+    // release mouse capture
+    ReleaseCapture();
 
-	GetClientRect(&rc);
+    GetClientRect(&rc);
 
-	DrawButtonUp(pDC, rc);
+    DrawButtonUp(pDC, rc);
 
-	ReleaseDC(pDC);
+    ReleaseDC(pDC);
 
-	// call the base class handler
-	COleControl::OnLButtonUp(nFlags, point);
+    // call the base class handler
+    COleControl::OnLButtonUp(nFlags, point);
 
 }
 
 void CColorButtonCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
-	static BOOL bHaveDrawnUp	= FALSE;
-	static BOOL bHaveDrawnDown	= FALSE;
+    static BOOL bHaveDrawnUp	= FALSE;
+    static BOOL bHaveDrawnDown	= FALSE;
 
-	CDC* pDC = GetDC();
+    CDC* pDC = GetDC();
 
-	// get button rect
-	CRect rc;
-	GetClientRect(&rc);
+    // get button rect
+    CRect rc;
+    GetClientRect(&rc);
 
-	// check whether the button is down
-	if (m_bDown) {
-		// check whether mouse pointer is over button
-		if (rc.PtInRect(point)) {
-			bHaveDrawnUp = FALSE;
-			if (!bHaveDrawnDown) {
-				DrawButtonDown(pDC, rc);
-				bHaveDrawnDown = TRUE;
-			}
-		} else {
-			bHaveDrawnDown = FALSE;
-			if (!bHaveDrawnUp) {
-				DrawButtonUp(pDC, rc);
-				bHaveDrawnUp = TRUE;
-			}
-		}
-	} else {
-		bHaveDrawnUp	= FALSE;
-		bHaveDrawnDown	= FALSE;
-	}
-	ReleaseDC(pDC);
+    // check whether the button is down
+    if (m_bDown) {
+        // check whether mouse pointer is over button
+        if (rc.PtInRect(point)) {
+            bHaveDrawnUp = FALSE;
+            if (!bHaveDrawnDown) {
+                DrawButtonDown(pDC, rc);
+                bHaveDrawnDown = TRUE;
+            }
+        } else {
+            bHaveDrawnDown = FALSE;
+            if (!bHaveDrawnUp) {
+                DrawButtonUp(pDC, rc);
+                bHaveDrawnUp = TRUE;
+            }
+        }
+    } else {
+        bHaveDrawnUp	= FALSE;
+        bHaveDrawnDown	= FALSE;
+    }
+    ReleaseDC(pDC);
 }
 
 void CColorButtonCtrl::DrawControl(CDC& dc, CRect& rc)
 {
-	// paint the button rect
-	CBrush br(m_BackColor), *pbrOld;
-	CRect rcClip;
+    // paint the button rect
+    CBrush br(m_BackColor), *pbrOld;
+    CRect rcClip;
 
-	dc.GetClipBox(&rcClip);
-	pbrOld = dc.SelectObject(&br);
+    dc.GetClipBox(&rcClip);
+    pbrOld = dc.SelectObject(&br);
 
-	dc.PatBlt(rcClip.left, rcClip.top, (rcClip.right - rcClip.left),
-	          (rcClip.bottom - rcClip.top), PATCOPY);
+    dc.PatBlt(rcClip.left, rcClip.top, (rcClip.right - rcClip.left),
+              (rcClip.bottom - rcClip.top), PATCOPY);
 
-	dc.SelectObject(pbrOld);
+    dc.SelectObject(pbrOld);
 
-	// draw bevel
-	DrawBevelRaised(&dc, rc);
+    // draw bevel
+    DrawBevelRaised(&dc, rc);
 
-	// draw caption
-	DrawCaption(&dc, rc, GetEnabled()? m_ForeColor : ::GetSysColor(COLOR_GRAYTEXT));
+    // draw caption
+    DrawCaption(&dc, rc, GetEnabled()? m_ForeColor : ::GetSysColor(COLOR_GRAYTEXT));
 
-	// draw the frame
-	if (this == GetFocus() ) {
-		CBrush br(::GetSysColor(COLOR_3DDKSHADOW));
-		FrameButton(br);
-	}
+    // draw the frame
+    if (this == GetFocus() ) {
+        CBrush br(::GetSysColor(COLOR_3DDKSHADOW));
+        FrameButton(br);
+    }
 }
 
 void CColorButtonCtrl::DrawBevelRaised(CDC* pDC, CRect& rc)
 {
-	CPen penLight(PS_SOLID, 1, ::GetSysColor(COLOR_3DHILIGHT));
+    CPen penLight(PS_SOLID, 1, ::GetSysColor(COLOR_3DHILIGHT));
 
-	CPen penShadow(PS_SOLID, 1, ::GetSysColor(COLOR_3DSHADOW));
+    CPen penShadow(PS_SOLID, 1, ::GetSysColor(COLOR_3DSHADOW));
 
-	DrawBevel(pDC, rc, penLight, penShadow);
+    DrawBevel(pDC, rc, penLight, penShadow);
 }
 
 void CColorButtonCtrl::DrawCaption(CDC* pDC, CRect& rc, COLORREF lColor)
 {
-	int cx	= 0;
-	int cy	= 0;
-	CSize size;
+    int cx	= 0;
+    int cy	= 0;
+    CSize size;
 
-	// set font
-	CFont* pOldFont;
-	pOldFont = SelectFontObject(pDC, InternalGetFont());
+    // set font
+    CFont* pOldFont;
+    pOldFont = SelectFontObject(pDC, InternalGetFont());
 
-	// get the bounds of the caption text
-	::GetTextExtentPoint32(
-	    pDC->m_hDC,						// handle of device context
-	    m_sCaption,						// address of text string
-	    m_sCaption.GetLength(),			// number of characters in string
-	    &size);							// address of size structure
+    // get the bounds of the caption text
+    ::GetTextExtentPoint32(
+        pDC->m_hDC,						// handle of device context
+        m_sCaption,						// address of text string
+        m_sCaption.GetLength(),			// number of characters in string
+        &size);							// address of size structure
 
-	cx = (rc.left + rc.right) / 2 - size.cx / 2;
-	cy = (rc.top + rc.bottom) / 2 - size.cy / 2;
+    cx = (rc.left + rc.right) / 2 - size.cx / 2;
+    cy = (rc.top + rc.bottom) / 2 - size.cy / 2;
 
-	// offset clipping region
-	CRgn rgn;
-	rgn.CreateRectRgn(rc.left + m_BevelWidth + 1, rc.top + m_BevelWidth + 1,
-	                  rc.right - m_BevelWidth - 1, rc.bottom - m_BevelWidth - 1);
+    // offset clipping region
+    CRgn rgn;
+    rgn.CreateRectRgn(rc.left + m_BevelWidth + 1, rc.top + m_BevelWidth + 1,
+                      rc.right - m_BevelWidth - 1, rc.bottom - m_BevelWidth - 1);
 
-	pDC->SelectClipRgn(&rgn);
+    pDC->SelectClipRgn(&rgn);
 
-	// make text background transparent
-	pDC->SetBkMode(TRANSPARENT);
+    // make text background transparent
+    pDC->SetBkMode(TRANSPARENT);
 
-	// etch the caption if disabled
-	if (!GetEnabled() ) {
-		pDC->SetTextColor(::GetSysColor(COLOR_3DHILIGHT));
-		pDC->TextOut(cx+1, cy+1, m_sCaption);
-	}
+    // etch the caption if disabled
+    if (!GetEnabled() ) {
+        pDC->SetTextColor(::GetSysColor(COLOR_3DHILIGHT));
+        pDC->TextOut(cx+1, cy+1, m_sCaption);
+    }
 
-	// set text color
-	pDC->SetTextColor(lColor);
+    // set text color
+    pDC->SetTextColor(lColor);
 
-	// set panel caption
-	pDC->TextOut(cx, cy, m_sCaption);
+    // set panel caption
+    pDC->TextOut(cx, cy, m_sCaption);
 
-	// release font
-	pDC->SelectObject(pOldFont);
+    // release font
+    pDC->SelectObject(pOldFont);
 
-	// delete region
-	DeleteObject(&rgn);
+    // delete region
+    DeleteObject(&rgn);
 }
 
 void CColorButtonCtrl::DrawBevel(CDC* pDC, CRect& rc, CPen& pen1, CPen& pen2)
 {
-	int i = 0;
-	// draw bevel top and left
+    int i = 0;
+    // draw bevel top and left
 
-	// the top
-	int cxLeft	= rc.left;
-	int cy		= rc.top;
-	int cxRight	= rc.right + 1;
+    // the top
+    int cxLeft	= rc.left;
+    int cy		= rc.top;
+    int cxRight	= rc.right + 1;
 
-	// select new pen into DC for drawing; save old pen
-	CPen* pPenOld = pDC->SelectObject(&pen1);
+    // select new pen into DC for drawing; save old pen
+    CPen* pPenOld = pDC->SelectObject(&pen1);
 
-	// draw the bevel
-	for (i = 0; i < m_BevelWidth; i++) {
-		pDC->MoveTo(cxLeft++, cy);
-		pDC->LineTo(cxRight--, cy++);
-	}
+    // draw the bevel
+    for (i = 0; i < m_BevelWidth; i++) {
+        pDC->MoveTo(cxLeft++, cy);
+        pDC->LineTo(cxRight--, cy++);
+    }
 
-	// the left
-	int cx			= rc.left;
-	int cyTop		= rc.top;
-	int cyBottom	= rc.bottom + 1;
+    // the left
+    int cx			= rc.left;
+    int cyTop		= rc.top;
+    int cyBottom	= rc.bottom + 1;
 
-	for (i = 0; i < m_BevelWidth; i++) {
-		pDC->MoveTo(cx, cyTop++);
-		pDC->LineTo(cx++, cyBottom--);
-	}
+    for (i = 0; i < m_BevelWidth; i++) {
+        pDC->MoveTo(cx, cyTop++);
+        pDC->LineTo(cx++, cyBottom--);
+    }
 
-	// draw the bottom and right
+    // draw the bottom and right
 
-	// the bottom
-	cxLeft	= rc.left;
-	cy		= rc.bottom - 1;
-	cxRight	= rc.right;
+    // the bottom
+    cxLeft	= rc.left;
+    cy		= rc.bottom - 1;
+    cxRight	= rc.right;
 
-	// select new pen into DC for drawing
-	pDC->SelectObject(&pen2);
+    // select new pen into DC for drawing
+    pDC->SelectObject(&pen2);
 
-	// draw the bevel
-	for (i = 0; i < m_BevelWidth; i++) {
-		pDC->MoveTo(cxLeft++, cy);
-		pDC->LineTo(cxRight--, cy--);
-	}
+    // draw the bevel
+    for (i = 0; i < m_BevelWidth; i++) {
+        pDC->MoveTo(cxLeft++, cy);
+        pDC->LineTo(cxRight--, cy--);
+    }
 
-	// the right
-	cx			= rc.right - 1;
-	cyTop		= rc.top;
-	cyBottom	= rc.bottom;
+    // the right
+    cx			= rc.right - 1;
+    cyTop		= rc.top;
+    cyBottom	= rc.bottom;
 
-	for (i = 0; i < m_BevelWidth; i++) {
-		pDC->MoveTo(cx, cyTop++);
-		pDC->LineTo(cx--, cyBottom--);
-	}
+    for (i = 0; i < m_BevelWidth; i++) {
+        pDC->MoveTo(cx, cyTop++);
+        pDC->LineTo(cx--, cyBottom--);
+    }
 
-	// restore original pen
-	pDC->SelectObject(pPenOld);
+    // restore original pen
+    pDC->SelectObject(pPenOld);
 }
 
 void CColorButtonCtrl::DrawButtonDown(CDC* pDC, CRect& rc)
 {
-	// draw button down
-	DrawBevelInset(pDC, rc);
+    // draw button down
+    DrawBevelInset(pDC, rc);
 
-	// erase caption
-	DrawCaption(pDC, rc, m_BackColor);
+    // erase caption
+    DrawCaption(pDC, rc, m_BackColor);
 
-	// move caption and redraw
-	CRect rcTemp;
-	CopyRect(rcTemp, rc);
-	rcTemp.OffsetRect(1,1);
+    // move caption and redraw
+    CRect rcTemp;
+    CopyRect(rcTemp, rc);
+    rcTemp.OffsetRect(1,1);
 
-	DrawCaption(pDC, rcTemp, m_ForeColor);
+    DrawCaption(pDC, rcTemp, m_ForeColor);
 }
 
 void CColorButtonCtrl::DrawBevelInset(CDC* pDC, CRect& rc)
 {
-	CPen penLight(PS_SOLID, 1, ::GetSysColor(COLOR_3DHILIGHT));
-	CPen penShadow(PS_SOLID, 1, ::GetSysColor(COLOR_3DSHADOW));
+    CPen penLight(PS_SOLID, 1, ::GetSysColor(COLOR_3DHILIGHT));
+    CPen penShadow(PS_SOLID, 1, ::GetSysColor(COLOR_3DSHADOW));
 
-	DrawBevel(pDC, rc, penShadow, penLight);
+    DrawBevel(pDC, rc, penShadow, penLight);
 }
 
 void CColorButtonCtrl::DrawButtonUp(CDC* pDC, CRect& rc)
 {
-	// draw button up
-	DrawBevelRaised(pDC, rc);
+    // draw button up
+    DrawBevelRaised(pDC, rc);
 
-	// erase caption
-	CRect rcTemp;
-	CopyRect(rcTemp, rc);
-	rcTemp.OffsetRect(1,1);
-	DrawCaption(pDC, rcTemp, m_BackColor);
+    // erase caption
+    CRect rcTemp;
+    CopyRect(rcTemp, rc);
+    rcTemp.OffsetRect(1,1);
+    DrawCaption(pDC, rcTemp, m_BackColor);
 
-	// redraw caption
-	rcTemp.OffsetRect(-1,-1);
-	DrawCaption(pDC, rcTemp, m_ForeColor);
+    // redraw caption
+    rcTemp.OffsetRect(-1,-1);
+    DrawCaption(pDC, rcTemp, m_ForeColor);
 
-	// draw the frame
-	if (this == GetFocus() ) {
-		CBrush br(::GetSysColor(COLOR_3DDKSHADOW));
-		FrameButton(br);
-	}
+    // draw the frame
+    if (this == GetFocus() ) {
+        CBrush br(::GetSysColor(COLOR_3DDKSHADOW));
+        FrameButton(br);
+    }
 }
 
 OLE_COLOR CColorButtonCtrl::GetBackColor()
 {
-	return m_BackColor;
+    return m_BackColor;
 }
 
 void CColorButtonCtrl::SetBackColor(OLE_COLOR nNewValue)
 {
-	m_BackColor = nNewValue;
-	InvalidateControl();
-	SetModifiedFlag();
+    m_BackColor = nNewValue;
+    InvalidateControl();
+    SetModifiedFlag();
 }
 
 OLE_COLOR CColorButtonCtrl::GetForeColor()
 {
-	return m_ForeColor;
+    return m_ForeColor;
 }
 
 void CColorButtonCtrl::SetForeColor(OLE_COLOR nNewValue)
 {
-	m_ForeColor = nNewValue;
-	InvalidateControl();
-	SetModifiedFlag();
+    m_ForeColor = nNewValue;
+    InvalidateControl();
+    SetModifiedFlag();
 }
 
 
 BSTR CColorButtonCtrl::GetCaption()
 {
-	return m_sCaption.AllocSysString();
+    return m_sCaption.AllocSysString();
 }
 
 void CColorButtonCtrl::SetCaption(LPCTSTR lpszNewValue)
 {
-	m_sCaption = lpszNewValue;
-	InvalidateControl();
-	SetModifiedFlag();
+    m_sCaption = lpszNewValue;
+    InvalidateControl();
+    SetModifiedFlag();
 }
 
 void CColorButtonCtrl::OnKillFocus(CWnd* pNewWnd)
 {
-	COleControl::OnKillFocus(pNewWnd);
+    COleControl::OnKillFocus(pNewWnd);
 
-	InvalidateControl();
+    InvalidateControl();
 }
 
 void CColorButtonCtrl::OnSetFocus(CWnd* pOldWnd)
 {
-	CBrush br(::GetSysColor(COLOR_3DDKSHADOW));
+    CBrush br(::GetSysColor(COLOR_3DDKSHADOW));
 
-	FrameButton(br);
+    FrameButton(br);
 
-	COleControl::OnSetFocus(pOldWnd);
+    COleControl::OnSetFocus(pOldWnd);
 }
 
 short CColorButtonCtrl::GetBevelWidth()
 {
-	return (m_BevelWidth);
+    return (m_BevelWidth);
 }
 
 void CColorButtonCtrl::SetBevelWidth(short nNewValue)
 {
-	if (nNewValue < 1 || nNewValue > 10) {
-		CString str;
-		str.LoadString(IDS_BEVELERROR);
-		AfxMessageBox(str, MB_ICONINFORMATION);
-		return;
-	}
-	m_BevelWidth = nNewValue;
-	InvalidateControl();
-	SetModifiedFlag();
+    if (nNewValue < 1 || nNewValue > 10) {
+        CString str;
+        str.LoadString(IDS_BEVELERROR);
+        AfxMessageBox(str, MB_ICONINFORMATION);
+        return;
+    }
+    m_BevelWidth = nNewValue;
+    InvalidateControl();
+    SetModifiedFlag();
 }
 
 void CColorButtonCtrl::FrameButton(CBrush& br)
 {
-	CDC* pDC = GetDC();
+    CDC* pDC = GetDC();
 
-	CRect rc;
+    CRect rc;
 
-	GetClientRect(&rc);
+    GetClientRect(&rc);
 
-	pDC->FrameRect(&rc, &br);
+    pDC->FrameRect(&rc, &br);
 
-	ReleaseDC(pDC);
+    ReleaseDC(pDC);
 }

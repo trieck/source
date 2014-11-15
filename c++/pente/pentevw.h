@@ -10,56 +10,56 @@
 
 class PenteView : public CView {
 protected: // create from serialization only
-	PenteView();
-	DECLARE_DYNCREATE(PenteView)
+    PenteView();
+    DECLARE_DYNCREATE(PenteView)
 // Attributes
 public:
-	PenteDoc* GetDocument();
+    PenteDoc* GetDocument();
 
 // Operations
 public:
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(PenteView)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(PenteView)
 public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual void OnInitialUpdate();
+    virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual void OnInitialUpdate();
 protected:
-	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
-	//}}AFX_VIRTUAL
+    virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
+    virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
+    virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+    virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~PenteView();
+    virtual ~PenteView();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 // Generated message map functions
 protected:
-	//{{AFX_MSG(PenteView)
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
-	afx_msg LRESULT OnAppSettingChange(WPARAM wParam, LPARAM lParam);
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(PenteView)
+    afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+    afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
+    afx_msg LRESULT OnAppSettingChange(WPARAM wParam, LPARAM lParam);
+    afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	CBrush bkgBrush;
-	COLORREF bkgColor;
+    CBrush bkgBrush;
+    COLORREF bkgColor;
 public:
 };
 
 #ifndef _DEBUG  // debug version in pentevw.cpp
 inline PenteDoc* PenteView::GetDocument()
 {
-	return (PenteDoc*)m_pDocument;
+    return (PenteDoc*)m_pDocument;
 }
 #endif
 

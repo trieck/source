@@ -22,14 +22,14 @@ ObjectFile::~ObjectFile()
 /////////////////////////////////////////////////////////////////////////////
 void ObjectFile::Dump(PIMAGE_FILE_HEADER pImageFileHeader)
 {
-	PECommon::DumpHeader(pImageFileHeader);
+    PECommon::DumpHeader(pImageFileHeader);
 
-	_tprintf(_T("\n"));
+    _tprintf(_T("\n"));
 
-	PIMAGE_SECTION_HEADER pSections =
-	    MAKE_PTR(PIMAGE_SECTION_HEADER, (pImageFileHeader+1),
-	             pImageFileHeader->SizeOfOptionalHeader);
+    PIMAGE_SECTION_HEADER pSections =
+        MAKE_PTR(PIMAGE_SECTION_HEADER, (pImageFileHeader+1),
+                 pImageFileHeader->SizeOfOptionalHeader);
 
-	PECommon::DumpSectionTable(pSections, pImageFileHeader->NumberOfSections, FALSE);
+    PECommon::DumpSectionTable(pSections, pImageFileHeader->NumberOfSections, FALSE);
 }
 

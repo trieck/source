@@ -12,50 +12,50 @@
 
 /////////////////////////////////////////////////////////////////////////////
 class InputDevice : public MidiDevice, private MIDIINCAPS {
-	friend class InputDevices;
+    friend class InputDevices;
 
 protected:
-	// Construction / Destruction
-	InputDevice(LPMIDIINCAPS, UINT);
+    // Construction / Destruction
+    InputDevice(LPMIDIINCAPS, UINT);
 public:
-	virtual ~InputDevice();
+    virtual ~InputDevice();
 
-	// Interface
-	inline WORD GetMid() const {
-		return wMid;
-	}
-	inline WORD GetPid() const {
-		return wPid;
-	}
-	inline MMVERSION GetVersion() const {
-		return vDriverVersion;
-	}
-	inline CString GetProduct () const {
-		return szPname;
-	}
-	inline DWORD GetSupport() const {
-		return dwSupport;
-	}
-	inline operator HMIDIIN() const {
-		return (HMIDIIN)m_handle;
-	}
-	inline BOOL IsOpen() const {
-		return m_handle != NULL;
-	}
+    // Interface
+    inline WORD GetMid() const {
+        return wMid;
+    }
+    inline WORD GetPid() const {
+        return wPid;
+    }
+    inline MMVERSION GetVersion() const {
+        return vDriverVersion;
+    }
+    inline CString GetProduct () const {
+        return szPname;
+    }
+    inline DWORD GetSupport() const {
+        return dwSupport;
+    }
+    inline operator HMIDIIN() const {
+        return (HMIDIIN)m_handle;
+    }
+    inline BOOL IsOpen() const {
+        return m_handle != NULL;
+    }
 
-	static CString GetErrorText(MMRESULT);
+    static CString GetErrorText(MMRESULT);
 
-	virtual MMRESULT Open();
-	MMRESULT Close();
+    virtual MMRESULT Open();
+    MMRESULT Close();
 protected:
-	// Implementation
+    // Implementation
 
-	static void CALLBACK MidiInProc(
-	    HMIDIIN hMidiIn,
-	    UINT wMsg,
-	    DWORD dwInstance,
-	    DWORD dwParam1,
-	    DWORD dwParam2);
+    static void CALLBACK MidiInProc(
+        HMIDIIN hMidiIn,
+        UINT wMsg,
+        DWORD dwInstance,
+        DWORD dwParam1,
+        DWORD dwParam2);
 };
 /////////////////////////////////////////////////////////////////////////////
 

@@ -48,10 +48,10 @@ extern "C" {
 #define __IID_DEFINED__
 
 typedef struct _IID {
-	unsigned long x;
-	unsigned short s1;
-	unsigned short s2;
-	unsigned char  c[8];
+    unsigned long x;
+    unsigned short s1;
+    unsigned short s2;
+    unsigned char  c[8];
 } IID;
 
 #endif // __IID_DEFINED__

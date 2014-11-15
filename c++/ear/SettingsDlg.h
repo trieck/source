@@ -13,40 +13,40 @@
 class SettingsDlg : public CDialog {
 // Construction
 public:
-	SettingsDlg(CWnd* pParent = NULL);   // standard constructor
+    SettingsDlg(CWnd* pParent = NULL);   // standard constructor
 
 // Dialog Data
-	//{{AFX_DATA(SettingsDlg)
-	enum { IDD = IDD_SETTINGS };
-	BOOL	m_Fifths;
-	BOOL	m_Fourths;
-	BOOL	m_Octaves;
-	BOOL	m_Seconds;
-	BOOL	m_Sevenths;
-	BOOL	m_Sixths;
-	BOOL	m_Thirds;
-	int		m_instrument;
-	//}}AFX_DATA
+    //{{AFX_DATA(SettingsDlg)
+    enum { IDD = IDD_SETTINGS };
+    BOOL	m_Fifths;
+    BOOL	m_Fourths;
+    BOOL	m_Octaves;
+    BOOL	m_Seconds;
+    BOOL	m_Sevenths;
+    BOOL	m_Sixths;
+    BOOL	m_Thirds;
+    int		m_instrument;
+    //}}AFX_DATA
 
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(SettingsDlg)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(SettingsDlg)
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+    //}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	void BuildInstruments();
-	void SetIntervals();
+    void BuildInstruments();
+    void SetIntervals();
 
-	// Generated message map functions
-	//{{AFX_MSG(SettingsDlg)
-	virtual BOOL OnInitDialog();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    // Generated message map functions
+    //{{AFX_MSG(SettingsDlg)
+    virtual BOOL OnInitDialog();
+    virtual void OnOK();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 //{{AFX_INSERT_LOCATION}}

@@ -29,9 +29,9 @@
 // MIDIEVENT structure
 //
 typedef struct midishortevent_tag {
-	DWORD delta;    // time in MIDI ticks between previous and current event
-	DWORD id;       // reserved; must be 0
-	DWORD event;    // event code, parameters, length
+    DWORD delta;    // time in MIDI ticks between previous and current event
+    DWORD id;       // reserved; must be 0
+    DWORD event;    // event code, parameters, length
 } MIDISHORTEVENT, *PMIDISHORTEVENT;
 
 #define NOTEOFF(n)			0x80 | n

@@ -13,22 +13,22 @@
 /////////////////////////////////////////////////////////////////////////////
 class MidiDevice {
 protected:
-	// Construction / Destruction
-	MidiDevice();
+    // Construction / Destruction
+    MidiDevice();
 public:
-	virtual ~MidiDevice();
+    virtual ~MidiDevice();
 
-	// Interface
-	virtual MMRESULT Open() = 0;
-	virtual MMRESULT Close() = 0;
-	inline UINT GetDeviceID() const {
-		return m_id;
-	}
+    // Interface
+    virtual MMRESULT Open() = 0;
+    virtual MMRESULT Close() = 0;
+    inline UINT GetDeviceID() const {
+        return m_id;
+    }
 
 protected:
-	// Implementation
-	HANDLE m_handle;
-	UINT m_id;
+    // Implementation
+    HANDLE m_handle;
+    UINT m_id;
 };
 /////////////////////////////////////////////////////////////////////////////
 

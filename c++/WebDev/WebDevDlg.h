@@ -9,28 +9,28 @@
 class CWebDevDlg : public CDialogEx {
 // Construction
 public:
-	CWebDevDlg(CWnd* pParent = NULL);	// standard constructor
+    CWebDevDlg(CWnd* pParent = NULL);	// standard constructor
 
 // Dialog Data
-	enum { IDD = IDD_WEBDEV_DIALOG };
+    enum { IDD = IDD_WEBDEV_DIALOG };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
+    virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 
 
 // Implementation
 protected:
-	HICON m_hIcon;
+    HICON m_hIcon;
 
-	// Generated message map functions
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
-	afx_msg void OnPaint();
-	afx_msg HCURSOR OnQueryDragIcon();
-	DECLARE_MESSAGE_MAP()
+    // Generated message map functions
+    virtual BOOL OnInitDialog();
+    afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+    afx_msg void OnPaint();
+    afx_msg HCURSOR OnQueryDragIcon();
+    DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedBrowseWebdev();
-	afx_msg void OnBnClickedBrowseWebsite();
-	afx_msg void OnBnClickedOk();
-	afx_msg void OnExit();
+    afx_msg void OnBnClickedBrowseWebdev();
+    afx_msg void OnBnClickedBrowseWebsite();
+    afx_msg void OnBnClickedOk();
+    afx_msg void OnExit();
 };

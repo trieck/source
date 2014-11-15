@@ -9,27 +9,27 @@
 using namespace std;
 
 struct _coinit {
-	_coinit() {
-		CoInitialize(NULL);
-	}
-	~_coinit() {
-		CoUninitialize();
-	}
+    _coinit() {
+        CoInitialize(NULL);
+    }
+    ~_coinit() {
+        CoUninitialize();
+    }
 } coinit;
 
 /////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
-	IPlanetPtr planet;
+    IPlanetPtr planet;
 
-	try {
-		planet.CreateInstance(__uuidof(Neptune));
+    try {
+        planet.CreateInstance(__uuidof(Neptune));
 
 
-	} catch (_com_error & E) {
-		cerr << E.ErrorMessage() << endl;
-		return 1;
-	}
+    } catch (_com_error & E) {
+        cerr << E.ErrorMessage() << endl;
+        return 1;
+    }
 
-	return 0;
+    return 0;
 }

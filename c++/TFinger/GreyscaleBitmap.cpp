@@ -12,7 +12,7 @@
 
 GreyscaleBitmap::GreyscaleBitmap()
 {
-	CImage image;
+    CImage image;
 }
 
 GreyscaleBitmap::~GreyscaleBitmap()
@@ -21,39 +21,39 @@ GreyscaleBitmap::~GreyscaleBitmap()
 
 BOOL GreyscaleBitmap::LoadBitmap(LPCTSTR szFilename)
 {
-	HRESULT hr = Load(szFilename);
-	if (FAILED(hr))
-		return FALSE;
+    HRESULT hr = Load(szFilename);
+    if (FAILED(hr))
+        return FALSE;
 
-	// only allow 256-color images
-	if (GetBPP() != 8) {
-		Destroy();
-		return FALSE;
-	}
+    // only allow 256-color images
+    if (GetBPP() != 8) {
+        Destroy();
+        return FALSE;
+    }
 
-	return Monochrome();
+    return Monochrome();
 }
 
 BOOL GreyscaleBitmap::Monochrome()
 {
-	int nColors = GetMaxColorTableEntries();
-	RGBQUAD *prgbColors = (RGBQUAD*)GlobalAlloc(GMEM_FIXED, sizeof(RGBQUAD) * nColors);
-	if (prgbColors == NULL)
-		return FALSE;
+    int nColors = GetMaxColorTableEntries();
+    RGBQUAD *prgbColors = (RGBQUAD*)GlobalAlloc(GMEM_FIXED, sizeof(RGBQUAD) * nColors);
+    if (prgbColors == NULL)
+        return FALSE;
 
-	GetColorTable(0, nColors, prgbColors);
+    GetColorTable(0, nColors, prgbColors);
 
-	for (int i = 0; i < nColors; i++) {
-		BYTE &R = prgbColors[i].rgbRed;
-		BYTE &G = prgbColors[i].rgbGreen;
-		BYTE &B = prgbColors[i].rgbBlue;
+    for (int i = 0; i < nColors; i++) {
+        BYTE &R = prgbColors[i].rgbRed;
+        BYTE &G = prgbColors[i].rgbGreen;
+        BYTE &B = prgbColors[i].rgbBlue;
 
-		R = G = B = LUMINANCE(R,G,B);
-	}
+        R = G = B = LUMINANCE(R,G,B);
+    }
 
-	SetColorTable(0, nColors, prgbColors);
+    SetColorTable(0, nColors, prgbColors);
 
-	GlobalFree(prgbColors);
+    GlobalFree(prgbColors);
 
-	return TRUE;
+    return TRUE;
 }

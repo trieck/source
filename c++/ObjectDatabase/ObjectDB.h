@@ -10,64 +10,64 @@
 
 /////////////////////////////////////////////////////////////////////////////
 class ObjectDB {
-	// Construction / Destruction
+    // Construction / Destruction
 private:
-	ObjectDB();
+    ObjectDB();
 public:
-	virtual ~ObjectDB();
+    virtual ~ObjectDB();
 
-	typedef auto_ptr<ObjectDB> ObjectDBPtr;
+    typedef auto_ptr<ObjectDB> ObjectDBPtr;
 
 // Interface
-	static ObjectDB *instance();
+    static ObjectDB *instance();
 
-	LPCSTR MakePool();
-	LPCSTR CreateObject(const string &poolid, int ntype,
-	                    LPSTRING pObjectID = NULL,
-	                    LPBEOBJECT pValue = NULL);
+    LPCSTR MakePool();
+    LPCSTR CreateObject(const string &poolid, int ntype,
+                        LPSTRING pObjectID = NULL,
+                        LPBEOBJECT pValue = NULL);
 
-	LPBEOBJECT GetObject(const string &poolid,
-	                     const string &objectid) const;
+    LPBEOBJECT GetObject(const string &poolid,
+                         const string &objectid) const;
 
-	BOOL SetObject(const string &poolid,
-	               const string &objectid,
-	               LPBEOBJECT pObject);
+    BOOL SetObject(const string &poolid,
+                   const string &objectid,
+                   LPBEOBJECT pObject);
 
-	BOOL DestroyObject(const string &poolid, const string &objectid);
+    BOOL DestroyObject(const string &poolid, const string &objectid);
 
-	unsigned GetPoolCount() const {
-		return pools.size();
-	}
+    unsigned GetPoolCount() const {
+        return pools.size();
+    }
 
 // Implementation
 private:
-	LPCSTR Insert(const string &poolid, LPBEOBJECT pObject,
-	              LPSTRING pKey = NULL);
-	static string NewKey();
-	static LPBEOBJECT MakeObject(int ntype);
+    LPCSTR Insert(const string &poolid, LPBEOBJECT pObject,
+                  LPSTRING pKey = NULL);
+    static string NewKey();
+    static LPBEOBJECT MakeObject(int ntype);
 
-	typedef map<string, LPBEOBJECT> PoolMap;
+    typedef map<string, LPBEOBJECT> PoolMap;
 
-	typedef struct Pool {
-		Pool();
-		~Pool();
-		void Lock();
-		void Unlock();
-		CRITICAL_SECTION cs;	// critical section
-		PoolMap entries;		// pool entries
-	} *LPPOOL;
+    typedef struct Pool {
+        Pool();
+        ~Pool();
+        void Lock();
+        void Unlock();
+        CRITICAL_SECTION cs;	// critical section
+        PoolMap entries;		// pool entries
+    } *LPPOOL;
 
-	typedef map<string, LPPOOL> Pools;
+    typedef map<string, LPPOOL> Pools;
 
-	LPPOOL GetPool(const string &poolid) const;
-	LPBEOBJECT GetObject(LPPOOL pPool, const string &Key) const;
+    LPPOOL GetPool(const string &poolid) const;
+    LPBEOBJECT GetObject(LPPOOL pPool, const string &Key) const;
 
-	void Lock();
-	void Unlock();
+    void Lock();
+    void Unlock();
 
-	Pools pools;
-	CRITICAL_SECTION pools_cs;	// main critical section for pools
-	static ObjectDBPtr This;
+    Pools pools;
+    CRITICAL_SECTION pools_cs;	// main critical section for pools
+    static ObjectDBPtr This;
 };
 /////////////////////////////////////////////////////////////////////////////
 

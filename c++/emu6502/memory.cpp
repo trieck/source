@@ -13,32 +13,32 @@ Memory::MemoryPtr Memory::This;
 /////////////////////////////////////////////////////////////////////////////
 Memory::Memory()
 {
-	memory = (LPBYTE)calloc(MEMSIZE, sizeof(BYTE));
+    memory = (LPBYTE)calloc(MEMSIZE, sizeof(BYTE));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Memory::~Memory()
 {
-	free(memory);
+    free(memory);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Memory* Memory::instance()
 {
-	if (This.get() == NULL) {
-		This = MemoryPtr(new Memory());
-	}
-	return This.get();
+    if (This.get() == NULL) {
+        This = MemoryPtr(new Memory());
+    }
+    return This.get();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Memory::Set(USHORT address, BYTE b)
 {
-	memory[address] = b;
+    memory[address] = b;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 BYTE Memory::Get(USHORT address)
 {
-	return memory[address];
+    return memory[address];
 }

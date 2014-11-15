@@ -1,3 +1,3 @@
 #!/bin/bash
 
-find . \( -name *.cpp -o -name *.c -o -name *.h \) -exec astyle --style=stroustrup --indent=tab {} \;
+find . \( -name *.cpp -o -name *.c -o -name *.h \) -exec astyle --style=stroustrup --indent=spaces {} \;

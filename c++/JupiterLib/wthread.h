@@ -13,34 +13,34 @@
 class WorkerThread {
 // Construction / Destruction
 public:
-	WorkerThread(IRunnable* pworker, LPVOID pparam = 0)
-		: worker(pworker), param(pparam) {
-		hThread = CreateThread(NULL, 0, ThreadProc, this,
-		                       CREATE_SUSPENDED, 0);
-	}
+    WorkerThread(IRunnable* pworker, LPVOID pparam = 0)
+        : worker(pworker), param(pparam) {
+        hThread = CreateThread(NULL, 0, ThreadProc, this,
+                               CREATE_SUSPENDED, 0);
+    }
 
-	virtual ~WorkerThread() {
-		CloseHandle(hThread);
-	}
+    virtual ~WorkerThread() {
+        CloseHandle(hThread);
+    }
 
 // Interface
-	DWORD Start() {
-		return ResumeThread(hThread);
-	}
-	HANDLE GetThread() const {
-		return hThread;
-	}
+    DWORD Start() {
+        return ResumeThread(hThread);
+    }
+    HANDLE GetThread() const {
+        return hThread;
+    }
 
 // Implementation
 private:
-	static DWORD WINAPI ThreadProc(LPVOID instance) {
-		WorkerThread *pthis = static_cast<WorkerThread*>(instance);
-		return pthis->worker->Execute(pthis->param);
-	}
+    static DWORD WINAPI ThreadProc(LPVOID instance) {
+        WorkerThread *pthis = static_cast<WorkerThread*>(instance);
+        return pthis->worker->Execute(pthis->param);
+    }
 
-	IRunnable *worker;
-	LPVOID param;
-	HANDLE hThread;
+    IRunnable *worker;
+    LPVOID param;
+    HANDLE hThread;
 };
 /////////////////////////////////////////////////////////////////////////////
 

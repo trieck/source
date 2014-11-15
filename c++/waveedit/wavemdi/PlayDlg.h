@@ -16,37 +16,37 @@
 #include "LEDMeter.h"
 
 class CPlayDlg : public CDialog {
-	DECLARE_DYNCREATE (CPlayDlg)
+    DECLARE_DYNCREATE (CPlayDlg)
 
 // Construction
 public:
-	static CString TranslatePlayPosition(DWORD);
-	CPlayDlg(CWnd* pParent = NULL);
-	virtual ~CPlayDlg();
+    static CString TranslatePlayPosition(DWORD);
+    CPlayDlg(CWnd* pParent = NULL);
+    virtual ~CPlayDlg();
 
 protected:
-	// Overrides
-	virtual BOOL OnInitDialog();
-	virtual VOID OnCancel();
-	virtual VOID PostNcDestroy();
+    // Overrides
+    virtual BOOL OnInitDialog();
+    virtual VOID OnCancel();
+    virtual VOID PostNcDestroy();
 
-	afx_msg void OnTimer(UINT nIDEvent);
+    afx_msg void OnTimer(UINT nIDEvent);
 
-	VOID			OnStopWave();
-	VOID			OnPlayWave();
-	VOID			OnPauseWave();
+    VOID			OnStopWave();
+    VOID			OnPlayWave();
+    VOID			OnPauseWave();
 protected:
-	CWaveDoc*		GetActiveDocument();
-	CWaveDoc*		m_pDoc;
-	CDigitCtrlMgr*	m_pDigitCtrlMgr;
-	CLEDMeter*		m_pLeftChannel;
-	CLEDMeter*		m_pRightChannel;
-	BOOL			m_fPaused;
+    CWaveDoc*		GetActiveDocument();
+    CWaveDoc*		m_pDoc;
+    CDigitCtrlMgr*	m_pDigitCtrlMgr;
+    CLEDMeter*		m_pLeftChannel;
+    CLEDMeter*		m_pRightChannel;
+    BOOL			m_fPaused;
 
-	static const UINT sm_nCtrlIDs[];
-	static const RECT sm_rcDigitSizes[];
+    static const UINT sm_nCtrlIDs[];
+    static const RECT sm_rcDigitSizes[];
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 #endif // __PLAYDLG_H__

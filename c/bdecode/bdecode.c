@@ -21,135 +21,135 @@ static FILE *fp;
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2) usage();
+    if (argc < 2) usage();
 
-	atexit(cleanup);
+    atexit(cleanup);
 
-	bdecode(argv[1]);
+    bdecode(argv[1]);
 
-	return 0;
+    return 0;
 }
 
 void cleanup(void)
 {
-	if (fp != NULL) fclose(fp);
+    if (fp != NULL) fclose(fp);
 }
 
 void usage(void)
 {
-	error("usage: bdecode file\n");
+    error("usage: bdecode file\n");
 }
 
 void bdecode(const char *filename)
 {
-	fp = fopen(filename, "rb");
-	if (fp == NULL)
-		error("unable to open \"%s\".\n", filename);
+    fp = fopen(filename, "rb");
+    if (fp == NULL)
+        error("unable to open \"%s\".\n", filename);
 
-	parse();
+    parse();
 }
 
 void parse(void)
 {
-	int t;
-	while ((t = lex()) != EOF) {
-		parsetok(t);
-	}
+    int t;
+    while ((t = lex()) != EOF) {
+        parsetok(t);
+    }
 }
 
 void parsetok(int t)
 {
-	switch (t) {
-	case 'd':
-		dict();
-		break;
-	case 'i':
-		integer();
-		break;
-	case 'l':
-		list();
-		break;
-	default:
-		if (isdigit(t)) {
-			ungetc(t, fp);
-			string();
-		} else error("unexpected token 0x%.2x.\n", t);
-		break;
-	}
+    switch (t) {
+    case 'd':
+        dict();
+        break;
+    case 'i':
+        integer();
+        break;
+    case 'l':
+        list();
+        break;
+    default:
+        if (isdigit(t)) {
+            ungetc(t, fp);
+            string();
+        } else error("unexpected token 0x%.2x.\n", t);
+        break;
+    }
 }
 
 int lex(void)
 {
-	return fgetc(fp);
+    return fgetc(fp);
 }
 
 void error(const char *fmt, ...)
 {
-	va_list arglist;
-	va_start(arglist, fmt);
+    va_list arglist;
+    va_start(arglist, fmt);
 
-	vfprintf(stderr, fmt, arglist);
-	va_end (arglist);
+    vfprintf(stderr, fmt, arglist);
+    va_end (arglist);
 
-	exit(1);
+    exit(1);
 }
 
 void output(const char *fmt, ...)
 {
-	va_list arglist;
-	va_start(arglist, fmt);
+    va_list arglist;
+    va_start(arglist, fmt);
 
-	vfprintf(stdout, fmt, arglist);
-	va_end (arglist);
+    vfprintf(stdout, fmt, arglist);
+    va_end (arglist);
 }
 
 
 void dict(void)
 {
-	int t;
-	output("*BEGIN DICTIONARY*\n");
+    int t;
+    output("*BEGIN DICTIONARY*\n");
 
-	while ((t = lex()) != 'e' && t != EOF) {
-		parsetok(t);
-	}
+    while ((t = lex()) != 'e' && t != EOF) {
+        parsetok(t);
+    }
 
-	output("*END DICTIONARY*\n");
+    output("*END DICTIONARY*\n");
 }
 
 void integer(void)
 {
-	int t;
-	while ((t = lex()) != 'e' && t != EOF) {
-		fputc(t, stdout);
-	}
+    int t;
+    while ((t = lex()) != 'e' && t != EOF) {
+        fputc(t, stdout);
+    }
 
-	fputc('\n', stdout);
-	fflush(stdout);
+    fputc('\n', stdout);
+    fflush(stdout);
 }
 
 void list(void)
 {
-	int t;
-	output("*BEGIN LIST*\n");
+    int t;
+    output("*BEGIN LIST*\n");
 
-	while ((t = lex()) != 'e' && t != EOF) {
-		parsetok(t);
-	}
+    while ((t = lex()) != 'e' && t != EOF) {
+        parsetok(t);
+    }
 
-	output("*END LIST*\n");
+    output("*END LIST*\n");
 }
 
 void string(void)
 {
-	int n, c, len;
+    int n, c, len;
 
-	fscanf(fp, "%d:", &len);
-	for (n = 0; n < len; n++) {
-		c = lex();
-		if (isprint(c)) fputc(c, stdout);
-		else output("%.2x", c);
-	}
+    fscanf(fp, "%d:", &len);
+    for (n = 0; n < len; n++) {
+        c = lex();
+        if (isprint(c)) fputc(c, stdout);
+        else output("%.2x", c);
+    }
 
-	fputc('\n', stdout);
-	fflush(stdout);
+    fputc('\n', stdout);
+    fflush(stdout);
 }

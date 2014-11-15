@@ -10,10 +10,10 @@
 #include <tchar.h>
 
 typedef struct {
-	HINSTANCE hInstance;
-	LPTSTR command;
-	int show;
-	HWND hWndMain;
+    HINSTANCE hInstance;
+    LPTSTR command;
+    int show;
+    HWND hWndMain;
 } WinApp;
 
 // Helper functions

@@ -13,19 +13,19 @@
 
 /////////////////////////////////////////////////////////////////////////////
 class Computer : public PlayerTwo {
-	// Construction / Destruction
+    // Construction / Destruction
 public:
-	Computer(Player *popponent);
-	~Computer();
-	// Interface
-	bool getMove(CPoint & pt);
+    Computer(Player *popponent);
+    ~Computer();
+    // Interface
+    bool getMove(CPoint & pt);
 
-	// Implementation
+    // Implementation
 protected:
 private:
-	Player *opponent;
-	Machine machine;
-	DECLARE_DYNAMIC(Computer)
+    Player *opponent;
+    Machine machine;
+    DECLARE_DYNAMIC(Computer)
 };
 /////////////////////////////////////////////////////////////////////////////
 #endif // _COMPUTER_H__

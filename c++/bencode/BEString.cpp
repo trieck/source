@@ -12,71 +12,71 @@
 /////////////////////////////////////////////////////////////////////////////
 String::String(LPBYTE pdata, INT len)
 {
-	nlen = len;
-	data = new BYTE[len + 1];	// for null terminator
-	memcpy(data, pdata, len);
-	data[len] = '\0';
+    nlen = len;
+    data = new BYTE[len + 1];	// for null terminator
+    memcpy(data, pdata, len);
+    data[len] = '\0';
 }
 
 /////////////////////////////////////////////////////////////////////////////
 String::String(const String &str)
-	: data(NULL), nlen(0)
+    : data(NULL), nlen(0)
 {
-	*this = str;
+    *this = str;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 String::~String()
 {
-	if (data != NULL)
-		delete []data;
+    if (data != NULL)
+        delete []data;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 String &String::operator =(const String &rhs)
 {
-	if (this != &rhs) {
-		if (data != NULL)
-			delete []data;
-		nlen = rhs.nlen;
-		data = new BYTE[rhs.nlen + 1];	// for null terminator
-		memcpy(data, rhs.data, nlen);
-		data[nlen] = '\0';
-	}
+    if (this != &rhs) {
+        if (data != NULL)
+            delete []data;
+        nlen = rhs.nlen;
+        data = new BYTE[rhs.nlen + 1];	// for null terminator
+        memcpy(data, rhs.data, nlen);
+        data[nlen] = '\0';
+    }
 
-	return *this;
+    return *this;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 String::operator string() const
 {
-	return string((LPSTR)data, nlen);
+    return string((LPSTR)data, nlen);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 BYTE String::GetAt(int i) const
 {
-	if (i < 0 || i >= nlen)
-		return -1;
+    if (i < 0 || i >= nlen)
+        return -1;
 
-	return data[i];
+    return data[i];
 }
 
 /////////////////////////////////////////////////////////////////////////////
 LPBEOBJECT String::Copy() const
 {
-	return new String(*this);
+    return new String(*this);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Global helpers
 LPSTRING MakeString(LPBYTE data, INT nlen)
 {
-	return new String(data, nlen);
+    return new String(data, nlen);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 LPSTRING MakeString(LPCSTR pstr)
 {
-	return MakeString((LPBYTE)pstr, strlen(pstr));
+    return MakeString((LPBYTE)pstr, strlen(pstr));
 }

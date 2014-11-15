@@ -12,38 +12,38 @@
 class String {
 public:
 // Construction / Destruction
-	String();
-	String(const char * pstr);
-	String(const String & str);
-	virtual ~String();
+    String();
+    String(const char * pstr);
+    String(const String & str);
+    virtual ~String();
 
 // Interface
-	String & operator =(const String & rhs);
-	String & operator += (const String & rhs);
-	bool operator == (const String & rhs);
-	operator const char *() const;
+    String & operator =(const String & rhs);
+    String & operator += (const String & rhs);
+    bool operator == (const String & rhs);
+    operator const char *() const;
 
-	size_t length() const;
+    size_t length() const;
 
 protected:
 // Implementation
-	void AllocBuffer(size_t len = BUFFSIZE);
-	void Realloc(size_t nsize);
+    void AllocBuffer(size_t len = BUFFSIZE);
+    void Realloc(size_t nsize);
 private:
-	char *buffer;
-	size_t size;
-	size_t nlen;
+    char *buffer;
+    size_t size;
+    size_t nlen;
 };
 /////////////////////////////////////////////////////////////////////////////
 
 inline String::operator const char *() const
 {
-	return buffer;
+    return buffer;
 }
 
 inline size_t String::length() const
 {
-	return nlen;
+    return nlen;
 }
 
 // global operators

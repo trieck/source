@@ -47,9 +47,9 @@ static void monitor_dump(const word *start,
  */
 void monitor_init(void)
 {
-	atexit(monitor_term);
-	/* initialize the assembler */
-	assem_init();
+    atexit(monitor_term);
+    /* initialize the assembler */
+    assem_init();
 }
 /*
  * reclaim monitor resources
@@ -62,138 +62,138 @@ void monitor_term(void)
  */
 void monitor_run(void)
 {
-	char line[BUFFSIZE];
+    char line[BUFFSIZE];
 
-	for (;;) {
-		pinput = line;
-		if (assemmode) {
-			printf("($%.4hx) ", assemc);
-			fgets(line, BUFFSIZE, stdin);
-			assemble_inmode(&pinput);
-		} else {
-			putchar('>');
-			putchar(' ');
-			fgets(line, BUFFSIZE, stdin);
-			process_input();
-		}
-		fflush(stdout);
-	}
+    for (;;) {
+        pinput = line;
+        if (assemmode) {
+            printf("($%.4hx) ", assemc);
+            fgets(line, BUFFSIZE, stdin);
+            assemble_inmode(&pinput);
+        } else {
+            putchar('>');
+            putchar(' ');
+            fgets(line, BUFFSIZE, stdin);
+            process_input();
+        }
+        fflush(stdout);
+    }
 }
 /*
  * print the machine registers
  */
 void printregs(void)
 {
-	char buffer[BUFFSIZE];
-	char sr[9];
-	byte io = fetch_byte(1);
-	sr[0] = get_neg_flag() ? '1' : '0';
-	sr[1] = get_overflow_flag() ? '1' : '0';
-	sr[2] = '1'; /* unused */
-	sr[3] = get_brk_flag() ? '1' : '0';
-	sr[4] = get_dec_flag() ? '1' : '0';
-	sr[5] = get_int_disable_flag() ? '1' : '0';
-	sr[6] = get_zero_flag() ? '1' : '0';
-	sr[7] = get_carry_flag() ? '1' : '0';
-	sr[8] = '\0';
-	sprintf(buffer,
-	        "%.4x %.2x %.2x %.2x %.2x %.2x %s",
-	        cpu.pc, cpu.a, cpu.x,
-	        cpu.y,
-	        cpu.sp, io, sr);
+    char buffer[BUFFSIZE];
+    char sr[9];
+    byte io = fetch_byte(1);
+    sr[0] = get_neg_flag() ? '1' : '0';
+    sr[1] = get_overflow_flag() ? '1' : '0';
+    sr[2] = '1'; /* unused */
+    sr[3] = get_brk_flag() ? '1' : '0';
+    sr[4] = get_dec_flag() ? '1' : '0';
+    sr[5] = get_int_disable_flag() ? '1' : '0';
+    sr[6] = get_zero_flag() ? '1' : '0';
+    sr[7] = get_carry_flag() ? '1' : '0';
+    sr[8] = '\0';
+    sprintf(buffer,
+            "%.4x %.2x %.2x %.2x %.2x %.2x %s",
+            cpu.pc, cpu.a, cpu.x,
+            cpu.y,
+            cpu.sp, io, sr);
 
-	printf("ADDR AC XR YR SP 01 NV-BDIZC\n%s\n", buffer);
+    printf("ADDR AC XR YR SP 01 NV-BDIZC\n%s\n", buffer);
 }
 /*
  * process the current input option
  */
 void process_input(void)
 {
-	Token t = gettok(&pinput);
+    Token t = gettok(&pinput);
 
-	if (strcmp(t.value, "?") == 0) {
-		help();
-	} else if (strcmp(t.value, "a") == 0) {
-		assemble(&pinput);
-	} else if (strcmp(t.value, "d") == 0) {
-		disassemble(&pinput);
-	} else if (strcmp(t.value, "g") == 0) {
-		go();
-	} else if (strcmp(t.value, "m") == 0) {
-		dump();
-	} else if (strcmp(t.value, "r") == 0) {
-		printregs();
-	} else if (strcmp(t.value, "s") == 0) {
-		step();
-	} else if (strcmp(t.value, "x") == 0) {
-		exit(0);
-	} else if (strcmp(t.value, "z") == 0) {
-		cpu_run();
-	} else if (t.type == UNDEF) {
-		return;
-	} else {
-		warning("unknown option specified.\n");
-	}
+    if (strcmp(t.value, "?") == 0) {
+        help();
+    } else if (strcmp(t.value, "a") == 0) {
+        assemble(&pinput);
+    } else if (strcmp(t.value, "d") == 0) {
+        disassemble(&pinput);
+    } else if (strcmp(t.value, "g") == 0) {
+        go();
+    } else if (strcmp(t.value, "m") == 0) {
+        dump();
+    } else if (strcmp(t.value, "r") == 0) {
+        printregs();
+    } else if (strcmp(t.value, "s") == 0) {
+        step();
+    } else if (strcmp(t.value, "x") == 0) {
+        exit(0);
+    } else if (strcmp(t.value, "z") == 0) {
+        cpu_run();
+    } else if (t.type == UNDEF) {
+        return;
+    } else {
+        warning("unknown option specified.\n");
+    }
 }
 /*
  * step the monitor
  */
 void step(void)
 {
-	const char *usage = "usage: s [address]\n";
-	word addr;
-	const word *paddr = NULL;
-	Token tok;
-	tok = gettok(&pinput);
-	if (NUM == tok.type) {
-		sscanf(tok.value, "%hx", &addr);
-		paddr = &addr;
-	}
-	machine_step(paddr);
+    const char *usage = "usage: s [address]\n";
+    word addr;
+    const word *paddr = NULL;
+    Token tok;
+    tok = gettok(&pinput);
+    if (NUM == tok.type) {
+        sscanf(tok.value, "%hx", &addr);
+        paddr = &addr;
+    }
+    machine_step(paddr);
 }
 /*
  * execute the machine
  */
 void go(void)
 {
-	const char *usage = "usage: g address\n";
-	word addr;
-	Token tok;
-	tok = gettok(&pinput);
-	if (NUM != tok.type) {
-		warning(usage);
-		return;
-	}
-	sscanf(tok.value, "%hx", &addr);
-	machine_go(addr);
+    const char *usage = "usage: g address\n";
+    word addr;
+    Token tok;
+    tok = gettok(&pinput);
+    if (NUM != tok.type) {
+        warning(usage);
+        return;
+    }
+    sscanf(tok.value, "%hx", &addr);
+    machine_go(addr);
 }
 /*
  * dump memory
  */
 void dump(void)
 {
-	word starta, enda;
-	word *pstart = 0, *pend = 0;
-	const char *usage = "usage: m [start] [end]\n";
-	Token start = gettok(&pinput);
-	Token end = gettok(&pinput);
-	if (UNDEF != start.type && NUM != start.type) {
-		warning(usage);
-		return;
-	}
-	if (UNDEF != end.type && NUM != end.type) {
-		warning(usage);
-		return;
-	}
-	if (NUM == start.type) {
-		sscanf(start.value, "%hx", &starta);
-		pstart = &starta;
-	}
-	if (NUM == end.type) {
-		sscanf(end.value, "%hx", &enda);
-		pend = &enda;
-	}
-	monitor_dump(pstart, pend);
+    word starta, enda;
+    word *pstart = 0, *pend = 0;
+    const char *usage = "usage: m [start] [end]\n";
+    Token start = gettok(&pinput);
+    Token end = gettok(&pinput);
+    if (UNDEF != start.type && NUM != start.type) {
+        warning(usage);
+        return;
+    }
+    if (UNDEF != end.type && NUM != end.type) {
+        warning(usage);
+        return;
+    }
+    if (NUM == start.type) {
+        sscanf(start.value, "%hx", &starta);
+        pstart = &starta;
+    }
+    if (NUM == end.type) {
+        sscanf(end.value, "%hx", &enda);
+        pend = &enda;
+    }
+    monitor_dump(pstart, pend);
 }
 /*
  * dump memory
@@ -201,59 +201,59 @@ void dump(void)
 void monitor_dump(const word *start,
                   const word *end)
 {
-	/*
-	 * this is a hack; rewrite this
-	 */
-	int i = 0, j;
-	const int LINESIZE = 16;
-	const int LINES = 9;
-	static word pc;
-	static initialized;
+    /*
+     * this is a hack; rewrite this
+     */
+    int i = 0, j;
+    const int LINESIZE = 16;
+    const int LINES = 9;
+    static word pc;
+    static initialized;
 
-	if (!initialized) {
-		pc = cpu.pc;
-		initialized = 1;
-	}
+    if (!initialized) {
+        pc = cpu.pc;
+        initialized = 1;
+    }
 
-	if (NULL != start)
-		pc = *start;
-	do {
-		printf("$%.4x\t", pc);
+    if (NULL != start)
+        pc = *start;
+    do {
+        printf("$%.4x\t", pc);
 
-		for (j = 0; j < LINESIZE; j++) {
-			byte b = fetch_byte((word)(pc + j));
-			printf("%.2x", b);
-			if (end && (word)(pc + j) == *end) break;
-			if (j != LINESIZE - 1) putchar(' ');
-		}
+        for (j = 0; j < LINESIZE; j++) {
+            byte b = fetch_byte((word)(pc + j));
+            printf("%.2x", b);
+            if (end && (word)(pc + j) == *end) break;
+            if (j != LINESIZE - 1) putchar(' ');
+        }
 
-		do {
-			putchar (' ');
-			putchar (' ');
-			putchar (' ');
-		} while (++j < LINESIZE);
+        do {
+            putchar (' ');
+            putchar (' ');
+            putchar (' ');
+        } while (++j < LINESIZE);
 
-		for (j = 0; j < LINESIZE; j++) {
-			byte b = fetch_byte((word)(pc + j));
-			if (isprint(b))
-				putchar(b);
-			else putchar('.');
-			if (end && (word)(pc + j) == *end) break;
-		}
+        for (j = 0; j < LINESIZE; j++) {
+            byte b = fetch_byte((word)(pc + j));
+            if (isprint(b))
+                putchar(b);
+            else putchar('.');
+            if (end && (word)(pc + j) == *end) break;
+        }
 
-		putchar('\n');
-		pc += j;
+        putchar('\n');
+        pc += j;
 
-	} while (NULL == end ? ++i < LINES : pc != *end);
+    } while (NULL == end ? ++i < LINES : pc != *end);
 }
 /*
  * command help
  */
 void help(void)
 {
-	printf("a   assemble\td   disassemble\n"
-	       "g   go\t\tm   memory\n"
-	       "r   registers\ts   step\n"
-	       "x   exit\tz   run the cpu\n"
-	       "?   help\n");
+    printf("a   assemble\td   disassemble\n"
+           "g   go\t\tm   memory\n"
+           "r   registers\ts   step\n"
+           "x   exit\tz   run the cpu\n"
+           "?   help\n");
 }

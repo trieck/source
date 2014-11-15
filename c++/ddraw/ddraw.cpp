@@ -11,14 +11,14 @@
 int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                       LPSTR lpCmdLine, int nShowCmd)
 {
-	HRESULT hr;
-	LPDIRECTDRAW pdd;
+    HRESULT hr;
+    LPDIRECTDRAW pdd;
 
-	hr = DirectDrawCreate(NULL, &pdd, NULL);
-	if (FAILED(hr))
-		return 1;
+    hr = DirectDrawCreate(NULL, &pdd, NULL);
+    if (FAILED(hr))
+        return 1;
 
-	pdd->Release();
+    pdd->Release();
 
-	return 0;
+    return 0;
 }

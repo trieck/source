@@ -10,19 +10,19 @@
 class Exception {
 // Construction / Destruction
 public:
-	Exception (LPTSTR fmt, ...);
-	~Exception();
+    Exception (LPTSTR fmt, ...);
+    ~Exception();
 
-	operator LPCTSTR() const;
+    operator LPCTSTR() const;
 private:
-	tstring _text;
+    tstring _text;
 };
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
 inline Exception::operator LPCTSTR() const
 {
-	return _text.c_str();
+    return _text.c_str();
 }
 
 #endif // __XCEPT_H__

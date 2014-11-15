@@ -28,9 +28,9 @@ class MusicDoc : public CDocument
 
 protected: // create from serialization only
 
-	MusicDoc();
+    MusicDoc();
 
-	DECLARE_DYNCREATE(MusicDoc)
+    DECLARE_DYNCREATE(MusicDoc)
 
 
 
@@ -48,17 +48,17 @@ public:
 
 // Overrides
 
-	// ClassWizard generated virtual function overrides
+    // ClassWizard generated virtual function overrides
 
-	//{{AFX_VIRTUAL(MusicDoc)
+    //{{AFX_VIRTUAL(MusicDoc)
 
 public:
 
-	virtual BOOL OnNewDocument();
+    virtual BOOL OnNewDocument();
 
-	virtual void Serialize(CArchive& ar);
+    virtual void Serialize(CArchive& ar);
 
-	//}}AFX_VIRTUAL
+    //}}AFX_VIRTUAL
 
 
 
@@ -66,13 +66,13 @@ public:
 
 public:
 
-	virtual ~MusicDoc();
+    virtual ~MusicDoc();
 
 #ifdef _DEBUG
 
-	virtual void AssertValid() const;
+    virtual void AssertValid() const;
 
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void Dump(CDumpContext& dc) const;
 
 #endif
 
@@ -86,11 +86,11 @@ protected:
 
 protected:
 
-	//{{AFX_MSG(MusicDoc)
+    //{{AFX_MSG(MusicDoc)
 
-	//}}AFX_MSG
+    //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 
 };
 

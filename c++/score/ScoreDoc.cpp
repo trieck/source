@@ -16,9 +16,9 @@ static char THIS_FILE[] = __FILE__;
 
 // score file marker
 static const BYTE scoreMarker[MARKER_SIZE] = {
-	0x73,
-	0x63,
-	0x72
+    0x73,
+    0x63,
+    0x72
 }; // scr
 
 /////////////////////////////////////////////////////////////////////////////
@@ -32,9 +32,9 @@ ScoreDoc::ScoreDoc()
 
 BOOL ScoreDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
-	return TRUE;
+    if (!CDocument::OnNewDocument())
+        return FALSE;
+    return TRUE;
 }
 
 ScoreDoc::~ScoreDoc()
@@ -43,9 +43,9 @@ ScoreDoc::~ScoreDoc()
 
 
 BEGIN_MESSAGE_MAP(ScoreDoc, CDocument)
-	//{{AFX_MSG_MAP(ScoreDoc)
-	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnUpdateFileSave)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(ScoreDoc)
+    ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnUpdateFileSave)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -54,12 +54,12 @@ END_MESSAGE_MAP()
 #ifdef _DEBUG
 void ScoreDoc::AssertValid() const
 {
-	CDocument::AssertValid();
+    CDocument::AssertValid();
 }
 
 void ScoreDoc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+    CDocument::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -68,20 +68,20 @@ void ScoreDoc::Dump(CDumpContext& dc) const
 
 void ScoreDoc::Serialize(CArchive& ar)
 {
-	BYTE buffer[MARKER_SIZE];
+    BYTE buffer[MARKER_SIZE];
 
-	if (ar.IsStoring()) {
-		ar << scoreMarker[0];   // 's'
-		ar << scoreMarker[1];   // 'c'
-		ar << scoreMarker[2];   // 'r'
-	} else {
-		// Is this a valid score archive
-		ar.Read(buffer, MARKER_SIZE);
-		if (memcmp(buffer, scoreMarker, MARKER_SIZE) != 0)
-			AfxThrowArchiveException(CArchiveException::badIndex);
-	}
+    if (ar.IsStoring()) {
+        ar << scoreMarker[0];   // 's'
+        ar << scoreMarker[1];   // 'c'
+        ar << scoreMarker[2];   // 'r'
+    } else {
+        // Is this a valid score archive
+        ar.Read(buffer, MARKER_SIZE);
+        if (memcmp(buffer, scoreMarker, MARKER_SIZE) != 0)
+            AfxThrowArchiveException(CArchiveException::badIndex);
+    }
 
-	m_Staff.Serialize(ar);
+    m_Staff.Serialize(ar);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -92,9 +92,9 @@ void ScoreDoc::Serialize(CArchive& ar)
 //
 void ScoreDoc::DeselectAllMeasures()
 {
-	m_Staff.DeselectAllMeasures();
+    m_Staff.DeselectAllMeasures();
 
-	UpdateAllViews(NULL);
+    UpdateAllViews(NULL);
 }
 
 //
@@ -102,12 +102,12 @@ void ScoreDoc::DeselectAllMeasures()
 //
 void ScoreDoc::SelectMeasure(Measure * pMeasure)
 {
-	DeselectAllMeasures();
+    DeselectAllMeasures();
 
-	if (pMeasure != NULL)
-		pMeasure->Select(TRUE);
+    if (pMeasure != NULL)
+        pMeasure->Select(TRUE);
 
-	UpdateAllViews(NULL, measureHint, pMeasure);
+    UpdateAllViews(NULL, measureHint, pMeasure);
 }
 
 //
@@ -115,17 +115,17 @@ void ScoreDoc::SelectMeasure(Measure * pMeasure)
 //
 BOOL ScoreDoc::AddNote(Measure * pMeasure, Note * pNote)
 {
-	ASSERT_VALID(pMeasure);
-	ASSERT_VALID(pNote);
+    ASSERT_VALID(pMeasure);
+    ASSERT_VALID(pNote);
 
-	if (!pMeasure->AddNote(pNote))
-		return FALSE;
+    if (!pMeasure->AddNote(pNote))
+        return FALSE;
 
-	SetModifiedFlag(TRUE);
+    SetModifiedFlag(TRUE);
 
-	UpdateAllViews(NULL);
+    UpdateAllViews(NULL);
 
-	return TRUE;
+    return TRUE;
 }
 
 //
@@ -133,17 +133,17 @@ BOOL ScoreDoc::AddNote(Measure * pMeasure, Note * pNote)
 //
 BOOL ScoreDoc::RemoveNote(Measure * pMeasure, Note * pNote)
 {
-	ASSERT_VALID(pMeasure);
-	ASSERT_VALID(pNote);
+    ASSERT_VALID(pMeasure);
+    ASSERT_VALID(pNote);
 
-	if (!pMeasure->RemoveNote(pNote))
-		return FALSE;
+    if (!pMeasure->RemoveNote(pNote))
+        return FALSE;
 
-	SetModifiedFlag(TRUE);
+    SetModifiedFlag(TRUE);
 
-	UpdateAllViews(NULL);
+    UpdateAllViews(NULL);
 
-	return TRUE;
+    return TRUE;
 }
 
 //
@@ -151,28 +151,28 @@ BOOL ScoreDoc::RemoveNote(Measure * pMeasure, Note * pNote)
 //
 BOOL ScoreDoc::ModifyNote(Measure * pMeasure, Note * pNote, const Tool & tool)
 {
-	ASSERT_VALID(pMeasure);
-	ASSERT_VALID(pNote);
-	ASSERT(tool.type == ModifierTool);
+    ASSERT_VALID(pMeasure);
+    ASSERT_VALID(pNote);
+    ASSERT(tool.type == ModifierTool);
 
-	// Don't allow no op modifiers
-	const KeySignature & ks = pMeasure->GetKeySignature();
-	Modifier mod = ks.getmodifier(pNote->GetName());
+    // Don't allow no op modifiers
+    const KeySignature & ks = pMeasure->GetKeySignature();
+    Modifier mod = ks.getmodifier(pNote->GetName());
 
-	if (mod == tool.user)
-		return FALSE;
+    if (mod == tool.user)
+        return FALSE;
 
-	pNote->SetModifier(&tool);
-	Note * pForward = pMeasure->ResetForward(pNote);
+    pNote->SetModifier(&tool);
+    Note * pForward = pMeasure->ResetForward(pNote);
 
-	SetModifiedFlag(TRUE);
+    SetModifiedFlag(TRUE);
 
-	UpdateAllViews(NULL, modifierHint, pNote);
+    UpdateAllViews(NULL, modifierHint, pNote);
 
-	if (pForward != NULL)
-		UpdateAllViews(NULL, modifierHint, pForward);
+    if (pForward != NULL)
+        UpdateAllViews(NULL, modifierHint, pForward);
 
-	return TRUE;
+    return TRUE;
 }
 
 //
@@ -180,9 +180,9 @@ BOOL ScoreDoc::ModifyNote(Measure * pMeasure, Note * pNote, const Tool & tool)
 //
 void ScoreDoc::DeleteContents()
 {
-	m_Staff.Clear();
+    m_Staff.Clear();
 
-	CDocument::DeleteContents();
+    CDocument::DeleteContents();
 }
 
 //
@@ -190,8 +190,8 @@ void ScoreDoc::DeleteContents()
 //
 void ScoreDoc::OnUpdateFileSave(CCmdUI* pCmdUI)
 {
-	ASSERT(pCmdUI != NULL);
+    ASSERT(pCmdUI != NULL);
 
-	pCmdUI->Enable(IsModified());
+    pCmdUI->Enable(IsModified());
 }
 

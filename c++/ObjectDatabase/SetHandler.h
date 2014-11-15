@@ -12,11 +12,11 @@
 class SetHandler : public IHandler {
 // Construction / Destruction
 public:
-	SetHandler();
-	virtual ~SetHandler();
+    SetHandler();
+    virtual ~SetHandler();
 
 // Interface
-	void Call(LPDICTIONARY request, LPDICTIONARY response);
+    void Call(LPDICTIONARY request, LPDICTIONARY response);
 
 // Implementation
 private:

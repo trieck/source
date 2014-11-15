@@ -4,8 +4,8 @@
 
 class MorphologicalOperator {
 public:
-	MorphologicalOperator();
-	virtual ~MorphologicalOperator();
+    MorphologicalOperator();
+    virtual ~MorphologicalOperator();
 protected:
-	virtual bool Match(CImage &image, Kernel *pKernel, int x, int y);
+    virtual bool Match(CImage &image, Kernel *pKernel, int x, int y);
 };

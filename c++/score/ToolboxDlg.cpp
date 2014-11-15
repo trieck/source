@@ -18,15 +18,15 @@ static char THIS_FILE[] = __FILE__;
 
 // Tool array
 const static Tool Tools[] = {
-	NoteTool, IDC_WHOLENOTE, IDI_WHOLENOTE, IDC_WNOTE, WholeNote,
-	NoteTool, IDC_HALFNOTE, IDI_HALFNOTE, IDC_HNOTE, HalfNote,
-	NoteTool, IDC_QUARTERNOTE, IDI_QUARTERNOTE, IDC_QNOTE, QuarterNote,
-	NoteTool, IDC_EIGTHNOTE, IDI_EIGTHNOTE, IDC_8NOTE, EigthNote,
-	NoteTool, IDC_SIXTEENTHNOTE, IDI_SIXTEENTHNOTE, IDC_16NOTE, SixteenthNote,
-	NoteTool, IDC_THIRTYSECONDNOTE, IDI_THIRTYSECONDNOTE, IDC_32NOTE, ThirtySecondNote,
-	ModifierTool, IDC_FLATTEN, IDI_FLAT, IDC_FLAT, -1,
-	ModifierTool, IDC_SHARPEN, IDI_SHARP, IDC_SHARP, 1,
-	ModifierTool, IDC_NATURALIZE, IDI_NATURAL, IDC_NATURAL, 0
+    NoteTool, IDC_WHOLENOTE, IDI_WHOLENOTE, IDC_WNOTE, WholeNote,
+    NoteTool, IDC_HALFNOTE, IDI_HALFNOTE, IDC_HNOTE, HalfNote,
+    NoteTool, IDC_QUARTERNOTE, IDI_QUARTERNOTE, IDC_QNOTE, QuarterNote,
+    NoteTool, IDC_EIGTHNOTE, IDI_EIGTHNOTE, IDC_8NOTE, EigthNote,
+    NoteTool, IDC_SIXTEENTHNOTE, IDI_SIXTEENTHNOTE, IDC_16NOTE, SixteenthNote,
+    NoteTool, IDC_THIRTYSECONDNOTE, IDI_THIRTYSECONDNOTE, IDC_32NOTE, ThirtySecondNote,
+    ModifierTool, IDC_FLATTEN, IDI_FLAT, IDC_FLAT, -1,
+    ModifierTool, IDC_SHARPEN, IDI_SHARP, IDC_SHARP, 1,
+    ModifierTool, IDC_NATURALIZE, IDI_NATURAL, IDC_NATURAL, 0
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -34,13 +34,13 @@ const static Tool Tools[] = {
 
 
 ToolboxDlg::ToolboxDlg(CWnd * pParent)
-	: CDialog(ToolboxDlg::IDD, pParent)
+    : CDialog(ToolboxDlg::IDD, pParent)
 {
-	ASSERT_VALID(pParent);
+    ASSERT_VALID(pParent);
 
-	//{{AFX_DATA_INIT(ToolboxDlg)
-	// NOTE: the ClassWizard will add member initialization here
-	//}}AFX_DATA_INIT
+    //{{AFX_DATA_INIT(ToolboxDlg)
+    // NOTE: the ClassWizard will add member initialization here
+    //}}AFX_DATA_INIT
 }
 
 //
@@ -52,25 +52,25 @@ ToolboxDlg::~ToolboxDlg()
 
 void ToolboxDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(ToolboxDlg)
-	// NOTE: the ClassWizard will add DDX and DDV calls here
-	//}}AFX_DATA_MAP
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(ToolboxDlg)
+    // NOTE: the ClassWizard will add DDX and DDV calls here
+    //}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(ToolboxDlg, CDialog)
-	//{{AFX_MSG_MAP(ToolboxDlg)
-	ON_BN_CLICKED(IDC_QUARTERNOTE, OnQuarterNote)
-	ON_BN_CLICKED(IDC_EIGTHNOTE, OnEigthNote)
-	ON_BN_CLICKED(IDC_SIXTEENTHNOTE, OnSixteenthNote)
-	ON_BN_CLICKED(IDC_THIRTYSECONDNOTE, OnThirtysecondNote)
-	ON_BN_CLICKED(IDC_HALFNOTE, OnHalfNote)
-	ON_BN_CLICKED(IDC_WHOLENOTE, OnWholeNote)
-	ON_BN_CLICKED(IDC_SHARPEN, OnSharpen)
-	ON_BN_CLICKED(IDC_FLATTEN, OnFlatten)
-	ON_BN_CLICKED(IDC_NATURALIZE, OnNaturalize)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(ToolboxDlg)
+    ON_BN_CLICKED(IDC_QUARTERNOTE, OnQuarterNote)
+    ON_BN_CLICKED(IDC_EIGTHNOTE, OnEigthNote)
+    ON_BN_CLICKED(IDC_SIXTEENTHNOTE, OnSixteenthNote)
+    ON_BN_CLICKED(IDC_THIRTYSECONDNOTE, OnThirtysecondNote)
+    ON_BN_CLICKED(IDC_HALFNOTE, OnHalfNote)
+    ON_BN_CLICKED(IDC_WHOLENOTE, OnWholeNote)
+    ON_BN_CLICKED(IDC_SHARPEN, OnSharpen)
+    ON_BN_CLICKED(IDC_FLATTEN, OnFlatten)
+    ON_BN_CLICKED(IDC_NATURALIZE, OnNaturalize)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -81,14 +81,14 @@ END_MESSAGE_MAP()
 //
 BOOL ToolboxDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+    CDialog::OnInitDialog();
 
-	LoadImages();
+    LoadImages();
 
-	SetActiveButton();
+    SetActiveButton();
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+    return TRUE;  // return TRUE unless you set the focus to a control
+    // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 //
@@ -96,15 +96,15 @@ BOOL ToolboxDlg::OnInitDialog()
 //
 void ToolboxDlg::LoadImages()
 {
-	int Count = sizeof(Tools) / sizeof(Tool);
+    int Count = sizeof(Tools) / sizeof(Tool);
 
-	// Set the images
-	for (int i = 0; i < Count; i++) {
-		CButton * pButton = (CButton *)GetDlgItem(Tools[i].button);
-		ASSERT_VALID(pButton);
-		pButton->SetIcon((HICON)Neptune::LoadImage(Tools[i].icon, IMAGE_ICON));
-		::SetWindowLong(*pButton, GWL_USERDATA, (LONG)&Tools[i]);
-	}
+    // Set the images
+    for (int i = 0; i < Count; i++) {
+        CButton * pButton = (CButton *)GetDlgItem(Tools[i].button);
+        ASSERT_VALID(pButton);
+        pButton->SetIcon((HICON)Neptune::LoadImage(Tools[i].icon, IMAGE_ICON));
+        ::SetWindowLong(*pButton, GWL_USERDATA, (LONG)&Tools[i]);
+    }
 }
 
 //
@@ -112,19 +112,19 @@ void ToolboxDlg::LoadImages()
 //
 void ToolboxDlg::SetActiveButton()
 {
-	int Count = sizeof(Tools) / sizeof(Tool);
+    int Count = sizeof(Tools) / sizeof(Tool);
 
-	const Tool * pTool = ((ScoreView*)m_pParentWnd)->GetTool();
-	ASSERT(pTool != NULL);
+    const Tool * pTool = ((ScoreView*)m_pParentWnd)->GetTool();
+    ASSERT(pTool != NULL);
 
-	for (int i = 0; i < Count; i++) {
-		if (Tools[i].cursor == pTool->cursor) {
-			CButton * pButton = (CButton*)GetDlgItem(Tools[i].button);
-			ASSERT_VALID(pButton);
-			pButton->SetCheck(1);
-			break;
-		}
-	}
+    for (int i = 0; i < Count; i++) {
+        if (Tools[i].cursor == pTool->cursor) {
+            CButton * pButton = (CButton*)GetDlgItem(Tools[i].button);
+            ASSERT_VALID(pButton);
+            pButton->SetCheck(1);
+            break;
+        }
+    }
 }
 
 //
@@ -132,10 +132,10 @@ void ToolboxDlg::SetActiveButton()
 //
 void ToolboxDlg::PostNcDestroy()
 {
-	ASSERT_VALID(this);
-	delete this;
+    ASSERT_VALID(this);
+    delete this;
 
-	CDialog::PostNcDestroy();
+    CDialog::PostNcDestroy();
 }
 
 //
@@ -143,7 +143,7 @@ void ToolboxDlg::PostNcDestroy()
 //
 void ToolboxDlg::OnCancel()
 {
-	DestroyWindow();
+    DestroyWindow();
 }
 
 //
@@ -151,7 +151,7 @@ void ToolboxDlg::OnCancel()
 //
 void ToolboxDlg::OnWholeNote()
 {
-	SetTool(IDC_WHOLENOTE);
+    SetTool(IDC_WHOLENOTE);
 }
 
 //
@@ -159,7 +159,7 @@ void ToolboxDlg::OnWholeNote()
 //
 void ToolboxDlg::OnHalfNote()
 {
-	SetTool(IDC_HALFNOTE);
+    SetTool(IDC_HALFNOTE);
 }
 
 //
@@ -167,7 +167,7 @@ void ToolboxDlg::OnHalfNote()
 //
 void ToolboxDlg::OnQuarterNote()
 {
-	SetTool(IDC_QUARTERNOTE);
+    SetTool(IDC_QUARTERNOTE);
 }
 
 //
@@ -175,7 +175,7 @@ void ToolboxDlg::OnQuarterNote()
 //
 void ToolboxDlg::OnEigthNote()
 {
-	SetTool(IDC_EIGTHNOTE);
+    SetTool(IDC_EIGTHNOTE);
 }
 
 //
@@ -183,7 +183,7 @@ void ToolboxDlg::OnEigthNote()
 //
 void ToolboxDlg::OnSixteenthNote()
 {
-	SetTool(IDC_SIXTEENTHNOTE);
+    SetTool(IDC_SIXTEENTHNOTE);
 }
 
 //
@@ -191,7 +191,7 @@ void ToolboxDlg::OnSixteenthNote()
 //
 void ToolboxDlg::OnThirtysecondNote()
 {
-	SetTool(IDC_THIRTYSECONDNOTE);
+    SetTool(IDC_THIRTYSECONDNOTE);
 }
 
 //
@@ -199,7 +199,7 @@ void ToolboxDlg::OnThirtysecondNote()
 //
 void ToolboxDlg::OnSharpen()
 {
-	SetTool(IDC_SHARPEN);
+    SetTool(IDC_SHARPEN);
 }
 
 //
@@ -207,7 +207,7 @@ void ToolboxDlg::OnSharpen()
 //
 void ToolboxDlg::OnFlatten()
 {
-	SetTool(IDC_FLATTEN);
+    SetTool(IDC_FLATTEN);
 }
 
 //
@@ -215,7 +215,7 @@ void ToolboxDlg::OnFlatten()
 //
 void ToolboxDlg::OnNaturalize()
 {
-	SetTool(IDC_NATURALIZE);
+    SetTool(IDC_NATURALIZE);
 }
 
 //
@@ -223,18 +223,18 @@ void ToolboxDlg::OnNaturalize()
 //
 void ToolboxDlg::SetTool(UINT nButton)
 {
-	CButton * pButton = (CButton*)GetDlgItem(nButton);
-	ASSERT_VALID(pButton);
+    CButton * pButton = (CButton*)GetDlgItem(nButton);
+    ASSERT_VALID(pButton);
 
-	ScoreView * pView = (ScoreView *)m_pParentWnd;
-	ASSERT_VALID(pView);
+    ScoreView * pView = (ScoreView *)m_pParentWnd;
+    ASSERT_VALID(pView);
 
-	HICON hIcon = pButton->GetIcon();
-	ASSERT(hIcon != NULL);
+    HICON hIcon = pButton->GetIcon();
+    ASSERT(hIcon != NULL);
 
-	Tool * pTool = (Tool *)::GetWindowLong(*pButton, GWL_USERDATA);
-	ASSERT(pTool != NULL);
+    Tool * pTool = (Tool *)::GetWindowLong(*pButton, GWL_USERDATA);
+    ASSERT(pTool != NULL);
 
-	pView->SetTool(pTool);
+    pView->SetTool(pTool);
 }
 

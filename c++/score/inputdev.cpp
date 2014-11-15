@@ -13,14 +13,14 @@
 //
 InputDevice::InputDevice(LPMIDIINCAPS pmidicaps, UINT id)
 {
-	wMid = pmidicaps->wMid;
-	wPid = pmidicaps->wPid;
-	vDriverVersion = pmidicaps->vDriverVersion;
-	strcpy(szPname, pmidicaps->szPname);
-	dwSupport = pmidicaps->dwSupport;
+    wMid = pmidicaps->wMid;
+    wPid = pmidicaps->wPid;
+    vDriverVersion = pmidicaps->vDriverVersion;
+    strcpy(szPname, pmidicaps->szPname);
+    dwSupport = pmidicaps->dwSupport;
 
-	m_id = id;
-	m_handle = NULL;
+    m_id = id;
+    m_handle = NULL;
 }
 
 //
@@ -28,7 +28,7 @@ InputDevice::InputDevice(LPMIDIINCAPS pmidicaps, UINT id)
 //
 InputDevice::~InputDevice()
 {
-	Close();
+    Close();
 }
 
 //
@@ -36,14 +36,14 @@ InputDevice::~InputDevice()
 //
 MMRESULT InputDevice::Open()
 {
-	Close();
+    Close();
 
-	return ::midiInOpen(
-	           (HMIDIIN *)&m_handle,
-	           m_id,
-	           (DWORD)InputDevice::MidiInProc,
-	           (DWORD)this,
-	           CALLBACK_FUNCTION);
+    return ::midiInOpen(
+               (HMIDIIN *)&m_handle,
+               m_id,
+               (DWORD)InputDevice::MidiInProc,
+               (DWORD)this,
+               CALLBACK_FUNCTION);
 }
 
 //
@@ -51,14 +51,14 @@ MMRESULT InputDevice::Open()
 //
 MMRESULT InputDevice::Close()
 {
-	MMRESULT result = MMSYSERR_INVALHANDLE;
+    MMRESULT result = MMSYSERR_INVALHANDLE;
 
-	if (*this != NULL) {
-		result = ::midiInClose(*this);
-		m_handle = NULL;
-	}
+    if (*this != NULL) {
+        result = ::midiInClose(*this);
+        m_handle = NULL;
+    }
 
-	return result;
+    return result;
 }
 
 //
@@ -66,12 +66,12 @@ MMRESULT InputDevice::Close()
 //
 CString InputDevice::GetErrorText(MMRESULT error)
 {
-	CHAR buffer[MAXERRORLENGTH + 1];
-	buffer[0] = '\0';
+    CHAR buffer[MAXERRORLENGTH + 1];
+    buffer[0] = '\0';
 
-	::midiInGetErrorText(error, buffer, sizeof(buffer));
+    ::midiInGetErrorText(error, buffer, sizeof(buffer));
 
-	return buffer;
+    return buffer;
 }
 
 //
@@ -84,7 +84,7 @@ void CALLBACK InputDevice::MidiInProc(
     DWORD /*dwParam1*/,
     DWORD /*dwParam2*/)
 {
-	InputDevice * This = (InputDevice *)dwInstance;
-	ASSERT(This != NULL);
+    InputDevice * This = (InputDevice *)dwInstance;
+    ASSERT(This != NULL);
 }
 

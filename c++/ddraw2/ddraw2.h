@@ -21,27 +21,27 @@
 
 class DDrawApp : public CWinApp {
 public:
-	DDrawApp();
+    DDrawApp();
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(DDrawApp)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(DDrawApp)
 public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
-	//}}AFX_VIRTUAL
+    virtual BOOL InitInstance();
+    virtual int ExitInstance();
+    //}}AFX_VIRTUAL
 
-	LPDIRECTDRAW GetDirectDraw() const {
-		return pddraw;
-	}
+    LPDIRECTDRAW GetDirectDraw() const {
+        return pddraw;
+    }
 
 // Implementation
-	//{{AFX_MSG(DDrawApp)
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(DDrawApp)
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	BOOL CreateDirectDraw(void);
-	LPDIRECTDRAW pddraw;
+    BOOL CreateDirectDraw(void);
+    LPDIRECTDRAW pddraw;
 };
 
 

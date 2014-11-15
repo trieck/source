@@ -19,8 +19,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(LeftView, CTreeView)
 
 BEGIN_MESSAGE_MAP(LeftView, CTreeView)
-	//{{AFX_MSG_MAP(LeftView)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(LeftView)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ LeftView::~LeftView()
 
 BOOL LeftView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	return CTreeView::PreCreateWindow(cs);
+    return CTreeView::PreCreateWindow(cs);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -44,14 +44,14 @@ BOOL LeftView::PreCreateWindow(CREATESTRUCT& cs)
 
 void LeftView::OnDraw(CDC* pDC)
 {
-	WindumpDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
+    WindumpDoc* pDoc = GetDocument();
+    ASSERT_VALID(pDoc);
 }
 
 
 void LeftView::OnInitialUpdate()
 {
-	CTreeView::OnInitialUpdate();
+    CTreeView::OnInitialUpdate();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -60,18 +60,18 @@ void LeftView::OnInitialUpdate()
 #ifdef _DEBUG
 void LeftView::AssertValid() const
 {
-	CTreeView::AssertValid();
+    CTreeView::AssertValid();
 }
 
 void LeftView::Dump(CDumpContext& dc) const
 {
-	CTreeView::Dump(dc);
+    CTreeView::Dump(dc);
 }
 
 WindumpDoc* LeftView::GetDocument() // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WindumpDoc)));
-	return (WindumpDoc*)m_pDocument;
+    ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WindumpDoc)));
+    return (WindumpDoc*)m_pDocument;
 }
 #endif //_DEBUG
 

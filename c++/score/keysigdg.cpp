@@ -17,28 +17,28 @@ static char THIS_FILE[] = __FILE__;
 
 
 KeySignatureDlg::KeySignatureDlg(Measure * pMeasure, CWnd* pParent /*=NULL*/)
-	: m_pMeasure(pMeasure),
-	  CDialog(KeySignatureDlg::IDD, pParent)
+    : m_pMeasure(pMeasure),
+      CDialog(KeySignatureDlg::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(KeySignatureDlg)
-	// NOTE: the ClassWizard will add member initialization here
-	//}}AFX_DATA_INIT
-	ASSERT_VALID(m_pMeasure);
+    //{{AFX_DATA_INIT(KeySignatureDlg)
+    // NOTE: the ClassWizard will add member initialization here
+    //}}AFX_DATA_INIT
+    ASSERT_VALID(m_pMeasure);
 }
 
 
 void KeySignatureDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(KeySignatureDlg)
-	DDX_Control(pDX, IDC_KEYSIGNATURE, m_KeySignature);
-	//}}AFX_DATA_MAP
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(KeySignatureDlg)
+    DDX_Control(pDX, IDC_KEYSIGNATURE, m_KeySignature);
+    //}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(KeySignatureDlg, CDialog)
-	//{{AFX_MSG_MAP(KeySignatureDlg)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(KeySignatureDlg)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -46,12 +46,12 @@ END_MESSAGE_MAP()
 
 BOOL KeySignatureDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+    CDialog::OnInitDialog();
 
-	SetActiveKeySignature();
+    SetActiveKeySignature();
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+    return TRUE;  // return TRUE unless you set the focus to a control
+    // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 //
@@ -59,10 +59,10 @@ BOOL KeySignatureDlg::OnInitDialog()
 //
 void KeySignatureDlg::SetActiveKeySignature()
 {
-	const KeySignature & ks = m_pMeasure->GetKeySignature();
-	int index = ks.GetIndex();
+    const KeySignature & ks = m_pMeasure->GetKeySignature();
+    int index = ks.GetIndex();
 
-	m_KeySignature.SetCurSel(index);
+    m_KeySignature.SetCurSel(index);
 }
 
 //
@@ -70,11 +70,11 @@ void KeySignatureDlg::SetActiveKeySignature()
 //
 void KeySignatureDlg::OnOK()
 {
-	CDialog::OnOK();
+    CDialog::OnOK();
 
-	int index = m_KeySignature.GetCurSel();
-	if (index != CB_ERR) {
-		m_pMeasure->SetKeySignature(index);
-	}
+    int index = m_KeySignature.GetCurSel();
+    if (index != CB_ERR) {
+        m_pMeasure->SetKeySignature(index);
+    }
 }
 

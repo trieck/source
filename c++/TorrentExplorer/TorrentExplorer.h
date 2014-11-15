@@ -25,43 +25,43 @@ typedef CMap<COLORREF, COLORREF, int, int> ColorMap;
 
 class TorrentExplorer : public CWinApp {
 public:
-	BOOL IsSetting(LPCSTR key);
-	TorrentExplorer();
+    BOOL IsSetting(LPCSTR key);
+    TorrentExplorer();
 
-	__int64 GetIntSetting(LPCSTR key);
-	BOOL GetBOOLSetting(LPCSTR key);
-	LPTORRENTOBJECT GetSetting(LPCSTR key);
-	void PutSetting(LPCSTR key, __int64 val);
-	void PutSetting(LPCSTR key, LPCSTR val);
-	RGBTRIPLE *GetPalette() const {
-		return m_pPalette;
-	}
-	BOOL GetPaletteIndex(COLORREF c, int &i) const;
+    __int64 GetIntSetting(LPCSTR key);
+    BOOL GetBOOLSetting(LPCSTR key);
+    LPTORRENTOBJECT GetSetting(LPCSTR key);
+    void PutSetting(LPCSTR key, __int64 val);
+    void PutSetting(LPCSTR key, LPCSTR val);
+    RGBTRIPLE *GetPalette() const {
+        return m_pPalette;
+    }
+    BOOL GetPaletteIndex(COLORREF c, int &i) const;
 
-	enum { NUM_PALETTE_COLORS = 256 };
+    enum { NUM_PALETTE_COLORS = 256 };
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(TorrentExplorer)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(TorrentExplorer)
 public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
-	//}}AFX_VIRTUAL
+    virtual BOOL InitInstance();
+    virtual int ExitInstance();
+    //}}AFX_VIRTUAL
 
 // Implementation
-	//{{AFX_MSG(TorrentExplorer)
-	afx_msg void OnAppAbout();
-	afx_msg void OnSettings();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(TorrentExplorer)
+    afx_msg void OnAppAbout();
+    afx_msg void OnSettings();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 
 private:
-	BOOL CheckInstance();
-	BOOL LoadPalette();
-	TorrentSettings *m_pSettings;
-	RGBTRIPLE *m_pPalette;
-	ColorMap m_ColorMap;
-	HANDLE m_hMutex;
+    BOOL CheckInstance();
+    BOOL LoadPalette();
+    TorrentSettings *m_pSettings;
+    RGBTRIPLE *m_pPalette;
+    ColorMap m_ColorMap;
+    HANDLE m_hMutex;
 };
 
 

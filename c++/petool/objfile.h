@@ -12,15 +12,15 @@
 class ObjectFile {
 // Construction / Destruction
 public:
-	ObjectFile();
-	virtual ~ObjectFile();
+    ObjectFile();
+    virtual ~ObjectFile();
 
 // Interface
-	static void Dump(PIMAGE_FILE_HEADER pImageFileHeader);
+    static void Dump(PIMAGE_FILE_HEADER pImageFileHeader);
 
 // Implementation
 private:
-	static void DumpHeader(PIMAGE_FILE_HEADER pImageFileHeader);
+    static void DumpHeader(PIMAGE_FILE_HEADER pImageFileHeader);
 
 };
 /////////////////////////////////////////////////////////////////////////////

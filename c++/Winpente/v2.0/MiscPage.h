@@ -12,30 +12,30 @@
 #include "ResDll\resource.h"
 
 class CMiscPage : public CPropertyPage {
-	DECLARE_DYNCREATE(CMiscPage);
+    DECLARE_DYNCREATE(CMiscPage);
 
 public:
-	CMiscPage();
-	~CMiscPage();
+    CMiscPage();
+    ~CMiscPage();
 
 protected:
-	virtual BOOL		OnInitDialog();
-	virtual void		OnOK();
-	virtual BOOL		OnApply();
-	inline	CButton&	GetCheckBox() {
-		return * (CButton*)GetDlgItem(IDC_DEBUGOPTIONS);
-	}
+    virtual BOOL		OnInitDialog();
+    virtual void		OnOK();
+    virtual BOOL		OnApply();
+    inline	CButton&	GetCheckBox() {
+        return * (CButton*)GetDlgItem(IDC_DEBUGOPTIONS);
+    }
 
 private:
-	enum {IDD = IDD_MISCPAGE};
+    enum {IDD = IDD_MISCPAGE};
 
-	afx_msg VOID OnPaint();
-	afx_msg VOID OnEnableDebug();
-	afx_msg VOID OnFlushPlayers();
-	afx_msg VOID OnFlushScores();
+    afx_msg VOID OnPaint();
+    afx_msg VOID OnEnableDebug();
+    afx_msg VOID OnFlushPlayers();
+    afx_msg VOID OnFlushScores();
 
 protected:
-	DECLARE_MESSAGE_MAP();
+    DECLARE_MESSAGE_MAP();
 };
 
 #endif // __MISCPAGE_H__

@@ -6,11 +6,11 @@
 
 class CaptureBitmap : public RecolorableBitmap {
 public:
-	CaptureBitmap();
-	virtual ~CaptureBitmap();
+    CaptureBitmap();
+    virtual ~CaptureBitmap();
 
 private:
-	enum { DEFAULT_COLOR = RGB(0x00, 0x80, 0x00) };
+    enum { DEFAULT_COLOR = RGB(0x00, 0x80, 0x00) };
 };
 
 

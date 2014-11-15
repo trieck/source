@@ -23,33 +23,33 @@ List::List()
 
 List::~List()
 {
-	LPTORRENTOBJECT t;
+    LPTORRENTOBJECT t;
 
-	POSITION pos = list.GetHeadPosition();
-	while (pos != NULL) {
-		t = list.GetNext(pos);
-		delete t;
-	}
+    POSITION pos = list.GetHeadPosition();
+    while (pos != NULL) {
+        t = list.GetNext(pos);
+        delete t;
+    }
 }
 
 //////////////////////////////////////////////////////////////////////
 void List::append(LPTORRENTOBJECT t)
 {
-	list.AddTail(t);
+    list.AddTail(t);
 }
 
 //////////////////////////////////////////////////////////////////////
 UINT List::size() const
 {
-	return list.GetCount();
+    return list.GetCount();
 }
 
 //////////////////////////////////////////////////////////////////////
 LPTORRENTOBJECT List::GetAt(UINT n) const
 {
-	POSITION pos = list.FindIndex(n);
-	if (pos == NULL)
-		return NULL;
+    POSITION pos = list.FindIndex(n);
+    if (pos == NULL)
+        return NULL;
 
-	return list.GetAt(pos);
+    return list.GetAt(pos);
 }

@@ -23,18 +23,18 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(TorrentDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(TorrentDoc, CDocument)
-	//{{AFX_MSG_MAP(TorrentDoc)
-	ON_COMMAND(ID_FILE_NEW, OnFileNew)
-	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnUpdateFileSave)
-	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_AS, OnUpdateFileSaveAs)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(TorrentDoc)
+    ON_COMMAND(ID_FILE_NEW, OnFileNew)
+    ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnUpdateFileSave)
+    ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_AS, OnUpdateFileSaveAs)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // TorrentDoc construction/destruction
 
 TorrentDoc::TorrentDoc()
-	: m_pTorrent(NULL)
+    : m_pTorrent(NULL)
 {
 }
 
@@ -44,10 +44,10 @@ TorrentDoc::~TorrentDoc()
 
 BOOL TorrentDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
+    if (!CDocument::OnNewDocument())
+        return FALSE;
 
-	return TRUE;
+    return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -55,16 +55,16 @@ BOOL TorrentDoc::OnNewDocument()
 
 void TorrentDoc::Serialize(CArchive& ar)
 {
-	try {
-		if (ar.IsLoading()) {
-			m_pTorrent = TorrentParser::Parse(ar);
-		} else {
-			TorrentWriter::Write(m_pTorrent, ar);
-		}
-	} catch (CException *pException) {
-		pException->ReportError();
-		pException->Delete();
-	}
+    try {
+        if (ar.IsLoading()) {
+            m_pTorrent = TorrentParser::Parse(ar);
+        } else {
+            TorrentWriter::Write(m_pTorrent, ar);
+        }
+    } catch (CException *pException) {
+        pException->ReportError();
+        pException->Delete();
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -73,12 +73,12 @@ void TorrentDoc::Serialize(CArchive& ar)
 #ifdef _DEBUG
 void TorrentDoc::AssertValid() const
 {
-	CDocument::AssertValid();
+    CDocument::AssertValid();
 }
 
 void TorrentDoc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+    CDocument::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -87,32 +87,32 @@ void TorrentDoc::Dump(CDumpContext& dc) const
 
 void TorrentDoc::DeleteContents()
 {
-	if (m_pTorrent != NULL) {
-		delete m_pTorrent;
-		m_pTorrent = NULL;
-	}
-	CDocument::DeleteContents();
+    if (m_pTorrent != NULL) {
+        delete m_pTorrent;
+        m_pTorrent = NULL;
+    }
+    CDocument::DeleteContents();
 }
 
 void TorrentDoc::OnFileNew()
 {
-	TorrentDlg dlg;
-	if (dlg.DoModal() == IDOK) {
-		AfxGetApp()->OnCmdMsg(ID_FILE_NEW, 0, 0, 0);
-		CArchive ar(dlg.GetFile(), CArchive::load);
-		Serialize(ar);
-		SetModifiedFlag(TRUE);
-		UpdateAllViews(NULL);
-	}
+    TorrentDlg dlg;
+    if (dlg.DoModal() == IDOK) {
+        AfxGetApp()->OnCmdMsg(ID_FILE_NEW, 0, 0, 0);
+        CArchive ar(dlg.GetFile(), CArchive::load);
+        Serialize(ar);
+        SetModifiedFlag(TRUE);
+        UpdateAllViews(NULL);
+    }
 }
 
 void TorrentDoc::OnUpdateFileSave(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(IsModified());
+    pCmdUI->Enable(IsModified());
 }
 
 void TorrentDoc::OnUpdateFileSaveAs(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(IsModified());
+    pCmdUI->Enable(IsModified());
 }
 

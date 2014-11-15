@@ -17,8 +17,8 @@ enum {
 
 @interface Entry :
 NSObject {
-	Point pt;
-	uint32 type;
+    Point pt;
+    uint32 type;
 }
 
 - (id)initWithCoords :

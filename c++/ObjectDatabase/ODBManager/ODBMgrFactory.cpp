@@ -13,7 +13,7 @@ LONG ODBMgrFactory::m_cLock = 0;
 
 /////////////////////////////////////////////////////////////////////////////
 ODBMgrFactory::ODBMgrFactory()
-	: m_cRef(0)
+    : m_cRef(0)
 {
 }
 
@@ -25,72 +25,72 @@ ODBMgrFactory::~ODBMgrFactory()
 /////////////////////////////////////////////////////////////////////////////
 ODBMgrFactory * ODBMgrFactory::Create()
 {
-	return new ODBMgrFactory();
+    return new ODBMgrFactory();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 STDMETHODIMP ODBMgrFactory::QueryInterface(REFIID riid, LPVOID *ppv)
 {
-	*ppv = NULL;
+    *ppv = NULL;
 
-	if (riid == IID_IUnknown || riid == IID_IClassFactory)
-		*ppv = this;
+    if (riid == IID_IUnknown || riid == IID_IClassFactory)
+        *ppv = this;
 
-	if (*ppv) {
-		((LPUNKNOWN)*ppv)->AddRef();
-		return S_OK;
-	}
+    if (*ppv) {
+        ((LPUNKNOWN)*ppv)->AddRef();
+        return S_OK;
+    }
 
-	return E_NOINTERFACE;
+    return E_NOINTERFACE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 STDMETHODIMP_(ULONG) ODBMgrFactory::AddRef()
 {
-	return InterlockedIncrement(&m_cRef);
+    return InterlockedIncrement(&m_cRef);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 STDMETHODIMP_(ULONG) ODBMgrFactory::Release()
 {
-	if (InterlockedDecrement(&m_cRef) == 0) {
-		delete this;
-		return 0;
-	}
+    if (InterlockedDecrement(&m_cRef) == 0) {
+        delete this;
+        return 0;
+    }
 
-	return m_cRef;
+    return m_cRef;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 STDMETHODIMP ODBMgrFactory::CreateInstance(LPUNKNOWN pUnkOuter, REFIID riid,
         LPVOID * ppv)
 {
-	if (pUnkOuter != NULL)
-		return CLASS_E_NOAGGREGATION;
+    if (pUnkOuter != NULL)
+        return CLASS_E_NOAGGREGATION;
 
-	ODBManagerPtr manager;
-	manager.Attach(new ODBManager());
+    ODBManagerPtr manager;
+    manager.Attach(new ODBManager());
 
-	if (manager == NULL)
-		return E_OUTOFMEMORY;
+    if (manager == NULL)
+        return E_OUTOFMEMORY;
 
-	HRESULT hr = manager->QueryInterface(riid, ppv);
-	if (FAILED(hr))
-		return hr;
+    HRESULT hr = manager->QueryInterface(riid, ppv);
+    if (FAILED(hr))
+        return hr;
 
-	manager.Detach();	// release ownership
+    manager.Detach();	// release ownership
 
-	return hr;
+    return hr;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 STDMETHODIMP ODBMgrFactory::LockServer(BOOL fLock)
 {
-	if (fLock) {
-		InterlockedIncrement(&m_cLock);
-	} else {
-		InterlockedDecrement(&m_cLock);
-	}
+    if (fLock) {
+        InterlockedIncrement(&m_cLock);
+    } else {
+        InterlockedDecrement(&m_cLock);
+    }
 
-	return S_OK;
+    return S_OK;
 }

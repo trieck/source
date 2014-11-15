@@ -18,72 +18,72 @@
 
 void exch(char **a, char **b)
 {
-	char *t = *a;
-	*a = *b;
-	*b = t;
+    char *t = *a;
+    *a = *b;
+    *b = t;
 }
 
 /* Three-way radix sort */
 void radixsort(char *a[], int l, int r, int d)
 {
-	int i, j, k, p, q;
-	int v;
+    int i, j, k, p, q;
+    int v;
 
-	if (r <= l)
-		return;
+    if (r <= l)
+        return;
 
-	v = a[r][d];
-	i = l - 1;
-	j = r;
-	p = l - 1;
-	q = r;
+    v = a[r][d];
+    i = l - 1;
+    j = r;
+    p = l - 1;
+    q = r;
 
-	while (i < j) {
-		while (a[++i][d] < v);
+    while (i < j) {
+        while (a[++i][d] < v);
 
-		while (v < a[--j][d])
-			if (j == l)
-				break;
+        while (v < a[--j][d])
+            if (j == l)
+                break;
 
-		if (i > j)
-			break;
+        if (i > j)
+            break;
 
-		exch(&a[i], &a[j]);
+        exch(&a[i], &a[j]);
 
-		if (a[i][d] == v) {
-			p++;
-			exch(&a[p], &a[i]);
-		}
+        if (a[i][d] == v) {
+            p++;
+            exch(&a[p], &a[i]);
+        }
 
-		if (v == a[j][d]) {
-			q--;
-			exch(&a[j], &a[q]);
-		}
-	}
+        if (v == a[j][d]) {
+            q--;
+            exch(&a[j], &a[q]);
+        }
+    }
 
-	if (p == q) {
-		if (v)
-			radixsort(a, l, r, d + 1);
+    if (p == q) {
+        if (v)
+            radixsort(a, l, r, d + 1);
 
-		return;
-	}
+        return;
+    }
 
-	if (a[i][d] < v)
-		i++;
+    if (a[i][d] < v)
+        i++;
 
-	for (k = l; k <= p; k++, j--)
-		exch(&a[k], &a[j]);
+    for (k = l; k <= p; k++, j--)
+        exch(&a[k], &a[j]);
 
-	for (k = r; k >= q; k--, i++)
-		exch(&a[k], &a[i]);
+    for (k = r; k >= q; k--, i++)
+        exch(&a[k], &a[i]);
 
-	radixsort(a, l, j, d);
+    radixsort(a, l, j, d);
 
-	if (i == r && a[i][d] == v)
-		i++;
+    if (i == r && a[i][d] == v)
+        i++;
 
-	if (v)
-		radixsort(a, j + 1, i - 1, d + 1);
+    if (v)
+        radixsort(a, j + 1, i - 1, d + 1);
 
-	radixsort(a, i, r, d);
+    radixsort(a, i, r, d);
 }

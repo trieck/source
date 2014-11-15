@@ -44,11 +44,11 @@ IMPLEMENT_DYNCREATE(MainFrame, CFrameWnd)
 
 BEGIN_MESSAGE_MAP(MainFrame, CFrameWnd)
 
-	//{{AFX_MSG_MAP(MainFrame)
+    //{{AFX_MSG_MAP(MainFrame)
 
-	ON_WM_CREATE()
+    ON_WM_CREATE()
 
-	//}}AFX_MSG_MAP
+    //}}AFX_MSG_MAP
 
 END_MESSAGE_MAP()
 
@@ -56,7 +56,7 @@ END_MESSAGE_MAP()
 
 static UINT indicators[] = {
 
-	ID_SEPARATOR	// status line indicator
+    ID_SEPARATOR	// status line indicator
 
 };
 
@@ -88,97 +88,97 @@ int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 {
 
-	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
+    if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
 
-		return -1;
-
-
-
-	if (!m_wndDlgBar.Create(this, IDR_MAINFRAME,
-
-	                        CBRS_ALIGN_TOP, AFX_IDW_DIALOGBAR))	{
-
-		TRACE0("Failed to create dialogbar\n");
-
-		return -1;		// fail to create
-
-	}
+        return -1;
 
 
 
-	if (!m_wndReBar.Create(this) ||
+    if (!m_wndDlgBar.Create(this, IDR_MAINFRAME,
 
-	        !m_wndReBar.AddBar(&m_wndDlgBar)) {
+                            CBRS_ALIGN_TOP, AFX_IDW_DIALOGBAR))	{
 
-		TRACE0("Failed to create rebar\n");
+        TRACE0("Failed to create dialogbar\n");
 
-		return -1;      // fail to create
+        return -1;		// fail to create
 
-	}
-
-
-
-	if (!m_wndStatusBar.Create(this) ||
-
-	        !m_wndStatusBar.SetIndicators(indicators,
-
-	                                      sizeof(indicators)/sizeof(UINT))) {
-
-		TRACE0("Failed to create status bar\n");
-
-		return -1;      // fail to create
-
-	}
+    }
 
 
 
-	// Set dialog button images
+    if (!m_wndReBar.Create(this) ||
 
-	if (!setButtonImage(&m_wndDlgBar,		/* parent dialog */
+            !m_wndReBar.AddBar(&m_wndDlgBar)) {
 
-	                    IDM_ADDRECORD,						/* button resource */
+        TRACE0("Failed to create rebar\n");
 
-	                    IDB_ADDRECORD,						/* image resource */
+        return -1;      // fail to create
 
-	                    IMAGE_BITMAP,						/* image type */
-
-	                    SMALLICON_CX, SMALLICON_CY,			/* image size */
-
-	                    LR_LOADMAP3DCOLORS | LR_SHARED)) {	/* load flags */
-
-		TRACE0("Failed to set button image.\n");
-
-		return -1;
-
-	}
+    }
 
 
 
-	if (!setButtonImage(&m_wndDlgBar,		/* parent dialog */
+    if (!m_wndStatusBar.Create(this) ||
 
-	                    IDM_DELRECORD,						/* button resource */
+            !m_wndStatusBar.SetIndicators(indicators,
 
-	                    IDB_DELRECORD,						/* image resource */
+                                          sizeof(indicators)/sizeof(UINT))) {
 
-	                    IMAGE_BITMAP,						/* image type */
+        TRACE0("Failed to create status bar\n");
 
-	                    SMALLICON_CX, SMALLICON_CY,			/* image size */
+        return -1;      // fail to create
 
-	                    LR_LOADMAP3DCOLORS | LR_SHARED)) {	/* load flags */
-
-		TRACE0("Failed to set button image.\n");
-
-		return -1;
-
-	}
+    }
 
 
 
-	CenterWindow();
+    // Set dialog button images
+
+    if (!setButtonImage(&m_wndDlgBar,		/* parent dialog */
+
+                        IDM_ADDRECORD,						/* button resource */
+
+                        IDB_ADDRECORD,						/* image resource */
+
+                        IMAGE_BITMAP,						/* image type */
+
+                        SMALLICON_CX, SMALLICON_CY,			/* image size */
+
+                        LR_LOADMAP3DCOLORS | LR_SHARED)) {	/* load flags */
+
+        TRACE0("Failed to set button image.\n");
+
+        return -1;
+
+    }
 
 
 
-	return 0;
+    if (!setButtonImage(&m_wndDlgBar,		/* parent dialog */
+
+                        IDM_DELRECORD,						/* button resource */
+
+                        IDB_DELRECORD,						/* image resource */
+
+                        IMAGE_BITMAP,						/* image type */
+
+                        SMALLICON_CX, SMALLICON_CY,			/* image size */
+
+                        LR_LOADMAP3DCOLORS | LR_SHARED)) {	/* load flags */
+
+        TRACE0("Failed to set button image.\n");
+
+        return -1;
+
+    }
+
+
+
+    CenterWindow();
+
+
+
+    return 0;
 
 }
 
@@ -188,17 +188,17 @@ BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
 
 {
 
-	if ( !CFrameWnd::PreCreateWindow(cs) )
+    if ( !CFrameWnd::PreCreateWindow(cs) )
 
-		return FALSE;
-
-
-
-	cs.style &= ~(AFX_IDS_APP_TITLE | WS_MAXIMIZEBOX | WS_THICKFRAME);
+        return FALSE;
 
 
 
-	return TRUE;
+    cs.style &= ~(AFX_IDS_APP_TITLE | WS_MAXIMIZEBOX | WS_THICKFRAME);
+
+
+
+    return TRUE;
 
 }
 
@@ -216,7 +216,7 @@ void MainFrame::AssertValid() const
 
 {
 
-	CFrameWnd::AssertValid();
+    CFrameWnd::AssertValid();
 
 }
 
@@ -226,7 +226,7 @@ void MainFrame::Dump(CDumpContext& dc) const
 
 {
 
-	CFrameWnd::Dump(dc);
+    CFrameWnd::Dump(dc);
 
 }
 

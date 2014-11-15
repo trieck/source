@@ -10,7 +10,7 @@
 
 PieceBitmap::PieceBitmap() : RecolorableBitmap(DEFAULT_COLOR)
 {
-	Load(IDB_PIECE);
+    Load(IDB_PIECE);
 }
 
 PieceBitmap::~PieceBitmap()

@@ -12,32 +12,32 @@
 class Application : public WinThread {
 public:
 // Construction / Destruction
-	Application();
-	virtual ~Application();
+    Application();
+    virtual ~Application();
 
 // Interface
-	virtual bool initInstance();
-	virtual bool run();
-	virtual int exitInstance();
+    virtual bool initInstance();
+    virtual bool run();
+    virtual int exitInstance();
 
-	HMODULE getInstance() const;
-	const LPCTSTR getName() const;
+    HMODULE getInstance() const;
+    const LPCTSTR getName() const;
 
 // Implementation
 protected:
 private:
-	LPTSTR name;
-	HMODULE instance;
+    LPTSTR name;
+    HMODULE instance;
 };
 /////////////////////////////////////////////////////////////////////////////
 
 inline const LPCTSTR Application::getName() const
 {
-	return name;
+    return name;
 }
 inline HMODULE Application::getInstance() const
 {
-	return instance;
+    return instance;
 }
 Application *getApp();
 

@@ -13,21 +13,21 @@
 
 class Integer : public TorrentObject {
 public:
-	Integer(__int64 val);
-	Integer(const Integer &rhs);
+    Integer(__int64 val);
+    Integer(const Integer &rhs);
 
-	virtual ~Integer();
+    virtual ~Integer();
 
-	Integer &operator =(const Integer &rhs);
-	virtual int GetElementType() const {
-		return ET_INTEGER;
-	}
-	operator __int64() const {
-		return value;
-	}
+    Integer &operator =(const Integer &rhs);
+    virtual int GetElementType() const {
+        return ET_INTEGER;
+    }
+    operator __int64() const {
+        return value;
+    }
 
 private:
-	__int64 value;
+    __int64 value;
 };
 
 typedef Integer *LPINTEGER;

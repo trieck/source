@@ -15,39 +15,39 @@
 
 /* ERF header */
 typedef struct tagErfHeader {
-	char FileType[4];				/* "ERF ", "MOD ", "SAV ", "HAK " as appropriate */
-	char Version[4];				/* "V1.0" */
-	int LanguageCount;				/* Number of strings in the Localized String Table */
-	int LocalizedStringSize;		/* Total size (bytes) of Localized String Table */
-	int EntryCount;					/* Number of files packed into the ERF */
-	int OffsetToLocalizedString;	/* From beginning of file */
-	int OffsetToKeyList;			/* From beginning of file */
-	int OffsetToResourceList;		/* From beginning of file */
-	int BuildYear;					/* Since 1900 */
-	int BuildDay;					/* Since January 1st */
-	int DescriptionStrRef;			/* strref for file description */
-	unsigned char Reserved[116];	/* NULL padding */
+    char FileType[4];				/* "ERF ", "MOD ", "SAV ", "HAK " as appropriate */
+    char Version[4];				/* "V1.0" */
+    int LanguageCount;				/* Number of strings in the Localized String Table */
+    int LocalizedStringSize;		/* Total size (bytes) of Localized String Table */
+    int EntryCount;					/* Number of files packed into the ERF */
+    int OffsetToLocalizedString;	/* From beginning of file */
+    int OffsetToKeyList;			/* From beginning of file */
+    int OffsetToResourceList;		/* From beginning of file */
+    int BuildYear;					/* Since 1900 */
+    int BuildDay;					/* Since January 1st */
+    int DescriptionStrRef;			/* strref for file description */
+    unsigned char Reserved[116];	/* NULL padding */
 } ErfHeader;
 
 /* Element in a String List */
 typedef struct tagStringElement {
-	int LanguageID;
-	int StringSize;
-	char *Str;
+    int LanguageID;
+    int StringSize;
+    char *Str;
 } StringElement;
 
 /* Key structure */
 typedef struct tagKey {
-	char ResRef[16];	/* Filename */
-	int ResID;			/* Resource ID */
-	short ResType;		/* File Type */
-	short Unused;		/* NULLs */
+    char ResRef[16];	/* Filename */
+    int ResID;			/* Resource ID */
+    short ResType;		/* File Type */
+    short Unused;		/* NULLs */
 } Key;
 
 /* Resource structure */
 typedef struct tagResource {
-	int OffsetToResource;
-	int ResourceSize;
+    int OffsetToResource;
+    int ResourceSize;
 } Resource;
 
 #define STRING_SIZE(x) \

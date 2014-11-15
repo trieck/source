@@ -16,15 +16,15 @@
 
 class CmwrtApp : public CWinApp {
 public:
-	CmwrtApp();
+    CmwrtApp();
 
 // Overrides
 public:
-	virtual BOOL InitInstance();
+    virtual BOOL InitInstance();
 
 // Implementation
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 extern CmwrtApp theApp;

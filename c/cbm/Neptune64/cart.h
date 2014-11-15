@@ -25,8 +25,8 @@
 #define __CART_H__
 /* expansion port signals */
 typedef struct {
-	byte exrom;
-	byte game;
+    byte exrom;
+    byte game;
 } export_t;
 extern export_t export;
 /***************************************************************************/

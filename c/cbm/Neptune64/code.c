@@ -44,222 +44,222 @@ extern const char **ppin;	/* pointer to current input */
 static word pmem;
 void putmem(int ncount, ...)
 {
-	va_list arglist;
-	va_start(arglist, ncount);
-	while (ncount--) {
-		byte c = va_arg(arglist, char);
-		store_byte(pmem++, c);
-	}
+    va_list arglist;
+    va_start(arglist, ncount);
+    while (ncount--) {
+        byte c = va_arg(arglist, char);
+        store_byte(pmem++, c);
+    }
 
-	va_end (arglist);
+    va_end (arglist);
 }
 /*
  * code generation
  */
 word code(word start, addrmode mode, byte opcode)
 {
-	pmem = start;
-	switch (mode) {
-	case acc:
-		acccode(opcode);
-		break;
-	case imm:
-		immcode(opcode);
-		break;
-	case zpg:
-		zpgcode(opcode);
-		break;
-	case zpx:
-		zpxcode(opcode);
-		break;
-	case zpy:
-		zpycode(opcode);
-		break;
-	case absl:
-		abscode(opcode);
-		break;
-	case abx:
-		abxcode(opcode);
-		break;
-	case aby:
-		abycode(opcode);
-		break;
-	case imp:
-		impcode(opcode);
-		break;
-	case rel:
-		relcode(opcode);
-		break;
-	case idx:
-		idxcode(opcode);
-		break;
-	case idy:
-		idycode(opcode);
-		break;
-	case ind:
-		indcode(opcode);
-		break;
-	}
-	return pmem;
+    pmem = start;
+    switch (mode) {
+    case acc:
+        acccode(opcode);
+        break;
+    case imm:
+        immcode(opcode);
+        break;
+    case zpg:
+        zpgcode(opcode);
+        break;
+    case zpx:
+        zpxcode(opcode);
+        break;
+    case zpy:
+        zpycode(opcode);
+        break;
+    case absl:
+        abscode(opcode);
+        break;
+    case abx:
+        abxcode(opcode);
+        break;
+    case aby:
+        abycode(opcode);
+        break;
+    case imp:
+        impcode(opcode);
+        break;
+    case rel:
+        relcode(opcode);
+        break;
+    case idx:
+        idxcode(opcode);
+        break;
+    case idy:
+        idycode(opcode);
+        break;
+    case ind:
+        indcode(opcode);
+        break;
+    }
+    return pmem;
 }
 /*
  * accumlator addressing mode
  */
 void acccode(byte opcode)
 {
-	putmem(1, opcode);
+    putmem(1, opcode);
 }
 /*
  * immediate addressing mode
  */
 void immcode(byte opcode)
 {
-	word operand;
-	Token token;
-	token = gettok(ppin);	/* '#' */
-	token = gettok(ppin);	/* operand */
-	sscanf(token.value, "%hx", &operand);
-	putmem(2, opcode, operand);
+    word operand;
+    Token token;
+    token = gettok(ppin);	/* '#' */
+    token = gettok(ppin);	/* operand */
+    sscanf(token.value, "%hx", &operand);
+    putmem(2, opcode, operand);
 }
 /*
  * zero page addressing mode
  */
 void zpgcode(byte opcode)
 {
-	word operand;
-	Token token;
-	token = gettok(ppin);
-	sscanf(token.value, "%hx", &operand);
-	putmem(2, opcode, operand);
+    word operand;
+    Token token;
+    token = gettok(ppin);
+    sscanf(token.value, "%hx", &operand);
+    putmem(2, opcode, operand);
 }
 /*
  * zero page, x addressing mode
  */
 void zpxcode(byte opcode)
 {
-	word operand;
-	Token token;
-	token = gettok(ppin);
-	sscanf(token.value, "%hx", &operand);
-	token = gettok(ppin);	/* ',' */
-	token = gettok(ppin);	/* 'x' */
-	putmem(2, opcode, operand);
+    word operand;
+    Token token;
+    token = gettok(ppin);
+    sscanf(token.value, "%hx", &operand);
+    token = gettok(ppin);	/* ',' */
+    token = gettok(ppin);	/* 'x' */
+    putmem(2, opcode, operand);
 }
 /*
  * zero page, y addressing mode
  */
 void zpycode(byte opcode)
 {
-	word operand;
-	Token token;
-	token = gettok(ppin);
-	sscanf(token.value, "%hx", &operand);
-	token = gettok(ppin);	/* ',' */
-	token = gettok(ppin);	/* 'y' */
-	putmem(2, opcode, operand);
+    word operand;
+    Token token;
+    token = gettok(ppin);
+    sscanf(token.value, "%hx", &operand);
+    token = gettok(ppin);	/* ',' */
+    token = gettok(ppin);	/* 'y' */
+    putmem(2, opcode, operand);
 }
 /*
  * absolute addressing mode
  */
 void abscode(byte opcode)
 {
-	word operand;
-	Token token;
-	token = gettok(ppin);
-	sscanf(token.value, "%hx", &operand);
+    word operand;
+    Token token;
+    token = gettok(ppin);
+    sscanf(token.value, "%hx", &operand);
 
-	putmem(3, opcode, lobyte(operand), hibyte(operand));
+    putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 /*
  * absolute, x addressing mode
  */
 void abxcode(byte opcode)
 {
-	word operand;
-	Token token;
-	token = gettok(ppin);
-	sscanf(token.value, "%hx", &operand);
-	token = gettok(ppin);	/* ',' */
-	token = gettok(ppin);	/* 'x' */
-	putmem(3, opcode, lobyte(operand), hibyte(operand));
+    word operand;
+    Token token;
+    token = gettok(ppin);
+    sscanf(token.value, "%hx", &operand);
+    token = gettok(ppin);	/* ',' */
+    token = gettok(ppin);	/* 'x' */
+    putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 /*
  * absolute, y addressing mode
  */
 void abycode(byte opcode)
 {
-	word operand;
-	Token token;
-	token = gettok(ppin);
-	sscanf(token.value, "%hx", &operand);
-	token = gettok(ppin);	/* ',' */
-	token = gettok(ppin);	/* 'y' */
-	putmem(3, opcode, lobyte(operand), hibyte(operand));
+    word operand;
+    Token token;
+    token = gettok(ppin);
+    sscanf(token.value, "%hx", &operand);
+    token = gettok(ppin);	/* ',' */
+    token = gettok(ppin);	/* 'y' */
+    putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 /*
  * indirect addressing mode
  */
 void indcode(byte opcode)
 {
-	word operand;
-	Token token;
-	token = gettok(ppin);	/* '(' */
-	token = gettok(ppin);
-	sscanf(token.value, "%hx", &operand);
-	token = gettok(ppin);	/* ')' */
-	putmem(3, opcode, lobyte(operand), hibyte(operand));
+    word operand;
+    Token token;
+    token = gettok(ppin);	/* '(' */
+    token = gettok(ppin);
+    sscanf(token.value, "%hx", &operand);
+    token = gettok(ppin);	/* ')' */
+    putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 /*
  * implied addressing mode
  */
 void impcode(byte opcode)
 {
-	putmem(1, opcode);
+    putmem(1, opcode);
 }
 /*
  * relative addressing mode
  */
 void relcode(byte opcode)
 {
-	word operand;
-	Token token;
-	token = gettok(ppin);
-	sscanf(token.value, "%hx", &operand);
+    word operand;
+    Token token;
+    token = gettok(ppin);
+    sscanf(token.value, "%hx", &operand);
 
-	putmem(2, opcode, operand - (pmem + 2));
+    putmem(2, opcode, operand - (pmem + 2));
 }
 /*
  * indirect, x addressing mode
  */
 void idxcode(byte opcode)
 {
-	word operand;
-	Token token;
+    word operand;
+    Token token;
 
-	token = gettok(ppin);	/* '(' */
+    token = gettok(ppin);	/* '(' */
 
-	token = gettok(ppin);
-	sscanf(token.value, "%hx", &operand);
-	token = gettok(ppin);	/* ',' */
-	token = gettok(ppin);	/* 'x' */
-	token = gettok(ppin);	/* ')' */
-	putmem(2, opcode, operand);
+    token = gettok(ppin);
+    sscanf(token.value, "%hx", &operand);
+    token = gettok(ppin);	/* ',' */
+    token = gettok(ppin);	/* 'x' */
+    token = gettok(ppin);	/* ')' */
+    putmem(2, opcode, operand);
 }
 /*
  * indirect, y addressing mode
  */
 void idycode(byte opcode)
 {
-	word operand;
-	Token token;
+    word operand;
+    Token token;
 
-	token = gettok(ppin);	/* '(' */
+    token = gettok(ppin);	/* '(' */
 
-	token = gettok(ppin);
-	sscanf(token.value, "%hx", &operand);
-	token = gettok(ppin);	/* ')' */
-	token = gettok(ppin);	/* ',' */
-	token = gettok(ppin);	/* 'y' */
+    token = gettok(ppin);
+    sscanf(token.value, "%hx", &operand);
+    token = gettok(ppin);	/* ')' */
+    token = gettok(ppin);	/* ',' */
+    token = gettok(ppin);	/* 'y' */
 
-	putmem(2, opcode, operand);
+    putmem(2, opcode, operand);
 }

@@ -13,14 +13,14 @@
 /////////////////////////////////////////////////////////////////////////////
 int _tmain(int argc, TCHAR *argv[])
 {
-	HttpServer server(HTTP_PORT);
+    HttpServer server(HTTP_PORT);
 
-	try {
-		server.run();
-	} catch (const Exception &E) {
-		cerr << E.getDescription() << endl;
-		return 1;
-	}
+    try {
+        server.run();
+    } catch (const Exception &E) {
+        cerr << E.getDescription() << endl;
+        return 1;
+    }
 
-	return 0;
+    return 0;
 }

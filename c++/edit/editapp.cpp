@@ -21,11 +21,11 @@ EditApp::~EditApp()
 
 BOOL EditApp::InitInstance()
 {
-	Window *pWnd = new EditFrame("Toast");
+    Window *pWnd = new EditFrame("Toast");
 
-	pWnd->Show();
-	pWnd->Update();
+    pWnd->Show();
+    pWnd->Update();
 
-	return TRUE;
+    return TRUE;
 }
 

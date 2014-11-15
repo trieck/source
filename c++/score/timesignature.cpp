@@ -13,8 +13,8 @@
 //
 TimeSignature::TimeSignature()
 {
-	m_beats = 0;
-	m_length = EmptyLength;
+    m_beats = 0;
+    m_length = EmptyLength;
 }
 
 //
@@ -22,8 +22,8 @@ TimeSignature::TimeSignature()
 //
 TimeSignature::TimeSignature(int beats, BeatLength length)
 {
-	m_beats = beats;
-	m_length = length;
+    m_beats = beats;
+    m_length = length;
 }
 
 //
@@ -38,8 +38,8 @@ TimeSignature::~TimeSignature()
 //
 void TimeSignature::SetTimeSignature(int beats, BeatLength length)
 {
-	m_beats = beats;
-	m_length = length;
+    m_beats = beats;
+    m_length = length;
 }
 
 //
@@ -47,8 +47,8 @@ void TimeSignature::SetTimeSignature(int beats, BeatLength length)
 //
 void TimeSignature::GetTimeSignature(int & beats, BeatLength & length) const
 {
-	beats = m_beats;
-	length = m_length;
+    beats = m_beats;
+    length = m_length;
 }
 
 //
@@ -56,9 +56,9 @@ void TimeSignature::GetTimeSignature(int & beats, BeatLength & length) const
 //
 float TimeSignature::GetDuration() const
 {
-	if (m_length == EmptyLength)
-		return 0;
+    if (m_length == EmptyLength)
+        return 0;
 
-	return m_beats * float(1) / m_length;
+    return m_beats * float(1) / m_length;
 
 }

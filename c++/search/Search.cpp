@@ -12,38 +12,38 @@
 /////////////////////////////////////////////////////////////////////////////
 Search::Search(LPCSTR filename)
 {
-	open(filename);
+    open(filename);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Search::~Search()
 {
-	close();
+    close();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Search::open(LPCSTR filename)
 {
-	if (!btree.open(filename, OM_RO))
-		throw Exception(lasterror());
+    if (!btree.open(filename, OM_RO))
+        throw Exception(lasterror());
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Search::close()
 {
-	btree.close();
+    btree.close();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 DocVector Search::search(LPCSTR q)
 {
-	StrStream *pStream = StrStream::newInstance();
-	pStream->Write(q);
-	pStream->Reset();
+    StrStream *pStream = StrStream::newInstance();
+    pStream->Write(q);
+    pStream->Reset();
 
-	IPeekableStreamPtr stream;
-	stream.Attach(pStream);
+    IPeekableStreamPtr stream;
+    stream.Attach(pStream);
 
-	Query query(btree);
-	return query.query(stream);
+    Query query(btree);
+    return query.query(stream);
 }

@@ -12,51 +12,51 @@
 
 class DDrawView : public CView {
 protected: // create from serialization only
-	DDrawView();
-	DECLARE_DYNCREATE(DDrawView)
+    DDrawView();
+    DECLARE_DYNCREATE(DDrawView)
 
 // Attributes
 public:
-	DDrawDoc* GetDocument();
+    DDrawDoc* GetDocument();
 
 // Operations
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(DDrawView)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(DDrawView)
 public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual void OnInitialUpdate();
-	//}}AFX_VIRTUAL
+    virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual void OnInitialUpdate();
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~DDrawView();
+    virtual ~DDrawView();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(DDrawView)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnDestroy();
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(DDrawView)
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnDestroy();
+    afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	LPDIRECTDRAWSURFACE pdds;
+    LPDIRECTDRAWSURFACE pdds;
 };
 
 #ifndef _DEBUG  // debug version in DDrawView.cpp
 inline DDrawDoc* DDrawView::GetDocument()
 {
-	return (DDrawDoc*)m_pDocument;
+    return (DDrawDoc*)m_pDocument;
 }
 #endif
 

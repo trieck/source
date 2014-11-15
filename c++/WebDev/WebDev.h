@@ -17,15 +17,15 @@
 
 class CWebDevApp : public CWinApp {
 public:
-	CWebDevApp();
+    CWebDevApp();
 
 // Overrides
 public:
-	virtual BOOL InitInstance();
+    virtual BOOL InitInstance();
 
 // Implementation
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 extern CWebDevApp theApp;

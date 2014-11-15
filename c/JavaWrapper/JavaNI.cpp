@@ -9,27 +9,27 @@
 
 /////////////////////////////////////////////////////////////////////////////
 JavaNI::JavaNI()
-	: env(0), jvm(0)
+    : env(0), jvm(0)
 {
 }
 
 /////////////////////////////////////////////////////////////////////////////
 JavaNI::~JavaNI()
 {
-	if (jvm != NULL) {
-		jvm->DestroyJavaVM();
-	}
+    if (jvm != NULL) {
+        jvm->DestroyJavaVM();
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////
 bool JavaNI::CreateJVM(JavaVMInitArgs *args)
 {
-	jint res = JNI_CreateJavaVM(&jvm, (void **)&env, args);
-	return res == 0;
+    jint res = JNI_CreateJavaVM(&jvm, (void **)&env, args);
+    return res == 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 jclass JavaNI::FindClass(const char *name)
 {
-	return env->FindClass(name);
+    return env->FindClass(name);
 }

@@ -17,16 +17,16 @@
 class Configuration {
 // Construction / Destruction
 public:
-	Configuration(const char *pfile);
-	virtual ~Configuration();
+    Configuration(const char *pfile);
+    virtual ~Configuration();
 
 // Interface
-	string GetValue(const char *app, const char *key, const char *def = "");
-	string GetValueEx(const char *app, const char *key, const char *def = "");
+    string GetValue(const char *app, const char *key, const char *def = "");
+    string GetValueEx(const char *app, const char *key, const char *def = "");
 
 // Implementation
 private:
-	string filename;
+    string filename;
 };
 /////////////////////////////////////////////////////////////////////////////
 

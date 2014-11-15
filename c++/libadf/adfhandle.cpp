@@ -26,26 +26,26 @@ HandlerRegistrar::~HandlerRegistrar()
 /////////////////////////////////////////////////////////////////////////////
 HandlerRegistrar *HandlerRegistrar::getInstance()
 {
-	if (instance.get() == NULL) {
-		instance = HandlerRegistrarPtr(new HandlerRegistrar());
-	}
-	return instance.get();
+    if (instance.get() == NULL) {
+        instance = HandlerRegistrarPtr(new HandlerRegistrar());
+    }
+    return instance.get();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void HandlerRegistrar::add(IADFHandler *pHandler)
 {
-	handlers.push_back(pHandler);
+    handlers.push_back(pHandler);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 HandlerRegistrar::IADFHandlerIterator HandlerRegistrar::iterator()
 {
-	return handlers.begin();
+    return handlers.begin();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 HandlerRegistrar::IADFHandlerIterator HandlerRegistrar::end()
 {
-	return handlers.end();
+    return handlers.end();
 }

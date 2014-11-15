@@ -15,38 +15,38 @@
 #include "resource.h"
 
 class CBkgndPage : public CPropertyPage {
-	DECLARE_DYNCREATE(CBkgndPage);
+    DECLARE_DYNCREATE(CBkgndPage);
 public:
-	CBkgndPage();
-	~CBkgndPage();
+    CBkgndPage();
+    ~CBkgndPage();
 
-	CBkgndBitmap *	m_pCurrentBitmap;
-	VOID RedrawBitmaps();
+    CBkgndBitmap *	m_pCurrentBitmap;
+    VOID RedrawBitmaps();
 
 protected:
-	// Virtual Overrides
-	virtual BOOL	OnInitDialog();
-	virtual void	OnOK();
-	virtual BOOL	OnApply();
+    // Virtual Overrides
+    virtual BOOL	OnInitDialog();
+    virtual void	OnOK();
+    virtual BOOL	OnApply();
 
-	CBkgndBitmap*	GetBkgndBitmapFromRes(UINT);
+    CBkgndBitmap*	GetBkgndBitmapFromRes(UINT);
 
-	enum {IDD = IDD_BKGNDPAGE};
+    enum {IDD = IDD_BKGNDPAGE};
 
-	static const UINT	ctlIDs[];
-	static const UINT	resIDs[];
-	static const RECT	rcs[];
+    static const UINT	ctlIDs[];
+    static const UINT	resIDs[];
+    static const RECT	rcs[];
 
-	CPenteView*		m_pView;
-	LPCTSTR			m_lpszClassName;
+    CPenteView*		m_pView;
+    LPCTSTR			m_lpszClassName;
 
-	CBkgndBitmap *	m_pBkgndBitmaps[6];
+    CBkgndBitmap *	m_pBkgndBitmaps[6];
 
-	// Message Handlers
-	afx_msg VOID	OnPaletteChanged(CWnd*);
-	afx_msg BOOL	OnQueryNewPalette();
+    // Message Handlers
+    afx_msg VOID	OnPaletteChanged(CWnd*);
+    afx_msg BOOL	OnQueryNewPalette();
 
-	DECLARE_MESSAGE_MAP();
+    DECLARE_MESSAGE_MAP();
 };
 
 #endif // __BKGNDPAGE_H__

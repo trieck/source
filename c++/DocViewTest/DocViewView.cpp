@@ -12,7 +12,7 @@
 IMPLEMENT_DYNCREATE(CDocViewView, CView)
 
 BEGIN_MESSAGE_MAP(CDocViewView, CView)
-	ON_WM_CREATE()
+    ON_WM_CREATE()
 END_MESSAGE_MAP()
 ///////////////////////////////////////////////////////////////////
 // CDocViewView construction/destruction
@@ -27,33 +27,33 @@ CDocViewView::~CDocViewView()
 
 BOOL CDocViewView :: PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style = cs.style | WS_CLIPSIBLINGS;
-	return CView :: PreCreateWindow(cs);
+    cs.style = cs.style | WS_CLIPSIBLINGS;
+    return CView :: PreCreateWindow(cs);
 }
 
 void CDocViewView::OnDraw(CDC* pDC)
 {
-	CRect	rc;
-	CBrush	aBrush, *pBrushOld;
-	INT		x, y;
+    CRect	rc;
+    CBrush	aBrush, *pBrushOld;
+    INT		x, y;
 
-	pDC->GetClipBox(&rc);
+    pDC->GetClipBox(&rc);
 
-	if (pDC->RectVisible(&rc)) {
-		// Paint the background
-		x		= rc.left;
-		y		= rc.top;
+    if (pDC->RectVisible(&rc)) {
+        // Paint the background
+        x		= rc.left;
+        y		= rc.top;
 
-		aBrush.CreateSolidBrush(::GetSysColor(COLOR_WINDOW));
+        aBrush.CreateSolidBrush(::GetSysColor(COLOR_WINDOW));
 
-		pBrushOld = pDC->SelectObject(&aBrush);
+        pBrushOld = pDC->SelectObject(&aBrush);
 
-		pDC->PatBlt(x, y, rc.Width(), rc.Height(), PATCOPY);
+        pDC->PatBlt(x, y, rc.Width(), rc.Height(), PATCOPY);
 
-		pDC->SelectObject(pBrushOld);
+        pDC->SelectObject(pBrushOld);
 
-		aBrush.DeleteObject();
-	}
+        aBrush.DeleteObject();
+    }
 }
 
 void CDocViewView::OnInitialUpdate()
@@ -62,6 +62,6 @@ void CDocViewView::OnInitialUpdate()
 
 INT	CDocViewView :: OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	return CView :: OnCreate(lpCreateStruct);
+    return CView :: OnCreate(lpCreateStruct);
 }
 

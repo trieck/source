@@ -16,21 +16,21 @@
 
 class CTFingerApp : public CWinAppEx {
 public:
-	CTFingerApp();
+    CTFingerApp();
 
 
 // Overrides
 public:
-	virtual BOOL InitInstance();
+    virtual BOOL InitInstance();
 
 // Implementation
-	virtual void PreLoadState();
-	virtual void LoadCustomState();
-	virtual void SaveCustomState();
+    virtual void PreLoadState();
+    virtual void LoadCustomState();
+    virtual void SaveCustomState();
 
-	afx_msg void OnAppAbout();
+    afx_msg void OnAppAbout();
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 extern CTFingerApp theApp;

@@ -24,39 +24,39 @@ ObjectDatabase::ObjectDatabasePtr ObjectDatabase::This;
 /////////////////////////////////////////////////////////////////////////////
 ObjectDatabase::ObjectDatabase()
 {
-	pservice = new ODBService();
+    pservice = new ODBService();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 ObjectDatabase::~ObjectDatabase()
 {
-	delete pservice;
+    delete pservice;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 ObjectDatabase* ObjectDatabase::instance()
 {
-	if (This.get() == NULL) {
-		This = ObjectDatabasePtr(new ObjectDatabase());
-	}
+    if (This.get() == NULL) {
+        This = ObjectDatabasePtr(new ObjectDatabase());
+    }
 
-	return This.get();
+    return This.get();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 int ObjectDatabase::Run(int argc, char **argv)
 {
-	if (!pservice->Execute(argc, argv))
-		return -1;
+    if (!pservice->Execute(argc, argv))
+        return -1;
 
-	return pservice->GetExitCode();
+    return pservice->GetExitCode();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // application entry point
 int main(int argc, char **argv)
 {
-	ObjectDatabase *odb = ObjectDatabase::instance();
-	return odb->Run(argc, argv);
+    ObjectDatabase *odb = ObjectDatabase::instance();
+    return odb->Run(argc, argv);
 }
 

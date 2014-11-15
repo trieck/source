@@ -34,9 +34,9 @@
 typedef const unsigned char* LPCBYTE;
 
 struct StringPtrLess {
-	bool operator()(LPCSTR left, LPCSTR right) {
-		return strcmp(left, right) < 0;
-	}
+    bool operator()(LPCSTR left, LPCSTR right) {
+        return strcmp(left, right) < 0;
+    }
 };
 
 #include <vector>

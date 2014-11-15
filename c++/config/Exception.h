@@ -13,18 +13,18 @@
 class Exception {
 // Construction / Destruction
 public:
-	Exception(const char *pdesc) : desc(pdesc) {}
-	Exception(const string &sdesc) : desc(sdesc) {}
-	virtual ~Exception() {}
+    Exception(const char *pdesc) : desc(pdesc) {}
+    Exception(const string &sdesc) : desc(sdesc) {}
+    virtual ~Exception() {}
 
 // Interface
-	string GetDescription() const {
-		return desc;
-	}
+    string GetDescription() const {
+        return desc;
+    }
 
 // Implementation
 private:
-	string desc;
+    string desc;
 };
 
 #endif // __EXCEPTION_H__

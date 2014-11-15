@@ -12,11 +12,11 @@
 class MakePoolHandler : public IHandler {
 // Construction / Destruction
 public:
-	MakePoolHandler();
-	virtual ~MakePoolHandler();
+    MakePoolHandler();
+    virtual ~MakePoolHandler();
 
 // Interface
-	void Call(LPDICTIONARY request, LPDICTIONARY response);
+    void Call(LPDICTIONARY request, LPDICTIONARY response);
 
 // Implementation
 private:

@@ -22,17 +22,17 @@ String::String()
 
 String::String(const String &s)
 {
-	*this = s;
+    *this = s;
 }
 
 String::String(const CString &s)
 {
-	data = s;
+    data = s;
 }
 
 String::String(const char *p, int nlen)
 {
-	data = CString(p, nlen);
+    data = CString(p, nlen);
 }
 
 String::~String()
@@ -41,24 +41,24 @@ String::~String()
 
 String &String::operator =(const String &s)
 {
-	if (this != &s) {
-		data = s.data;
-	}
+    if (this != &s) {
+        data = s.data;
+    }
 
-	return *this;
+    return *this;
 }
 
 String::operator LPCSTR() const
 {
-	return data;
+    return data;
 }
 
 String::operator const CString&() const
 {
-	return data;
+    return data;
 }
 
 char String::CharAt(int n) const
 {
-	return data.GetAt(n);
+    return data.GetAt(n);
 }

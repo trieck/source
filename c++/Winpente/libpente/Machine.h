@@ -11,22 +11,21 @@
 #include "Vector.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class Machine
-{
+class Machine {
 // Construction / Destruction
 public:
-	Machine();
-	~Machine();
+    Machine();
+    ~Machine();
 
 // Interface
 
 // Implementation
 private:
-	void generate();
+    void generate();
 
-	Board::BoardPtr board;
-	typedef std::vector<Vector> VecVec;
-	VecVec vectors;
+    Board::BoardPtr board;
+    typedef std::vector<Vector> VecVec;
+    VecVec vectors;
 };
 
 #endif // __MACHINE_H__

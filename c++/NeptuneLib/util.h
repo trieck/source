@@ -9,31 +9,29 @@
 #define __UTIL_INCLUDED_H__
 
 /////////////////////////////////////////////////////////////////////////////
-extern string tempname();
-extern stringvec expand(const char *pattern);
-extern stringvec rexpand(const char *pattern);
-extern string dirname(const char *path);
-extern string fullpath(const char *path);
-extern string filename(const char *path);
-extern string basename(const char *path);
-extern string extname(const char *path);
-extern string layout(const char *path);
-extern string modulename();
-extern string modulebasename();
-extern string programdir();
-extern string machinename();
-extern string fileload(const string &file);
-extern string itoa(int n);
-extern string trim(const char *str);
-extern string trim_left(const char *str);
-extern string trim_right(const char *str);
-extern string lower(const string & input);
-extern string upper(const string & input);
-extern string xmlescape(const string &input);
-extern string comma(INT64 i);
-extern string lasterror();
-extern string format(const char *fmt, ...);
-extern string uni2ansi(const wchar_t *pwstr);
+extern tstring tempname();
+extern tstringvec expand(LPCTSTR pattern);
+extern tstringvec rexpand(LPCTSTR pattern);
+extern tstring dirname(LPCTSTR path);
+extern tstring fullpath(LPCTSTR path);
+extern tstring filename(LPCTSTR path);
+extern tstring basename(LPCTSTR path);
+extern tstring extname(LPCTSTR path);
+extern tstring modulename();
+extern tstring modulebasename();
+extern tstring programdir();
+extern tstring machinename();
+extern tstring fileload(const tstring &file);
+extern tstring itoa(int n);
+extern tstring trim(LPCTSTR str);
+extern tstring trim_left(LPCTSTR str);
+extern tstring trim_right(LPCTSTR str);
+extern tstring lower(const tstring & input);
+extern tstring upper(const tstring & input);
+extern tstring xmlescape(const tstring &input);
+extern tstring comma(INT64 i);
+extern tstring lasterror();
+extern tstring format(LPCTSTR fmt, ...);
 /////////////////////////////////////////////////////////////////////////////
 
 #endif // __UTIL_INCLUDED_H__

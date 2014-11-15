@@ -21,8 +21,8 @@ LPCTSTR	CWaveView::m_lpszHeaders[] = {_T("File Name"),
 IMPLEMENT_DYNCREATE(CWaveView, CListView)
 
 BEGIN_MESSAGE_MAP(CWaveView, CListView)
-	ON_WM_CREATE()
-	ON_WM_SIZE()
+    ON_WM_CREATE()
+    ON_WM_SIZE()
 END_MESSAGE_MAP()
 ///////////////////////////////////////////////////////////////////
 // CWaveView construction/destruction
@@ -37,8 +37,8 @@ CWaveView::~CWaveView()
 
 BOOL CWaveView :: PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style |= LVS_REPORT | LVS_NOSORTHEADER;	// Report style view
-	return CListView :: PreCreateWindow(cs);
+    cs.style |= LVS_REPORT | LVS_NOSORTHEADER;	// Report style view
+    return CListView :: PreCreateWindow(cs);
 }
 
 void CWaveView::OnInitialUpdate()
@@ -47,22 +47,22 @@ void CWaveView::OnInitialUpdate()
 
 INT	CWaveView :: OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	CListView :: OnCreate(lpCreateStruct);
+    CListView :: OnCreate(lpCreateStruct);
 
-	// Set Column information
-	LV_COLUMN	lvc;
+    // Set Column information
+    LV_COLUMN	lvc;
 
-	for (UINT i = 0; i < 6; i++) {
-		lvc.mask		= LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
-		lvc.fmt			= LVCFMT_CENTER;
-		lvc.cx			= 100;
-		lvc.pszText		= (LPTSTR)m_lpszHeaders[i];
-		lvc.cchTextMax	= 0;
+    for (UINT i = 0; i < 6; i++) {
+        lvc.mask		= LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
+        lvc.fmt			= LVCFMT_CENTER;
+        lvc.cx			= 100;
+        lvc.pszText		= (LPTSTR)m_lpszHeaders[i];
+        lvc.cchTextMax	= 0;
 
-		GetListCtrl().InsertColumn(i, &lvc);
-	}
+        GetListCtrl().InsertColumn(i, &lvc);
+    }
 
-	return 0;
+    return 0;
 }
 
 VOID CWaveView :: OnSize(UINT nType, int cx, int cy)

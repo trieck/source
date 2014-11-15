@@ -24,11 +24,11 @@ string trim_right(const string &str);
 
 /////////////////////////////////////////////////////////////////////////////
 Configuration::Configuration(const char *pfile)
-	: filename(pfile)
+    : filename(pfile)
 {
-	// check read permission
-	if (_access(pfile, 04) == -1)
-		throw Exception("file is not readable.");
+    // check read permission
+    if (_access(pfile, 04) == -1)
+        throw Exception("file is not readable.");
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -40,27 +40,27 @@ Configuration::~Configuration()
 string Configuration::GetValue(const char *app, const char *key,
                                const char *def)
 {
-	string output;
+    string output;
 
-	FILE *fp = fopen(filename.c_str(), "r");
-	if (fp == NULL)
-		throw Exception("cannot open file.");
+    FILE *fp = fopen(filename.c_str(), "r");
+    if (fp == NULL)
+        throw Exception("cannot open file.");
 
-	if (!FindApp(app, fp)) {
-		fclose(fp);
-		return def;
-	}
+    if (!FindApp(app, fp)) {
+        fclose(fp);
+        return def;
+    }
 
-	if (!FindKey(key, fp)) {
-		fclose(fp);
-		return def;
-	}
+    if (!FindKey(key, fp)) {
+        fclose(fp);
+        return def;
+    }
 
-	output = ::GetValue(fp);
+    output = ::GetValue(fp);
 
-	fclose(fp);
+    fclose(fp);
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -68,9 +68,9 @@ string Configuration::GetValue(const char *app, const char *key,
 string Configuration::GetValueEx(const char *app, const char *key,
                                  const char *def)
 {
-	char buf[256] = { 0 };
-	GetPrivateProfileString(app, key, def, buf, sizeof(buf), filename.c_str());
-	return buf;
+    char buf[256] = { 0 };
+    GetPrivateProfileString(app, key, def, buf, sizeof(buf), filename.c_str());
+    return buf;
 }
 
 namespace {	// anonymous
@@ -78,103 +78,103 @@ namespace {	// anonymous
 /////////////////////////////////////////////////////////////////////////////
 bool FindApp(const char *app, FILE *fp)
 {
-	int c;
-	string capp;
+    int c;
+    string capp;
 
-	while ((c = getc(fp)) != -1) {
-		switch (c) {
-		case '\n':
-		case '[':
-			capp = "";
-			break;
-		case ']':
-			if (stricmp(trim(capp).c_str(), app) == 0)
-				return true;
-			break;
-		default:
-			capp += (char)c;
-			break;
-		}
-	}
+    while ((c = getc(fp)) != -1) {
+        switch (c) {
+        case '\n':
+        case '[':
+            capp = "";
+            break;
+        case ']':
+            if (stricmp(trim(capp).c_str(), app) == 0)
+                return true;
+            break;
+        default:
+            capp += (char)c;
+            break;
+        }
+    }
 
-	return false;
+    return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 bool FindKey(const char *key, FILE *fp)
 {
-	int c, bdone = 0;
-	string ckey;
+    int c, bdone = 0;
+    string ckey;
 
-	while ((c = getc(fp)) != -1) {
-		switch (c) {
-		case '\n':
-			ckey = "";
-			bdone = 0;
-			break;
-		case '[':
-			return false;	// new section
-		case '=':
-			if (stricmp(trim(ckey).c_str(), key) == 0)
-				return true;
-			bdone = 1;
-			break;
-		default:
-			if (!bdone)
-				ckey += (char)c;
-			break;
-		}
-	}
+    while ((c = getc(fp)) != -1) {
+        switch (c) {
+        case '\n':
+            ckey = "";
+            bdone = 0;
+            break;
+        case '[':
+            return false;	// new section
+        case '=':
+            if (stricmp(trim(ckey).c_str(), key) == 0)
+                return true;
+            bdone = 1;
+            break;
+        default:
+            if (!bdone)
+                ckey += (char)c;
+            break;
+        }
+    }
 
-	return false;
+    return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string GetValue(FILE *fp)
 {
-	string output;
+    string output;
 
-	int c;
-	while ((c = fgetc(fp)) != -1) {
-		switch (c) {
-		case '\n':
-			return output;
-		case '"':
-			//TODO: handle quotes intelligently.
-			break;
-		default:
-			output += (char)c;
-			break;
-		}
-	}
+    int c;
+    while ((c = fgetc(fp)) != -1) {
+        switch (c) {
+        case '\n':
+            return output;
+        case '"':
+            //TODO: handle quotes intelligently.
+            break;
+        default:
+            output += (char)c;
+            break;
+        }
+    }
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string trim(const string &str)
 {
-	return trim_left(trim_right(str));
+    return trim_left(trim_right(str));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string trim_left(const string &str)
 {
-	string::size_type i = 0;
-	for ( ; i < str.length() && isspace(str[i]); i++)
-		;
+    string::size_type i = 0;
+    for ( ; i < str.length() && isspace(str[i]); i++)
+        ;
 
-	return str.substr(i);
+    return str.substr(i);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string trim_right(const string &str)
 {
-	string::size_type i = str.length() - 1;
-	for ( ; i != -1 && isspace(str[i]); i--)
-		;
+    string::size_type i = str.length() - 1;
+    for ( ; i != -1 && isspace(str[i]); i--)
+        ;
 
-	return str.substr(0, i + 1);
+    return str.substr(0, i + 1);
 }
 
 }	// anonymous

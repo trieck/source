@@ -12,7 +12,7 @@
 @interface CocoaQueue :
 NSObject {
 
-	struct queue *myQueue;
+    struct queue *myQueue;
 }
 
 - (id)init;

@@ -4,14 +4,14 @@
 
 class ImageBinarizer {
 public:
-	ImageBinarizer();
-	~ImageBinarizer();
+    ImageBinarizer();
+    ~ImageBinarizer();
 
-	void Binarize(CImage &image);
+    void Binarize(CImage &image);
 private:
-	ULONG OtsusMethod(CImage &image);
-	void Histogram(CImage &image);
-	void Reset();
+    ULONG OtsusMethod(CImage &image);
+    void Histogram(CImage &image);
+    void Reset();
 
-	ULONG m_histogram[256];
+    ULONG m_histogram[256];
 };

@@ -13,7 +13,7 @@
 #pragma warning(disable:4786) // disable truncation warning
 #pragma warning(disable:4996) // disable deprecation warning
 
-#define WINVER 0x0500
+#define WINVER 0x0501
 
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 

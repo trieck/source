@@ -12,17 +12,17 @@
 class Walker : public IItemWalker {
 // Construction / Destruction
 public:
-	Walker();
-	virtual ~Walker();
+    Walker();
+    virtual ~Walker();
 
-	void walk(LPCSTR filename);
+    void walk(LPCSTR filename);
 
-	// ITreeWalkerClient methods
-	void Call(PITEM pItem);
+    // ITreeWalkerClient methods
+    void Call(PITEM pItem);
 
 // Implementation
 private:
-	BTree btree;
+    BTree btree;
 };
 /////////////////////////////////////////////////////////////////////////////
 

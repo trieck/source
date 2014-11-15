@@ -10,38 +10,39 @@
 /////////////////////////////////////////////////////////////////////////////
 // entry types
 enum {
-	ET_EMPTY = 0,
-	ET_PLAYER_ONE,
-	ET_PLAYER_TWO
+    ET_EMPTY = 0,
+    ET_PLAYER_ONE,
+    ET_PLAYER_TWO
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class Entry
-{
+class Entry {
 // Construction / Destruction
 public:
-	Entry();
-	Entry(const POINT &aPoint, uint32_t ntype);
-	~Entry();
+    Entry();
+    Entry(const POINT &aPoint, uint32_t ntype);
+    ~Entry();
 
 // Interface
-	POINT where() const;
-	uint32_t getType() const;
+    POINT where() const;
+    uint32_t getType() const;
 
 // Implementation
 private:
-	POINT pt;
-	uint32_t type;
+    POINT pt;
+    uint32_t type;
 };
 
 /////////////////////////////////////////////////////////////////////////////
-inline POINT Entry::where() const {
-	return pt;
+inline POINT Entry::where() const
+{
+    return pt;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-inline uint32_t Entry::getType() const {
-	return type;
+inline uint32_t Entry::getType() const
+{
+    return type;
 }
 
 

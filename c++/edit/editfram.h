@@ -12,18 +12,18 @@
 class EditFrame : public FrameWindow {
 // Construction / Destruction
 public:
-	EditFrame(LPCSTR caption = "", int x = CW_USEDEFAULT,
-	          int y = CW_USEDEFAULT,
-	          int width = CW_USEDEFAULT,
-	          int height = CW_USEDEFAULT);
-	~EditFrame();
+    EditFrame(LPCSTR caption = "", int x = CW_USEDEFAULT,
+              int y = CW_USEDEFAULT,
+              int width = CW_USEDEFAULT,
+              int height = CW_USEDEFAULT);
+    ~EditFrame();
 
 // Interface
 
 // Implementation
 protected:
-	void RegisterMessages();
-	void OnEraseBkgnd(WPARAM wParam, LPARAM lParam);
+    void RegisterMessages();
+    void OnEraseBkgnd(WPARAM wParam, LPARAM lParam);
 };
 /////////////////////////////////////////////////////////////////////////////
 

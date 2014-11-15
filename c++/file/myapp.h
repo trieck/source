@@ -12,13 +12,13 @@
 class MyApp : public Application {
 public:
 // Construction / Destruction
-	MyApp();
-	~MyApp();
+    MyApp();
+    ~MyApp();
 
 // Interface
-	bool initInstance();
-	bool run();
-	int exitInstance();
+    bool initInstance();
+    bool run();
+    int exitInstance();
 
 // Implementation
 protected:

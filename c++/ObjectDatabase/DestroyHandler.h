@@ -12,11 +12,11 @@
 class DestroyHandler : public IHandler {
 // Construction / Destruction
 public:
-	DestroyHandler();
-	virtual ~DestroyHandler();
+    DestroyHandler();
+    virtual ~DestroyHandler();
 
 // Interface
-	void Call(LPDICTIONARY request, LPDICTIONARY response);
+    void Call(LPDICTIONARY request, LPDICTIONARY response);
 
 // Implementation
 private:

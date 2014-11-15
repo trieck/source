@@ -11,11 +11,11 @@
 
 class TorrentWriter {
 private:
-	TorrentWriter();
-	virtual ~TorrentWriter();
+    TorrentWriter();
+    virtual ~TorrentWriter();
 
 public:
-	static void Write(LPDICTIONARY torrent, CArchive &ar);
+    static void Write(LPDICTIONARY torrent, CArchive &ar);
 };
 
 #endif // !defined(AFX_TORRENTWRITER_H__652C9543_3590_4110_8466_D1C2A61C832A__INCLUDED_)

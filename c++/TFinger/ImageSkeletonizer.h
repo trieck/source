@@ -5,20 +5,20 @@
 
 class ImageSkeletonizer : public MorphologicalOperator {
 public:
-	ImageSkeletonizer();
-	~ImageSkeletonizer();
+    ImageSkeletonizer();
+    ~ImageSkeletonizer();
 
-	void Skeletonize(CImage &image);
+    void Skeletonize(CImage &image);
 
 private:
-	UINT Neighbors(CImage &image, int x, int y);
-	UINT Transitions(CImage &image, int x, int y);
-	bool BkgndCond(CImage &image, int x, int y, int sub);
-	void ZhangSuen(CImage &image);
-	UINT ZhangSuen(CImage &image, int sub);
-	bool ZhangSuenCond(CImage &image, int x, int y, int sub);
-	void Skeletonize(CImage &image, Kernel *pKernel);
+    UINT Neighbors(CImage &image, int x, int y);
+    UINT Transitions(CImage &image, int x, int y);
+    bool BkgndCond(CImage &image, int x, int y, int sub);
+    void ZhangSuen(CImage &image);
+    UINT ZhangSuen(CImage &image, int sub);
+    bool ZhangSuenCond(CImage &image, int x, int y, int sub);
+    void Skeletonize(CImage &image, Kernel *pKernel);
 
-	typedef std::vector<Kernel*> KernelVec;
-	KernelVec m_kernels;
+    typedef std::vector<Kernel*> KernelVec;
+    KernelVec m_kernels;
 };

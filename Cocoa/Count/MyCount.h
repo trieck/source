@@ -4,8 +4,8 @@
 
 @interface MyCount :
 NSObject {
-	IBOutlet id inputText;
-	IBOutlet id outputText;
+    IBOutlet id inputText;
+    IBOutlet id outputText;
 }
 - (IBAction)setCount:
 (id)sender;

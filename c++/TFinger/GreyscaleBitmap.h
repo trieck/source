@@ -6,13 +6,13 @@
 
 class GreyscaleBitmap : public CImage {
 public:
-	GreyscaleBitmap();
-	virtual ~GreyscaleBitmap();
+    GreyscaleBitmap();
+    virtual ~GreyscaleBitmap();
 
-	virtual BOOL LoadBitmap(LPCTSTR szFilename);
+    virtual BOOL LoadBitmap(LPCTSTR szFilename);
 
 private:
-	BOOL Monochrome();
+    BOOL Monochrome();
 };
 
 

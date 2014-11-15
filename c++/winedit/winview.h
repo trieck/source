@@ -12,51 +12,51 @@
 
 class WinEditView : public CEditView {
 protected: // create from serialization only
-	WinEditView();
-	DECLARE_DYNCREATE(WinEditView)
+    WinEditView();
+    DECLARE_DYNCREATE(WinEditView)
 
 // Attributes
 public:
-	WinEditDoc* GetDocument();
+    WinEditDoc* GetDocument();
 
 // Operations
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(WinEditView)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(WinEditView)
 public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual void OnInitialUpdate();
+    virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual void OnInitialUpdate();
 protected:
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
-	//}}AFX_VIRTUAL
+    virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~WinEditView();
+    virtual ~WinEditView();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(WinEditView)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(WinEditView)
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	CFont m_font;
+    CFont m_font;
 };
 
 #ifndef _DEBUG  // debug version in winview.cpp
 inline WinEditDoc* WinEditView::GetDocument()
 {
-	return (WinEditDoc*)m_pDocument;
+    return (WinEditDoc*)m_pDocument;
 }
 #endif
 

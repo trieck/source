@@ -14,12 +14,12 @@
 // SettingsSheet
 
 class SettingsSheet : public CPropertySheet {
-	DECLARE_DYNAMIC(SettingsSheet)
+    DECLARE_DYNAMIC(SettingsSheet)
 
 // Construction
 public:
-	SettingsSheet(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
-	SettingsSheet(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+    SettingsSheet(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+    SettingsSheet(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
 
 // Attributes
 public:
@@ -29,24 +29,24 @@ public:
 
 protected:
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(SettingsSheet)
-	virtual void BuildPropPageArray();
-	//}}AFX_VIRTUAL
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(SettingsSheet)
+    virtual void BuildPropPageArray();
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~SettingsSheet();
+    virtual ~SettingsSheet();
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	//{{AFX_MSG(SettingsSheet)
-	// NOTE - the ClassWizard will add and remove member functions here.
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(SettingsSheet)
+    // NOTE - the ClassWizard will add and remove member functions here.
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	ColorsPage * m_pColorsPage;
-	GeneralPage *m_pGeneralPage;
+    ColorsPage * m_pColorsPage;
+    GeneralPage *m_pGeneralPage;
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -6,36 +6,36 @@
 class wxcdioFrame : public wxDocParentFrame {
 
 public:
-	wxcdioFrame(wxDocManager *manager,
-	            wxFrame *frame = NULL,
-	            wxWindowID id = wxID_ANY,
-	            const wxString& title =  WXCDIO_APP_NAME,
-	            const wxPoint& pos = wxDefaultPosition,
-	            const wxSize& size = wxSize(CX_FRAME, CY_FRAME),
-	            long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL,
-	            const wxString& name = wxFrameNameStr);
+    wxcdioFrame(wxDocManager *manager,
+                wxFrame *frame = NULL,
+                wxWindowID id = wxID_ANY,
+                const wxString& title =  WXCDIO_APP_NAME,
+                const wxPoint& pos = wxDefaultPosition,
+                const wxSize& size = wxSize(CX_FRAME, CY_FRAME),
+                long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL,
+                const wxString& name = wxFrameNameStr);
 
-	~wxcdioFrame();
+    ~wxcdioFrame();
 
-	DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 private:
-	wxMenuBar* m_menuBar;
-	wxMenu* m_menuFile;
-	wxMenu* m_menuHelp;
-	wxStatusBar* m_statusBar;
-	wxToolBar* m_toolBar;
+    wxMenuBar* m_menuBar;
+    wxMenu* m_menuFile;
+    wxMenu* m_menuHelp;
+    wxStatusBar* m_statusBar;
+    wxToolBar* m_toolBar;
 
-	enum { CX_FRAME = 600 };
-	enum { CY_FRAME = 400 };
+    enum { CX_FRAME = 600 };
+    enum { CY_FRAME = 400 };
 
-	enum { CX_TB_BMP_SIZE = 22 };
-	enum { CY_TB_BMP_SIZE = 22 };
+    enum { CX_TB_BMP_SIZE = 22 };
+    enum { CY_TB_BMP_SIZE = 22 };
 
-	void OnCloseFrame(wxCloseEvent& event);
-	void OnExitClick(wxCommandEvent& event);
+    void OnCloseFrame(wxCloseEvent& event);
+    void OnExitClick(wxCommandEvent& event);
 
-	void OnAbout(wxCommandEvent& event);
-	void OnVolInfo(wxCommandEvent& event);
+    void OnAbout(wxCommandEvent& event);
+    void OnVolInfo(wxCommandEvent& event);
 };
 
 #endif // __wxcdioframe__

@@ -13,26 +13,26 @@ class Memory {
 
 // Construction / Destruction
 public:
-	~Memory();
+    ~Memory();
 protected:
-	Memory();
+    Memory();
 
 // Interface
 public:
-	static Memory* instance();	// singleton
-	static UINT GetMemorySize() {
-		return MEMSIZE;
-	}
+    static Memory* instance();	// singleton
+    static UINT GetMemorySize() {
+        return MEMSIZE;
+    }
 
-	void Set(USHORT address, BYTE b);
-	BYTE Get(USHORT address);
+    void Set(USHORT address, BYTE b);
+    BYTE Get(USHORT address);
 
 // Implementation
 private:
-	enum { MEMSIZE = 1 << 16 };
-	typedef std::auto_ptr<Memory> MemoryPtr;
-	static MemoryPtr This;
-	LPBYTE memory;
+    enum { MEMSIZE = 1 << 16 };
+    typedef std::auto_ptr<Memory> MemoryPtr;
+    static MemoryPtr This;
+    LPBYTE memory;
 };
 
 #endif // __MEMORY_H__

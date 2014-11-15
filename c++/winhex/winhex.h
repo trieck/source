@@ -21,20 +21,20 @@
 
 class HexApp : public CWinApp {
 public:
-	HexApp();
+    HexApp();
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(HexApp)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(HexApp)
 public:
-	virtual BOOL InitInstance();
-	//}}AFX_VIRTUAL
+    virtual BOOL InitInstance();
+    //}}AFX_VIRTUAL
 
 // Implementation
-	//{{AFX_MSG(HexApp)
-	afx_msg void OnAppAbout();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(HexApp)
+    afx_msg void OnAppAbout();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

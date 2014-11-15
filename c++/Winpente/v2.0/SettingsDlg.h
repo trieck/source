@@ -12,12 +12,12 @@
 // CSettingsDlg
 
 class CSettingsDlg : public CPropertySheet {
-	DECLARE_DYNAMIC(CSettingsDlg)
+    DECLARE_DYNAMIC(CSettingsDlg)
 
 // Construction
 public:
-	CSettingsDlg(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
-	CSettingsDlg(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+    CSettingsDlg(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+    CSettingsDlg(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
 
 // Attributes
 public:
@@ -26,24 +26,24 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CSettingsDlg)
-	//}}AFX_VIRTUAL
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CSettingsDlg)
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CSettingsDlg();
+    virtual ~CSettingsDlg();
 
-	VOID Init();
-	// Generated message map functions
+    VOID Init();
+    // Generated message map functions
 protected:
-	VOID BuildPages();
-	//{{AFX_MSG(CSettingsDlg)
-	// NOTE - the ClassWizard will add and remove member functions here.
-	//}}AFX_MSG
+    VOID BuildPages();
+    //{{AFX_MSG(CSettingsDlg)
+    // NOTE - the ClassWizard will add and remove member functions here.
+    //}}AFX_MSG
 
-	CMiscPage * m_pMiscPage;
-	DECLARE_MESSAGE_MAP()
+    CMiscPage * m_pMiscPage;
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

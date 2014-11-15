@@ -13,16 +13,16 @@ typedef void ** PPVOID;
 
 DECLARE_INTERFACE_(IDrawObject, IUnknown)
 {
-	// IUnknown members
-	STDMETHOD(QueryInterface) (THIS_ REFIID, PPVOID) PURE;
-	STDMETHOD_(ULONG,AddRef)  (THIS) PURE;
-	STDMETHOD_(ULONG,Release) (THIS) PURE;
+    // IUnknown members
+    STDMETHOD(QueryInterface) (THIS_ REFIID, PPVOID) PURE;
+    STDMETHOD_(ULONG,AddRef)  (THIS) PURE;
+    STDMETHOD_(ULONG,Release) (THIS) PURE;
 
-	// IDrawObject members
-	STDMETHOD(Randomize)(THIS) PURE;
-	STDMETHOD(SetBounds)(THIS_ LPRECT) PURE;
-	STDMETHOD(SetColor)(THIS_ COLORREF) PURE;
-	STDMETHOD(GetColor)(THIS_ LPCOLORREF) PURE;
+    // IDrawObject members
+    STDMETHOD(Randomize)(THIS) PURE;
+    STDMETHOD(SetBounds)(THIS_ LPRECT) PURE;
+    STDMETHOD(SetColor)(THIS_ COLORREF) PURE;
+    STDMETHOD(GetColor)(THIS_ LPCOLORREF) PURE;
 };
 
 typedef IDrawObject *PDRAWOBJECT;

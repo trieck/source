@@ -17,7 +17,7 @@
 class CLEDMeter : public CProgressCtrl {
 // Construction
 public:
-	CLEDMeter();
+    CLEDMeter();
 
 // Attributes
 public:
@@ -26,35 +26,35 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CLEDMeter)
-	//}}AFX_VIRTUAL
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CLEDMeter)
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual UINT StepIt();
-	virtual ~CLEDMeter();
+    virtual UINT StepIt();
+    virtual ~CLEDMeter();
 
-	// Generated message map functions
-	virtual UINT SetStep(UINT nStep);
-	virtual UINT SetPos(UINT nPos);
-	virtual UINT OffsetPos(UINT nPos);
-	virtual void SetRange(UINT nLower, UINT nUpper);
+    // Generated message map functions
+    virtual UINT SetStep(UINT nStep);
+    virtual UINT SetPos(UINT nPos);
+    virtual UINT OffsetPos(UINT nPos);
+    virtual void SetRange(UINT nLower, UINT nUpper);
 protected:
-	COLORREF m_nBackColor;
-	UINT m_nGapSize;
-	VOID DrawChunks(CDC* pDC);
-	UINT m_nLowerRange;
-	UINT m_nUpperRange;
-	UINT m_nPosition;
-	UINT m_nStep;
-	//{{AFX_MSG(CLEDMeter)
-	afx_msg void OnPaint();
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnDestroy();
-	//}}AFX_MSG
+    COLORREF m_nBackColor;
+    UINT m_nGapSize;
+    VOID DrawChunks(CDC* pDC);
+    UINT m_nLowerRange;
+    UINT m_nUpperRange;
+    UINT m_nPosition;
+    UINT m_nStep;
+    //{{AFX_MSG(CLEDMeter)
+    afx_msg void OnPaint();
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnDestroy();
+    //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

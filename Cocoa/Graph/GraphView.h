@@ -13,8 +13,8 @@
 
 @interface GraphView :
 NSView {
-	NSBezierPath *grid;				// grid bezier path
-	AppController *appController;	// controller
+    NSBezierPath *grid;				// grid bezier path
+    AppController *appController;	// controller
 }
 
 // Methods

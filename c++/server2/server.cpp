@@ -14,20 +14,20 @@ static DWORD WINAPI ThreadProc(LPVOID lpParameter);
 
 int _tmain(int argc, TCHAR *argv[])
 {
-	if (argc < 2)
-		return 1;
+    if (argc < 2)
+        return 1;
 
-	if (!QueueUserWorkItem(ThreadProc, argv[1], WT_EXECUTEDEFAULT))
-		return 1;
+    if (!QueueUserWorkItem(ThreadProc, argv[1], WT_EXECUTEDEFAULT))
+        return 1;
 
-	Sleep(INFINITE);
+    Sleep(INFINITE);
 
-	return 0;
+    return 0;
 }
 
 DWORD WINAPI ThreadProc(LPVOID lpParameter)
 {
-	int sock = atoi((LPCTSTR)lpParameter);
+    int sock = atoi((LPCTSTR)lpParameter);
 
-	return 0;
+    return 0;
 }

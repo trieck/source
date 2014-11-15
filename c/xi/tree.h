@@ -18,12 +18,12 @@
 
 /* node in the parse tree */
 typedef struct Node {
-	int type;					/* type of node */
-	int nobj;					/* special */
-	int nargs;					/* number of children */
-	int lineno;					/* line number during parsing */
-	struct Node *next;			/* next node if chained */
-	struct Node *args[1];		/* variable size for child nodes */
+    int type;					/* type of node */
+    int nobj;					/* special */
+    int nargs;					/* number of children */
+    int lineno;					/* line number during parsing */
+    struct Node *next;			/* next node if chained */
+    struct Node *args[1];		/* variable size for child nodes */
 } Node, *PNODE;
 
 /* initialize tree */

@@ -13,7 +13,7 @@
 
 int main(int argc, char *argv[])
 {
-	x_init(argc, argv);
-	x_run();
-	return 0;
+    x_init(argc, argv);
+    x_run();
+    return 0;
 }

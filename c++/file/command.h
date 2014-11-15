@@ -13,23 +13,23 @@
 class CommandLine {
 public:
 // Construction / Destruction
-	CommandLine();
-	~CommandLine();
+    CommandLine();
+    ~CommandLine();
 
 // Interface
-	LPCTSTR getArg(int N) const;
-	int size() const;
+    LPCTSTR getArg(int N) const;
+    int size() const;
 
 // Implementation
 protected:
 private:
-	int m_size;
+    int m_size;
 };
 /////////////////////////////////////////////////////////////////////////////
 
 inline int CommandLine::size() const
 {
-	return m_size;
+    return m_size;
 }
 
 #endif // __COMMAND_H__

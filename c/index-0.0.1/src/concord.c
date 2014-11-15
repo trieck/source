@@ -65,39 +65,39 @@ static uint64_t insertpage(Concord_t * concord);
  */
 Concord_t *concord_open(const char *filename, int mode)
 {
-	Concord_t *concord;
-	FILE *fp;
-	const char *pm;
+    Concord_t *concord;
+    FILE *fp;
+    const char *pm;
 
-	/*
-	 * check for valid open mode
-	 */
-	switch (mode) {
-	case OM_READ_ONLY:
-		pm = "r";
-		break;
-	case OM_WRITE:
-		pm = "w";
-		break;
-	default:		/* unknown */
-		return NULL;
-	}
+    /*
+     * check for valid open mode
+     */
+    switch (mode) {
+    case OM_READ_ONLY:
+        pm = "r";
+        break;
+    case OM_WRITE:
+        pm = "w";
+        break;
+    default:		/* unknown */
+        return NULL;
+    }
 
-	/*
-	 * open underlying file
-	 */
-	if ((fp = fopen(filename, pm)) == NULL)
-		return NULL;	/* unable to open file */
+    /*
+     * open underlying file
+     */
+    if ((fp = fopen(filename, pm)) == NULL)
+        return NULL;	/* unable to open file */
 
-	/*
-	 * allocate concordance struct
-	 */
-	concord = (Concord_t *) malloc(sizeof(Concord_t));
-	concord->fp = fp;
+    /*
+     * allocate concordance struct
+     */
+    concord = (Concord_t *) malloc(sizeof(Concord_t));
+    concord->fp = fp;
 
-	memset(concord->buf, 0, BLOCK_SIZE);
+    memset(concord->buf, 0, BLOCK_SIZE);
 
-	return concord;
+    return concord;
 }
 
 /*
@@ -105,11 +105,11 @@ Concord_t *concord_open(const char *filename, int mode)
  */
 void concord_close(Concord_t * concord)
 {
-	if (concord->fp != NULL) {
-		fclose(concord->fp);
-	}
+    if (concord->fp != NULL) {
+        fclose(concord->fp);
+    }
 
-	free(concord);
+    free(concord);
 }
 
 /*
@@ -117,7 +117,7 @@ void concord_close(Concord_t * concord)
  */
 int readpage(Concord_t * concord, uint64_t pageno)
 {
-	return readblock(concord->fp, pageno, concord->buf);
+    return readblock(concord->fp, pageno, concord->buf);
 }
 
 /*
@@ -125,19 +125,19 @@ int readpage(Concord_t * concord, uint64_t pageno)
  */
 int writepage(Concord_t * concord, uint64_t pageno)
 {
-	return writeblock(concord->fp, pageno, concord->buf);
+    return writeblock(concord->fp, pageno, concord->buf);
 }
 
 /* insert a page */
 uint64_t insertpage(Concord_t * concord)
 {
-	ConcordHeader_t *header = (ConcordHeader_t *) concord->buf;
-	header->pageno = concord->npages;
+    ConcordHeader_t *header = (ConcordHeader_t *) concord->buf;
+    header->pageno = concord->npages;
 
-	if (!insertblock(concord->fp, concord->buf))
-		return 0;
+    if (!insertblock(concord->fp, concord->buf))
+        return 0;
 
-	return ++(concord->npages);
+    return ++(concord->npages);
 }
 
 void concord_insert(Concord_t * concord, const char *term, uint32_t docid)

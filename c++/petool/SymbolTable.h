@@ -10,8 +10,8 @@
 
 class SymbolTable {
 public:
-	SymbolTable();
-	~SymbolTable();
+    SymbolTable();
+    ~SymbolTable();
 };
 
 #endif // __SYMBOLTABLE_H__

@@ -23,21 +23,21 @@ static char lexbuf[BSIZE];
  */
 const char *gettok(void)
 {
-	int c;
-	for (;;) {
-		c = fgetc(fpin);
-		if (isalnum(c) || c == '_') {
-			int b = 0;
-			while (isalnum(c) || c == '_') {
-				lexbuf[b++] = c;
-				if (b >= BSIZE)
-					error("lexical buffer overflow.");
-				c = fgetc(fpin);
-			}
-			lexbuf[b] = '\0';
-			return lexbuf;
-		} else if (c == EOF) {
-			return NULL;
-		}
-	}
+    int c;
+    for (;;) {
+        c = fgetc(fpin);
+        if (isalnum(c) || c == '_') {
+            int b = 0;
+            while (isalnum(c) || c == '_') {
+                lexbuf[b++] = c;
+                if (b >= BSIZE)
+                    error("lexical buffer overflow.");
+                c = fgetc(fpin);
+            }
+            lexbuf[b] = '\0';
+            return lexbuf;
+        } else if (c == EOF) {
+            return NULL;
+        }
+    }
 }

@@ -10,7 +10,7 @@
 
 NetError::NetError()
 {
-	create();
+    create();
 }
 
 NetError::~NetError()
@@ -19,35 +19,35 @@ NetError::~NetError()
 
 NetError::NetError(const NetError & E)
 {
-	m_errorcode = E.m_errorcode;
-	m_description = E.m_description;
-	m_provider = E.m_provider;
+    m_errorcode = E.m_errorcode;
+    m_description = E.m_description;
+    m_provider = E.m_provider;
 }
 
 NetError & NetError::operator = (const NetError & E)
 {
-	if (this != & E) {
-		m_errorcode = E.m_errorcode;
-		m_description = E.m_description;
-		m_provider = E.m_provider;
-	}
+    if (this != & E) {
+        m_errorcode = E.m_errorcode;
+        m_description = E.m_description;
+        m_provider = E.m_provider;
+    }
 
-	return *this;
+    return *this;
 }
 
 void NetError::create()
 {
-	TCHAR provider[256] = "";
-	TCHAR description[256] = "";
+    TCHAR provider[256] =_T("");
+    TCHAR description[256] = _T("");
 
-	WNetGetLastError(&m_errorcode,
-	                 description,
-	                 256,
-	                 provider,
-	                 256);
+    WNetGetLastError(&m_errorcode,
+                     description,
+                     256,
+                     provider,
+                     256);
 
-	m_description = description;
-	m_provider = provider;
+    m_description = description;
+    m_provider = provider;
 }
 
 

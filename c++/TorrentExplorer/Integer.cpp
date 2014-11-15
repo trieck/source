@@ -22,7 +22,7 @@ Integer::Integer(__int64 val) : value(val)
 
 Integer::Integer(const Integer &rhs)
 {
-	*this = rhs;
+    *this = rhs;
 }
 
 Integer::~Integer()
@@ -31,11 +31,11 @@ Integer::~Integer()
 
 Integer &Integer::operator =(const Integer &rhs)
 {
-	if (this != &rhs) {
-		value = rhs.value;
-	}
+    if (this != &rhs) {
+        value = rhs.value;
+    }
 
-	return *this;
+    return *this;
 }
 
 

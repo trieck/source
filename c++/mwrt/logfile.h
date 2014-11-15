@@ -12,16 +12,16 @@
 class LogFile {
 // Construction / Destruction
 public:
-	LogFile();
-	~LogFile();
+    LogFile();
+    ~LogFile();
 
 // Interface
-	bool open(LPCTSTR filename);
-	bool log(LPCTSTR fmt, ...);
-	void close();
+    bool open(LPCTSTR filename);
+    bool log(LPCTSTR fmt, ...);
+    void close();
 
 private:
-	HANDLE hFile;
+    HANDLE hFile;
 };
 /////////////////////////////////////////////////////////////////////////////
 

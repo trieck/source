@@ -38,9 +38,9 @@ IMPLEMENT_DYNCREATE(MusicDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(MusicDoc, CDocument)
 
-	//{{AFX_MSG_MAP(MusicDoc)
+    //{{AFX_MSG_MAP(MusicDoc)
 
-	//}}AFX_MSG_MAP
+    //}}AFX_MSG_MAP
 
 END_MESSAGE_MAP()
 
@@ -72,13 +72,13 @@ BOOL MusicDoc::OnNewDocument()
 
 {
 
-	if (!CDocument::OnNewDocument())
+    if (!CDocument::OnNewDocument())
 
-		return FALSE;
+        return FALSE;
 
 
 
-	return TRUE;
+    return TRUE;
 
 }
 
@@ -98,17 +98,17 @@ void MusicDoc::Serialize(CArchive& ar)
 
 {
 
-	if (ar.IsStoring())
+    if (ar.IsStoring())
 
-	{
+    {
 
-	}
+    }
 
-	else
+    else
 
-	{
+    {
 
-	}
+    }
 
 }
 
@@ -126,7 +126,7 @@ void MusicDoc::AssertValid() const
 
 {
 
-	CDocument::AssertValid();
+    CDocument::AssertValid();
 
 }
 
@@ -136,7 +136,7 @@ void MusicDoc::Dump(CDumpContext& dc) const
 
 {
 
-	CDocument::Dump(dc);
+    CDocument::Dump(dc);
 
 }
 

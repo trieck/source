@@ -12,49 +12,49 @@
 
 class Emu6502View : public CEditView {
 protected: // create from serialization only
-	Emu6502View();
-	DECLARE_DYNCREATE(Emu6502View)
+    Emu6502View();
+    DECLARE_DYNCREATE(Emu6502View)
 
 // Attributes
 public:
-	Emu6502Doc* GetDocument();
+    Emu6502Doc* GetDocument();
 
 // Operations
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(Emu6502View)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(Emu6502View)
 public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual void OnInitialUpdate();
-	//}}AFX_VIRTUAL
+    virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual void OnInitialUpdate();
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~Emu6502View();
+    virtual ~Emu6502View();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(Emu6502View)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(Emu6502View)
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	CFont m_Font;
+    CFont m_Font;
 };
 
 #ifndef _DEBUG  // debug version in emu6502View.cpp
 inline Emu6502Doc* Emu6502View::GetDocument()
 {
-	return (Emu6502Doc*)m_pDocument;
+    return (Emu6502Doc*)m_pDocument;
 }
 #endif
 

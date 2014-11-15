@@ -23,8 +23,8 @@ static char unescape (const char c);
 //
 Machine::Machine ()
 {
-	pc = NULL;
-	returning = false;
+    pc = NULL;
+    returning = false;
 }
 
 //
@@ -39,13 +39,13 @@ Machine::~Machine()
 //
 void Machine::run(const char *input)
 {
-	for (const char** pp = &input; **pp; ) {
-		init();
-		compiler.compile(pp);
-		pc = program;
-		returning = false;
-		execute(pc);
-	}
+    for (const char** pp = &input; **pp; ) {
+        init();
+        compiler.compile(pp);
+        pc = program;
+        returning = false;
+        execute(pc);
+    }
 }
 
 //
@@ -53,9 +53,9 @@ void Machine::run(const char *input)
 //
 void Machine::init()
 {
-	program.init();
-	machinestack.reset();
-	framestack.reset();
+    program.init();
+    machinestack.reset();
+    framestack.reset();
 }
 
 //
@@ -63,15 +63,15 @@ void Machine::init()
 //
 void Machine::execute(const Instr * p)
 {
-	try {
-		for (pc = p; *pc != STOP && !returning; )
-			(this->*(*pc++))();
-	} catch (const Warning & w) {
-		cerr << w << endl;
-	} catch (const Error & e) {
-		cerr << e << endl;
-		exit(1);
-	}
+    try {
+        for (pc = p; *pc != STOP && !returning; )
+            (this->*(*pc++))();
+    } catch (const Warning & w) {
+        cerr << w << endl;
+    } catch (const Error & e) {
+        cerr << e << endl;
+        exit(1);
+    }
 }
 
 //
@@ -79,13 +79,13 @@ void Machine::execute(const Instr * p)
 //
 void Machine::plus()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = d1.value + d2.value;
+    Datum d3;
+    d3.value = d1.value + d2.value;
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -93,13 +93,13 @@ void Machine::plus()
 //
 void Machine::minus()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = d2.value - d1.value;
+    Datum d3;
+    d3.value = d2.value - d1.value;
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -107,11 +107,11 @@ void Machine::minus()
 //
 void Machine::unaryminus()
 {
-	Datum d = machinestack.pop();
+    Datum d = machinestack.pop();
 
-	d.value = - d.value;
+    d.value = - d.value;
 
-	machinestack.push(d);
+    machinestack.push(d);
 }
 
 //
@@ -119,13 +119,13 @@ void Machine::unaryminus()
 //
 void Machine::mult()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = d2.value * d1.value;
+    Datum d3;
+    d3.value = d2.value * d1.value;
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -133,16 +133,16 @@ void Machine::mult()
 //
 void Machine::divide()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	if (d1.value == 0)
-		throw Warning(W_DIVIDEBYZERO);
+    if (d1.value == 0)
+        throw Warning(W_DIVIDEBYZERO);
 
-	Datum d3;
-	d3.value = d2.value / d1.value;
+    Datum d3;
+    d3.value = d2.value / d1.value;
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -150,16 +150,16 @@ void Machine::divide()
 //
 void Machine::mod()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	if (d1.value == 0)
-		throw Warning(W_DIVIDEBYZERO);
+    if (d1.value == 0)
+        throw Warning(W_DIVIDEBYZERO);
 
-	Datum d3;
-	d3.value = int(d2.value) % int(d1.value);
+    Datum d3;
+    d3.value = int(d2.value) % int(d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -167,19 +167,19 @@ void Machine::mod()
 //
 void Machine::assign()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	if (d2.symbol == NULL)
-		throw Warning(W_LITERALASSIGN);
+    if (d2.symbol == NULL)
+        throw Warning(W_LITERALASSIGN);
 
-	if (d2.symbol->type != variable && d2.symbol->type != undefined)
-		throw Warning(W_NONVARASSIGN);
+    if (d2.symbol->type != variable && d2.symbol->type != undefined)
+        throw Warning(W_NONVARASSIGN);
 
-	d2.symbol->value = d1.value;
-	d2.symbol->type = variable;
+    d2.symbol->value = d1.value;
+    d2.symbol->type = variable;
 
-	machinestack.push(d1);
+    machinestack.push(d1);
 }
 
 //
@@ -187,9 +187,9 @@ void Machine::assign()
 //
 void Machine::varpush()
 {
-	Datum d;
-	d.symbol = *(Symbol **)pc++;
-	machinestack.push(d);
+    Datum d;
+    d.symbol = *(Symbol **)pc++;
+    machinestack.push(d);
 }
 
 //
@@ -197,9 +197,9 @@ void Machine::varpush()
 //
 void Machine::constpush()
 {
-	Datum d;
-	d.value = (*(Symbol**)pc++)->value;
-	machinestack.push(d);
+    Datum d;
+    d.value = (*(Symbol**)pc++)->value;
+    machinestack.push(d);
 }
 
 //
@@ -207,9 +207,9 @@ void Machine::constpush()
 //
 void Machine::strpush()
 {
-	Datum d;
-	d.symbol = *(Symbol **)pc++;
-	machinestack.push(d);
+    Datum d;
+    d.symbol = *(Symbol **)pc++;
+    machinestack.push(d);
 }
 
 //
@@ -217,15 +217,15 @@ void Machine::strpush()
 //
 void Machine::eval()
 {
-	Datum d = machinestack.pop();
-	if (d.symbol == NULL)
-		throw Warning(W_EVALLITERAL);
+    Datum d = machinestack.pop();
+    if (d.symbol == NULL)
+        throw Warning(W_EVALLITERAL);
 
-	if (d.symbol->type == undefined)
-		throw Warning(W_UNDEFINEDVAR);
+    if (d.symbol->type == undefined)
+        throw Warning(W_UNDEFINEDVAR);
 
-	d.value = d.symbol->value;
-	machinestack.push(d);
+    d.value = d.symbol->value;
+    machinestack.push(d);
 }
 
 //
@@ -233,43 +233,43 @@ void Machine::eval()
 //
 void Machine::printf()
 {
-	int nargs = *(int *)pc++;
+    int nargs = *(int *)pc++;
 
-	// first argument is the deepest
-	Datum * dp = machinestack.stackp - nargs;
-	const char * format = (dp++)->symbol->str;
+    // first argument is the deepest
+    Datum * dp = machinestack.stackp - nargs;
+    const char * format = (dp++)->symbol->str;
 
-	for ( ; format[0] != '\0'; *format++) {
-		if (format[0] == '%') {
-			switch (format[1]) {
-			case 'c':
-				cout << (char)(dp++)->value;
-				format++;
-				break;
-			case 'd':
-				cout << (int)(dp++)->value;
-				format++;
-				break;
-			case 'f':
-				cout << (float)(dp++)->value;
-				format++;
-				break;
-			case 's':
-				cout << (dp++)->symbol->str;
-				format++;
-				break;
-			default:
-				break;
-			}
-		} else if (format[0] == '\\') {
-			cout << unescape(format[1]);
-			format++;
-		} else cout << format[0];
-	}
+    for ( ; format[0] != '\0'; *format++) {
+        if (format[0] == '%') {
+            switch (format[1]) {
+            case 'c':
+                cout << (char)(dp++)->value;
+                format++;
+                break;
+            case 'd':
+                cout << (int)(dp++)->value;
+                format++;
+                break;
+            case 'f':
+                cout << (float)(dp++)->value;
+                format++;
+                break;
+            case 's':
+                cout << (dp++)->symbol->str;
+                format++;
+                break;
+            default:
+                break;
+            }
+        } else if (format[0] == '\\') {
+            cout << unescape(format[1]);
+            format++;
+        } else cout << format[0];
+    }
 
-	// pop the arguments from the stack
-	for (int i = 0; i < nargs; i++)
-		machinestack.pop();
+    // pop the arguments from the stack
+    for (int i = 0; i < nargs; i++)
+        machinestack.pop();
 }
 
 //
@@ -277,13 +277,13 @@ void Machine::printf()
 //
 void Machine::pow()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = ::pow(d2.value, d1.value);
+    Datum d3;
+    d3.value = ::pow(d2.value, d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -291,12 +291,12 @@ void Machine::pow()
 //
 void Machine::log()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::log(d1.value);
+    Datum d2;
+    d2.value = ::log(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -304,12 +304,12 @@ void Machine::log()
 //
 void Machine::log10()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::log10(d1.value);
+    Datum d2;
+    d2.value = ::log10(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -317,13 +317,13 @@ void Machine::log10()
 //
 void Machine::fmod()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = ::fmod(d2.value, d1.value);
+    Datum d3;
+    d3.value = ::fmod(d2.value, d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -331,12 +331,12 @@ void Machine::fmod()
 //
 void Machine::sin()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::sin(d1.value);
+    Datum d2;
+    d2.value = ::sin(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -344,12 +344,12 @@ void Machine::sin()
 //
 void Machine::asin()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::asin(d1.value);
+    Datum d2;
+    d2.value = ::asin(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -357,12 +357,12 @@ void Machine::asin()
 //
 void Machine::sinh()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::sinh(d1.value);
+    Datum d2;
+    d2.value = ::sinh(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 
@@ -371,12 +371,12 @@ void Machine::sinh()
 //
 void Machine::cos()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::cos(d1.value);
+    Datum d2;
+    d2.value = ::cos(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -384,12 +384,12 @@ void Machine::cos()
 //
 void Machine::acos()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::acos(d1.value);
+    Datum d2;
+    d2.value = ::acos(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -397,12 +397,12 @@ void Machine::acos()
 //
 void Machine::cosh()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::cosh(d1.value);
+    Datum d2;
+    d2.value = ::cosh(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -410,12 +410,12 @@ void Machine::cosh()
 //
 void Machine::tan()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::tan(d1.value);
+    Datum d2;
+    d2.value = ::tan(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -423,12 +423,12 @@ void Machine::tan()
 //
 void Machine::atan()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::atan(d1.value);
+    Datum d2;
+    d2.value = ::atan(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -436,12 +436,12 @@ void Machine::atan()
 //
 void Machine::tanh()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::tanh(d1.value);
+    Datum d2;
+    d2.value = ::tanh(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -449,12 +449,12 @@ void Machine::tanh()
 //
 void Machine::sqrt()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::sqrt(d1.value);
+    Datum d2;
+    d2.value = ::sqrt(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -462,12 +462,12 @@ void Machine::sqrt()
 //
 void Machine::iint ()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = int(d1.value);
+    Datum d2;
+    d2.value = int(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -475,12 +475,12 @@ void Machine::iint ()
 //
 void Machine::exp()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::exp(d1.value);
+    Datum d2;
+    d2.value = ::exp(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -488,12 +488,12 @@ void Machine::exp()
 //
 void Machine::ceil()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::ceil(d1.value);
+    Datum d2;
+    d2.value = ::ceil(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -501,12 +501,12 @@ void Machine::ceil()
 //
 void Machine::floor()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::floor(d1.value);
+    Datum d2;
+    d2.value = ::floor(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -514,12 +514,12 @@ void Machine::floor()
 //
 void Machine::abs()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = ::fabs(d1.value);
+    Datum d2;
+    d2.value = ::fabs(d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -527,13 +527,13 @@ void Machine::abs()
 //
 void Machine::shiftleft()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = int(d2.value) << int(d1.value);
+    Datum d3;
+    d3.value = int(d2.value) << int(d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -541,13 +541,13 @@ void Machine::shiftleft()
 //
 void Machine::shiftright()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = int(d2.value) >> int(d1.value);
+    Datum d3;
+    d3.value = int(d2.value) >> int(d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -555,22 +555,22 @@ void Machine::shiftright()
 //
 void Machine::whilecode()
 {
-	const Instr *savepc = pc;			// loop body
+    const Instr *savepc = pc;			// loop body
 
-	execute(savepc + 2);                // condition
+    execute(savepc + 2);                // condition
 
-	Datum d = machinestack.pop();
-	while (d.value) {
-		execute(*(Instr **)(savepc));	// loop body
-		if (returning)
-			break;
+    Datum d = machinestack.pop();
+    while (d.value) {
+        execute(*(Instr **)(savepc));	// loop body
+        if (returning)
+            break;
 
-		execute(savepc + 2);			// condition
-		d = machinestack.pop();
-	}
+        execute(savepc + 2);			// condition
+        d = machinestack.pop();
+    }
 
-	if (!returning)
-		pc = *((Instr **)(savepc + 1));	// next statement
+    if (!returning)
+        pc = *((Instr **)(savepc + 1));	// next statement
 }
 
 //
@@ -578,18 +578,18 @@ void Machine::whilecode()
 //
 void Machine::ifcode()
 {
-	const Instr *savepc = pc;			// then part
+    const Instr *savepc = pc;			// then part
 
-	execute(savepc + 3);				// condition
+    execute(savepc + 3);				// condition
 
-	Datum d = machinestack.pop();
-	if (d.value)
-		execute(*((Instr **)(savepc)));
-	else if (*((Instr **)(savepc + 1)))	// else part
-		execute(*((Instr **)(savepc + 1)));
+    Datum d = machinestack.pop();
+    if (d.value)
+        execute(*((Instr **)(savepc)));
+    else if (*((Instr **)(savepc + 1)))	// else part
+        execute(*((Instr **)(savepc + 1)));
 
-	if (!returning)
-		pc = *((Instr **)(savepc + 2));	// next statement
+    if (!returning)
+        pc = *((Instr **)(savepc + 2));	// next statement
 }
 
 //
@@ -597,13 +597,13 @@ void Machine::ifcode()
 //
 void Machine::lt()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = double(d2.value < d1.value);
+    Datum d3;
+    d3.value = double(d2.value < d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -611,13 +611,13 @@ void Machine::lt()
 //
 void Machine::gt()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = double(d2.value > d1.value);
+    Datum d3;
+    d3.value = double(d2.value > d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -625,13 +625,13 @@ void Machine::gt()
 //
 void Machine::le()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = double(d2.value <= d1.value);
+    Datum d3;
+    d3.value = double(d2.value <= d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -639,13 +639,13 @@ void Machine::le()
 //
 void Machine::ge()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = double(d2.value >= d1.value);
+    Datum d3;
+    d3.value = double(d2.value >= d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -653,13 +653,13 @@ void Machine::ge()
 //
 void Machine::eq()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = double(d2.value == d1.value);
+    Datum d3;
+    d3.value = double(d2.value == d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -667,13 +667,13 @@ void Machine::eq()
 //
 void Machine::ne()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = double(d2.value != d1.value);
+    Datum d3;
+    d3.value = double(d2.value != d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -681,12 +681,12 @@ void Machine::ne()
 //
 void Machine::not()
 {
-	Datum d1 = machinestack.pop();
+    Datum d1 = machinestack.pop();
 
-	Datum d2;
-	d2.value = double(!d1.value);
+    Datum d2;
+    d2.value = double(!d1.value);
 
-	machinestack.push(d2);
+    machinestack.push(d2);
 }
 
 //
@@ -694,7 +694,7 @@ void Machine::not()
 //
 void Machine::pop()
 {
-	machinestack.pop();
+    machinestack.pop();
 }
 
 //
@@ -702,13 +702,13 @@ void Machine::pop()
 //
 void Machine::bitand()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = int(d2.value) & int(d1.value);
+    Datum d3;
+    d3.value = int(d2.value) & int(d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -716,13 +716,13 @@ void Machine::bitand()
 //
 void Machine::logand()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = d2.value && d1.value;
+    Datum d3;
+    d3.value = d2.value && d1.value;
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -730,13 +730,13 @@ void Machine::logand()
 //
 void Machine::bitor()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = int(d2.value) | int(d1.value);
+    Datum d3;
+    d3.value = int(d2.value) | int(d1.value);
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -744,13 +744,13 @@ void Machine::bitor()
 //
 void Machine::logor()
 {
-	Datum d1 = machinestack.pop();
-	Datum d2 = machinestack.pop();
+    Datum d1 = machinestack.pop();
+    Datum d2 = machinestack.pop();
 
-	Datum d3;
-	d3.value = d2.value || d1.value;
+    Datum d3;
+    d3.value = d2.value || d1.value;
 
-	machinestack.push(d3);
+    machinestack.push(d3);
 }
 
 //
@@ -758,19 +758,19 @@ void Machine::logor()
 //
 void Machine::call()	// call a function
 {
-	const Symbol * sp = *(Symbol **)pc;
+    const Symbol * sp = *(Symbol **)pc;
 
-	Frame frame;
-	frame.sp = sp;
-	frame.nargs = *(int *)(pc + 1);
-	frame.retpc = pc + 2;
-	frame.argn = machinestack.stackp - 1;
+    Frame frame;
+    frame.sp = sp;
+    frame.nargs = *(int *)(pc + 1);
+    frame.retpc = pc + 2;
+    frame.argn = machinestack.stackp - 1;
 
-	framestack.push(frame);
+    framestack.push(frame);
 
-	execute(sp->defn);
+    execute(sp->defn);
 
-	returning = false;
+    returning = false;
 }
 
 //
@@ -778,12 +778,12 @@ void Machine::call()	// call a function
 //
 void Machine::funcret()
 {
-	if (framestack.framep->sp->type == procedure)
-		throw Warning(W_PROCRETVAL);
+    if (framestack.framep->sp->type == procedure)
+        throw Warning(W_PROCRETVAL);
 
-	Datum d = machinestack.pop();
-	ret();
-	machinestack.push(d);
+    Datum d = machinestack.pop();
+    ret();
+    machinestack.push(d);
 }
 
 //
@@ -791,10 +791,10 @@ void Machine::funcret()
 //
 void Machine::procret()
 {
-	if (framestack.framep->sp->type == function)
-		throw Warning(W_FUNCRETNOVAL);
+    if (framestack.framep->sp->type == function)
+        throw Warning(W_FUNCRETNOVAL);
 
-	ret();
+    ret();
 }
 
 //
@@ -802,14 +802,14 @@ void Machine::procret()
 //
 void Machine::ret()	// return from a function / procedure
 {
-	for (int i = 0; i < framestack.framep->nargs; i++) {
-		machinestack.pop();
-	}
+    for (int i = 0; i < framestack.framep->nargs; i++) {
+        machinestack.pop();
+    }
 
-	pc = framestack.framep->retpc;
-	framestack.framep--;
+    pc = framestack.framep->retpc;
+    framestack.framep--;
 
-	returning = true;
+    returning = true;
 }
 
 //
@@ -817,9 +817,9 @@ void Machine::ret()	// return from a function / procedure
 //
 void Machine::arg()
 {
-	Datum d;
-	d.value = *getarg();
-	machinestack.push(d);
+    Datum d;
+    d.value = *getarg();
+    machinestack.push(d);
 }
 
 //
@@ -827,9 +827,9 @@ void Machine::arg()
 //
 void Machine::argassign()
 {
-	Datum d = machinestack.pop();
-	machinestack.push(d);
-	*getarg() = d.value;
+    Datum d = machinestack.pop();
+    machinestack.push(d);
+    *getarg() = d.value;
 }
 
 //
@@ -837,22 +837,22 @@ void Machine::argassign()
 //
 double * Machine::getarg()
 {
-	int nargs = *(int *)pc++;
-	if (nargs > framestack.framep->nargs)
-		throw Warning(W_NOTENOUGHARGS);
+    int nargs = *(int *)pc++;
+    if (nargs > framestack.framep->nargs)
+        throw Warning(W_NOTENOUGHARGS);
 
-	return &framestack.framep->argn[nargs - framestack.framep->nargs].value;
+    return &framestack.framep->argn[nargs - framestack.framep->nargs].value;
 }
 
 // Helper functions
 
 char unescape (const char c)
 {
-	static const char transtab[] = "b\bf\fn\nr\rt\t";
+    static const char transtab[] = "b\bf\fn\nr\rt\t";
 
-	if (strchr(transtab, c)) {
-		return strchr(transtab, c)[1];
-	}
+    if (strchr(transtab, c)) {
+        return strchr(transtab, c)[1];
+    }
 
-	return c;
+    return c;
 }

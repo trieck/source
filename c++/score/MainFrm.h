@@ -12,9 +12,9 @@
 class MainFrame : public CFrameWnd {
 
 public:
-	MainFrame();
+    MainFrame();
 protected:
-	DECLARE_DYNCREATE(MainFrame)
+    DECLARE_DYNCREATE(MainFrame)
 
 // Attributes
 public:
@@ -23,39 +23,39 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(MainFrame)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(MainFrame)
 public:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	//}}AFX_VIRTUAL
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~MainFrame();
+    virtual ~MainFrame();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:  // control bar embedded members
-	CStatusBar  m_wndStatusBar;
-	CToolBar    m_wndToolBar;
-	CReBar      m_wndReBar;
-	CDialogBar  m_wndDlgBar;
+    CStatusBar  m_wndStatusBar;
+    CToolBar    m_wndToolBar;
+    CReBar      m_wndReBar;
+    CDialogBar  m_wndDlgBar;
 
-	void BuildInstruments();
-	void SetActiveInstrument();
+    void BuildInstruments();
+    void SetActiveInstrument();
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(MainFrame)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnInstrumentChange();
-	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
-	afx_msg void OnClose();
-	afx_msg void OnDropFiles(HDROP hDropInfo);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(MainFrame)
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnInstrumentChange();
+    afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
+    afx_msg void OnClose();
+    afx_msg void OnDropFiles(HDROP hDropInfo);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

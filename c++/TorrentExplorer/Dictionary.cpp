@@ -24,63 +24,63 @@ Dictionary::Dictionary()
 
 Dictionary::~Dictionary()
 {
-	CString key;
-	LPTORRENTOBJECT val;
+    CString key;
+    LPTORRENTOBJECT val;
 
-	POSITION pos = map.GetStartPosition();
-	while (pos != NULL) {
-		map.GetNextAssoc(pos, key, val);
-		delete val;
-	}
+    POSITION pos = map.GetStartPosition();
+    while (pos != NULL) {
+        map.GetNextAssoc(pos, key, val);
+        delete val;
+    }
 }
 
 void Dictionary::Set(LPCSTR k, LPTORRENTOBJECT v)
 {
-	LPTORRENTOBJECT o;
-	if (map.Lookup(k, o))
-		delete o;
+    LPTORRENTOBJECT o;
+    if (map.Lookup(k, o))
+        delete o;
 
-	map[k] = v;
+    map[k] = v;
 }
 
 LPTORRENTOBJECT Dictionary::Get(LPCSTR k) const
 {
-	LPTORRENTOBJECT v;
-	if (map.Lookup(k, v))
-		return v;
+    LPTORRENTOBJECT v;
+    if (map.Lookup(k, v))
+        return v;
 
-	return NULL;
+    return NULL;
 }
 
 LPCSTR Dictionary::GetString(LPCSTR k) const
 {
-	LPTORRENTOBJECT v = Get(k);
-	if (v == NULL) return NULL;
-	if (v->GetElementType() != ET_STRING)
-		return NULL;
-	return (LPCSTR)*(LPSTRING)v;
+    LPTORRENTOBJECT v = Get(k);
+    if (v == NULL) return NULL;
+    if (v->GetElementType() != ET_STRING)
+        return NULL;
+    return (LPCSTR)*(LPSTRING)v;
 }
 
 KeyVec Dictionary::GetKeys() const
 {
-	KeyVec keys;
-	CString key;
-	LPTORRENTOBJECT val;
+    KeyVec keys;
+    CString key;
+    LPTORRENTOBJECT val;
 
-	POSITION pos = map.GetStartPosition();
-	while (pos != NULL) {
-		map.GetNextAssoc(pos, key, val);
-		keys.push_back(key);
-	}
+    POSITION pos = map.GetStartPosition();
+    while (pos != NULL) {
+        map.GetNextAssoc(pos, key, val);
+        keys.push_back(key);
+    }
 
-	return keys;
+    return keys;
 }
 
 KeyVec Dictionary::GetKeysSorted() const
 {
-	KeyVec keys = GetKeys();
+    KeyVec keys = GetKeys();
 
-	std::sort(keys.begin(), keys.end(), StringPtrLess());
+    std::sort(keys.begin(), keys.end(), StringPtrLess());
 
-	return keys;
+    return keys;
 }

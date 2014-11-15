@@ -12,18 +12,18 @@
 class ProcessKiller {
 // Construction / Destruction
 public:
-	ProcessKiller();
-	virtual ~ProcessKiller();
+    ProcessKiller();
+    virtual ~ProcessKiller();
 
 // Interface
-	void kill(const PidVector &pids, ostream *pstream = NULL);
+    void kill(const PidVector &pids, ostream *pstream = NULL);
 
 // Implementation
 protected:
-	void kill(DWORD pid, ostream *pstream = NULL);
-	bool enablePrivileges();
+    void kill(DWORD pid, ostream *pstream = NULL);
+    bool enablePrivileges();
 private:
-	HANDLE hToken;
+    HANDLE hToken;
 };
 /////////////////////////////////////////////////////////////////////////////
 

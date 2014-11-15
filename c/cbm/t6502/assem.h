@@ -35,8 +35,8 @@ typedef enum {
     PSEUDO = '.'
 } TokenType;
 typedef struct {
-	TokenType type;
-	char value[MAXTOK];
+    TokenType type;
+    char value[MAXTOK];
 } Token;
 /***************************************************************************/
 void assemble();

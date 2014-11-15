@@ -12,49 +12,49 @@
 
 class WindumpView : public CListView {
 protected: // create from serialization only
-	WindumpView();
-	DECLARE_DYNCREATE(WindumpView)
+    WindumpView();
+    DECLARE_DYNCREATE(WindumpView)
 
 // Attributes
 public:
-	WindumpDoc* GetDocument();
+    WindumpDoc* GetDocument();
 
 // Operations
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(WindumpView)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(WindumpView)
 public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
-	virtual void OnInitialUpdate(); // called first time after construct
-	//}}AFX_VIRTUAL
+    virtual void OnInitialUpdate(); // called first time after construct
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~WindumpView();
+    virtual ~WindumpView();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(WindumpView)
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	//}}AFX_MSG
-	afx_msg void OnStyleChanged(int nStyleType, LPSTYLESTRUCT lpStyleStruct);
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(WindumpView)
+    afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+    //}}AFX_MSG
+    afx_msg void OnStyleChanged(int nStyleType, LPSTYLESTRUCT lpStyleStruct);
+    DECLARE_MESSAGE_MAP()
 };
 
 #ifndef _DEBUG  // debug version in windumpView.cpp
 inline WindumpDoc* WindumpView::GetDocument()
 {
-	return (WindumpDoc*)m_pDocument;
+    return (WindumpDoc*)m_pDocument;
 }
 #endif
 

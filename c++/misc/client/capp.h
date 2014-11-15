@@ -34,45 +34,45 @@ LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,
                              WPARAM wParam, LPARAM lParam);
 
 class CApp {
-	friend LRESULT APIENTRY	MainWndProc(HWND, UINT, WPARAM, LPARAM);
-	friend LRESULT APIENTRY	ChildProc(HWND, UINT, WPARAM, LPARAM);
-	friend BOOL	CALLBACK DriveProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
-	friend BOOL CALLBACK AboutProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
+    friend LRESULT APIENTRY	MainWndProc(HWND, UINT, WPARAM, LPARAM);
+    friend LRESULT APIENTRY	ChildProc(HWND, UINT, WPARAM, LPARAM);
+    friend BOOL	CALLBACK DriveProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
+    friend BOOL CALLBACK AboutProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 protected:
-	HINSTANCE		m_hInst;
-	WNDCLASS		m_wndClass;
-	BOOL			m_fInitialized;
-	HWND			m_hWnd;
-	HWND			m_hWndList;
-	HWND			m_hWndStatus;
-	INT				m_nCmdShow;
-	TCHAR			m_szClassName[_MAX_PATH];
-	IMiscellaneous*	m_pIMisc;
-	ULONG			m_cRef;
-	BOOL			m_fExe;	// Component in .EXE
+    HINSTANCE		m_hInst;
+    WNDCLASS		m_wndClass;
+    BOOL			m_fInitialized;
+    HWND			m_hWnd;
+    HWND			m_hWndList;
+    HWND			m_hWndStatus;
+    INT				m_nCmdShow;
+    TCHAR			m_szClassName[_MAX_PATH];
+    IMiscellaneous*	m_pIMisc;
+    ULONG			m_cRef;
+    BOOL			m_fExe;	// Component in .EXE
 public:
-	CApp(HINSTANCE hInstance, INT nCmdShow);
-	~CApp();
+    CApp(HINSTANCE hInstance, INT nCmdShow);
+    ~CApp();
 
-	BOOL	Init(LPCTSTR);
-	BOOL	Create(LPCTSTR);
-	VOID	Trace(LPCTSTR);
-	VOID	Trace(wchar_t*);
-	VOID	Trace(LONG);
-	VOID	StatusTrace(LPCTSTR);
+    BOOL	Init(LPCTSTR);
+    BOOL	Create(LPCTSTR);
+    VOID	Trace(LPCTSTR);
+    VOID	Trace(wchar_t*);
+    VOID	Trace(LONG);
+    VOID	StatusTrace(LPCTSTR);
 
-	inline	HWND GetMainWnd() {
-		return m_hWnd;
-	}
+    inline	HWND GetMainWnd() {
+        return m_hWnd;
+    }
 protected:
-	BOOL GetDate(BSTR&);
-	BOOL GetTime(BSTR&);
-	BOOL GetDateTime(BSTR&);
-	BOOL GetDriveSpace();
-	BOOL EnumDrives(BSTR&);
+    BOOL GetDate(BSTR&);
+    BOOL GetTime(BSTR&);
+    BOOL GetDateTime(BSTR&);
+    BOOL GetDriveSpace();
+    BOOL EnumDrives(BSTR&);
 
-	VOID DrawStatusBar(LPDRAWITEMSTRUCT);
-	VOID DrawListBox(LPDRAWITEMSTRUCT);
+    VOID DrawStatusBar(LPDRAWITEMSTRUCT);
+    VOID DrawListBox(LPDRAWITEMSTRUCT);
 };
 
 typedef CApp* PAPP;

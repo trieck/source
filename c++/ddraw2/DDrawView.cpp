@@ -33,10 +33,10 @@ static char THIS_FILE[] = __FILE__;
 #define COLORS 0x10
 
 static COLORREF colors[COLORS] = {
-	COLOR_BLACK, COLOR_WHITE, COLOR_RED, COLOR_TURQUOISE, COLOR_PURPLE,
-	COLOR_GREEN, COLOR_BLUE, COLOR_YELLOW, COLOR_ORANGE, COLOR_BROWN,
-	COLOR_LTRED, COLOR_LTGREY, COLOR_GREY, COLOR_LTGREEN, COLOR_LTBLUE,
-	COLOR_DKGREY
+    COLOR_BLACK, COLOR_WHITE, COLOR_RED, COLOR_TURQUOISE, COLOR_PURPLE,
+    COLOR_GREEN, COLOR_BLUE, COLOR_YELLOW, COLOR_ORANGE, COLOR_BROWN,
+    COLOR_LTRED, COLOR_LTGREY, COLOR_GREY, COLOR_LTGREEN, COLOR_LTBLUE,
+    COLOR_DKGREY
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -45,18 +45,18 @@ static COLORREF colors[COLORS] = {
 IMPLEMENT_DYNCREATE(DDrawView, CView)
 
 BEGIN_MESSAGE_MAP(DDrawView, CView)
-	//{{AFX_MSG_MAP(DDrawView)
-	ON_WM_CREATE()
-	ON_WM_DESTROY()
-	ON_WM_ERASEBKGND()
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(DDrawView)
+    ON_WM_CREATE()
+    ON_WM_DESTROY()
+    ON_WM_ERASEBKGND()
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // DDrawView construction/destruction
 
 DDrawView::DDrawView()
-	: pdds(NULL)
+    : pdds(NULL)
 {
 }
 
@@ -66,7 +66,7 @@ DDrawView::~DDrawView()
 
 BOOL DDrawView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	return CView::PreCreateWindow(cs);
+    return CView::PreCreateWindow(cs);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,8 +74,8 @@ BOOL DDrawView::PreCreateWindow(CREATESTRUCT& cs)
 
 void DDrawView::OnDraw(CDC* pDC)
 {
-	DDrawDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
+    DDrawDoc* pDoc = GetDocument();
+    ASSERT_VALID(pDoc);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -84,18 +84,18 @@ void DDrawView::OnDraw(CDC* pDC)
 #ifdef _DEBUG
 void DDrawView::AssertValid() const
 {
-	CView::AssertValid();
+    CView::AssertValid();
 }
 
 void DDrawView::Dump(CDumpContext& dc) const
 {
-	CView::Dump(dc);
+    CView::Dump(dc);
 }
 
 DDrawDoc* DDrawView::GetDocument() // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(DDrawDoc)));
-	return (DDrawDoc*)m_pDocument;
+    ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(DDrawDoc)));
+    return (DDrawDoc*)m_pDocument;
 }
 #endif //_DEBUG
 
@@ -104,54 +104,54 @@ DDrawDoc* DDrawView::GetDocument() // non-debug version is inline
 
 int DDrawView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CView::OnCreate(lpCreateStruct) == -1)
-		return -1;
+    if (CView::OnCreate(lpCreateStruct) == -1)
+        return -1;
 
-	DDrawApp *pApp = (DDrawApp*)AfxGetApp();
-	ASSERT_VALID(pApp);
+    DDrawApp *pApp = (DDrawApp*)AfxGetApp();
+    ASSERT_VALID(pApp);
 
-	LPDIRECTDRAW pdd = pApp->GetDirectDraw();
-	pdd->AddRef();
+    LPDIRECTDRAW pdd = pApp->GetDirectDraw();
+    pdd->AddRef();
 
-	DDSURFACEDESC ddsd;
+    DDSURFACEDESC ddsd;
 
-	ZeroMemory(&ddsd, sizeof(DDSURFACEDESC));
-	ddsd.dwSize = sizeof(DDSURFACEDESC);
-	ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
-	ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
-	ddsd.dwBackBufferCount = 1;
+    ZeroMemory(&ddsd, sizeof(DDSURFACEDESC));
+    ddsd.dwSize = sizeof(DDSURFACEDESC);
+    ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
+    ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
+    ddsd.dwBackBufferCount = 1;
 
-	// Create the primary surface with one back buffer
-	HRESULT hr = pdd->CreateSurface(&ddsd, &pdds, NULL);
-	if (hr != DD_OK) {
-		TRACE0("failed while creating direct draw surface.\n");
-		pdd->Release();
-		return -1;
-	}
+    // Create the primary surface with one back buffer
+    HRESULT hr = pdd->CreateSurface(&ddsd, &pdds, NULL);
+    if (hr != DD_OK) {
+        TRACE0("failed while creating direct draw surface.\n");
+        pdd->Release();
+        return -1;
+    }
 
-	pdd->Release();
+    pdd->Release();
 
-	return 0;
+    return 0;
 }
 
 void DDrawView::OnDestroy()
 {
-	CView::OnDestroy();
+    CView::OnDestroy();
 
-	if (NULL != pdds) {
-		ULONG result = pdds->Release();
-		if (0 != result)
-			TRACE1("DirectDraw surface non zero [%d] on Release()!\n", result);
-	}
+    if (NULL != pdds) {
+        ULONG result = pdds->Release();
+        if (0 != result)
+            TRACE1("DirectDraw surface non zero [%d] on Release()!\n", result);
+    }
 }
 
 void DDrawView::OnInitialUpdate()
 {
-	CView::OnInitialUpdate();
+    CView::OnInitialUpdate();
 
 }
 
 BOOL DDrawView::OnEraseBkgnd(CDC* pDC)
 {
-	return CView::OnEraseBkgnd(pDC);
+    return CView::OnEraseBkgnd(pDC);
 }

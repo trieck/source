@@ -27,12 +27,12 @@ CDocViewDoc::~CDocViewDoc()
 
 BOOL CDocViewDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
+    if (!CDocument::OnNewDocument())
+        return FALSE;
 
-	// SDI documents will reuse this document, initialize here...
+    // SDI documents will reuse this document, initialize here...
 
-	return TRUE;
+    return TRUE;
 }
 
 ///////////////////////////////////////////////////////////////////

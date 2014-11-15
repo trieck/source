@@ -12,7 +12,7 @@
 
 int main(int argc, char *argv[])
 {
-	pixie_init(argc, argv);
-	pixie_run();
-	return 0;
+    pixie_init(argc, argv);
+    pixie_run();
+    return 0;
 }

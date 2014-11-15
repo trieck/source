@@ -13,17 +13,17 @@
 /////////////////////////////////////////////////////////////////////////////
 class OutputDevices : public MidiDevices {
 public:
-	// Construction / Destruction
-	OutputDevices();
-	virtual ~OutputDevices();
+    // Construction / Destruction
+    OutputDevices();
+    virtual ~OutputDevices();
 
-	// Interface
-	UINT Count() const;
-	MidiDevice * GetDevice(UINT) const;
-	MidiDevice * GetStream(UINT) const;
+    // Interface
+    UINT Count() const;
+    MidiDevice * GetDevice(UINT) const;
+    MidiDevice * GetStream(UINT) const;
 
 protected:
-	// Implementation
+    // Implementation
 };
 /////////////////////////////////////////////////////////////////////////////
 

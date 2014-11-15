@@ -21,10 +21,10 @@ LPCTSTR MusicApp::databasePath = _T("C:\\WINNT\\Profiles\\trieck\\Personal\\musi
 // MusicApp
 
 BEGIN_MESSAGE_MAP(MusicApp, CWinApp)
-	//{{AFX_MSG_MAP(MusicApp)
-	ON_COMMAND(IDM_ADDRECORD, OnAddRecord)
-	ON_COMMAND(IDM_DELRECORD, OnDeleteRecord)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(MusicApp)
+    ON_COMMAND(IDM_ADDRECORD, OnAddRecord)
+    ON_COMMAND(IDM_DELRECORD, OnDeleteRecord)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -32,13 +32,13 @@ END_MESSAGE_MAP()
 
 MusicApp::MusicApp()
 {
-	db = new CDaoDatabase();
+    db = new CDaoDatabase();
 }
 
 MusicApp::~MusicApp()
 {
-	if (db)
-		delete db;
+    if (db)
+        delete db;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -51,42 +51,42 @@ MusicApp theApp;
 
 BOOL MusicApp::InitInstance()
 {
-	if (!AfxOleInit())
-		return FALSE;
+    if (!AfxOleInit())
+        return FALSE;
 
-	// VC++ 6.0 / Access 2000 workaround
-	// note: must link with MFC DLL
-	AfxGetModuleState()->m_dwVersion = 0x0601;
+    // VC++ 6.0 / Access 2000 workaround
+    // note: must link with MFC DLL
+    AfxGetModuleState()->m_dwVersion = 0x0601;
 
-	try {
-		db->Open(databasePath,
-		         FALSE, FALSE);
-	} catch (CDaoException *E) {
-		E->ReportError(MB_OK | MB_ICONEXCLAMATION);
-		E->Delete();
-		return FALSE;
-	}
+    try {
+        db->Open(databasePath,
+                 FALSE, FALSE);
+    } catch (CDaoException *E) {
+        E->ReportError(MB_OK | MB_ICONEXCLAMATION);
+        E->Delete();
+        return FALSE;
+    }
 
-	// Register document templates
-	CSingleDocTemplate* pDocTemplate;
-	pDocTemplate = new CSingleDocTemplate(
-	    IDR_MAINFRAME,
-	    RUNTIME_CLASS(MusicDoc),
-	    RUNTIME_CLASS(MainFrame),       // main SDI frame window
-	    RUNTIME_CLASS(MusicView));
-	AddDocTemplate(pDocTemplate);
+    // Register document templates
+    CSingleDocTemplate* pDocTemplate;
+    pDocTemplate = new CSingleDocTemplate(
+        IDR_MAINFRAME,
+        RUNTIME_CLASS(MusicDoc),
+        RUNTIME_CLASS(MainFrame),       // main SDI frame window
+        RUNTIME_CLASS(MusicView));
+    AddDocTemplate(pDocTemplate);
 
-	// Parse command line for standard shell commands, DDE, file open
-	CCommandLineInfo cmdInfo;
-	ParseCommandLine(cmdInfo);
+    // Parse command line for standard shell commands, DDE, file open
+    CCommandLineInfo cmdInfo;
+    ParseCommandLine(cmdInfo);
 
-	// Dispatch commands specified on the command line
-	if (!ProcessShellCommand(cmdInfo))
-		return FALSE;
-	m_pMainWnd->ShowWindow(SW_SHOW);
-	m_pMainWnd->UpdateWindow();
+    // Dispatch commands specified on the command line
+    if (!ProcessShellCommand(cmdInfo))
+        return FALSE;
+    m_pMainWnd->ShowWindow(SW_SHOW);
+    m_pMainWnd->UpdateWindow();
 
-	return TRUE;
+    return TRUE;
 }
 /////////////////////////////////////////////////////////////////////////////
 // MusicApp message handlers
@@ -94,17 +94,17 @@ BOOL MusicApp::InitInstance()
 
 int MusicApp::ExitInstance()
 {
-	if (db->IsOpen())
-		db->Close();
+    if (db->IsOpen())
+        db->Close();
 
-	return CWinApp::ExitInstance();
+    return CWinApp::ExitInstance();
 }
 
 void MusicApp::OnAddRecord()
 {
-	_Record rec;
-	AddEditDlg dlg(AddEditDlg::addMode, &rec);
-	dlg.DoModal();
+    _Record rec;
+    AddEditDlg dlg(AddEditDlg::addMode, &rec);
+    dlg.DoModal();
 }
 
 void MusicApp::OnDeleteRecord()
@@ -114,9 +114,9 @@ void MusicApp::OnDeleteRecord()
 // global helper functions
 CString LoadString(UINT resource)
 {
-	CString str;
-	str.LoadString(resource);
-	return str;
+    CString str;
+    str.LoadString(resource);
+    return str;
 }
 
 BOOL setButtonImage(CWnd *pParent,	/* parent dialog */
@@ -126,28 +126,28 @@ BOOL setButtonImage(CWnd *pParent,	/* parent dialog */
                     UINT cx, UINT cy,			/* image size */
                     UINT flags)					/* load flags */
 {
-	ASSERT_VALID(pParent);
+    ASSERT_VALID(pParent);
 
-	CButton *pBtn = (CButton*)pParent->GetDlgItem(button);
-	ASSERT_VALID(pBtn);
-	if (pBtn == NULL)
-		return FALSE;	// no button
+    CButton *pBtn = (CButton*)pParent->GetDlgItem(button);
+    ASSERT_VALID(pBtn);
+    if (pBtn == NULL)
+        return FALSE;	// no button
 
-	HANDLE hImage = ::LoadImage(AfxGetResourceHandle(),
-	                            MAKEINTRESOURCE(image),
-	                            imageType,
-	                            cx, cy, flags);
-	ASSERT(hImage != NULL);
-	if (hImage == NULL)
-		return FALSE;	// no image
+    HANDLE hImage = ::LoadImage(AfxGetResourceHandle(),
+                                MAKEINTRESOURCE(image),
+                                imageType,
+                                cx, cy, flags);
+    ASSERT(hImage != NULL);
+    if (hImage == NULL)
+        return FALSE;	// no image
 
-	if (imageType == IMAGE_ICON)
-		pBtn->SetIcon((HICON)hImage);
-	else if (imageType == IMAGE_BITMAP)
-		pBtn->SetBitmap((HBITMAP)hImage);
-	else if (imageType == IMAGE_CURSOR)
-		pBtn->SetCursor((HCURSOR)hImage);
-	else return FALSE;	// image type unknown
+    if (imageType == IMAGE_ICON)
+        pBtn->SetIcon((HICON)hImage);
+    else if (imageType == IMAGE_BITMAP)
+        pBtn->SetBitmap((HBITMAP)hImage);
+    else if (imageType == IMAGE_CURSOR)
+        pBtn->SetCursor((HCURSOR)hImage);
+    else return FALSE;	// image type unknown
 
-	return TRUE;
+    return TRUE;
 }

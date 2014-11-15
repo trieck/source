@@ -13,9 +13,9 @@
 // StackFrame frame
 
 class StackFrame : public CMiniFrameWnd {
-	DECLARE_DYNCREATE(StackFrame)
+    DECLARE_DYNCREATE(StackFrame)
 protected:
-	StackFrame();           // protected constructor used by dynamic creation
+    StackFrame();           // protected constructor used by dynamic creation
 
 // Attributes
 public:
@@ -24,24 +24,24 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(StackFrame)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(StackFrame)
 protected:
-	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	//}}AFX_VIRTUAL
+    virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    //}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	virtual ~StackFrame();
+    virtual ~StackFrame();
 
-	// Generated message map functions
-	//{{AFX_MSG(StackFrame)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    // Generated message map functions
+    //{{AFX_MSG(StackFrame)
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 private:
-	CStatusBar m_wndStatusBar;
+    CStatusBar m_wndStatusBar;
 };
 
 /////////////////////////////////////////////////////////////////////////////

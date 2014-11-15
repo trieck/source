@@ -12,30 +12,30 @@
 class NetError {
 // Construction / Destruction
 public:
-	NetError();
-	NetError(const NetError &);
-	virtual ~NetError();
+    NetError();
+    NetError(const NetError &);
+    virtual ~NetError();
 
 // Interface
-	NetError & operator = (const NetError & E);
-	DWORD GetErrorCode() const {
-		return m_errorcode;
-	};
-	CString GetDescription() const {
-		return (LPCTSTR)m_description;
-	}
-	CString GetProvider() const {
-		return (LPCTSTR)m_provider;
-	}
+    NetError & operator = (const NetError & E);
+    DWORD GetErrorCode() const {
+        return m_errorcode;
+    };
+    CString GetDescription() const {
+        return (LPCTSTR)m_description;
+    }
+    CString GetProvider() const {
+        return (LPCTSTR)m_provider;
+    }
 
 protected:
 // Implementation
-	void create();
+    void create();
 
 private:
-	DWORD m_errorcode;
-	CString m_description;
-	CString m_provider;
+    DWORD m_errorcode;
+    CString m_description;
+    CString m_provider;
 };
 /////////////////////////////////////////////////////////////////////////////
 

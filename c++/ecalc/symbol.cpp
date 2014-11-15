@@ -15,7 +15,7 @@
 //
 SymbolTable::SymbolTable()
 {
-	init();	// install built in functions and keywords
+    init();	// install built in functions and keywords
 }
 
 //
@@ -23,11 +23,11 @@ SymbolTable::SymbolTable()
 //
 SymbolTable::~SymbolTable()
 {
-	map<string, const Symbol *>::const_iterator it = begin();
-	for ( ; it != end(); it++) {
-		const Symbol * sp = (*it).second;
-		delete const_cast<Symbol *>(sp);
-	}
+    map<string, const Symbol *>::const_iterator it = begin();
+    for ( ; it != end(); it++) {
+        const Symbol * sp = (*it).second;
+        delete const_cast<Symbol *>(sp);
+    }
 }
 
 //
@@ -36,14 +36,14 @@ SymbolTable::~SymbolTable()
 const Symbol * SymbolTable::install(const char* name,
                                     SymbolType type, double value)
 {
-	Symbol * sp = const_cast<Symbol *>(lookup(name));
-	if (sp == NULL)
-		sp = new Symbol;
+    Symbol * sp = const_cast<Symbol *>(lookup(name));
+    if (sp == NULL)
+        sp = new Symbol;
 
-	sp->type = type;
-	sp->value = value;
+    sp->type = type;
+    sp->value = value;
 
-	return (*this)[name] = sp;
+    return (*this)[name] = sp;
 }
 
 //
@@ -52,14 +52,14 @@ const Symbol * SymbolTable::install(const char* name,
 const Symbol * SymbolTable::install(const char* name,
                                     SymbolType type, Instr * defn)
 {
-	Symbol * sp = const_cast<Symbol *>(lookup(name));
-	if (sp == NULL)
-		sp = new Symbol;
+    Symbol * sp = const_cast<Symbol *>(lookup(name));
+    if (sp == NULL)
+        sp = new Symbol;
 
-	sp->type = type;
-	sp->defn = defn;
+    sp->type = type;
+    sp->defn = defn;
 
-	return (*this)[name] = sp;
+    return (*this)[name] = sp;
 }
 
 
@@ -68,14 +68,14 @@ const Symbol * SymbolTable::install(const char* name,
 //
 const Symbol * SymbolTable::install(const char* name, Instr i)
 {
-	Symbol * sp = const_cast<Symbol *>(lookup(name));
-	if (sp == NULL)
-		sp = new Symbol;
+    Symbol * sp = const_cast<Symbol *>(lookup(name));
+    if (sp == NULL)
+        sp = new Symbol;
 
-	sp->type = bltin;
-	sp->instruction = i;
+    sp->type = bltin;
+    sp->instruction = i;
 
-	return (*this)[name] = sp;
+    return (*this)[name] = sp;
 }
 
 //
@@ -83,14 +83,14 @@ const Symbol * SymbolTable::install(const char* name, Instr i)
 //
 const Symbol * SymbolTable::install(const char *name, const char *value)
 {
-	Symbol * sp = const_cast<Symbol *>(lookup(name));
-	if (sp == NULL)
-		sp = new Symbol;
+    Symbol * sp = const_cast<Symbol *>(lookup(name));
+    if (sp == NULL)
+        sp = new Symbol;
 
-	sp->type = str;
-	strcpy(sp->str, value);
+    sp->type = str;
+    strcpy(sp->str, value);
 
-	return (*this)[name] = sp;
+    return (*this)[name] = sp;
 }
 
 //
@@ -98,14 +98,14 @@ const Symbol * SymbolTable::install(const char *name, const char *value)
 //
 const Symbol * SymbolTable::install(const char *name, const Keyword kword)
 {
-	Symbol * sp = const_cast<Symbol *>(lookup(name));
-	if (sp == NULL)
-		sp = new Symbol;
+    Symbol * sp = const_cast<Symbol *>(lookup(name));
+    if (sp == NULL)
+        sp = new Symbol;
 
-	sp->type = keyword;
-	sp->keyword = kword;
+    sp->type = keyword;
+    sp->keyword = kword;
 
-	return (*this)[name] = sp;
+    return (*this)[name] = sp;
 }
 
 //
@@ -113,11 +113,11 @@ const Symbol * SymbolTable::install(const char *name, const Keyword kword)
 //
 const Symbol* SymbolTable::lookup(const char* name) const
 {
-	map<string, const Symbol *>::const_iterator it = find(name);
-	if (it != end())
-		return (*it).second;
+    map<string, const Symbol *>::const_iterator it = find(name);
+    if (it != end())
+        return (*it).second;
 
-	return NULL;
+    return NULL;
 }
 
 //
@@ -125,35 +125,35 @@ const Symbol* SymbolTable::lookup(const char* name) const
 //
 void SymbolTable::init()
 {
-	// install built in functions
-	install("pow", &Machine::pow);
-	install("log", &Machine::log);
-	install("log10", &Machine::log10);
-	install("fmod", &Machine::fmod);
-	install("sin", &Machine::sin);
-	install("asin", &Machine::asin);
-	install("sinh", &Machine::sinh);
-	install("cos", &Machine::cos);
-	install("acos", &Machine::acos);
-	install("cosh", &Machine::cosh);
-	install("tan", &Machine::tan);
-	install("atan", &Machine::atan);
-	install("tanh", &Machine::tanh);
-	install("sqrt", &Machine::sqrt);
-	install("int", &Machine::iint);
-	install("exp", &Machine::exp);
-	install("ceil", &Machine::ceil);
-	install("floor", &Machine::floor);
-	install("abs", &Machine::abs);
+    // install built in functions
+    install("pow", &Machine::pow);
+    install("log", &Machine::log);
+    install("log10", &Machine::log10);
+    install("fmod", &Machine::fmod);
+    install("sin", &Machine::sin);
+    install("asin", &Machine::asin);
+    install("sinh", &Machine::sinh);
+    install("cos", &Machine::cos);
+    install("acos", &Machine::acos);
+    install("cosh", &Machine::cosh);
+    install("tan", &Machine::tan);
+    install("atan", &Machine::atan);
+    install("tanh", &Machine::tanh);
+    install("sqrt", &Machine::sqrt);
+    install("int", &Machine::iint);
+    install("exp", &Machine::exp);
+    install("ceil", &Machine::ceil);
+    install("floor", &Machine::floor);
+    install("abs", &Machine::abs);
 
-	// install keywords
-	install("proc", PROC);
-	install("func", FUNC);
-	install("return", RETURN);
-	install("if", IF);
-	install("else", ELSE);
-	install("while", WHILE);
-	install("printf", PRINTF);
+    // install keywords
+    install("proc", PROC);
+    install("func", FUNC);
+    install("return", RETURN);
+    install("if", IF);
+    install("else", ELSE);
+    install("while", WHILE);
+    install("printf", PRINTF);
 }
 
 

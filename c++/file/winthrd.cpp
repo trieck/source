@@ -6,10 +6,10 @@
 #include "common.h"
 
 WinThread::WinThread()
-	: thread(0),
-	  mainWnd(0)
+    : thread(0),
+      mainWnd(0)
 {
-	currentMessage.message = WM_NULL;
+    currentMessage.message = WM_NULL;
 }
 
 WinThread::~WinThread()
@@ -18,55 +18,55 @@ WinThread::~WinThread()
 
 bool WinThread::initInstance()
 {
-	return TRUE;
+    return TRUE;
 }
 
 bool WinThread::run()
 {
-	return pumpMessages();
+    return pumpMessages();
 }
 
 int WinThread::exitInstance()
 {
-	return 0;
+    return 0;
 }
 
 bool WinThread::pumpMessages()
 {
-	for (;;) {
-		bool idle = true;
+    for (;;) {
+        bool idle = true;
 
-		while (idle && !::PeekMessage(&currentMessage, NULL, NULL, NULL, PM_NOREMOVE)) {
-			if (!onIdle())
-				idle = false;
-		}
+        while (idle && !::PeekMessage(&currentMessage, NULL, NULL, NULL, PM_NOREMOVE)) {
+            if (!onIdle())
+                idle = false;
+        }
 
-		do {
-			// pump message, but quit on WM_QUIT
-			if (!pumpMessage())
-				return exitInstance() == 0;
+        do {
+            // pump message, but quit on WM_QUIT
+            if (!pumpMessage())
+                return exitInstance() == 0;
 
-		} while (::PeekMessage(&currentMessage, NULL, NULL, NULL, PM_NOREMOVE));
-	}
+        } while (::PeekMessage(&currentMessage, NULL, NULL, NULL, PM_NOREMOVE));
+    }
 
-	return false;	// not reachable
+    return false;	// not reachable
 }
 
 bool WinThread::pumpMessage()
 {
-	if (!::GetMessage(&currentMessage, NULL, NULL, NULL)) {
-		return false;
-	}
+    if (!::GetMessage(&currentMessage, NULL, NULL, NULL)) {
+        return false;
+    }
 
-	// process this message
-	::TranslateMessage(&currentMessage);
-	::DispatchMessage(&currentMessage);
+    // process this message
+    ::TranslateMessage(&currentMessage);
+    ::DispatchMessage(&currentMessage);
 
-	return true;
+    return true;
 }
 
 bool WinThread::onIdle()
 {
-	return FALSE;
+    return FALSE;
 }
 

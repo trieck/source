@@ -196,7 +196,7 @@ CPU::CPUPtr CPU::This;
 /////////////////////////////////////////////////////////////////////////////
 CPU::CPU()
 {
-	Reset();
+    Reset();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -207,94 +207,94 @@ CPU::~CPU()
 /////////////////////////////////////////////////////////////////////////////
 CPU* CPU::instance()
 {
-	if (This.get() == NULL) {
-		This = CPUPtr(new CPU());
-	}
-	return This.get();
+    if (This.get() == NULL) {
+        This = CPUPtr(new CPU());
+    }
+    return This.get();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void CPU::Reset()
 {
-	a = x = y = 0;
-	clock = 0UL;
-	p = INITIAL_P_STATE;
-	s = STACK_BEGIN;
-	pc = FETCH_WORD(RESET_VECTOR);
+    a = x = y = 0;
+    clock = 0UL;
+    p = INITIAL_P_STATE;
+    s = STACK_BEGIN;
+    pc = FETCH_WORD(RESET_VECTOR);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void CPU::Run()
 {
-	BYTE opcode;
+    BYTE opcode;
 
-	for (;;) {
-		opcode = FETCH();
-		switch (opcode) {
-		case 0x00:				// BRK
-			BRK();
-			break;
-		case 0x01:				// ORA ($nn, X)
-			ORA(FETCH_BYTE(FETCH_IND_X(pc+1)), 4, 2);
-			break;
-		case 0x05:				// ORA $nn
-			ORA(FETCH_BYTE(FETCH_ZERO(pc+1)), 3, 2);
-		case 0x06:				// ASL $nn
-			ASL(FETCH_BYTE(pc+1), 5, 2);
-			break;
-		case 0x08:				// PHP
-			PHP();
-			break;
-		case 0x09:				// ORA #$nn
-			ORA(FETCH_BYTE(pc+1), 2, 2);
-			break;
-		case 0x0a:				// ASL A
-			ASL_A();
-			break;
-		case 0x0d:				// ORA $nnnn
-			ORA(FETCH_BYTE(FETCH_ABS(pc+1)), 4, 3);
-			break;
-		case 0x0e:				// ASL $nnnn
-			ASL(FETCH_ABS(pc+1), 6, 3);
-			break;
-		case 0x10:
-			BPL();				// BPL $nn
-			break;
-		case 0x11:				// ORA ($nn), Y
-			ORA(FETCH_BYTE(FETCH_IND_Y(pc+1)), 5, 2);
-			break;
-		case 0x15:				// ORA $nn, X
-			ORA(FETCH_BYTE(FETCH_ZERO_X(pc+1)), 4, 2);
-			break;
-		case 0x16:				// ASL $nn, X
-			ASL(FETCH_ZERO_X(pc+1), 6, 2);
-			break;
-		case 0x18:				// CLC
-			CLC();
-			break;
-		case 0x19:				// ORA $nnnn, Y
-			ORA(FETCH_BYTE(FETCH_ABS_Y(pc+1)), 4, 3);
-		case 0x20:				// JSR $nnnn
-			JSR(FETCH_ABS(pc+1), 6, 3);
-		case 0x21:				// AND ($nn, X)
-			AND(FETCH_BYTE(FETCH_IND_X(pc+1)), 6, 2);
-			break;
-		case 0x24:				// BIT $nn
-			BIT(FETCH_ZERO(pc+1), 3, 2);
-			break;
-		case 0x25:				// AND $nn
-			AND(FETCH_BYTE(FETCH_ZERO(pc+1)), 3, 2);
-			break;
-		case 0x26:				// ROL $nn
-			ROL(FETCH_ZERO(pc+1), 5, 2);
-			break;
-		case 0x28:				// PLP
-			PLP();
-			break;
-		case 0x29:				// AND #$nn
-			AND(FETCH_BYTE(pc+1), 2, 2);
-		default:
-			break;
-		}
-	}
+    for (;;) {
+        opcode = FETCH();
+        switch (opcode) {
+        case 0x00:				// BRK
+            BRK();
+            break;
+        case 0x01:				// ORA ($nn, X)
+            ORA(FETCH_BYTE(FETCH_IND_X(pc+1)), 4, 2);
+            break;
+        case 0x05:				// ORA $nn
+            ORA(FETCH_BYTE(FETCH_ZERO(pc+1)), 3, 2);
+        case 0x06:				// ASL $nn
+            ASL(FETCH_BYTE(pc+1), 5, 2);
+            break;
+        case 0x08:				// PHP
+            PHP();
+            break;
+        case 0x09:				// ORA #$nn
+            ORA(FETCH_BYTE(pc+1), 2, 2);
+            break;
+        case 0x0a:				// ASL A
+            ASL_A();
+            break;
+        case 0x0d:				// ORA $nnnn
+            ORA(FETCH_BYTE(FETCH_ABS(pc+1)), 4, 3);
+            break;
+        case 0x0e:				// ASL $nnnn
+            ASL(FETCH_ABS(pc+1), 6, 3);
+            break;
+        case 0x10:
+            BPL();				// BPL $nn
+            break;
+        case 0x11:				// ORA ($nn), Y
+            ORA(FETCH_BYTE(FETCH_IND_Y(pc+1)), 5, 2);
+            break;
+        case 0x15:				// ORA $nn, X
+            ORA(FETCH_BYTE(FETCH_ZERO_X(pc+1)), 4, 2);
+            break;
+        case 0x16:				// ASL $nn, X
+            ASL(FETCH_ZERO_X(pc+1), 6, 2);
+            break;
+        case 0x18:				// CLC
+            CLC();
+            break;
+        case 0x19:				// ORA $nnnn, Y
+            ORA(FETCH_BYTE(FETCH_ABS_Y(pc+1)), 4, 3);
+        case 0x20:				// JSR $nnnn
+            JSR(FETCH_ABS(pc+1), 6, 3);
+        case 0x21:				// AND ($nn, X)
+            AND(FETCH_BYTE(FETCH_IND_X(pc+1)), 6, 2);
+            break;
+        case 0x24:				// BIT $nn
+            BIT(FETCH_ZERO(pc+1), 3, 2);
+            break;
+        case 0x25:				// AND $nn
+            AND(FETCH_BYTE(FETCH_ZERO(pc+1)), 3, 2);
+            break;
+        case 0x26:				// ROL $nn
+            ROL(FETCH_ZERO(pc+1), 5, 2);
+            break;
+        case 0x28:				// PLP
+            PLP();
+            break;
+        case 0x29:				// AND #$nn
+            AND(FETCH_BYTE(pc+1), 2, 2);
+        default:
+            break;
+        }
+    }
 }

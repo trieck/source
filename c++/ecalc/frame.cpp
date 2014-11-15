@@ -14,7 +14,7 @@
 //
 FrameStack::FrameStack()
 {
-	framep = frame;
+    framep = frame;
 }
 
 //
@@ -29,10 +29,10 @@ FrameStack::~FrameStack()
 //
 Frame FrameStack::pop()
 {
-	if (framep == frame)
-		throw Error(E_FRAMEUNDERRUN);
+    if (framep == frame)
+        throw Error(E_FRAMEUNDERRUN);
 
-	return *--framep;
+    return *--framep;
 }
 
 //
@@ -40,10 +40,10 @@ Frame FrameStack::pop()
 //
 void FrameStack::push(const Frame & f)
 {
-	if (framep >= &frame[NFRAME])
-		throw Error(E_CALLNESTEDTOODEEP);
+    if (framep >= &frame[NFRAME])
+        throw Error(E_CALLNESTEDTOODEEP);
 
-	*++framep = f;
+    *++framep = f;
 }
 
 //
@@ -51,7 +51,7 @@ void FrameStack::push(const Frame & f)
 //
 void FrameStack::reset()
 {
-	framep = frame;
+    framep = frame;
 }
 
 

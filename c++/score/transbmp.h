@@ -11,24 +11,24 @@
 ///////////////////////////////////////////////////////////////////////
 class TransparentBitmap : public CBitmap {
 public:
-	// Construction / Destruction
-	TransparentBitmap(UINT, COLORREF);
-	virtual ~TransparentBitmap();
+    // Construction / Destruction
+    TransparentBitmap(UINT, COLORREF);
+    virtual ~TransparentBitmap();
 
-	// Interface
-	BOOL Initialize(CDC *);
-	BOOL Render(CDC * pDC, int x, int y);
+    // Interface
+    BOOL Initialize(CDC *);
+    BOOL Render(CDC * pDC, int x, int y);
 
-	// Implementation
+    // Implementation
 protected:
-	CDC m_MemDC;
-	CDC m_AndDC;
-	CDC m_XOrDC;
-	CBitmap * m_pOldBitmapMem;
-	CBitmap * m_pOldBitmapXor;
-	CBitmap * m_pOldBitmapAnd;
-	BOOL m_fInitialized;
-	COLORREF m_transparent;
+    CDC m_MemDC;
+    CDC m_AndDC;
+    CDC m_XOrDC;
+    CBitmap * m_pOldBitmapMem;
+    CBitmap * m_pOldBitmapXor;
+    CBitmap * m_pOldBitmapAnd;
+    BOOL m_fInitialized;
+    COLORREF m_transparent;
 };
 
 ///////////////////////////////////////////////////////////////////////

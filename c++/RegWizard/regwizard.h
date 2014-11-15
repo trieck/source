@@ -13,15 +13,15 @@
 // CWinApp derived class
 class CRegWizApp : public CWinApp {
 public:
-	virtual BOOL InitInstance();
-	CRegWizApp(LPCTSTR lpszAppName = NULL);
-	~CRegWizApp();
+    virtual BOOL InitInstance();
+    CRegWizApp(LPCTSTR lpszAppName = NULL);
+    ~CRegWizApp();
 private:
-	void CreateWizard();
-	CWizard* m_pWizard;
-	CStartPage* m_pStartPage;
-	CPageTwo* m_pPageTwo;
-	CPageThree* m_pPageThree;
+    void CreateWizard();
+    CWizard* m_pWizard;
+    CStartPage* m_pStartPage;
+    CPageTwo* m_pPageTwo;
+    CPageThree* m_pPageThree;
 };
 
 #endif // __REGWIZARD_H__

@@ -12,29 +12,29 @@
 class ODBMgrFactory : public IClassFactory {
 // Construction / Destruction
 private:
-	ODBMgrFactory();	// new creation only
+    ODBMgrFactory();	// new creation only
 public:
-	virtual ~ODBMgrFactory();
+    virtual ~ODBMgrFactory();
 
 // Interface
-	static ODBMgrFactory *Create();
-	static LONG GetLockCount() {
-		return m_cLock;
-	}
+    static ODBMgrFactory *Create();
+    static LONG GetLockCount() {
+        return m_cLock;
+    }
 
-	// IUnknown members
-	STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
-	STDMETHODIMP_(ULONG) AddRef();
-	STDMETHODIMP_(ULONG) Release();
+    // IUnknown members
+    STDMETHODIMP         QueryInterface(REFIID, LPVOID *);
+    STDMETHODIMP_(ULONG) AddRef();
+    STDMETHODIMP_(ULONG) Release();
 
-	// IClassFactory members
-	STDMETHODIMP         CreateInstance(LPUNKNOWN, REFIID, LPVOID *);
-	STDMETHODIMP         LockServer(BOOL);
+    // IClassFactory members
+    STDMETHODIMP         CreateInstance(LPUNKNOWN, REFIID, LPVOID *);
+    STDMETHODIMP         LockServer(BOOL);
 
 // Implementation
 private:
-	LONG m_cRef;
-	static LONG m_cLock;	// total lock count
+    LONG m_cRef;
+    static LONG m_cLock;	// total lock count
 };
 
 /////////////////////////////////////////////////////////////////////////////

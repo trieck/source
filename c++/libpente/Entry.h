@@ -19,32 +19,32 @@ enum EntryType {
 class Entry {
 // Construction / Destruction
 public:
-	Entry();
-	Entry(const Entry &rhs);
-	Entry(const POINT &aPoint, uint32_t ntype);
-	~Entry();
+    Entry();
+    Entry(const Entry &rhs);
+    Entry(const POINT &aPoint, uint32_t ntype);
+    ~Entry();
 
 // Interface
-	Entry & operator = (const Entry &rhs);
-	POINT where() const;
-	uint32_t getType() const;
+    Entry & operator = (const Entry &rhs);
+    POINT where() const;
+    uint32_t getType() const;
 
 // Implementation
 private:
-	POINT pt;
-	uint32_t type;
+    POINT pt;
+    uint32_t type;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 inline POINT Entry::where() const
 {
-	return pt;
+    return pt;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 inline uint32_t Entry::getType() const
 {
-	return type;
+    return type;
 }
 
 

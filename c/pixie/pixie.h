@@ -19,12 +19,12 @@
 
 /* node in the parse tree */
 typedef struct Node {
-	int type;					/* NUNDEF|NSTMT|NVALUE */
-	int lineno;					/* line number during parsing */
-	int nobj;
-	int nargs;					/* number of children */
-	struct Node *next;			/* next node if chained */
-	struct Node *args[1];		/* variable size for child nodes */
+    int type;					/* NUNDEF|NSTMT|NVALUE */
+    int lineno;					/* line number during parsing */
+    int nobj;
+    int nargs;					/* number of children */
+    struct Node *next;			/* next node if chained */
+    struct Node *args[1];		/* variable size for child nodes */
 } Node;
 
 /* symbol types */
@@ -45,23 +45,23 @@ struct Symbol;
 
 /* array of symbols */
 typedef struct {
-	struct Symbol **v;			/* vector of symbols */
-	unsigned size;				/* size of array in elements */
-	unsigned alloced;			/* allocated size */
+    struct Symbol **v;			/* vector of symbols */
+    unsigned size;				/* size of array in elements */
+    unsigned alloced;			/* allocated size */
 } Array;
 
 /* all information about a variable or constant */
 typedef struct Symbol {
-	int type;					/* SUNDEF|SCONST|SVAR|SFUNC, etc. */
-	int sub;					/* SFLOAT|SSTRING|SARRAY, etc. */
-	char *name;					/* name for variable / function */
-	union {
-		char *sval;				/* string value */
-		double fval;			/* floating point value */
-		Array *aval;			/* array value */
-		struct Node *defn;		/* function definition */
-	} u;
-	struct Symbol *next;		/* next symbol */
+    int type;					/* SUNDEF|SCONST|SVAR|SFUNC, etc. */
+    int sub;					/* SFLOAT|SSTRING|SARRAY, etc. */
+    char *name;					/* name for variable / function */
+    union {
+        char *sval;				/* string value */
+        double fval;			/* floating point value */
+        Array *aval;			/* array value */
+        struct Node *defn;		/* function definition */
+    } u;
+    struct Symbol *next;		/* next symbol */
 } Symbol;
 
 #undef ASSERT

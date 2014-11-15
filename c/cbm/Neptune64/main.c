@@ -37,22 +37,22 @@ const char *log_file_name = NULL;
  */
 int main(void)
 {
-	init();
-	notice();
-	monitor_run();
-	return 0;
+    init();
+    notice();
+    monitor_run();
+    return 0;
 }
 /*
  * initialization
  */
 void init(void)
 {
-	/* set up exit handler */
-	atexit(cleanup);
-	/* initialize the machine */
-	machine_init();
-	/* initialize the monitor */
-	monitor_init();
+    /* set up exit handler */
+    atexit(cleanup);
+    /* initialize the machine */
+    machine_init();
+    /* initialize the monitor */
+    monitor_init();
 }
 /*
  * main entry point
@@ -65,9 +65,9 @@ void cleanup(void)
  */
 void notice(void)
 {
-	printf("\nNeptune64 version 0.0.1, Copyright (c) 2001 Thomas A. Rieck\n"
-	       "Neptune64 comes with ABSOLUTELY NO WARRANTY.\n"
-	       "This is free software, and you are welcome to redistribute it\n"
-	       "under certain conditions.\n"
-	      );
+    printf("\nNeptune64 version 0.0.1, Copyright (c) 2001 Thomas A. Rieck\n"
+           "Neptune64 comes with ABSOLUTELY NO WARRANTY.\n"
+           "This is free software, and you are welcome to redistribute it\n"
+           "under certain conditions.\n"
+          );
 }

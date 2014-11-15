@@ -12,32 +12,32 @@
 class WinThread {
 public:
 // Construction / Destruction
-	WinThread();
-	virtual ~WinThread();
+    WinThread();
+    virtual ~WinThread();
 
 // Interface
-	virtual bool initInstance();
-	virtual bool run();
-	virtual int exitInstance();
+    virtual bool initInstance();
+    virtual bool run();
+    virtual int exitInstance();
 
-	Window *getMainWnd() const;
+    Window *getMainWnd() const;
 
 // Implementation
 protected:
-	bool pumpMessages();
-	bool pumpMessage();
-	bool onIdle();
+    bool pumpMessages();
+    bool pumpMessage();
+    bool onIdle();
 
-	Window *mainWnd;
-	MSG currentMessage;
+    Window *mainWnd;
+    MSG currentMessage;
 private:
-	HANDLE thread;
+    HANDLE thread;
 };
 /////////////////////////////////////////////////////////////////////////////
 
 inline Window *WinThread::getMainWnd() const
 {
-	return mainWnd;
+    return mainWnd;
 }
 
 #endif // __WINTHRD_H__

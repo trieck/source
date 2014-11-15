@@ -13,7 +13,7 @@
 typedef long Handle;
 
 typedef struct {
-	Handle handle;				/* string handle */
+    Handle handle;				/* string handle */
 } String;
 
 String stringalloc(void);

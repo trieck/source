@@ -22,18 +22,18 @@
 
 class MainApp : public wxApp {
 public:
-	MainApp();
+    MainApp();
 
-	bool OnInit();
-	int OnExit(void);
+    bool OnInit();
+    int OnExit(void);
 
-	wxFrame *GetFrame() const;
+    wxFrame *GetFrame() const;
 
-	DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 
 private:
-	void OnUpdateVolInfo(wxUpdateUIEvent &event);
-	wxDocManager* m_docManager;
+    void OnUpdateVolInfo(wxUpdateUIEvent &event);
+    wxDocManager* m_docManager;
 };
 
 // declare global static function wxGetApp()

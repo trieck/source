@@ -14,18 +14,18 @@
 /////////////////////////////////////////////////////////////////////////////
 ADFException::ADFException()
 {
-	description = strerror(errno);
+    description = strerror(errno);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 ADFException::ADFException(const char *fmt, ...)
 {
-	va_list arglist;
-	char buff[256];
+    va_list arglist;
+    char buff[256];
 
-	va_start(arglist, fmt);
-	vsnprintf(buff, 256, fmt, arglist);
-	va_end (arglist);
+    va_start(arglist, fmt);
+    vsnprintf(buff, 256, fmt, arglist);
+    va_end (arglist);
 
-	description = buff;
+    description = buff;
 }

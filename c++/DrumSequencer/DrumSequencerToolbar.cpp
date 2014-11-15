@@ -21,22 +21,22 @@ DrumSequencerToolbar::~DrumSequencerToolbar()
 
 void DrumSequencerToolbar::OnAfterFloat()
 {
-	CWnd *pWnd = AfxGetMainWnd();
-	if (pWnd->IsKindOf(RUNTIME_CLASS(CFrameWnd))) {
-		((CFrameWnd*)pWnd)->RecalcLayout();
-	}
+    CWnd *pWnd = AfxGetMainWnd();
+    if (pWnd->IsKindOf(RUNTIME_CLASS(CFrameWnd))) {
+        ((CFrameWnd*)pWnd)->RecalcLayout();
+    }
 
-	CMFCToolBar::OnAfterFloat();
+    CMFCToolBar::OnAfterFloat();
 }
 
 void DrumSequencerToolbar::OnAfterDock(CBasePane* pBar, LPCRECT lpRect, AFX_DOCK_METHOD dockMethod)
 {
-	CWnd *pWnd = AfxGetMainWnd();
-	if (pWnd->IsKindOf(RUNTIME_CLASS(CFrameWnd))) {
-		((CFrameWnd*)pWnd)->RecalcLayout();
-	}
+    CWnd *pWnd = AfxGetMainWnd();
+    if (pWnd->IsKindOf(RUNTIME_CLASS(CFrameWnd))) {
+        ((CFrameWnd*)pWnd)->RecalcLayout();
+    }
 
-	CMFCToolBar::OnAfterDock(pBar, lpRect, dockMethod);
+    CMFCToolBar::OnAfterDock(pBar, lpRect, dockMethod);
 }
 
 BEGIN_MESSAGE_MAP(DrumSequencerToolbar, CMFCToolBar)

@@ -7,7 +7,7 @@ extern void parse(void);
 
 void main(void)
 {
-	init();
-	parse();
-	exit(0);	/* successful termination */
+    init();
+    parse();
+    exit(0);	/* successful termination */
 }

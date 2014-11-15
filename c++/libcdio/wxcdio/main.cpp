@@ -21,7 +21,7 @@
 IMPLEMENT_APP(MainApp);
 
 BEGIN_EVENT_TABLE(MainApp, wxApp)
-	EVT_UPDATE_UI(ID_VOL_INFO, MainApp::OnUpdateVolInfo)
+    EVT_UPDATE_UI(ID_VOL_INFO, MainApp::OnUpdateVolInfo)
 END_EVENT_TABLE()
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -34,45 +34,45 @@ MainApp::MainApp() : m_docManager(NULL)
 
 bool MainApp::OnInit()
 {
-	m_docManager = new wxDocManager;
-	m_docManager->SetMaxDocsOpen(1);
+    m_docManager = new wxDocManager;
+    m_docManager->SetMaxDocsOpen(1);
 
-	// create a template relating drawing documents to their views
-	(void)new wxDocTemplate(m_docManager, _T("ISO image"), _T("*.iso"),
-	                        _T(""),
-	                        _T("iso"),
-	                        _T("wxcdioDoc"),
-	                        _T("wxcdioView"),
-	                        CLASSINFO(wxcdioDoc),
-	                        CLASSINFO(wxcdioView));
+    // create a template relating drawing documents to their views
+    (void)new wxDocTemplate(m_docManager, _T("ISO image"), _T("*.iso"),
+                            _T(""),
+                            _T("iso"),
+                            _T("wxcdioDoc"),
+                            _T("wxcdioView"),
+                            CLASSINFO(wxcdioDoc),
+                            CLASSINFO(wxcdioView));
 
-	wxFrame *pFrame = new wxcdioFrame(m_docManager);
-	pFrame->Centre(wxBOTH);
+    wxFrame *pFrame = new wxcdioFrame(m_docManager);
+    pFrame->Centre(wxBOTH);
 
-	SetTopWindow(pFrame);
+    SetTopWindow(pFrame);
 
-	pFrame->Show();
+    pFrame->Show();
 
-	// true = enter the main loop
-	return true;
+    // true = enter the main loop
+    return true;
 }
 
 wxFrame *MainApp::GetFrame() const
 {
-	return (wxFrame*)GetTopWindow();
+    return (wxFrame*)GetTopWindow();
 }
 
 int MainApp::OnExit(void)
 {
-	delete m_docManager;
-	return 0;
+    delete m_docManager;
+    return 0;
 }
 
 void MainApp::OnUpdateVolInfo(wxUpdateUIEvent &event)
 {
-	bool bEnable =
-	    ((m_docManager != NULL) &&
-	     (m_docManager->GetCurrentDocument() != NULL));
+    bool bEnable =
+        ((m_docManager != NULL) &&
+         (m_docManager->GetCurrentDocument() != NULL));
 
-	event.Enable(bEnable);
+    event.Enable(bEnable);
 }

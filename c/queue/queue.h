@@ -13,8 +13,8 @@
  *
  */
 struct node {
-	void *data;
-	struct node *prev, *next;
+    void *data;
+    struct node *prev, *next;
 };
 
 /*
@@ -22,7 +22,7 @@ struct node {
  *
  */
 struct queue {
-	struct node *head;
+    struct node *head;
 };
 
 /*

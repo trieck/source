@@ -11,21 +11,21 @@
 /////////////////////////////////////////////////////////////////////////////
 class Beats : public CList<NoteList *, NoteList *> {
 public:
-	// Construction / Destruction
-	Beats();
-	virtual ~Beats();
+    // Construction / Destruction
+    Beats();
+    virtual ~Beats();
 
-	// Interface
-	void insert(Note * pNote);
-	BOOL remove(NoteList *);
-	void clear();
-	NoteList * find(const Note * pNote, POSITION &);
-	POSITION splice(POSITION pos, Note * pNote);
-	void Serialize(CArchive &);
+    // Interface
+    void insert(Note * pNote);
+    BOOL remove(NoteList *);
+    void clear();
+    NoteList * find(const Note * pNote, POSITION &);
+    POSITION splice(POSITION pos, Note * pNote);
+    void Serialize(CArchive &);
 
-	// Implementation
+    // Implementation
 protected:
-	DECLARE_SERIAL(Beats);
+    DECLARE_SERIAL(Beats);
 };
 /////////////////////////////////////////////////////////////////////////////
 

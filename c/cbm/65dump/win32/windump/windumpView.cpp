@@ -19,9 +19,9 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(WindumpView, CListView)
 
 BEGIN_MESSAGE_MAP(WindumpView, CListView)
-	//{{AFX_MSG_MAP(WindumpView)
-	ON_WM_ERASEBKGND()
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(WindumpView)
+    ON_WM_ERASEBKGND()
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -37,7 +37,7 @@ WindumpView::~WindumpView()
 
 BOOL WindumpView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	return CListView::PreCreateWindow(cs);
+    return CListView::PreCreateWindow(cs);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -45,14 +45,14 @@ BOOL WindumpView::PreCreateWindow(CREATESTRUCT& cs)
 
 void WindumpView::OnDraw(CDC* pDC)
 {
-	WindumpDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	CListCtrl& refCtrl = GetListCtrl();
+    WindumpDoc* pDoc = GetDocument();
+    ASSERT_VALID(pDoc);
+    CListCtrl& refCtrl = GetListCtrl();
 }
 
 void WindumpView::OnInitialUpdate()
 {
-	CListView::OnInitialUpdate();
+    CListView::OnInitialUpdate();
 
 }
 
@@ -62,18 +62,18 @@ void WindumpView::OnInitialUpdate()
 #ifdef _DEBUG
 void WindumpView::AssertValid() const
 {
-	CListView::AssertValid();
+    CListView::AssertValid();
 }
 
 void WindumpView::Dump(CDumpContext& dc) const
 {
-	CListView::Dump(dc);
+    CListView::Dump(dc);
 }
 
 WindumpDoc* WindumpView::GetDocument() // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WindumpDoc)));
-	return (WindumpDoc*)m_pDocument;
+    ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WindumpDoc)));
+    return (WindumpDoc*)m_pDocument;
 }
 #endif //_DEBUG
 
@@ -85,11 +85,11 @@ void WindumpView::OnStyleChanged(int nStyleType, LPSTYLESTRUCT lpStyleStruct)
 
 BOOL WindumpView::OnEraseBkgnd(CDC* pDC)
 {
-	CRect rc;
-	pDC->GetClipBox(rc);
+    CRect rc;
+    pDC->GetClipBox(rc);
 
-	pDC->PatBlt(rc.left, rc.top, rc.Width(), rc.Height(), PATCOPY);
+    pDC->PatBlt(rc.left, rc.top, rc.Width(), rc.Height(), PATCOPY);
 
-	return TRUE;
-	//return CListView::OnEraseBkgnd(pDC);
+    return TRUE;
+    //return CListView::OnEraseBkgnd(pDC);
 }

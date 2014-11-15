@@ -15,24 +15,24 @@
 /////////////////////////////////////////////////////////////////////////////
 class DataEngine {
 public:
-	// Construction / Destruction
-	DataEngine(const Measure *);
-	virtual ~DataEngine();
+    // Construction / Destruction
+    DataEngine(const Measure *);
+    virtual ~DataEngine();
 
-	// Interface
-	operator MIDIHDR* () const {
-		return m_pData;
-	}
+    // Interface
+    operator MIDIHDR* () const {
+        return m_pData;
+    }
 
-	// Implementation
+    // Implementation
 protected:
-	BOOL xform(const Measure *);
-	BOOL AllocBuffer(const Measure *);
-	shortEvent * NoteOn(const Note *) const;
-	shortEvent * NoteOff(const Note *, BOOL delay) const;
-	void SetTempo(int bpm);
+    BOOL xform(const Measure *);
+    BOOL AllocBuffer(const Measure *);
+    shortEvent * NoteOn(const Note *) const;
+    shortEvent * NoteOff(const Note *, BOOL delay) const;
+    void SetTempo(int bpm);
 
-	MIDIHDR * m_pData;
+    MIDIHDR * m_pData;
 };
 
 /////////////////////////////////////////////////////////////////////////////

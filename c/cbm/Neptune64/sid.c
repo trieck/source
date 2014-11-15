@@ -28,7 +28,7 @@
  */
 byte sid_read(word address)
 {
-	return 0;
+    return 0;
 }
 /*
  * store a byte at sid

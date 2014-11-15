@@ -14,17 +14,17 @@
 
 class CCustomBitmap : public CObject {
 public:
-	CCustomBitmap();
-	virtual ~CCustomBitmap();
+    CCustomBitmap();
+    virtual ~CCustomBitmap();
 protected:
-	HPALETTE			CreateDIBPalette(LPBITMAPINFO, LPINT);
+    HPALETTE			CreateDIBPalette(LPBITMAPINFO, LPINT);
 public:
-	VOID				PaintDCByHBitmap(CDC*, HBITMAP, BOOL);
-	VOID				PaintDCByResource(CDC*, INT);
-	VOID				PaintDCByColor(CDC*, COLORREF);
-	HBITMAP				LoadResourceBitmap(INT, HPALETTE*);
+    VOID				PaintDCByHBitmap(CDC*, HBITMAP, BOOL);
+    VOID				PaintDCByResource(CDC*, INT);
+    VOID				PaintDCByColor(CDC*, COLORREF);
+    HBITMAP				LoadResourceBitmap(INT, HPALETTE*);
 
-	DECLARE_DYNCREATE(CCustomBitmap)
+    DECLARE_DYNCREATE(CCustomBitmap)
 };
 
 ///////////////////////////////////////////////////////////////////

@@ -13,7 +13,7 @@
 class ColorButton : public CButton {
 // Construction
 public:
-	ColorButton();
+    ColorButton();
 
 // Attributes
 public:
@@ -22,33 +22,33 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(ColorButton)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(ColorButton)
 public:
-	virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
-	//}}AFX_VIRTUAL
+    virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	COLORREF GetFillColor() const;
-	void SetFillColor(COLORREF clr);
-	BOOL IsSet() const {
-		return m_Set;
-	}
-	virtual ~ColorButton();
+    COLORREF GetFillColor() const;
+    void SetFillColor(COLORREF clr);
+    BOOL IsSet() const {
+        return m_Set;
+    }
+    virtual ~ColorButton();
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	//{{AFX_MSG(ColorButton)
-	afx_msg void OnSysColorChange();
-	//}}AFX_MSG
+    //{{AFX_MSG(ColorButton)
+    afx_msg void OnSysColorChange();
+    //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 
 private:
-	COLORREF m_Hilight, m_GrayText, m_Text, m_Fill;
-	CBrush m_BkgndBrush;
-	BOOL m_Set;
+    COLORREF m_Hilight, m_GrayText, m_Text, m_Fill;
+    CBrush m_BkgndBrush;
+    BOOL m_Set;
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -12,7 +12,7 @@
 
 @interface Graph :
 NSObject {
-	NSMutableArray *vertices;
+    NSMutableArray *vertices;
 }
 
 - (int)path:

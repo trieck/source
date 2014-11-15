@@ -16,29 +16,29 @@
 /////////////////////////////////////////////////////////////////////////////
 class DoubleBuffer {
 public:
-	// Construction / Destruction
-	DoubleBuffer();
-	virtual ~DoubleBuffer();
+    // Construction / Destruction
+    DoubleBuffer();
+    virtual ~DoubleBuffer();
 
-	// Interface
-	BOOL SetFront(MIDIHDR*);
-	BOOL SetBack(MIDIHDR*);
+    // Interface
+    BOOL SetFront(MIDIHDR*);
+    BOOL SetBack(MIDIHDR*);
 
-	inline MIDIHDR* GetFront() {
-		return &m_Buffers[0];
-	}
-	inline MIDIHDR* GetBack() {
-		return &m_Buffers[1];
-	}
+    inline MIDIHDR* GetFront() {
+        return &m_Buffers[0];
+    }
+    inline MIDIHDR* GetBack() {
+        return &m_Buffers[1];
+    }
 
-	// Implementation
+    // Implementation
 protected:
-	void AllocBuffers();
-	void FreeBuffers();
-	BOOL ReallocBuffer(MIDIHDR *) const;
-	BOOL Set(MIDIHDR *, MIDIHDR *) const;
+    void AllocBuffers();
+    void FreeBuffers();
+    BOOL ReallocBuffer(MIDIHDR *) const;
+    BOOL Set(MIDIHDR *, MIDIHDR *) const;
 
-	MIDIHDR m_Buffers[BUFFERS];
+    MIDIHDR m_Buffers[BUFFERS];
 };
 /////////////////////////////////////////////////////////////////////////////
 

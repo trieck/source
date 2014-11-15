@@ -11,15 +11,15 @@
 /////////////////////////////////////////////////////////////////////////////
 class HiresTimer {
 public:
-	HiresTimer();
-	~HiresTimer();
+    HiresTimer();
+    ~HiresTimer();
 
-	operator string() const;
+    operator string() const;
 private:
-	INT64 LI2INT64(PLARGE_INTEGER li) const;
+    INT64 LI2INT64(PLARGE_INTEGER li) const;
 
-	LARGE_INTEGER start;
-	INT64 ticksPerSecond;
+    LARGE_INTEGER start;
+    INT64 ticksPerSecond;
 };
 
 /////////////////////////////////////////////////////////////////////////////

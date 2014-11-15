@@ -30,25 +30,25 @@
 
 // message structures
 typedef struct {
-	char	cType;
-	char	cSubType;
-	char	cDetails;
-	char	cPad;						// align to even byte boundary
-	char	cMsgSpec[MAXMSGSPEC];		// message specific data
+    char	cType;
+    char	cSubType;
+    char	cDetails;
+    char	cPad;						// align to even byte boundary
+    char	cMsgSpec[MAXMSGSPEC];		// message specific data
 } REQUEST, *LPREQUEST;
 
 typedef struct {
-	char			cType;
-	char			cSubType;
-	char			cDetails;
-	char			cError;
-	unsigned short	iMsgLen;
-	char			cMsgSpec[MAXMSGSPEC];		// message specific data
+    char			cType;
+    char			cSubType;
+    char			cDetails;
+    char			cError;
+    unsigned short	iMsgLen;
+    char			cMsgSpec[MAXMSGSPEC];		// message specific data
 } RESPONSE, *LPRESPONSE;
 
 // message specific data structures
 
 typedef struct {
-	unsigned long	lTotalBytes;
-	unsigned long	lFreeBytes;
+    unsigned long	lTotalBytes;
+    unsigned long	lFreeBytes;
 } DISKINFOSTRUCT, *LPDISKINFOSTRUCT;

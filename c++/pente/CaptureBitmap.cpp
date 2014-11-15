@@ -10,7 +10,7 @@
 
 CaptureBitmap::CaptureBitmap() : RecolorableBitmap(DEFAULT_COLOR)
 {
-	Load(IDB_CAPTURE);
+    Load(IDB_CAPTURE);
 }
 
 CaptureBitmap::~CaptureBitmap()

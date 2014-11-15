@@ -10,14 +10,14 @@
 /////////////////////////////////////////////////////////////////////////////
 Capture::Capture(const POINT &pt1, const POINT &pt2)
 {
-	pts[0] = pt1;
-	pts[1] = pt2;
+    pts[0] = pt1;
+    pts[1] = pt2;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 Capture::Capture(const Capture &rhs)
 {
-	*this = rhs;
+    *this = rhs;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -28,9 +28,9 @@ Capture::~Capture()
 /////////////////////////////////////////////////////////////////////////////
 Capture& Capture::operator =(const Capture &rhs)
 {
-	if (this != &rhs) {
-		memcpy(pts, rhs.pts, sizeof(POINT) * 2);
-	}
+    if (this != &rhs) {
+        memcpy(pts, rhs.pts, sizeof(POINT) * 2);
+    }
 
-	return *this;
+    return *this;
 }

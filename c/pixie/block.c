@@ -29,107 +29,107 @@ static void blockfree(void);
 /* initialize */
 void blockinit(void)
 {
-	mcatexit(blockfree);
-	blockp = blocks;
+    mcatexit(blockfree);
+    blockp = blocks;
 }
 
 /* free all remaining symbol tables */
 void blockfree(void)
 {
-	SymbolTable table;
+    SymbolTable table;
 
-	while (blockp > blocks) {
-		table = blockpop();
-		if (table == BLOCKSTOP)
-			continue;
+    while (blockp > blocks) {
+        table = blockpop();
+        if (table == BLOCKSTOP)
+            continue;
 
-		tabfree(table);
-	}
+        tabfree(table);
+    }
 }
 
 /* enter a code block */
 void blockenter(void)
 {
-	SymbolTable block;
-	block = maketab();
-	blockpush(block);
+    SymbolTable block;
+    block = maketab();
+    blockpush(block);
 }
 
 /* leave a code block */
 void blockleave(void)
 {
-	SymbolTable block;
-	block = blockpop();
-	tabfree(block);
+    SymbolTable block;
+    block = blockpop();
+    tabfree(block);
 }
 
 /* lookup a symbol */
 Symbol *blookup(const char *s)
 {
-	Symbol *sp = 0;
-	SymbolTable *bp;
+    Symbol *sp = 0;
+    SymbolTable *bp;
 
-	ASSERT(blockp > blocks);
+    ASSERT(blockp > blocks);
 
-	/* walk the stack of hash table pointers */
-	for (bp = blockp - 1; bp >= blocks; bp--) {
-		if (*bp == BLOCKSTOP)
-			break;
+    /* walk the stack of hash table pointers */
+    for (bp = blockp - 1; bp >= blocks; bp--) {
+        if (*bp == BLOCKSTOP)
+            break;
 
-		sp = lookup(*bp, s);
-		if (sp)
-			break;
-	}
+        sp = lookup(*bp, s);
+        if (sp)
+            break;
+    }
 
 
-	/* try global "special" variables */
-	if (!sp)
-		sp = glookup(s);
+    /* try global "special" variables */
+    if (!sp)
+        sp = glookup(s);
 
-	return sp;
+    return sp;
 }
 
 /* does a local already exist */
 int islocal(const char *s)
 {
-	SymbolTable *block;
+    SymbolTable *block;
 
-	ASSERT(blockp > blocks);
+    ASSERT(blockp > blocks);
 
-	block = blockp - 1;			/* current block */
-	if (lookup(*block, s))
-		return 1;
+    block = blockp - 1;			/* current block */
+    if (lookup(*block, s))
+        return 1;
 
-	return 0;
+    return 0;
 }
 
 /* install s */
 Symbol *binstall(const char *s, int t, int sub, double val)
 {
-	SymbolTable *block;
+    SymbolTable *block;
 
-	ASSERT(blockp > blocks);
+    ASSERT(blockp > blocks);
 
-	block = blockp - 1;			/* current block */
-	return install(*block, s, t, sub, val);
+    block = blockp - 1;			/* current block */
+    return install(*block, s, t, sub, val);
 }
 
 /* push a symbol table */
 void blockpush(SymbolTable table)
 {
-	if (blockp >= &blocks[NBLOCK]) {
-		error("block nested too deep.");
-	}
+    if (blockp >= &blocks[NBLOCK]) {
+        error("block nested too deep.");
+    }
 
-	*blockp++ = table;
+    *blockp++ = table;
 }
 
 /* pop a symbol table */
 SymbolTable blockpop(void)
 {
-	if (blockp == blocks) {
-		error("block stack underrun.");
-	}
+    if (blockp == blocks) {
+        error("block stack underrun.");
+    }
 
-	return *--blockp;
+    return *--blockp;
 }

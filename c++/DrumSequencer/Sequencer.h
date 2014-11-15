@@ -11,26 +11,26 @@ typedef enum SequencerState {
 
 class Sequencer {
 public:
-	Sequencer();
-	~Sequencer();
+    Sequencer();
+    ~Sequencer();
 
-	BOOL Initialize();
-	BOOL IsPlaying() const;
+    BOOL Initialize();
+    BOOL IsPlaying() const;
 
-	void Close();
-	BOOL Play(const Sequence &sequence);
-	BOOL Stop();
+    void Close();
+    BOOL Play(const Sequence &sequence);
+    BOOL Stop();
 
 private:
-	MidiStream *m_pStream;
-	MidiBuffer m_buffer;
-	SequencerState m_state;
+    MidiStream *m_pStream;
+    MidiBuffer m_buffer;
+    SequencerState m_state;
 
-	static void StreamProc(HMIDISTRM hMidiStream, UINT uMsg,
-	                       DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
+    static void StreamProc(HMIDISTRM hMidiStream, UINT uMsg,
+                           DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
 };
 
 inline BOOL Sequencer::IsPlaying() const
 {
-	return m_state == Playing;
+    return m_state == Playing;
 }

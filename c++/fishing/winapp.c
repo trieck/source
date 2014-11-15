@@ -17,104 +17,104 @@ static BOOL init(WinApp *pApp, HINSTANCE hInstance, LPTSTR command,
 /////////////////////////////////////////////////////////////////////////////
 BOOL init(WinApp *pApp, HINSTANCE hInstance, LPTSTR command, int show)
 {
-	pApp->hInstance = hInstance;
-	pApp->command = command;
-	pApp->show = show;
-	App = pApp;
+    pApp->hInstance = hInstance;
+    pApp->command = command;
+    pApp->show = show;
+    App = pApp;
 
-	return initApp();
+    return initApp();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPTSTR command,
                      INT show)
 {
-	WinApp theApp;
+    WinApp theApp;
 
-	if (!init(&theApp, hInstance,  command, show))
-		return 1;
+    if (!init(&theApp, hInstance,  command, show))
+        return 1;
 
-	runApp();
+    runApp();
 
-	return exitApp();
+    return exitApp();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 BOOL centerWindow(HWND hWnd, HWND hWndParent)
 {
-	RECT rc, rcParent;
-	POINT pt;
+    RECT rc, rcParent;
+    POINT pt;
 
-	GetWindowRect(hWnd, &rc);
-	GetWindowRect(hWndParent, &rcParent);
+    GetWindowRect(hWnd, &rc);
+    GetWindowRect(hWndParent, &rcParent);
 
-	pt.x = rcParent.left + (((rcParent.right - rcParent.left) -
-	                         (rc.right - rc.left)) / 2);
-	pt.y = rcParent.top + (((rcParent.bottom - rcParent.top) -
-	                        (rc.bottom - rc.top)) / 2);
+    pt.x = rcParent.left + (((rcParent.right - rcParent.left) -
+                             (rc.right - rc.left)) / 2);
+    pt.y = rcParent.top + (((rcParent.bottom - rcParent.top) -
+                            (rc.bottom - rc.top)) / 2);
 
-	return SetWindowPos(hWnd, NULL, pt.x, pt.y, 0, 0,
-	                    SWP_NOSIZE | SWP_NOZORDER);
+    return SetWindowPos(hWnd, NULL, pt.x, pt.y, 0, 0,
+                        SWP_NOSIZE | SWP_NOZORDER);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 BOOL pumpMessages()
 {
-	MSG msg;
-	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
-		if (!pumpMessage()) {
-			PostQuitMessage(0);
-			FALSE;
-		}
-	}
-	return TRUE;
+    MSG msg;
+    while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
+        if (!pumpMessage()) {
+            PostQuitMessage(0);
+            FALSE;
+        }
+    }
+    return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 BOOL pumpMessage()
 {
-	MSG msg;
+    MSG msg;
 
-	if (!GetMessage(&msg, NULL, 0, 0))
-		return FALSE;
+    if (!GetMessage(&msg, NULL, 0, 0))
+        return FALSE;
 
-	// process this message
-	TranslateMessage(&msg);
-	DispatchMessage(&msg);
+    // process this message
+    TranslateMessage(&msg);
+    DispatchMessage(&msg);
 
-	return TRUE;
+    return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void enterModalLoop(HWND hWnd)
 {
-	EnableWindow(GetParent(hWnd), FALSE);
+    EnableWindow(GetParent(hWnd), FALSE);
 
-	SetWindowLong(hWnd,
-	              GWL_USERDATA,
-	              GetWindowLong(hWnd, GWL_USERDATA) | WF_CONTINUEMODAL);
+    SetWindowLong(hWnd,
+                  GWL_USERDATA,
+                  GetWindowLong(hWnd, GWL_USERDATA) | WF_CONTINUEMODAL);
 
-	for (;;) {
-		LONG flags = GetWindowLong(hWnd, GWL_USERDATA);
-		if ((flags & WF_CONTINUEMODAL) == 0)
-			break;
+    for (;;) {
+        LONG flags = GetWindowLong(hWnd, GWL_USERDATA);
+        if ((flags & WF_CONTINUEMODAL) == 0)
+            break;
 
-		if (!pumpMessages())
-			break;
-	}
+        if (!pumpMessages())
+            break;
+    }
 
-	DestroyWindow(hWnd);
+    DestroyWindow(hWnd);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void endModalLoop(HWND hWnd)
 {
-	LONG flags = GetWindowLong(hWnd, GWL_USERDATA);
-	if (flags & WF_CONTINUEMODAL) {
-		flags &= ~WF_CONTINUEMODAL;
-		SetWindowLong(hWnd, GWL_USERDATA, flags);
-	}
+    LONG flags = GetWindowLong(hWnd, GWL_USERDATA);
+    if (flags & WF_CONTINUEMODAL) {
+        flags &= ~WF_CONTINUEMODAL;
+        SetWindowLong(hWnd, GWL_USERDATA, flags);
+    }
 
-	EnableWindow(GetParent(hWnd), TRUE);
+    EnableWindow(GetParent(hWnd), TRUE);
 }
 

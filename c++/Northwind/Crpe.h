@@ -156,15 +156,15 @@ BOOL CRPE_API PEIsPrintJobFinished (short printJob);
 #define PE_JOBCANCELLED  5
 
 struct PEJobInfo {
-	WORD StructSize;    // initialize to sizeof (PEJobInfo)
+    WORD StructSize;    // initialize to sizeof (PEJobInfo)
 
-	DWORD NumRecordsRead,
-	      NumRecordsSelected,
-	      NumRecordsPrinted;
-	WORD  DisplayPageN, // the page being displayed in window
-	      LatestPageN,  // the page being generated
-	      StartPageN;   // user opted, default to 1
-	BOOL  printEnded;   // full report print completed?
+    DWORD NumRecordsRead,
+          NumRecordsSelected,
+          NumRecordsPrinted;
+    WORD  DisplayPageN, // the page being displayed in window
+          LatestPageN,  // the page being generated
+          StartPageN;   // user opted, default to 1
+    BOOL  printEnded;   // full report print completed?
 };
 
 short CRPE_API PEGetJobStatus (short printJob,
@@ -370,14 +370,14 @@ short CRPE_API PEGetNTables (short printJob);
 #define PE_DT_SQL       2
 
 struct PETableType {
-	// Initialize to PE_SIZEOF_TABLE_TYPE.
-	WORD StructSize;
+    // Initialize to PE_SIZEOF_TABLE_TYPE.
+    WORD StructSize;
 
-	// All strings are null-terminated.
-	char DLLName [PE_DLL_NAME_LEN];
-	char DescriptiveName [PE_FULL_NAME_LEN];
+    // All strings are null-terminated.
+    char DLLName [PE_DLL_NAME_LEN];
+    char DescriptiveName [PE_FULL_NAME_LEN];
 
-	WORD DBType;
+    WORD DBType;
 };
 
 BOOL  CRPE_API PEGetNthTableType (short printJob,
@@ -399,19 +399,19 @@ BOOL  CRPE_API PEGetNthTableType (short printJob,
                                PE_LONGPTR_LEN
 
 struct PESessionInfo {
-	// Initialize to PE_SIZEOF_SESSION_INFO.
-	WORD StructSize;
+    // Initialize to PE_SIZEOF_SESSION_INFO.
+    WORD StructSize;
 
-	// All strings are null-terminated.
-	char UserID [PE_SESS_PASSWORD_LEN];
+    // All strings are null-terminated.
+    char UserID [PE_SESS_PASSWORD_LEN];
 
-	// Password is undefined when getting information from report.
-	char Password [PE_SESS_PASSWORD_LEN];
+    // Password is undefined when getting information from report.
+    char Password [PE_SESS_PASSWORD_LEN];
 
-	// SessionHandle is undefined when getting information from report.
-	// When setting information, if it is = 0 the UserID and Password
-	// settings are used, otherwise the SessionHandle is used.
-	DWORD SessionHandle;
+    // SessionHandle is undefined when getting information from report.
+    // When setting information, if it is = 0 the UserID and Password
+    // settings are used, otherwise the SessionHandle is used.
+    DWORD SessionHandle;
 };
 
 BOOL  CRPE_API PEGetNthTableSessionInfo (short printJob,
@@ -447,22 +447,22 @@ BOOL  CRPE_API PESetNthTableSessionInfo (short printJob,
                              PE_PASSWORD_LEN
 
 struct PELogOnInfo {
-	// Initialize to PE_SIZEOF_LOGON_INFO.
-	WORD StructSize;
+    // Initialize to PE_SIZEOF_LOGON_INFO.
+    WORD StructSize;
 
-	// For any of the following values an empty string ("") means to use
-	// the value already set in the report.  To override a value in the
-	// report use a non-empty string (e.g. "Server A").  All strings are
-	// null-terminated.
-	//
-	// For Netware SQL, pass the dictionary path name in ServerName and
-	// data path name in DatabaseName.
-	char ServerName [PE_SERVERNAME_LEN];
-	char DatabaseName [PE_DATABASENAME_LEN];
-	char UserID [PE_USERID_LEN];
+    // For any of the following values an empty string ("") means to use
+    // the value already set in the report.  To override a value in the
+    // report use a non-empty string (e.g. "Server A").  All strings are
+    // null-terminated.
+    //
+    // For Netware SQL, pass the dictionary path name in ServerName and
+    // data path name in DatabaseName.
+    char ServerName [PE_SERVERNAME_LEN];
+    char DatabaseName [PE_DATABASENAME_LEN];
+    char UserID [PE_USERID_LEN];
 
-	// Password is undefined when getting information from report.
-	char Password [PE_PASSWORD_LEN];
+    // Password is undefined when getting information from report.
+    char Password [PE_PASSWORD_LEN];
 };
 
 BOOL  CRPE_API PEGetNthTableLogOnInfo (short printJob,
@@ -486,11 +486,11 @@ BOOL  CRPE_API PESetNthTableLogOnInfo (short printJob,
                                  PE_TABLE_LOCATION_LEN
 
 struct PETableLocation {
-	// Initialize to PE_SIZEOF_TABLE_LOCATION.
-	WORD StructSize;
+    // Initialize to PE_SIZEOF_TABLE_LOCATION.
+    WORD StructSize;
 
-	// String is null-terminated.
-	char Location [PE_TABLE_LOCATION_LEN];
+    // String is null-terminated.
+    char Location [PE_TABLE_LOCATION_LEN];
 };
 
 BOOL  CRPE_API PEGetNthTableLocation (short printJob,
@@ -722,15 +722,15 @@ BOOL CRPE_API PEGetNDetailCopies (short printJob,
 #define PE_DEFAULTCOLLATION 2
 
 struct PEPrintOptions {
-	WORD StructSize;            // initialize to sizeof (PEPrintOptions)
+    WORD StructSize;            // initialize to sizeof (PEPrintOptions)
 
-	// page and copy numbers are 1-origin
-	// use 0 to preserve the existing settings
-	unsigned short startPageN,
-	         stopPageN;
+    // page and copy numbers are 1-origin
+    // use 0 to preserve the existing settings
+    unsigned short startPageN,
+             stopPageN;
 
-	unsigned short nReportCopies;
-	unsigned short collation;
+    unsigned short nReportCopies;
+    unsigned short collation;
 };
 
 BOOL CRPE_API PESetPrintOptions (short printJob,
@@ -753,20 +753,20 @@ BOOL CRPE_API PEGetPrintOptions (short printJob,
 
 // Use for all types except PE_FT_CHARSEPARATED
 struct PEPrintFileOptions {
-	WORD StructSize;        // initialize to sizeof (PEPrintFileOptions)
-	BOOL UseReportNumberFmt,
-	     UseReportDateFormat;
+    WORD StructSize;        // initialize to sizeof (PEPrintFileOptions)
+    BOOL UseReportNumberFmt,
+         UseReportDateFormat;
 };
 
 #define PE_FIELDDELIMLEN  16
 
 // Use for PE_FT_CHARSEPARATED
 struct PECharSepFileOptions {
-	WORD StructSize;        // initialize to sizeof (PECharSepFileOptions)
-	BOOL UseReportNumberFmt,
-	     UseReportDateFormat;
-	char StringDelimiter;
-	char FieldDelimiter [PE_FIELDDELIMLEN + 1];
+    WORD StructSize;        // initialize to sizeof (PECharSepFileOptions)
+    BOOL UseReportNumberFmt,
+         UseReportDateFormat;
+    char StringDelimiter;
+    char FieldDelimiter [PE_FIELDDELIMLEN + 1];
 };
 
 BOOL CRPE_API PEOutputToFile (short printJob,
@@ -775,18 +775,18 @@ BOOL CRPE_API PEOutputToFile (short printJob,
                               void FAR *options);
 
 struct PEExportOptions {
-	WORD StructSize;               // initialize to sizeof (PEExportOptions)
+    WORD StructSize;               // initialize to sizeof (PEExportOptions)
 
-	char formatDLLName [PE_DLL_NAME_LEN];
-	DWORD formatType;
-	void FAR *formatOptions;
-	char destinationDLLName [PE_DLL_NAME_LEN];
-	DWORD destinationType;
-	void FAR *destinationOptions;
-	WORD nFormatOptionsBytes;      // Set by 'PEGetExportOptions',
-	// ignored by 'PEExportTo'.
-	WORD nDestinationOptionsBytes; // Set by 'PEGetExportOptions',
-	// ignored by 'PEExportTo'.
+    char formatDLLName [PE_DLL_NAME_LEN];
+    DWORD formatType;
+    void FAR *formatOptions;
+    char destinationDLLName [PE_DLL_NAME_LEN];
+    DWORD destinationType;
+    void FAR *destinationOptions;
+    WORD nFormatOptionsBytes;      // Set by 'PEGetExportOptions',
+    // ignored by 'PEExportTo'.
+    WORD nDestinationOptionsBytes; // Set by 'PEGetExportOptions',
+    // ignored by 'PEExportTo'.
 };
 
 #define PE_SIZEOF_EXPORT_OPTIONS sizeof (WORD) + \
@@ -846,15 +846,15 @@ BOOL CRPE_API PEGetMinimumSectionHeight (short printJob,
         short FAR *minimumHeight);
 
 struct PESectionOptions {
-	WORD StructSize;            // initialize to sizeof (PESectionOptions)
+    WORD StructSize;            // initialize to sizeof (PESectionOptions)
 
-	short visible,              // BOOLEAN values, except use PE_UNCHANGED
-	      newPageBefore,        // to preserve the existing settings
-	      newPageAfter,
-	      keepTogether,
-	      suppressBlankLines,
-	      resetPageNAfter,
-	      printAtBottomOfPage;
+    short visible,              // BOOLEAN values, except use PE_UNCHANGED
+          newPageBefore,        // to preserve the existing settings
+          newPageAfter,
+          keepTogether,
+          suppressBlankLines,
+          resetPageNAfter,
+          printAtBottomOfPage;
 };
 
 BOOL CRPE_API PESetSectionFormat (short printJob,
@@ -953,44 +953,44 @@ BOOL CRPE_API PESetFont (short printJob,
 #define PE_GRAPH_TEXT_LEN                     128
 
 struct PEGraphDataInfo {
-	WORD StructSize;            // initialize to sizeof (PEGraphDataInfo)
+    WORD StructSize;            // initialize to sizeof (PEGraphDataInfo)
 
-	short rowGroupN,            // group number in report.
-	      colGroupN,            // group number in report.
-	      summarizedFieldN,     // summarized field number for the group
-	      // where the graph stays.
-	      graphDirection;       // For normal group/total report, the direction,
-	// is always GRAPH_COLS_ONLY.  For CrossTab
-	// report all four options will change the
-	// graph data.
+    short rowGroupN,            // group number in report.
+          colGroupN,            // group number in report.
+          summarizedFieldN,     // summarized field number for the group
+          // where the graph stays.
+          graphDirection;       // For normal group/total report, the direction,
+    // is always GRAPH_COLS_ONLY.  For CrossTab
+    // report all four options will change the
+    // graph data.
 };
 
 struct PEGraphTextInfo {
-	WORD StructSize;            // initialize to sizeof (PEGraphTextInfo)
+    WORD StructSize;            // initialize to sizeof (PEGraphTextInfo)
 
-	// Strings are null-terminated.
-	char graphTitle       [PE_GRAPH_TEXT_LEN];
-	char graphSubTitle    [PE_GRAPH_TEXT_LEN];
-	char graphFootNote    [PE_GRAPH_TEXT_LEN];
-	char graphGroupsTitle [PE_GRAPH_TEXT_LEN];
-	char graphSeriesTitle [PE_GRAPH_TEXT_LEN];
-	char graphXAxisTitle  [PE_GRAPH_TEXT_LEN];
-	char graphYAxisTitle  [PE_GRAPH_TEXT_LEN];
-	char graphZAxisTitle  [PE_GRAPH_TEXT_LEN];
+    // Strings are null-terminated.
+    char graphTitle       [PE_GRAPH_TEXT_LEN];
+    char graphSubTitle    [PE_GRAPH_TEXT_LEN];
+    char graphFootNote    [PE_GRAPH_TEXT_LEN];
+    char graphGroupsTitle [PE_GRAPH_TEXT_LEN];
+    char graphSeriesTitle [PE_GRAPH_TEXT_LEN];
+    char graphXAxisTitle  [PE_GRAPH_TEXT_LEN];
+    char graphYAxisTitle  [PE_GRAPH_TEXT_LEN];
+    char graphZAxisTitle  [PE_GRAPH_TEXT_LEN];
 };
 
 struct PEGraphOptions {
-	WORD StructSize;            // initialize to sizeof (PEGraphOptions)
+    WORD StructSize;            // initialize to sizeof (PEGraphOptions)
 
-	double graphMaxValue,
-	       graphMinValue;
+    double graphMaxValue,
+           graphMinValue;
 
-	BOOL   showDataValue,       // Show data values on risers.
-	       showGridLine,
-	       verticalBars,
-	       showLegend;
+    BOOL   showDataValue,       // Show data values on risers.
+           showGridLine,
+           verticalBars,
+           showLegend;
 
-	char   fontFaceName [PE_GRAPH_TEXT_LEN];
+    char   fontFaceName [PE_GRAPH_TEXT_LEN];
 };
 
 BOOL CRPE_API PEGetGraphType (short printJob,

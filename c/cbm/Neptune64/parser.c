@@ -28,57 +28,57 @@
  */
 Token gettok(const char **ppin)
 {
-	Token tok;
-	const char* pin = *ppin;
-	memset(&tok, 0, sizeof(Token));
-	for (;;) {
-		switch (*pin) {
-		case '\0':
-			if (pin > *ppin) {
-				strncpy(tok.value, *ppin, pin - *ppin);
-				*ppin = pin;
-			}
-			return tok;
-		case LPAREN:
-		case RPAREN:
-		case COMMA:
-		case POUND:
-			if (pin > *ppin) {
-				strncpy(tok.value, *ppin, pin - *ppin);
-				*ppin = pin;
-				return tok;
-			}
-			tok.type = *pin;
-			tok.value[0] = *(*ppin)++;
-			return tok;
-		case ' ':		/* white space */
-		case '\t':
-		case '\r':
-		case '\n':
-			if (pin > *ppin) {
-				strncpy(tok.value, *ppin, pin - *ppin);
-				*ppin = pin;
-				return tok;
-			}
-			(*ppin)++; /* eat white */
-			break;
-		default:
-			if (isxdigit(*pin)) {
-				while (isxdigit(*pin))
-					pin++;
-				tok.type = NUM;
-				continue;
-			} else if (isalpha(*pin)) {
-				while (isalpha(*pin))
-					pin++;
-				tok.type = STR;
-				continue;
-			} else {
-				tok.type = UNDEF;
-				tok.value[0] = *(*ppin)++;
-				return tok;
-			}
-		}
-		pin++;
-	}
+    Token tok;
+    const char* pin = *ppin;
+    memset(&tok, 0, sizeof(Token));
+    for (;;) {
+        switch (*pin) {
+        case '\0':
+            if (pin > *ppin) {
+                strncpy(tok.value, *ppin, pin - *ppin);
+                *ppin = pin;
+            }
+            return tok;
+        case LPAREN:
+        case RPAREN:
+        case COMMA:
+        case POUND:
+            if (pin > *ppin) {
+                strncpy(tok.value, *ppin, pin - *ppin);
+                *ppin = pin;
+                return tok;
+            }
+            tok.type = *pin;
+            tok.value[0] = *(*ppin)++;
+            return tok;
+        case ' ':		/* white space */
+        case '\t':
+        case '\r':
+        case '\n':
+            if (pin > *ppin) {
+                strncpy(tok.value, *ppin, pin - *ppin);
+                *ppin = pin;
+                return tok;
+            }
+            (*ppin)++; /* eat white */
+            break;
+        default:
+            if (isxdigit(*pin)) {
+                while (isxdigit(*pin))
+                    pin++;
+                tok.type = NUM;
+                continue;
+            } else if (isalpha(*pin)) {
+                while (isalpha(*pin))
+                    pin++;
+                tok.type = STR;
+                continue;
+            } else {
+                tok.type = UNDEF;
+                tok.value[0] = *(*ppin)++;
+                return tok;
+            }
+        }
+        pin++;
+    }
 }

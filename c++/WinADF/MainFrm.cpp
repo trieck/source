@@ -16,14 +16,14 @@
 IMPLEMENT_DYNAMIC(MainFrame, CMDIFrameWnd)
 
 BEGIN_MESSAGE_MAP(MainFrame, CMDIFrameWnd)
-	ON_WM_CREATE()
+    ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 static UINT indicators[] = {
-	ID_SEPARATOR,           // status line indicator
-	ID_INDICATOR_CAPS,
-	ID_INDICATOR_NUM,
-	ID_INDICATOR_SCRL,
+    ID_SEPARATOR,           // status line indicator
+    ID_INDICATOR_CAPS,
+    ID_INDICATOR_NUM,
+    ID_INDICATOR_SCRL,
 };
 
 
@@ -40,45 +40,45 @@ MainFrame::~MainFrame()
 
 int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CMDIFrameWnd::OnCreate(lpCreateStruct) == -1)
-		return -1;
+    if (CMDIFrameWnd::OnCreate(lpCreateStruct) == -1)
+        return -1;
 
-	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT | TBSTYLE_TRANSPARENT) ||
-	        !m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
-		TRACE0("Failed to create toolbar\n");
-		return -1;      // fail to create
-	}
+    if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT | TBSTYLE_TRANSPARENT) ||
+            !m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
+        TRACE0("Failed to create toolbar\n");
+        return -1;      // fail to create
+    }
 
-	if (!m_wndReBar.Create(this) ||
-	        !m_wndReBar.AddBar(&m_wndToolBar)) {
-		TRACE0("Failed to create rebar\n");
-		return -1;      // fail to create
-	}
+    if (!m_wndReBar.Create(this) ||
+            !m_wndReBar.AddBar(&m_wndToolBar)) {
+        TRACE0("Failed to create rebar\n");
+        return -1;      // fail to create
+    }
 
-	if (!m_wndStatusBar.Create(this) ||
-	        !m_wndStatusBar.SetIndicators(indicators,
-	                                      sizeof(indicators)/sizeof(UINT))) {
-		TRACE0("Failed to create status bar\n");
-		return -1;      // fail to create
-	}
+    if (!m_wndStatusBar.Create(this) ||
+            !m_wndStatusBar.SetIndicators(indicators,
+                                          sizeof(indicators)/sizeof(UINT))) {
+        TRACE0("Failed to create status bar\n");
+        return -1;      // fail to create
+    }
 
-	m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() |
-	                         CBRS_TOOLTIPS | CBRS_FLYBY);
+    m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() |
+                             CBRS_TOOLTIPS | CBRS_FLYBY);
 
-	CenterWindow();
+    CenterWindow();
 
-	return 0;
+    return 0;
 }
 
 BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	if ( !CMDIFrameWnd::PreCreateWindow(cs) )
-		return FALSE;
+    if ( !CMDIFrameWnd::PreCreateWindow(cs) )
+        return FALSE;
 
-	cs.cx = 650;
-	cs.cy = 400;
+    cs.cx = 650;
+    cs.cy = 400;
 
-	return TRUE;
+    return TRUE;
 }
 
 
@@ -87,12 +87,12 @@ BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs)
 #ifdef _DEBUG
 void MainFrame::AssertValid() const
 {
-	CMDIFrameWnd::AssertValid();
+    CMDIFrameWnd::AssertValid();
 }
 
 void MainFrame::Dump(CDumpContext& dc) const
 {
-	CMDIFrameWnd::Dump(dc);
+    CMDIFrameWnd::Dump(dc);
 }
 
 #endif //_DEBUG

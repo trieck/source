@@ -10,9 +10,9 @@
 
 @interface LotteryEntry :
 NSObject {
-	NSCalendarDate *entryDate;
-	int firstNumber;
-	int secondNumber;
+    NSCalendarDate *entryDate;
+    int firstNumber;
+    int secondNumber;
 }
 - (void)setEntryDate:
 (NSCalendarDate *)date;

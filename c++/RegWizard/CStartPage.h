@@ -8,20 +8,20 @@
 
 // CPropertyPage derived class
 class CStartPage : public CPropertyPage {
-	DECLARE_DYNCREATE(CStartPage);
+    DECLARE_DYNCREATE(CStartPage);
 
 public:
-	CStartPage();
-	~CStartPage();
+    CStartPage();
+    ~CStartPage();
 protected:
-	virtual LRESULT OnWizardNext();
-	virtual BOOL OnInitDialog();
-	// message handlers
-	afx_msg void OnPaint();
+    virtual LRESULT OnWizardNext();
+    virtual BOOL OnInitDialog();
+    // message handlers
+    afx_msg void OnPaint();
 private:
-	CFont m_fntTitle;
-	enum {IDD = IDD_STARTPAGE};
-	DECLARE_MESSAGE_MAP();
+    CFont m_fntTitle;
+    enum {IDD = IDD_STARTPAGE};
+    DECLARE_MESSAGE_MAP();
 };
 
 #endif // __CSTARTPAGE_H__

@@ -79,72 +79,72 @@ enum TokenType {
 };
 
 typedef struct {
-	TokenType type;
-	char value[MAXTOK];
+    TokenType type;
+    char value[MAXTOK];
 } Token;
 
 /////////////////////////////////////////////////////////////////////////////
 class Compile {
 public:
 // Construction / Destruction
-	Compile();
-	~Compile();
+    Compile();
+    ~Compile();
 
 // Interface
-	void compile(const char **);
+    void compile(const char **);
 protected:
 // Implementation
-	void compstmt();
-	void expr(bool get = true);
-	void compexpr(bool get = true);
-	void shiftexpr(bool get = true);
-	void addexpr(bool get = true);
-	void multexpr(bool get = true);
-	void prim(bool get = true);
-	void plus();
-	void minus();
-	void unaryminus();
-	void mult();
-	void divide();
-	void mod();
-	void assign();
-	void constant();
-	void shiftleft();
-	void shiftright();
-	void whilecode();
-	void ifcode();
-	void printf();
-	void string();
-	void lt();
-	void gt();
-	void le();
-	void ge();
-	void not();
-	void eq();
-	void ne();
-	void bitand();
-	void bitor();
-	void logand();
-	void logor();
-	void symbol();
-	void funcdef();
-	void procdef();
-	void ret();
-	void arg();
-	int arglist();
+    void compstmt();
+    void expr(bool get = true);
+    void compexpr(bool get = true);
+    void shiftexpr(bool get = true);
+    void addexpr(bool get = true);
+    void multexpr(bool get = true);
+    void prim(bool get = true);
+    void plus();
+    void minus();
+    void unaryminus();
+    void mult();
+    void divide();
+    void mod();
+    void assign();
+    void constant();
+    void shiftleft();
+    void shiftright();
+    void whilecode();
+    void ifcode();
+    void printf();
+    void string();
+    void lt();
+    void gt();
+    void le();
+    void ge();
+    void not();
+    void eq();
+    void ne();
+    void bitand();
+    void bitor();
+    void logand();
+    void logor();
+    void symbol();
+    void funcdef();
+    void procdef();
+    void ret();
+    void arg();
+    int arglist();
 
-	void kword(const Symbol *);
-	void var(const Symbol *);
-	void builtin(const Symbol *);
-	void call(const Symbol *);
-	void argassign(int);
+    void kword(const Symbol *);
+    void var(const Symbol *);
+    void builtin(const Symbol *);
+    void call(const Symbol *);
+    void argassign(int);
 
-	Token gettok(const char**);
-	Token lookahead();
+    Token gettok(const char**);
+    Token lookahead();
 private:
-	const char** ppin;	// address of input pointer
-	Token token;		// current token
-	bool indef;			// in a function / procedure definition
+    const char** ppin;	// address of input pointer
+    Token token;		// current token
+    bool indef;			// in a function / procedure definition
 };
 /////////////////////////////////////////////////////////////////////////////
 

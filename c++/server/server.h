@@ -15,17 +15,17 @@
 /////////////////////////////////////////////////////////////////////////////
 class HttpServer {
 public:
-	HttpServer(int port = DEFAULT_HTTP_PORT);
-	~HttpServer();
+    HttpServer(int port = DEFAULT_HTTP_PORT);
+    ~HttpServer();
 
 // Interface
-	bool run();
+    bool run();
 
 // Implementation
 private:
-	bool service(Connection *request);
-	Connection conn;
-	int port;
+    bool service(Connection *request);
+    Connection conn;
+    int port;
 };
 /////////////////////////////////////////////////////////////////////////////
 

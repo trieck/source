@@ -10,8 +10,8 @@
 class FrameWindow : public Window {
 public:
 // Construction / Destruction
-	FrameWindow();
-	virtual ~FrameWindow();
+    FrameWindow();
+    virtual ~FrameWindow();
 
 // Interface
 // Implementation

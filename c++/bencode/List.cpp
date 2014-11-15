@@ -17,52 +17,52 @@ List::List()
 /////////////////////////////////////////////////////////////////////////////
 List::List(const List &l)
 {
-	*this = l;
+    *this = l;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 List::~List()
 {
-	vector<LPBEOBJECT>::const_iterator it = list.begin();
-	for ( ; it != list.end(); it++) {
-		delete *it;
-	}
+    vector<LPBEOBJECT>::const_iterator it = list.begin();
+    for ( ; it != list.end(); it++) {
+        delete *it;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////
 List &List::operator =(const List &rhs)
 {
-	if (this != &rhs) {
-		list = rhs.list;
-	}
+    if (this != &rhs) {
+        list = rhs.list;
+    }
 
-	return *this;
+    return *this;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 LPBEOBJECT List::Get(unsigned index) const
 {
-	if (index >= list.size())
-		return NULL;
+    if (index >= list.size())
+        return NULL;
 
-	return list[index];
+    return list[index];
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void List::AddObject(LPBEOBJECT o)
 {
-	list.push_back(o);
+    list.push_back(o);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 LPBEOBJECT List::Copy() const
 {
-	return new List(*this);
+    return new List(*this);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Global helpers
 LPLIST MakeList()
 {
-	return new List();
+    return new List();
 }

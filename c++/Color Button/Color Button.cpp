@@ -22,12 +22,12 @@ const WORD _wVerMinor = 0;
 
 BOOL CColorButtonApp::InitInstance()
 {
-	BOOL bInit = COleControlModule::InitInstance();
+    BOOL bInit = COleControlModule::InitInstance();
 
-	if (bInit) {
-	}
+    if (bInit) {
+    }
 
-	return bInit;
+    return bInit;
 }
 
 
@@ -36,7 +36,7 @@ BOOL CColorButtonApp::InitInstance()
 
 int CColorButtonApp::ExitInstance()
 {
-	return COleControlModule::ExitInstance();
+    return COleControlModule::ExitInstance();
 }
 
 
@@ -45,15 +45,15 @@ int CColorButtonApp::ExitInstance()
 
 STDAPI DllRegisterServer(void)
 {
-	AFX_MANAGE_STATE(_afxModuleAddrThis);
+    AFX_MANAGE_STATE(_afxModuleAddrThis);
 
-	if (!AfxOleRegisterTypeLib(AfxGetInstanceHandle(), _tlid))
-		return ResultFromScode(SELFREG_E_TYPELIB);
+    if (!AfxOleRegisterTypeLib(AfxGetInstanceHandle(), _tlid))
+        return ResultFromScode(SELFREG_E_TYPELIB);
 
-	if (!COleObjectFactoryEx::UpdateRegistryAll(TRUE))
-		return ResultFromScode(SELFREG_E_CLASS);
+    if (!COleObjectFactoryEx::UpdateRegistryAll(TRUE))
+        return ResultFromScode(SELFREG_E_CLASS);
 
-	return NOERROR;
+    return NOERROR;
 }
 
 
@@ -62,13 +62,13 @@ STDAPI DllRegisterServer(void)
 
 STDAPI DllUnregisterServer(void)
 {
-	AFX_MANAGE_STATE(_afxModuleAddrThis);
+    AFX_MANAGE_STATE(_afxModuleAddrThis);
 
-	if (!AfxOleUnregisterTypeLib(_tlid))
-		return ResultFromScode(SELFREG_E_TYPELIB);
+    if (!AfxOleUnregisterTypeLib(_tlid))
+        return ResultFromScode(SELFREG_E_TYPELIB);
 
-	if (!COleObjectFactoryEx::UpdateRegistryAll(FALSE))
-		return ResultFromScode(SELFREG_E_CLASS);
+    if (!COleObjectFactoryEx::UpdateRegistryAll(FALSE))
+        return ResultFromScode(SELFREG_E_CLASS);
 
-	return NOERROR;
+    return NOERROR;
 }

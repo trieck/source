@@ -23,7 +23,7 @@ TextFileView::~TextFileView()
 }
 
 BEGIN_MESSAGE_MAP(TextFileView, TextView)
-	ON_WM_CREATE()
+    ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 
@@ -31,7 +31,7 @@ END_MESSAGE_MAP()
 
 void TextFileView::OnDraw(CDC* pDC)
 {
-	TextView::OnDraw(pDC);
+    TextView::OnDraw(pDC);
 }
 
 
@@ -40,19 +40,19 @@ void TextFileView::OnDraw(CDC* pDC)
 #ifdef _DEBUG
 void TextFileView::AssertValid() const
 {
-	TextView::AssertValid();
+    TextView::AssertValid();
 }
 
 #ifndef _WIN32_WCE
 void TextFileView::Dump(CDumpContext& dc) const
 {
-	TextView::Dump(dc);
+    TextView::Dump(dc);
 }
 
 WinADFDoc* TextFileView::GetDocument() const // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WinADFDoc)));
-	return (WinADFDoc*)m_pDocument;
+    ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(WinADFDoc)));
+    return (WinADFDoc*)m_pDocument;
 }
 
 #endif
@@ -66,45 +66,45 @@ void TextFileView::OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pHi
 
 void TextFileView::OnInitialUpdate()
 {
-	TextView::OnInitialUpdate();
+    TextView::OnInitialUpdate();
 }
 
 int TextFileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (TextView::OnCreate(lpCreateStruct) != 0)
-		return -1;
+    if (TextView::OnCreate(lpCreateStruct) != 0)
+        return -1;
 
-	m_Font.CreatePointFont(90, _T("Courier New"));
+    m_Font.CreatePointFont(90, _T("Courier New"));
 
-	WinADFDoc *pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
+    WinADFDoc *pDoc = GetDocument();
+    ASSERT_VALID(pDoc);
 
-	Volume *pVol = pDoc->GetVolume();
-	ASSERT(pVol != NULL);
+    Volume *pVol = pDoc->GetVolume();
+    ASSERT(pVol != NULL);
 
-	const Entry *pEntry = pDoc->GetEntry();
-	ASSERT(pEntry != NULL);
+    const Entry *pEntry = pDoc->GetEntry();
+    ASSERT(pEntry != NULL);
 
-	try {
-		FilePtr file = pVol->openfile(*pEntry);
+    try {
+        FilePtr file = pVol->openfile(*pEntry);
 
-		LPSTR pbuf = m_Text.GetBuffer(pEntry->size+1);
-		file->read(pEntry->size, pbuf);
-		pbuf[pEntry->size] = '\0';
-		m_Text.ReleaseBuffer();
-	} catch (const ADFException &e) {
-		AfxMessageBox(e.getDescription().c_str());
-		return -1;
-	}
+        LPSTR pbuf = m_Text.GetBuffer(pEntry->size+1);
+        file->read(pEntry->size, pbuf);
+        pbuf[pEntry->size] = '\0';
+        m_Text.ReleaseBuffer();
+    } catch (const ADFException &e) {
+        AfxMessageBox(e.getDescription().c_str());
+        return -1;
+    }
 
-	RecalcLayout();
+    RecalcLayout();
 
-	return 0;
+    return 0;
 }
 
 BOOL TextFileView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	return TextView::PreCreateWindow(cs);
+    return TextView::PreCreateWindow(cs);
 }
 
 

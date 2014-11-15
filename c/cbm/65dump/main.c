@@ -32,12 +32,12 @@ const char *log_file_name = NULL;	/* stderr */
  */
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		usage();
+    if (argc < 2)
+        usage();
 
-	dump(argv[1]);
+    dump(argv[1]);
 
-	return 0;
+    return 0;
 }
 
 /*
@@ -45,34 +45,34 @@ int main(int argc, char *argv[])
  */
 void dump(const char *filename)
 {
-	FILE *fp;
-	FileHeader fh;
-	unsigned const int magic = OBJ_MAGIC_NUMBER;
+    FILE *fp;
+    FileHeader fh;
+    unsigned const int magic = OBJ_MAGIC_NUMBER;
 
-	/* filename must end in .o extension */
-	size_t N = strlen(filename);
-	if (strcmp(filename + N - 2, ".o"))
-		error("file must end with .o extension.\n");
+    /* filename must end in .o extension */
+    size_t N = strlen(filename);
+    if (strcmp(filename + N - 2, ".o"))
+        error("file must end with .o extension.\n");
 
-	/* open the file */
-	fp = fopen(filename, "rb");
-	if (fp == NULL)
-		error("unable to open file %s.\n", filename);
+    /* open the file */
+    fp = fopen(filename, "rb");
+    if (fp == NULL)
+        error("unable to open file %s.\n", filename);
 
-	/* read in the file header */
-	N = fread(&fh, sizeof(FileHeader), 1, fp);
-	if (1 != N) {
-		fclose(fp);
-		error("unable to read file header.\n");
-	}
+    /* read in the file header */
+    N = fread(&fh, sizeof(FileHeader), 1, fp);
+    if (1 != N) {
+        fclose(fp);
+        error("unable to read file header.\n");
+    }
 
-	/* ensure this is a valid image */
-	if (memcmp(&magic, fh.magic, sizeof(fh.magic)) != 0) {
-		fclose(fp);
-		error("file is not valid binary image.\n");
-	}
+    /* ensure this is a valid image */
+    if (memcmp(&magic, fh.magic, sizeof(fh.magic)) != 0) {
+        fclose(fp);
+        error("file is not valid binary image.\n");
+    }
 
-	fclose(fp);
+    fclose(fp);
 }
 
 /*
@@ -80,6 +80,6 @@ void dump(const char *filename)
  */
 void usage(void)
 {
-	fprintf(stderr, "usage: 65dump file\n");
-	exit(1);
+    fprintf(stderr, "usage: 65dump file\n");
+    exit(1);
 }

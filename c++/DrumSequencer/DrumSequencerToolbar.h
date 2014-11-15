@@ -4,16 +4,16 @@
 // DrumSequencerToolbar
 
 class DrumSequencerToolbar : public CMFCToolBar {
-	DECLARE_DYNAMIC(DrumSequencerToolbar)
+    DECLARE_DYNAMIC(DrumSequencerToolbar)
 
 public:
-	DrumSequencerToolbar();
-	virtual ~DrumSequencerToolbar();
+    DrumSequencerToolbar();
+    virtual ~DrumSequencerToolbar();
 
-	virtual void OnAfterFloat();
+    virtual void OnAfterFloat();
 protected:
-	DECLARE_MESSAGE_MAP()
-	virtual void OnAfterDock(CBasePane* pBar, LPCRECT lpRect, AFX_DOCK_METHOD dockMethod);
+    DECLARE_MESSAGE_MAP()
+    virtual void OnAfterDock(CBasePane* pBar, LPCRECT lpRect, AFX_DOCK_METHOD dockMethod);
 };
 
 

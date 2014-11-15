@@ -17,35 +17,35 @@
 /* allocate memory block */
 void *xmalloc(size_t size)
 {
-	void *pv = malloc(size);
-	if (pv == 0) {
-		error("unable to allocate memory block.");
-	}
+    void *pv = malloc(size);
+    if (pv == 0) {
+        error("unable to allocate memory block.");
+    }
 
-	mcalloc(pv, size);
+    mcalloc(pv, size);
 
-	return pv;
+    return pv;
 }
 
 /* reallocate memory block */
 void *xrealloc(void *old, size_t size)
 {
-	void *new = realloc(old, size);
-	if (new == 0) {
-		error("unable to reallocate memory block.");
-	}
+    void *new = realloc(old, size);
+    if (new == 0) {
+        error("unable to reallocate memory block.");
+    }
 
-	mcfree(old);
-	mcalloc(new, size);
+    mcfree(old);
+    mcalloc(new, size);
 
-	return new;
+    return new;
 }
 
 /* free memory block */
 void xfree(void *pv)
 {
-	if (pv != 0) {
-		free(pv);
-		mcfree(pv);
-	}
+    if (pv != 0) {
+        free(pv);
+        mcfree(pv);
+    }
 }

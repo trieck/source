@@ -10,22 +10,22 @@
 
 /////////////////////////////////////////////////////////////////////////////
 class ObjectDatabase {
-	// Construction / Destruction
+    // Construction / Destruction
 private:
-	ObjectDatabase();
+    ObjectDatabase();
 public:
-	virtual ~ObjectDatabase();
+    virtual ~ObjectDatabase();
 
-	typedef auto_ptr<ObjectDatabase> ObjectDatabasePtr;
+    typedef auto_ptr<ObjectDatabase> ObjectDatabasePtr;
 
 // Interface
-	static ObjectDatabase *instance();
-	int Run(int argc, char **argv);
+    static ObjectDatabase *instance();
+    int Run(int argc, char **argv);
 
 // Implementation
 private:
-	static ObjectDatabasePtr This;
-	Service *pservice;
+    static ObjectDatabasePtr This;
+    Service *pservice;
 };
 /////////////////////////////////////////////////////////////////////////////
 

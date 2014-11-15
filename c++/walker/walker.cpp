@@ -26,15 +26,15 @@ Walker::~Walker()
 /////////////////////////////////////////////////////////////////////////////
 void Walker::walk(LPCSTR filename)
 {
-	if (!btree.open(filename, OM_RO))
-		throw Exception(lasterror());
+    if (!btree.open(filename, OM_RO))
+        throw Exception(lasterror());
 
-	btree.Walk(this);
+    btree.Walk(this);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 void Walker::Call(PITEM pKey)
 {
-	string key = string(pKey->data, pKey->nlen);
-	cout << key << endl;
+    string key = string(pKey->data, pKey->nlen);
+    cout << key << endl;
 }

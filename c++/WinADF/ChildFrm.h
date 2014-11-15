@@ -7,13 +7,13 @@
 class WinADFView;
 
 class ChildFrame : public CMDIChildWnd {
-	DECLARE_DYNCREATE(ChildFrame)
+    DECLARE_DYNCREATE(ChildFrame)
 public:
-	ChildFrame();
+    ChildFrame();
 
 // Attributes
 protected:
-	CSplitterWnd m_wndSplitter;
+    CSplitterWnd m_wndSplitter;
 public:
 
 // Operations
@@ -22,24 +22,24 @@ public:
 // Overrides
 public:
 public:
-	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
 // Implementation
 public:
-	virtual ~ChildFrame();
+    virtual ~ChildFrame();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
-	WinADFView* GetRightPane();
+    WinADFView* GetRightPane();
 // Generated message map functions
 protected:
-	afx_msg void OnUpdateViewStyles(CCmdUI* pCmdUI);
-	afx_msg void OnViewStyle(UINT nCommandID);
-	DECLARE_MESSAGE_MAP()
+    afx_msg void OnUpdateViewStyles(CCmdUI* pCmdUI);
+    afx_msg void OnViewStyle(UINT nCommandID);
+    DECLARE_MESSAGE_MAP()
 
-	CStatusBar  m_wndStatusBar;
+    CStatusBar  m_wndStatusBar;
 };

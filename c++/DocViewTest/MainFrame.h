@@ -16,23 +16,23 @@
 // The CMainFrame frame window class
 
 class CMainFrame : public CFrameWnd {
-	friend CDocViewView;
+    friend CDocViewView;
 
 protected: // create from serialization only
-	CMainFrame();
-	virtual BOOL PreCreateWindow(CREATESTRUCT&);
-	virtual ~CMainFrame();
+    CMainFrame();
+    virtual BOOL PreCreateWindow(CREATESTRUCT&);
+    virtual ~CMainFrame();
 
-	// message map entries
-	afx_msg	INT	OnCreate(LPCREATESTRUCT);
-	afx_msg VOID OnSize(UINT, INT, INT);
-	afx_msg VOID OnExit ();
+    // message map entries
+    afx_msg	INT	OnCreate(LPCREATESTRUCT);
+    afx_msg VOID OnSize(UINT, INT, INT);
+    afx_msg VOID OnExit ();
 
 protected:
-	CStatusBar*	m_pWndStatus;
+    CStatusBar*	m_pWndStatus;
 
-	DECLARE_DYNCREATE(CMainFrame)
-	DECLARE_MESSAGE_MAP()
+    DECLARE_DYNCREATE(CMainFrame)
+    DECLARE_MESSAGE_MAP()
 };
 
 ///////////////////////////////////////////////////////////////////

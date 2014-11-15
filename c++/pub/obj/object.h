@@ -15,9 +15,9 @@
 
 // object rendering
 typedef struct tagRendering {
-	RECT		aRect;
-	RECT		aBoundsRect;
-	COLORREF	aColor;
+    RECT		aRect;
+    RECT		aBoundsRect;
+    COLORREF	aColor;
 } RENDERING, *PRENDERING;
 
 // function for destroying object
@@ -35,140 +35,140 @@ typedef CImpIDataObject		*PCImpIDataObject;
 typedef CImpIViewObject2	*PCImpIViewObject2;
 
 class CDrawObject : public IDrawObject {
-	friend CImpIPersistStream;
-	friend CImpIDataObject;
-	friend CImpIViewObject2;
+    friend CImpIPersistStream;
+    friend CImpIDataObject;
+    friend CImpIViewObject2;
 
 protected:
-	DWORD				m_cRef;					// Object reference count
-	LPUNKNOWN			m_pUnkOuter;			// Controlling unknown
-	PFNDESTROYED		m_pfnDestroy;			// To call on closure
-	PCImpIPersistStream	m_pImpIPersistStream;	// Persistant stream pointer
-	PCImpIDataObject	m_pImpIDataObject;		// Data Object pointer
-	PCImpIViewObject2	m_pImpIViewObject2;		// View Object pointer
-	LPDATAADVISEHOLDER	m_pIDataAdviseHolder;	// Data Advise Holder pointer
-	CLSID				m_clsID;
-	BOOL				m_fDirty;
-	PRENDERING			m_pRender;				// Object rendering pointer
-	LPSTGMEDIUM			m_pSTM;
+    DWORD				m_cRef;					// Object reference count
+    LPUNKNOWN			m_pUnkOuter;			// Controlling unknown
+    PFNDESTROYED		m_pfnDestroy;			// To call on closure
+    PCImpIPersistStream	m_pImpIPersistStream;	// Persistant stream pointer
+    PCImpIDataObject	m_pImpIDataObject;		// Data Object pointer
+    PCImpIViewObject2	m_pImpIViewObject2;		// View Object pointer
+    LPDATAADVISEHOLDER	m_pIDataAdviseHolder;	// Data Advise Holder pointer
+    CLSID				m_clsID;
+    BOOL				m_fDirty;
+    PRENDERING			m_pRender;				// Object rendering pointer
+    LPSTGMEDIUM			m_pSTM;
 public:
-	CDrawObject(LPUNKNOWN, PFNDESTROYED);
-	~CDrawObject();
-	BOOL		Init();
+    CDrawObject(LPUNKNOWN, PFNDESTROYED);
+    ~CDrawObject();
+    BOOL		Init();
 
 protected:
-	HRESULT		RenderData();
-	BOOL		RenderMetafile();
-	VOID		Draw(HDC);
+    HRESULT		RenderData();
+    BOOL		RenderMetafile();
+    VOID		Draw(HDC);
 
 public:
-	// IUnknown members
-	STDMETHODIMP         QueryInterface(REFIID, PPVOID);
-	STDMETHODIMP_(DWORD) AddRef();
-	STDMETHODIMP_(DWORD) Release();
+    // IUnknown members
+    STDMETHODIMP         QueryInterface(REFIID, PPVOID);
+    STDMETHODIMP_(DWORD) AddRef();
+    STDMETHODIMP_(DWORD) Release();
 
-	// IDrawObject members
-	STDMETHODIMP		Randomize();
-	STDMETHODIMP		SetBounds(LPRECT);
-	STDMETHODIMP		GetColor(LPCOLORREF);
-	STDMETHODIMP		SetColor(COLORREF);
+    // IDrawObject members
+    STDMETHODIMP		Randomize();
+    STDMETHODIMP		SetBounds(LPRECT);
+    STDMETHODIMP		GetColor(LPCOLORREF);
+    STDMETHODIMP		SetColor(COLORREF);
 };
 
 typedef CDrawObject *PCDrawObject;
 
 class CImpIPersistStream : public IPersistStream {
 protected:
-	PCDrawObject	m_pObj;
-	DWORD			m_cRef;
+    PCDrawObject	m_pObj;
+    DWORD			m_cRef;
 public:
-	CImpIPersistStream(PCDrawObject);
-	~CImpIPersistStream();
+    CImpIPersistStream(PCDrawObject);
+    ~CImpIPersistStream();
 
-	// IUnknown members
-	STDMETHODIMP         QueryInterface(REFIID, PPVOID);
-	STDMETHODIMP_(DWORD) AddRef();
-	STDMETHODIMP_(DWORD) Release();
+    // IUnknown members
+    STDMETHODIMP         QueryInterface(REFIID, PPVOID);
+    STDMETHODIMP_(DWORD) AddRef();
+    STDMETHODIMP_(DWORD) Release();
 
-	// IPersist members
-	STDMETHODIMP GetClassID(LPCLSID);
+    // IPersist members
+    STDMETHODIMP GetClassID(LPCLSID);
 
-	// IPersistStream members
-	STDMETHODIMP IsDirty();
-	STDMETHODIMP Load(LPSTREAM);
-	STDMETHODIMP Save(LPSTREAM, BOOL);
-	STDMETHODIMP GetSizeMax(ULARGE_INTEGER*);
+    // IPersistStream members
+    STDMETHODIMP IsDirty();
+    STDMETHODIMP Load(LPSTREAM);
+    STDMETHODIMP Save(LPSTREAM, BOOL);
+    STDMETHODIMP GetSizeMax(ULARGE_INTEGER*);
 };
 
 class CImpIDataObject : public IDataObject {
 protected:
-	PCDrawObject	m_pObj;			// back pointer to main object
-	DWORD			m_cRef;
+    PCDrawObject	m_pObj;			// back pointer to main object
+    DWORD			m_cRef;
 public:
-	CImpIDataObject(PCDrawObject);
-	~CImpIDataObject();
+    CImpIDataObject(PCDrawObject);
+    ~CImpIDataObject();
 
-	// IUnknown members
-	STDMETHODIMP			QueryInterface(REFIID, PPVOID);
-	STDMETHODIMP_(DWORD)	AddRef();
-	STDMETHODIMP_(DWORD)	Release();
+    // IUnknown members
+    STDMETHODIMP			QueryInterface(REFIID, PPVOID);
+    STDMETHODIMP_(DWORD)	AddRef();
+    STDMETHODIMP_(DWORD)	Release();
 
-	// IDataObject members
-	STDMETHODIMP			GetData(LPFORMATETC, LPSTGMEDIUM);
-	STDMETHODIMP			GetDataHere(LPFORMATETC, LPSTGMEDIUM);
-	STDMETHODIMP			QueryGetData(LPFORMATETC);
-	STDMETHODIMP			GetCanonicalFormatEtc(LPFORMATETC, LPFORMATETC);
-	STDMETHODIMP			SetData(LPFORMATETC, LPSTGMEDIUM, BOOL);
-	STDMETHODIMP			EnumFormatEtc(DWORD, LPENUMFORMATETC*);
-	STDMETHODIMP			DAdvise(LPFORMATETC, DWORD, LPADVISESINK, LPDWORD);
-	STDMETHODIMP			DUnadvise(DWORD);
-	STDMETHODIMP			EnumDAdvise(LPENUMSTATDATA*);
+    // IDataObject members
+    STDMETHODIMP			GetData(LPFORMATETC, LPSTGMEDIUM);
+    STDMETHODIMP			GetDataHere(LPFORMATETC, LPSTGMEDIUM);
+    STDMETHODIMP			QueryGetData(LPFORMATETC);
+    STDMETHODIMP			GetCanonicalFormatEtc(LPFORMATETC, LPFORMATETC);
+    STDMETHODIMP			SetData(LPFORMATETC, LPSTGMEDIUM, BOOL);
+    STDMETHODIMP			EnumFormatEtc(DWORD, LPENUMFORMATETC*);
+    STDMETHODIMP			DAdvise(LPFORMATETC, DWORD, LPADVISESINK, LPDWORD);
+    STDMETHODIMP			DUnadvise(DWORD);
+    STDMETHODIMP			EnumDAdvise(LPENUMSTATDATA*);
 };
 
 class CImpIViewObject2 : public IViewObject {
 protected:
-	PCDrawObject	m_pObj;		// back pointer to main object
-	ULONG			m_cRef;
+    PCDrawObject	m_pObj;		// back pointer to main object
+    ULONG			m_cRef;
 public:
-	CImpIViewObject2(PCDrawObject);
-	~CImpIViewObject2();
+    CImpIViewObject2(PCDrawObject);
+    ~CImpIViewObject2();
 
-	// IUnknown members
-	STDMETHODIMP			QueryInterface(REFIID, PPVOID);
-	STDMETHODIMP_(DWORD)	AddRef();
-	STDMETHODIMP_(DWORD)	Release();
+    // IUnknown members
+    STDMETHODIMP			QueryInterface(REFIID, PPVOID);
+    STDMETHODIMP_(DWORD)	AddRef();
+    STDMETHODIMP_(DWORD)	Release();
 
-	// IViewObject members
-	STDMETHODIMP Draw (DWORD, LONG, LPVOID, DVTARGETDEVICE*,
-	                   HDC, HDC, LPCRECTL, LPCRECTL, BOOL (CALLBACK*)(DWORD),
-	                   DWORD);
-	STDMETHODIMP GetColorSet(DWORD, LONG, LPVOID, DVTARGETDEVICE*,
-	                         HDC, LPLOGPALETTE*);
-	STDMETHODIMP Freeze(DWORD, LONG, LPVOID, LPDWORD);
-	STDMETHODIMP Unfreeze(DWORD);
-	STDMETHODIMP SetAdvise(DWORD, DWORD, LPADVISESINK);
-	STDMETHODIMP GetAdvise(LPDWORD, LPDWORD, LPADVISESINK*);
+    // IViewObject members
+    STDMETHODIMP Draw (DWORD, LONG, LPVOID, DVTARGETDEVICE*,
+                       HDC, HDC, LPCRECTL, LPCRECTL, BOOL (CALLBACK*)(DWORD),
+                       DWORD);
+    STDMETHODIMP GetColorSet(DWORD, LONG, LPVOID, DVTARGETDEVICE*,
+                             HDC, LPLOGPALETTE*);
+    STDMETHODIMP Freeze(DWORD, LONG, LPVOID, LPDWORD);
+    STDMETHODIMP Unfreeze(DWORD);
+    STDMETHODIMP SetAdvise(DWORD, DWORD, LPADVISESINK);
+    STDMETHODIMP GetAdvise(LPDWORD, LPDWORD, LPADVISESINK*);
 
-	// IViewObject2 members
-	STDMETHODIMP GetExtent(DWORD, LONG, DVTARGETDEVICE*, LPSIZEL);
+    // IViewObject2 members
+    STDMETHODIMP GetExtent(DWORD, LONG, DVTARGETDEVICE*, LPSIZEL);
 };
 
 class CDrawClassFactory : public IClassFactory {
 protected:
-	ULONG           m_cRef;
+    ULONG           m_cRef;
 
 public:
-	CDrawClassFactory();
-	~CDrawClassFactory();
+    CDrawClassFactory();
+    ~CDrawClassFactory();
 
-	// IUnknown members
-	STDMETHODIMP         QueryInterface(REFIID, PPVOID);
-	STDMETHODIMP_(ULONG) AddRef();
-	STDMETHODIMP_(ULONG) Release();
+    // IUnknown members
+    STDMETHODIMP         QueryInterface(REFIID, PPVOID);
+    STDMETHODIMP_(ULONG) AddRef();
+    STDMETHODIMP_(ULONG) Release();
 
-	// IClassFactory members
-	STDMETHODIMP         CreateInstance(LPUNKNOWN, REFIID
-	                                    , PPVOID);
-	STDMETHODIMP         LockServer(BOOL);
+    // IClassFactory members
+    STDMETHODIMP         CreateInstance(LPUNKNOWN, REFIID
+                                        , PPVOID);
+    STDMETHODIMP         LockServer(BOOL);
 };
 
 typedef CDrawClassFactory *PCDrawClassFactory;

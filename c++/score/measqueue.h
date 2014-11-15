@@ -17,14 +17,14 @@
 /////////////////////////////////////////////////////////////////////////////
 class MeasureQueue : public std::queue<Measure *> {
 public:
-	// Construction / Destruction
-	MeasureQueue();
-	virtual ~MeasureQueue();
+    // Construction / Destruction
+    MeasureQueue();
+    virtual ~MeasureQueue();
 
-	// Interface
-	void clear();
+    // Interface
+    void clear();
 
-	// Implementation
+    // Implementation
 protected:
 };
 /////////////////////////////////////////////////////////////////////////////

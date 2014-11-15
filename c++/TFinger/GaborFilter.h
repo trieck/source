@@ -2,11 +2,11 @@
 
 class GaborFilter {
 public:
-	GaborFilter();
-	~GaborFilter();
+    GaborFilter();
+    ~GaborFilter();
 
-	void Apply(CImage &image);
+    void Apply(CImage &image);
 private:
-	enum { BLOCK_SIZE = 8 };
+    enum { BLOCK_SIZE = 8 };
 
 };

@@ -10,7 +10,7 @@
 #include "command.h"
 
 CommandLine::CommandLine()
-	: m_size(__argc)
+    : m_size(__argc)
 {
 }
 
@@ -20,8 +20,8 @@ CommandLine::~CommandLine()
 
 LPCTSTR CommandLine::getArg(int N) const
 {
-	if (N >= m_size)
-		return NULL;
+    if (N >= m_size)
+        return NULL;
 
-	return __argv[N];
+    return __argv[N];
 }

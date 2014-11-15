@@ -11,24 +11,24 @@
 /////////////////////////////////////////////////////////////////////////////
 class ODBService : public Service, IRunnable {
 public:
-	// Construction / Destruction
-	ODBService();
-	~ODBService();
+    // Construction / Destruction
+    ODBService();
+    ~ODBService();
 
 // Interface
-	virtual LPCSTR GetServiceName() const;
+    virtual LPCSTR GetServiceName() const;
 
 // Implementation
 private:
-	DWORD Execute(LPVOID pdata);
-	virtual BOOL OnInit();
-	virtual void Run();
-	virtual void OnStop();
+    DWORD Execute(LPVOID pdata);
+    virtual BOOL OnInit();
+    virtual void Run();
+    virtual void OnStop();
 
-	enum { LISTEN_PORT = 5001 };
+    enum { LISTEN_PORT = 5001 };
 
-	Connection conn;
-	CThreadPool<::Handler> pool;
+    Connection conn;
+    CThreadPool<::Handler> pool;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ private:
 /////////////////////////////////////////////////////////////////////////////
 inline LPCSTR ODBService::GetServiceName() const
 {
-	return "Object Database Service";
+    return "Object Database Service";
 }
 
 #endif // __ODBSERVICE_H__

@@ -11,28 +11,28 @@
 /////////////////////////////////////////////////////////////////////////////
 class Integer : public BEObject {
 private:
-	// Construction / Destruction
-	Integer(INT64 v);
+    // Construction / Destruction
+    Integer(INT64 v);
 public:
-	Integer(const Integer &i);
-	~Integer();
+    Integer(const Integer &i);
+    ~Integer();
 
 // Interface
-	Integer &operator =(const Integer &i);
+    Integer &operator =(const Integer &i);
 
-	virtual ObjectType GetType() const {
-		return BET_INTEGER;
-	}
-	virtual LPBEOBJECT Copy() const;
+    virtual ObjectType GetType() const {
+        return BET_INTEGER;
+    }
+    virtual LPBEOBJECT Copy() const;
 
-	operator INT64() const {
-		return val;
-	}
+    operator INT64() const {
+        return val;
+    }
 
 // Implementation
 private:
-	INT64 val;
-	friend Integer *MakeInteger(INT64 v);
+    INT64 val;
+    friend Integer *MakeInteger(INT64 v);
 };
 /////////////////////////////////////////////////////////////////////////////
 

@@ -20,17 +20,17 @@ class IADFWarningHandler : public IADFHandler {
 /////////////////////////////////////////////////////////////////////////////
 class ADFWarningRegistrar {
 private:
-	ADFWarningRegistrar();
+    ADFWarningRegistrar();
 public:
-	static void Register(IADFWarningHandler *pHandler);
+    static void Register(IADFWarningHandler *pHandler);
 };
 
 /////////////////////////////////////////////////////////////////////////////
 class ADFWarningDispatcher {
 private:
-	ADFWarningDispatcher();
+    ADFWarningDispatcher();
 public:
-	static void dispatch(const string &s);
+    static void dispatch(const string &s);
 };
 
 #endif // __ADFWARN_H__

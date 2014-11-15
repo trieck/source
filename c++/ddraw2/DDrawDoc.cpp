@@ -18,8 +18,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(DDrawDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(DDrawDoc, CDocument)
-	//{{AFX_MSG_MAP(DDrawDoc)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(DDrawDoc)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -35,10 +35,10 @@ DDrawDoc::~DDrawDoc()
 
 BOOL DDrawDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
+    if (!CDocument::OnNewDocument())
+        return FALSE;
 
-	return TRUE;
+    return TRUE;
 }
 
 
@@ -48,9 +48,9 @@ BOOL DDrawDoc::OnNewDocument()
 
 void DDrawDoc::Serialize(CArchive& ar)
 {
-	if (ar.IsStoring()) {
-	} else {
-	}
+    if (ar.IsStoring()) {
+    } else {
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -59,12 +59,12 @@ void DDrawDoc::Serialize(CArchive& ar)
 #ifdef _DEBUG
 void DDrawDoc::AssertValid() const
 {
-	CDocument::AssertValid();
+    CDocument::AssertValid();
 }
 
 void DDrawDoc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+    CDocument::Dump(dc);
 }
 #endif //_DEBUG
 

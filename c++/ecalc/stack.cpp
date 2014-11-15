@@ -14,7 +14,7 @@
 //
 Stack::Stack()
 {
-	stackp = data;
+    stackp = data;
 }
 
 //
@@ -29,10 +29,10 @@ Stack::~Stack()
 //
 Datum Stack::pop()
 {
-	if (stackp == data)
-		throw Error(E_STACKUNDERRUN);
+    if (stackp == data)
+        throw Error(E_STACKUNDERRUN);
 
-	return *--stackp;
+    return *--stackp;
 }
 
 //
@@ -40,10 +40,10 @@ Datum Stack::pop()
 //
 void Stack::push(const Datum & datum)
 {
-	if (stackp >= &data[NSTACK])
-		throw Error(E_STACKTOODEEP);
+    if (stackp >= &data[NSTACK])
+        throw Error(E_STACKTOODEEP);
 
-	*stackp++ = datum;
+    *stackp++ = datum;
 }
 
 //
@@ -51,5 +51,5 @@ void Stack::push(const Datum & datum)
 //
 void Stack::reset()
 {
-	stackp = data;
+    stackp = data;
 }

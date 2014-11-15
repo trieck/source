@@ -18,14 +18,14 @@
 template <>
 void AFXAPI SerializeElements <Note *> ( CArchive& ar, Note ** ppNote, int nCount)
 {
-	ASSERT(ppNote != NULL);
+    ASSERT(ppNote != NULL);
 
-	if (ar.IsLoading()) {
-		*ppNote = new Note;
-	}
+    if (ar.IsLoading()) {
+        *ppNote = new Note;
+    }
 
-	ASSERT_VALID(*ppNote);
-	(*ppNote)->Serialize(ar);
+    ASSERT_VALID(*ppNote);
+    (*ppNote)->Serialize(ar);
 }
 
 IMPLEMENT_SERIAL(NoteList, CObject, VERSIONABLE_SCHEMA)
@@ -42,7 +42,7 @@ NoteList::NoteList()
 //
 NoteList::~NoteList()
 {
-	Clear();
+    Clear();
 }
 
 //
@@ -50,16 +50,16 @@ NoteList::~NoteList()
 //
 NoteList::NoteList(const NoteList & list)
 {
-	POSITION pos = list.GetHeadPosition();
-	while (pos != NULL) {
-		Note * pNote = list.GetNext(pos);
-		ASSERT_VALID(pNote);
+    POSITION pos = list.GetHeadPosition();
+    while (pos != NULL) {
+        Note * pNote = list.GetNext(pos);
+        ASSERT_VALID(pNote);
 
-		Note * pNewNote = new Note(*pNote);
-		ASSERT_VALID(pNewNote);
+        Note * pNewNote = new Note(*pNote);
+        ASSERT_VALID(pNewNote);
 
-		AddTail(pNewNote);
-	}
+        AddTail(pNewNote);
+    }
 }
 
 //
@@ -67,22 +67,22 @@ NoteList::NoteList(const NoteList & list)
 //
 NoteList & NoteList::operator = (const NoteList & list)
 {
-	if (this != &list) {
-		Clear();
+    if (this != &list) {
+        Clear();
 
-		POSITION pos = list.GetHeadPosition();
-		while (pos != NULL) {
-			Note * pNote = list.GetNext(pos);
-			ASSERT_VALID(pNote);
+        POSITION pos = list.GetHeadPosition();
+        while (pos != NULL) {
+            Note * pNote = list.GetNext(pos);
+            ASSERT_VALID(pNote);
 
-			Note * pNewNote = new Note(*pNote);
-			ASSERT_VALID(pNewNote);
+            Note * pNewNote = new Note(*pNote);
+            ASSERT_VALID(pNewNote);
 
-			AddTail(pNewNote);
-		}
-	}
+            AddTail(pNewNote);
+        }
+    }
 
-	return * this;
+    return * this;
 }
 
 //
@@ -90,15 +90,15 @@ NoteList & NoteList::operator = (const NoteList & list)
 //
 void NoteList::Clear()
 {
-	POSITION pos = GetHeadPosition();
-	while (pos != NULL) {
-		Note * pNote = GetNext(pos);
-		ASSERT_VALID(pNote);
+    POSITION pos = GetHeadPosition();
+    while (pos != NULL) {
+        Note * pNote = GetNext(pos);
+        ASSERT_VALID(pNote);
 
-		delete pNote;
-	}
+        delete pNote;
+    }
 
-	RemoveAll();
+    RemoveAll();
 }
 
 //
@@ -106,20 +106,20 @@ void NoteList::Clear()
 //
 BOOL NoteList::ismember(const Note * pNote) const
 {
-	ASSERT_VALID(pNote);
+    ASSERT_VALID(pNote);
 
-	// Do a comparison based on data
+    // Do a comparison based on data
 
-	POSITION pos = GetHeadPosition();
-	while (pos != NULL) {
-		Note * pNextNote = GetNext(pos);
-		ASSERT_VALID(pNextNote);
+    POSITION pos = GetHeadPosition();
+    while (pos != NULL) {
+        Note * pNextNote = GetNext(pos);
+        ASSERT_VALID(pNextNote);
 
-		if (pNextNote->GetData() == pNote->GetData())
-			return TRUE;
-	}
+        if (pNextNote->GetData() == pNote->GetData())
+            return TRUE;
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 //
@@ -127,18 +127,18 @@ BOOL NoteList::ismember(const Note * pNote) const
 //
 Note * NoteList::find(BYTE data) const
 {
-	POSITION pos = GetHeadPosition();
-	while (pos != NULL) {
-		Note * pNote = GetNext(pos);
-		ASSERT_VALID(pNote);
+    POSITION pos = GetHeadPosition();
+    while (pos != NULL) {
+        Note * pNote = GetNext(pos);
+        ASSERT_VALID(pNote);
 
-		// Do a comparison based on data
+        // Do a comparison based on data
 
-		if (pNote->GetData() == data)
-			return pNote;
-	}
+        if (pNote->GetData() == data)
+            return pNote;
+    }
 
-	return NULL;
+    return NULL;
 }
 
 //
@@ -146,9 +146,9 @@ Note * NoteList::find(BYTE data) const
 //
 Duration NoteList::GetDuration() const
 {
-	ASSERT(!IsEmpty());
+    ASSERT(!IsEmpty());
 
-	return GetHead()->GetDuration();
+    return GetHead()->GetDuration();
 }
 
 //
@@ -156,9 +156,9 @@ Duration NoteList::GetDuration() const
 //
 int NoteList::GetX() const
 {
-	ASSERT(!IsEmpty());
+    ASSERT(!IsEmpty());
 
-	return GetHead()->GetX();
+    return GetHead()->GetX();
 }
 
 //
@@ -166,16 +166,16 @@ int NoteList::GetX() const
 //
 BOOL NoteList::Remove(Note * pNote)
 {
-	ASSERT_VALID(pNote);
+    ASSERT_VALID(pNote);
 
-	POSITION pos = Find(pNote);
-	if (pos != NULL) {
-		RemoveAt(pos);
-		delete pNote;
-		return TRUE;
-	}
+    POSITION pos = Find(pNote);
+    if (pos != NULL) {
+        RemoveAt(pos);
+        delete pNote;
+        return TRUE;
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 //
@@ -183,22 +183,22 @@ BOOL NoteList::Remove(Note * pNote)
 //
 void NoteList::Serialize(CArchive & ar)
 {
-	CObject::Serialize(ar);
+    CObject::Serialize(ar);
 
-	if (ar.IsStoring()) {
-		ar.WriteCount(m_nCount);
-		for (CNode* pNode = m_pNodeHead; pNode != NULL; pNode = pNode->pNext) {
-			ASSERT(AfxIsValidAddress(pNode, sizeof(CNode)));
-			SerializeElements<Note *>(ar, &pNode->data, 1);
-		}
-	} else {
-		DWORD nNewCount = ar.ReadCount();
-		while (nNewCount--) {
-			Note * newData;
-			SerializeElements<Note *>(ar, &newData, 1);
-			AddTail(newData);
-		}
-	}
+    if (ar.IsStoring()) {
+        ar.WriteCount(m_nCount);
+        for (CNode* pNode = m_pNodeHead; pNode != NULL; pNode = pNode->pNext) {
+            ASSERT(AfxIsValidAddress(pNode, sizeof(CNode)));
+            SerializeElements<Note *>(ar, &pNode->data, 1);
+        }
+    } else {
+        DWORD nNewCount = ar.ReadCount();
+        while (nNewCount--) {
+            Note * newData;
+            SerializeElements<Note *>(ar, &newData, 1);
+            AddTail(newData);
+        }
+    }
 }
 
 

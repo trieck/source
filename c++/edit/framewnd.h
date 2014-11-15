@@ -28,15 +28,15 @@ class FrameWindow : public Window
 
 public:
 
-	FrameWindow(LPCSTR caption = "", int x = CW_USEDEFAULT,
+    FrameWindow(LPCSTR caption = "", int x = CW_USEDEFAULT,
 
-	            int y = CW_USEDEFAULT,
+                int y = CW_USEDEFAULT,
 
-	            int width = CW_USEDEFAULT,
+                int width = CW_USEDEFAULT,
 
-	            int height = CW_USEDEFAULT);
+                int height = CW_USEDEFAULT);
 
-	virtual ~FrameWindow();
+    virtual ~FrameWindow();
 
 
 
@@ -48,15 +48,15 @@ public:
 
 protected:
 
-	BOOL Create(LPCSTR caption, int x, int y, int width, int height);
+    BOOL Create(LPCSTR caption, int x, int y, int width, int height);
 
-	virtual void InitClass(LPWNDCLASS) const;
+    virtual void InitClass(LPWNDCLASS) const;
 
-	virtual void OnDestroy(WPARAM, LPARAM);
+    virtual void OnDestroy(WPARAM, LPARAM);
 
-	virtual void OnNcDestroy(WPARAM, LPARAM);
+    virtual void OnNcDestroy(WPARAM, LPARAM);
 
-	virtual void RegisterMessages();
+    virtual void RegisterMessages();
 
 private:
 

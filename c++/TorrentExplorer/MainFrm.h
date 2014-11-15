@@ -12,8 +12,8 @@
 class MainFrame : public CFrameWnd {
 
 protected: // create from serialization only
-	MainFrame();
-	DECLARE_DYNCREATE(MainFrame)
+    MainFrame();
+    DECLARE_DYNCREATE(MainFrame)
 
 // Attributes
 public:
@@ -22,37 +22,37 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(MainFrame)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(MainFrame)
 public:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
-	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
-	//}}AFX_VIRTUAL
+    virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	static LPCSTR RegisterClass();
-	void SwapViews();
-	virtual ~MainFrame();
+    static LPCSTR RegisterClass();
+    void SwapViews();
+    virtual ~MainFrame();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:  // control bar embedded members
-	CStatusBar		m_wndStatusBar;
-	GripperBar		m_wndToolBar;
-	CSplitterWnd	m_wndSplitter;
+    CStatusBar		m_wndStatusBar;
+    GripperBar		m_wndToolBar;
+    CSplitterWnd	m_wndSplitter;
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(MainFrame)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnDestroy();
-	afx_msg LRESULT OnSettingChange(WPARAM wParam, LPARAM lParam);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(MainFrame)
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnDestroy();
+    afx_msg LRESULT OnSettingChange(WPARAM wParam, LPARAM lParam);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

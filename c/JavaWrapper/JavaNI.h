@@ -14,17 +14,17 @@
 class JavaNI {
 // Construction / Destruction
 public:
-	JavaNI();
-	virtual ~JavaNI();
+    JavaNI();
+    virtual ~JavaNI();
 
 // Interface
-	bool CreateJVM(JavaVMInitArgs *args);
-	jclass FindClass(const char *name);
+    bool CreateJVM(JavaVMInitArgs *args);
+    jclass FindClass(const char *name);
 
 // Implementation
 private:
-	JavaVM* jvm;
-	JNIEnv* env;
+    JavaVM* jvm;
+    JNIEnv* env;
 };
 
 /////////////////////////////////////////////////////////////////////////////

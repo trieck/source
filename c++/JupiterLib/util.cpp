@@ -15,465 +15,465 @@
 /////////////////////////////////////////////////////////////////////////////
 string tempname()
 {
-	char path[MAX_PATH] = { 0 };
-	char filename[MAX_PATH] = { 0 };
+    char path[MAX_PATH] = { 0 };
+    char filename[MAX_PATH] = { 0 };
 
-	GetTempPath(MAX_PATH, path);
-	GetTempFileName(path, "", 0, filename);
+    GetTempPath(MAX_PATH, path);
+    GetTempFileName(path, "", 0, filename);
 
-	return filename;
+    return filename;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 stringvec expand(const char* arg)
 {
-	stringvec doclist;
-	string dir = dirname(arg);
+    stringvec doclist;
+    string dir = dirname(arg);
 
-	struct _finddata_t file;
-	long h = _findfirst(arg, &file);
+    struct _finddata_t file;
+    long h = _findfirst(arg, &file);
 
-	if (h == -1)
-		return doclist;
+    if (h == -1)
+        return doclist;
 
-	do {
-		if (file.attrib & _A_SUBDIR)
-			continue;
+    do {
+        if (file.attrib & _A_SUBDIR)
+            continue;
 
-		doclist.push_back(lower(dir + file.name));
-	} while (_findnext(h, &file) == 0);
+        doclist.push_back(lower(dir + file.name));
+    } while (_findnext(h, &file) == 0);
 
-	_findclose(h);
+    _findclose(h);
 
-	return doclist;
+    return doclist;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 stringvec rexpand(const char* arg)
 {
-	char patt[MAX_PATH + _MAX_FNAME + 1];
+    char patt[MAX_PATH + _MAX_FNAME + 1];
 
-	stringvec doclist, tmplist;
-	string dir = dirname(arg);
-	string pattern = arg;
+    stringvec doclist, tmplist;
+    string dir = dirname(arg);
+    string pattern = arg;
 
-	string::size_type N = pattern.find_last_of('\\');
-	if (N != string::npos)
-		pattern = pattern.substr(++N);
+    string::size_type N = pattern.find_last_of('\\');
+    if (N != string::npos)
+        pattern = pattern.substr(++N);
 
-	struct _finddata_t file;
-	long h = _findfirst(arg, &file);
+    struct _finddata_t file;
+    long h = _findfirst(arg, &file);
 
-	if (h == -1) { // no pattern match try subdirectories
-		sprintf(patt, "%s*", dir.c_str());
-		h = _findfirst(patt, &file);
-		if (h == -1)
-			return doclist;
+    if (h == -1) { // no pattern match try subdirectories
+        sprintf(patt, "%s*", dir.c_str());
+        h = _findfirst(patt, &file);
+        if (h == -1)
+            return doclist;
 
-		do {
-			if (strcmp(file.name, ".") == 0)
-				continue;
-			if (strcmp(file.name, "..") == 0)
-				continue;
+        do {
+            if (strcmp(file.name, ".") == 0)
+                continue;
+            if (strcmp(file.name, "..") == 0)
+                continue;
 
-			if (file.attrib & _A_SUBDIR) {
-				sprintf(patt, "%s%s\\%s", dir.c_str(), file.name,
-				        pattern.c_str());
-				tmplist = rexpand(patt);
-				doclist.insert(doclist.end(), tmplist.begin(),
-				               tmplist.end());
-			}
+            if (file.attrib & _A_SUBDIR) {
+                sprintf(patt, "%s%s\\%s", dir.c_str(), file.name,
+                        pattern.c_str());
+                tmplist = rexpand(patt);
+                doclist.insert(doclist.end(), tmplist.begin(),
+                               tmplist.end());
+            }
 
-		} while (_findnext(h, &file) == 0);
+        } while (_findnext(h, &file) == 0);
 
-		_findclose(h);
+        _findclose(h);
 
-		return doclist;
-	}
+        return doclist;
+    }
 
-	do {
-		if (strcmp(file.name, ".") == 0)
-			continue;
-		if (strcmp(file.name, "..") == 0)
-			continue;
+    do {
+        if (strcmp(file.name, ".") == 0)
+            continue;
+        if (strcmp(file.name, "..") == 0)
+            continue;
 
-		if (file.attrib & _A_SUBDIR) {
-			sprintf(patt, "%s%s\\%s", dir.c_str(), file.name,
-			        pattern.c_str());
-			tmplist = rexpand(patt);
-			doclist.insert(doclist.end(), tmplist.begin(),
-			               tmplist.end());
-			continue;
-		}
+        if (file.attrib & _A_SUBDIR) {
+            sprintf(patt, "%s%s\\%s", dir.c_str(), file.name,
+                    pattern.c_str());
+            tmplist = rexpand(patt);
+            doclist.insert(doclist.end(), tmplist.begin(),
+                           tmplist.end());
+            continue;
+        }
 
-		doclist.push_back(lower(dir + file.name));
+        doclist.push_back(lower(dir + file.name));
 
-	} while (_findnext(h, &file) == 0);
+    } while (_findnext(h, &file) == 0);
 
-	_findclose(h);
+    _findclose(h);
 
-	return doclist;
+    return doclist;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string dirname(const char* path)
 {
-	char drive[_MAX_DRIVE] = { 0 };
-	char dir[_MAX_PATH] = { 0 };
+    char drive[_MAX_DRIVE] = { 0 };
+    char dir[_MAX_PATH] = { 0 };
 
-	_splitpath(path, drive, dir, NULL, NULL);
+    _splitpath(path, drive, dir, NULL, NULL);
 
-	return string(drive) + dir;
+    return string(drive) + dir;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string fullpath(const char *path)
 {
-	char buffer[_MAX_PATH + _MAX_FNAME + 1];
-	buffer[0] = '\0';
+    char buffer[_MAX_PATH + _MAX_FNAME + 1];
+    buffer[0] = '\0';
 
-	_fullpath(buffer, path, _MAX_PATH + _MAX_FNAME);
+    _fullpath(buffer, path, _MAX_PATH + _MAX_FNAME);
 
-	return buffer;
+    return buffer;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string filename(const char* path)
 {
-	char filename[_MAX_FNAME] = { 0 };
-	char ext[_MAX_EXT] = { 0 };
-	char output[_MAX_FNAME + _MAX_EXT + 1];
+    char filename[_MAX_FNAME] = { 0 };
+    char ext[_MAX_EXT] = { 0 };
+    char output[_MAX_FNAME + _MAX_EXT + 1];
 
-	_splitpath(path, NULL, NULL, filename, ext);
+    _splitpath(path, NULL, NULL, filename, ext);
 
-	sprintf(output, "%s%s", filename, ext);
+    sprintf(output, "%s%s", filename, ext);
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string basename(const char* path)
 {
-	char drive[_MAX_DRIVE] = { 0 };
-	char dir[_MAX_PATH] = { 0 };
-	char file[_MAX_FNAME] = { 0 };
-	char output[_MAX_DRIVE + _MAX_PATH + _MAX_FNAME + 1];
+    char drive[_MAX_DRIVE] = { 0 };
+    char dir[_MAX_PATH] = { 0 };
+    char file[_MAX_FNAME] = { 0 };
+    char output[_MAX_DRIVE + _MAX_PATH + _MAX_FNAME + 1];
 
-	string name = filename(path);
+    string name = filename(path);
 
-	_splitpath(name.c_str(), drive, dir, file, NULL);
+    _splitpath(name.c_str(), drive, dir, file, NULL);
 
-	sprintf(output, "%s%s%s", drive, dir, file);
+    sprintf(output, "%s%s%s", drive, dir, file);
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string extname(const char* path)
 {
-	char ext[_MAX_EXT] = { 0 };
+    char ext[_MAX_EXT] = { 0 };
 
-	_splitpath(path, NULL, NULL, NULL, ext);
+    _splitpath(path, NULL, NULL, NULL, ext);
 
-	return ext;
+    return ext;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string modulename()
 {
-	char path[_MAX_PATH + _MAX_FNAME + 1] = { 0 };
+    char path[_MAX_PATH + _MAX_FNAME + 1] = { 0 };
 
-	MEMORY_BASIC_INFORMATION mbi;
-	VirtualQuery(programdir, &mbi, sizeof(mbi));
+    MEMORY_BASIC_INFORMATION mbi;
+    VirtualQuery(programdir, &mbi, sizeof(mbi));
 
-	GetModuleFileName((HINSTANCE)mbi.AllocationBase,
-	                  path, _MAX_PATH + _MAX_FNAME);
+    GetModuleFileName((HINSTANCE)mbi.AllocationBase,
+                      path, _MAX_PATH + _MAX_FNAME);
 
-	return path;
+    return path;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string modulebasename()
 {
-	return basename(modulename().c_str());
+    return basename(modulename().c_str());
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string programdir()
 {
-	return lower(dirname(modulename().c_str()));
+    return lower(dirname(modulename().c_str()));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string itoa(int n)
 {
-	static const int len = 20;
-	char buffer[len] = { 0 };
+    static const int len = 20;
+    char buffer[len] = { 0 };
 
-	_itoa(n, buffer, 10);
+    _itoa(n, buffer, 10);
 
-	return buffer;
+    return buffer;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string trim(const char *str)
 {
-	return trim_left(trim_right(str).c_str());
+    return trim_left(trim_right(str).c_str());
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string trim_left(const char *str)
 {
-	size_t len, idx;
+    size_t len, idx;
 
-	len = strlen(str);
+    len = strlen(str);
 
-	for (idx = 0; idx < len; idx++) {
-		if (!isspace(str[idx]))
-			break;
-	}
+    for (idx = 0; idx < len; idx++) {
+        if (!isspace(str[idx]))
+            break;
+    }
 
-	return &str[idx];
+    return &str[idx];
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string trim_right(const char *str)
 {
-	size_t idx = strlen(str);
+    size_t idx = strlen(str);
 
-	if (idx == 0)
-		return "";
+    if (idx == 0)
+        return "";
 
-	for (idx--; isspace(str[idx]); idx--)
-		;
+    for (idx--; isspace(str[idx]); idx--)
+        ;
 
-	return string(str, idx + 1);
+    return string(str, idx + 1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string comma(INT64 i)
 {
-	string output;
+    string output;
 
-	char buff[MAX_PATH];
-	sprintf(buff,"%I64u", i);
+    char buff[MAX_PATH];
+    sprintf(buff,"%I64u", i);
 
-	int n = strlen(buff);
+    int n = strlen(buff);
 
-	for (int j = n - 1, k = 1; j >= 0; j--, k++) {
-		output += buff[j];
-		if (k % 3 == 0 && j > 0 && j < n - 1)
-			output += ',';
-	}
+    for (int j = n - 1, k = 1; j >= 0; j--, k++) {
+        output += buff[j];
+        if (k % 3 == 0 && j > 0 && j < n - 1)
+            output += ',';
+    }
 
-	std::reverse(output.begin(), output.end());
+    std::reverse(output.begin(), output.end());
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string lower(const string & input)
 {
-	string output;
+    string output;
 
-	size_t N = input.length();
-	output.resize(N);
+    size_t N = input.length();
+    output.resize(N);
 
-	unsigned i;
-	for (i = 0; i < N; i++)
-		output[i] = tolower(input[i]);
+    unsigned i;
+    for (i = 0; i < N; i++)
+        output[i] = tolower(input[i]);
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string upper(const string & input)
 {
-	string output;
+    string output;
 
-	size_t N = input.length();
-	output.resize(N);
+    size_t N = input.length();
+    output.resize(N);
 
-	unsigned i;
-	for (i = 0; i < N; i++)
-		output[i] = toupper(input[i]);
+    unsigned i;
+    for (i = 0; i < N; i++)
+        output[i] = toupper(input[i]);
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string lasterror()
 {
-	string output;
+    string output;
 
-	char *pmsg = NULL;
+    char *pmsg = NULL;
 
-	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
-	              NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-	              (LPTSTR)&pmsg, 0, NULL);
+    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
+                  NULL, GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                  (LPTSTR)&pmsg, 0, NULL);
 
-	if (pmsg != NULL) {
-		int N = strlen(pmsg);
-		if (N > 1 && pmsg[N - 1] == '\n')
-			pmsg[N - 1] = '\0';
+    if (pmsg != NULL) {
+        int N = strlen(pmsg);
+        if (N > 1 && pmsg[N - 1] == '\n')
+            pmsg[N - 1] = '\0';
 
-		if (N > 1 && pmsg[N - 2] == '\r')
-			pmsg[N - 2] = '\0';
+        if (N > 1 && pmsg[N - 2] == '\r')
+            pmsg[N - 2] = '\0';
 
-		output = pmsg;
+        output = pmsg;
 
-		LocalFree(pmsg);
-	}
+        LocalFree(pmsg);
+    }
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string fileload(const string &file)
 {
-	// read in a file into a string using the "big gulp" method
-	int fd = open(file.c_str(), _O_RDONLY | _O_BINARY | _O_SEQUENTIAL);
+    // read in a file into a string using the "big gulp" method
+    int fd = open(file.c_str(), _O_RDONLY | _O_BINARY | _O_SEQUENTIAL);
 
-	if (fd == -1)
-		return "";
+    if (fd == -1)
+        return "";
 
-	struct stat status;
-	fstat(fd, &status);
+    struct stat status;
+    fstat(fd, &status);
 
-	char* pbuf = new char[status.st_size + 1];
+    char* pbuf = new char[status.st_size + 1];
 
-	int nread = read(fd, pbuf, status.st_size);
+    int nread = read(fd, pbuf, status.st_size);
 
-	pbuf[nread] = '\0';
+    pbuf[nread] = '\0';
 
-	string output = pbuf;
-	delete [] pbuf;
+    string output = pbuf;
+    delete [] pbuf;
 
-	close(fd);
+    close(fd);
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string xmlescape(const string &input)
 {
-	string output;
+    string output;
 
-	const char *pin = input.c_str();
+    const char *pin = input.c_str();
 
-	while (*pin) {
-		if (*pin == '"') {
-			output += "&quot;";
-			pin++;
-		} else if (*pin == '<') {
-			output += "&lt;";
-			pin++;
-		} else if (*pin == '>') {
-			output += "&gt;";
-			pin++;
-		} else if (*pin == '&') {
-			output += "&amp;";
-			pin++;
-		} else {
-			output += *pin++;
-		}
-	}
+    while (*pin) {
+        if (*pin == '"') {
+            output += "&quot;";
+            pin++;
+        } else if (*pin == '<') {
+            output += "&lt;";
+            pin++;
+        } else if (*pin == '>') {
+            output += "&gt;";
+            pin++;
+        } else if (*pin == '&') {
+            output += "&amp;";
+            pin++;
+        } else {
+            output += *pin++;
+        }
+    }
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string machinename()
 {
-	DWORD len = MAX_COMPUTERNAME_LENGTH;
-	char cname[MAX_COMPUTERNAME_LENGTH + 1];
+    DWORD len = MAX_COMPUTERNAME_LENGTH;
+    char cname[MAX_COMPUTERNAME_LENGTH + 1];
 
-	GetComputerName(cname, &len);
+    GetComputerName(cname, &len);
 
-	return cname;
+    return cname;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string format(const char *fmt, ...)
 {
-	va_list arglist;
-	va_start(arglist, fmt);
+    va_list arglist;
+    va_start(arglist, fmt);
 
-	char buf[8000];
-	vsprintf(buf, fmt, arglist);
+    char buf[8000];
+    vsprintf(buf, fmt, arglist);
 
-	va_end (arglist);
+    va_end (arglist);
 
-	return buf;
+    return buf;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string uni2ansi(const wchar_t *pwstr)
 {
-	size_t N = wcslen(pwstr);
+    size_t N = wcslen(pwstr);
 
-	char *pstr = new char[N + 1];
+    char *pstr = new char[N + 1];
 
-	int result = ::WideCharToMultiByte(CP_ACP, 0, pwstr, -1, pstr,
-	                                   N + 1, NULL, NULL);
-	if (result == 0) {
-		delete [] pstr;
-		return "";
-	}
+    int result = ::WideCharToMultiByte(CP_ACP, 0, pwstr, -1, pstr,
+                                       N + 1, NULL, NULL);
+    if (result == 0) {
+        delete [] pstr;
+        return "";
+    }
 
-	string output = pstr;
-	delete [] pstr;
+    string output = pstr;
+    delete [] pstr;
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string uni2utf8(const wchar_t *pwstr)
 {
-	int N = ::WideCharToMultiByte(CP_UTF8, 0, pwstr, -1, NULL,
-	                              0, NULL, NULL);
-	if (N == 0)
-		return "";
+    int N = ::WideCharToMultiByte(CP_UTF8, 0, pwstr, -1, NULL,
+                                  0, NULL, NULL);
+    if (N == 0)
+        return "";
 
-	char *pstr = new char[N];
+    char *pstr = new char[N];
 
-	int result = ::WideCharToMultiByte(CP_UTF8, 0, pwstr, -1, pstr, N, NULL,
-	                                   NULL);
-	if (result == 0) {
-		delete [] pstr;
-		return "";
-	}
+    int result = ::WideCharToMultiByte(CP_UTF8, 0, pwstr, -1, pstr, N, NULL,
+                                       NULL);
+    if (result == 0) {
+        delete [] pstr;
+        return "";
+    }
 
-	string output = pstr;
-	delete [] pstr;
+    string output = pstr;
+    delete [] pstr;
 
-	return output;
+    return output;
 
 }
 
 /////////////////////////////////////////////////////////////////////////////
 wstring ansi2uni(const char *pstr)
 {
-	size_t N = strlen(pstr);
+    size_t N = strlen(pstr);
 
-	wchar_t *pwstr = new wchar_t[N + 1];
+    wchar_t *pwstr = new wchar_t[N + 1];
 
-	int result = ::MultiByteToWideChar(CP_ACP, 0, pstr, -1, pwstr, N + 1);
-	if (result == 0) {
-		delete [] pwstr;
-		return L"";
-	}
+    int result = ::MultiByteToWideChar(CP_ACP, 0, pstr, -1, pwstr, N + 1);
+    if (result == 0) {
+        delete [] pwstr;
+        return L"";
+    }
 
-	wstring output = pwstr;
+    wstring output = pwstr;
 
-	delete [] pwstr;
+    delete [] pwstr;
 
-	return output;
+    return output;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 string ansi2utf8(const char *pstr)
 {
-	wstring wstr = ansi2uni(pstr);
-	return uni2utf8(wstr.c_str());
+    wstring wstr = ansi2uni(pstr);
+    return uni2utf8(wstr.c_str());
 }

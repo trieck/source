@@ -10,13 +10,13 @@
 class PlayerOne : public Player {
 // Construction / Destruction
 public:
-	PlayerOne();
-	~PlayerOne();
+    PlayerOne();
+    ~PlayerOne();
 // Interface
 
 // Implementation
 protected:
 private:
-	DECLARE_DYNAMIC(PlayerOne)
+    DECLARE_DYNAMIC(PlayerOne)
 };
 #endif // __PLAYRONE_H__

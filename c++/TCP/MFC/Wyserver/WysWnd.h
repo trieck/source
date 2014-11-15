@@ -19,35 +19,35 @@
 #define DEFAULT_FACENAME	"MS Sans Serif"
 
 typedef struct { // screen line structure
-	COLORREF	uColor;
-	CString		szText;
+    COLORREF	uColor;
+    CString		szText;
 } SCREENLINE, *LPSCREENLINE;
 
 // CFrameWnd derived class
 class CWysWnd : public CFrameWnd {
 private:
-	HICON		m_hIcon;
-	CListBox*	m_pListBox;
-	CFont*		m_pFont;
+    HICON		m_hIcon;
+    CListBox*	m_pListBox;
+    CFont*		m_pFont;
 protected:
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
-	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
-	afx_msg void OnAbout();
-	afx_msg void OnActiveConn();
-	afx_msg void OnPreferences();
-	afx_msg void OnFont();
+    afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnSize(UINT nType, int cx, int cy);
+    afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
+    afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
+    afx_msg void OnAbout();
+    afx_msg void OnActiveConn();
+    afx_msg void OnPreferences();
+    afx_msg void OnFont();
 public:
-	CWysWnd ();
-	CListBox* GetListBox();
-	void CreateListBox();
-	BOOL CreateListFont(LPLOGFONT lpLogFont = NULL);
-	void AddListItem(LPSCREENLINE lpScreenLine);
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual ~CWysWnd();
+    CWysWnd ();
+    CListBox* GetListBox();
+    void CreateListBox();
+    BOOL CreateListFont(LPLOGFONT lpLogFont = NULL);
+    void AddListItem(LPSCREENLINE lpScreenLine);
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual ~CWysWnd();
 
-	DECLARE_MESSAGE_MAP();
+    DECLARE_MESSAGE_MAP();
 };
 #endif // __WYSWND_H__

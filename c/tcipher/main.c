@@ -6,21 +6,21 @@
 
 int main(int argc, char *argv[])
 {
-	char *encode, *decode;
-	unsigned long public_key = htonl(0xcafebabe);
+    char *encode, *decode;
+    unsigned long public_key = htonl(0xcafebabe);
 
-	if (argc < 2) {
-		fprintf(stderr, "usage: tcipher input\n");
-		return 1;
-	}
+    if (argc < 2) {
+        fprintf(stderr, "usage: tcipher input\n");
+        return 1;
+    }
 
-	encode = tencipher(argv[1], public_key);
-	decode = tencipher(encode, public_key);
+    encode = tencipher(argv[1], public_key);
+    decode = tencipher(encode, public_key);
 
-	printf("%s\n%s\n", encode, decode);
+    printf("%s\n%s\n", encode, decode);
 
-	free(encode);
-	free(decode);
+    free(encode);
+    free(decode);
 
-	return 0;
+    return 0;
 }

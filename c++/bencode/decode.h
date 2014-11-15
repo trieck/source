@@ -12,26 +12,26 @@
 class BEDecoder {
 // Construction / Destruction
 private:
-	BEDecoder(IPeekableStream *pStream);
+    BEDecoder(IPeekableStream *pStream);
 public:
-	virtual ~BEDecoder();
+    virtual ~BEDecoder();
 
 // Interface
-	static LPBEOBJECT decode(IPeekableStream *pStream);
+    static LPBEOBJECT decode(IPeekableStream *pStream);
 
 // Implementation
 private:
-	LPBEOBJECT LoadObject();
-	LPINTEGER LoadInteger();
-	LPSTRING LoadString();
-	LPLIST LoadList();
-	LPDICTIONARY LoadDictionary();
+    LPBEOBJECT LoadObject();
+    LPINTEGER LoadInteger();
+    LPSTRING LoadString();
+    LPLIST LoadList();
+    LPDICTIONARY LoadDictionary();
 
-	int Gettok();
-	int Getc();
-	int Peek();
+    int Gettok();
+    int Getc();
+    int Peek();
 
-	IPeekableStream *m_pStream;
+    IPeekableStream *m_pStream;
 };
 /////////////////////////////////////////////////////////////////////////////
 

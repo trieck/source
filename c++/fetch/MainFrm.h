@@ -14,9 +14,9 @@
 class MainFrame : public CFrameWnd {
 
 public:
-	MainFrame();
+    MainFrame();
 protected:
-	DECLARE_DYNAMIC(MainFrame)
+    DECLARE_DYNAMIC(MainFrame)
 
 // Attributes
 public:
@@ -25,37 +25,37 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(MainFrame)
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(MainFrame)
 public:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
-	//}}AFX_VIRTUAL
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~MainFrame();
+    virtual ~MainFrame();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 protected:
-	void SetButtonBitmaps();
+    void SetButtonBitmaps();
 private:  // control bar embedded members
-	CStatusBar m_wndStatusBar;
-	CToolBar m_wndToolBar;
-	CDialogBar m_wndSearchBar;
-	ChildView *m_pwndView;
+    CStatusBar m_wndStatusBar;
+    CToolBar m_wndToolBar;
+    CDialogBar m_wndSearchBar;
+    ChildView *m_pwndView;
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(MainFrame)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSetFocus(CWnd *pOldWnd);
-	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(MainFrame)
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnSetFocus(CWnd *pOldWnd);
+    afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
+    afx_msg void OnSize(UINT nType, int cx, int cy);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -13,7 +13,7 @@
 class CPlayers : public CObject {
 // Construction
 public:
-	CPlayers();
+    CPlayers();
 
 // Attributes
 public:
@@ -22,30 +22,30 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CPlayers)
-	//}}AFX_VIRTUAL
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CPlayers)
+    //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	BOOL	GetPlayer(INT nIndex, CString&);
-	BOOL	AddPlayer(const CString&);
-	INT		GetPlayerCount();
-	BOOL	FlushPlayers();
-	BOOL	Init();
-	virtual ~CPlayers();
+    BOOL	GetPlayer(INT nIndex, CString&);
+    BOOL	AddPlayer(const CString&);
+    INT		GetPlayerCount();
+    BOOL	FlushPlayers();
+    BOOL	Init();
+    virtual ~CPlayers();
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	CStringArray *	m_pPlayersArray;
-	BOOL			m_fInitialized;
+    CStringArray *	m_pPlayersArray;
+    BOOL			m_fInitialized;
 
-	VOID BuildPlayersArray();
-	BOOL UpdateRegistry();
+    VOID BuildPlayersArray();
+    BOOL UpdateRegistry();
 
-	//{{AFX_MSG(CPlayers)
-	// NOTE - the ClassWizard will add and remove member functions here.
-	//}}AFX_MSG
+    //{{AFX_MSG(CPlayers)
+    // NOTE - the ClassWizard will add and remove member functions here.
+    //}}AFX_MSG
 };
 
 /////////////////////////////////////////////////////////////////////////////

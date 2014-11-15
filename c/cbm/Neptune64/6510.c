@@ -297,1706 +297,1706 @@ extern int err, pending_interrupt;
  */
 void cpu_reset(void)
 {
-	cpu.pc = fetch_word(0xfffc);
-	err = 0;
+    cpu.pc = fetch_word(0xfffc);
+    err = 0;
 }
 /*
  * run the cpu
  */
 void cpu_run(void)
 {
-	byte i;
-	const Instr *pi;
+    byte i;
+    const Instr *pi;
 
-	cpu_reset();
+    cpu_reset();
 
-	do {
-		/* check for pending interrupts */
-		if (!get_int_disable_flag() && (pending_interrupt & HANDLE_IRQ))
-			DO_INTERRUPT();
+    do {
+        /* check for pending interrupts */
+        if (!get_int_disable_flag() && (pending_interrupt & HANDLE_IRQ))
+            DO_INTERRUPT();
 
-		if (pending_interrupt & HANDLE_NMI) {
-			pending_interrupt &= ~HANDLE_NMI;
-			DO_NMI();
-		}
+        if (pending_interrupt & HANDLE_NMI) {
+            pending_interrupt &= ~HANDLE_NMI;
+            DO_NMI();
+        }
 
-		/* fetch the next instruction */
-		i = fetch_byte(cpu.pc);
+        /* fetch the next instruction */
+        i = fetch_byte(cpu.pc);
 
-		pi = instructions[i];
-		if (NULL == pi) {
-			warning("unrecognized instruction \"$%.2x\" at $%.4hx.\n",
-			        i, cpu.pc);
-			break;
-		}
+        pi = instructions[i];
+        if (NULL == pi) {
+            warning("unrecognized instruction \"$%.2x\" at $%.4hx.\n",
+                    i, cpu.pc);
+            break;
+        }
 
-		/* execute the instruction */
-		(*pi->fnc)();
-	} while (!err);
+        /* execute the instruction */
+        (*pi->fnc)();
+    } while (!err);
 }
 /*
  * push a value onto the stack
  */
 void push(byte c)
 {
-	if (cpu.sp == STACKEND) {
-		warning("stack overflow error.\n");
-		err = 1;
-		return;
-	}
-	store_byte((word)(PAGEONE + cpu.sp--), c);
+    if (cpu.sp == STACKEND) {
+        warning("stack overflow error.\n");
+        err = 1;
+        return;
+    }
+    store_byte((word)(PAGEONE + cpu.sp--), c);
 }
 /*
  * pop a value from the stack
  */
 byte pop(void)
 {
-	if (cpu.sp == STACKBEGIN) {
-		warning("stack underflow error.\n");
-		err = 1;
-		return 0;
-	}
-	return fetch_byte((word)(PAGEONE + ++cpu.sp));
+    if (cpu.sp == STACKBEGIN) {
+        warning("stack underflow error.\n");
+        err = 1;
+        return 0;
+    }
+    return fetch_byte((word)(PAGEONE + ++cpu.sp));
 }
 /*
  * add with carry, absolute mode
  */
 void _adcAbsl(void)
 {
-	word addr;
-	byte value;
-	addr = fetch_word((word)(cpu.pc + 1));
-	value = fetch_byte(addr);
+    word addr;
+    byte value;
+    addr = fetch_word((word)(cpu.pc + 1));
+    value = fetch_byte(addr);
 
-	ADC(value);
+    ADC(value);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 /*
  * add with carry absolute, x mode
  */
 void _adcAbx(void)
 {
-	word addr;
-	byte value;
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.x;
+    word addr;
+    byte value;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.x;
 
-	value = fetch_byte(addr);
-	ADC(value);
+    value = fetch_byte(addr);
+    ADC(value);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 /*
  * add with carry absolute, y mode
  */
 void _adcAby(void)
 {
-	word addr;
-	byte value;
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.y;
+    word addr;
+    byte value;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.y;
 
-	value = fetch_byte(addr);
-	ADC(addr);
+    value = fetch_byte(addr);
+    ADC(addr);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 /*
  * add with carry indirect, x mode
  */
 void _adcIdx(void)
 {
-	byte zaddr, value;
-	word addr;
+    byte zaddr, value;
+    word addr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
 
-	addr = fetch_word(zaddr);
-	value = fetch_byte(addr);
-	ADC(value);
+    addr = fetch_word(zaddr);
+    value = fetch_byte(addr);
+    ADC(value);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 /*
  * add with carry indirect, y mode
  */
 void _adcIdy(void)
 {
-	byte zaddr, value;
-	word addr;
+    byte zaddr, value;
+    word addr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	addr = fetch_word(zaddr) + cpu.y;
-	value = fetch_byte(addr);
-	ADC(value);
+    addr = fetch_word(zaddr) + cpu.y;
+    value = fetch_byte(addr);
+    ADC(value);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 /*
  * add with carry immediate mode
  */
 void _adcImm(void)
 {
-	byte value;
+    byte value;
 
-	value = fetch_byte((word)(cpu.pc + 1));
+    value = fetch_byte((word)(cpu.pc + 1));
 
-	ADC(value);
+    ADC(value);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 /*
  * add with carry zero page mode
  */
 void _adcZp(void)
 {
-	byte zaddr, value;
+    byte zaddr, value;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	value = fetch_byte(zaddr);
-	ADC(value);
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    value = fetch_byte(zaddr);
+    ADC(value);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 /*
  * add with carry zero page, x mode
  */
 void _adcZpx(void)
 {
-	byte zaddr, value;
+    byte zaddr, value;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
 
-	value = fetch_byte(zaddr);
-	ADC(value);
+    value = fetch_byte(zaddr);
+    ADC(value);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _andAbsl(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
-	res = cpu.a &= fetch_byte(addr);
+    addr = fetch_word((word)(cpu.pc + 1));
+    res = cpu.a &= fetch_byte(addr);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _andAbx(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.x;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.x;
 
-	res = cpu.a &= fetch_byte(addr);
+    res = cpu.a &= fetch_byte(addr);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _andAby(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.y;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.y;
 
-	res = cpu.a &= fetch_byte(addr);
+    res = cpu.a &= fetch_byte(addr);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _andIdx(void)
 {
-	byte zaddr;
-	word addr;
-	word res;
+    byte zaddr;
+    word addr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
 
-	addr = fetch_word(zaddr);
+    addr = fetch_word(zaddr);
 
-	res = cpu.a &= fetch_byte(addr);
+    res = cpu.a &= fetch_byte(addr);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _andIdy(void)
 {
-	byte zaddr;
-	word addr;
-	word res;
+    byte zaddr;
+    word addr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	addr = fetch_word(zaddr) + cpu.y;
+    addr = fetch_word(zaddr) + cpu.y;
 
-	res = cpu.a &= fetch_byte(addr);
+    res = cpu.a &= fetch_byte(addr);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _andImm(void)
 {
-	byte val;
-	word res;
-	val = fetch_byte((word)(cpu.pc + 1));
+    byte val;
+    word res;
+    val = fetch_byte((word)(cpu.pc + 1));
 
-	res = cpu.a &= val;
+    res = cpu.a &= val;
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _andZp(void)
 {
-	byte zaddr;
-	word res;
+    byte zaddr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	res = cpu.a &= fetch_byte(zaddr);
+    res = cpu.a &= fetch_byte(zaddr);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _andZpx(void)
 {
-	byte zaddr;
-	word res;
+    byte zaddr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
 
-	res = cpu.a &= fetch_byte(zaddr);
+    res = cpu.a &= fetch_byte(zaddr);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _aslAbsl(void)
 {
-	word addr;
+    word addr;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	ASL(addr);
+    ASL(addr);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _aslAbx(void)
 {
-	word addr;
+    word addr;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	ASL((word)(addr + cpu.x));
+    ASL((word)(addr + cpu.x));
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _aslAcc(void)
 {
-	ASL_A();
-	cpu.pc++;
+    ASL_A();
+    cpu.pc++;
 }
 void _aslZp(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	ASL(zaddr);
+    ASL(zaddr);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _aslZpx(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	ASL((word)(zaddr + cpu.x));
+    ASL((word)(zaddr + cpu.x));
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _bcc(void)
 {
-	byte b;
-	b = fetch_byte((word)(cpu.pc + 1));
+    byte b;
+    b = fetch_byte((word)(cpu.pc + 1));
 
-	cpu.pc += 2;
-	if (!get_carry_flag())
-		branch(b);
+    cpu.pc += 2;
+    if (!get_carry_flag())
+        branch(b);
 }
 void _bcs(void)
 {
-	byte b;
-	b = fetch_byte((word)(cpu.pc + 1));
-	cpu.pc += 2;
-	if (get_carry_flag())
-		branch(b);
+    byte b;
+    b = fetch_byte((word)(cpu.pc + 1));
+    cpu.pc += 2;
+    if (get_carry_flag())
+        branch(b);
 }
 void _beq(void)
 {
-	byte b;
-	b = fetch_byte((word)(cpu.pc + 1));
-	cpu.pc += 2;
-	if (get_zero_flag())
-		branch(b);
+    byte b;
+    b = fetch_byte((word)(cpu.pc + 1));
+    cpu.pc += 2;
+    if (get_zero_flag())
+        branch(b);
 }
 void _bitAbsl(void)
 {
-	word addr;
+    word addr;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	BIT(addr);
+    BIT(addr);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _bitZp(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	BIT(zaddr);
+    BIT(zaddr);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _bmi(void)
 {
-	byte b;
-	b = fetch_byte((word)(cpu.pc + 1));
-	cpu.pc += 2;
-	if (get_neg_flag())
-		branch(b);
+    byte b;
+    b = fetch_byte((word)(cpu.pc + 1));
+    cpu.pc += 2;
+    if (get_neg_flag())
+        branch(b);
 }
 void _bne(void)
 {
-	byte b;
-	b = fetch_byte((word)(cpu.pc + 1));
-	cpu.pc += 2;
-	if (!get_zero_flag())
-		branch(b);
+    byte b;
+    b = fetch_byte((word)(cpu.pc + 1));
+    cpu.pc += 2;
+    if (!get_zero_flag())
+        branch(b);
 }
 void _bpl(void)
 {
-	byte b;
-	b = fetch_byte((word)(cpu.pc + 1));
-	cpu.pc += 2;
-	if (!get_neg_flag())
-		branch(b);
+    byte b;
+    b = fetch_byte((word)(cpu.pc + 1));
+    cpu.pc += 2;
+    if (!get_neg_flag())
+        branch(b);
 }
 void _brk(void)
 {
-	push(hibyte(cpu.pc + sizeof(word)));
-	push(lobyte(cpu.pc + sizeof(word)));
-	push(cpu.sr);
-	set_brk_flag();
+    push(hibyte(cpu.pc + sizeof(word)));
+    push(lobyte(cpu.pc + sizeof(word)));
+    push(cpu.sr);
+    set_brk_flag();
 
-	set_int_disable_flag();
-	cpu.pc = fetch_word(IRQ_VECTOR);
+    set_int_disable_flag();
+    cpu.pc = fetch_word(IRQ_VECTOR);
 }
 void _bvc(void)
 {
-	byte b;
-	b = fetch_byte((word)(cpu.pc + 1));
-	cpu.pc += 2;
-	if (!get_overflow_flag())
-		branch(b);
+    byte b;
+    b = fetch_byte((word)(cpu.pc + 1));
+    cpu.pc += 2;
+    if (!get_overflow_flag())
+        branch(b);
 }
 void _bvs(void)
 {
-	byte b;
-	b = fetch_byte((word)(cpu.pc + 1));
-	cpu.pc += 2;
-	if (get_overflow_flag())
-		branch(b);
+    byte b;
+    b = fetch_byte((word)(cpu.pc + 1));
+    cpu.pc += 2;
+    if (get_overflow_flag())
+        branch(b);
 }
 void _clc(void)
 {
-	clear_carry_flag();
-	cpu.pc++;
+    clear_carry_flag();
+    cpu.pc++;
 }
 void _cld(void)
 {
-	clear_dec_flag();
-	cpu.pc++;
+    clear_dec_flag();
+    cpu.pc++;
 }
 void _cli(void)
 {
-	clear_int_disable_flag();
-	cpu.pc++;
+    clear_int_disable_flag();
+    cpu.pc++;
 }
 void _clv(void)
 {
-	clear_overflow_flag();
-	cpu.pc++;
+    clear_overflow_flag();
+    cpu.pc++;
 }
 void _cmpAbsl(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	res = cpu.a - fetch_byte(addr);
+    res = cpu.a - fetch_byte(addr);
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _cmpAbx(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	addr += cpu.x;
+    addr += cpu.x;
 
-	res = cpu.a - fetch_byte(addr);
+    res = cpu.a - fetch_byte(addr);
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _cmpAby(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	addr += cpu.y;
+    addr += cpu.y;
 
-	res = cpu.a - fetch_byte(addr);
+    res = cpu.a - fetch_byte(addr);
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _cmpIdx(void)
 {
-	byte zaddr;
-	word addr;
-	word res;
+    byte zaddr;
+    word addr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
 
-	addr = fetch_word(zaddr);
+    addr = fetch_word(zaddr);
 
-	res = cpu.a - fetch_byte(addr);
+    res = cpu.a - fetch_byte(addr);
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _cmpIdy(void)
 {
-	byte zaddr;
-	word addr;
-	word res;
+    byte zaddr;
+    word addr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	addr = fetch_word(zaddr) + cpu.y;
+    addr = fetch_word(zaddr) + cpu.y;
 
-	res = cpu.a - fetch_byte(addr);
+    res = cpu.a - fetch_byte(addr);
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _cmpImm(void)
 {
-	byte value;
-	word res;
+    byte value;
+    word res;
 
-	value = fetch_byte((word)(cpu.pc + 1));
+    value = fetch_byte((word)(cpu.pc + 1));
 
-	res = cpu.a - value;
+    res = cpu.a - value;
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _cmpZp(void)
 {
-	byte zaddr;
-	word res;
+    byte zaddr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	res = cpu.a - fetch_byte(zaddr);
+    res = cpu.a - fetch_byte(zaddr);
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _cmpZpx(void)
 {
-	byte zaddr;
-	word res;
+    byte zaddr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
 
-	res = cpu.a - fetch_byte(zaddr);
+    res = cpu.a - fetch_byte(zaddr);
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _cpxAbsl(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	res = cpu.x - fetch_byte(addr);
+    res = cpu.x - fetch_byte(addr);
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _cpxImm(void)
 {
-	byte value;
-	word res;
+    byte value;
+    word res;
 
-	value = fetch_byte((word)(cpu.pc + 1));
+    value = fetch_byte((word)(cpu.pc + 1));
 
-	res = cpu.x - value;
+    res = cpu.x - value;
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _cpxZp(void)
 {
-	byte zaddr;
-	word res;
+    byte zaddr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	res = cpu.x - fetch_byte(zaddr);
+    res = cpu.x - fetch_byte(zaddr);
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _cpyAbsl(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	res = cpu.y - fetch_byte(addr);
+    res = cpu.y - fetch_byte(addr);
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _cpyImm(void)
 {
-	byte value;
-	word res;
+    byte value;
+    word res;
 
-	value = fetch_byte((word)(cpu.pc + 1));
+    value = fetch_byte((word)(cpu.pc + 1));
 
-	res = cpu.y - value;
+    res = cpu.y - value;
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _cpyZp(void)
 {
-	byte zaddr;
-	word res;
+    byte zaddr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	res = cpu.y - fetch_byte(zaddr);
+    res = cpu.y - fetch_byte(zaddr);
 
-	set_carry(res < 0x100);
-	set_nz(res);
+    set_carry(res < 0x100);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _decAbsl(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	res = fetch_byte(addr);
-	res = (res - 1) & 0xFF;
+    res = fetch_byte(addr);
+    res = (res - 1) & 0xFF;
 
-	store_byte(addr, (byte)res);
+    store_byte(addr, (byte)res);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _decAbx(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.x;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.x;
 
-	res = fetch_byte(addr);
-	res = (res - 1) & 0xFF;
+    res = fetch_byte(addr);
+    res = (res - 1) & 0xFF;
 
-	store_byte(addr, (byte)res);
+    store_byte(addr, (byte)res);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _decZp(void)
 {
-	byte addr;
-	word res;
+    byte addr;
+    word res;
 
-	addr = fetch_byte((word)(cpu.pc + 1));
+    addr = fetch_byte((word)(cpu.pc + 1));
 
-	res = fetch_byte(addr);
-	res = (res - 1) & 0xFF;
+    res = fetch_byte(addr);
+    res = (res - 1) & 0xFF;
 
-	store_byte(addr, (byte)res);
+    store_byte(addr, (byte)res);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _decZpx(void)
 {
-	byte addr;
-	word res;
+    byte addr;
+    word res;
 
-	addr = fetch_byte((word)(cpu.pc + 1));
-	addr += cpu.x;
+    addr = fetch_byte((word)(cpu.pc + 1));
+    addr += cpu.x;
 
-	res = fetch_byte(addr);
-	res = (res - 1) & 0xFF;
+    res = fetch_byte(addr);
+    res = (res - 1) & 0xFF;
 
-	store_byte(addr, (byte)res);
+    store_byte(addr, (byte)res);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _dex(void)
 {
-	word res;
+    word res;
 
-	res = (cpu.x - 1) & 0xFF;
+    res = (cpu.x - 1) & 0xFF;
 
-	cpu.x = (byte)res;
+    cpu.x = (byte)res;
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc++;
+    cpu.pc++;
 }
 void _dey(void)
 {
-	word res;
+    word res;
 
-	res = (cpu.y - 1) & 0xFF;
+    res = (cpu.y - 1) & 0xFF;
 
-	cpu.y = (byte)res;
+    cpu.y = (byte)res;
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc++;
+    cpu.pc++;
 }
 void _eorAbsl(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	res = cpu.a ^= fetch_byte(addr);
-	set_nz(res);
+    res = cpu.a ^= fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _eorAbx(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.x;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.x;
 
-	res = cpu.a ^= fetch_byte(addr);
-	set_nz(res);
+    res = cpu.a ^= fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _eorAby(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.y;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.y;
 
-	res = cpu.a ^= fetch_byte(addr);
-	set_nz(res);
+    res = cpu.a ^= fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _eorIdx(void)
 {
-	byte zaddr;
-	word addr;
-	word res;
+    byte zaddr;
+    word addr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	zaddr += cpu.x;
+    zaddr += cpu.x;
 
-	addr = fetch_word(zaddr);
+    addr = fetch_word(zaddr);
 
-	res = cpu.a ^= fetch_byte(addr);
+    res = cpu.a ^= fetch_byte(addr);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _eorIdy(void)
 {
-	byte zaddr;
-	word addr;
-	word res;
+    byte zaddr;
+    word addr;
+    word res;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	addr = fetch_word(zaddr) + cpu.y;
+    addr = fetch_word(zaddr) + cpu.y;
 
-	res = cpu.a ^= fetch_byte(addr);
+    res = cpu.a ^= fetch_byte(addr);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _eorImm(void)
 {
-	byte val;
-	word res;
+    byte val;
+    word res;
 
-	val = fetch_byte((word)(cpu.pc + 1));
+    val = fetch_byte((word)(cpu.pc + 1));
 
-	res = cpu.a ^= val;
-	set_nz(res);
+    res = cpu.a ^= val;
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _eorZp(void)
 {
-	byte addr;
-	word res;
+    byte addr;
+    word res;
 
-	addr = fetch_byte((word)(cpu.pc + 1));
+    addr = fetch_byte((word)(cpu.pc + 1));
 
-	res = cpu.a ^= fetch_byte(addr);
-	set_nz(res);
+    res = cpu.a ^= fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _eorZpx(void)
 {
-	byte addr;
-	word res;
+    byte addr;
+    word res;
 
-	addr = fetch_byte((word)(cpu.pc + 1));
-	addr += cpu.x;
+    addr = fetch_byte((word)(cpu.pc + 1));
+    addr += cpu.x;
 
-	res = cpu.a ^= fetch_byte(addr);
-	set_nz(res);
+    res = cpu.a ^= fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _incAbsl(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	res = fetch_byte(addr);
-	res = (res + 1) & 0xFF;
+    res = fetch_byte(addr);
+    res = (res + 1) & 0xFF;
 
-	store_byte(addr, (byte)res);
+    store_byte(addr, (byte)res);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _incAbx(void)
 {
-	word addr;
-	word res;
+    word addr;
+    word res;
 
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.x;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.x;
 
-	res = fetch_byte(addr);
-	res = (res + 1) & 0xFF;
+    res = fetch_byte(addr);
+    res = (res + 1) & 0xFF;
 
-	store_byte(addr, (byte)res);
+    store_byte(addr, (byte)res);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _incZp(void)
 {
-	byte addr;
-	word res;
+    byte addr;
+    word res;
 
-	addr = fetch_byte((word)(cpu.pc + 1));
+    addr = fetch_byte((word)(cpu.pc + 1));
 
-	res = fetch_byte(addr);
-	res = (res + 1) & 0xFF;
+    res = fetch_byte(addr);
+    res = (res + 1) & 0xFF;
 
-	store_byte(addr, (byte)res);
+    store_byte(addr, (byte)res);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _incZpx(void)
 {
-	byte addr;
-	word res;
+    byte addr;
+    word res;
 
-	addr = fetch_byte((word)(cpu.pc + 1));
-	addr += cpu.x;
+    addr = fetch_byte((word)(cpu.pc + 1));
+    addr += cpu.x;
 
-	res = fetch_byte(addr);
-	res = (res + 1) & 0xFF;
+    res = fetch_byte(addr);
+    res = (res + 1) & 0xFF;
 
-	store_byte(addr, (byte)res);
+    store_byte(addr, (byte)res);
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _inx(void)
 {
-	word res;
+    word res;
 
-	res = cpu.x + 1;
-	cpu.x = (byte)res;
+    res = cpu.x + 1;
+    cpu.x = (byte)res;
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc++;
+    cpu.pc++;
 }
 void _iny(void)
 {
-	word res;
+    word res;
 
-	res = cpu.y + 1;
-	cpu.y = (byte)res;
+    res = cpu.y + 1;
+    cpu.y = (byte)res;
 
-	set_nz(res);
+    set_nz(res);
 
-	cpu.pc++;
+    cpu.pc++;
 }
 void _jmpAbsl(void)
 {
-	word addr;
-	addr = fetch_word((word)(cpu.pc + 1));
-	cpu.pc = addr;
+    word addr;
+    addr = fetch_word((word)(cpu.pc + 1));
+    cpu.pc = addr;
 }
 void _jmpInd(void)
 {
-	word iaddr;
-	word eaddr;
-	iaddr = fetch_word((word)(cpu.pc + 1));
-	eaddr = fetch_word(iaddr);
-	cpu.pc = eaddr;
+    word iaddr;
+    word eaddr;
+    iaddr = fetch_word((word)(cpu.pc + 1));
+    eaddr = fetch_word(iaddr);
+    cpu.pc = eaddr;
 }
 void _jsr(void)
 {
-	word addr;
-	push(hibyte(cpu.pc + 3));
-	push(lobyte(cpu.pc + 3));
-	addr = fetch_word((word)(cpu.pc + 1));
-	cpu.pc = addr;
+    word addr;
+    push(hibyte(cpu.pc + 3));
+    push(lobyte(cpu.pc + 3));
+    addr = fetch_word((word)(cpu.pc + 1));
+    cpu.pc = addr;
 }
 void _ldaAbsl(void)
 {
-	word addr;
-	word res;
-	addr = fetch_word((word)(cpu.pc + 1));
-	res = cpu.a = fetch_byte(addr);
-	set_nz(res);
+    word addr;
+    word res;
+    addr = fetch_word((word)(cpu.pc + 1));
+    res = cpu.a = fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _ldaAbx(void)
 {
-	word addr;
-	word res;
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.x;
-	res = cpu.a = fetch_byte(addr);
-	set_nz(res);
+    word addr;
+    word res;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.x;
+    res = cpu.a = fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _ldaAby(void)
 {
-	word addr;
-	word res;
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.y;
-	res = cpu.a = fetch_byte(addr);
-	set_nz(res);
+    word addr;
+    word res;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.y;
+    res = cpu.a = fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _ldaIdx(void)
 {
-	byte zaddr;
-	word addr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
-	addr = fetch_word(zaddr);
-	res = cpu.a = fetch_byte(addr);
-	set_nz(res);
+    byte zaddr;
+    word addr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
+    addr = fetch_word(zaddr);
+    res = cpu.a = fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _ldaIdy(void)
 {
-	byte zaddr;
-	word addr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	addr = fetch_word(zaddr) + cpu.y;
-	res = cpu.a = fetch_byte(addr);
-	set_nz(res);
+    byte zaddr;
+    word addr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    addr = fetch_word(zaddr) + cpu.y;
+    res = cpu.a = fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _ldaImm(void)
 {
-	byte val;
-	word res;
-	val = fetch_byte((word)(cpu.pc + 1));
-	res = cpu.a = val;
-	set_nz(res);
+    byte val;
+    word res;
+    val = fetch_byte((word)(cpu.pc + 1));
+    res = cpu.a = val;
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _ldaZp(void)
 {
-	byte zaddr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	res = cpu.a = fetch_byte(zaddr);
-	set_nz(res);
+    byte zaddr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    res = cpu.a = fetch_byte(zaddr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _ldaZpx(void)
 {
-	byte zaddr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
-	res = cpu.a = fetch_byte(zaddr);
-	set_nz(res);
+    byte zaddr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
+    res = cpu.a = fetch_byte(zaddr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _ldxAbsl(void)
 {
-	word addr;
-	word res;
-	addr = fetch_word((word)(cpu.pc + 1));
-	res = cpu.x = fetch_byte(addr);
-	set_nz(res);
+    word addr;
+    word res;
+    addr = fetch_word((word)(cpu.pc + 1));
+    res = cpu.x = fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _ldxAby(void)
 {
-	word addr;
-	word res;
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.y;
-	res = cpu.x = fetch_byte(addr);
-	set_nz(res);
+    word addr;
+    word res;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.y;
+    res = cpu.x = fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _ldxImm(void)
 {
-	byte val;
-	word res;
-	val = fetch_byte((word)(cpu.pc + 1));
-	res = cpu.x = val;
-	set_nz(res);
+    byte val;
+    word res;
+    val = fetch_byte((word)(cpu.pc + 1));
+    res = cpu.x = val;
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _ldxZp(void)
 {
-	byte zaddr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	res = cpu.x = fetch_byte(zaddr);
-	set_nz(res);
+    byte zaddr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    res = cpu.x = fetch_byte(zaddr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _ldxZpy(void)
 {
-	byte zaddr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.y;
-	res = cpu.x = fetch_byte(zaddr);
-	set_nz(res);
+    byte zaddr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.y;
+    res = cpu.x = fetch_byte(zaddr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _ldyAbsl(void)
 {
-	word addr;
-	word res;
-	addr = fetch_word((word)(cpu.pc + 1));
-	res = cpu.y = fetch_byte(addr);
-	set_nz(res);
+    word addr;
+    word res;
+    addr = fetch_word((word)(cpu.pc + 1));
+    res = cpu.y = fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _ldyAbx(void)
 {
-	word addr;
-	word res;
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.x;
-	res = cpu.y = fetch_byte(addr);
-	set_nz(res);
+    word addr;
+    word res;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.x;
+    res = cpu.y = fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _ldyImm(void)
 {
-	byte val;
-	word res;
-	val = fetch_byte((word)(cpu.pc + 1));
-	res = cpu.y = val;
-	set_nz(res);
+    byte val;
+    word res;
+    val = fetch_byte((word)(cpu.pc + 1));
+    res = cpu.y = val;
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _ldyZp(void)
 {
-	byte zaddr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	res = cpu.y = fetch_byte(zaddr);
-	set_nz(res);
+    byte zaddr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    res = cpu.y = fetch_byte(zaddr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _ldyZpx(void)
 {
-	byte zaddr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
-	res = cpu.y = fetch_byte(zaddr);
-	set_nz(res);
+    byte zaddr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
+    res = cpu.y = fetch_byte(zaddr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _lsrAbsl(void)
 {
-	word addr;
+    word addr;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	LSR(addr);
+    LSR(addr);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _lsrAbx(void)
 {
-	word addr;
+    word addr;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	LSR((word)(addr + cpu.x));
+    LSR((word)(addr + cpu.x));
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _lsrAcc(void)
 {
-	LSR_A();
-	cpu.pc++;
+    LSR_A();
+    cpu.pc++;
 }
 void _lsrZp(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	LSR(zaddr);
+    LSR(zaddr);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _lsrZpx(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	LSR((word)(zaddr + cpu.x));
+    LSR((word)(zaddr + cpu.x));
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _nop(void)
 {
-	cpu.pc++;
+    cpu.pc++;
 }
 void _oraAbsl(void)
 {
-	word addr;
-	word res;
-	addr = fetch_word((word)(cpu.pc + 1));
-	res = cpu.a |= fetch_byte(addr);
-	set_nz(res);
+    word addr;
+    word res;
+    addr = fetch_word((word)(cpu.pc + 1));
+    res = cpu.a |= fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _oraAbx(void)
 {
-	word addr;
-	word res;
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.x;
-	res = cpu.a |= fetch_byte(addr);
-	set_nz(res);
+    word addr;
+    word res;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.x;
+    res = cpu.a |= fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _oraAby(void)
 {
-	word addr;
-	word res;
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.y;
-	res = cpu.a |= fetch_byte(addr);
-	set_nz(res);
+    word addr;
+    word res;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.y;
+    res = cpu.a |= fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _oraIdx(void)
 {
-	byte zaddr;
-	word addr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
-	addr = fetch_word(zaddr);
-	res = cpu.a |= fetch_byte(addr);
-	set_nz(res);
+    byte zaddr;
+    word addr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
+    addr = fetch_word(zaddr);
+    res = cpu.a |= fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _oraIdy(void)
 {
-	byte zaddr;
-	word addr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    byte zaddr;
+    word addr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	addr = fetch_word(zaddr) + cpu.y;
-	res = cpu.a |= fetch_byte(addr);
-	set_nz(res);
+    addr = fetch_word(zaddr) + cpu.y;
+    res = cpu.a |= fetch_byte(addr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _oraImm(void)
 {
-	byte val;
-	word res;
-	val = fetch_byte((word)(cpu.pc + 1));
-	res = cpu.a |= val;
-	set_nz(res);
+    byte val;
+    word res;
+    val = fetch_byte((word)(cpu.pc + 1));
+    res = cpu.a |= val;
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _oraZp(void)
 {
-	byte zaddr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    byte zaddr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	res = cpu.a |= fetch_byte(zaddr);
-	set_nz(res);
+    res = cpu.a |= fetch_byte(zaddr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _oraZpx(void)
 {
-	byte zaddr;
-	word res;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
-	res = cpu.a |= fetch_byte(zaddr);
-	set_nz(res);
+    byte zaddr;
+    word res;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
+    res = cpu.a |= fetch_byte(zaddr);
+    set_nz(res);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _pha(void)
 {
-	push(cpu.a);
-	cpu.pc++;
+    push(cpu.a);
+    cpu.pc++;
 }
 void _php(void)
 {
-	push(cpu.sr);
-	cpu.pc++;
+    push(cpu.sr);
+    cpu.pc++;
 }
 void _pla(void)
 {
-	word res;
-	res = cpu.a = pop();
-	set_nz(res);
-	cpu.pc++;
+    word res;
+    res = cpu.a = pop();
+    set_nz(res);
+    cpu.pc++;
 }
 void _plp(void)
 {
-	cpu.sr = pop();
-	cpu.pc++;
+    cpu.sr = pop();
+    cpu.pc++;
 }
 void _rolAbsl(void)
 {
-	word addr;
+    word addr;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	ROL(addr);
+    ROL(addr);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _rolAbx(void)
 {
-	word addr;
+    word addr;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	ROL((word)(addr + cpu.x));
+    ROL((word)(addr + cpu.x));
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _rolAcc(void)
 {
-	ROL_A();
-	cpu.pc++;
+    ROL_A();
+    cpu.pc++;
 }
 void _rolZp(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	ROL(zaddr);
+    ROL(zaddr);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _rolZpx(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	ROL((word)(zaddr + cpu.x));
+    ROL((word)(zaddr + cpu.x));
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _rorAbsl(void)
 {
-	word addr;
+    word addr;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	ROR(addr);
+    ROR(addr);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _rorAbx(void)
 {
-	word addr;
+    word addr;
 
-	addr = fetch_word((word)(cpu.pc + 1));
+    addr = fetch_word((word)(cpu.pc + 1));
 
-	ROR((word)(addr + cpu.x));
+    ROR((word)(addr + cpu.x));
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _rorAcc(void)
 {
-	ROR_A();
-	cpu.pc++;
+    ROR_A();
+    cpu.pc++;
 }
 void _rorZp(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	ROR(zaddr);
+    ROR(zaddr);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _rorZpx(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	ROR((word)(zaddr + cpu.x));
+    ROR((word)(zaddr + cpu.x));
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _rti(void)
 {
-	byte pcl, pch;
-	cpu.sr = pop();
-	pcl = pop();
-	pch = pop();
-	cpu.pc = pch * 0x100 + pcl;
+    byte pcl, pch;
+    cpu.sr = pop();
+    pcl = pop();
+    pch = pop();
+    cpu.pc = pch * 0x100 + pcl;
 }
 void _rts(void)
 {
-	byte pcl, pch;
+    byte pcl, pch;
 
-	pcl = pop();
-	pch = pop();
-	cpu.pc = pch * 0x100 + pcl;
+    pcl = pop();
+    pch = pop();
+    cpu.pc = pch * 0x100 + pcl;
 }
 void _sbcAbsl(void)
 {
-	word addr;
-	byte value;
-	addr = fetch_word((word)(cpu.pc + 1));
-	value = fetch_byte(addr);
+    word addr;
+    byte value;
+    addr = fetch_word((word)(cpu.pc + 1));
+    value = fetch_byte(addr);
 
-	SBC(value);
+    SBC(value);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _sbcAbx(void)
 {
-	word addr;
-	byte value;
-	addr = fetch_word((word)(cpu.pc + 1));
-	value = fetch_byte((word)(addr + cpu.x));
+    word addr;
+    byte value;
+    addr = fetch_word((word)(cpu.pc + 1));
+    value = fetch_byte((word)(addr + cpu.x));
 
-	SBC(value);
+    SBC(value);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _sbcAby(void)
 {
-	word addr;
-	byte value;
-	addr = fetch_word((word)(cpu.pc + 1));
-	value = fetch_byte((word)(addr + cpu.y));
+    word addr;
+    byte value;
+    addr = fetch_word((word)(cpu.pc + 1));
+    value = fetch_byte((word)(addr + cpu.y));
 
-	SBC(value);
+    SBC(value);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _sbcIdx(void)
 {
-	byte zaddr, value;
-	word addr;
+    byte zaddr, value;
+    word addr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
 
-	addr = fetch_word(zaddr);
-	value = fetch_byte(addr);
-	SBC(value);
+    addr = fetch_word(zaddr);
+    value = fetch_byte(addr);
+    SBC(value);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _sbcIdy(void)
 {
-	byte zaddr, value;
-	word addr;
+    byte zaddr, value;
+    word addr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	addr = fetch_word(zaddr) + cpu.y;
-	value = fetch_byte(addr);
-	SBC(value);
+    addr = fetch_word(zaddr) + cpu.y;
+    value = fetch_byte(addr);
+    SBC(value);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _sbcImm(void)
 {
-	byte value;
+    byte value;
 
-	value = fetch_byte((word)(cpu.pc + 1));
+    value = fetch_byte((word)(cpu.pc + 1));
 
-	SBC(value);
+    SBC(value);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _sbcZp(void)
 {
-	byte zaddr, value;
+    byte zaddr, value;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	value = fetch_byte(zaddr);
-	SBC(value);
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    value = fetch_byte(zaddr);
+    SBC(value);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _sbcZpx(void)
 {
-	byte zaddr, value;
+    byte zaddr, value;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
 
-	value = fetch_byte(zaddr);
-	SBC(value);
+    value = fetch_byte(zaddr);
+    SBC(value);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _sec(void)
 {
-	set_carry_flag();
-	cpu.pc++;
+    set_carry_flag();
+    cpu.pc++;
 }
 void _sed(void)
 {
-	set_dec_flag();
-	cpu.pc++;
+    set_dec_flag();
+    cpu.pc++;
 }
 void _sei(void)
 {
-	set_int_disable_flag();
-	cpu.pc++;
+    set_int_disable_flag();
+    cpu.pc++;
 }
 void _staAbsl(void)
 {
-	word addr;
-	addr = fetch_word((word)(cpu.pc + 1));
-	store_byte(addr, cpu.a);
+    word addr;
+    addr = fetch_word((word)(cpu.pc + 1));
+    store_byte(addr, cpu.a);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _staAbx(void)
 {
-	word addr;
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.x;
-	store_byte(addr, cpu.a);
+    word addr;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.x;
+    store_byte(addr, cpu.a);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _staAby(void)
 {
-	word addr;
-	addr = fetch_word((word)(cpu.pc + 1));
-	addr += cpu.y;
-	store_byte(addr, cpu.a);
+    word addr;
+    addr = fetch_word((word)(cpu.pc + 1));
+    addr += cpu.y;
+    store_byte(addr, cpu.a);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _staIdx(void)
 {
-	byte zaddr;
-	word addr;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
-	addr = fetch_word(zaddr);
-	store_byte(addr, cpu.a);
+    byte zaddr;
+    word addr;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
+    addr = fetch_word(zaddr);
+    store_byte(addr, cpu.a);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _staIdy(void)
 {
-	byte zaddr;
-	word addr;
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    byte zaddr;
+    word addr;
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	addr = fetch_word(zaddr) + cpu.y;
-	store_byte(addr, cpu.a);
+    addr = fetch_word(zaddr) + cpu.y;
+    store_byte(addr, cpu.a);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _staZp(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	store_byte(zaddr, cpu.a);
+    store_byte(zaddr, cpu.a);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _staZpx(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
-	store_byte(zaddr, cpu.a);
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
+    store_byte(zaddr, cpu.a);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _stxAbsl(void)
 {
-	word addr;
-	addr = fetch_word((word)(cpu.pc + 1));
-	store_byte(addr, cpu.x);
+    word addr;
+    addr = fetch_word((word)(cpu.pc + 1));
+    store_byte(addr, cpu.x);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _stxZp(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	store_byte(zaddr, cpu.x);
+    store_byte(zaddr, cpu.x);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _stxZpy(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.y;
-	store_byte(zaddr, cpu.x);
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.y;
+    store_byte(zaddr, cpu.x);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _styAbsl(void)
 {
-	word addr;
-	addr = fetch_word((word)(cpu.pc + 1));
-	store_byte(addr, cpu.y);
+    word addr;
+    addr = fetch_word((word)(cpu.pc + 1));
+    store_byte(addr, cpu.y);
 
-	cpu.pc += 3;
+    cpu.pc += 3;
 }
 void _styZp(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr = fetch_byte((word)(cpu.pc + 1));
 
-	store_byte(zaddr, cpu.y);
+    store_byte(zaddr, cpu.y);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _styZpx(void)
 {
-	byte zaddr;
+    byte zaddr;
 
-	zaddr = fetch_byte((word)(cpu.pc + 1));
-	zaddr += cpu.x;
-	store_byte(zaddr, cpu.y);
+    zaddr = fetch_byte((word)(cpu.pc + 1));
+    zaddr += cpu.x;
+    store_byte(zaddr, cpu.y);
 
-	cpu.pc += 2;
+    cpu.pc += 2;
 }
 void _tax(void)
 {
-	word res;
-	res = cpu.x = cpu.a;
-	set_nz(res);
+    word res;
+    res = cpu.x = cpu.a;
+    set_nz(res);
 
-	cpu.pc++;
+    cpu.pc++;
 }
 void _tay(void)
 {
-	word res;
-	res = cpu.y = cpu.a;
-	set_nz(res);
+    word res;
+    res = cpu.y = cpu.a;
+    set_nz(res);
 
-	cpu.pc++;
+    cpu.pc++;
 }
 void _tsx(void)
 {
-	word res;
-	res = cpu.x = cpu.sp;
-	set_nz(res);
+    word res;
+    res = cpu.x = cpu.sp;
+    set_nz(res);
 
-	cpu.pc++;
+    cpu.pc++;
 }
 void _txa(void)
 {
-	word res;
-	res = cpu.a = cpu.x;
-	set_nz(res);
+    word res;
+    res = cpu.a = cpu.x;
+    set_nz(res);
 
-	cpu.pc++;
+    cpu.pc++;
 }
 void _txs(void)
 {
-	cpu.sp = cpu.x;
-	cpu.pc++;
+    cpu.sp = cpu.x;
+    cpu.pc++;
 }
 void _tya(void)
 {
-	word res;
-	res = cpu.a = cpu.y;
-	set_nz(res);
+    word res;
+    res = cpu.a = cpu.y;
+    set_nz(res);
 
-	cpu.pc++;
+    cpu.pc++;
 }
