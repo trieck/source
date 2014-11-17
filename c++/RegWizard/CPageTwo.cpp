@@ -62,7 +62,7 @@ LRESULT CPageTwo::OnWizardNext()
 
     // Check to see that text exists in  edit controls
     if (sServer.GetLength() == 0) {
-        AfxMessageBox("You must enter a server name.",
+        AfxMessageBox(_T("You must enter a server name."),
                       MB_OK | MB_ICONINFORMATION);
 
         // set focus
@@ -75,7 +75,7 @@ LRESULT CPageTwo::OnWizardNext()
     }
 
     if (sDatabase.GetLength() == 0) {
-        AfxMessageBox("You must enter a database name.",
+        AfxMessageBox(_T("You must enter a database name."),
                       MB_OK | MB_ICONINFORMATION);
 
         // set focus
@@ -88,7 +88,7 @@ LRESULT CPageTwo::OnWizardNext()
     }
 
     if (sReportPath.GetLength() == 0) {
-        AfxMessageBox("You must enter a report path.",
+        AfxMessageBox(_T("You must enter a report path."),
                       MB_OK | MB_ICONINFORMATION);
 
         // set focus

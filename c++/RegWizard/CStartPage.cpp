@@ -26,7 +26,7 @@ BOOL CStartPage::OnInitDialog()
     // set font for title
     m_fntTitle.CreateFont(28, 0, 0, 0, FW_BOLD, TRUE, FALSE,
                           0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                          DEFAULT_QUALITY, DEFAULT_PITCH | FF_ROMAN, "Times New Roman");
+                          DEFAULT_QUALITY, DEFAULT_PITCH | FF_ROMAN, _T("Times New Roman"));
     return (TRUE);
 }
 

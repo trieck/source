@@ -14,7 +14,7 @@ CRegWizApp::CRegWizApp(LPCTSTR lpszAppName)
 BOOL CRegWizApp::InitInstance()
 {
     // create the wizard
-    m_pWizard = new CWizard("Registry Wizard");
+    m_pWizard = new CWizard(_T("Registry Wizard"));
     ASSERT_VALID (m_pWizard);
 
     this->CreateWizard();
