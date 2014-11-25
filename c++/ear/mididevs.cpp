@@ -11,14 +11,14 @@
 //
 // Constructor
 //
-MidiDevices :: MidiDevices()
+MidiDevices::MidiDevices()
 {
 }
 
 //
 // Destructor
 //
-MidiDevices :: ~MidiDevices()
+MidiDevices::~MidiDevices()
 {
 }
 

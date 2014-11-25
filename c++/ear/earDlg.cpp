@@ -5,15 +5,18 @@
 #include "ear.h"
 #include "earDlg.h"
 #include "SettingsDlg.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
 extern int loNote;
 extern int hiNote;
 static int random(int lo, int hi);
 static CString IntervalToString(IntervalEnum i);
+
 /////////////////////////////////////////////////////////////////////////////
 // AboutDlg dialog used for App About
 class AboutDlg : public CDialog {
@@ -50,6 +53,7 @@ BEGIN_MESSAGE_MAP(AboutDlg, CDialog)
     // No message handlers
     //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 /////////////////////////////////////////////////////////////////////////////
 // EarDlg dialog
 EarDlg::EarDlg(CWnd* pParent /*=NULL*/)
@@ -64,6 +68,7 @@ EarDlg::EarDlg(CWnd* pParent /*=NULL*/)
     m_correct = 0;
     m_incorrect = 0;
 }
+
 void EarDlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialog::DoDataExchange(pDX);
@@ -72,6 +77,7 @@ void EarDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Text(pDX, IDC_OUTPUT, m_Output);
     //}}AFX_DATA_MAP
 }
+
 BEGIN_MESSAGE_MAP(EarDlg, CDialog)
     //{{AFX_MSG_MAP(EarDlg)
     ON_WM_SYSCOMMAND()
@@ -81,11 +87,13 @@ BEGIN_MESSAGE_MAP(EarDlg, CDialog)
     ON_WM_CTLCOLOR()
     //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 /////////////////////////////////////////////////////////////////////////////
 // EarDlg message handlers
 BOOL EarDlg::OnInitDialog()
 {
     CDialog::OnInitDialog();
+
     ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
     ASSERT(IDM_ABOUTBOX < 0xF000);
     CMenu* pSysMenu = GetSystemMenu(FALSE);
@@ -97,13 +105,16 @@ BOOL EarDlg::OnInitDialog()
             pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
         }
     }
-    SetIcon(m_hIcon, TRUE);			// Set big icon
-    SetIcon(m_hIcon, FALSE);		// Set small icon
+
+    SetIcon(m_hIcon, TRUE);     // Set big icon
+    SetIcon(m_hIcon, FALSE);    // Set small icon
     CreateInterval();
     OnListen();
     UpdateData(FALSE);
+
     return TRUE;  // return TRUE  unless you set the focus to a control
 }
+
 void EarDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
     if ((nID & 0xFFF0) == IDM_ABOUTBOX) {
@@ -111,16 +122,19 @@ void EarDlg::OnSysCommand(UINT nID, LPARAM lParam)
         dlgAbout.DoModal();
     } else CDialog::OnSysCommand(nID, lParam);
 }
+
 void EarDlg::OnSettings()
 {
     SettingsDlg().DoModal();
 }
+
 void EarDlg::OnListen()
 {
     EarApp *pApp = (EarApp *)AfxGetApp();
     ASSERT_VALID(pApp);
     pApp->Play(&m_buffer);
 }
+
 void EarDlg::OnCancel()
 {
     EarApp *pApp = (EarApp *)AfxGetApp();
@@ -128,6 +142,7 @@ void EarDlg::OnCancel()
     pApp->Stop();
     CDialog::OnCancel();
 }
+
 void EarDlg::CreateInterval()
 {
     int first, second;
@@ -138,6 +153,7 @@ void EarDlg::CreateInterval()
     m_MidiInterval = IntervalEnum(abs(second - first));
     m_buffer.Transform(first, second);
 }
+
 // Helper functions
 int random(int lo, int hi)
 {
@@ -147,7 +163,9 @@ int random(int lo, int hi)
 void EarDlg::OnEnter()
 {
     CString message;
+
     UpdateData(TRUE);
+
     IntervalEnum i = IntervalEnum(m_Interval + 1);
     if (i == m_MidiInterval) {
         message.LoadString(IDS_CORRECT);
@@ -160,6 +178,7 @@ void EarDlg::OnEnter()
         incorrect.Format(L"%d", ++m_incorrect);
         GetDlgItem(IDC_INCORRECT)->SetWindowText(incorrect);
     }
+
     float total = 100 * m_correct / (float)(m_correct + m_incorrect);
     CString T;
     T.Format(L"%.2f%%", total);
@@ -169,6 +188,7 @@ void EarDlg::OnEnter()
     CreateInterval();
     OnListen();
 }
+
 CString IntervalToString(IntervalEnum i)
 {
     CString output;
@@ -215,6 +235,7 @@ CString IntervalToString(IntervalEnum i)
     }
     return output;
 }
+
 HBRUSH EarDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
     HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);

@@ -26,6 +26,7 @@ BEGIN_MESSAGE_MAP(EarApp, CWinApp)
     //}}AFX_MSG
     ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 END_MESSAGE_MAP()
+
 /////////////////////////////////////////////////////////////////////////////
 // EarApp construction
 EarApp::EarApp()
@@ -34,14 +35,17 @@ EarApp::EarApp()
     m_Intervals = INTERVAL_ALL;
     m_instrument = 0;
 }
+
 EarApp::~EarApp()
 {
     if (m_pStream != NULL)
-        delete [] m_pStream;
+        delete[] m_pStream;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 // The one and only EarApp object
 EarApp theApp;
+
 /////////////////////////////////////////////////////////////////////////////
 // EarApp initialization
 BOOL EarApp::InitInstance()
@@ -49,6 +53,7 @@ BOOL EarApp::InitInstance()
     srand(GetTickCount());
     if (!InitializeStream())
         return FALSE;
+
     EarDlg dlg;
     m_pMainWnd = &dlg;
 
@@ -56,6 +61,7 @@ BOOL EarApp::InitInstance()
 
     return FALSE;
 }
+
 int EarApp::ExitInstance()
 {
     if (m_pStream != NULL && m_pStream->IsOpen()) {
@@ -64,18 +70,21 @@ int EarApp::ExitInstance()
     }
     return CWinApp::ExitInstance();
 }
+
 //
 // InitializeStream
 //
 BOOL EarApp::InitializeStream()
 {
     ASSERT(m_pStream == NULL);
+
     // Set the output stream to the midi mapper
     m_pStream = (MidiStream *)OutputDevices().GetStream(-1);
     if (m_pStream == NULL) {
         AfxMessageBox(IDS_COULDNOTOPENMIDIMAPPER);
         return FALSE;
     }
+
     m_pStream->RegisterHook(StreamProc);
     // Open the output device
     MMRESULT result = m_pStream->Open();
@@ -83,6 +92,7 @@ BOOL EarApp::InitializeStream()
         AfxMessageBox(OutputDevice::GetErrorText(result));
         return FALSE;
     }
+
     // Set the time division
     MIDIPROPTIMEDIV prop;
     prop.cbStruct = sizeof(MIDIPROPTIMEDIV);
@@ -91,9 +101,11 @@ BOOL EarApp::InitializeStream()
         AfxMessageBox(IDS_COULDNOTSETTIMEDIVISION);
         return FALSE;
     }
+
     // Set the default instrument
     return SetInstrument(m_instrument);
 }
+
 BOOL EarApp::Play(MidiBuffer *pbuff)
 {
     MMRESULT result;
@@ -108,14 +120,16 @@ BOOL EarApp::Play(MidiBuffer *pbuff)
         return FALSE;
     return TRUE;
 }
+
 BOOL EarApp::Stop()
 {
     if (m_pStream == NULL)
         return FALSE;
     return m_pStream->Stop() == MMSYSERR_NOERROR;
 }
+
 void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance,
-                DWORD dwParam1, DWORD dwParam2)
+    DWORD dwParam1, DWORD dwParam2)
 {
     if (uMsg != MOM_DONE)
         return;
@@ -125,6 +139,7 @@ void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance,
         (LPMIDIHDR)dwParam1,
         sizeof(MIDIHDR));
 }
+
 int EarApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType, UINT nIDPrompt)
 {
     return CWinApp::DoMessageBox(lpszPrompt, nType, nIDPrompt);
@@ -143,4 +158,3 @@ BOOL EarApp::SetInstrument(BYTE b)
     }
     return FALSE;
 }
-

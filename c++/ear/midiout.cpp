@@ -11,7 +11,7 @@
 //
 // Constructor
 //
-MidiOutput :: MidiOutput(LPMIDIOUTCAPS pmidicaps, UINT id)
+MidiOutput::MidiOutput(LPMIDIOUTCAPS pmidicaps, UINT id)
     : OutputDevice(pmidicaps, id)
 {
 }
@@ -19,7 +19,7 @@ MidiOutput :: MidiOutput(LPMIDIOUTCAPS pmidicaps, UINT id)
 //
 // Destructor
 //
-MidiOutput :: ~MidiOutput()
+MidiOutput::~MidiOutput()
 {
     Close();
 }
@@ -27,7 +27,7 @@ MidiOutput :: ~MidiOutput()
 //
 // Open
 //
-MMRESULT MidiOutput :: Open()
+MMRESULT MidiOutput::Open()
 {
     Close();
 
@@ -42,7 +42,7 @@ MMRESULT MidiOutput :: Open()
 //
 // Close
 //
-MMRESULT MidiOutput :: Close()
+MMRESULT MidiOutput::Close()
 {
     MMRESULT result = MMSYSERR_INVALHANDLE;
 
@@ -57,7 +57,7 @@ MMRESULT MidiOutput :: Close()
 //
 // MidiOutProc
 //
-void CALLBACK MidiOutput :: MidiOutProc(
+void CALLBACK MidiOutput::MidiOutProc(
     HMIDIOUT hMidiOut,
     UINT wMsg,
     DWORD dwInstance,
@@ -80,7 +80,7 @@ void CALLBACK MidiOutput :: MidiOutProc(
 //
 // ShortMessage
 //
-MMRESULT MidiOutput :: ShortMessage(const MidiMessage & message)
+MMRESULT MidiOutput::ShortMessage(const MidiMessage & message)
 {
     ASSERT(*this != NULL);
 
@@ -90,7 +90,7 @@ MMRESULT MidiOutput :: ShortMessage(const MidiMessage & message)
 //
 // LongMessage
 //
-MMRESULT MidiOutput :: LongMessage(LPSTR pdata, UINT cbSize)
+MMRESULT MidiOutput::LongMessage(LPSTR pdata, UINT cbSize)
 {
     // BUGBUG -- not implemented
 
@@ -100,7 +100,7 @@ MMRESULT MidiOutput :: LongMessage(LPSTR pdata, UINT cbSize)
 //
 // GetVolume
 //
-MMRESULT MidiOutput :: GetVolume (LPDWORD pVolume)
+MMRESULT MidiOutput::GetVolume (LPDWORD pVolume)
 {
     ASSERT(*this != NULL);
     ASSERT(pVolume != NULL);
@@ -111,7 +111,7 @@ MMRESULT MidiOutput :: GetVolume (LPDWORD pVolume)
 //
 // SetVolume
 //
-MMRESULT MidiOutput :: SetVolume(DWORD volume)
+MMRESULT MidiOutput::SetVolume(DWORD volume)
 {
     ASSERT(*this != NULL);
 

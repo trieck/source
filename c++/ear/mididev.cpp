@@ -11,7 +11,7 @@
 //
 // Constructor
 //
-MidiDevice :: MidiDevice()
+MidiDevice::MidiDevice()
 {
     m_handle = NULL;
     m_id = 0;
@@ -20,7 +20,7 @@ MidiDevice :: MidiDevice()
 //
 // Destructor
 //
-MidiDevice :: ~MidiDevice()
+MidiDevice::~MidiDevice()
 {
 }
 

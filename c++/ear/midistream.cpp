@@ -11,7 +11,7 @@
 //
 // Constructor
 //
-MidiStream :: MidiStream(LPMIDIOUTCAPS pmidicaps, UINT id)
+MidiStream::MidiStream(LPMIDIOUTCAPS pmidicaps, UINT id)
     : OutputDevice(pmidicaps, id)
 {
 }
@@ -19,7 +19,7 @@ MidiStream :: MidiStream(LPMIDIOUTCAPS pmidicaps, UINT id)
 //
 // Destructor
 //
-MidiStream :: ~MidiStream()
+MidiStream::~MidiStream()
 {
     Close();
 }
@@ -27,7 +27,7 @@ MidiStream :: ~MidiStream()
 //
 // Open
 //
-MMRESULT MidiStream :: Open()
+MMRESULT MidiStream::Open()
 {
     Close();
 
@@ -35,15 +35,15 @@ MMRESULT MidiStream :: Open()
                (HMIDISTRM *)&m_handle,
                &m_id,
                1 /* reserved */,
-               (DWORD)MidiStream::MidiStreamProc,
-               (DWORD) this,
+               (DWORD_PTR)MidiStream::MidiStreamProc,
+               (DWORD_PTR) this,
                CALLBACK_FUNCTION);
 }
 
 //
 // Close
 //
-MMRESULT MidiStream :: Close()
+MMRESULT MidiStream::Close()
 {
     MMRESULT result = MMSYSERR_INVALHANDLE;
 
@@ -58,7 +58,7 @@ MMRESULT MidiStream :: Close()
 //
 // Position
 //
-MMRESULT MidiStream :: Position(LPMMTIME pmmt) const
+MMRESULT MidiStream::Position(LPMMTIME pmmt) const
 {
     ASSERT(*this != NULL);
     ASSERT(pmmt != NULL);
@@ -69,7 +69,7 @@ MMRESULT MidiStream :: Position(LPMMTIME pmmt) const
 //
 // Property
 //
-MMRESULT MidiStream :: Property (LPBYTE ppropdata, DWORD property) const
+MMRESULT MidiStream::Property (LPBYTE ppropdata, DWORD property) const
 {
     ASSERT(*this != NULL);
     ASSERT(ppropdata != NULL);
@@ -80,7 +80,7 @@ MMRESULT MidiStream :: Property (LPBYTE ppropdata, DWORD property) const
 //
 // Out
 //
-MMRESULT MidiStream :: Out(LPMIDIHDR pMidiHdr)
+MMRESULT MidiStream::Out(LPMIDIHDR pMidiHdr)
 {
     ASSERT(*this != NULL);
     ASSERT(pMidiHdr != NULL);
@@ -105,7 +105,7 @@ MMRESULT MidiStream :: Out(LPMIDIHDR pMidiHdr)
 //
 // Restart
 //
-MMRESULT MidiStream :: Restart()
+MMRESULT MidiStream::Restart()
 {
     ASSERT(*this != NULL);
 
@@ -115,7 +115,7 @@ MMRESULT MidiStream :: Restart()
 //
 // Stop
 //
-MMRESULT MidiStream :: Stop() const
+MMRESULT MidiStream::Stop() const
 {
     ASSERT(*this != NULL);
 
@@ -125,7 +125,7 @@ MMRESULT MidiStream :: Stop() const
 //
 // MidiStreamProc
 //
-void CALLBACK MidiStream :: MidiStreamProc(
+void CALLBACK MidiStream::MidiStreamProc(
     HMIDISTRM hMidiStream,
     UINT uMsg,
     DWORD dwInstance,
@@ -149,7 +149,7 @@ void CALLBACK MidiStream :: MidiStreamProc(
 //
 // ShortMessage
 //
-MMRESULT MidiStream :: ShortMessage(const MidiMessage & message) const
+MMRESULT MidiStream::ShortMessage(const MidiMessage & message) const
 {
     ASSERT(*this != NULL);
 
@@ -159,7 +159,7 @@ MMRESULT MidiStream :: ShortMessage(const MidiMessage & message) const
 //
 // RegisterHook
 //
-BOOL MidiStream :: RegisterHook(PFNCALLBACK pfnCallBack)
+BOOL MidiStream::RegisterHook(PFNCALLBACK pfnCallBack)
 {
     ASSERT(pfnCallBack != NULL);
     ASSERT_VALID(&m_HookChain);
@@ -174,7 +174,7 @@ BOOL MidiStream :: RegisterHook(PFNCALLBACK pfnCallBack)
 //
 // RevokeHook
 //
-BOOL MidiStream :: RevokeHook(PFNCALLBACK pfnCallBack)
+BOOL MidiStream::RevokeHook(PFNCALLBACK pfnCallBack)
 {
     ASSERT(pfnCallBack != NULL);
     ASSERT_VALID(&m_HookChain);
