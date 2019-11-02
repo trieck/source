@@ -9,7 +9,8 @@
 #define __EDITFRAM_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class EditFrame : public FrameWindow {
+class EditFrame : public FrameWindow
+{
 // Construction / Destruction
 public:
     EditFrame(LPCSTR caption = "", int x = CW_USEDEFAULT,

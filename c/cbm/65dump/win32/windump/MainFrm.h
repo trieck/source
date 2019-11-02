@@ -11,7 +11,8 @@
 
 class WindumpView;
 
-class MainFrame : public CFrameWnd {
+class MainFrame : public CFrameWnd
+{
 
 protected: // create from serialization only
     MainFrame();

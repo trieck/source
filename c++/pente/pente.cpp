@@ -65,7 +65,7 @@ BOOL PenteApp::InitInstance()
     AddDocTemplate(pDocTemplate);
 
     HKEY HKCU;
-    long res_reg = RegOpenCurrentUser(KEY_SET_VALUE , &HKCU);
+    long res_reg = RegOpenCurrentUser(KEY_SET_VALUE, &HKCU);
     if (res_reg == ERROR_SUCCESS)
         res_reg = RegOverridePredefKey(HKEY_CLASSES_ROOT, HKCU);
 
@@ -92,7 +92,8 @@ BOOL PenteApp::InitInstance()
 /////////////////////////////////////////////////////////////////////////////
 // AboutDlg dialog used for App About
 
-class AboutDlg : public CDialog {
+class AboutDlg : public CDialog
+{
 public:
     AboutDlg();
     // Dialog Data

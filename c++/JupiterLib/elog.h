@@ -8,7 +8,8 @@
 #ifndef __ELOG_H__
 #define __ELOG_H__
 
-namespace EventLog {
+namespace EventLog
+{
 void logerr(const char *format, ...);
 void logwarn(const char *format, ...);
 void loginfo(const char *format, ...);

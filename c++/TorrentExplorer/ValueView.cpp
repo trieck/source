@@ -21,7 +21,8 @@ LPCTSTR headers[] = {
     "Value"
 };
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 CString FormatInt(LPINTEGER i, LONG lHint);
 CString Comma(__int64 i);
@@ -147,7 +148,8 @@ LRESULT ValueView::OnSettingChange(WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 CString FormatInt(LPINTEGER i, LONG lHint)
 {

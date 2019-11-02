@@ -9,21 +9,25 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
-class CMainDlg : public CDialogImpl<CMainDlg>, public CMessageFilter {
+class CMainDlg : public CDialogImpl<CMainDlg>, public CMessageFilter
+{
 public:
     enum { IDD = IDD_GUIDGEN_DIALOG };
 
     int m_nGuidType;
     GUID m_guid;
 
-    CMainDlg() : m_nGuidType(0) {
+    CMainDlg() : m_nGuidType(0)
+    {
     }
 
-    virtual BOOL PreTranslateMessage(MSG* pMsg) {
+    virtual BOOL PreTranslateMessage(MSG* pMsg)
+    {
         return ::IsDialogMessage(m_hWnd, pMsg);
     }
 
-    void UpdateData() {
+    void UpdateData()
+    {
         m_nGuidType = 0;
         m_nGuidType = IsDlgButtonChecked(IDC_RADIO2) ? 1 : m_nGuidType;
         m_nGuidType = IsDlgButtonChecked(IDC_RADIO3) ? 2 : m_nGuidType;
@@ -40,7 +44,8 @@ public:
     MESSAGE_HANDLER(WM_SYSCOMMAND, OnSysCommand)
     END_MSG_MAP()
 
-    LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/) {
+    LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+    {
         // center the dialog on the screen
         CenterWindow();
 
@@ -90,7 +95,8 @@ public:
         return TRUE;
     }
 
-    void GetFormattedGuid(TCHAR* rString) {
+    void GetFormattedGuid(TCHAR* rString)
+    {
         // load appropriate formatting string
         TCHAR szBuf[256];
         ::LoadString(_Module.GetResourceInstance(), IDS_FORMATS+m_nGuidType, szBuf, 255);
@@ -105,13 +111,15 @@ public:
                  m_guid.Data4[4], m_guid.Data4[5], m_guid.Data4[6], m_guid.Data4[7]);
     }
 
-    void DisplayGUID() {
+    void DisplayGUID()
+    {
         TCHAR szBuf[512];
         GetFormattedGuid(szBuf);
         SetDlgItemText(IDC_RESULTS, szBuf);
     }
 
-    BOOL NewGUID() {
+    BOOL NewGUID()
+    {
         m_guid = GUID_NULL;
         ::CoCreateGuid(&m_guid);
         if (m_guid == GUID_NULL) {
@@ -123,14 +131,16 @@ public:
         return TRUE;
     }
 
-    LRESULT OnNewGUID(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
+    LRESULT OnNewGUID(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+    {
         if (!NewGUID())
             return 0;
         DisplayGUID();
         return 0;
     }
 
-    LRESULT OnSelChange(WORD wNotifyCode, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
+    LRESULT OnSelChange(WORD wNotifyCode, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+    {
         if (wNotifyCode == BN_CLICKED) {
             UpdateData();
             DisplayGUID();
@@ -138,7 +148,8 @@ public:
         return 0;
     }
 
-    LRESULT OnOK(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
+    LRESULT OnOK(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+    {
         UpdateData();
         if (!OpenClipboard()) {
             TCHAR szBuf[256];
@@ -168,7 +179,8 @@ public:
         return 0;
     }
 
-    LRESULT OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
+    LRESULT OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+    {
         CRegKey reg;
         long lRet = reg.Open(HKEY_CURRENT_USER, _T("Software\\Microsoft\\ATL\\Samples\\GUIDGen"), KEY_WRITE);
         if (lRet != ERROR_SUCCESS) {
@@ -198,12 +210,14 @@ public:
         return 0;
     }
 
-    void CloseDialog(int nVal) {
+    void CloseDialog(int nVal)
+    {
         DestroyWindow();
         ::PostQuitMessage(nVal);
     }
 
-    LRESULT OnSysCommand(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& bHandled) {
+    LRESULT OnSysCommand(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& bHandled)
+    {
         UINT uCmdType = (UINT)wParam;
 
         if ((uCmdType & 0xFFF0) == IDM_ABOUTBOX) {

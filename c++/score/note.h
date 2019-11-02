@@ -13,7 +13,8 @@ class Measure;
 
 /////////////////////////////////////////////////////////////////////////////
 // Note class
-class Note : public CObject, protected KeyNote {
+class Note : public CObject, protected KeyNote
+{
 public:
     // Construction / Destruction
     Note();
@@ -28,44 +29,57 @@ public:
     void GetModifierRect(CRect &) const;
     void SetModifier(const Tool *);
     void Serialize(CArchive & ar);
-    void SetData(BYTE b) {
+    void SetData(BYTE b)
+    {
         m_data = b;
     }
-    BYTE GetData() const {
+    BYTE GetData() const
+    {
         return BYTE(m_data + mod);
     }
-    BYTE GetBaseData() const {
+    BYTE GetBaseData() const
+    {
         return BYTE(m_data);
     }
-    void SetIcon(HICON hIcon) {
+    void SetIcon(HICON hIcon)
+    {
         m_hIcon = hIcon;
     }
-    HICON GetIcon() const {
+    HICON GetIcon() const
+    {
         return m_hIcon;
     }
-    CPoint GetPos() const {
+    CPoint GetPos() const
+    {
         return m_pos;
     }
     void SetPos(const CPoint & pos);
-    void SetX(int x) {
+    void SetX(int x)
+    {
         m_pos.x = x;
     }
-    int GetX() const {
+    int GetX() const
+    {
         return m_pos.x;
     }
-    Duration GetDuration() const {
+    Duration GetDuration() const
+    {
         return m_duration;
     }
-    void SetDuration(Duration d) {
+    void SetDuration(Duration d)
+    {
         m_duration = d;
     }
-    void SetName(char c) {
+    void SetName(char c)
+    {
         keyname = c;
     }
-    char GetName() const {
+    char GetName() const
+    {
         return keyname;
     }
-    Modifier GetModifier() const {
+    Modifier GetModifier() const
+    {
         return mod;
     }
 

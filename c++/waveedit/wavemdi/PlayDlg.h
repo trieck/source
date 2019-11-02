@@ -15,7 +15,8 @@
 #include "DigitCtrlMgr.h"
 #include "LEDMeter.h"
 
-class CPlayDlg : public CDialog {
+class CPlayDlg : public CDialog
+{
     DECLARE_DYNCREATE (CPlayDlg)
 
 // Construction

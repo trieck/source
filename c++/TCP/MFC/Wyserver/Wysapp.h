@@ -10,7 +10,8 @@
 #include "WySock.h"
 
 // CWinApp derived class
-class CWysApp : public CWinApp {
+class CWysApp : public CWinApp
+{
 protected:
     BOOL	m_bIsLogging;
     CString	m_szLogPath;

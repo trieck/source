@@ -21,7 +21,8 @@ typedef enum Duration {
 };
 
 /////////////////////////////////////////////////////////////////////////////
-namespace MidiTime {
+namespace MidiTime
+{
 DWORD BPMToMicroseconds(DWORD bpm);
 DWORD MicrosecondsToBPM(DWORD microseconds);
 BYTE DurationToTicks(Duration duration);

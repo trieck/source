@@ -7,7 +7,8 @@
 #define __FILE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class File {
+class File
+{
 public:
     enum openMode {
         unknown = 0,

@@ -10,7 +10,8 @@
 #endif // _MSC_VER > 1000
 
 
-class Emu6502Doc : public CDocument {
+class Emu6502Doc : public CDocument
+{
 protected: // create from serialization only
     Emu6502Doc();
     DECLARE_DYNCREATE(Emu6502Doc)

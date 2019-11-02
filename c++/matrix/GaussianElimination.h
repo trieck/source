@@ -4,7 +4,8 @@
 #include "matrix.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class GaussianElimination {
+class GaussianElimination
+{
 // Construction / Destuction
 private:
     GaussianElimination();

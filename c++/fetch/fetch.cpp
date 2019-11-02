@@ -66,7 +66,8 @@ BOOL FetchApp::InitInstance()
 /////////////////////////////////////////////////////////////////////////////
 // AboutDlg dialog used for App About
 
-class AboutDlg : public CDialog {
+class AboutDlg : public CDialog
+{
 public:
     AboutDlg();
 

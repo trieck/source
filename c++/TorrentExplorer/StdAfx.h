@@ -40,7 +40,8 @@ typedef std::vector<CString> CStringVec;
 typedef const unsigned char* LPCBYTE;
 
 struct StringPtrLess {
-    bool operator()(LPCSTR left, LPCSTR right) {
+    bool operator()(LPCSTR left, LPCSTR right)
+    {
         return strcmp(left, right) < 0;
     }
 };

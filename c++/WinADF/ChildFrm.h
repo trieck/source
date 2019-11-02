@@ -6,7 +6,8 @@
 
 class WinADFView;
 
-class ChildFrame : public CMDIChildWnd {
+class ChildFrame : public CMDIChildWnd
+{
     DECLARE_DYNCREATE(ChildFrame)
 public:
     ChildFrame();

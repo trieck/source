@@ -9,7 +9,8 @@
 #define __WINAPP_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class WinApp {
+class WinApp
+{
     friend int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                               LPSTR command, int nCmdShow);
 

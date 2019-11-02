@@ -36,7 +36,8 @@ typedef vector<string> stringvec;
 // case insensitive string comparison
 //
 struct stringless : std::binary_function <string, string, bool> {
-    bool operator () (const string & _X, const string & _Y) const {
+    bool operator () (const string & _X, const string & _Y) const
+    {
         return (stricmp(_X.c_str(), _Y.c_str()) > 0);
     }
 };

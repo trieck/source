@@ -3,7 +3,8 @@
 #include "Kernel.h"
 #include "MorphologicalOperator.h"
 
-class ImageEroder : public MorphologicalOperator {
+class ImageEroder : public MorphologicalOperator
+{
 public:
     ImageEroder();
     ~ImageEroder();

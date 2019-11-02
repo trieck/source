@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // ColorChooserWnd window
 
-class ColorChooserWnd : public CWnd {
+class ColorChooserWnd : public CWnd
+{
 // Construction
 public:
     ColorChooserWnd();

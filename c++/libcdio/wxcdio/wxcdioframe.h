@@ -3,7 +3,8 @@
 
 #include "main.h"
 
-class wxcdioFrame : public wxDocParentFrame {
+class wxcdioFrame : public wxDocParentFrame
+{
 
 public:
     wxcdioFrame(wxDocManager *manager,

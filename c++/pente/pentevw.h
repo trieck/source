@@ -8,7 +8,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class PenteView : public CView {
+class PenteView : public CView
+{
 protected: // create from serialization only
     PenteView();
     DECLARE_DYNCREATE(PenteView)

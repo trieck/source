@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // ValueView view
 
-class ValueView : public CListView {
+class ValueView : public CListView
+{
 protected:
     ValueView();           // protected constructor used by dynamic creation
     DECLARE_DYNCREATE(ValueView)

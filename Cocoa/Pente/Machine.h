@@ -11,7 +11,8 @@
 #import "Vector.h"
 
 @interface Machine :
-NSObject {
+    NSObject
+{
     /* all initially feasible vectors */
     NSMutableArray *vectors;
     Board *board;
@@ -19,6 +20,6 @@ NSObject {
 
 - (Point)move;
 - (Vector*)winner:
-(uint32_t *)type;
+    (uint32_t *)type;
 
 @end

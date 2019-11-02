@@ -2,7 +2,8 @@
 
 #include "Sequence.h"
 
-class BeatGrid {
+class BeatGrid
+{
 public:
     BeatGrid(void);
     ~BeatGrid(void);

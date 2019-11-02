@@ -16,7 +16,8 @@
 LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,
                              WPARAM wParam, LPARAM lParam);
 
-class CApp {
+class CApp
+{
     friend LRESULT APIENTRY MainWndProc(HWND, UINT, WPARAM, LPARAM);
     friend LRESULT APIENTRY ChildProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -34,7 +35,8 @@ public:
     ~CApp();
     BOOL Init(LPCSTR lpszClassName);
     BOOL Create(LPCSTR lpszCaption);
-    inline HWND GetMainWnd() {
+    inline HWND GetMainWnd()
+    {
         return m_hWnd;
     }
     VOID Message(LPCTSTR szMessage);

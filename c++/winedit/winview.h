@@ -10,7 +10,8 @@
 #endif // _MSC_VER > 1000
 
 
-class WinEditView : public CEditView {
+class WinEditView : public CEditView
+{
 protected: // create from serialization only
     WinEditView();
     DECLARE_DYNCREATE(WinEditView)

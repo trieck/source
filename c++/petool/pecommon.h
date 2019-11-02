@@ -8,7 +8,8 @@
 #ifndef __PECOMMON_H__
 #define __PECOMMON_H__
 
-namespace PECommon {
+namespace PECommon
+{
 
 /////////////////////////////////////////////////////////////////////////////
 bool IsValidMachineType(WORD wMachineType);

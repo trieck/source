@@ -18,7 +18,8 @@
 // See pente.cpp for the implementation of this class
 //
 
-class PenteApp : public CWinApp {
+class PenteApp : public CWinApp
+{
 public:
     PenteApp();
     virtual ~PenteApp();

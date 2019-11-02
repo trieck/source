@@ -7,7 +7,8 @@
 #define __XCEPT_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Exception {
+class Exception
+{
 // Construction / Destruction
 public:
     Exception (LPTSTR fmt, ...);

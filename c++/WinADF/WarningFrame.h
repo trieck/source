@@ -4,7 +4,8 @@
 
 // WarningFrame frame
 
-class WarningFrame : public CMDIChildWnd, public IADFWarningHandler {
+class WarningFrame : public CMDIChildWnd, public IADFWarningHandler
+{
     DECLARE_DYNCREATE(WarningFrame)
 protected:
     WarningFrame();           // protected constructor used by dynamic creation

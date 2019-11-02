@@ -18,7 +18,8 @@
 #endif
 
 // CFrameWnd derived class
-class CDlgWin : public CFrameWnd {
+class CDlgWin : public CFrameWnd
+{
 private:
     void UpdateClientColor();
     void SetWndFont(CWnd* pWnd, CString szFont, LONG lSize);

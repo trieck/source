@@ -6,7 +6,8 @@
 #include "common.h"
 #include "resource.h"
 
-namespace {
+namespace
+{
 Application* currentApp = NULL;
 }
 

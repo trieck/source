@@ -3,7 +3,8 @@
 
 #include "wxcdiotreectrl.h"
 
-class wxcdioCanvas : public wxScrolledWindow {
+class wxcdioCanvas : public wxScrolledWindow
+{
 public:
     wxcdioCanvas(wxView *view, wxFrame *frame, const wxPoint& pos,
                  const wxSize& size, const long style);

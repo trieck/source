@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // ColorButton window
 
-class ColorButton : public CButton {
+class ColorButton : public CButton
+{
 // Construction
 public:
     ColorButton();
@@ -32,7 +33,8 @@ public:
 public:
     COLORREF GetFillColor() const;
     void SetFillColor(COLORREF clr);
-    BOOL IsSet() const {
+    BOOL IsSet() const
+    {
         return m_Set;
     }
     virtual ~ColorButton();

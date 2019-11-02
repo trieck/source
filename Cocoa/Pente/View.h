@@ -14,7 +14,8 @@
 @class AppController;
 
 @interface View :
-NSView {
+    NSView
+{
     NSBezierPath *grid;				// grid bezier path
     NSBezierPath *polygon;
     Board *board;					// board
@@ -25,9 +26,9 @@ NSView {
 }
 
 - (void) redrawSquare:
-(uint32_t)x :
-(uint32_t)y;
+    (uint32_t)x :
+    (uint32_t)y;
 - (void) setWinner:
-(Vector*)winner;
+    (Vector*)winner;
 
 @end

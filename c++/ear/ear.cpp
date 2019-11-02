@@ -129,7 +129,7 @@ BOOL EarApp::Stop()
 }
 
 void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance,
-    DWORD dwParam1, DWORD dwParam2)
+                DWORD dwParam1, DWORD dwParam2)
 {
     if (uMsg != MOM_DONE)
         return;

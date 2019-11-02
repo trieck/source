@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // CScores window
 
-class CScores : public CObject {
+class CScores : public CObject
+{
 // Construction
 public:
     CScores();

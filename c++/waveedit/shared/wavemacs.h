@@ -13,5 +13,5 @@ typedef IID CLSID;
 #define DECLARE_MY_GUIDS							\
 		extern "C" const CLSID	CLSID_WaveLib;		\
 		extern "C" const IID	IID_IWaveLib;		\
-	
+
 #endif // __WAVEMACS_H__

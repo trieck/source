@@ -11,7 +11,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // CSettingsDlg
 
-class CSettingsDlg : public CPropertySheet {
+class CSettingsDlg : public CPropertySheet
+{
     DECLARE_DYNAMIC(CSettingsDlg)
 
 // Construction

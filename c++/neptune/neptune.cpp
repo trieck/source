@@ -10,7 +10,8 @@
 #include "neptune_i.c"
 #include "resource.h"
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 typedef std::basic_string<TCHAR> tstring;
 
@@ -33,7 +34,8 @@ bool gettok(LPCTSTR *ppin, LPTOKEN ptok);
 }	// anonymous
 
 /////////////////////////////////////////////////////////////////////////////
-class Neptune : public IStringUtil, public IComputer {
+class Neptune : public IStringUtil, public IComputer
+{
 public:
     Neptune();
     virtual ~Neptune();
@@ -55,7 +57,8 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class NeptuneClassFactory : public IClassFactory {
+class NeptuneClassFactory : public IClassFactory
+{
 public:
     NeptuneClassFactory();
     ~NeptuneClassFactory();
@@ -450,7 +453,8 @@ HRESULT ModuleLoadTypeLib(BSTR* pbstrPath, ITypeLib** ppTypeLib)
     return hr;
 }
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 /////////////////////////////////////////////////////////////////////////////
 bool gettok(LPCTSTR *ppin, LPTOKEN ptok)

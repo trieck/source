@@ -12,7 +12,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // ScoreView window
 
-class ScoreView : public CScrollView {
+class ScoreView : public CScrollView
+{
 // Construction
 protected:
     ScoreView();
@@ -25,7 +26,8 @@ public:
 // Operations
 public:
     void SetTool(Tool * pTool);
-    inline const Tool * GetTool() const {
+    inline const Tool * GetTool() const
+    {
         return &m_Tool;
     }
 

@@ -3,7 +3,8 @@
 #include <afxwin.h>
 
 // CComboBox derived class
-class CColorCombo : public CComboBox {
+class CColorCombo : public CComboBox
+{
 protected:
     // Overridden ancestor methods
     virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);

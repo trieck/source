@@ -2,7 +2,8 @@
 
 // TransparentBitmap command target
 
-class TransparentBitmap : public CBitmap {
+class TransparentBitmap : public CBitmap
+{
 public:
     TransparentBitmap(COLORREF transparent);
     virtual ~TransparentBitmap();

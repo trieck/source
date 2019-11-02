@@ -21,6 +21,11 @@
 
 #include <ddraw.h>
 
+#include <atlbase.h>
+
+#define COM_SMARTPTR(Interface)  \
+    typedef CComPtr<Interface> Interface##Ptr;
+
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 

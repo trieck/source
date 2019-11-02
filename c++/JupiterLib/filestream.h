@@ -10,7 +10,8 @@
 #define __FILESTREAM_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class FileStream : public IPeekableStream {
+class FileStream : public IPeekableStream
+{
 // Construction / Destruction
 private:
     FileStream();

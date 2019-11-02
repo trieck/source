@@ -14,7 +14,8 @@
 ///////////////////////////////////////////////////////////////////
 // The CDocViewApp application class
 
-class CDocViewApp : public CWinApp {
+class CDocViewApp : public CWinApp
+{
 public:
     CDocViewApp();
     virtual ~CDocViewApp();

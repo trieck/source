@@ -9,8 +9,10 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+COM_SMARTPTR(IDirectDrawSurface7)
 
-class DDrawView : public CView {
+class DDrawView : public CView
+{
 protected: // create from serialization only
     DDrawView();
     DECLARE_DYNCREATE(DDrawView)
@@ -50,7 +52,7 @@ protected:
     //}}AFX_MSG
     DECLARE_MESSAGE_MAP()
 private:
-    LPDIRECTDRAWSURFACE pdds;
+    IDirectDrawSurface7Ptr m_pdds;
 };
 
 #ifndef _DEBUG  // debug version in DDrawView.cpp

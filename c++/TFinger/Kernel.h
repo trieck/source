@@ -1,7 +1,8 @@
 #pragma once
 
 /////////////////////////////////////////////////////////////////////////////
-class Kernel {
+class Kernel
+{
 private:
     Kernel(int bsize, const BYTE *data);
 public:

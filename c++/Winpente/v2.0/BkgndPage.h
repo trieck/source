@@ -14,7 +14,8 @@
 #include "ResDll\resource.h"
 #include "resource.h"
 
-class CBkgndPage : public CPropertyPage {
+class CBkgndPage : public CPropertyPage
+{
     DECLARE_DYNCREATE(CBkgndPage);
 public:
     CBkgndPage();

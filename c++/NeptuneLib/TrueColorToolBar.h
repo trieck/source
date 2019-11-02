@@ -22,7 +22,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // CTrueColorToolBar
 
-class CTrueColorToolBar : public CToolBar {
+class CTrueColorToolBar : public CToolBar
+{
 // Construction
 public:
     CTrueColorToolBar();

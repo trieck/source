@@ -14,7 +14,8 @@
 
 static BOOL log(LPCTSTR message, WORD type);
 
-namespace EventLog {
+namespace EventLog
+{
 
 /////////////////////////////////////////////////////////////////////////////
 void logerr(LPCTSTR format, ...)

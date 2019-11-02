@@ -10,7 +10,8 @@
 #define __EXCEPTION_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Exception {
+class Exception
+{
 // Construction / Destruction
 public:
     Exception(const char *pdesc) : desc(pdesc) {}
@@ -18,7 +19,8 @@ public:
     virtual ~Exception() {}
 
 // Interface
-    string GetDescription() const {
+    string GetDescription() const
+    {
         return desc;
     }
 

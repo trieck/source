@@ -19,7 +19,8 @@
 // See winedit.cpp for the implementation of this class
 //
 
-class WinEditApp : public CWinApp {
+class WinEditApp : public CWinApp
+{
 public:
     WinEditApp();
 

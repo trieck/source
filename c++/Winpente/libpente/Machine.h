@@ -11,7 +11,8 @@
 #include "Vector.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class Machine {
+class Machine
+{
 // Construction / Destruction
 public:
     Machine();

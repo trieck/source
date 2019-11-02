@@ -4,14 +4,16 @@
 #include "Sequence.h"
 
 ///////////////////////////////////////////////////////////////////////
-class MidiBuffer {
+class MidiBuffer
+{
 public:
     // Construction / Destruction
     MidiBuffer();
     virtual ~MidiBuffer();
 
     // Interface
-    operator MIDIHDR* () {
+    operator MIDIHDR* ()
+    {
         return &m_header;
     }
 

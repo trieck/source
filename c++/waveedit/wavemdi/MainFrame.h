@@ -13,7 +13,8 @@
 
 ///////////////////////////////////////////////////////////////////
 // The CMainFrame frame window class
-class CMainFrame : public CMDIFrameWnd {
+class CMainFrame : public CMDIFrameWnd
+{
 public:
     CMainFrame();
     virtual ~CMainFrame();

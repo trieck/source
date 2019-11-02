@@ -9,7 +9,8 @@
 #define __SETHANDLER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class SetHandler : public IHandler {
+class SetHandler : public IHandler
+{
 // Construction / Destruction
 public:
     SetHandler();

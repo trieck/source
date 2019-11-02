@@ -9,21 +9,26 @@
 #define __EXCEPTION_INCLUDE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Exception {
+class Exception
+{
 public:
-    Exception(const string &msg) {
+    Exception(const string &msg)
+    {
         description = msg;
     }
-    Exception(const Exception & E) {
+    Exception(const Exception & E)
+    {
         *this = E;
     }
     Exception(const char *fmt, ...);
-    Exception & operator = (const Exception & E) {
+    Exception & operator = (const Exception & E)
+    {
         if (this != & E)
             description = E.description;
         return *this;
     }
-    string getDescription() const {
+    string getDescription() const
+    {
         return description;
     }
 private:

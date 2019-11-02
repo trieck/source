@@ -11,7 +11,8 @@
 #include "midicommon.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class MidiDevice {
+class MidiDevice
+{
 protected:
     // Construction / Destruction
     MidiDevice();
@@ -21,7 +22,8 @@ public:
     // Interface
     virtual MMRESULT Open() = 0;
     virtual MMRESULT Close() = 0;
-    inline UINT GetDeviceID() const {
+    inline UINT GetDeviceID() const
+    {
         return m_id;
     }
 

@@ -10,7 +10,8 @@
 #define __RANDSTREAM_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class RandomFileStream : public IStream {
+class RandomFileStream : public IStream
+{
 // Construction / Destruction
 private:
     RandomFileStream();

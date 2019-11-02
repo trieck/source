@@ -12,7 +12,8 @@
 #define STOP (Instr)NULL
 
 /////////////////////////////////////////////////////////////////////////////
-class Program {
+class Program
+{
 public:
 // Construction / Destruction
     Program();

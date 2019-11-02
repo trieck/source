@@ -16,7 +16,8 @@
 class SymbolTable;
 
 /////////////////////////////////////////////////////////////////////////////
-class Machine {
+class Machine
+{
     friend class Compile;
     friend class SymbolTable;
 

@@ -17,7 +17,8 @@ typedef ADODB::FieldsPtr FieldsPtr;
 typedef ADODB::FieldPtr FieldPtr;
 
 /////////////////////////////////////////////////////////////////////////////
-class Database {
+class Database
+{
 // Construction / Destruction
 public:
     Database();

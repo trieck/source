@@ -9,7 +9,8 @@
 #define __LOGFILE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class LogFile {
+class LogFile
+{
 // Construction / Destruction
 public:
     LogFile();

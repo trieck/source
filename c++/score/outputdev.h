@@ -11,7 +11,8 @@
 #include "mididev.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class OutputDevice : public MidiDevice, private MIDIOUTCAPS {
+class OutputDevice : public MidiDevice, private MIDIOUTCAPS
+{
     friend class OutputDevices;
 
 protected:
@@ -21,34 +22,44 @@ public:
     virtual ~OutputDevice();
 
     // Interface
-    inline WORD GetMid() const {
+    inline WORD GetMid() const
+    {
         return wMid;
     }
-    inline WORD GetPid() const {
+    inline WORD GetPid() const
+    {
         return wPid;
     }
-    inline MMVERSION GetVersion() const {
+    inline MMVERSION GetVersion() const
+    {
         return vDriverVersion;
     }
-    inline CString GetProduct () const {
+    inline CString GetProduct () const
+    {
         return szPname;
     }
-    inline WORD GetTechnology() const {
+    inline WORD GetTechnology() const
+    {
         return wTechnology;
     }
-    inline WORD GetVoices() const {
+    inline WORD GetVoices() const
+    {
         return wVoices;
     }
-    inline WORD GetNotes() const {
+    inline WORD GetNotes() const
+    {
         return wNotes;
     }
-    inline WORD GetChannelMask() const {
+    inline WORD GetChannelMask() const
+    {
         return wChannelMask;
     }
-    inline DWORD GetSupport() const {
+    inline DWORD GetSupport() const
+    {
         return dwSupport;
     }
-    inline BOOL IsOpen() const {
+    inline BOOL IsOpen() const
+    {
         return m_handle != NULL;
     }
 

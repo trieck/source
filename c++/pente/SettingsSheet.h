@@ -5,7 +5,8 @@
 
 // SettingsSheet
 
-class SettingsSheet : public CPropertySheet {
+class SettingsSheet : public CPropertySheet
+{
     DECLARE_DYNAMIC(SettingsSheet)
 
 public:

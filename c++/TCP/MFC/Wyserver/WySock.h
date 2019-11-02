@@ -22,7 +22,8 @@
 
 #define NOTFOUND		-1
 
-class CWySock : public CAsyncSocket {
+class CWySock : public CAsyncSocket
+{
 protected:
     REQUEST Request;
 public:

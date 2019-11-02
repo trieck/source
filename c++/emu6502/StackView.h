@@ -12,7 +12,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // StackView view
 
-class StackView : public MultirowView {
+class StackView : public MultirowView
+{
 protected:
     StackView();           // protected constructor used by dynamic creation
     DECLARE_DYNCREATE(StackView)

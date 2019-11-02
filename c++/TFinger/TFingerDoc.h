@@ -14,7 +14,8 @@
 #include "ImageSkeletonizer.h"
 #include "MinutiaExtractor.h"
 
-class CTFingerDoc : public CDocument {
+class CTFingerDoc : public CDocument
+{
 protected: // create from serialization only
     CTFingerDoc();
     DECLARE_DYNCREATE(CTFingerDoc)

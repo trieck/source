@@ -34,7 +34,8 @@
 // See ear.cpp for the implementation of this class
 //
 
-class EarApp : public CWinApp {
+class EarApp : public CWinApp
+{
 public:
     EarApp();
     ~EarApp();

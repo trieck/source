@@ -11,7 +11,8 @@
 
 class WindumpDoc;
 
-class LeftView : public CTreeView {
+class LeftView : public CTreeView
+{
 protected: // create from serialization only
     LeftView();
     DECLARE_DYNCREATE(LeftView)

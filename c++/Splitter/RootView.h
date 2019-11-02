@@ -13,7 +13,8 @@
 
 ///////////////////////////////////////////////////////////////////
 // The CRootView view class
-class CRootView : public CListView {
+class CRootView : public CListView
+{
 protected:
     CRootView();
     DECLARE_DYNCREATE(CRootView)

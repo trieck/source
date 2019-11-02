@@ -13,7 +13,8 @@ typedef struct tagREGINFO {
 }
 REGINFO;
 
-class CWizard : public CPropertySheet {
+class CWizard : public CPropertySheet
+{
 public:
     REGINFO m_rgi;
     // Construction

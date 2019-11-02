@@ -4,7 +4,8 @@
 #include "wxcdionode.h"
 #include "isoimage.h"
 
-class wxcdioTreeCtrl : public wxTreeCtrl {
+class wxcdioTreeCtrl : public wxTreeCtrl
+{
 public:
     wxcdioTreeCtrl(wxView *view, wxWindow *parent);
     ~wxcdioTreeCtrl();

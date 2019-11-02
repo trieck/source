@@ -9,7 +9,8 @@
 #define __OBJFILE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ObjectFile {
+class ObjectFile
+{
 // Construction / Destruction
 public:
     ObjectFile();

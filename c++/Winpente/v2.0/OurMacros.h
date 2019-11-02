@@ -15,5 +15,5 @@
 						p = NULL;					\
 						}							\
 					}								\
- 
+
 #endif // _OURMACROS_H

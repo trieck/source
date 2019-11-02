@@ -15,7 +15,8 @@ typedef void (*PFNCALLBACK)(HMIDISTRM, UINT, DWORD, DWORD, DWORD);
 typedef CList<PFNCALLBACK, PFNCALLBACK> HookChain;
 
 ///////////////////////////////////////////////////////////////////////
-class MidiStream : public OutputDevice {
+class MidiStream : public OutputDevice
+{
     friend class OutputDevices;
 
 protected:
@@ -47,10 +48,12 @@ protected:
         DWORD dwParam2
     );
 
-    operator HMIDISTRM() const {
+    operator HMIDISTRM() const
+    {
         return (HMIDISTRM) m_handle;
     }
-    HMIDIOUT GetOutputHandle() const {
+    HMIDIOUT GetOutputHandle() const
+    {
         return (HMIDIOUT) m_handle;
     }
 

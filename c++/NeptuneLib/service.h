@@ -9,7 +9,8 @@
 #define __SERVICE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Service {
+class Service
+{
 // Construction
 public:
     Service(LPCTSTR name);

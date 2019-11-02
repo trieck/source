@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // RegisterDlg dialog
 
-class RegisterDlg : public CDialog {
+class RegisterDlg : public CDialog
+{
 // Construction
 public:
     RegisterDlg(CWnd* pParent = NULL);   // standard constructor

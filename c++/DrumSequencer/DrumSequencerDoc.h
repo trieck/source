@@ -6,7 +6,8 @@
 
 #include "Sequence.h"
 
-class CDrumSequencerDoc : public CDocument {
+class CDrumSequencerDoc : public CDocument
+{
 protected: // create from serialization only
     CDrumSequencerDoc();
     DECLARE_DYNCREATE(CDrumSequencerDoc)
@@ -33,7 +34,8 @@ public:
     virtual void AssertValid() const;
     virtual void Dump(CDumpContext& dc) const;
 #endif
-    Sequence *GetSequence() {
+    Sequence *GetSequence()
+    {
         return &m_sequence;
     }
 protected:

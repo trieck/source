@@ -14,7 +14,8 @@
 
 static BOOL log(const char* message, WORD type);
 
-namespace EventLog {
+namespace EventLog
+{
 
 /////////////////////////////////////////////////////////////////////////////
 void logerr(const char *format, ...)

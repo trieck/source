@@ -16,7 +16,8 @@ class Disk;
 typedef auto_ptr<Disk> DiskPtr;
 
 /////////////////////////////////////////////////////////////////////////////
-class Disk {
+class Disk
+{
 // Construction / destruction
 private:
     Disk();

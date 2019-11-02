@@ -4,7 +4,8 @@
 
 // CColorsPage dialog
 
-class CColorsPage : public CPropertyPage {
+class CColorsPage : public CPropertyPage
+{
     DECLARE_DYNAMIC(CColorsPage)
 
 public:

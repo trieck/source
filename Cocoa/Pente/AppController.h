@@ -5,13 +5,14 @@
 #import "Machine.h"
 
 @interface AppController :
-NSObject {
+    NSObject
+{
     IBOutlet View *view;
     Board *board;
     Machine *machine;
 }
 - (IBAction)newGame:
-(id)sender;
+    (id)sender;
 
 - (Point)move;
 

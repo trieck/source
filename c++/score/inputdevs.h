@@ -11,7 +11,8 @@
 #include "mididevs.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class InputDevices : public MidiDevices {
+class InputDevices : public MidiDevices
+{
 public:
     // Construction / Destruction
     InputDevices();

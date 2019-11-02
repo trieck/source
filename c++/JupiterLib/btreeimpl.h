@@ -10,7 +10,8 @@
 #define __BTREEIMPL_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class BTreeImpl {
+class BTreeImpl
+{
 // Construction / Destruction
 public:
     BTreeImpl();

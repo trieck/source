@@ -15,7 +15,8 @@
 #include "disk.h"
 #include <errno.h>
 
-namespace {
+namespace
+{
 int32_t getDiskType(uint32_t size);
 }
 
@@ -291,7 +292,8 @@ void Disk::writeblock(uint32_t blockno, void *block)
         throw ADFException();
 }
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 /////////////////////////////////////////////////////////////////////////////
 int32_t getDiskType(uint32_t size)

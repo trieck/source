@@ -15,7 +15,8 @@
 // See WebDev.cpp for the implementation of this class
 //
 
-class CWebDevApp : public CWinApp {
+class CWebDevApp : public CWinApp
+{
 public:
     CWebDevApp();
 

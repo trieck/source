@@ -6,9 +6,11 @@ using namespace std;
 
 
 /////////////////////////////////////////////////////////////////////////////
-class X {
+class X
+{
 public:
-    static int s(int n) {
+    static int s(int n)
+    {
         int x, r = n % 4;
         if (r == 0) {
             x = n /2;
@@ -22,9 +24,11 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class U {
+class U
+{
 public:
-    static int s(int n) {
+    static int s(int n)
+    {
         int u, r = n % 4;
         if (r == 0 || r == 1) {
             u = n / 2 + 1;
@@ -38,9 +42,11 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class Xp {
+class Xp
+{
 public:
-    static int s(int n) {
+    static int s(int n)
+    {
         int x, r = n % 4;
         if (r == 0 || r == 1) {
             x = n * (n + 3) / 4;
@@ -53,9 +59,11 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class Up {
+class Up
+{
 public:
-    static int s(int n) {
+    static int s(int n)
+    {
         int u, r = n % 4;
         if (r == 0 || r == 1) {
             u = n * (n + 3) / 4 + 1;
@@ -67,9 +75,11 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class G {
+class G
+{
 public:
-    static string g(int n) {
+    static string g(int n)
+    {
         int u = U::s(n);
         int x = X::s(n);
 
@@ -80,9 +90,11 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class F {
+class F
+{
 public:
-    static string f(int n) {
+    static string f(int n)
+    {
         int u = Up::s(n);
         int x = Xp::s(n);
 

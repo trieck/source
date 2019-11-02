@@ -11,7 +11,8 @@
 #include "keynotes.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class KeySignature : protected tagKeySignature {
+class KeySignature : protected tagKeySignature
+{
 public:
 // Construction / Destruction
     KeySignature(int index);
@@ -20,7 +21,8 @@ public:
 // Interface
     BOOL ismodifier(const KeyNote *) const;
     Modifier getmodifier(char keyname) const;
-    int GetIndex() const {
+    int GetIndex() const
+    {
         return m_index;
     }
     void assign(int index);

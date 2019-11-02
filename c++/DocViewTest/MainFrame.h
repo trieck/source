@@ -15,7 +15,8 @@
 ///////////////////////////////////////////////////////////////////
 // The CMainFrame frame window class
 
-class CMainFrame : public CFrameWnd {
+class CMainFrame : public CFrameWnd
+{
     friend CDocViewView;
 
 protected: // create from serialization only

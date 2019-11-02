@@ -2,7 +2,8 @@
 
 #include "Kernel.h"
 
-class MorphologicalOperator {
+class MorphologicalOperator
+{
 public:
     MorphologicalOperator();
     virtual ~MorphologicalOperator();

@@ -9,7 +9,8 @@
 typedef vector<DWORD> PidVector;
 
 /////////////////////////////////////////////////////////////////////////////
-class ProcessEnumerator {
+class ProcessEnumerator
+{
 // Construction / Destruction
 public:
     ProcessEnumerator();

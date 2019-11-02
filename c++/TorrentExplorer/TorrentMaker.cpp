@@ -25,7 +25,8 @@ static char BEGIN_LIST[1] =    { 'l' };
 static char BEGIN_INTEGER[1] = { 'i' };
 static char END_OBJECT[1] =    { 'e' };
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 CString basename(LPCSTR path);
 CString filename(LPCSTR path);
@@ -520,7 +521,8 @@ void TorrentMaker::WriteChar(char c)
     m_pFile->Write(&c, sizeof(char));
 }
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 //////////////////////////////////////////////////////////////////////
 CString basename(LPCSTR path)

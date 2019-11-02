@@ -10,7 +10,8 @@
 #include <afxwin.h>
 #include "resource.h"
 
-class CConnDlg : public CDialog {
+class CConnDlg : public CDialog
+{
 protected:
     virtual BOOL OnInitDialog();
     afx_msg void OnRefresh();

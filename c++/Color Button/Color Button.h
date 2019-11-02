@@ -9,7 +9,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // CColorButtonApp : See Color Button.cpp for implementation.
 
-class CColorButtonApp : public COleControlModule {
+class CColorButtonApp : public COleControlModule
+{
 public:
     BOOL InitInstance();
     int ExitInstance();

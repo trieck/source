@@ -9,7 +9,8 @@
 #define __BLOCKIO_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class blockio {
+class blockio
+{
 // Construction / Destruction
 public:
     blockio(uint16_t blocksize = 4096, uint16_t headersize = 0);
@@ -28,15 +29,18 @@ public:
     uint32_t seekblock(uint64_t blockno);
 
     uint64_t tell();
-    uint16_t getBlockSize() const {
+    uint16_t getBlockSize() const
+    {
         return blocksize;
     }
-    uint16_t getHeaderSize() const {
+    uint16_t getHeaderSize() const
+    {
         return headersize;
     }
     uint64_t getFileSize();
 
-    bool isOpen() const {
+    bool isOpen() const
+    {
         return stream != NULL;
     }
 

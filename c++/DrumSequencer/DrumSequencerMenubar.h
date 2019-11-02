@@ -3,7 +3,8 @@
 
 // DrumSequencerMenubar
 
-class DrumSequencerMenubar : public CMFCMenuBar {
+class DrumSequencerMenubar : public CMFCMenuBar
+{
     DECLARE_DYNAMIC(DrumSequencerMenubar)
 
 public:

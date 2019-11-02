@@ -6,7 +6,8 @@
 
 #include "BeatGrid.h"
 
-class CDrumSequencerView : public CView {
+class CDrumSequencerView : public CView
+{
 protected: // create from serialization only
     CDrumSequencerView();
     DECLARE_DYNCREATE(CDrumSequencerView)

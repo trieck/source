@@ -13,7 +13,8 @@
 #include "ResDll\resource.h"
 #include "OurTypes.h"
 
-class CPiecePage : public CPropertyPage {
+class CPiecePage : public CPropertyPage
+{
     DECLARE_DYNCREATE(CPiecePage);
 
 public:

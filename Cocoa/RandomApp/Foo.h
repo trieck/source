@@ -3,11 +3,12 @@
 #import <Cocoa/Cocoa.h>
 
 @interface Foo :
-NSObject {
+    NSObject
+{
     IBOutlet id textField;
 }
 - (IBAction)generate:
-(id)sender;
+    (id)sender;
 - (IBAction)seed:
-(id)sender;
+    (id)sender;
 @end

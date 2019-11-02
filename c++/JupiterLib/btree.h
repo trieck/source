@@ -70,13 +70,15 @@ typedef IItemWalker *PITEMWALKER;
 
 /////////////////////////////////////////////////////////////////////////////
 // IWalkableItem interface
-class IWalkableItem {
+class IWalkableItem
+{
 public:
     virtual void Walk(PITEMWALKER) PURE;
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class BTree : public IWalkableItem {
+class BTree : public IWalkableItem
+{
 // Construction / Destruction
 public:
     BTree();

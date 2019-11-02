@@ -15,7 +15,8 @@
 ///////////////////////////////////////////////////////////////////
 // The CDocViewView view class
 
-class CDocViewView : public CView {
+class CDocViewView : public CView
+{
 protected:
     CDocViewView();
     DECLARE_DYNCREATE(CDocViewView)

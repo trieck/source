@@ -17,11 +17,13 @@ class CPicture;
 /////////////////////////////////////////////////////////////////////////////
 // CLabelControl wrapper class
 
-class CLabelControl : public CWnd {
+class CLabelControl : public CWnd
+{
 protected:
     DECLARE_DYNCREATE(CLabelControl)
 public:
-    CLSID const& GetClsid() {
+    CLSID const& GetClsid()
+    {
         static CLSID const clsid
             = { 0x978c9e23, 0xd4b0, 0x11ce, { 0xbf, 0x2d, 0x0, 0xaa, 0x0, 0x3f, 0x40, 0xd0 } };
         return clsid;
@@ -30,14 +32,16 @@ public:
                         LPCTSTR lpszWindowName, DWORD dwStyle,
                         const RECT& rect,
                         CWnd* pParentWnd, UINT nID,
-                        CCreateContext* pContext = NULL) {
+                        CCreateContext* pContext = NULL)
+    {
         return CreateControl(GetClsid(), lpszWindowName, dwStyle, rect, pParentWnd, nID);
     }
 
     BOOL Create(LPCTSTR lpszWindowName, DWORD dwStyle,
                 const RECT& rect, CWnd* pParentWnd, UINT nID,
                 CFile* pPersist = NULL, BOOL bStorage = FALSE,
-                BSTR bstrLicKey = NULL) {
+                BSTR bstrLicKey = NULL)
+    {
         return CreateControl(GetClsid(), lpszWindowName, dwStyle, rect, pParentWnd, nID,
                              pPersist, bStorage, bstrLicKey);
     }

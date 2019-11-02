@@ -6,7 +6,8 @@
 
 
 // CWebDevDlg dialog
-class CWebDevDlg : public CDialogEx {
+class CWebDevDlg : public CDialogEx
+{
 // Construction
 public:
     CWebDevDlg(CWnd* pParent = NULL);	// standard constructor

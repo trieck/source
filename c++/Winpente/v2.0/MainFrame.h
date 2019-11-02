@@ -12,7 +12,8 @@
 ///////////////////////////////////////////////////////////////////
 // The CMainFrame frame window class
 
-class CMainFrame : public CFrameWnd {
+class CMainFrame : public CFrameWnd
+{
 protected: // create from serialization only
     CMainFrame();
     virtual BOOL PreCreateWindow(CREATESTRUCT&);
@@ -26,10 +27,12 @@ protected: // create from serialization only
     afx_msg VOID OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
     afx_msg VOID OnExitMenuLoop(BOOL bIsTrackPopupMenu);
 public:
-    inline CStatusBar*	GetStatusBar() {
+    inline CStatusBar*	GetStatusBar()
+    {
         return &m_StatusBar;
     }
-    inline CToolBar*	GetToolBar() {
+    inline CToolBar*	GetToolBar()
+    {
         return &m_ToolBar;
     }
 protected:

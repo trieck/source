@@ -13,7 +13,8 @@
 
 ///////////////////////////////////////////////////////////////////
 // The CSplitterView view class
-class CSplitterView : public CListView {
+class CSplitterView : public CListView
+{
 protected:
     CSplitterView();
     DECLARE_DYNCREATE(CSplitterView)

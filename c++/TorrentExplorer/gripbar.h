@@ -9,7 +9,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // GripperBar window
 
-class GripperBar : public CToolBar {
+class GripperBar : public CToolBar
+{
 // Construction
 public:
     GripperBar();

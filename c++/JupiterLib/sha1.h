@@ -21,7 +21,8 @@
 #define SHA1_DIGEST_SIZE 20
 
 /////////////////////////////////////////////////////////////////////////////
-class SHA1 {
+class SHA1
+{
 // Construction / Destruction
 public:
     SHA1(const string &s);
@@ -29,7 +30,8 @@ public:
 
 // Interface
     string toHexString() const;
-    operator LPCSTR() const {
+    operator LPCSTR() const
+    {
         return digest;
     }
 

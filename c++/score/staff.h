@@ -21,7 +21,8 @@ typedef CArray<PANCHOR, PANCHOR> ANCHORARRAY;
 /////////////////////////////////////////////////////////////////////////////
 class Staff :
     public CRect,
-    private ANCHORARRAY {
+    private ANCHORARRAY
+{
     friend class Measure;
 public:
     // Construction / Destruction
@@ -36,10 +37,12 @@ public:
     void DeselectAllMeasures();
     void Serialize(CArchive & ar);
 
-    inline int GetMeasureCount() const {
+    inline int GetMeasureCount() const
+    {
         return m_Measures.GetSize();
     }
-    inline const MEASUREARRAY* GetMeasures() const {
+    inline const MEASUREARRAY* GetMeasures() const
+    {
         return &m_Measures;
     }
 

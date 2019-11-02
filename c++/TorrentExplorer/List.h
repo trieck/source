@@ -11,7 +11,8 @@
 
 #include "TorrentObject.h"
 
-class List : public TorrentObject {
+class List : public TorrentObject
+{
 public:
     List();
     virtual ~List();
@@ -19,7 +20,8 @@ public:
     void append(LPTORRENTOBJECT t);
     UINT size() const;
     LPTORRENTOBJECT GetAt(UINT n) const;
-    virtual int GetElementType() const {
+    virtual int GetElementType() const
+    {
         return ET_LIST;
     }
 

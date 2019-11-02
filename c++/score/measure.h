@@ -9,7 +9,8 @@
 #define __MEASURE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Measure : public CRect, public CObject {
+class Measure : public CRect, public CObject
+{
     friend class Staff;
 public:
     // Construction / Destruction
@@ -25,31 +26,40 @@ public:
     Note * GetNote(const CPoint &) const;
     void Serialize(CArchive & ar);
     int GetNoteCount() const;
-    const Staff * GetStaff() const {
+    const Staff * GetStaff() const
+    {
         return m_pStaff;
     }
-    BOOL IsSelected() const {
+    BOOL IsSelected() const
+    {
         return m_fSelected;
     }
-    VOID Select(BOOL selected) {
+    VOID Select(BOOL selected)
+    {
         m_fSelected = selected;
     }
-    INT GetTempo() const {
+    INT GetTempo() const
+    {
         return m_Tempo;
     }
-    void SetTempo(int tempo) {
+    void SetTempo(int tempo)
+    {
         m_Tempo = tempo;
     }
-    BOOL HasData() const {
+    BOOL HasData() const
+    {
         return !m_Beats.IsEmpty();
     }
-    const Beats * GetBeats() const {
+    const Beats * GetBeats() const
+    {
         return &m_Beats;
     }
-    const TimeSignature & GetTimeSignature() const {
+    const TimeSignature & GetTimeSignature() const
+    {
         return m_ts;
     }
-    const KeySignature & GetKeySignature() const {
+    const KeySignature & GetKeySignature() const
+    {
         return m_ks;
     }
     void SetKeySignature(int index);

@@ -4,7 +4,8 @@
 
 // BinaryFileView view
 
-class BinaryFileView : public HexView {
+class BinaryFileView : public HexView
+{
     DECLARE_DYNCREATE(BinaryFileView)
 
 protected:

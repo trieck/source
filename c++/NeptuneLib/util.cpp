@@ -78,10 +78,10 @@ tstringvec rexpand(LPCTSTR arg)
 
             if (file.attrib & _A_SUBDIR) {
                 _stprintf(patt, _T("%s%s\\%s"), dir.c_str(), file.name,
-                    pattern.c_str());
+                          pattern.c_str());
                 tmplist = rexpand(patt);
                 doclist.insert(doclist.end(), tmplist.begin(),
-                    tmplist.end());
+                               tmplist.end());
             }
 
         } while (_tfindnext(h, &file) == 0);
@@ -99,10 +99,10 @@ tstringvec rexpand(LPCTSTR arg)
 
         if (file.attrib & _A_SUBDIR) {
             _stprintf(patt, _T("%s%s\\%s"), dir.c_str(), file.name,
-                pattern.c_str());
+                      pattern.c_str());
             tmplist = rexpand(patt);
             doclist.insert(doclist.end(), tmplist.begin(),
-                tmplist.end());
+                           tmplist.end());
             continue;
         }
 
@@ -187,7 +187,7 @@ tstring modulename()
     VirtualQuery(programdir, &mbi, sizeof(mbi));
 
     GetModuleFileName((HINSTANCE)mbi.AllocationBase, path,
-        _MAX_PATH + _MAX_FNAME);
+                      _MAX_PATH + _MAX_FNAME);
 
     return path;
 }
@@ -309,8 +309,8 @@ tstring lasterror()
     TCHAR *pmsg = NULL;
 
     FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-        NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-        (LPTSTR)&pmsg, 0, NULL);
+                  NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                  (LPTSTR)&pmsg, 0, NULL);
 
     if (pmsg != NULL) {
         int N = _tcslen(pmsg);
@@ -365,20 +365,16 @@ tstring xmlescape(const tstring &input)
         if (*pin == '"') {
             output += _T("&quot;");
             pin++;
-        }
-        else if (*pin == '<') {
+        } else if (*pin == '<') {
             output += _T("&lt;");
             pin++;
-        }
-        else if (*pin == '>') {
+        } else if (*pin == '>') {
             output += _T("&gt;");
             pin++;
-        }
-        else if (*pin == '&') {
+        } else if (*pin == '&') {
             output += _T("&amp;");
             pin++;
-        }
-        else {
+        } else {
             output += *pin++;
         }
     }

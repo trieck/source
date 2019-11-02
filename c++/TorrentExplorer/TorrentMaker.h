@@ -9,7 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class TorrentMaker {
+class TorrentMaker
+{
 public:
     TorrentMaker(ICallable *pCallable = NULL, CFile *pFile = NULL);
     virtual ~TorrentMaker();
@@ -26,11 +27,13 @@ public:
               BOOL m_Private);
 
     void DoCancel();
-    BOOL DidCancel() const {
+    BOOL DidCancel() const
+    {
         return m_Cancel;
     }
 
-    CFile *GetFile() {
+    CFile *GetFile()
+    {
         return &m_file;
     }
 

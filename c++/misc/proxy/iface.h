@@ -83,102 +83,103 @@ EXTERN_C const IID IID_IMiscellaneous;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
 
-    MIDL_INTERFACE("813C3190-4E36-11d1-B1D5-000000000000")
+MIDL_INTERFACE("813C3190-4E36-11d1-B1D5-000000000000")
 IMiscellaneous :
-    public IDispatch {
+public IDispatch {
 public:
-        virtual HRESULT STDMETHODCALLTYPE GetDate(
-            /* [retval][out] */ BSTR *pbstrDate) = 0;
+    virtual HRESULT STDMETHODCALLTYPE GetDate(
+        /* [retval][out] */ BSTR *pbstrDate) = 0;
 
-        virtual HRESULT STDMETHODCALLTYPE GetTime(
-            /* [retval][out] */ BSTR *pbstrTime) = 0;
+    virtual HRESULT STDMETHODCALLTYPE GetTime(
+        /* [retval][out] */ BSTR *pbstrTime) = 0;
 
-        virtual HRESULT STDMETHODCALLTYPE GetDateTime(
-            /* [retval][out] */ BSTR *pbstrDateTime) = 0;
+    virtual HRESULT STDMETHODCALLTYPE GetDateTime(
+        /* [retval][out] */ BSTR *pbstrDateTime) = 0;
 
-        virtual HRESULT STDMETHODCALLTYPE GetDriveSpace(
-            /* [string][in] */ const BSTR bstrDrive,
-            /* [retval][out] */ __int64 *pBytes) = 0;
+    virtual HRESULT STDMETHODCALLTYPE GetDriveSpace(
+        /* [string][in] */ const BSTR bstrDrive,
+        /* [retval][out] */ __int64 *pBytes) = 0;
 
-        virtual HRESULT STDMETHODCALLTYPE EnumDrives(
-            /* [retval][out] */ BSTR *pbstrDrives) = 0;
+    virtual HRESULT STDMETHODCALLTYPE EnumDrives(
+        /* [retval][out] */ BSTR *pbstrDrives) = 0;
 
-    };
+};
 
 #else 	/* C style interface */
 
-    typedef struct IMiscellaneousVtbl {
-        BEGIN_INTERFACE
+typedef struct IMiscellaneousVtbl {
+    BEGIN_INTERFACE
 
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
-            IMiscellaneous * This,
-            /* [in] */ REFIID riid,
-            /* [iid_is][out] */
-            __RPC__deref_out  void **ppvObject);
+    HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
+        IMiscellaneous * This,
+        /* [in] */ REFIID riid,
+        /* [iid_is][out] */
+        __RPC__deref_out  void **ppvObject);
 
-        ULONG ( STDMETHODCALLTYPE *AddRef )(
-            IMiscellaneous * This);
+    ULONG ( STDMETHODCALLTYPE *AddRef )(
+        IMiscellaneous * This);
 
-        ULONG ( STDMETHODCALLTYPE *Release )(
-            IMiscellaneous * This);
+    ULONG ( STDMETHODCALLTYPE *Release )(
+        IMiscellaneous * This);
 
-        HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )(
-            IMiscellaneous * This,
-            /* [out] */ UINT *pctinfo);
+    HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )(
+        IMiscellaneous * This,
+        /* [out] */ UINT *pctinfo);
 
-        HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )(
-            IMiscellaneous * This,
-            /* [in] */ UINT iTInfo,
-            /* [in] */ LCID lcid,
-            /* [out] */ ITypeInfo **ppTInfo);
+    HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )(
+        IMiscellaneous * This,
+        /* [in] */ UINT iTInfo,
+        /* [in] */ LCID lcid,
+        /* [out] */ ITypeInfo **ppTInfo);
 
-        HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )(
-            IMiscellaneous * This,
-            /* [in] */ REFIID riid,
-            /* [size_is][in] */ LPOLESTR *rgszNames,
-            /* [range][in] */ UINT cNames,
-            /* [in] */ LCID lcid,
-            /* [size_is][out] */ DISPID *rgDispId);
+    HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )(
+        IMiscellaneous * This,
+        /* [in] */ REFIID riid,
+        /* [size_is][in] */ LPOLESTR *rgszNames,
+        /* [range][in] */ UINT cNames,
+        /* [in] */ LCID lcid,
+        /* [size_is][out] */ DISPID *rgDispId);
 
-        /* [local] */
-        HRESULT ( STDMETHODCALLTYPE *Invoke )(
-            IMiscellaneous * This,
-            /* [in] */ DISPID dispIdMember,
-            /* [in] */ REFIID riid,
-            /* [in] */ LCID lcid,
-            /* [in] */ WORD wFlags,
-            /* [out][in] */ DISPPARAMS *pDispParams,
-            /* [out] */ VARIANT *pVarResult,
-            /* [out] */ EXCEPINFO *pExcepInfo,
-            /* [out] */ UINT *puArgErr);
+    /* [local] */
+    HRESULT ( STDMETHODCALLTYPE *Invoke )(
+        IMiscellaneous * This,
+        /* [in] */ DISPID dispIdMember,
+        /* [in] */ REFIID riid,
+        /* [in] */ LCID lcid,
+        /* [in] */ WORD wFlags,
+        /* [out][in] */ DISPPARAMS *pDispParams,
+        /* [out] */ VARIANT *pVarResult,
+        /* [out] */ EXCEPINFO *pExcepInfo,
+        /* [out] */ UINT *puArgErr);
 
-        HRESULT ( STDMETHODCALLTYPE *GetDate )(
-            IMiscellaneous * This,
-            /* [retval][out] */ BSTR *pbstrDate);
+    HRESULT ( STDMETHODCALLTYPE *GetDate )(
+        IMiscellaneous * This,
+        /* [retval][out] */ BSTR *pbstrDate);
 
-        HRESULT ( STDMETHODCALLTYPE *GetTime )(
-            IMiscellaneous * This,
-            /* [retval][out] */ BSTR *pbstrTime);
+    HRESULT ( STDMETHODCALLTYPE *GetTime )(
+        IMiscellaneous * This,
+        /* [retval][out] */ BSTR *pbstrTime);
 
-        HRESULT ( STDMETHODCALLTYPE *GetDateTime )(
-            IMiscellaneous * This,
-            /* [retval][out] */ BSTR *pbstrDateTime);
+    HRESULT ( STDMETHODCALLTYPE *GetDateTime )(
+        IMiscellaneous * This,
+        /* [retval][out] */ BSTR *pbstrDateTime);
 
-        HRESULT ( STDMETHODCALLTYPE *GetDriveSpace )(
-            IMiscellaneous * This,
-            /* [string][in] */ const BSTR bstrDrive,
-            /* [retval][out] */ __int64 *pBytes);
+    HRESULT ( STDMETHODCALLTYPE *GetDriveSpace )(
+        IMiscellaneous * This,
+        /* [string][in] */ const BSTR bstrDrive,
+        /* [retval][out] */ __int64 *pBytes);
 
-        HRESULT ( STDMETHODCALLTYPE *EnumDrives )(
-            IMiscellaneous * This,
-            /* [retval][out] */ BSTR *pbstrDrives);
+    HRESULT ( STDMETHODCALLTYPE *EnumDrives )(
+        IMiscellaneous * This,
+        /* [retval][out] */ BSTR *pbstrDrives);
 
-        END_INTERFACE
-    } IMiscellaneousVtbl;
+    END_INTERFACE
+} IMiscellaneousVtbl;
 
-    interface IMiscellaneous {
-        CONST_VTBL struct IMiscellaneousVtbl *lpVtbl;
-    };
+interface IMiscellaneous
+{
+    CONST_VTBL struct IMiscellaneousVtbl *lpVtbl;
+};
 
 
 
@@ -238,29 +239,29 @@ public:
 #ifndef __MiscLib_LIBRARY_DEFINED__
 #define __MiscLib_LIBRARY_DEFINED__
 
-    /* library MiscLib */
-    /* [helpstring][version][uuid] */
+/* library MiscLib */
+/* [helpstring][version][uuid] */
 
 
-    EXTERN_C const IID LIBID_MiscLib;
+EXTERN_C const IID LIBID_MiscLib;
 
-    EXTERN_C const CLSID CLSID_Miscellaneous;
+EXTERN_C const CLSID CLSID_Miscellaneous;
 
 #ifdef __cplusplus
 
-    class DECLSPEC_UUID("813C3191-4E36-11d1-B1D5-000000000000")
-            Miscellaneous;
+class DECLSPEC_UUID("813C3191-4E36-11d1-B1D5-000000000000")
+    Miscellaneous;
 #endif
 #endif /* __MiscLib_LIBRARY_DEFINED__ */
 
-    /* Additional Prototypes for ALL interfaces */
+/* Additional Prototypes for ALL interfaces */
 
-    unsigned long             __RPC_USER  BSTR_UserSize(     unsigned long *, unsigned long            , BSTR * );
-    unsigned char * __RPC_USER  BSTR_UserMarshal(  unsigned long *, unsigned char *, BSTR * );
-    unsigned char * __RPC_USER  BSTR_UserUnmarshal(unsigned long *, unsigned char *, BSTR * );
-    void                      __RPC_USER  BSTR_UserFree(     unsigned long *, BSTR * );
+unsigned long             __RPC_USER  BSTR_UserSize(     unsigned long *, unsigned long, BSTR * );
+unsigned char * __RPC_USER  BSTR_UserMarshal(  unsigned long *, unsigned char *, BSTR * );
+unsigned char * __RPC_USER  BSTR_UserUnmarshal(unsigned long *, unsigned char *, BSTR * );
+void                      __RPC_USER  BSTR_UserFree(     unsigned long *, BSTR * );
 
-    /* end of Additional Prototypes */
+/* end of Additional Prototypes */
 
 #ifdef __cplusplus
 }

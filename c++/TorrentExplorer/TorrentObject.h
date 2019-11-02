@@ -17,7 +17,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // TorrentObject command target
 
-class TorrentObject : public CObject {
+class TorrentObject : public CObject
+{
 public:
     TorrentObject();
     virtual ~TorrentObject();

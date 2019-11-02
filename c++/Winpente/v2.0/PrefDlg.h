@@ -14,7 +14,8 @@
 #include "BkgndPage.h"
 #include "ResDll\resource.h"
 
-class CPrefDlg : public CPropertySheet {
+class CPrefDlg : public CPropertySheet
+{
     friend CBkgndPage;
 
     // Construction / Destruction

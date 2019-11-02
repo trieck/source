@@ -13,7 +13,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // EarDlg dialog
 
-class EarDlg : public CDialog {
+class EarDlg : public CDialog
+{
 // Construction
 public:
     EarDlg(CWnd* pParent = NULL);	// standard constructor

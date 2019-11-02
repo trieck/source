@@ -24,7 +24,8 @@ typedef struct { // screen line structure
 } SCREENLINE, *LPSCREENLINE;
 
 // CFrameWnd derived class
-class CWysWnd : public CFrameWnd {
+class CWysWnd : public CFrameWnd
+{
 private:
     HICON		m_hIcon;
     CListBox*	m_pListBox;

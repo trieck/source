@@ -9,7 +9,8 @@
 #define __OBJECTDB_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ObjectDB {
+class ObjectDB
+{
     // Construction / Destruction
 private:
     ObjectDB();
@@ -35,7 +36,8 @@ public:
 
     BOOL DestroyObject(const string &poolid, const string &objectid);
 
-    unsigned GetPoolCount() const {
+    unsigned GetPoolCount() const
+    {
         return pools.size();
     }
 

@@ -21,7 +21,8 @@ typedef Enumerator<UInt32Map> UInt32MapEnum;
 typedef std::vector<Entry> EntryVec;
 
 /////////////////////////////////////////////////////////////////////////////
-class Board {
+class Board
+{
 // Construction / Destruction
 private:
     Board();

@@ -11,22 +11,27 @@
 #define __ADFEXCEPT_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ADFException {
+class ADFException
+{
 public:
     ADFException();
-    ADFException(const string &msg) {
+    ADFException(const string &msg)
+    {
         description = msg;
     }
-    ADFException(const ADFException & E) {
+    ADFException(const ADFException & E)
+    {
         *this = E;
     }
     ADFException(const char *fmt, ...);
-    ADFException & operator = (const ADFException & E) {
+    ADFException & operator = (const ADFException & E)
+    {
         if (this != & E)
             description = E.description;
         return *this;
     }
-    string getDescription() const {
+    string getDescription() const
+    {
         return description;
     }
 private:

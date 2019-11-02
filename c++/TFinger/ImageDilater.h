@@ -2,7 +2,8 @@
 
 #include "MorphologicalOperator.h"
 
-class ImageDilater : public MorphologicalOperator {
+class ImageDilater : public MorphologicalOperator
+{
 public:
     ImageDilater();
     ~ImageDilater();

@@ -10,7 +10,8 @@
 #include "PieceBitmap.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class PenteBoard : public CObject {
+class PenteBoard : public CObject
+{
 // Construction / Destruction
 public:
     DECLARE_SERIAL(PenteBoard);

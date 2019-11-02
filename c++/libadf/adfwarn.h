@@ -14,11 +14,13 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // IADFWarningHandler interface
-class IADFWarningHandler : public IADFHandler {
+class IADFWarningHandler : public IADFHandler
+{
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class ADFWarningRegistrar {
+class ADFWarningRegistrar
+{
 private:
     ADFWarningRegistrar();
 public:
@@ -26,7 +28,8 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class ADFWarningDispatcher {
+class ADFWarningDispatcher
+{
 private:
     ADFWarningDispatcher();
 public:

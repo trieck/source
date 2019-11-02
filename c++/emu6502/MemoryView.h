@@ -3,7 +3,8 @@
 #include "MultirowView.h"
 
 // MemoryView view
-class MemoryView : public MultirowView {
+class MemoryView : public MultirowView
+{
     DECLARE_DYNCREATE(MemoryView)
 
 protected:

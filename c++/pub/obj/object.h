@@ -34,7 +34,8 @@ typedef CImpIPersistStream	*PCImpIPersistStream;
 typedef CImpIDataObject		*PCImpIDataObject;
 typedef CImpIViewObject2	*PCImpIViewObject2;
 
-class CDrawObject : public IDrawObject {
+class CDrawObject : public IDrawObject
+{
     friend CImpIPersistStream;
     friend CImpIDataObject;
     friend CImpIViewObject2;
@@ -76,7 +77,8 @@ public:
 
 typedef CDrawObject *PCDrawObject;
 
-class CImpIPersistStream : public IPersistStream {
+class CImpIPersistStream : public IPersistStream
+{
 protected:
     PCDrawObject	m_pObj;
     DWORD			m_cRef;
@@ -99,7 +101,8 @@ public:
     STDMETHODIMP GetSizeMax(ULARGE_INTEGER*);
 };
 
-class CImpIDataObject : public IDataObject {
+class CImpIDataObject : public IDataObject
+{
 protected:
     PCDrawObject	m_pObj;			// back pointer to main object
     DWORD			m_cRef;
@@ -124,7 +127,8 @@ public:
     STDMETHODIMP			EnumDAdvise(LPENUMSTATDATA*);
 };
 
-class CImpIViewObject2 : public IViewObject {
+class CImpIViewObject2 : public IViewObject
+{
 protected:
     PCDrawObject	m_pObj;		// back pointer to main object
     ULONG			m_cRef;
@@ -152,7 +156,8 @@ public:
     STDMETHODIMP GetExtent(DWORD, LONG, DVTARGETDEVICE*, LPSIZEL);
 };
 
-class CDrawClassFactory : public IClassFactory {
+class CDrawClassFactory : public IClassFactory
+{
 protected:
     ULONG           m_cRef;
 

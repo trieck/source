@@ -9,7 +9,8 @@
 #define __CONN_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Connection {
+class Connection
+{
 public:
     // Construction / Destruction
     Connection();
@@ -29,7 +30,8 @@ public:
     typedef auto_ptr<Connection> ConnectionPtr;
     ConnectionPtr accept() const;
 
-    inline operator SOCKET() const {
+    inline operator SOCKET() const
+    {
         return m_socket;
     }
 

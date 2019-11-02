@@ -9,7 +9,8 @@
 #define __MEMORY_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Memory {
+class Memory
+{
 
 // Construction / Destruction
 public:
@@ -20,7 +21,8 @@ protected:
 // Interface
 public:
     static Memory* instance();	// singleton
-    static UINT GetMemorySize() {
+    static UINT GetMemorySize()
+    {
         return MEMSIZE;
     }
 

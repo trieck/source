@@ -10,7 +10,8 @@
 #endif // _MSC_VER > 1000
 
 
-class TorrentDoc : public CDocument {
+class TorrentDoc : public CDocument
+{
 protected: // create from serialization only
     TorrentDoc();
     DECLARE_DYNCREATE(TorrentDoc)
@@ -30,7 +31,8 @@ public:
     virtual void DeleteContents();
     //}}AFX_VIRTUAL
 
-    LPDICTIONARY GetTorrent() const {
+    LPDICTIONARY GetTorrent() const
+    {
         return m_pTorrent;
     }
 

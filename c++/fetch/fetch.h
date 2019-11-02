@@ -19,7 +19,8 @@
 // See fetch.cpp for the implementation of this class
 //
 
-class FetchApp : public CWinApp {
+class FetchApp : public CWinApp
+{
 public:
     FetchApp();
 

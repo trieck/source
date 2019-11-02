@@ -12,7 +12,8 @@
 @class AppController;
 
 @interface GraphView :
-NSView {
+    NSView
+{
     NSBezierPath *grid;				// grid bezier path
     AppController *appController;	// controller
 }
@@ -22,6 +23,6 @@ NSView {
 - (void)drawVertices;
 - (void)drawEdges;
 - (NSPoint)vertexCenter:
-(Vertex*)v;
+    (Vertex*)v;
 
 @end

@@ -10,7 +10,8 @@
 #endif // _MSC_VER > 1000
 
 
-class WindumpDoc : public CDocument {
+class WindumpDoc : public CDocument
+{
 protected: // create from serialization only
     WindumpDoc();
     DECLARE_DYNCREATE(WindumpDoc)

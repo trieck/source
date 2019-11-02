@@ -3,7 +3,8 @@
 
 #include "wxcdiocanvas.h"
 
-class wxcdioView : public wxView {
+class wxcdioView : public wxView
+{
     DECLARE_DYNAMIC_CLASS(wxcdioView)
 public:
     wxcdioView();

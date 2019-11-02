@@ -27,7 +27,8 @@ BOOL CALLBACK DlgProc(HWND hWnd, UINT message,
 class CAdviseSink;
 typedef class CAdviseSink *PCAdviseSink;
 
-class CApp {
+class CApp
+{
     friend	LRESULT APIENTRY MainWndProc(HWND, UINT, WPARAM, LPARAM);
     friend	LRESULT APIENTRY ClientProc(HWND, UINT, WPARAM, LPARAM);
     friend	BOOL CALLBACK DlgProc(HWND, UINT, WPARAM, LPARAM);
@@ -72,7 +73,8 @@ protected:
 
 typedef CApp* PAPP;
 
-class CAdviseSink : public IAdviseSink {
+class CAdviseSink : public IAdviseSink
+{
 protected:
     ULONG               m_cRef;
     PAPP                m_pApp;

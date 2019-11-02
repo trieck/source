@@ -16,7 +16,8 @@ CString LastError();
 
 // CAboutDlg dialog used for App About
 
-class CAboutDlg : public CDialogEx {
+class CAboutDlg : public CDialogEx
+{
 public:
     CAboutDlg();
 

@@ -9,7 +9,8 @@
 #include "winthrd.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class Application : public WinThread {
+class Application : public WinThread
+{
 public:
 // Construction / Destruction
     Application();

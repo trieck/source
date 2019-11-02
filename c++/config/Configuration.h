@@ -14,7 +14,8 @@
 #define __CONFIGURATION_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Configuration {
+class Configuration
+{
 // Construction / Destruction
 public:
     Configuration(const char *pfile);

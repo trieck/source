@@ -4,7 +4,8 @@
 
 #pragma once
 
-class CMainFrame : public CFrameWndEx {
+class CMainFrame : public CFrameWndEx
+{
 
 protected: // create from serialization only
     CMainFrame();

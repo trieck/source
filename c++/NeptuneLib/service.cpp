@@ -44,15 +44,13 @@ BOOL Service::Execute(int argc, TCHAR **argv)
             else if (InstallService())
                 cout << "service installed successfully." << endl;
             else cerr << "unable to install service." << endl;
-        }
-        else if (_tcscmp(argv[1], _T("-u")) == 0) {
+        } else if (_tcscmp(argv[1], _T("-u")) == 0) {
             if (!IsInstalled())
                 cerr << "service is not installed." << endl;
             else if (UninstallService())
                 cout << "service uninstalled successfully." << endl;
             else cerr << "unable to uninstall service." << endl;
-        }
-        else cerr << usage << endl;
+        } else cerr << usage << endl;
 
         return FALSE;
     }
@@ -79,7 +77,7 @@ void Service::ServiceMain(DWORD argc, TCHAR** argv)
 {
     m_pThis->m_ServiceThreadID = GetCurrentThreadId();
     m_pThis->m_hServiceStatus = RegisterServiceCtrlHandler(
-        m_pThis->m_name.c_str(), Handler);
+                                    m_pThis->m_name.c_str(), Handler);
 
     m_pThis->m_Status.dwWin32ExitCode = 0;
     m_pThis->m_Status.dwCheckPoint = 0;
@@ -139,17 +137,13 @@ void Service::Run()
             SetStatus(SERVICE_STOP_PENDING);
             OnStop();
             break;
-        }
-        else if (opcode == SERVICE_CONTROL_PAUSE) {
+        } else if (opcode == SERVICE_CONTROL_PAUSE) {
             OnPause();
-        }
-        else if (opcode == SERVICE_CONTROL_CONTINUE) {
+        } else if (opcode == SERVICE_CONTROL_CONTINUE) {
             OnContinue();
-        }
-        else if (opcode == SERVICE_CONTROL_INTERROGATE) {
+        } else if (opcode == SERVICE_CONTROL_INTERROGATE) {
             OnInterrogate();
-        }
-        else if (opcode == SERVICE_CONTROL_SHUTDOWN) {
+        } else if (opcode == SERVICE_CONTROL_SHUTDOWN) {
             OnShutdown();
         }
         ::SetServiceStatus(m_pThis->m_hServiceStatus, &m_pThis->m_Status);
@@ -209,18 +203,18 @@ BOOL Service::InstallService() const
 
     // Create the service
     SC_HANDLE hService = ::CreateService(hSCM,
-        m_name.c_str(),
-        m_name.c_str(),
-        SERVICE_ALL_ACCESS,
-        SERVICE_WIN32_OWN_PROCESS,
-        SERVICE_AUTO_START,        // start condition
-        SERVICE_ERROR_NORMAL,
-        path,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL);
+                                         m_name.c_str(),
+                                         m_name.c_str(),
+                                         SERVICE_ALL_ACCESS,
+                                         SERVICE_WIN32_OWN_PROCESS,
+                                         SERVICE_AUTO_START,        // start condition
+                                         SERVICE_ERROR_NORMAL,
+                                         path,
+                                         NULL,
+                                         NULL,
+                                         NULL,
+                                         NULL,
+                                         NULL);
     if (hService == NULL) {
         ::CloseServiceHandle(hSCM);
         return FALSE;
@@ -245,15 +239,14 @@ BOOL Service::UninstallService() const
 
     BOOL bResult = FALSE;
     SC_HANDLE hService = ::OpenService(hSCM,
-        m_name.c_str(),
-        DELETE);
+                                       m_name.c_str(),
+                                       DELETE);
 
     if (hService != NULL) {
         if (::DeleteService(hService)) {
             EventLog::loginfo(_T("The service was removed"));
             bResult = TRUE;
-        }
-        else {
+        } else {
             EventLog::logerr(_T("The service could not be removed"));
         }
         ::CloseServiceHandle(hService);
@@ -274,7 +267,7 @@ BOOL Service::IsInstalled() const
     if (hSCM != NULL) {
         // Try to open the service
         SC_HANDLE hService = ::OpenService(hSCM, m_name.c_str(),
-            SERVICE_QUERY_CONFIG);
+                                           SERVICE_QUERY_CONFIG);
         if (hService != NULL) {
             bResult = TRUE;
             ::CloseServiceHandle(hService);

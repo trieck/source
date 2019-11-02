@@ -10,7 +10,8 @@
 #define __SOCKSTREAM_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class SockStream : public IPeekableStream {
+class SockStream : public IPeekableStream
+{
 // Construction / Destruction
 private:
     SockStream(SOCKET s);

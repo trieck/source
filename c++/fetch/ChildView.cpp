@@ -60,10 +60,10 @@ int ChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
         return -1;
     }
     HICON hIcon = (HICON)::LoadImage(AfxGetResourceHandle(),
-        MAKEINTRESOURCE(IDI_FOLDER),
-        IMAGE_ICON,
-        16, 16,
-        LR_LOADTRANSPARENT | LR_SHARED);
+                                     MAKEINTRESOURCE(IDI_FOLDER),
+                                     IMAGE_ICON,
+                                     16, 16,
+                                     LR_LOADTRANSPARENT | LR_SHARED);
     ASSERT(hIcon != NULL);
     m_ImageList.Add(hIcon);
     CListCtrl & ctrl = GetListCtrl();
@@ -98,9 +98,9 @@ void ChildView::OnInitialUpdate()
 {
     CListView::OnInitialUpdate();
     ListView_SetExtendedListViewStyleEx(*this,
-        0,
-        LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES
-        );
+                                        0,
+                                        LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES
+                                       );
     InsertHeaders();
 }
 UINT ChildView::PerformSearch(LPVOID pdata)
@@ -110,12 +110,11 @@ UINT ChildView::PerformSearch(LPVOID pdata)
     try {
         LPNETRESOURCEENUM proot = GetRootEnum();
         EnumerateResources(T, proot);
-    }
-    catch (NetError & E) {
+    } catch (NetError & E) {
         TRACE3("Network Error: Error Code: %d, Provider: %s, Description: %s.\n",
-            E.GetErrorCode(),
-            E.GetProvider(),
-            E.GetDescription());
+               E.GetErrorCode(),
+               E.GetProvider(),
+               E.GetDescription());
         E.GetErrorCode();
     }
     ::SendMessage(T->hWnd, WM_SEARCHCOMPLETE, 0, 0);
@@ -145,12 +144,11 @@ void EnumerateResources(threadData *T, LPNETRESOURCEENUM penum)
         try {
             LPNETRESOURCEENUM p = penum->GetAt(i);
             EnumerateResources(T, p);
-        }
-        catch (const NetError & E) {
+        } catch (const NetError & E) {
             TRACE3("Network Error: Error Code: %d, Provider: %s, Description: %s.\n",
-                E.GetErrorCode(),
-                E.GetProvider(),
-                E.GetDescription());
+                   E.GetErrorCode(),
+                   E.GetProvider(),
+                   E.GetDescription());
             E.GetErrorCode();
         }
     }

@@ -18,7 +18,8 @@ typedef struct {
 #define NFRAME 1024
 
 /////////////////////////////////////////////////////////////////////////////
-class FrameStack {
+class FrameStack
+{
 public:
 // Construction / Destruction
     FrameStack();

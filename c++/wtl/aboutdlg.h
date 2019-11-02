@@ -5,7 +5,8 @@
 #if !defined(AFX_ABOUTDLG_H__159B8919_29D1_4725_882A_E69D09D04840__INCLUDED_)
 #define AFX_ABOUTDLG_H__159B8919_29D1_4725_882A_E69D09D04840__INCLUDED_
 
-class CAboutDlg : public CDialogImpl<CAboutDlg> {
+class CAboutDlg : public CDialogImpl<CAboutDlg>
+{
 public:
     enum { IDD = IDD_ABOUTBOX };
 
@@ -15,12 +16,14 @@ public:
     COMMAND_ID_HANDLER(IDCANCEL, OnCloseCmd)
     END_MSG_MAP()
 
-    LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/) {
+    LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+    {
         CenterWindow(GetParent());
         return TRUE;
     }
 
-    LRESULT OnCloseCmd(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
+    LRESULT OnCloseCmd(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+    {
         EndDialog(wID);
         return 0;
     }

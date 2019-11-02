@@ -3,7 +3,8 @@
 
 // FileViewFrame frame
 
-class FileViewFrame : public CMDIChildWnd {
+class FileViewFrame : public CMDIChildWnd
+{
     DECLARE_DYNCREATE(FileViewFrame)
 protected:
     FileViewFrame();           // protected constructor used by dynamic creation

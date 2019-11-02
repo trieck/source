@@ -9,7 +9,8 @@
 #include "procenum.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class ProcessKiller {
+class ProcessKiller
+{
 // Construction / Destruction
 public:
     ProcessKiller();

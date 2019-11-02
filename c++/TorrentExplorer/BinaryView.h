@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // BinaryView view
 
-class BinaryView : public CView {
+class BinaryView : public CView
+{
 protected:
     BinaryView();           // protected constructor used by dynamic creation
     DECLARE_DYNCREATE(BinaryView)

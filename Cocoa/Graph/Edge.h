@@ -10,12 +10,13 @@
 #import "Vertex.h"
 
 @interface Edge :
-NSObject {
+    NSObject
+{
     Vertex *v, *w;
 }
 
 - (id)initWithVertex:
-(Vertex*)v toVertex:
-(Vertex*)w;
+    (Vertex*)v toVertex:
+    (Vertex*)w;
 
 @end

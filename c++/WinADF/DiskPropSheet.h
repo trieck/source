@@ -4,7 +4,8 @@
 
 // DiskPropSheet
 
-class DiskPropSheet : public CPropertySheet {
+class DiskPropSheet : public CPropertySheet
+{
     DECLARE_DYNAMIC(DiskPropSheet)
 
 public:

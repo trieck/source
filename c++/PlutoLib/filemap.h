@@ -9,7 +9,8 @@
 #define __FILEMAP_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class FileMapping {
+class FileMapping
+{
 // Construction / Destruction
 public:
     FileMapping();

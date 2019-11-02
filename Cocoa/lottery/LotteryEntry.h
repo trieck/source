@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @interface LotteryEntry :
-NSObject {
+    NSObject
+{
     NSCalendarDate *entryDate;
     int firstNumber;
     int secondNumber;
 }
 - (void)setEntryDate:
-(NSCalendarDate *)date;
+    (NSCalendarDate *)date;
 - (NSCalendarDate *)entryDate;
 - (int)firstNumber;
 - (int)secondNumber;

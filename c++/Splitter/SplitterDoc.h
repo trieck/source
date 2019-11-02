@@ -14,7 +14,8 @@
 ///////////////////////////////////////////////////////////////////
 // The CSplitterDoc document class
 
-class CSplitterDoc : public CDocument {
+class CSplitterDoc : public CDocument
+{
 protected:
     DECLARE_DYNCREATE(CSplitterDoc)
 

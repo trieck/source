@@ -9,7 +9,8 @@
 #define __LIBFILE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class LibraryFile {
+class LibraryFile
+{
 // Construction / Destruction
 public:
     LibraryFile();

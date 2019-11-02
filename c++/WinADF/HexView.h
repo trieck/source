@@ -1,7 +1,8 @@
 #pragma once
 #include "bigscrollview.h"
 
-class HexView :	public BigScrollView {
+class HexView :	public BigScrollView
+{
     DECLARE_DYNCREATE(HexView)
 public:
     HexView(void);

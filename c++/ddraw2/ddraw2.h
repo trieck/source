@@ -19,7 +19,10 @@
 // See ddraw2.cpp for the implementation of this class
 //
 
-class DDrawApp : public CWinApp {
+COM_SMARTPTR(IDirectDraw7)
+
+class DDrawApp : public CWinApp
+{
 public:
     DDrawApp();
 
@@ -31,8 +34,9 @@ public:
     virtual int ExitInstance();
     //}}AFX_VIRTUAL
 
-    LPDIRECTDRAW GetDirectDraw() const {
-        return pddraw;
+    IDirectDraw7Ptr GetDirectDraw() const
+    {
+        return m_pdraw;
     }
 
 // Implementation
@@ -41,7 +45,7 @@ public:
     DECLARE_MESSAGE_MAP()
 private:
     BOOL CreateDirectDraw(void);
-    LPDIRECTDRAW pddraw;
+    IDirectDraw7Ptr m_pdraw;
 };
 
 

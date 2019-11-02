@@ -13,7 +13,8 @@
 
 HINSTANCE hInstance = NULL;
 
-namespace {
+namespace
+{
 BOOL SetKeyAndValue(LPCWSTR pKey, LPCWSTR pSubKey, LPCWSTR val);
 }
 
@@ -116,7 +117,8 @@ STDAPI DllUnregisterServer()
     return S_OK;
 }
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 /////////////////////////////////////////////////////////////////////////////
 BOOL SetKeyAndValue(LPCWSTR pKey, LPCWSTR pSubKey, LPCWSTR pVal)

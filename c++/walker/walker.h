@@ -9,7 +9,8 @@
 #define __WALKER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Walker : public IItemWalker {
+class Walker : public IItemWalker
+{
 // Construction / Destruction
 public:
     Walker();

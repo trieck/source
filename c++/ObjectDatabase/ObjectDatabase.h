@@ -9,7 +9,8 @@
 #define __OBJECTDATABASE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ObjectDatabase {
+class ObjectDatabase
+{
     // Construction / Destruction
 private:
     ObjectDatabase();

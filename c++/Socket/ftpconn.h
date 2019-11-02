@@ -9,7 +9,8 @@
 #define __FTPCONN_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class FTPConnection {
+class FTPConnection
+{
 public:
 // Construction / Destruction
     FTPConnection();
@@ -21,20 +22,25 @@ public:
     bool connect(LPCSTR host, LPCSTR uid, LPCSTR pwd);
     bool ChangeDirectory(LPCSTR dir);
     void close();
-    HINTERNET GetConn() const {
+    HINTERNET GetConn() const
+    {
         return hConn;
     }
 
-    class File {
+    class File
+    {
     public:
-        File(HINTERNET file) : hFile(file) {
+        File(HINTERNET file) : hFile(file)
+        {
             memset(&data, 0, sizeof(WIN32_FIND_DATA));
         }
 
-        File(WIN32_FIND_DATA *pdata) : hFile(NULL) {
+        File(WIN32_FIND_DATA *pdata) : hFile(NULL)
+        {
             memcpy(&data, pdata, sizeof(WIN32_FIND_DATA));
         }
-        ~File() {
+        ~File()
+        {
             close();
         }
         bool Open(const FTPConnection &conn,
@@ -44,7 +50,8 @@ public:
         DWORD Read(char *buf, unsigned size);
         string ReadLine();
 
-        void close() {
+        void close()
+        {
             if (hFile)
                 InternetCloseHandle(hFile);
         }
@@ -57,7 +64,8 @@ public:
     FilePtr GetFile(LPCSTR path);
     bool PutFile(LPCSTR local, LPCSTR remote);
 
-    class FileIterator {
+    class FileIterator
+    {
     private:
         FileIterator(const FTPConnection &conn, LPCSTR patt);
     public:

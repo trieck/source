@@ -10,7 +10,8 @@
 #endif // _MSC_VER > 1000
 
 
-class TorrentView : public CTreeView {
+class TorrentView : public CTreeView
+{
 protected: // create from serialization only
     TorrentView();
     DECLARE_DYNCREATE(TorrentView)

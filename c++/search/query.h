@@ -17,7 +17,8 @@
 typedef vector<UINT64> DocVector;
 
 /////////////////////////////////////////////////////////////////////////////
-class Query {
+class Query
+{
 // Construction / Destruction
 public:
     Query(BTree &t);

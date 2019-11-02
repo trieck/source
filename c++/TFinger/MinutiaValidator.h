@@ -12,7 +12,8 @@
 
 #include "Minutia.h"
 
-class MinutiaValidator {
+class MinutiaValidator
+{
 public:
     MinutiaValidator();
     ~MinutiaValidator();

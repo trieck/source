@@ -17,7 +17,8 @@ class NetResourceEnum;
 typedef std::auto_ptr<NetResourceEnum> LPNETRESOURCEENUM;
 
 /////////////////////////////////////////////////////////////////////////////
-class NetResourceEnum : public NETRESOURCE {
+class NetResourceEnum : public NETRESOURCE
+{
 // Construction / Destruction
 protected:
     NetResourceEnum(LPNETRESOURCE);

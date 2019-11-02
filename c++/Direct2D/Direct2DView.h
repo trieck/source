@@ -4,11 +4,13 @@
 
 #include "Board.h"
 
-class CDirect2DView : public CWindowImpl<CDirect2DView> {
+class CDirect2DView : public CWindowImpl<CDirect2DView>
+{
 public:
     DECLARE_WND_CLASS(NULL)
 
-    BOOL PreTranslateMessage(MSG* pMsg) {
+    BOOL PreTranslateMessage(MSG* pMsg)
+    {
         pMsg;
         return FALSE;
     }
@@ -25,7 +27,8 @@ public:
     //	LRESULT CommandHandler(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
     //	LRESULT NotifyHandler(int /*idCtrl*/, LPNMHDR /*pnmh*/, BOOL& /*bHandled*/)
 
-    LRESULT OnCreate(LPCREATESTRUCT cs) {
+    LRESULT OnCreate(LPCREATESTRUCT cs)
+    {
         HRESULT hr = D2D1CreateFactory(
                          D2D1_FACTORY_TYPE_SINGLE_THREADED,
                          &m_factory
@@ -37,21 +40,25 @@ public:
         return 0;
     }
 
-    void OnDestroy() {
+    void OnDestroy()
+    {
         DiscardDevResources();
         m_factory.Release();
     }
 
-    void OnPaint(CDCHandle /*hDC*/) {
+    void OnPaint(CDCHandle /*hDC*/)
+    {
         CPaintDC dc(*this);
         Render(dc);
     }
 
-    void OnSize(UINT /*type*/, CSize size) {
+    void OnSize(UINT /*type*/, CSize size)
+    {
     }
 
 private:
-    void Render(CPaintDC &dc) {
+    void Render(CPaintDC &dc)
+    {
         HRESULT hr;
 
         if (m_target == NULL) {
@@ -73,7 +80,8 @@ private:
         }
     }
 
-    HRESULT CreateDevResources() {
+    HRESULT CreateDevResources()
+    {
 
         DiscardDevResources();
 
@@ -100,7 +108,8 @@ private:
         return hr;
     }
 
-    void DiscardDevResources() {
+    void DiscardDevResources()
+    {
         m_board.Destroy();
         m_target.Release();
     }

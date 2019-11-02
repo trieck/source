@@ -3,7 +3,8 @@
 
 // DiskPropPage dialog
 
-class DiskPropPage : public CPropertyPage {
+class DiskPropPage : public CPropertyPage
+{
     DECLARE_DYNCREATE(DiskPropPage)
 
 public:

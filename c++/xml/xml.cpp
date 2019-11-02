@@ -16,16 +16,19 @@ using std::endl;
 #include "exception.h"
 
 struct _coinit {
-    _coinit() {
+    _coinit()
+    {
         CoInitialize(NULL);
     }
-    ~_coinit() {
+    ~_coinit()
+    {
         CoUninitialize();
     }
 } coinit;
 
 
-namespace {
+namespace
+{
 
 } // anonymous
 
@@ -74,7 +77,8 @@ int _tmain(int argc, TCHAR *argv[])
     return 0;
 }
 
-namespace { // anonymous
+namespace   // anonymous
+{
 
 
 

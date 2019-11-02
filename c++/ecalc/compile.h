@@ -84,7 +84,8 @@ typedef struct {
 } Token;
 
 /////////////////////////////////////////////////////////////////////////////
-class Compile {
+class Compile
+{
 public:
 // Construction / Destruction
     Compile();

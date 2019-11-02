@@ -33,7 +33,8 @@ extern "C" const CLSID CLSID_Miscellaneous;
 LRESULT APIENTRY MainWndProc(HWND hWnd, UINT message,
                              WPARAM wParam, LPARAM lParam);
 
-class CApp {
+class CApp
+{
     friend LRESULT APIENTRY	MainWndProc(HWND, UINT, WPARAM, LPARAM);
     friend LRESULT APIENTRY	ChildProc(HWND, UINT, WPARAM, LPARAM);
     friend BOOL	CALLBACK DriveProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -61,7 +62,8 @@ public:
     VOID	Trace(LONG);
     VOID	StatusTrace(LPCTSTR);
 
-    inline	HWND GetMainWnd() {
+    inline	HWND GetMainWnd()
+    {
         return m_hWnd;
     }
 protected:

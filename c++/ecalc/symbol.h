@@ -9,7 +9,8 @@
 #define __SYMBOL_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class SymbolTable : protected map<string, const Symbol *> {
+class SymbolTable : protected map<string, const Symbol *>
+{
 public:
 // Construction / Destruction
     SymbolTable();

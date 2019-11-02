@@ -7,7 +7,8 @@
 #define __WINDOW_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Window {
+class Window
+{
 public:
     typedef map<HWND, Window *> WindowMap;
 // Construction / Destruction

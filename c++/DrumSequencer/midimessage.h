@@ -9,7 +9,8 @@
 #define __MIDIMESSAGE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class MidiMessage {
+class MidiMessage
+{
 public:
     // Construction / Destruction
     MidiMessage();
@@ -17,23 +18,29 @@ public:
     virtual ~MidiMessage();
 
     // Interface
-    inline BYTE GetVelocity() const {
+    inline BYTE GetVelocity() const
+    {
         return m_velocity;
     }
-    inline BYTE GetData() const {
+    inline BYTE GetData() const
+    {
         return m_data;
     }
-    inline BYTE GetStatus() const {
+    inline BYTE GetStatus() const
+    {
         return m_status;
     }
 
-    inline void SetVelocity(BYTE b) {
+    inline void SetVelocity(BYTE b)
+    {
         m_velocity = b;
     }
-    inline void SetData(BYTE b) {
+    inline void SetData(BYTE b)
+    {
         m_data = b;
     }
-    inline void SetStatus(BYTE b) {
+    inline void SetStatus(BYTE b)
+    {
         m_status = b;
     }
 

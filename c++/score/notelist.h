@@ -12,7 +12,8 @@
 #define __NOTELIST_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class NoteList : public CList <Note *, Note *> {
+class NoteList : public CList <Note *, Note *>
+{
 public:
     // Construction / Destruction
     NoteList();

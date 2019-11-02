@@ -4,7 +4,8 @@
 
 // CColorChooserDlg dialog
 
-class CColorChooserDlg : public CDialog {
+class CColorChooserDlg : public CDialog
+{
     DECLARE_DYNAMIC(CColorChooserDlg)
 
 public:

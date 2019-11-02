@@ -3,7 +3,8 @@
 #include "procenum.h"
 #include "prockill.h"
 
-namespace {
+namespace
+{
 LPCTSTR usage = _T("usage: kill process");
 }
 

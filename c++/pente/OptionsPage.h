@@ -3,7 +3,8 @@
 
 // OptionsPage dialog
 
-class OptionsPage : public CPropertyPage {
+class OptionsPage : public CPropertyPage
+{
     DECLARE_DYNAMIC(OptionsPage)
 
 public:

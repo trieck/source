@@ -9,7 +9,8 @@
 #define __6502_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class CPU {
+class CPU
+{
 
 // Construction / Destruction
 public:
@@ -20,124 +21,162 @@ protected:
 // Interface
 public:
     static CPU* instance();	// singleton
-    void SetA(BYTE b) {
+    void SetA(BYTE b)
+    {
         a = b;
     }
-    void SetX(BYTE b) {
+    void SetX(BYTE b)
+    {
         x = b;
     }
-    void SetY(BYTE b) {
+    void SetY(BYTE b)
+    {
         y = b;
     }
-    void SetPCL(BYTE b) {
+    void SetPCL(BYTE b)
+    {
         pc |= b;
     }
-    void SetPCH(BYTE b) {
+    void SetPCH(BYTE b)
+    {
         pc |= (b << 8);
     }
-    void SetS(BYTE b) {
+    void SetS(BYTE b)
+    {
         s = b;
     }
-    void SetP(BYTE b) {
+    void SetP(BYTE b)
+    {
         p = b;
     }
 
     // Registers
-    BYTE GetA() {
+    BYTE GetA()
+    {
         return a;
     }
-    BYTE GetX() {
+    BYTE GetX()
+    {
         return x;
     }
-    BYTE GetY() {
+    BYTE GetY()
+    {
         return y;
     }
-    BYTE GetPCL() {
+    BYTE GetPCL()
+    {
         return (BYTE)pc;
     }
-    BYTE GetPCH() {
+    BYTE GetPCH()
+    {
         return (BYTE)((pc & 0xFF00) >> 8);
     }
-    BYTE GetS() {
+    BYTE GetS()
+    {
         return s;
     }
-    BYTE GetP() {
+    BYTE GetP()
+    {
         return p;
     }
 
     // Flags
-    int GetNeg() {
+    int GetNeg()
+    {
         return p & NFLAG;
     }
-    int GetOverflow() {
+    int GetOverflow()
+    {
         return p & VFLAG;
     }
-    int GetUnused() {
+    int GetUnused()
+    {
         return p & UFLAG;
     }
-    int GetBreak() {
+    int GetBreak()
+    {
         return p & BFLAG;
     }
-    int GetDecimal() {
+    int GetDecimal()
+    {
         return p & DFLAG;
     }
-    int GetInterrupt() {
+    int GetInterrupt()
+    {
         return p & IFLAG;
     }
-    int GetZero() {
+    int GetZero()
+    {
         return p & ZFLAG;
     }
-    int GetCarry() {
+    int GetCarry()
+    {
         return p & CFLAG;
     }
 
-    void SetNeg() {
+    void SetNeg()
+    {
         p |= NFLAG;
     }
-    void SetOverflow() {
+    void SetOverflow()
+    {
         p |= VFLAG;
     }
-    void SetUnused() {
+    void SetUnused()
+    {
         p |= UFLAG;
     }
-    void SetBreak() {
+    void SetBreak()
+    {
         p |= BFLAG;
     }
-    void SetDecimal() {
+    void SetDecimal()
+    {
         p |= DFLAG;
     }
-    void SetInterrupt() {
+    void SetInterrupt()
+    {
         p |= IFLAG;
     }
-    void SetZero() {
+    void SetZero()
+    {
         p |= ZFLAG;
     }
-    void SetCarry() {
+    void SetCarry()
+    {
         p |= CFLAG;
     }
 
-    void ClearNeg() {
+    void ClearNeg()
+    {
         p &= ~NFLAG;
     }
-    void ClearOverflow() {
+    void ClearOverflow()
+    {
         p &= ~VFLAG;
     }
-    void ClearUnused() {
+    void ClearUnused()
+    {
         p &= ~UFLAG;
     }
-    void ClearBreak() {
+    void ClearBreak()
+    {
         p &= ~BFLAG;
     }
-    void ClearDecimal() {
+    void ClearDecimal()
+    {
         p &= ~DFLAG;
     }
-    void ClearInterrupt() {
+    void ClearInterrupt()
+    {
         p &= ~IFLAG;
     }
-    void ClearZero() {
+    void ClearZero()
+    {
         p &= ~ZFLAG;
     }
-    void ClearCarry() {
+    void ClearCarry()
+    {
         p &= ~CFLAG;
     }
 

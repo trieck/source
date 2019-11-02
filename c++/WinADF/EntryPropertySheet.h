@@ -4,7 +4,8 @@
 
 // EntryPropertySheet
 
-class EntryPropertySheet : public CPropertySheet {
+class EntryPropertySheet : public CPropertySheet
+{
     DECLARE_DYNAMIC(EntryPropertySheet)
 
 public:

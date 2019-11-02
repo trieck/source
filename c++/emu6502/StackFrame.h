@@ -12,7 +12,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // StackFrame frame
 
-class StackFrame : public CMiniFrameWnd {
+class StackFrame : public CMiniFrameWnd
+{
     DECLARE_DYNCREATE(StackFrame)
 protected:
     StackFrame();           // protected constructor used by dynamic creation

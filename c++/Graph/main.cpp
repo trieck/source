@@ -61,7 +61,8 @@ Edge::Edge(int V, int W)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-class Graph {
+class Graph
+{
 // Construction / Destruction
 public:
     Graph(int);
@@ -73,13 +74,16 @@ public:
     void removeEdge(const Edge &E);
     int edges(Edge []);
 
-    int vertices() const {
+    int vertices() const
+    {
         return V;
     }
-    int degree(int v) const {
+    int degree(int v) const
+    {
         return deg[v];
     }
-    int edges() const {
+    int edges() const
+    {
         return E;
     }
     bool isEdge(int v, int w) const;

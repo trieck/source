@@ -17,7 +17,8 @@ typedef void(Window::*MsgFunc)(WPARAM, LPARAM);
 	m_messagemap[msg] = (MsgFunc)pfn;
 
 /////////////////////////////////////////////////////////////////////////////
-class Window {
+class Window
+{
 // Construction / Destruction
 public:
     Window();

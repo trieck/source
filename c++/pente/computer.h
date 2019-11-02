@@ -12,7 +12,8 @@
 #include "libpente.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class Computer : public PlayerTwo {
+class Computer : public PlayerTwo
+{
     // Construction / Destruction
 public:
     Computer(Player *popponent);

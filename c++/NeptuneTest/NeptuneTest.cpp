@@ -9,10 +9,12 @@
 using namespace std;
 
 struct _coinit {
-    _coinit() {
+    _coinit()
+    {
         CoInitialize(NULL);
     }
-    ~_coinit() {
+    ~_coinit()
+    {
         CoUninitialize();
     }
 } coinit;

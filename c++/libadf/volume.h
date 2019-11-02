@@ -19,7 +19,8 @@ class Volume;
 typedef auto_ptr<Volume> VolumePtr;
 
 /////////////////////////////////////////////////////////////////////////////
-class Volume {
+class Volume
+{
 // Construction / destruction
 private:
     Volume();

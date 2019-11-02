@@ -8,7 +8,8 @@
 #include "afxwin.h"
 
 // CmwrtDlg dialog
-class CmwrtDlg : public CDialog {
+class CmwrtDlg : public CDialog
+{
 // Construction
 public:
     CmwrtDlg(CWnd* pParent = NULL);	// standard constructor

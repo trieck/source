@@ -10,7 +10,8 @@
 #import <Cocoa/Cocoa.h>
 
 @interface MyDocument :
-NSDocument {
+    NSDocument
+{
     NSMutableArray *employees;
     IBOutlet NSTableView *tableView;
     IBOutlet NSButton *deleteButton;
@@ -18,27 +19,27 @@ NSDocument {
 
 // Action methods
 - (IBAction)deleteEmployee:
-(id)sender;
+    (id)sender;
 - (IBAction)newEmployee:
-(id)sender;
+    (id)sender;
 
 // Data source methods
 - (int)numberOfRowsInTableView:
-(NSTableView *)aTableView;
+    (NSTableView *)aTableView;
 - (id)tableView:
-(NSTableView *)aTableView
-objectValueForTableColumn:
-(NSTableColumn *)aTableColumn
-row:
-(int)rowIndex;
+    (NSTableView *)aTableView
+    objectValueForTableColumn:
+    (NSTableColumn *)aTableColumn
+    row:
+    (int)rowIndex;
 - (void)tableView:
-(NSTableView *)aTableView
-setObjectValue:
-(id)anObject
-forTableColumn:
-(NSTableColumn *)aTableColumn
-row:
-(int)rowIndex;
+    (NSTableView *)aTableView
+    setObjectValue:
+    (id)anObject
+    forTableColumn:
+    (NSTableColumn *)aTableColumn
+    row:
+    (int)rowIndex;
 
 // Private methods
 - (void)createNewEmployee;

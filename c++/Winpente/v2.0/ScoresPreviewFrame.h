@@ -12,7 +12,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // CScoresPreviewFrame frame
 
-class CScoresPreviewFrame : public CFrameWnd {
+class CScoresPreviewFrame : public CFrameWnd
+{
     DECLARE_DYNCREATE(CScoresPreviewFrame)
 public:
     CScoresPreviewFrame();
@@ -24,7 +25,8 @@ public:
 // Operations
 public:
     CStatusBar * GetStatusBar();
-    inline CDC* GetPrinterDC() {
+    inline CDC* GetPrinterDC()
+    {
         return m_pPrinterDC;
     }
 

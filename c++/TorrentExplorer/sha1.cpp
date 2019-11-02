@@ -18,7 +18,8 @@
 #include "stdafx.h"
 #include "sha1.h"
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 #define SHA1_HMAC_BLOCK_SIZE    64
 
@@ -95,7 +96,8 @@ CString SHA1::toHexString() const
     return buf;
 }
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 /////////////////////////////////////////////////////////////////////////////
 void sha1_init(void *ctx)

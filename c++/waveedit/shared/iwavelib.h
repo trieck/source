@@ -23,7 +23,8 @@
 // IWaveLib
 //
 interface IWaveLib :
-IUnknown {
+IUnknown
+{
     // IUnknown Methods
     virtual HRESULT __stdcall QueryInterface(REFIID, PPVOID)=0;
     virtual ULONG	__stdcall AddRef()=0;

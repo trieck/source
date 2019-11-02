@@ -11,7 +11,8 @@
 #include "mididev.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class InputDevice : public MidiDevice, private MIDIINCAPS {
+class InputDevice : public MidiDevice, private MIDIINCAPS
+{
     friend class InputDevices;
 
 protected:
@@ -21,25 +22,32 @@ public:
     virtual ~InputDevice();
 
     // Interface
-    inline WORD GetMid() const {
+    inline WORD GetMid() const
+    {
         return wMid;
     }
-    inline WORD GetPid() const {
+    inline WORD GetPid() const
+    {
         return wPid;
     }
-    inline MMVERSION GetVersion() const {
+    inline MMVERSION GetVersion() const
+    {
         return vDriverVersion;
     }
-    inline CString GetProduct () const {
+    inline CString GetProduct () const
+    {
         return szPname;
     }
-    inline DWORD GetSupport() const {
+    inline DWORD GetSupport() const
+    {
         return dwSupport;
     }
-    inline operator HMIDIIN() const {
+    inline operator HMIDIIN() const
+    {
         return (HMIDIIN)m_handle;
     }
-    inline BOOL IsOpen() const {
+    inline BOOL IsOpen() const
+    {
         return m_handle != NULL;
     }
 

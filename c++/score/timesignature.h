@@ -20,7 +20,8 @@ typedef enum {
 
 /////////////////////////////////////////////////////////////////////////////
 // TimeSignature class
-class TimeSignature {
+class TimeSignature
+{
 public:
     // Construction / Destruction
     TimeSignature();
@@ -31,17 +32,21 @@ public:
     void SetTimeSignature (int, BeatLength);
     void GetTimeSignature(int &, BeatLength &) const;
 
-    inline void SetBeats(int beats) {
+    inline void SetBeats(int beats)
+    {
         m_beats = beats;
     }
-    inline int GetBeats() const {
+    inline int GetBeats() const
+    {
         return m_beats;
     }
 
-    inline void SetLength(BeatLength length) {
+    inline void SetLength(BeatLength length)
+    {
         m_length = length;
     }
-    inline BeatLength GetLength() const {
+    inline BeatLength GetLength() const
+    {
         return m_length;
     }
 

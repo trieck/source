@@ -7,7 +7,8 @@
 #define __BOARD_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Board {
+class Board
+{
 public:
     Board();
     virtual ~Board();

@@ -20,7 +20,8 @@
 // application class declaration
 ////////////////////////////////////////////////////////////////////////////////
 
-class MainApp : public wxApp {
+class MainApp : public wxApp
+{
 public:
     MainApp();
 

@@ -9,14 +9,16 @@
 #define __ODBMANAGER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ODBManager : public IUnknown {
+class ODBManager : public IUnknown
+{
 // Construction / Destruction
 public:
     ODBManager();
     virtual ~ODBManager();
 
 // Interface
-    static LONG GetObjectCount() {
+    static LONG GetObjectCount()
+    {
         return m_cCount;
     }
 

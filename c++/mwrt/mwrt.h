@@ -14,7 +14,8 @@
 // See mwrt.cpp for the implementation of this class
 //
 
-class CmwrtApp : public CWinApp {
+class CmwrtApp : public CWinApp
+{
 public:
     CmwrtApp();
 

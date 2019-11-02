@@ -11,7 +11,8 @@
 
 #include "TorrentObject.h"
 
-class Dictionary : public TorrentObject {
+class Dictionary : public TorrentObject
+{
 public:
     Dictionary();
     virtual ~Dictionary();
@@ -22,7 +23,8 @@ public:
     KeyVec GetKeys() const;
     KeyVec GetKeysSorted() const;
 
-    virtual int GetElementType() const {
+    virtual int GetElementType() const
+    {
         return ET_DICT;
     }
 

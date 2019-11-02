@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // GeneralPage dialog
 
-class GeneralPage : public CPropertyPage {
+class GeneralPage : public CPropertyPage
+{
     DECLARE_DYNCREATE(GeneralPage)
 
 // Construction

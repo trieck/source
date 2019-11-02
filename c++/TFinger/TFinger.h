@@ -14,7 +14,8 @@
 // See TFinger.cpp for the implementation of this class
 //
 
-class CTFingerApp : public CWinAppEx {
+class CTFingerApp : public CWinAppEx
+{
 public:
     CTFingerApp();
 

@@ -2,7 +2,8 @@
 
 /////////////////////////////////////////////////////////////////////////////
 template<class T>
-class Set {
+class Set
+{
 public:
     Set();
     Set(std::initializer_list<T> list);

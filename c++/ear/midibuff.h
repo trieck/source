@@ -9,7 +9,8 @@
 #define __MIDIBUFF_H__
 
 ///////////////////////////////////////////////////////////////////////
-class MidiBuffer {
+class MidiBuffer
+{
 public:
     // Construction / Destruction
     MidiBuffer();
@@ -17,7 +18,8 @@ public:
 
     // Interface
     void Transform (BYTE note1, BYTE note2);
-    operator MIDIHDR* () {
+    operator MIDIHDR* ()
+    {
         return &m_header;
     }
 

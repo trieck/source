@@ -9,7 +9,8 @@
 #define __ENCODE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class BEEncoder {
+class BEEncoder
+{
 // Construction / Destruction
 private:
     BEEncoder(ISequentialStream *pStream);

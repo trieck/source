@@ -9,17 +9,21 @@
 
 /////////////////////////////////////////////////////////////////////////////
 template <typename T>
-class Enumerator {
+class Enumerator
+{
 public:
     Enumerator(typename T::const_iterator i1, typename T::const_iterator &i2)
-        : current(i1), begin(i1), end(i2) {
+        : current(i1), begin(i1), end(i2)
+    {
     }
 
-    Enumerator(const Enumerator &rhs) {
+    Enumerator(const Enumerator &rhs)
+    {
         *this = rhs;
     }
 
-    Enumerator<typename T>& operator = (const Enumerator &rhs) {
+    Enumerator<typename T>& operator = (const Enumerator &rhs)
+    {
         if (this != &rhs) {
             current = rhs.current;
             begin = rhs.begin;
@@ -28,15 +32,18 @@ public:
         return *this;
     }
 
-    typename T::const_reference next() {
+    typename T::const_reference next()
+    {
         return *current++;
     }
 
-    bool hasNext() const {
+    bool hasNext() const
+    {
         return current != end;
     }
 
-    void reset() {
+    void reset()
+    {
         current = begin;
     }
 

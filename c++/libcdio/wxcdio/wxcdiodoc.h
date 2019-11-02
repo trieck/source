@@ -3,7 +3,8 @@
 
 #include "isoimage.h"
 
-class wxcdioDoc : public wxDocument {
+class wxcdioDoc : public wxDocument
+{
     DECLARE_DYNAMIC_CLASS(wxcdioDoc)
 public:
     wxcdioDoc();
@@ -14,7 +15,8 @@ public:
     bool OnNewDocument();
     bool OnCloseDocument();
 
-    isoimage *GetImage() {
+    isoimage *GetImage()
+    {
         return &m_image;
     }
 

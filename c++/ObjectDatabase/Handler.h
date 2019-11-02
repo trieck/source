@@ -18,7 +18,8 @@ public:
 typedef IHandler *PHANDLER;
 
 /////////////////////////////////////////////////////////////////////////////
-class Handler {
+class Handler
+{
 public:
     // Construction / Destruction
     Handler();

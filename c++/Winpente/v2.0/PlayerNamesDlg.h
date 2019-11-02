@@ -13,7 +13,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // CPlayerNamesDlg dialog
 
-class CPlayerNamesDlg : public CDialog {
+class CPlayerNamesDlg : public CDialog
+{
 // Construction
 public:
     CPlayerNamesDlg(CWnd* pParent = NULL);   // standard constructor
@@ -35,13 +36,16 @@ protected:
 
 // Implementation
 protected:
-    inline CComboBox&	GetPlayerOneNameList() {
+    inline CComboBox&	GetPlayerOneNameList()
+    {
         return * (CComboBox*) GetDlgItem(IDC_PLAYERONENAME);
     }
-    inline CComboBox&	GetPlayerTwoNameList() {
+    inline CComboBox&	GetPlayerTwoNameList()
+    {
         return * (CComboBox*) GetDlgItem(IDC_PLAYERTWONAME);
     }
-    inline CButton&		GetTwoPlayerGame() {
+    inline CButton&		GetTwoPlayerGame()
+    {
         return * (CButton*) GetDlgItem(IDC_TWOPLAYERGAME);
     }
 

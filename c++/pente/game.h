@@ -12,7 +12,8 @@
 typedef std::vector<CPoint> PointVec;
 
 /////////////////////////////////////////////////////////////////////////////
-class PenteGame : public CObject {
+class PenteGame : public CObject
+{
 public:
     DECLARE_SERIAL(PenteGame);
 

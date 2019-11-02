@@ -56,7 +56,6 @@ END_MESSAGE_MAP()
 // DDrawView construction/destruction
 
 DDrawView::DDrawView()
-    : pdds(NULL)
 {
 }
 
@@ -102,34 +101,31 @@ DDrawDoc* DDrawView::GetDocument() // non-debug version is inline
 /////////////////////////////////////////////////////////////////////////////
 // DDrawView message handlers
 
+
 int DDrawView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
     if (CView::OnCreate(lpCreateStruct) == -1)
         return -1;
 
-    DDrawApp *pApp = (DDrawApp*)AfxGetApp();
+    const auto* pApp = dynamic_cast<DDrawApp*>(AfxGetApp());
     ASSERT_VALID(pApp);
 
-    LPDIRECTDRAW pdd = pApp->GetDirectDraw();
-    pdd->AddRef();
+    auto pdd = pApp->GetDirectDraw();
 
-    DDSURFACEDESC ddsd;
+    DDSURFACEDESC2 ddsd;
 
-    ZeroMemory(&ddsd, sizeof(DDSURFACEDESC));
-    ddsd.dwSize = sizeof(DDSURFACEDESC);
+    ZeroMemory(&ddsd, sizeof(DDSURFACEDESC2));
+    ddsd.dwSize = sizeof(DDSURFACEDESC2);
     ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
     ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
     ddsd.dwBackBufferCount = 1;
 
     // Create the primary surface with one back buffer
-    HRESULT hr = pdd->CreateSurface(&ddsd, &pdds, NULL);
+    const auto hr = pdd->CreateSurface(&ddsd, &m_pdds, nullptr);
     if (hr != DD_OK) {
         TRACE0("failed while creating direct draw surface.\n");
-        pdd->Release();
         return -1;
     }
-
-    pdd->Release();
 
     return 0;
 }
@@ -137,18 +133,11 @@ int DDrawView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void DDrawView::OnDestroy()
 {
     CView::OnDestroy();
-
-    if (NULL != pdds) {
-        ULONG result = pdds->Release();
-        if (0 != result)
-            TRACE1("DirectDraw surface non zero [%d] on Release()!\n", result);
-    }
 }
 
 void DDrawView::OnInitialUpdate()
 {
     CView::OnInitialUpdate();
-
 }
 
 BOOL DDrawView::OnEraseBkgnd(CDC* pDC)

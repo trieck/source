@@ -9,7 +9,8 @@
 #define __INTEGER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Integer : public BEObject {
+class Integer : public BEObject
+{
 private:
     // Construction / Destruction
     Integer(INT64 v);
@@ -20,12 +21,14 @@ public:
 // Interface
     Integer &operator =(const Integer &i);
 
-    virtual ObjectType GetType() const {
+    virtual ObjectType GetType() const
+    {
         return BET_INTEGER;
     }
     virtual LPBEOBJECT Copy() const;
 
-    operator INT64() const {
+    operator INT64() const
+    {
         return val;
     }
 

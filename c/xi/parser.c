@@ -73,12 +73,12 @@ const short yysindex[] = {                                    -73,
                                                               -77, -237,  -73,  -37,    0,    0,    0,  -37,  -72,    0,
                                                               -77, -243,    0,    0,  -37, -250,    0,    0,    0,    0,
                                                               0,    0,    0,    0, -255,    0,    0,
-                         };
+                                                              };
 const short yyrindex[] = {                                      3,
                                                                 -70,    0,    4,    1,    0,    0,    0,  -84,    0,    0,
                                                                 -69,  -80,    0,    0,    2,    0,    0,    0,    0,    0,
                                                                 0,    0,    0,    0,    0,    0,    0,
-                         };
+                                                                };
 const short yygindex[] = {                                      0,
                                                                 0,   12,    0,    0,   14,    0,    5,    0,
                          };
@@ -138,7 +138,7 @@ const short yycheck[] = {                                      37,
                                                                -1,  269,   -1,   -1,   -1,  273,   -1,   -1,   -1,   -1,
                                                                -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
                                                                -1,   -1,   -1,   -1,   -1,   -1,  256,  256,  256,  256,
-                        };
+                                                               };
 #define YYFINAL 2
 #ifndef YYDEBUG
 #define YYDEBUG 0
@@ -287,7 +287,8 @@ YYPARSE_PARAM_DECL {
 #if YYDEBUG
     register const char *yys;
 
-    if ((yys = getenv("YYDEBUG"))) {
+    if ((yys = getenv("YYDEBUG")))
+    {
         yyn = *yys;
         if (yyn >= '0' && yyn <= '9')
             yydebug = yyn - '0';
@@ -305,7 +306,8 @@ YYPARSE_PARAM_DECL {
 
 yyloop:
     if ((yyn = yydefred[yystate])) goto yyreduce;
-    if (yychar < 0) {
+    if (yychar < 0)
+    {
         if ((yychar = yylex()) < 0) yychar = 0;
 #if YYDEBUG
         if (yydebug) {
@@ -313,12 +315,13 @@ yyloop:
             if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
             if (!yys) yys = "illegal-symbol";
             printf("%sdebug: state %d, reading %d (%s)\n",
-            YYPREFIX, yystate, yychar, yys);
+                   YYPREFIX, yystate, yychar, yys);
         }
 #endif
     }
     if ((yyn = yysindex[yystate]) && (yyn += yychar) >= 0 &&
-            yyn <= YYTABLESIZE && yycheck[yyn] == yychar) {
+            yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
+    {
 #if YYDEBUG
         if (yydebug)
             printf("%sdebug: state %d, shifting to state %d\n",
@@ -334,7 +337,8 @@ yyloop:
         goto yyloop;
     }
     if ((yyn = yyrindex[yystate]) && (yyn += yychar) >= 0 &&
-            yyn <= YYTABLESIZE && yycheck[yyn] == yychar) {
+            yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
+    {
         yyn = yytable[yyn];
         goto yyreduce;
     }
@@ -350,7 +354,8 @@ yynewerror:
 yyerrlab:
     ++yynerrs;
 yyinrecovery:
-    if (yyerrflag < 3) {
+    if (yyerrflag < 3)
+    {
         yyerrflag = 3;
         for (;;) {
             if ((yyn = yysindex[*yyssp]) && (yyn += YYERRCODE) >= 0 &&
@@ -377,7 +382,8 @@ yyinrecovery:
                 --yyvsp;
             }
         }
-    } else {
+    } else
+    {
         if (yychar == 0) goto yyabort;
 #if YYDEBUG
         if (yydebug) {
@@ -385,7 +391,7 @@ yyinrecovery:
             if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
             if (!yys) yys = "illegal-symbol";
             printf("%sdebug: state %d, error recovery discards token %d (%s)\n",
-            YYPREFIX, yystate, yychar, yys);
+                   YYPREFIX, yystate, yychar, yys);
         }
 #endif
         yychar = (-1);
@@ -395,11 +401,12 @@ yyreduce:
 #if YYDEBUG
     if (yydebug)
         printf("%sdebug: state %d, reducing by rule %d (%s)\n",
-        YYPREFIX, yystate, yyn, yyrule[yyn]);
+               YYPREFIX, yystate, yyn, yyrule[yyn]);
 #endif
     yym = yylen[yyn];
     yyval = yyvsp[1-yym];
-    switch (yyn) {
+    switch (yyn)
+    {
     case 2:
 #line 39 ".\parser.y"
         {
@@ -503,7 +510,8 @@ yyreduce:
     yystate = *yyssp;
     yyvsp -= yym;
     yym = yylhs[yyn];
-    if (yystate == 0 && yym == 0) {
+    if (yystate == 0 && yym == 0)
+    {
 #if YYDEBUG
         if (yydebug)
             printf("%sdebug: after reduction, shifting from state 0 to\
@@ -537,7 +545,8 @@ yyreduce:
         printf("%sdebug: after reduction, shifting from state %d \
 to state %d\n", YYPREFIX, *yyssp, yystate);
 #endif
-    if (yyssp >= yysslim && yygrowstack()) {
+    if (yyssp >= yysslim && yygrowstack())
+    {
         goto yyoverflow;
     }
     *++yyssp = yystate;

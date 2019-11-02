@@ -15,7 +15,8 @@
 /////////////////////////////////////////////////////////////////
 // The CWaveView view class
 
-class CWaveView : public CListView {
+class CWaveView : public CListView
+{
 protected:
     CWaveView();
     DECLARE_DYNCREATE(CWaveView)

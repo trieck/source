@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // TorrentDlg dialog
 
-class TorrentDlg : public CDialog, ICallable {
+class TorrentDlg : public CDialog, ICallable
+{
 // Construction
 public:
     TorrentDlg(CWnd* pParent = NULL);   // standard constructor

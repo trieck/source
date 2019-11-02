@@ -407,7 +407,7 @@ VOID AddListItem(HWND hWndList, LPSCREENLINE pSL)
     LONG lCount;
 
     // set list item text
-    SendMessage(hWndList, LB_ADDSTRING, 0 ,(LPARAM)pSL->szText);
+    SendMessage(hWndList, LB_ADDSTRING, 0,(LPARAM)pSL->szText);
 
     // get a count of number of items
     lCount = SendMessage(hWndList, LB_GETCOUNT, 0, 0);

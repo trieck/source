@@ -9,7 +9,8 @@
 #define __PIPE_H_INCLUDED__
 
 /////////////////////////////////////////////////////////////////////////////
-class Win32Pipe {
+class Win32Pipe
+{
 public:
 // Construction / Destruction
     Win32Pipe();

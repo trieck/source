@@ -9,10 +9,12 @@
 #include "conn.h"
 
 struct _sockinit {
-    _sockinit() {
+    _sockinit()
+    {
         WSAStartup(0x202, &data);
     }
-    ~_sockinit() {
+    ~_sockinit()
+    {
         WSACleanup();
     }
     WSADATA data;

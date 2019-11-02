@@ -10,7 +10,8 @@
 #endif // _MSC_VER > 1000
 
 
-class WindumpView : public CListView {
+class WindumpView : public CListView
+{
 protected: // create from serialization only
     WindumpView();
     DECLARE_DYNCREATE(WindumpView)

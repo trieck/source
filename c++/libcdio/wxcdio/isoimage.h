@@ -1,7 +1,8 @@
 #ifndef __isoimage__
 #define __isoimage__
 
-class isoimage : public wxObject {
+class isoimage : public wxObject
+{
 public:
     isoimage();
     ~isoimage();

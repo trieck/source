@@ -17,7 +17,8 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 typedef struct {
     LPCSTR desc;
@@ -219,7 +220,8 @@ CFile *TorrentDlg::GetFile()
     return NULL;
 }
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 CStringVec ParseTrackers(const CString &input)
 {

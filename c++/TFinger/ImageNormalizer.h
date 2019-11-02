@@ -1,6 +1,7 @@
 #pragma once
 
-class ImageNormalizer {
+class ImageNormalizer
+{
 public:
     ImageNormalizer();
     ~ImageNormalizer();

@@ -9,7 +9,8 @@
 #define __NETERROR_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class NetError {
+class NetError
+{
 // Construction / Destruction
 public:
     NetError();
@@ -18,13 +19,16 @@ public:
 
 // Interface
     NetError & operator = (const NetError & E);
-    DWORD GetErrorCode() const {
+    DWORD GetErrorCode() const
+    {
         return m_errorcode;
     };
-    CString GetDescription() const {
+    CString GetDescription() const
+    {
         return (LPCTSTR)m_description;
     }
-    CString GetProvider() const {
+    CString GetProvider() const
+    {
         return (LPCTSTR)m_provider;
     }
 

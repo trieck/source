@@ -11,7 +11,8 @@
 #define __FILEBLOCKS_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class FileBlocks {
+class FileBlocks
+{
 // Construction / destruction
 public:
     FileBlocks();

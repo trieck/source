@@ -7,7 +7,8 @@
 #define __FRAMEWND_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class FrameWindow : public Window {
+class FrameWindow : public Window
+{
 public:
 // Construction / Destruction
     FrameWindow();

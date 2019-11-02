@@ -19,7 +19,8 @@
 // See windump.cpp for the implementation of this class
 //
 
-class WindumpApp : public CWinApp {
+class WindumpApp : public CWinApp
+{
 public:
     WindumpApp();
 

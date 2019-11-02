@@ -11,7 +11,8 @@
 #include <winsock2.h>
 
 /////////////////////////////////////////////////////////////////////////////
-class Connection {
+class Connection
+{
 public:
 // Construction / Destruction
     Connection();
@@ -34,14 +35,17 @@ public:
     bool setBlockingMode(bool block) const;
     int select(bool read, bool write, bool error, timeval *timeout);
     Connection accept() const;
-    SOCKET release() {
+    SOCKET release()
+    {
         own = false;
         return m_socket;
     }
-    SOCKET getSock() const {
+    SOCKET getSock() const
+    {
         return m_socket;
     }
-    bool valid() const {
+    bool valid() const
+    {
         return m_socket != INVALID_SOCKET;
     }
 

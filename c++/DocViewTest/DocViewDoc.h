@@ -15,7 +15,8 @@
 ///////////////////////////////////////////////////////////////////
 // The CDocViewDoc document class
 
-class CDocViewDoc : public CDocument {
+class CDocViewDoc : public CDocument
+{
 protected:
     DECLARE_DYNCREATE(CDocViewDoc)
 

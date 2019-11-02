@@ -19,7 +19,8 @@
 // See emu6502.cpp for the implementation of this class
 //
 
-class Emu6502App : public CWinApp {
+class Emu6502App : public CWinApp
+{
 public:
     Emu6502App();
 

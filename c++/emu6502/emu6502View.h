@@ -10,7 +10,8 @@
 #endif // _MSC_VER > 1000
 
 
-class Emu6502View : public CEditView {
+class Emu6502View : public CEditView
+{
 protected: // create from serialization only
     Emu6502View();
     DECLARE_DYNCREATE(Emu6502View)

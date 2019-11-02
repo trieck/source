@@ -11,7 +11,8 @@
 
 #include "ResDll\resource.h"
 
-class CMiscPage : public CPropertyPage {
+class CMiscPage : public CPropertyPage
+{
     DECLARE_DYNCREATE(CMiscPage);
 
 public:
@@ -22,7 +23,8 @@ protected:
     virtual BOOL		OnInitDialog();
     virtual void		OnOK();
     virtual BOOL		OnApply();
-    inline	CButton&	GetCheckBox() {
+    inline	CButton&	GetCheckBox()
+    {
         return * (CButton*)GetDlgItem(IDC_DEBUGOPTIONS);
     }
 

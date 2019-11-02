@@ -4,7 +4,8 @@
 
 #pragma once
 
-class CTFingerView : public CScrollView {
+class CTFingerView : public CScrollView
+{
 protected: // create from serialization only
     CTFingerView();
     DECLARE_DYNCREATE(CTFingerView)

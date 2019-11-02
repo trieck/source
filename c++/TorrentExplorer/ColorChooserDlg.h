@@ -12,7 +12,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // ColorChooserDlg dialog
 
-class ColorChooserDlg : public CDialog {
+class ColorChooserDlg : public CDialog
+{
 // Construction
 public:
     COLORREF GetSelectedColor() const;

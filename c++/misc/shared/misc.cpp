@@ -60,7 +60,7 @@ HRESULT CMiscellaneous :: Init(HMODULE hModule)
             // Load and register the type library
 #ifndef _UNICODE
             MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szModule,
-                                -1 , wszModule, _MAX_PATH + _MAX_FNAME);
+                                -1, wszModule, _MAX_PATH + _MAX_FNAME);
 #else
             wcscpy(wszModule, szModule);
 #endif // _UNICODE
@@ -127,7 +127,7 @@ HRESULT CMiscellaneous :: GetDate(BSTR* pbstrDate)
     wsprintf(szTemp, _T("%s/%s/%d"), szMonth, szDay, st.wYear);
 
     MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szTemp,
-                        -1 , pszDate, 128);
+                        -1, pszDate, 128);
 #else
     wsprintf(pszDate, _T("%s/%s/%d"), szMonth, szDay, st.wYear);
 #endif // _UNICODE
@@ -180,7 +180,7 @@ HRESULT CMiscellaneous :: GetTime(BSTR* pbstrTime)
     wsprintf(szTemp, _T("%s:%s %s"), szHour, szMinute, st.wHour >= 12 ? _T("PM") : _T("AM"));
 
     MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szTemp,
-                        -1 , pszTime, 128);
+                        -1, pszTime, 128);
 #else
     wsprintf(pszTime, _T("%s:%s %s"), szHour, szMinute, st.wHour >= 12 ? _T("PM") : _T("AM"));
 #endif // _UNICODE
@@ -236,7 +236,7 @@ HRESULT CMiscellaneous :: GetDateTime(BSTR* pbstrDateTime)
     wsprintf(szTemp, _T("%s %s"), szDate, szTime);
 
     MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szTemp,
-                        -1 , lpszDateTime, 256);
+                        -1, lpszDateTime, 256);
 #else
     wsprintf(lpszDateTime, _T("%s %s"), bstrDate, bstrTime);
 #endif // _UNICODE
@@ -476,7 +476,7 @@ HRESULT CMiscellaneous :: GenerateError(LPCTSTR lpszErrDescription)
 
 #ifndef _UNICODE
     MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, lpszErrDescription,
-                        -1 , wszDescription, 255);
+                        -1, wszDescription, 255);
 #else
     wcscpy(wszDescription, lpszErrDescription);
 #endif

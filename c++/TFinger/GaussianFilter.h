@@ -1,6 +1,7 @@
 #pragma once
 
-class GaussianFilter {
+class GaussianFilter
+{
 public:
     GaussianFilter();
     ~GaussianFilter();

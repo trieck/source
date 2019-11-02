@@ -9,7 +9,8 @@
 #include "app.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class MyApp : public Application {
+class MyApp : public Application
+{
 public:
 // Construction / Destruction
     MyApp();

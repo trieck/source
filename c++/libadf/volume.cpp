@@ -27,7 +27,8 @@ uint32_t bitmask[BM_BLOCKS_ENTRY] = {
     0x10000000, 0x20000000, 0x40000000, 0x80000000
 };
 
-namespace {
+namespace
+{
 CacheEntry getCacheEntry(dircacheblock_t *block, int32_t *offset);
 }
 
@@ -1226,7 +1227,8 @@ void Volume::writedatablock(uint32_t blockno, void *block)
 }
 
 // helper functions
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 /////////////////////////////////////////////////////////////////////////////
 CacheEntry getCacheEntry(dircacheblock_t *dirc, int32_t *offset)

@@ -12,7 +12,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // CScoresDlg dialog
 
-class CScoresDlg : public CDialog {
+class CScoresDlg : public CDialog
+{
 // Construction
 public:
     CScoresDlg(CWnd* pParent = NULL);   // standard constructor
@@ -39,7 +40,8 @@ protected:
     VOID	InsertItems();
     VOID	InsertHeaders();
 
-    inline	CListCtrl& GetListCtrl() {
+    inline	CListCtrl& GetListCtrl()
+    {
         return * (CListCtrl*) GetDlgItem(IDC_SCORES);
     }
 

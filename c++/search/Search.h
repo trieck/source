@@ -16,7 +16,8 @@
 #include "query.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class Search {
+class Search
+{
 // Construction / Destruction
 public:
     Search(LPCSTR filename);

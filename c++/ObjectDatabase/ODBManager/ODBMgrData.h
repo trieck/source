@@ -9,7 +9,8 @@
 #define __ODBMGRDATA_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ODBMgrData : public IComponentData {
+class ODBMgrData : public IComponentData
+{
 // Construction / Destruction
 public:
     ODBMgrData(LPUNKNOWN pUnknown);

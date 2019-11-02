@@ -16,7 +16,8 @@ enum EntryType {
 };
 
 /////////////////////////////////////////////////////////////////////////////
-class Entry {
+class Entry
+{
 // Construction / Destruction
 public:
     Entry();

@@ -10,7 +10,8 @@
 #import "queue.h"
 
 @interface CocoaQueue :
-NSObject {
+    NSObject
+{
 
     struct queue *myQueue;
 }
@@ -18,7 +19,7 @@ NSObject {
 - (id)init;
 - (void)dealloc;
 - (void)addObject:
-(id)anObject;
+    (id)anObject;
 - (id)removeObject;
 - (BOOL)isEmpty;
 

@@ -12,7 +12,8 @@
 ///////////////////////////////////////////////////////////////////
 // The CCustomBitmap class
 
-class CCustomBitmap : public CObject {
+class CCustomBitmap : public CObject
+{
 public:
     CCustomBitmap();
     virtual ~CCustomBitmap();

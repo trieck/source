@@ -1,7 +1,8 @@
 #pragma once
 
 /////////////////////////////////////////////////////////////////////////////
-class Queens {
+class Queens
+{
 public:
     Queens(uint32_t size);
     ~Queens();

@@ -13,7 +13,8 @@
 #include "Exception.h"
 #include "Configuration.h"
 
-namespace {
+namespace
+{
 string GetValue(FILE *fp);
 bool FindApp(const char *app, FILE *fp);
 bool FindKey(const char *key, FILE *fp);
@@ -73,7 +74,8 @@ string Configuration::GetValueEx(const char *app, const char *key,
     return buf;
 }
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 /////////////////////////////////////////////////////////////////////////////
 bool FindApp(const char *app, FILE *fp)

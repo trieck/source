@@ -23,7 +23,8 @@ typedef CMap<COLORREF, COLORREF, int, int> ColorMap;
 // See TorrentExplorer.cpp for the implementation of this class
 //
 
-class TorrentExplorer : public CWinApp {
+class TorrentExplorer : public CWinApp
+{
 public:
     BOOL IsSetting(LPCSTR key);
     TorrentExplorer();
@@ -33,7 +34,8 @@ public:
     LPTORRENTOBJECT GetSetting(LPCSTR key);
     void PutSetting(LPCSTR key, __int64 val);
     void PutSetting(LPCSTR key, LPCSTR val);
-    RGBTRIPLE *GetPalette() const {
+    RGBTRIPLE *GetPalette() const
+    {
         return m_pPalette;
     }
     BOOL GetPaletteIndex(COLORREF c, int &i) const;

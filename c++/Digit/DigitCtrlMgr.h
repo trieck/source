@@ -9,7 +9,8 @@
 #include "DigitCtrl.h"
 ////////////////////////////////////////////////////////////////////////////
 // CDigitCtrlMgr window
-class CDigitCtrlMgr : public CObject {
+class CDigitCtrlMgr : public CObject
+{
 // Construction
 public:
     CDigitCtrlMgr(CDialog*, const UINT Ctrls[], const RECT rcs[], UINT nCount);

@@ -11,7 +11,8 @@
 
 #include "ResDll\resource.h"
 
-class CPlayerOptionsDlg : public CDialog {
+class CPlayerOptionsDlg : public CDialog
+{
     DECLARE_DYNCREATE(CPlayerOptionsDlg);
 
 public:

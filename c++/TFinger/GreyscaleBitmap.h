@@ -4,7 +4,8 @@
 
 // GreyscaleBitmap
 
-class GreyscaleBitmap : public CImage {
+class GreyscaleBitmap : public CImage
+{
 public:
     GreyscaleBitmap();
     virtual ~GreyscaleBitmap();

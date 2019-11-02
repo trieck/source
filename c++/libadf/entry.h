@@ -11,7 +11,8 @@
 #define __ENTRY_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Entry {
+class Entry
+{
 // Construction / Destruction
 public:
     Entry();

@@ -25,7 +25,8 @@ typedef std::vector<Entry> EntryVec;
 typedef std::vector<Vector> VecVec;
 
 /////////////////////////////////////////////////////////////////////////////
-class Board {
+class Board
+{
 // Construction / Destruction
 private:
     Board();
@@ -44,7 +45,8 @@ public:
     EntryVec empty();
     const VecVec &getVectors() const;
     const Vector* winner(uint32_t &nplayer) const;
-    uint32_t size() const {
+    uint32_t size() const
+    {
         return (uint32_t)rep.size();
     }
     void getCaptures(uint32_t x, uint32_t y, CaptureVec &captures);

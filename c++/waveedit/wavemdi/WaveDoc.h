@@ -18,7 +18,8 @@
 // Forward declarations
 class CPlayDlg;
 
-class CWaveDoc : public CDocument {
+class CWaveDoc : public CDocument
+{
     friend CPlayDlg;
 protected:
     VOID Initialize();
@@ -38,10 +39,12 @@ public:
     virtual ~CWaveDoc();
 
     VOID	SetBuffer(LPDIRECTSOUNDBUFFER);
-    inline	VOID	SetRate(DWORD dwBytesPerSec) {
+    inline	VOID	SetRate(DWORD dwBytesPerSec)
+    {
         m_dwBytesPerSec = dwBytesPerSec;
     }
-    inline	DWORD	GetRate() {
+    inline	DWORD	GetRate()
+    {
         return m_dwBytesPerSec;
     }
     // Overrides

@@ -3,7 +3,8 @@
 
 // DisassemFrame frame
 
-class DisassemFrame : public CMiniFrameWnd {
+class DisassemFrame : public CMiniFrameWnd
+{
     DECLARE_DYNCREATE(DisassemFrame)
 protected:
     DisassemFrame();           // protected constructor used by dynamic creation

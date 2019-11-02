@@ -4,7 +4,8 @@
 
 // CaptureBitmap command target
 
-class CaptureBitmap : public RecolorableBitmap {
+class CaptureBitmap : public RecolorableBitmap
+{
 public:
     CaptureBitmap();
     virtual ~CaptureBitmap();

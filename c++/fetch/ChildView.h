@@ -14,7 +14,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // ChildView window
 
-class ChildView : public CListView {
+class ChildView : public CListView
+{
 // Construction
 public:
     ChildView();

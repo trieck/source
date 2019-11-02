@@ -9,7 +9,8 @@
 #define __SMTP_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class SmtpMail {
+class SmtpMail
+{
 public:
 // Construction / Destruction
     SmtpMail(const char *phost);

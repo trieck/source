@@ -9,7 +9,8 @@
 #include "disassem.h"
 #include "memory.h"
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 CONST TCHAR ADC[] = _T("ADC");
 CONST TCHAR AND[] = _T("AND");

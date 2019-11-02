@@ -6,7 +6,8 @@
 #define __PLAYER_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Player : public CObject {
+class Player : public CObject
+{
 // Construction / Destruction
 public:
     Player();

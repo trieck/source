@@ -2,7 +2,8 @@
 
 #include <atlimage.h>
 
-class ImageBinarizer {
+class ImageBinarizer
+{
 public:
     ImageBinarizer();
     ~ImageBinarizer();

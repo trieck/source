@@ -12,7 +12,8 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // IADFHandler interface
-class IADFHandler {
+class IADFHandler
+{
 public:
     virtual void handle(const string &) const = 0;
 };
@@ -22,7 +23,8 @@ public:
 class HandlerRegistrar;
 typedef auto_ptr<HandlerRegistrar> HandlerRegistrarPtr;
 
-class HandlerRegistrar {
+class HandlerRegistrar
+{
 private:
     HandlerRegistrar();
 public:

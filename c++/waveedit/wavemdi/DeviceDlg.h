@@ -12,7 +12,8 @@
 #include "stdafx.h"
 #include "resource.h"
 
-class CDeviceDlg : public CDialog {
+class CDeviceDlg : public CDialog
+{
     DECLARE_DYNCREATE (CDeviceDlg)
 
 // Construction
@@ -24,21 +25,26 @@ protected:
     // Overrides
     virtual BOOL OnInitDialog();
 
-    inline CComboBox& GetInDeviceList() {
+    inline CComboBox& GetInDeviceList()
+    {
         return * (CComboBox*)GetDlgItem(IDC_INPUTDEVICES);
     }
-    inline CComboBox& GetOutDeviceList() {
+    inline CComboBox& GetOutDeviceList()
+    {
         return * (CComboBox*)GetDlgItem(IDC_OUTPUTDEVICES);
     }
 
-    inline CButton& GetQueryInput() {
+    inline CButton& GetQueryInput()
+    {
         return * (CButton*)GetDlgItem(IDC_QUERYINPUT);
     }
-    inline CButton& GetQueryOutput() {
+    inline CButton& GetQueryOutput()
+    {
         return * (CButton*)GetDlgItem(IDC_QUERYOUTPUT);
     }
 
-    inline CComboBox& GetFormatBox() {
+    inline CComboBox& GetFormatBox()
+    {
         return * (CComboBox*)GetDlgItem(IDC_FORMATS);
     }
 

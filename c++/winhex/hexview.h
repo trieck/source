@@ -11,7 +11,8 @@
 
 #include "HexEdit.h"
 
-class HexView : public CView {
+class HexView : public CView
+{
 protected: // create from serialization only
     HexView();
     DECLARE_DYNCREATE(HexView)

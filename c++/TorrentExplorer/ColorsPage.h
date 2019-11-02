@@ -12,7 +12,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // ColorsPage dialog
 
-class ColorsPage : public CPropertyPage {
+class ColorsPage : public CPropertyPage
+{
     DECLARE_DYNCREATE(ColorsPage)
 
 // Construction

@@ -59,20 +59,24 @@ struct INondelegatingUnknown {
 // Component
 //
 class CB : public IY,
-    public INondelegatingUnknown {
+    public INondelegatingUnknown
+{
 public:
     // Delegating IUnknown methods
-    virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv) {
+    virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv)
+    {
         trace ("Delegate QueryInterface.");
         return m_pUnknownOuter->QueryInterface(iid, ppv);
     }
 
-    virtual ULONG __stdcall AddRef() {
+    virtual ULONG __stdcall AddRef()
+    {
         trace ("Delegate AddRef.");
         return m_pUnknownOuter->AddRef();
     }
 
-    virtual ULONG __stdcall Release() {
+    virtual ULONG __stdcall Release()
+    {
         trace ("Delegate release");
         return m_pUnknownOuter->Release();
     }
@@ -83,7 +87,8 @@ public:
     virtual ULONG	__stdcall NondelegatingRelease();
 
     // IY Methods
-    virtual void __stdcall Fy() {
+    virtual void __stdcall Fy()
+    {
         trace("Fy");
     }
 
@@ -167,7 +172,8 @@ CB :: ~CB()
 //
 // Class factory
 //
-class CFactory : public IClassFactory {
+class CFactory : public IClassFactory
+{
 public:
     // IUnknown methods
     virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv);

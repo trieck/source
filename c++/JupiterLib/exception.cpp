@@ -8,7 +8,8 @@
 #include "stdafx.h"
 #include "exception.h"
 
-namespace {
+namespace
+{
 const int BUFFSIZE = 4096;
 }
 

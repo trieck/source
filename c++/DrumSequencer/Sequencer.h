@@ -9,7 +9,8 @@ typedef enum SequencerState {
     Playing
 };
 
-class Sequencer {
+class Sequencer
+{
 public:
     Sequencer();
     ~Sequencer();

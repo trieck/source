@@ -5,7 +5,8 @@
 
 // NewVolume dialog
 
-class NewVolumeDlg : public CDialog {
+class NewVolumeDlg : public CDialog
+{
     DECLARE_DYNAMIC(NewVolumeDlg)
 
 public:

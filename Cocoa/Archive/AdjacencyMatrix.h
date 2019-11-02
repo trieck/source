@@ -10,21 +10,22 @@
 #import "Vertex.h"
 
 @interface AdjacencyMatrix :
-NSObject {
+    NSObject
+{
     int **adj;	// representation
     int count;	// entries
 }
 
 - (id)initWithCount:
-(int)c;
+    (int)c;
 - (BOOL)isEdge:
-(Vertex*)v andVertex:
-(Vertex*)w;
+    (Vertex*)v andVertex:
+    (Vertex*)w;
 - (void)setEdge:
-(Vertex*)v toVertex:
-(Vertex*)w;
+    (Vertex*)v toVertex:
+    (Vertex*)w;
 - (void)removeEdge:
-(Vertex*)v toVertex:
-(Vertex*)w;
+    (Vertex*)v toVertex:
+    (Vertex*)w;
 
 @end

@@ -10,7 +10,8 @@
 #endif // _MSC_VER > 1000
 
 
-class WinEditDoc : public CDocument {
+class WinEditDoc : public CDocument
+{
 protected: // create from serialization only
     WinEditDoc();
     DECLARE_DYNCREATE(WinEditDoc)

@@ -14,7 +14,8 @@
 // See DrumSequencer.cpp for the implementation of this class
 //
 
-class CDrumSequencerApp : public CWinAppEx {
+class CDrumSequencerApp : public CWinAppEx
+{
 public:
     CDrumSequencerApp();
     virtual ~CDrumSequencerApp();

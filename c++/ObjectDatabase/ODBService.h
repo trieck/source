@@ -9,7 +9,8 @@
 #define __ODBSERVICE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ODBService : public Service, IRunnable {
+class ODBService : public Service, IRunnable
+{
 public:
     // Construction / Destruction
     ODBService();

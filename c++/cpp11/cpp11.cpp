@@ -30,7 +30,8 @@ void abssort(float *x, unsigned N)
 extern template class std::vector<int>;
 
 // N1791: extended friend declaration
-template <class T> class B {
+template <class T> class B
+{
     friend T;
 };
 

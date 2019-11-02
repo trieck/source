@@ -9,7 +9,8 @@
 #define __STRSTREAM_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class StrStream : public IPeekableStream {
+class StrStream : public IPeekableStream
+{
 // Construction / Destruction
 private:
     StrStream();
@@ -33,7 +34,8 @@ public:
     virtual STDMETHODIMP Peek(void *pv, ULONG cb,
                               ULONG *pcbRead);
 
-    void Reset() {
+    void Reset()
+    {
         m_Pos = 0;
     }
 
@@ -45,7 +47,8 @@ private:
     void alloc();
     bool resize(ULONG cb);
     void free();
-    ULONG avail() const {
+    ULONG avail() const
+    {
         return m_Size - m_Pos;
     }
 

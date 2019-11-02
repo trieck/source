@@ -46,25 +46,20 @@ int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     DDrawApp *pApp = (DDrawApp*)AfxGetApp();
     ASSERT_VALID(pApp);
 
-    LPDIRECTDRAW pdd = pApp->GetDirectDraw();
-    pdd->AddRef();
+    auto pdd = pApp->GetDirectDraw();
 
     // set cooperative level
-    HRESULT hr = pdd->SetCooperativeLevel(*this, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
+    auto hr = pdd->SetCooperativeLevel(*this, DDSCL_FULLSCREEN | DDSCL_EXCLUSIVE);
     if (hr != DD_OK) {
         TRACE0("unable to set cooperative level.\n");
-        pdd->Release();
-        return FALSE;
+        return -1;
     }
 
-    hr = pdd->SetDisplayMode(1152, 864, 32);
+    hr = pdd->SetDisplayMode(1440, 900, 32, 0, DDSDM_STANDARDVGAMODE);
     if (hr != DD_OK) {
         TRACE0("unable to set display mode.\n");
-        pdd->Release();
-        return FALSE;
+        return -1;
     }
-
-    pdd->Release();
 
     if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
         return -1;

@@ -18,7 +18,8 @@
 
 // forward declarations
 
-class CPenteView : public CView {
+class CPenteView : public CView
+{
 protected:
     CPenteView();
     DECLARE_DYNCREATE(CPenteView)
@@ -27,7 +28,8 @@ protected:
 public:
     CPenteDoc* GetDocument();
 
-    inline	INT		GetBackgroundRes() {
+    inline	INT		GetBackgroundRes()
+    {
         return m_nBackground;
     }
     VOID			SetBackgroundBitmap(INT);

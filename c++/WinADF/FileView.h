@@ -4,7 +4,8 @@
 
 // FileView view
 
-class FileView : public TextView {
+class FileView : public TextView
+{
     DECLARE_DYNCREATE(FileView)
 
 protected:

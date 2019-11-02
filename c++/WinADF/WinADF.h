@@ -13,7 +13,8 @@
 // See WinADF.cpp for the implementation of this class
 //
 
-class WinADFApp : public CWinApp {
+class WinADFApp : public CWinApp
+{
 public:
     WinADFApp();
 

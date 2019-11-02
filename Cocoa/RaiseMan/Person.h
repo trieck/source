@@ -9,16 +9,17 @@
 #import <Foundation/Foundation.h>
 
 @interface Person :
-NSObject <NSCoding> {
+    NSObject <NSCoding>
+{
     NSString *personName;
     float expectedRaise;
 }
 - (NSString *)personName;
 - (void)setPersonName:
-(NSString *)s;
+    (NSString *)s;
 
 - (float)expectedRaise;
 - (void)setExpectedRaise:
-(float)f;
+    (float)f;
 
 @end

@@ -1,7 +1,7 @@
 // ddraw2.cpp : Defines the class behaviors for the application.
 //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "ddraw2.h"
 #include "draw.h"
 
@@ -29,7 +29,6 @@ END_MESSAGE_MAP()
 // DDrawApp construction
 
 DDrawApp::DDrawApp()
-    : pddraw(NULL)
 {
 }
 
@@ -86,7 +85,7 @@ BOOL DDrawApp::CreateDirectDraw()
     HRESULT hr;
 
     // create direct draw object
-    hr = DirectDrawCreate(NULL, &pddraw, NULL);
+    hr = DirectDrawCreateEx(NULL, (void**)&m_pdraw, IID_IDirectDraw7, nullptr);
     if (hr != DD_OK) {
         TRACE0("unable to create DirectDraw object.\n");
         return FALSE;
@@ -97,11 +96,5 @@ BOOL DDrawApp::CreateDirectDraw()
 
 int DDrawApp::ExitInstance()
 {
-    if (NULL != pddraw) {
-        ULONG result = pddraw->Release();
-        if (0 != result)
-            TRACE1("reference count non zero [%d] on exit!\n", result);
-    }
-
     return CWinApp::ExitInstance();
 }

@@ -5,7 +5,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // PenteBar window
 
-class PenteBar : public CStatusBar {
+class PenteBar : public CStatusBar
+{
 // Construction
 public:
     PenteBar();

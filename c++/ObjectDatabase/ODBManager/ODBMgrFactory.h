@@ -9,7 +9,8 @@
 #define __ODBMGRFACTORY_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ODBMgrFactory : public IClassFactory {
+class ODBMgrFactory : public IClassFactory
+{
 // Construction / Destruction
 private:
     ODBMgrFactory();	// new creation only
@@ -18,7 +19,8 @@ public:
 
 // Interface
     static ODBMgrFactory *Create();
-    static LONG GetLockCount() {
+    static LONG GetLockCount()
+    {
         return m_cLock;
     }
 

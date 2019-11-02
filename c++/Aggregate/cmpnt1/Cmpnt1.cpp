@@ -43,7 +43,8 @@ const char g_szProgID[] 		= "Aggregation.Component1.1";
 //
 // Component A
 //
-class CA : public IX {
+class CA : public IX
+{
 public:
     // IUnknown methods
     virtual HRESULT 	__stdcall QueryInterface(REFIID iid, PPVOID ppv);
@@ -51,7 +52,8 @@ public:
     virtual ULONG		__stdcall Release();
 
     // IX Methods
-    virtual void __stdcall Fx() {
+    virtual void __stdcall Fx()
+    {
         trace ("Fx");
     }
 
@@ -200,7 +202,8 @@ ULONG __stdcall CA :: Release()
 //
 // Class factory
 //
-class CFactory : public IClassFactory {
+class CFactory : public IClassFactory
+{
 public:
     // IUnknown methods
     virtual HRESULT __stdcall QueryInterface(REFIID iid, PPVOID ppv);

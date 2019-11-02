@@ -7,7 +7,8 @@
 #define MT_RIDGE_BIFUR		(3)
 #define MT_CROSSING			(4)
 
-class Minutia {
+class Minutia
+{
 public:
     Minutia();
     Minutia(const Minutia &rhs);

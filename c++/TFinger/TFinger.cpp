@@ -101,7 +101,8 @@ BOOL CTFingerApp::InitInstance()
 }
 
 // CAboutDlg dialog used for App About
-class CAboutDlg : public CDialog {
+class CAboutDlg : public CDialog
+{
 public:
     CAboutDlg();
 

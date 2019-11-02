@@ -146,58 +146,58 @@ typedef unsigned int yy_size_t;
 
 
 struct yy_buffer_state {
-FILE *yy_input_file;
+    FILE *yy_input_file;
 
-char *yy_ch_buf;		/* input buffer */
-char *yy_buf_pos;		/* current position in input buffer */
+    char *yy_ch_buf;		/* input buffer */
+    char *yy_buf_pos;		/* current position in input buffer */
 
-/* Size of input buffer in bytes, not including room for EOB
- * characters.
- */
-yy_size_t yy_buf_size;
+    /* Size of input buffer in bytes, not including room for EOB
+     * characters.
+     */
+    yy_size_t yy_buf_size;
 
-/* Number of characters read into yy_ch_buf, not including EOB
- * characters.
- */
-int yy_n_chars;
+    /* Number of characters read into yy_ch_buf, not including EOB
+     * characters.
+     */
+    int yy_n_chars;
 
-/* Whether we "own" the buffer - i.e., we know we created it,
- * and can realloc() it to grow it, and should free() it to
- * delete it.
- */
-int yy_is_our_buffer;
+    /* Whether we "own" the buffer - i.e., we know we created it,
+     * and can realloc() it to grow it, and should free() it to
+     * delete it.
+     */
+    int yy_is_our_buffer;
 
-/* Whether this is an "interactive" input source; if so, and
- * if we're using stdio for input, then we want to use getc()
- * instead of fread(), to make sure we stop fetching input after
- * each newline.
- */
-int yy_is_interactive;
+    /* Whether this is an "interactive" input source; if so, and
+     * if we're using stdio for input, then we want to use getc()
+     * instead of fread(), to make sure we stop fetching input after
+     * each newline.
+     */
+    int yy_is_interactive;
 
-/* Whether we're considered to be at the beginning of a line.
- * If so, '^' rules will be active on the next match, otherwise
- * not.
- */
-int yy_at_bol;
+    /* Whether we're considered to be at the beginning of a line.
+     * If so, '^' rules will be active on the next match, otherwise
+     * not.
+     */
+    int yy_at_bol;
 
-/* Whether to try to fill the input buffer when we reach the
- * end of it.
- */
-int yy_fill_buffer;
+    /* Whether to try to fill the input buffer when we reach the
+     * end of it.
+     */
+    int yy_fill_buffer;
 
-int yy_buffer_status;
+    int yy_buffer_status;
 #define YY_BUFFER_NEW 0
 #define YY_BUFFER_NORMAL 1
-/* When an EOF's been seen but there's still some text to process
- * then we mark the buffer as YY_EOF_PENDING, to indicate that we
- * shouldn't try reading from the input source any more.  We might
- * still have a bunch of tokens to match, though, because of
- * possible backing-up.
- *
- * When we actually see the EOF, we change the status to "new"
- * (via yyrestart()), so that the user can continue scanning by
- * just pointing yyin at a new input file.
- */
+    /* When an EOF's been seen but there's still some text to process
+     * then we mark the buffer as YY_EOF_PENDING, to indicate that we
+     * shouldn't try reading from the input source any more.  We might
+     * still have a bunch of tokens to match, though, because of
+     * possible backing-up.
+     *
+     * When we actually see the EOF, we change the status to "new"
+     * (via yyrestart()), so that the user can continue scanning by
+     * just pointing yyin at a new input file.
+     */
 #define YY_BUFFER_EOF_PENDING 2
 };
 
@@ -379,7 +379,7 @@ char *yytext;
 
 int yywrap (void)
 {
-return 1;
+    return 1;
 }
 
 int lineno = 1;
@@ -552,7 +552,8 @@ YY_DECL {
 
 #line 560 ".\\lexer.c"
 
-    if ( yy_init ) {
+    if ( yy_init )
+    {
         yy_init = 0;
 
 #ifdef YY_USER_INIT
@@ -575,7 +576,8 @@ YY_DECL {
         yy_load_buffer_state();
     }
 
-    while ( 1 ) {	/* loops until end-of-file is reached */
+    while ( 1 )  	/* loops until end-of-file is reached */
+    {
         yy_cp = yy_c_buf_p;
 
         /* Support of yytext. */
@@ -657,12 +659,14 @@ do_action:	/* This label is used only to access EOF actions. */
 #line 35 ".\\d:\\source\\c\\xi\\lexer.l"
             {
                 PSYMBOL sym = glookup(yytext);
-                if (sym == 0 && (sym = tlookup(yytext)) == 0) {
+                if (sym == 0 && (sym = tlookup(yytext)) == 0)
+                {
                     yylval.sym = tinstallf(yytext, SUNDEF, 0);
                     return ID;
                 }
 
-                switch (sym->type) {
+                switch (sym->type)
+                {
                 case SKEYWD:
                     yylval.sym = sym;
                     return KEYWORD;
@@ -1031,7 +1035,7 @@ register char *yy_bp;
         /* +2 for EOB chars. */
         register int number_to_move = yy_n_chars + 2;
         register char *dest = &yy_current_buffer->yy_ch_buf[
-                                  yy_current_buffer->yy_buf_size + 2];
+                           yy_current_buffer->yy_buf_size + 2];
         register char *source =
             &yy_current_buffer->yy_ch_buf[number_to_move];
 
@@ -1095,7 +1099,7 @@ static int input()
                 /* Reset buffer status. */
                 yyrestart( yyin );
 
-                /* fall through */
+            /* fall through */
 
             case EOB_ACT_END_OF_FILE: {
                 if ( yywrap() )

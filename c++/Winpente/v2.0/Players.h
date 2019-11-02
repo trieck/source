@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // CPlayers window
 
-class CPlayers : public CObject {
+class CPlayers : public CObject
+{
 // Construction
 public:
     CPlayers();

@@ -9,7 +9,8 @@
 #define __ODBMGRCOMPONENT_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ODBMgrComponent : public IComponent {
+class ODBMgrComponent : public IComponent
+{
 // Construction / Destruction
 public:
     ODBMgrComponent(LPUNKNOWN pUnknown);

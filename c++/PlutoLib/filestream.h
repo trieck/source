@@ -9,7 +9,8 @@
 #define __FILESTREAM_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class FileStream : public ISequentialStream {
+class FileStream : public ISequentialStream
+{
 // Construction / Destruction
 public:
     FileStream();

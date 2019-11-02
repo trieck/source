@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // SettingsDlg dialog
 
-class SettingsDlg : public CDialog {
+class SettingsDlg : public CDialog
+{
 // Construction
 public:
     SettingsDlg(CWnd* pParent = NULL);   // standard constructor

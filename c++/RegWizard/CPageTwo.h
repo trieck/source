@@ -7,7 +7,8 @@
 #include "resource.h"
 
 // CPropertyPage derived class
-class CPageTwo : public CPropertyPage {
+class CPageTwo : public CPropertyPage
+{
     DECLARE_DYNCREATE(CPageTwo);
 
 public:

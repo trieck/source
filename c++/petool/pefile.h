@@ -9,7 +9,8 @@
 #define __PEFILE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class PEFile {
+class PEFile
+{
 // Construction / Destruction
 public:
     PEFile();

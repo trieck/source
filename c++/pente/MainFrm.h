@@ -11,7 +11,8 @@
 #include "GripBar.h"
 #include "penteBar.h"
 
-class MainFrame : public CFrameWnd {
+class MainFrame : public CFrameWnd
+{
 
 protected: // create from serialization only
     MainFrame();

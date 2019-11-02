@@ -16,7 +16,8 @@
 ///////////////////////////////////////////////////////////////////
 // The CPenteApp application class
 
-class CPenteApp : public CWinApp {
+class CPenteApp : public CWinApp
+{
 protected:
     HINSTANCE			m_hDllInst;
     BOOL				m_fInitialized;
@@ -30,7 +31,8 @@ public:
 
     static	BOOL	GetRegistryInformation(LPCTSTR, LPCTSTR, PPBYTE, UINT);
     static	BOOL	UpdateRegistryInformation(LPCTSTR, LPCTSTR, LPBYTE, UINT, UINT nBytes = 0);
-    static  CString	GetRegPath() {
+    static  CString	GetRegPath()
+    {
         return m_lpszRegPath;
     }
 

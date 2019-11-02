@@ -13,7 +13,8 @@
 
 /////////////////////////////////////////////////////////////////////////////
 struct StringLess : std::binary_function <LPSTRING, LPSTRING, bool> {
-    bool operator()(LPSTRING left, LPSTRING right) const {
+    bool operator()(LPSTRING left, LPSTRING right) const
+    {
         int n = min(left->GetLength(), right->GetLength());
         return memcmp(left->GetData(), right->GetData(), n) < 0;
     }
@@ -22,7 +23,8 @@ struct StringLess : std::binary_function <LPSTRING, LPSTRING, bool> {
 class DictIterator;
 
 /////////////////////////////////////////////////////////////////////////////
-class Dictionary : public BEObject {
+class Dictionary : public BEObject
+{
 private:
     // Construction / Destruction
     Dictionary();
@@ -33,7 +35,8 @@ public:
 // Interface
     Dictionary &operator =(const Dictionary &rhs);
 
-    virtual ObjectType GetType() const {
+    virtual ObjectType GetType() const
+    {
         return BET_DICT;
     }
     virtual LPBEOBJECT Copy() const;
@@ -61,29 +64,36 @@ private:
 typedef Dictionary *LPDICTIONARY;
 
 /////////////////////////////////////////////////////////////////////////////
-class DictIterator {
+class DictIterator
+{
 public:
-    DictIterator(Dictionary::CIterator s, Dictionary::CIterator e) {
+    DictIterator(Dictionary::CIterator s, Dictionary::CIterator e)
+    {
         start = it = s;
         end = e;
     }
-    DictIterator(const DictIterator &rhs) {
+    DictIterator(const DictIterator &rhs)
+    {
         *this = rhs;
     }
-    DictIterator &operator = (const DictIterator &rhs) {
+    DictIterator &operator = (const DictIterator &rhs)
+    {
         if (this != &rhs) {
             start = it = rhs.start;
             end = rhs.end;
         }
         return *this;
     }
-    Dictionary::ObjectEntry GetNext() {
+    Dictionary::ObjectEntry GetNext()
+    {
         return *it++;
     }
-    bool HasNext() const {
+    bool HasNext() const
+    {
         return it != end;
     }
-    void Reset() {
+    void Reset()
+    {
         it = start;
     }
 private:

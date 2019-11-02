@@ -9,7 +9,8 @@
 #define __LIST_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class List : public BEObject {
+class List : public BEObject
+{
 private:
     // Construction / Destruction
     List();
@@ -20,14 +21,16 @@ public:
 // Interface
     List &operator =(const List &rhs);
 
-    virtual ObjectType GetType() const {
+    virtual ObjectType GetType() const
+    {
         return BET_LIST;
     }
     virtual LPBEOBJECT Copy() const;
 
     void AddObject(LPBEOBJECT o);
     LPBEOBJECT Get(unsigned index) const;
-    unsigned size() const {
+    unsigned size() const
+    {
         return list.size();
     }
 

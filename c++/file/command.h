@@ -10,7 +10,8 @@
 #define __COMMAND_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class CommandLine {
+class CommandLine
+{
 public:
 // Construction / Destruction
     CommandLine();

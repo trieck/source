@@ -8,7 +8,8 @@
 #include "stdafx.h"
 #include "pecommon.h"
 
-namespace PECommon {
+namespace PECommon
+{
 
 typedef struct {
     WORD    flag;

@@ -9,7 +9,8 @@
 #define __TRANSBMP_H__
 
 ///////////////////////////////////////////////////////////////////////
-class TransparentBitmap : public CBitmap {
+class TransparentBitmap : public CBitmap
+{
 public:
     // Construction / Destruction
     TransparentBitmap(UINT, COLORREF);

@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // ToolboxDlg dialog
 
-class ToolboxDlg : public CDialog {
+class ToolboxDlg : public CDialog
+{
 // Construction
 public:
     ToolboxDlg(CWnd * pParent = NULL);   // standard constructor

@@ -16,7 +16,8 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 LPDICTIONARY LoadDictionary(CFile *fp);
 LPTORRENTOBJECT LoadElement(CFile *fp);
@@ -60,7 +61,8 @@ LPDICTIONARY TorrentParser::Parse(CArchive &ar)
 
 /////////////////////////////////////////////////////////////////////////////
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 /////////////////////////////////////////////////////////////////////////////
 LPDICTIONARY LoadDictionary(CFile *fp)

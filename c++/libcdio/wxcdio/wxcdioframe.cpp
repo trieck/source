@@ -61,7 +61,7 @@ wxcdioFrame::wxcdioFrame(wxDocManager *manager, wxFrame *frame,
 
     m_menuHelp = new wxMenu();
     wxMenuItem* m_menuAbout;
-    m_menuAbout = new wxMenuItem( m_menuHelp, wxID_ABOUT, wxString( _("About") ) , _T("About wxCDIO"), wxITEM_NORMAL );
+    m_menuAbout = new wxMenuItem( m_menuHelp, wxID_ABOUT, wxString( _("About") ), _T("About wxCDIO"), wxITEM_NORMAL );
     m_menuHelp->Append( m_menuAbout );
 
     m_menuBar->Append( m_menuHelp, _("Help") );

@@ -9,7 +9,8 @@
 #include "window.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class WinThread {
+class WinThread
+{
 public:
 // Construction / Destruction
     WinThread();

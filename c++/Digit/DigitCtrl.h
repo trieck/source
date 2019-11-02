@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // CDigitCtrl window
 
-class CDigitCtrl : public CWnd {
+class CDigitCtrl : public CWnd
+{
 // Construction
 public:
     CDigitCtrl();
@@ -30,7 +31,8 @@ public:
 public:
     VOID SetBackColor(COLORREF lColor);
     BOOL			SetValue(UINT);
-    inline	UINT	GetCurrentDigit() {
+    inline	UINT	GetCurrentDigit()
+    {
         return m_nCurrentDigit;
     }
     virtual VOID	DrawDigit(CDC*);

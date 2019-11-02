@@ -9,7 +9,8 @@
 #define __ODBMGRDATAOBJ_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class ODBMgrDataObj : public IDataObject {
+class ODBMgrDataObj : public IDataObject
+{
 // Construction / Destruction
 public:
     ODBMgrDataObj(LPUNKNOWN pUnknown);

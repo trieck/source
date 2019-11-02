@@ -10,7 +10,8 @@
 
 #include "game.h"
 
-class PenteDoc : public CDocument {
+class PenteDoc : public CDocument
+{
 protected: // create from serialization only
     PenteDoc();
     DECLARE_DYNCREATE(PenteDoc)

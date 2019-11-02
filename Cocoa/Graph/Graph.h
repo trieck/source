@@ -11,26 +11,27 @@
 #import "Edge.h"
 
 @interface Graph :
-NSObject {
+    NSObject
+{
     NSMutableArray *vertices;
 }
 
 - (int)path:
-(Vertex*)v toVertex:
-(Vertex*)w;
+    (Vertex*)v toVertex:
+    (Vertex*)w;
 - (int)pathR:
-(int)v toVertex:
-(int)w;
+    (int)v toVertex:
+    (int)w;
 - (void)bfs:
-(Edge*)edge;
+    (Edge*)edge;
 - (unsigned)vertices;
 - (void)clear;
 - (NSEnumerator*)enumVertices;
 - (Vertex*)vertex:
-(NSPoint)pt;
+    (NSPoint)pt;
 - (void)addVertex:
-(NSPoint)pt;
+    (NSPoint)pt;
 - (void)removeVertex:
-(Vertex*)v;
+    (Vertex*)v;
 
 @end

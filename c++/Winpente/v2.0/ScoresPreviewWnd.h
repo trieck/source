@@ -10,7 +10,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // CScoresPreviewWnd window
 
-class CScoresPreviewWnd : public CWnd {
+class CScoresPreviewWnd : public CWnd
+{
 // Construction
 public:
     CScoresPreviewWnd();

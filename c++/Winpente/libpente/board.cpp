@@ -8,7 +8,8 @@
 #include "entry.h"
 #include "board.h"
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 uint32_t key(uint32_t row, uint32_t col);
 
@@ -98,7 +99,8 @@ EntryVec Board::empty()
     return v;
 }
 
-namespace {	// anonymous
+namespace  	// anonymous
+{
 
 /////////////////////////////////////////////////////////////////////////////
 uint32_t key(uint32_t row, uint32_t col)

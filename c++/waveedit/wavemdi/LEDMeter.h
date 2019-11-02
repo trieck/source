@@ -14,7 +14,8 @@
 #define COLOR_YELLOW	RGB(0xFF, 0xFF, 0)
 #define COLOR_RED		RGB(0xFF, 0, 0)
 
-class CLEDMeter : public CProgressCtrl {
+class CLEDMeter : public CProgressCtrl
+{
 // Construction
 public:
     CLEDMeter();

@@ -30,7 +30,8 @@ typedef struct tagInstruction {
 } Instruction;
 
 /////////////////////////////////////////////////////////////////////////////
-class Disassembler {
+class Disassembler
+{
 
 // Construction / Destruction
 public:

@@ -9,7 +9,8 @@
 #define __BSTRSTREAM_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class BstrStream : public IPeekableStream {
+class BstrStream : public IPeekableStream
+{
 // Construction / Destruction
 private:
     BstrStream();
@@ -33,7 +34,8 @@ public:
     virtual STDMETHODIMP Peek(void *pv, ULONG cb,
                               ULONG *pcbRead);
 
-    void Reset() {
+    void Reset()
+    {
         m_Pos = 0;
     }
 
@@ -48,7 +50,8 @@ private:
     void alloc();
     bool resize(ULONG cb);
     void free();
-    ULONG avail() const {
+    ULONG avail() const
+    {
         return m_Size - m_Pos;
     }
 

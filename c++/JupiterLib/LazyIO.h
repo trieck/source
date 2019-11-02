@@ -9,7 +9,8 @@
 #define __LAZYIO_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class LazyIO : public IRunnable {
+class LazyIO : public IRunnable
+{
 // Construction / Destruction
 public:
     LazyIO(uint16_t bsize, uint16_t hsize);
@@ -18,10 +19,12 @@ public:
 // Interface
     bool open(LPCSTR filename, OpenMode mode);
     void close();
-    uint64_t getFileSize() {
+    uint64_t getFileSize()
+    {
         return io.getFileSize();
     }
-    bool isOpen() const {
+    bool isOpen() const
+    {
         return io.isOpen();
     }
 

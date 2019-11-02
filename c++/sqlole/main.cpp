@@ -10,10 +10,12 @@
 using namespace std;
 
 struct _oleinit {
-    _oleinit() {
+    _oleinit()
+    {
         CoInitialize(NULL);
     }
-    ~_oleinit() {
+    ~_oleinit()
+    {
         CoUninitialize();
     }
 } oleinit;

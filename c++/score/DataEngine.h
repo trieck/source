@@ -13,14 +13,16 @@
 #define __DATAENGINE_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class DataEngine {
+class DataEngine
+{
 public:
     // Construction / Destruction
     DataEngine(const Measure *);
     virtual ~DataEngine();
 
     // Interface
-    operator MIDIHDR* () const {
+    operator MIDIHDR* () const
+    {
         return m_pData;
     }
 

@@ -3,7 +3,8 @@
 
 // WaitDlg dialog
 
-class WaitDlg : public CDialog {
+class WaitDlg : public CDialog
+{
 public:
     DECLARE_DYNAMIC(WaitDlg)
     WaitDlg(CWnd* pParent = NULL);   // standard constructor

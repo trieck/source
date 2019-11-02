@@ -10,7 +10,8 @@
 #endif // _MSC_VER > 1000
 
 
-class DDrawDoc : public CDocument {
+class DDrawDoc : public CDocument
+{
 protected: // create from serialization only
     DDrawDoc();
     DECLARE_DYNCREATE(DDrawDoc)

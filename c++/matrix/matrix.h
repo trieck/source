@@ -2,7 +2,8 @@
 #define __MATRIX_H__
 
 /////////////////////////////////////////////////////////////////////////////
-class Matrix {
+class Matrix
+{
 public:
 // Construction / Destruction
     Matrix(int m, int n);

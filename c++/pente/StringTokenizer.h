@@ -9,7 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class StringTokenizer {
+class StringTokenizer
+{
 public:
     StringTokenizer(LPCTSTR pinput, LPCTSTR pdelim);
     ~StringTokenizer();

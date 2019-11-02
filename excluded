@@ -4,6 +4,7 @@ bsc
 bz2
 class
 clw
+db
 dep
 dll
 exe
@@ -12,7 +13,7 @@ frx
 gz
 idb
 ilk
-ilk
+ipch
 jar
 lib
 log

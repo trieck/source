@@ -3,7 +3,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // CColorButtonCtrl : See ColorButtonCtl.cpp for implementation.
 
-class CColorButtonCtrl : public COleControl {
+class CColorButtonCtrl : public COleControl
+{
     DECLARE_DYNCREATE(CColorButtonCtrl)
 
 // Constructor

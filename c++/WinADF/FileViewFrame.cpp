@@ -48,7 +48,7 @@ BOOL FileViewFrame::PreCreateWindow(CREATESTRUCT& cs)
     return CMDIChildWnd::PreCreateWindow(cs);
 }
 
-BOOL FileViewFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle , CWnd* pParentWnd , CCreateContext* pContext)
+BOOL FileViewFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext)
 {
     WinADFDoc *pDoc = (WinADFDoc*)pContext->m_pCurrentDoc;
     if (pDoc == NULL)

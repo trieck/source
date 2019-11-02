@@ -11,13 +11,15 @@
 #define ID_LISTBOX 12
 
 // CWinApp derived class
-class CDlgApp : public CWinApp {
+class CDlgApp : public CWinApp
+{
 public:
     virtual BOOL InitInstance();
 };
 
 // CFrameWnd derived class
-class CDlgWin : public CFrameWnd {
+class CDlgWin : public CFrameWnd
+{
 private:
     void UpdateClientColor();
     void SetWndFont(CWnd* pWnd, CString szFont, LONG lSize);

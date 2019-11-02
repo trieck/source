@@ -3,7 +3,8 @@
 
 // WinADFView view
 
-class WinADFView : public CListView {
+class WinADFView : public CListView
+{
     DECLARE_DYNCREATE(WinADFView)
 
 protected:

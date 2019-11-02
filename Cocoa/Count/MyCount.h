@@ -3,10 +3,11 @@
 #import <Cocoa/Cocoa.h>
 
 @interface MyCount :
-NSObject {
+    NSObject
+{
     IBOutlet id inputText;
     IBOutlet id outputText;
 }
 - (IBAction)setCount:
-(id)sender;
+    (id)sender;
 @end

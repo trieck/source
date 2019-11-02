@@ -12,17 +12,20 @@
 #include "PenteDoc.h"
 #include "ResDll\resource.h"
 
-class CColorPage : public CPropertyPage {
+class CColorPage : public CPropertyPage
+{
     DECLARE_DYNCREATE(CColorPage);
 
 public:
     CColorPage();
     ~CColorPage();
 
-    inline COLORREF GetBackColor() {
+    inline COLORREF GetBackColor()
+    {
         return m_lBackColor;
     };
-    inline COLORREF GetGridColor() {
+    inline COLORREF GetGridColor()
+    {
         return m_lGridColor;
     };
 protected:
@@ -35,10 +38,12 @@ private:
     CPenteDoc*	m_pDoc;
     BOOL		m_fUseBackColor;
 private:
-    inline CStatic& BackColor() {
+    inline CStatic& BackColor()
+    {
         return *(CStatic*) GetDlgItem(IDC_BACKCOLOR);
     };
-    inline CStatic& GridColor() {
+    inline CStatic& GridColor()
+    {
         return *(CStatic*) GetDlgItem(IDC_GRIDCOLOR);
     };
 
