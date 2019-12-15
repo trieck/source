@@ -1,4 +1,4 @@
-#!/usr/local/bin/pixie
+#!/usr/bin/env pixie
 
 include 'lib/sort'
 include 'lib/golden'
