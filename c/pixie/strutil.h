@@ -10,11 +10,7 @@
 #ifndef __STRUTIL_H__
 #define __STRUTIL_H__
 
-typedef long Handle;
-
-typedef struct {
-    Handle handle;				/* string handle */
-} String;
+typedef intptr_t String;
 
 String stringalloc(void);
 unsigned stringlen(String s);

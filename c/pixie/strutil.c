@@ -12,81 +12,80 @@
 #include "strutil.h"
 #include "xmalloc.h"
 
-#define STRLEN 100				/* initial string length */
+#define STRLEN 100  /* initial string length */
 
-#define HANDLE2REP(h) ((StringRep*)(h))
-#define REP2HANDLE(r) ((Handle)(r))
+#define STRING2REP(h) ((StringRep*)(h))
+#define REP2STRING(r) ((String)(r))
 
 /* string representation */
 typedef struct {
-    char *v;					/* string data */
-    unsigned n;					/* length of string */
-    unsigned m;					/* allocated size */
+    char *str;      /* string data */
+    unsigned len;   /* length of string */
+    unsigned size;  /* allocated size */
 } StringRep;
 
-static Handle getstring(void);
+static String getstring(void);
 static StringRep *allocrep(void);
 
 /* allocate a string */
 String stringalloc()
 {
-    String s;
-    s.handle = getstring();
+    String s = getstring();
     return s;
 }
 
 /* return length of string */
 unsigned stringlen(String s)
 {
-    StringRep *rep = HANDLE2REP(s.handle);
-    return rep->n;
+    StringRep *rep = STRING2REP(s);
+    return rep->len;
 }
 
-Handle getstring(void)
+String getstring(void)
 {
     StringRep *rep = allocrep();
-    Handle handle = REP2HANDLE(rep);
-    return handle;
+    String s = REP2STRING(rep);
+    return s;
 }
 
 /* allocate a string representation */
 StringRep *allocrep(void)
 {
     StringRep *rep = xmalloc(sizeof(StringRep));
-    rep->v = (char *) xmalloc(STRLEN);
-    rep->v[0] = '\0';
-    rep->n = 0;
-    rep->m = STRLEN;
+    rep->str = (char *) xmalloc(STRLEN);
+    rep->str[0] = '\0';
+    rep->len = 0;
+    rep->size = STRLEN;
     return rep;
 }
 
 /* free a string */
 void stringfree(String s)
 {
-    StringRep *rep = HANDLE2REP(s.handle);
-    xfree(rep->v);
+    StringRep *rep = STRING2REP(s);
+    xfree(rep->str);
     xfree(rep);
 }
 
 /* return a C style string */
 const char *stringptr(String s)
 {
-    StringRep *rep = HANDLE2REP(s.handle);
-    rep->v[rep->n] = '\0';
-    return rep->v;
+    StringRep *rep = STRING2REP(s);
+    rep->str[rep->len] = '\0';
+    return rep->str;
 }
 
 /* push a character onto a string */
 void stringpush(String s, char c)
 {
-    StringRep *rep = HANDLE2REP(s.handle);
+    StringRep *rep = STRING2REP(s);
 
-    if (rep->n == rep->m - 1) {
-        rep->v = (char *) xrealloc(rep->v, rep->m * 2);
-        rep->m = rep->m * 2;
+    if (rep->len == rep->size - 1) {
+        rep->str = (char *) xrealloc(rep->str, rep->size * 2);
+        rep->size *= 2;
     }
 
-    rep->v[rep->n++] = c;
+    rep->str[rep->len++] = c;
 }
 
 /* push a char* onto a string */
