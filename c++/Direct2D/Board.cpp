@@ -3,7 +3,7 @@
 // BOARD.CPP
 //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "Board.h"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -18,13 +18,13 @@ Board::~Board()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Board::Render(ID2D1RenderTarget *pTarget, const CRect &rc)
+void Board::Render(ID2D1RenderTarget* pTarget, const CRect& rc)
 {
-    D2D1_SIZE_F size = m_bitmap->GetSize();
+    const auto size = m_bitmap->GetSize();
 
-    D2D1_POINT_2F upperLeftCorner = D2D1::Point2F(
-                                        (FLOAT)-rc.left + CX_BORDER,
-                                        (FLOAT)-rc.top + CY_BORDER);
+    const auto upperLeftCorner = D2D1::Point2F(
+        static_cast<FLOAT>(-rc.left) + CX_BORDER,
+        static_cast<FLOAT>(-rc.top) + CY_BORDER);
 
     pTarget->DrawBitmap(
         m_bitmap,
@@ -37,39 +37,39 @@ void Board::Render(ID2D1RenderTarget *pTarget, const CRect &rc)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-HRESULT Board::Create(ID2D1RenderTarget *pTarget)
+HRESULT Board::Create(ID2D1RenderTarget* pTarget)
 {
     Destroy();
 
-    CSize dims = GetDimensions();
+    const auto dims = GetDimensions();
 
     // Create a compatible render target
     CComPtr<ID2D1BitmapRenderTarget> pbmTarget;
-    HRESULT hr = pTarget->CreateCompatibleRenderTarget(
-                     D2D1::SizeF((FLOAT)dims.cx, (FLOAT)dims.cy),
-                     &pbmTarget);
+    auto hr = pTarget->CreateCompatibleRenderTarget(
+        D2D1::SizeF(static_cast<FLOAT>(dims.cx), static_cast<FLOAT>(dims.cy)),
+        &pbmTarget);
     if (FAILED(hr))
         return hr;
 
     CComPtr<ID2D1SolidColorBrush> pBgBrush;
     hr = pbmTarget->CreateSolidColorBrush(
-             D2D1::ColorF(D2D1::ColorF::LightSteelBlue),
-             &pBgBrush);
+        D2D1::ColorF(D2D1::ColorF::LightSteelBlue),
+        &pBgBrush);
     if (FAILED(hr))
         return hr;
 
     CComPtr<ID2D1SolidColorBrush> pGridBrush;
     hr = pbmTarget->CreateSolidColorBrush(
-             D2D1::ColorF(D2D1::ColorF::DarkSlateGray),
-             &pGridBrush);
+        D2D1::ColorF(D2D1::ColorF::DarkSlateGray),
+        &pGridBrush);
     if (FAILED(hr))
         return hr;
 
-    D2D1_RECT_F rc = D2D1::RectF(0, 0, (FLOAT)dims.cx, (FLOAT)dims.cy);
-    FLOAT cx = FLOAT(dims.cx) / CX_SQUARES;
-    FLOAT cy = FLOAT(dims.cy) / CY_SQUARES;
+    const auto rc = D2D1::RectF(0, 0, static_cast<FLOAT>(dims.cx), static_cast<FLOAT>(dims.cy));
+    const auto cx = FLOAT(dims.cx) / CX_SQUARES;
+    const auto cy = FLOAT(dims.cy) / CY_SQUARES;
 
-    D2D1_POINT_2F ptStart = D2D1::Point2F(cx, 0);
+    auto ptStart = D2D1::Point2F(cx, 0);
     D2D1_POINT_2F ptEnd;
 
     pbmTarget->BeginDraw();
@@ -122,7 +122,7 @@ CRect Board::GetBoundingRect()
 {
     CRect rc;
 
-    CSize sz = Board::GetDimensions();
+    const auto sz = GetDimensions();
 
     rc.right = sz.cx + (CX_BORDER * 2);
     rc.bottom = sz.cy + (CY_BORDER * 2);

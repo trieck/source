@@ -4,11 +4,15 @@
 
 #pragma once
 
+#include "aboutdlg.h"
 #include "Board.h"
+#include "resource.h"
+#include "Direct2DView.h"
+#include <atlctrlw.h>
 
-typedef CWinTraits<WS_OVERLAPPED | 	WS_CAPTION | WS_SYSMENU |
-WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_MINIMIZEBOX, WS_EX_APPWINDOW |
-WS_EX_WINDOWEDGE> CMainFrameTraits;
+typedef CWinTraits<WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |
+                   WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_MINIMIZEBOX, WS_EX_APPWINDOW |
+                   WS_EX_WINDOWEDGE> CMainFrameTraits;
 
 class CMainFrame;
 typedef CFrameWindowImpl<CMainFrame, CWindow, CMainFrameTraits> CMainFrameImpl;
@@ -24,35 +28,35 @@ public:
     CDirect2DView m_view;
     CCommandBarCtrl m_CmdBar;
 
-    virtual BOOL PreTranslateMessage(MSG* pMsg)
+    BOOL PreTranslateMessage(MSG* pMsg) override
     {
-        if(CMainFrameImpl::PreTranslateMessage(pMsg))
+        if (CMainFrameImpl::PreTranslateMessage(pMsg))
             return TRUE;
 
         return m_view.PreTranslateMessage(pMsg);
     }
 
-    virtual BOOL OnIdle()
+    BOOL OnIdle() override
     {
         UIUpdateToolBar();
         return FALSE;
     }
 
     BEGIN_UPDATE_UI_MAP(CMainFrame)
-    UPDATE_ELEMENT(ID_VIEW_TOOLBAR, UPDUI_MENUPOPUP)
-    UPDATE_ELEMENT(ID_VIEW_STATUS_BAR, UPDUI_MENUPOPUP)
+            UPDATE_ELEMENT(ID_VIEW_TOOLBAR, UPDUI_MENUPOPUP)
+            UPDATE_ELEMENT(ID_VIEW_STATUS_BAR, UPDUI_MENUPOPUP)
     END_UPDATE_UI_MAP()
 
-    BEGIN_MSG_MAP(CMainFrame)
-    MSG_WM_CREATE(OnCreate)
-    MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
-    COMMAND_ID_HANDLER(ID_APP_EXIT, OnFileExit)
-    COMMAND_ID_HANDLER(ID_FILE_NEW, OnFileNew)
-    COMMAND_ID_HANDLER(ID_VIEW_TOOLBAR, OnViewToolBar)
-    COMMAND_ID_HANDLER(ID_VIEW_STATUS_BAR, OnViewStatusBar)
-    COMMAND_ID_HANDLER(ID_APP_ABOUT, OnAppAbout)
-    CHAIN_MSG_MAP(CUpdateUI<CMainFrame>)
-    CHAIN_MSG_MAP(CMainFrameImpl)
+BEGIN_MSG_MAP(CMainFrame)
+        MSG_WM_CREATE(OnCreate)
+        MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
+        COMMAND_ID_HANDLER(ID_APP_EXIT, OnFileExit)
+        COMMAND_ID_HANDLER(ID_FILE_NEW, OnFileNew)
+        COMMAND_ID_HANDLER(ID_VIEW_TOOLBAR, OnViewToolBar)
+        COMMAND_ID_HANDLER(ID_VIEW_STATUS_BAR, OnViewStatusBar)
+        COMMAND_ID_HANDLER(ID_APP_ABOUT, OnAppAbout)
+        CHAIN_MSG_MAP(CUpdateUI<CMainFrame>)
+        CHAIN_MSG_MAP(CMainFrameImpl)
     END_MSG_MAP()
 
     // Handler prototypes (uncomment arguments if needed):
@@ -63,19 +67,19 @@ public:
     LRESULT OnCreate(LPCREATESTRUCT pcs)
     {
         // create command bar window
-        HWND hWndCmdBar = m_CmdBar.Create(m_hWnd, rcDefault, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
+        const auto hWndCmdBar = m_CmdBar.Create(m_hWnd, rcDefault, nullptr, ATL_SIMPLE_CMDBAR_PANE_STYLE);
         // attach menu
         m_CmdBar.AttachMenu(GetMenu());
         // load command bar images
         m_CmdBar.LoadImages(IDR_MAINFRAME);
         // remove old menu
-        SetMenu(NULL);
+        SetMenu(nullptr);
 
-        HWND hWndToolBar = CreateSimpleToolBarCtrl(m_hWnd, IDR_MAINFRAME, FALSE, ATL_SIMPLE_TOOLBAR_PANE_STYLE);
+        const auto hWndToolBar = CreateSimpleToolBarCtrl(m_hWnd, IDR_MAINFRAME, FALSE, ATL_SIMPLE_TOOLBAR_PANE_STYLE);
 
         CreateSimpleReBar(ATL_SIMPLE_REBAR_NOBORDER_STYLE);
         AddSimpleReBarBand(hWndCmdBar);
-        AddSimpleReBarBand(hWndToolBar, NULL, TRUE);
+        AddSimpleReBarBand(hWndToolBar, nullptr, TRUE);
 
         CreateSimpleStatusBar(ATL_IDS_IDLEMESSAGE, WS_CHILD | WS_VISIBLE |
                               WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
@@ -84,10 +88,11 @@ public:
         UISetCheck(ID_VIEW_TOOLBAR, 1);
         UISetCheck(ID_VIEW_STATUS_BAR, 1);
 
-        m_hWndClient = m_view.Create(m_hWnd, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+        m_hWndClient = m_view.Create(m_hWnd, rcDefault, nullptr,
+                                     WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
 
         // register object for message filtering and idle updates
-        CMessageLoop* pLoop = _Module.GetMessageLoop();
+        auto* pLoop = _Module.GetMessageLoop();
         ATLASSERT(pLoop != NULL);
         pLoop->AddMessageFilter(this);
         pLoop->AddIdleHandler(this);
@@ -101,7 +106,7 @@ public:
     LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
     {
         // unregister message filtering and idle updates
-        CMessageLoop* pLoop = _Module.GetMessageLoop();
+        auto* pLoop = _Module.GetMessageLoop();
         ATLASSERT(pLoop != NULL);
         pLoop->RemoveMessageFilter(this);
         pLoop->RemoveIdleHandler(this);
@@ -128,7 +133,7 @@ public:
         static BOOL bVisible = TRUE;	// initially visible
         bVisible = !bVisible;
         CReBarCtrl rebar = m_hWndToolBar;
-        int nBandIndex = rebar.IdToIndex(ATL_IDW_BAND_FIRST + 1);	// toolbar is 2nd added band
+        const auto nBandIndex = rebar.IdToIndex(ATL_IDW_BAND_FIRST + 1);	// toolbar is 2nd added band
         rebar.ShowBand(nBandIndex, bVisible);
         UISetCheck(ID_VIEW_TOOLBAR, bVisible);
         UpdateLayout();
@@ -138,7 +143,7 @@ public:
 
     LRESULT OnViewStatusBar(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
     {
-        BOOL bVisible = !::IsWindowVisible(m_hWndStatusBar);
+        const auto bVisible = !::IsWindowVisible(m_hWndStatusBar);
         ::ShowWindow(m_hWndStatusBar, bVisible ? SW_SHOWNOACTIVATE : SW_HIDE);
         UISetCheck(ID_VIEW_STATUS_BAR, bVisible);
         UpdateLayout();
@@ -155,22 +160,22 @@ public:
 
     void ResizeFrameByBoard()
     {
-        CRect rc = Board::GetBoundingRect();
+        auto rc = Board::GetBoundingRect();
 
         // make room for the status bar
         CRect rcStatus;
-        CStatusBarCtrl wndStatus(m_hWndStatusBar);
+        const CStatusBarCtrl wndStatus(m_hWndStatusBar);
         wndStatus.GetWindowRect(rcStatus);
         rcStatus.OffsetRect(-rcStatus.left, -rcStatus.top);
 
         // make room for the toolbar
         CRect rcToolbar;
-        CReBarCtrl rebar = m_hWndToolBar;
+        const CReBarCtrl rebar = m_hWndToolBar;
         rebar.GetWindowRect(rcToolbar);
         rcToolbar.OffsetRect(-rcToolbar.left, -rcToolbar.top);
 
         // toolbar is 2nd added band
-        int nBandIndex = rebar.IdToIndex(ATL_IDW_BAND_FIRST + 1);
+        const auto nBandIndex = rebar.IdToIndex(ATL_IDW_BAND_FIRST + 1);
 
         REBARBANDINFO rbbi;
         memset(&rbbi, 0, sizeof(REBARBANDINFO));
@@ -184,11 +189,11 @@ public:
         if ((rbbi.fStyle & RBBS_HIDDEN) == 0)
             rc.bottom += rcToolbar.Height();
 
-        DWORD style = GetStyle();
-        DWORD dwExStyle = GetExStyle() | WS_EX_CLIENTEDGE;
+        const auto style = GetStyle();
+        const auto dwExStyle = GetExStyle() | WS_EX_CLIENTEDGE;
         AdjustWindowRectEx(&rc, style, TRUE, dwExStyle);
 
-        SetWindowPos(NULL, 0, 0, rc.Width(), rc.Height(),
+        SetWindowPos(nullptr, 0, 0, rc.Width(), rc.Height(),
                      SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);
     }
 };
