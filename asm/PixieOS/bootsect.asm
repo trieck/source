@@ -101,7 +101,7 @@ no386:
     
 ; checks whether we are running in real mode
 ;
-check_mode
+check_mode:
     mov eax, cr0        ; get control register 0 in eax
     and al, 1           ; check if PM bit is set
     jnz not_real_mode
