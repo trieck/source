@@ -1,9 +1,8 @@
 OBJECT = bootsect.bin
 IMAGE = $(OBJECT).img
-
 AFLAGS = -f bin
 
-all:	$(OBJECT) $(IMAGE)
+all: $(OBJECT) $(IMAGE)
 
 $(OBJECT):
 	@-nasm bootsect.asm $(AFLAGS) -o $@
@@ -19,7 +18,8 @@ install:
 	partcopy bootsect.bin 0 200 -f0
 
 clean:
-	@-rm -f $(OBJECT) $(IMAGE) > /dev/null
+	@-rm -f $(OBJECT) $(IMAGE)
+
 
 	
 	

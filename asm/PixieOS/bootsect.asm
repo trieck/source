@@ -12,7 +12,7 @@ org 0
 jmp start           ; skip over data
 
 bootdrv db 0
-copymsg db '[PixieOS] Copyright (c)2001 Thomas A. Rieck', 13, 10, 0
+copymsg db '[PixieOS] Copyright (c)2001-2020 Thomas A. Rieck', 13, 10, 0
 checkmsg db 'Checking processor...', 13, 10, 0
 chkmdmsg db 'Checking CPU mode...', 13, 10, 0
 no386msg db 'Sorry, at least an 80386 processor is required.', 13, 10, 0
@@ -147,6 +147,10 @@ get_key:
 ; clear the screen
 ;
 clear_scn:
+    xor ah, ah          ; set video mode
+    mov al, 0x03        ; 80x25 color text
+    int 0x10
+
     xor al, al          ; clear display window
     xor cx, cx          ; upper left corner
     mov dx, 0x184f      ; lower right corner
