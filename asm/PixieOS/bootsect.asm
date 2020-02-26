@@ -16,7 +16,7 @@ copymsg db '[PixieOS] Copyright (c)2001 Thomas A. Rieck', 13, 10, 0
 checkmsg db 'Checking processor...', 13, 10, 0
 chkmdmsg db 'Checking CPU mode...', 13, 10, 0
 no386msg db 'Sorry, at least an 80386 processor is required.', 13, 10, 0
-v86msg db 'System can not run in V86 mode.', 13, 10, 0
+v86msg db 'System cannot run in V86 mode.', 13, 10, 0
 bootmsg db 'Booting System...', 13, 10, 0
 rebootmsg db 'Press any key to reboot', 13, 10, 0
 readmsg db 'Loading superblock image...', 13, 10, 0
@@ -82,8 +82,8 @@ check_cpu:
     popf                ; pop this value into the flag register
     pushf               ; push flags onto the stack
     pop ax              ; and get flags into ax
-    and ah, 0x0f0       ; try to set high nibble
-    cmp ah, 0x0f0       ; the nibble is never 0f0h on an 80386
+    and ah, 0x0f0       ; try to set high nybble
+    cmp ah, 0x0f0       ; the nybble is never 0f0h on an 80386
     je no386
     mov ah, 0x70        ; try to set NT and IOPL
     push ax             ; need to understand this better
