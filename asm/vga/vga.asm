@@ -44,8 +44,38 @@ b_loop:
     int 20h         ; end
 
 
+
 ; supply bx = color value, dx = row, cx = column
 ; assumes es = a0000h
-
 ega_pixel:
+    push ax
+    push bx
+    push cx
+    push dx
+    xor di, di
+    mov ax, dx      ; get 80 * dx
+    shl dx, 1
+    shl dx, 1
+    add dx, ax
+    mov ax, cx
+    mov cl, 4
+    shl dx, cl      ; dx now multiplied by 80 (16*5)
+    push dx         ; put into index
+    pop di
+    mov dx, ax      ; get column no.
+    and dx, 7       ; find col. no mod 7
+    mov cl, 3
+    shr ax, cl      ; cx / 8
+    add di, ax      ; di now holds byte addr in video buffer
+    neg dl
+    add dl, 7
+    mov cl, dl      ; get bit to turn on
+    mov al, 1
+    shl al, cl
+    mov cl, al      ; bit set in cl is bit to turn on (for ORing)
+    mov ch, 0ffh
+    sub ch, cl      ; ch has same bit turned off (for ANDing).
+
+blue:
+
     retn

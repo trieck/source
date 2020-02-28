@@ -3,8 +3,8 @@ AFLAGS = -f bin
 
 all: $(OBJECT) 
 
-$(OBJECT):
-	@-nasm $(AFLAGS) vga.asm -o $@
+$(OBJECT): vga.asm
+	nasm $(AFLAGS) vga.asm -o $@
 
 clean:
 	@-rm -f $(OBJECT)
