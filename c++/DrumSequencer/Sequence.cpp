@@ -39,16 +39,17 @@ Sequence::~Sequence(void)
 
 void Sequence::ToggleSub(const CPoint& pt)
 {
-    int x = pt.x % NSUBS;
-    int y = pt.y % NINSTRUMENTS;
-    m_beats[y][x] = !m_beats[y][x];
+    const auto x = pt.x % NSUBS;
+    const auto y = pt.y % NINSTRUMENTS;
+    m_beats[x][y] = !m_beats[x][y];
 }
 
-bool Sequence::GetBeat(int x, int y) const
+bool Sequence::GetBeat(int sub, int instrument) const
 {
-    x = x % NSUBS;
-    y = y % NINSTRUMENTS;
-    return m_beats[y][x];
+    sub = sub % NSUBS;
+    instrument = instrument % NINSTRUMENTS;
+
+    return m_beats[sub][instrument];
 }
 
 BYTE Sequence::GetInstrument(int i) const

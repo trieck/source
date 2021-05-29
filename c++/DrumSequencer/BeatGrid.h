@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Sequence.h"
+#include "sequence.h"
 
 class BeatGrid
 {
 public:
-    BeatGrid(void);
-    ~BeatGrid(void);
+    BeatGrid();
+    ~BeatGrid();
     void Draw(CDC* pDC);
 
     enum { CX_SUB = 30 };		// width of each subdivision

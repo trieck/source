@@ -5,15 +5,13 @@
 #include "miditime.h"
 
 ANON_BEGIN
-MIDISHORTEVENT* Tempo(int bpm);
-MIDISHORTEVENT* NoteOn(BYTE data, BYTE velocity);
-MIDISHORTEVENT* NoteOff(BYTE data);
-void PutEvent(LPSTR *ppdata, const MIDISHORTEVENT*);
+void tempo(LPSTR* stream, int bpm);
+void noteOn(LPSTR* stream, BYTE data, BYTE velocity, Duration delta);
+void noteOff(LPSTR* stream, BYTE data, Duration delta);
 ANON_END
 
-MidiBuffer::MidiBuffer()
+MidiBuffer::MidiBuffer() : m_header({})
 {
-    memset(&m_header, 0, sizeof(MIDIHDR));
 }
 
 MidiBuffer::~MidiBuffer()
@@ -24,51 +22,47 @@ MidiBuffer::~MidiBuffer()
 void MidiBuffer::Alloc(UINT nSize)
 {
     Free();
-    m_header.dwBufferLength = m_header.dwBytesRecorded = nSize;
+    m_header.dwBufferLength = nSize;
+    m_header.dwBytesRecorded = 0;
     m_header.lpData = new CHAR[nSize];
-    if (m_header.lpData == NULL)
+    if (m_header.lpData == nullptr)
         AfxThrowMemoryException();
 }
 
 void MidiBuffer::Free()
 {
-    if (m_header.lpData)
-        delete [] m_header.lpData;
+    delete [] m_header.lpData;
     memset(&m_header, 0, sizeof(MIDIHDR));
 }
 
-void MidiBuffer::Encode(const Sequence & seq)
+void MidiBuffer::Encode(const Sequence& seq)
 {
     // Determine the size of the buffer needed
-    UINT size = (Sequence::NINSTRUMENTS * Sequence::NSUBS)	/* notes */
-                * 2	/* note-on + note-off */
-                * sizeof(MIDISHORTEVENT)
-                + sizeof(MIDISHORTEVENT);	// tempo
+    const auto size = (Sequence::NINSTRUMENTS * Sequence::NSUBS) /* notes */
+        * sizeof(MIDISHORTEVENT)
+        + sizeof(MIDISHORTEVENT); // tempo
 
     if (size > m_header.dwBufferLength) {
         Alloc(size);
     }
 
-    LPSTR pdata = m_header.lpData;
-    PutEvent(&pdata, Tempo(100));
-
+    auto pdata = m_header.lpData;
+    tempo(&pdata, 90);
     m_header.dwBytesRecorded = sizeof(MIDISHORTEVENT);
 
-    BYTE instrument;
-    for (int i = 0; i < Sequence::NSUBS; i++) {
-        for (int j = 0; j < Sequence::NINSTRUMENTS; j++) {
-            instrument = seq.GetInstrument(j);
-            if (seq.GetBeat(i, j)) {
-                PutEvent(&pdata, NoteOn(instrument, 127));
-            } else {
-                PutEvent(&pdata, NoteOn(instrument, 0));
-            }
-            m_header.dwBytesRecorded += sizeof(MIDISHORTEVENT);
-        }
+    for (auto i = 0; i < Sequence::NSUBS; i++) {
+        auto delta = i == 0 ? EmptyNote: SixteenthNote;
+        for (auto j = 0; j < Sequence::NINSTRUMENTS; j++) {
+            const auto instrument = seq.GetInstrument(j);
 
-        for (int j = 0; j < Sequence::NINSTRUMENTS; j++) {
-            instrument = seq.GetInstrument(j);
-            PutEvent(&pdata, NoteOff(instrument));
+            if (j > 0 && delta != EmptyNote) {
+                delta = EmptyNote;
+            }
+            if (seq.GetBeat(i,j)) {
+                noteOn(&pdata, instrument, 127, delta);
+            } else {
+                noteOff(&pdata, instrument, delta);
+            }
             m_header.dwBytesRecorded += sizeof(MIDISHORTEVENT);
         }
     }
@@ -78,62 +72,47 @@ void MidiBuffer::Encode(const Sequence & seq)
 
 ANON_BEGIN
 
-MIDISHORTEVENT* Tempo(int bpm)
-{
-    static MIDISHORTEVENT event;
-    memset(&event, 0, sizeof(MIDISHORTEVENT));
+    void tempo(LPSTR* stream, int bpm)
+    {
+        const auto microseconds = MidiTime::BPMToMicroseconds(bpm);
 
-    DWORD microseconds = MidiTime::BPMToMicroseconds(bpm);
+        MIDISHORTEVENT event = {};
+        event.event = TEMPO_CHANGE(microseconds);
 
-    event.delta = 0;
-    event.id = 0;
-    event.event = TEMPO_CHANGE(microseconds);
+        memcpy(*stream, &event, sizeof(MIDISHORTEVENT));
+        *stream += sizeof(MIDISHORTEVENT);
+    }
 
-    return &event;
-}
+    void noteOn(LPSTR* stream, BYTE data, BYTE velocity, Duration delta)
+    {
+        MIDISHORTEVENT event = {};
 
-MIDISHORTEVENT* NoteOn(BYTE data, BYTE velocity)
-{
-    static MIDISHORTEVENT event;
-    memset(&event, 0, sizeof(MIDISHORTEVENT));
+        MidiMessage message;
+        message.SetData(data);
+        message.SetStatus(NOTEON(0));
+        message.SetVelocity(velocity);
 
-    MidiMessage message;
-    message.SetData(data);
-    message.SetStatus(NOTEON(0));
-    message.SetVelocity(velocity);
+        event.delta = MidiTime::DurationToTicks(delta);
+        event.event = message;
 
-    event.delta = 0;
-    event.id = 0;
-    event.event = message;
+        memcpy(*stream, &event, sizeof(MIDISHORTEVENT));
+        *stream += sizeof(MIDISHORTEVENT);
+    }
 
-    return &event;
-}
+    void noteOff(LPSTR* stream, BYTE data, Duration delta)
+    {
+        MIDISHORTEVENT event = {};
 
-MIDISHORTEVENT* NoteOff(BYTE data)
-{
-    static MIDISHORTEVENT event;
-    memset(&event, 0, sizeof(MIDISHORTEVENT));
+        MidiMessage message;
+        message.SetData(data);
+        message.SetStatus(NOTEOFF(0));
+        message.SetVelocity(0);
 
-    MidiMessage message;
-    message.SetData(data);
-    message.SetStatus(NOTEOFF(0));
-    message.SetVelocity(0);
+        event.delta = MidiTime::DurationToTicks(delta);
+        event.event = message;
 
-    event.delta = 20;
-    event.id = 0;
-    event.event = message;
-
-    return &event;
-}
-
-void PutEvent(LPSTR *ppdata, const MIDISHORTEVENT *event)
-{
-    ASSERT(*ppdata != NULL);
-    ASSERT(event != NULL);
-
-    memcpy(*ppdata, event, sizeof(MIDISHORTEVENT));
-    *ppdata += sizeof(MIDISHORTEVENT);
-}
+        memcpy(*stream, &event, sizeof(MIDISHORTEVENT));
+        *stream += sizeof(MIDISHORTEVENT);
+    }
 
 ANON_END
-

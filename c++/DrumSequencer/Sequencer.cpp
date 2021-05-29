@@ -3,8 +3,6 @@
 #include "outputdevs.h"
 #include "resource.h"
 
-#define PRG_SYNTH_DRUM	(118)
-
 Sequencer::Sequencer() : m_pStream(NULL), m_state(Stopped)
 {
 }
@@ -48,17 +46,6 @@ BOOL Sequencer::Initialize()
         return FALSE;
     }
 
-    // make a program change to synth drum
-    MidiMessage msg;
-    msg.SetStatus(PROGRAM_CHANGE(0));
-    msg.SetData(PRG_SYNTH_DRUM);
-
-    if (m_pStream->ShortMessage(msg) != MMSYSERR_NOERROR) {
-        AfxMessageBox(IDS_CANTCHANGEPROGRAM);
-        return FALSE;
-    }
-
-    // TODO: can we set a default tempo??
     return TRUE;
 }
 

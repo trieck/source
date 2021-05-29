@@ -6,7 +6,7 @@ public:
     ~Sequence(void);
     void ToggleSub(const CPoint& pt);
 
-    bool GetBeat(int x, int y) const;
+    bool GetBeat(int sub, int instrument) const;
     void Clear(void);
     BYTE GetInstrument(int i) const;
 
@@ -17,7 +17,7 @@ public:
     enum { NSUBS = RESOLUTION * BEATS_PER_BAR * NBARS };	// number of subdivisions
 
 private:
-    bool m_beats[NINSTRUMENTS][NSUBS];
+    bool m_beats[NSUBS][NINSTRUMENTS];
     DECLARE_SERIAL(Sequence)
 public:
     virtual void Serialize(CArchive& ar);

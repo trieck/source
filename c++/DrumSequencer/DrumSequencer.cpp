@@ -2,7 +2,7 @@
 // DrumSequencer.cpp : Defines the class behaviors for the application.
 //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "afxwinappex.h"
 #include "afxdialogex.h"
 #include "DrumSequencer.h"

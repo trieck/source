@@ -15,7 +15,10 @@ DWORD MidiTime::BPMToMicroseconds(DWORD bpm)
 {
     // Convert from Beats Per Minute
     // to Microseconds Per Quarter Note
-    return DWORD(60000000 / float(bpm));
+
+    const auto result = float(60000000) / bpm;
+
+    return result;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -27,8 +30,14 @@ DWORD MidiTime::MicrosecondsToBPM(DWORD microseconds)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-BYTE MidiTime::DurationToTicks(Duration duration)
+DWORD MidiTime::DurationToTicks(Duration duration)
 {
-    return BYTE(DEFAULT_PPQN * 4 * float(1) / duration);
+    if (duration == EmptyNote) {
+        return 0;
+    }
+
+    auto result = (DEFAULT_PPQN * 4) / duration;
+
+    return result;
 }
 
