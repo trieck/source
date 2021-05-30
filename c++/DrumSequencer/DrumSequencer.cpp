@@ -131,6 +131,16 @@ BOOL CDrumSequencerApp::InitInstance()
     return TRUE;
 }
 
+void CDrumSequencerApp::setTempo(short bpm)
+{
+    m_sequencer.setTempo(bpm);
+}
+
+short CDrumSequencerApp::tempo() const
+{
+    return m_sequencer.tempo();
+}
+
 // CDrumSequencerApp message handlers
 
 

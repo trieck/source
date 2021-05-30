@@ -1,4 +1,3 @@
-
 // DrumSequencerView.cpp : implementation of the CDrumSequencerView class
 //
 
@@ -22,13 +21,13 @@
 IMPLEMENT_DYNCREATE(CDrumSequencerView, CView)
 
 BEGIN_MESSAGE_MAP(CDrumSequencerView, CView)
-    // Standard printing commands
-    ON_WM_LBUTTONDOWN()
-    ON_WM_ERASEBKGND()
-    ON_WM_CREATE()
+        // Standard printing commands
+        ON_WM_LBUTTONDOWN()
+        ON_WM_ERASEBKGND()
+        ON_WM_CREATE()
 END_MESSAGE_MAP()
 
-#define BKGND_COLOR	RGB(0xEE, 0xEE, 0xEE)
+#define BKGND_COLOR RGB(0xEE, 0xEE, 0xEE)
 
 // CDrumSequencerView construction/destruction
 
@@ -82,12 +81,10 @@ BOOL CDrumSequencerView::OnPreparePrinting(CPrintInfo* pInfo)
 
 void CDrumSequencerView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-    // TODO: add extra initialization before printing
 }
 
 void CDrumSequencerView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-    // TODO: add cleanup after printing
 }
 
 // CDrumSequencerView diagnostics
@@ -106,7 +103,7 @@ void CDrumSequencerView::Dump(CDumpContext& dc) const
 CDrumSequencerDoc* CDrumSequencerView::GetDocument() const // non-debug version is inline
 {
     ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CDrumSequencerDoc)));
-    return (CDrumSequencerDoc*)m_pDocument;
+    return dynamic_cast<CDrumSequencerDoc*>(m_pDocument);
 }
 #endif //_DEBUG
 
@@ -115,16 +112,15 @@ CDrumSequencerDoc* CDrumSequencerView::GetDocument() const // non-debug version 
 
 void CDrumSequencerView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-    CDrumSequencerDoc *pDoc = GetDocument();
+    auto pDoc = GetDocument();
 
     if (m_grid.PointOnGrid(point)) {
-        CPoint sub = m_grid.GetSubdivision(point);
+        const auto sub = m_grid.GetSubdivision(point);
         pDoc->ToggleSub(sub);
     }
 
     CView::OnLButtonDown(nFlags, point);
 }
-
 
 BOOL CDrumSequencerView::OnEraseBkgnd(CDC* pDC)
 {
@@ -135,7 +131,6 @@ BOOL CDrumSequencerView::OnEraseBkgnd(CDC* pDC)
     return TRUE;
 }
 
-
 int CDrumSequencerView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
     if (CView::OnCreate(lpCreateStruct) == -1)
@@ -144,7 +139,7 @@ int CDrumSequencerView::OnCreate(LPCREATESTRUCT lpCreateStruct)
     if (!m_bkgndBrush.CreateSolidBrush(BKGND_COLOR))
         return -1;
 
-    CClientDC dc(this);
+    const CClientDC dc(this);
 
     // Create the font
     LOGFONT lf;
@@ -165,14 +160,13 @@ void CDrumSequencerView::DrawInstruments(CDC* pDC)
     CRect rc;
     pDC->GetClipBox(rc);
 
-    CFont *pOldFont = pDC->SelectObject(&m_font);
+    const auto pOldFont = pDC->SelectObject(&m_font);
 
-    CSize sz;
-    int x, y = BeatGrid::CY_OFFSET+2;
-    for (int i = 0; i < sizeof(Instruments) / sizeof(LPCTSTR); i++) {
-        sz = pDC->GetTextExtent(Instruments[i]);
-        x = BeatGrid::CX_OFFSET - sz.cx - 2;
-        pDC->TextOut(x, y, Instruments[i]);
+    auto y = BeatGrid::CY_OFFSET + 2;
+    for (auto Instrument : Instruments) {
+        const auto sz = pDC->GetTextExtent(Instrument);
+        const int x = BeatGrid::CX_OFFSET - sz.cx - 2;
+        pDC->TextOut(x, y, Instrument);
         y += BeatGrid::CY_SUB;
     }
 
@@ -181,11 +175,11 @@ void CDrumSequencerView::DrawInstruments(CDC* pDC)
 
 void CDrumSequencerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
-    if (pHint != NULL) {
-        Sequence *pSeq = static_cast<Sequence*>(pHint);
+    if (pHint != nullptr) {
+        auto* pSeq = dynamic_cast<Sequence*>(pHint);
         ASSERT_VALID(pSeq);
-        int x = LOWORD(lHint);
-        int y = HIWORD(lHint);
+        const int x = LOWORD(lHint);
+        const int y = HIWORD(lHint);
         CRect rc;
         m_grid.GetBeatRect(x, y, rc);
         InvalidateRect(rc);
@@ -194,22 +188,21 @@ void CDrumSequencerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
     }
 }
 
-void CDrumSequencerView::DrawBeats(CDC *pDC, Sequence *pSeq)
+void CDrumSequencerView::DrawBeats(CDC* pDC, Sequence* pSeq)
 {
     CRect rc;
-    COLORREF color;
 
-    for (int i = 0; i < Sequence::NINSTRUMENTS; i++) {
-        color = BeatGrid::GetInstColor(i);
-        for (int j = 0; j < Sequence::NSUBS; j++) {
+    for (auto i = 0; i < Sequence::NINSTRUMENTS; i++) {
+        const auto color = BeatGrid::GetInstColor(i);
+        for (auto j = 0; j < Sequence::NSUBS; j++) {
             if (pSeq->GetBeat(j, i)) {
                 m_grid.GetBeatRect(j, i, rc);
-                rc.DeflateRect(1,1,0,0);
+                rc.DeflateRect(1, 1, 0, 0);
 
-                if (j % Sequence::RESOLUTION == Sequence::RESOLUTION-1) {
-                    rc.right -= 1;	// thick pen
+                if (j % Sequence::RESOLUTION == Sequence::RESOLUTION - 1) {
+                    rc.right -= 1; // thick pen
                 }
-                if (i == Sequence::NINSTRUMENTS-1) {
+                if (i == Sequence::NINSTRUMENTS - 1) {
                     rc.bottom -= 1;
                 }
                 pDC->FillSolidRect(rc, color);

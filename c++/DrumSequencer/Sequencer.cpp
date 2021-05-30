@@ -2,8 +2,9 @@
 #include "Sequencer.h"
 #include "outputdevs.h"
 #include "resource.h"
+#include "miditime.h"
 
-Sequencer::Sequencer() : m_pStream(NULL), m_state(Stopped)
+Sequencer::Sequencer() : m_pStream(nullptr), m_state(Stopped)
 {
 }
 
@@ -56,15 +57,14 @@ void Sequencer::Close() const
     }
 }
 
-BOOL Sequencer::Play(const Sequence &sequence)
+BOOL Sequencer::Play(const Sequence& sequence)
 {
     ASSERT(m_pStream != NULL);
     ASSERT(m_pStream->IsOpen());
 
     m_buffer.Encode(sequence);
 
-    MMRESULT result;
-    result = m_pStream->Stop();
+    auto result = m_pStream->Stop();
     if (result != MMSYSERR_NOERROR)
         return FALSE;
     result = m_pStream->Out(m_buffer);
@@ -92,8 +92,38 @@ BOOL Sequencer::Stop()
     return TRUE;
 }
 
+short Sequencer::tempo() const
+{
+    // Get the tempo property
+    MIDIPROPTEMPO prop{};
+    prop.cbStruct = sizeof(MIDIPROPTEMPO);
+
+    if (m_pStream->Property(reinterpret_cast<LPBYTE>(&prop),
+                            MIDIPROP_GET | MIDIPROP_TEMPO) != MMSYSERR_NOERROR) {
+        AfxMessageBox(IDS_COULDNOTGETTEMPO);
+    }
+
+    auto bpm = static_cast<short>(MidiTime::MicrosecondsToBPM(prop.dwTempo));
+
+    return bpm;
+}
+
+void Sequencer::setTempo(short bpm)
+{
+    // Set the tempo property
+    MIDIPROPTEMPO prop{};
+    prop.cbStruct = sizeof(MIDIPROPTEMPO);
+    prop.dwTempo = MidiTime::BPMToMicroseconds(bpm);
+
+    if (m_pStream->Property(reinterpret_cast<LPBYTE>(&prop),
+                            MIDIPROP_SET | MIDIPROP_TEMPO) !=
+        MMSYSERR_NOERROR) {
+        AfxMessageBox(IDS_COULDNOTSETTEMPO);
+    }
+}
+
 void Sequencer::StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstance,
-    DWORD_PTR dwParam1, DWORD_PTR dwParam2)
+                           DWORD_PTR dwParam1, DWORD_PTR dwParam2)
 {
     if (uMsg != MOM_DONE)
         return;

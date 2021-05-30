@@ -19,10 +19,11 @@ typedef struct MIDISHORTEVENT
     DWORD event;    // event code, parameters, length
 } *PMIDISHORTEVENT;
 
-#define NOTEOFF(n)          (0x89 | n)
-#define NOTEON(n)           (0x99 | n)
-#define PROGRAM_CHANGE(c)   (0xC9 | c)
-#define TEMPO_CHANGE(t)     ((DWORD)MEVT_TEMPO << 24) | t
-#define DEFAULT_PPQN        960
+#define NOTEOFF(n)          (0x89 | (n))
+#define NOTEON(n)           (0x99 | (n))
+#define PROGRAM_CHANGE(c)   (0xC9 | (c))
+#define TEMPO_CHANGE(t)     (((DWORD)MEVT_TEMPO << 24) | (t))
+
+constexpr auto DEFAULT_PPQN = 960;
 
 #endif // __MIDICOMMON_H__

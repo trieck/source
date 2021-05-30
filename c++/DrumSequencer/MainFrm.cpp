@@ -1,4 +1,3 @@
-
 // MainFrm.cpp : implementation of the CMainFrame class
 //
 
@@ -15,17 +14,17 @@
 
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWndEx)
 
-const int  iMaxUserToolbars = 10;
+const int iMaxUserToolbars = 10;
 const UINT uiFirstUserToolBarId = AFX_IDW_CONTROLBAR_FIRST + 40;
 const UINT uiLastUserToolBarId = uiFirstUserToolBarId + iMaxUserToolbars - 1;
 
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
-    ON_WM_CREATE()
-    ON_REGISTERED_MESSAGE(AFX_WM_CREATETOOLBAR, &CMainFrame::OnToolbarCreateNew)
+        ON_WM_CREATE()
+        ON_REGISTERED_MESSAGE(AFX_WM_CREATETOOLBAR, &CMainFrame::OnToolbarCreateNew)
 END_MESSAGE_MAP()
 
 static UINT indicators[] = {
-    ID_SEPARATOR,           // status line indicator
+    ID_SEPARATOR, // status line indicator
     ID_INDICATOR_CAPS,
     ID_INDICATOR_NUM,
     ID_INDICATOR_SCRL,
@@ -48,7 +47,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     if (!m_wndMenuBar.Create(this)) {
         TRACE0("Failed to create menubar\n");
-        return -1;      // fail to create
+        return -1; // fail to create
     }
 
     m_wndMenuBar.SetPaneStyle(m_wndMenuBar.GetPaneStyle() | CBRS_TOOLTIPS);
@@ -58,21 +57,26 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT,
                                WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS) ||
-            !m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
+        !m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
         TRACE0("Failed to create toolbar\n");
-        return -1;      // fail to create
+        return -1; // fail to create
     }
 
-    if (!m_wndSettingsPane.Create(NULL, this, rectDefault, FALSE, ID_SETTINGS_PANE, WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP)) {
-        TRACE0("Failed to create settings pane.\n");
+    if (!m_wndSettingsPane.Create(
+        nullptr, this, FALSE,
+        MAKEINTRESOURCE(IDD_SETTINGS),
+        WS_CHILD | WS_VISIBLE | CBRS_TOP,
+        ID_SETTINGS_PANE)) {
+        TRACE0("Failed to create settings bar\n");
+        return -1; // fail to create
     }
 
     if (!m_wndStatusBar.Create(this)) {
         TRACE0("Failed to create status bar\n");
-        return -1;      // fail to create
+        return -1; // fail to create
     }
 
-    m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
+    m_wndStatusBar.SetIndicators(indicators, sizeof(indicators) / sizeof(UINT));
 
     m_wndMenuBar.EnableDocking(CBRS_ALIGN_TOP);
     m_wndToolBar.EnableDocking(CBRS_ALIGN_TOP);
@@ -88,7 +92,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-    if (!CFrameWndEx::PreCreateWindow(cs) )
+    if (!CFrameWndEx::PreCreateWindow(cs))
         return FALSE;
 
     cs.style &= ~(WS_THICKFRAME | WS_MAXIMIZE | WS_MAXIMIZEBOX);
@@ -113,9 +117,9 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 // CMainFrame message handlers
 
-LRESULT CMainFrame::OnToolbarCreateNew(WPARAM wp,LPARAM lp)
+LRESULT CMainFrame::OnToolbarCreateNew(WPARAM wp, LPARAM lp)
 {
-    LRESULT lres = CFrameWndEx::OnToolbarCreateNew(wp,lp);
+    LRESULT lres = CFrameWndEx::OnToolbarCreateNew(wp, lp);
     if (lres == 0) {
         return 0;
     }
@@ -181,7 +185,7 @@ void CMainFrame::ResizeFrame(void)
     }
 
     if (IsWindow(m_wndMenuBar) && !m_wndMenuBar.IsFloating()
-            && m_wndMenuBar.IsWindowVisible()) {
+        && m_wndMenuBar.IsWindowVisible()) {
         if (m_wndMenuBar.GetPaneStyle() & CBRS_ORIENT_HORZ)
             rc.bottom += rcMenu.Height();
         else if (m_wndMenuBar.GetPaneStyle() & CBRS_ORIENT_VERT)
@@ -189,7 +193,7 @@ void CMainFrame::ResizeFrame(void)
     }
 
     if (IsWindow(m_wndToolBar) && !m_wndToolBar.IsFloating() &&
-            m_wndToolBar.IsWindowVisible()) {
+        m_wndToolBar.IsWindowVisible()) {
         if (m_wndToolBar.GetPaneStyle() & CBRS_ORIENT_HORZ)
             rc.bottom += rcToolbar.Height();
         else if (m_wndToolBar.GetPaneStyle() & CBRS_ORIENT_VERT)
@@ -197,7 +201,7 @@ void CMainFrame::ResizeFrame(void)
     }
 
     if (IsWindow(m_wndSettingsPane) && !m_wndSettingsPane.IsFloating()
-            && m_wndSettingsPane.IsWindowVisible()) {
+        && m_wndSettingsPane.IsWindowVisible()) {
         if (m_wndSettingsPane.GetPaneStyle() & CBRS_ORIENT_HORZ)
             rc.bottom += rcPane.Height();
         else if (m_wndSettingsPane.GetPaneStyle() & CBRS_ORIENT_VERT)
@@ -212,7 +216,7 @@ void CMainFrame::ResizeFrame(void)
     DWORD dwExStyle = GetExStyle() | WS_EX_CLIENTEDGE;
     AdjustWindowRectEx(&rc, style, TRUE, dwExStyle);
 
-    SetWindowPos(NULL, 0, 0, rc.Width(), rc.Height(),
+    SetWindowPos(nullptr, 0, 0, rc.Width(), rc.Height(),
                  SWP_NOMOVE | SWP_FRAMECHANGED | SWP_NOZORDER);
 }
 
@@ -227,4 +231,3 @@ void CMainFrame::AdjustDockingLayout(HDWP hdwp)
     ResizeFrame();
     return CFrameWndEx::AdjustDockingLayout(hdwp);
 }
-

@@ -1,25 +1,19 @@
 #pragma once
 
-#include "SettingsBar.h"
-
-// SettingsPane
-
-class SettingsPane : public CDockablePane
+class SettingsPane : public CPaneDialog
 {
-    DECLARE_DYNAMIC(SettingsPane)
-
 public:
-    SettingsPane();
-    virtual ~SettingsPane();
 
 protected:
-    SettingsBar m_bar;
-public:
     DECLARE_MESSAGE_MAP()
-    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-    afx_msg void OnSize(UINT nType, int cx, int cy);
-protected:
-    BOOL OnBeforeFloat(CRect& rectFloat, AFX_DOCK_METHOD dockMethod) override;
+
+    void DoDataExchange(CDataExchange *pDX) override; // DDX/DDV support
+    afx_msg LRESULT HandleInitDialog(WPARAM wParam, LPARAM lParam);
+    afx_msg void OnUpDownTempo(NMHDR *pNMHDR, LRESULT *pResult);
+
+  private:
+    CEdit m_tempo;
+    CMFCSpinButtonCtrl m_spin;
+    short m_lowerLimit = 0;
+    short m_upperLimit = 300;
 };
-
-

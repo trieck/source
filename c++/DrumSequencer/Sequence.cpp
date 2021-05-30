@@ -80,9 +80,9 @@ void Sequence::Serialize(CArchive& ar)
         // Is this a valid sequence archive
         ar.Read(buffer, 3);
         if (memcmp(buffer, SEQ_MARKER, 3) != 0)
-            AfxThrowArchiveException(CArchiveException::badIndex);
+            AfxThrowArchiveException(CArchiveException::badSchema);
 
-        UINT nRead = ar.Read(&m_beats, sizeof(m_beats));
+        const auto nRead = ar.Read(&m_beats, sizeof(m_beats));
         if (nRead != sizeof(m_beats)) {
             AfxThrowArchiveException(CArchiveException::endOfFile);
         }

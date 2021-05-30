@@ -1,4 +1,3 @@
-
 // MainFrm.h : interface of the CMainFrame class
 //
 
@@ -10,47 +9,47 @@
 
 class CMainFrame : public CFrameWndEx
 {
-
 protected: // create from serialization only
     CMainFrame();
-    DECLARE_DYNCREATE(CMainFrame)
+DECLARE_DYNCREATE(CMainFrame)
 
-// Attributes
+    // Attributes
 public:
 
-// Operations
+    // Operations
 public:
 
-// Overrides
+    // Overrides
 public:
     BOOL PreCreateWindow(CREATESTRUCT& cs) override;
-    BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL) override;
+    BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE,
+                   CWnd* pParentWnd = nullptr, CCreateContext* pContext = nullptr) override;
 
-// Implementation
+    // Implementation
 public:
     virtual ~CMainFrame();
 #ifdef _DEBUG
-    virtual void AssertValid() const;
-    virtual void Dump(CDumpContext& dc) const;
+    void AssertValid() const override;
+    void Dump(CDumpContext& dc) const override;
 #endif
 
-protected:  // control bar embedded members
-    DrumSequencerMenubar	m_wndMenuBar;
-    DrumSequencerToolbar	m_wndToolBar;
-    SettingsPane			m_wndSettingsPane;
-    CMFCStatusBar			m_wndStatusBar;
-    CMFCToolBarImages		m_UserImages;
+protected: // control bar embedded members
+    DrumSequencerMenubar m_wndMenuBar;
+    DrumSequencerToolbar m_wndToolBar;
+    SettingsPane m_wndSettingsPane;
+    CMFCStatusBar m_wndStatusBar;
+    CMFCToolBarImages m_UserImages;
 
-// Generated message map functions
+    // Generated message map functions
 protected:
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
     afx_msg LRESULT OnToolbarCreateNew(WPARAM wp, LPARAM lp);
-    DECLARE_MESSAGE_MAP()
+DECLARE_MESSAGE_MAP()
 public:
-    virtual void RecalcLayout(BOOL bNotify = TRUE);
+    void RecalcLayout(BOOL bNotify = TRUE) override;
     void ResizeFrame(void);
-    virtual void AdjustClientArea();
-    virtual void AdjustDockingLayout(HDWP hdwp = NULL);
+    void AdjustClientArea() override;
+    void AdjustDockingLayout(HDWP hdwp = nullptr) override;
+//    virtual BOOL OnCmdMsg(UINT nID, int nCode, void *pExtra,
+//                          AFX_CMDHANDLERINFO *pHandlerInfo);
 };
-
-

@@ -5,9 +5,8 @@
 #include "miditime.h"
 
 ANON_BEGIN
-void tempo(LPSTR* stream, int bpm);
-void noteOn(LPSTR* stream, BYTE data, BYTE velocity, Duration delta);
-void noteOff(LPSTR* stream, BYTE data, Duration delta);
+    void noteOn(LPSTR* stream, BYTE data, BYTE velocity, Duration delta);
+    void noteOff(LPSTR* stream, BYTE data, Duration delta);
 ANON_END
 
 MidiBuffer::MidiBuffer() : m_header({})
@@ -39,26 +38,24 @@ void MidiBuffer::Encode(const Sequence& seq)
 {
     // Determine the size of the buffer needed
     const auto size = (Sequence::NINSTRUMENTS * Sequence::NSUBS) /* notes */
-        * sizeof(MIDISHORTEVENT)
-        + sizeof(MIDISHORTEVENT); // tempo
+        * sizeof(MIDISHORTEVENT);
 
     if (size > m_header.dwBufferLength) {
         Alloc(size);
     }
 
     auto pdata = m_header.lpData;
-    tempo(&pdata, 90);
-    m_header.dwBytesRecorded = sizeof(MIDISHORTEVENT);
+    m_header.dwBytesRecorded = 0;
 
     for (auto i = 0; i < Sequence::NSUBS; i++) {
-        auto delta = i == 0 ? EmptyNote: SixteenthNote;
+        auto delta = i == 0 ? EmptyNote : SixteenthNote;
         for (auto j = 0; j < Sequence::NINSTRUMENTS; j++) {
             const auto instrument = seq.GetInstrument(j);
 
             if (j > 0 && delta != EmptyNote) {
                 delta = EmptyNote;
             }
-            if (seq.GetBeat(i,j)) {
+            if (seq.GetBeat(i, j)) {
                 noteOn(&pdata, instrument, 127, delta);
             } else {
                 noteOff(&pdata, instrument, delta);

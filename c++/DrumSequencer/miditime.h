@@ -26,7 +26,6 @@ namespace MidiTime
 DWORD BPMToMicroseconds(DWORD bpm);
 DWORD MicrosecondsToBPM(DWORD microseconds);
 DWORD DurationToTicks(Duration duration);
-Duration TicksToDuration(BYTE Ticks);
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -35,8 +35,7 @@ BOOL CDrumSequencerDoc::OnNewDocument()
     if (!CDocument::OnNewDocument())
         return FALSE;
 
-    // TODO: add reinitialization code here
-    // (SDI documents will reuse this document)
+    m_sequence.Clear();
 
     return TRUE;
 }
@@ -126,7 +125,7 @@ void CDrumSequencerDoc::DeleteContents()
 {
     m_sequence.Clear();
 
-    CDocument::DeleteContents();
+    UpdateAllViews(nullptr);
 }
 
 BEGIN_MESSAGE_MAP(CDrumSequencerDoc, CDocument)
@@ -136,7 +135,7 @@ END_MESSAGE_MAP()
 
 void CDrumSequencerDoc::OnSequencerPlay()
 {
-    CDrumSequencerApp *pApp = (CDrumSequencerApp*)AfxGetApp();
+    auto *pApp = dynamic_cast<CDrumSequencerApp*>(AfxGetApp());
     ASSERT_VALID(pApp);
 
     pApp->Play(m_sequence);

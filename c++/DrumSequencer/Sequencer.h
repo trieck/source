@@ -22,6 +22,10 @@ public:
     BOOL Play(const Sequence &sequence);
     BOOL Stop();
 
+    short tempo() const;
+    void setTempo(short bpm);
+
+
 private:
     MidiStream *m_pStream;
     MidiBuffer m_buffer;

@@ -1,50 +1,67 @@
-// SettingsPane.cpp : implementation file
-//
-
 #include "stdafx.h"
 #include "SettingsPane.h"
 #include "resource.h"
+#include "DrumSequencer.h"
 
-// SettingsPane
-
-IMPLEMENT_DYNAMIC(SettingsPane, CDockablePane)
-
-SettingsPane::SettingsPane()
-{
-
-}
-
-SettingsPane::~SettingsPane()
-{
-}
-BEGIN_MESSAGE_MAP(SettingsPane, CDockablePane)
-    ON_WM_CREATE()
-    ON_WM_SIZE()
+BEGIN_MESSAGE_MAP(SettingsPane, CPaneDialog)
+        ON_NOTIFY(UDN_DELTAPOS, IDC_SP_TEMPO, SettingsPane::OnUpDownTempo)
+        ON_MESSAGE(WM_INITDIALOG, SettingsPane::HandleInitDialog)
 END_MESSAGE_MAP()
 
-int SettingsPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-    if (CDockablePane::OnCreate(lpCreateStruct) == -1)
-        return -1;
+extern CDrumSequencerApp theApp;
 
-    if (!m_bar.Create(this, IDD_SETTINGS, WS_CHILD | WS_VISIBLE, ID_SETTINGS_BAR)) {
-        TRACE0("Unable to create settings bar.\n");
-        return -1;
+void SettingsPane::DoDataExchange(CDataExchange* pDX)
+{
+    CPaneDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(SettingsPane)
+    DDX_Control(pDX, IDC_E_TEMPO, m_tempo);
+    DDX_Control(pDX, IDC_SP_TEMPO, m_spin);
+    //}}AFX_DATA_MAP
+}
+
+LRESULT SettingsPane::HandleInitDialog(WPARAM wParam, LPARAM lParam)
+{
+    if (!CPaneDialog::HandleInitDialog(wParam, lParam)) {
+        return FALSE;
     }
 
-    SetPaneStyle(0);
+    ASSERT(IsWindow(m_tempo));
+    ASSERT(IsWindow(m_spin));
 
-    return 0;
+    auto bpm = theApp.tempo();
+    ASSERT(bpm >= m_lowerLimit && bpm <= m_upperLimit);
+
+    m_spin.SetBuddy(&m_tempo);
+    m_spin.SetRange(m_lowerLimit, m_upperLimit);
+    m_spin.SetPos(bpm);
+
+    CString strTempo;
+    strTempo.Format(_T("%d"), bpm);
+    m_tempo.SetWindowText(strTempo);
+
+    return TRUE;
 }
 
-void SettingsPane::OnSize(UINT nType, int cx, int cy)
+void SettingsPane::OnUpDownTempo(NMHDR* pNMHDR, LRESULT* pResult)
 {
-    CDockablePane::OnSize(nType, cx, cy);
+    const auto pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 
-    m_bar.SetWindowPos(NULL, 0, 0, cx, cy, SWP_NOACTIVATE | SWP_NOZORDER);
-}
+    if (pNMHDR->hwndFrom == m_spin.m_hWnd) {
+        auto newValue = pNMUpDown->iPos + pNMUpDown->iDelta;
+        if (newValue < m_lowerLimit || newValue > m_upperLimit) {
+            *pResult = 1; // invalid
+            return;
+        }
 
-BOOL SettingsPane::OnBeforeFloat(CRect& rectFloat, AFX_DOCK_METHOD dockMethod)
-{
-    return FALSE;
+        theApp.setTempo(newValue);
+
+        CString str;
+        str.Format(_T("%d"), newValue);
+
+        m_tempo.SetWindowText(str);
+
+        *pResult = 0;
+    } else {
+        *pResult = -1; // don't know you
+    }
 }

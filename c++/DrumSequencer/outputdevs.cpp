@@ -30,9 +30,9 @@ UINT OutputDevices::Count() const
 MidiDevice * OutputDevices::GetDevice(UINT device) const
 {
     MIDIOUTCAPS caps;
-    MMRESULT result = ::midiOutGetDevCaps(device, &caps, sizeof(MIDIOUTCAPS));
+    auto result = ::midiOutGetDevCaps(device, &caps, sizeof(MIDIOUTCAPS));
     if (result != MMSYSERR_NOERROR)
-        return NULL;
+        return nullptr;
 
     return new MidiOutput(&caps, device);
 }
@@ -43,7 +43,7 @@ MidiDevice * OutputDevices::GetStream(UINT device) const
     MIDIOUTCAPS caps;
     MMRESULT result = ::midiOutGetDevCaps(device, &caps, sizeof(MIDIOUTCAPS));
     if (result != MMSYSERR_NOERROR)
-        return NULL;
+        return nullptr;
 
     return new MidiStream(&caps, device);
 }

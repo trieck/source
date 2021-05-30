@@ -12,20 +12,25 @@
 /////////////////////////////////////////////////////////////////////////////
 DWORD MidiTime::BPMToMicroseconds(DWORD bpm)
 {
+    if (bpm == 0) {
+        return 0;
+    }
+
     // Convert from Beats Per Minute
     // to Microseconds Per Quarter Note
-
-    const auto result = 60000000 / bpm;
-
-    return result;
+    return 60000000 / bpm;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 DWORD MidiTime::MicrosecondsToBPM(DWORD microseconds)
 {
+    if (microseconds == 0) {
+        return 0;
+    }
+
     // Convert from Microseconds Per Quarter Note
     // to Beats Per Minute
-    return (DWORD)(1 / (microseconds / 1000000 / 60));
+    return 60000000 / microseconds;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -39,4 +44,3 @@ DWORD MidiTime::DurationToTicks(Duration duration)
 
     return result;
 }
-

@@ -22,8 +22,10 @@ public:
 // Overrides
 public:
     virtual BOOL InitInstance();
+    void setTempo(short bpm);
+    short tempo() const;
 
-// Implementation
+    // Implementation
     UINT  m_nAppLook;
     BOOL  m_bHiColorIcons;
 
