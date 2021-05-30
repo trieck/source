@@ -8,7 +8,6 @@
 #include "stdafx.h"
 #include "MidiTime.h"
 #include "MidiCommon.h"
-#include <math.h>
 
 /////////////////////////////////////////////////////////////////////////////
 DWORD MidiTime::BPMToMicroseconds(DWORD bpm)
@@ -16,7 +15,7 @@ DWORD MidiTime::BPMToMicroseconds(DWORD bpm)
     // Convert from Beats Per Minute
     // to Microseconds Per Quarter Note
 
-    const auto result = float(60000000) / bpm;
+    const auto result = 60000000 / bpm;
 
     return result;
 }

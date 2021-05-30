@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-#include "DrumSequencer.h"
 #include "SettingsBar.h"
 
 // SettingsBar

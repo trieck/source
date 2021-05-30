@@ -9,6 +9,7 @@
 #include "MainFrm.h"
 #include "DrumSequencerDoc.h"
 #include "DrumSequencerView.h"
+#include "resource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

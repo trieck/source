@@ -3,7 +3,6 @@
 //
 
 #include "stdafx.h"
-#include "DrumSequencer.h"
 #include "MainFrm.h"
 #include "BeatGrid.h"
 #include "resource.h"

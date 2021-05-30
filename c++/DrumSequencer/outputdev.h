@@ -22,54 +22,62 @@ public:
     virtual ~OutputDevice();
 
     // Interface
-    inline WORD GetMid() const
+    WORD GetMid() const
     {
         return wMid;
     }
-    inline WORD GetPid() const
+
+    WORD GetPid() const
     {
         return wPid;
     }
-    inline MMVERSION GetVersion() const
+
+    MMVERSION GetVersion() const
     {
         return vDriverVersion;
     }
-    inline CString GetProduct () const
+
+    CString GetProduct () const
     {
         return szPname;
     }
-    inline WORD GetTechnology() const
+
+    WORD GetTechnology() const
     {
         return wTechnology;
     }
-    inline WORD GetVoices() const
+
+    WORD GetVoices() const
     {
         return wVoices;
     }
-    inline WORD GetNotes() const
+
+    WORD GetNotes() const
     {
         return wNotes;
     }
-    inline WORD GetChannelMask() const
+
+    WORD GetChannelMask() const
     {
         return wChannelMask;
     }
-    inline DWORD GetSupport() const
+
+    DWORD GetSupport() const
     {
         return dwSupport;
     }
-    inline BOOL IsOpen() const
+
+    BOOL IsOpen() const
     {
-        return m_handle != NULL;
+        return m_handle != nullptr;
     }
 
     static CString GetErrorText(MMRESULT);
 
-    virtual MMRESULT Open() = 0;
-    virtual MMRESULT Close();
+    MMRESULT Open() override = 0;
+    MMRESULT Close() override;
 
     // Implementation
-protected:
 };
 /////////////////////////////////////////////////////////////////////////////
 

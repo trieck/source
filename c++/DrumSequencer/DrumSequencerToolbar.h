@@ -11,10 +11,10 @@ public:
     DrumSequencerToolbar();
     virtual ~DrumSequencerToolbar();
 
-    virtual void OnAfterFloat();
+    void OnAfterFloat() override;
 protected:
     DECLARE_MESSAGE_MAP()
-    virtual void OnAfterDock(CBasePane* pBar, LPCRECT lpRect, AFX_DOCK_METHOD dockMethod);
+    void OnAfterDock(CBasePane* pBar, LPCRECT lpRect, AFX_DOCK_METHOD dockMethod) override;
 };
 
 

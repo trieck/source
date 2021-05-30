@@ -19,7 +19,7 @@ public:
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
     afx_msg void OnSize(UINT nType, int cx, int cy);
 protected:
-    virtual BOOL OnBeforeFloat(CRect& rectFloat, AFX_DOCK_METHOD dockMethod);
+    BOOL OnBeforeFloat(CRect& rectFloat, AFX_DOCK_METHOD dockMethod) override;
 };
 
 

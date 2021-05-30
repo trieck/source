@@ -5,12 +5,12 @@
 //	Copyright(c) 2011, Thomas A. Rieck, All Rights Reserved
 //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "midistream.h"
 
 /////////////////////////////////////////////////////////////////////////////
 MidiStream::MidiStream(LPMIDIOUTCAPS pmidicaps, UINT id)
-    : OutputDevice(pmidicaps, id), m_pSequencer(NULL)
+    : OutputDevice(pmidicaps, id), m_pSequencer(nullptr)
 {
 }
 
@@ -25,13 +25,13 @@ MMRESULT MidiStream::Open()
 {
     Close();
 
-    return ::midiStreamOpen(
-               (HMIDISTRM *)&m_handle,
-               &m_id,
-               1 /* reserved */,
-               (DWORD)MidiStream::MidiStreamProc,
-               (DWORD) this,
-               CALLBACK_FUNCTION);
+    return midiStreamOpen(
+        reinterpret_cast<HMIDISTRM*>(&m_handle),
+        &m_id,
+        1 /* reserved */,
+        reinterpret_cast<DWORD_PTR>(MidiStreamProc),
+        reinterpret_cast<DWORD_PTR>(this),
+        CALLBACK_FUNCTION);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -39,9 +39,9 @@ MMRESULT MidiStream::Close()
 {
     MMRESULT result = MMSYSERR_INVALHANDLE;
 
-    if (m_handle != NULL) {
-        result = ::midiStreamClose(*this);
-        m_handle = NULL;
+    if (m_handle != nullptr) {
+        result = midiStreamClose(*this);
+        m_handle = nullptr;
     }
 
     return result;
@@ -53,16 +53,16 @@ MMRESULT MidiStream::Position(LPMMTIME pmmt) const
     ASSERT(*this != NULL);
     ASSERT(pmmt != NULL);
 
-    return ::midiStreamPosition(*this, pmmt, sizeof(MMTIME));
+    return midiStreamPosition(*this, pmmt, sizeof(MMTIME));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-MMRESULT MidiStream::Property (LPBYTE ppropdata, DWORD property) const
+MMRESULT MidiStream::Property(LPBYTE ppropdata, DWORD property) const
 {
     ASSERT(*this != NULL);
     ASSERT(ppropdata != NULL);
 
-    return ::midiStreamProperty(*this, ppropdata, property);
+    return midiStreamProperty(*this, ppropdata, property);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -72,14 +72,14 @@ MMRESULT MidiStream::Out(LPMIDIHDR pMidiHdr)
     ASSERT(pMidiHdr != NULL);
 
     // Prepare the header
-    MMRESULT result = ::midiOutPrepareHeader((HMIDIOUT)m_handle, pMidiHdr, sizeof(MIDIHDR));
+    MMRESULT result = midiOutPrepareHeader(static_cast<HMIDIOUT>(m_handle), pMidiHdr, sizeof(MIDIHDR));
     if (result != MMSYSERR_NOERROR)
         return result;
 
     // Output the header
-    result = ::midiStreamOut(*this, pMidiHdr, sizeof(MIDIHDR));
+    result = midiStreamOut(*this, pMidiHdr, sizeof(MIDIHDR));
     if (result != MMSYSERR_NOERROR) {
-        ::midiOutUnprepareHeader((HMIDIOUT)m_handle, pMidiHdr, sizeof(MIDIHDR));
+        midiOutUnprepareHeader(static_cast<HMIDIOUT>(m_handle), pMidiHdr, sizeof(MIDIHDR));
         return result;
     }
 
@@ -93,7 +93,7 @@ MMRESULT MidiStream::Restart()
 {
     ASSERT(*this != NULL);
 
-    return ::midiStreamRestart(*this);
+    return midiStreamRestart(*this);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -101,25 +101,20 @@ MMRESULT MidiStream::Stop() const
 {
     ASSERT(*this != NULL);
 
-    return ::midiStreamStop(*this);
+    return midiStreamStop(*this);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void CALLBACK MidiStream::MidiStreamProc(
-    HMIDISTRM hMidiStream,
-    UINT uMsg,
-    DWORD dwInstance,
-    DWORD dwParam1,
-    DWORD dwParam2
-)
+void MidiStream::MidiStreamProc(HMIDISTRM hMidiStream, UINT uMsg, 
+    DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2)
 {
-    MidiStream * This = (MidiStream *)dwInstance;
+    auto This = reinterpret_cast<MidiStream*>(dwInstance);
     ASSERT(This != NULL);
 
     // Iterate through the hook chain
-    POSITION pos = This->m_HookChain.GetHeadPosition();
-    while (pos != NULL) {
-        PFNCALLBACK pfnCallBack = This->m_HookChain.GetNext(pos);
+    auto pos = This->m_HookChain.GetHeadPosition();
+    while (pos != nullptr) {
+        const auto pfnCallBack = This->m_HookChain.GetNext(pos);
         ASSERT(pfnCallBack != NULL);
 
         (*pfnCallBack)(hMidiStream, uMsg, dwInstance, dwParam1, dwParam2);
@@ -127,11 +122,11 @@ void CALLBACK MidiStream::MidiStreamProc(
 }
 
 /////////////////////////////////////////////////////////////////////////////
-MMRESULT MidiStream::ShortMessage(const MidiMessage & message) const
+MMRESULT MidiStream::ShortMessage(const MidiMessage& message) const
 {
     ASSERT(*this != NULL);
 
-    return ::midiOutShortMsg(GetOutputHandle(), message);
+    return midiOutShortMsg(GetOutputHandle(), message);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -141,10 +136,10 @@ BOOL MidiStream::RegisterHook(PFNCALLBACK pfnCallBack)
     ASSERT_VALID(&m_HookChain);
 
     // Don't allow duplicates in the hook chain
-    if (m_HookChain.Find(pfnCallBack) != NULL)
+    if (m_HookChain.Find(pfnCallBack) != nullptr)
         return FALSE;
 
-    return m_HookChain.AddTail(pfnCallBack) != NULL;
+    return m_HookChain.AddTail(pfnCallBack) != nullptr;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -153,8 +148,8 @@ BOOL MidiStream::RevokeHook(PFNCALLBACK pfnCallBack)
     ASSERT(pfnCallBack != NULL);
     ASSERT_VALID(&m_HookChain);
 
-    POSITION pos = m_HookChain.GetHeadPosition();
-    while (pos != NULL) {
+    auto pos = m_HookChain.GetHeadPosition();
+    while (pos != nullptr) {
         if (m_HookChain.GetAt(pos) == pfnCallBack) {
             m_HookChain.RemoveAt(pos);
             return TRUE;
@@ -166,13 +161,13 @@ BOOL MidiStream::RevokeHook(PFNCALLBACK pfnCallBack)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void MidiStream::SetSequencer(Sequencer *pSeq)
+void MidiStream::SetSequencer(Sequencer* pSeq)
 {
     m_pSequencer = pSeq;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-Sequencer *MidiStream::GetSequencer() const
+Sequencer* MidiStream::GetSequencer() const
 {
     return m_pSequencer;
 }

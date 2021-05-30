@@ -2,8 +2,8 @@
 //
 
 #include "stdafx.h"
-#include "DrumSequencer.h"
 #include "SettingsPane.h"
+#include "resource.h"
 
 // SettingsPane
 

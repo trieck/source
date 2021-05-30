@@ -11,7 +11,7 @@
 #include "OutputDev.h"
 #include "MidiMessage.h"
 
-typedef void (*PFNCALLBACK)(HMIDISTRM, UINT, DWORD, DWORD, DWORD);
+typedef void (*PFNCALLBACK)(HMIDISTRM, UINT, DWORD_PTR, DWORD_PTR, DWORD_PTR);
 typedef CList<PFNCALLBACK, PFNCALLBACK> HookChain;
 
 class Sequencer;	// forward declarations
@@ -28,8 +28,8 @@ public:
     virtual ~MidiStream();
 
     // Interface
-    virtual MMRESULT Open();
-    virtual MMRESULT Close();
+    MMRESULT Open() override;
+    MMRESULT Close() override;
 
     MMRESULT Position(LPMMTIME) const;
     MMRESULT Property(LPBYTE, DWORD) const;
@@ -48,22 +48,22 @@ protected:
     static void CALLBACK MidiStreamProc(
         HMIDISTRM hMidiStream,
         UINT uMsg,
-        DWORD dwInstance,
-        DWORD dwParam1,
-        DWORD dwParam2
+        DWORD_PTR dwInstance,
+        DWORD_PTR dwParam1,
+        DWORD_PTR dwParam2
     );
 
     operator HMIDISTRM() const
     {
-        return (HMIDISTRM) m_handle;
+        return static_cast<HMIDISTRM>(m_handle);
     }
     HMIDIOUT GetOutputHandle() const
     {
-        return (HMIDIOUT) m_handle;
+        return static_cast<HMIDIOUT>(m_handle);
     }
 
     HookChain m_HookChain;
-    Sequencer *m_pSequencer;	// sequencer that owns stream
+    Sequencer *m_pSequencer;	// sequencer that owns this stream
 };
 /////////////////////////////////////////////////////////////////////////////
 

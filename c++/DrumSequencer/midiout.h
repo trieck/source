@@ -22,16 +22,17 @@ protected:
 public:
     virtual ~MidiOutput();
 
-    virtual MMRESULT Open();
-    virtual MMRESULT Close();
+    MMRESULT Open() override;
+    MMRESULT Close() override;
+
     MMRESULT ShortMessage(const MidiMessage &);
     MMRESULT LongMessage(LPSTR, UINT);
     MMRESULT GetVolume(LPDWORD);
     MMRESULT SetVolume(DWORD);
 
-    inline operator HMIDIOUT() const
+    operator HMIDIOUT() const
     {
-        return (HMIDIOUT) m_handle;
+        return static_cast<HMIDIOUT>(m_handle);
     }
 
 protected:
@@ -40,9 +41,9 @@ protected:
     static void CALLBACK MidiOutProc(
         HMIDIOUT hMidiOut,
         UINT wMsg,
-        DWORD dwInstance,
-        DWORD dwParam1,
-        DWORD dwParam2);
+        DWORD_PTR dwInstance,
+        DWORD_PTR dwParam1,
+        DWORD_PTR dwParam2);
 };
 /////////////////////////////////////////////////////////////////////////////
 

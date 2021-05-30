@@ -11,7 +11,7 @@
 /////////////////////////////////////////////////////////////////////////////
 MidiDevice::MidiDevice()
 {
-    m_handle = NULL;
+    m_handle = nullptr;
     m_id = 0;
 }
 

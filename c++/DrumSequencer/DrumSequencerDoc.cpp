@@ -10,8 +10,7 @@
 #endif
 
 #include "DrumSequencerDoc.h"
-
-#include <propkey.h>
+#include "resource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

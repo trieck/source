@@ -4,7 +4,7 @@
 #include "MidiBuffer.h"
 #include "Sequence.h"
 
-typedef enum SequencerState {
+enum SequencerState {
     Stopped,
     Playing
 };
@@ -18,7 +18,7 @@ public:
     BOOL Initialize();
     BOOL IsPlaying() const;
 
-    void Close();
+    void Close() const;
     BOOL Play(const Sequence &sequence);
     BOOL Stop();
 
@@ -27,8 +27,7 @@ private:
     MidiBuffer m_buffer;
     SequencerState m_state;
 
-    static void StreamProc(HMIDISTRM hMidiStream, UINT uMsg,
-                           DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
+    static void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2);
 };
 
 inline BOOL Sequencer::IsPlaying() const

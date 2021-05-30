@@ -23,8 +23,8 @@ public:
 
 // Overrides
 public:
-    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-    virtual BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL);
+    BOOL PreCreateWindow(CREATESTRUCT& cs) override;
+    BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL) override;
 
 // Implementation
 public:

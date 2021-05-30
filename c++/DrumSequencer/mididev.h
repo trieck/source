@@ -22,7 +22,8 @@ public:
     // Interface
     virtual MMRESULT Open() = 0;
     virtual MMRESULT Close() = 0;
-    inline UINT GetDeviceID() const
+
+    UINT GetDeviceID() const
     {
         return m_id;
     }

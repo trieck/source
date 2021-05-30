@@ -2,12 +2,12 @@
 class Sequence : public CObject
 {
 public:
-    Sequence(void);
-    ~Sequence(void);
+    Sequence();
+    ~Sequence();
     void ToggleSub(const CPoint& pt);
 
     bool GetBeat(int sub, int instrument) const;
-    void Clear(void);
+    void Clear();
     BYTE GetInstrument(int i) const;
 
     enum { NINSTRUMENTS = 10 };	// number of instruments

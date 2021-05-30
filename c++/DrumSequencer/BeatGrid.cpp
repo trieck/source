@@ -1,8 +1,8 @@
 #include "StdAfx.h"
 #include "BeatGrid.h"
 
-#define COLOR_GRID		RGB(0xc0, 0xc0, 0xc0)
-#define COLOR_BKGND		RGB(0xEE, 0xEE, 0xFF)
+constexpr auto COLOR_GRID  = RGB(0xc0, 0xc0, 0xc0);
+constexpr auto COLOR_BKGND = RGB(0xEE, 0xEE, 0xFF);
 
 const COLORREF INST_COLORS[Sequence::NINSTRUMENTS] = {
     RGB(192, 0, 0),
@@ -35,7 +35,7 @@ void BeatGrid::Draw(CDC* pDC)
     CRect rc;
     pDC->GetClipBox(rc);
 
-    CBitmap *pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
+    CBitmap* pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
 
     CRect aRect(rc);
     aRect.OffsetRect(-CX_OFFSET, -CY_OFFSET);
@@ -56,7 +56,7 @@ void BeatGrid::CreateBitmap(void)
         AfxThrowResourceException();
 
     CDC dc;
-    dc.Attach(::GetDC(NULL));
+    dc.Attach(GetDC(nullptr));
     if (!m_MemDC.CreateCompatibleDC(&dc))
         AfxThrowResourceException();
 
@@ -75,10 +75,10 @@ void BeatGrid::PaintBitmap(void)
     CRect rcBoard;
     m_Region.GetRgnBox(rcBoard);
 
-    CBitmap *pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
+    CBitmap* pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
 
-    CBrush *pOldBrush = (CBrush *)m_MemDC.SelectObject(&m_bkgBrush);
-    CPen *pOldPen = (CPen *)m_MemDC.SelectObject(&m_thinPen);
+    CBrush* pOldBrush = static_cast<CBrush*>(m_MemDC.SelectObject(&m_bkgBrush));
+    CPen* pOldPen = static_cast<CPen*>(m_MemDC.SelectObject(&m_thinPen));
 
     m_MemDC.Rectangle(rcBoard);
 
@@ -116,21 +116,21 @@ void BeatGrid::PaintBitmap(void)
     m_MemDC.SelectObject(pOldBitmap);
 }
 
-void BeatGrid::GetDimensions(CRect &rc)
+void BeatGrid::GetDimensions(CRect& rc)
 {
     rc.SetRectEmpty();
     rc.right = CX_GRID;
     rc.bottom = CY_GRID;
 }
 
-void BeatGrid::GetBoundingRect(CRect & rc)
+void BeatGrid::GetBoundingRect(CRect& rc)
 {
     GetDimensions(rc);
     rc.right += 2 * CX_OFFSET;
     rc.bottom += 2 * CY_OFFSET;
 }
 
-BOOL BeatGrid::PointOnGrid(const CPoint &pt)
+BOOL BeatGrid::PointOnGrid(const CPoint& pt)
 {
     CRect rc;
     GetDimensions(rc);

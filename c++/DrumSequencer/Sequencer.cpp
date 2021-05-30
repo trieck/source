@@ -10,9 +10,9 @@ Sequencer::Sequencer() : m_pStream(NULL), m_state(Stopped)
 Sequencer::~Sequencer()
 {
     Close();
-    if (m_pStream != NULL) {
+    if (m_pStream != nullptr) {
         delete m_pStream;
-        m_pStream = NULL;
+        m_pStream = nullptr;
     }
 }
 
@@ -21,8 +21,8 @@ BOOL Sequencer::Initialize()
     ASSERT(m_pStream == NULL);
 
     // Set the output stream to the midi mapper
-    m_pStream = (MidiStream *)OutputDevices().GetStream(MIDI_MAPPER);
-    if (m_pStream == NULL) {
+    m_pStream = dynamic_cast<MidiStream*>(OutputDevices().GetStream(MIDI_MAPPER));
+    if (m_pStream == nullptr) {
         AfxMessageBox(IDS_COULDNOTOPENMIDIMAPPER);
         return FALSE;
     }
@@ -31,7 +31,7 @@ BOOL Sequencer::Initialize()
     m_pStream->RegisterHook(StreamProc);
 
     // Open the output device
-    MMRESULT result = m_pStream->Open();
+    const auto result = m_pStream->Open();
     if (result != MMSYSERR_NOERROR) {
         AfxMessageBox(OutputDevice::GetErrorText(result));
         return FALSE;
@@ -41,7 +41,7 @@ BOOL Sequencer::Initialize()
     MIDIPROPTIMEDIV prop;
     prop.cbStruct = sizeof(MIDIPROPTIMEDIV);
     prop.dwTimeDiv = DEFAULT_PPQN;
-    if (m_pStream->Property((LPBYTE)&prop, MIDIPROP_SET | MIDIPROP_TIMEDIV) != MMSYSERR_NOERROR) {
+    if (m_pStream->Property(reinterpret_cast<LPBYTE>(&prop), MIDIPROP_SET | MIDIPROP_TIMEDIV) != MMSYSERR_NOERROR) {
         AfxMessageBox(IDS_COULDNOTSETTIMEDIVISION);
         return FALSE;
     }
@@ -49,9 +49,9 @@ BOOL Sequencer::Initialize()
     return TRUE;
 }
 
-void Sequencer::Close()
+void Sequencer::Close() const
 {
-    if (m_pStream != NULL) {
+    if (m_pStream != nullptr) {
         m_pStream->Close();
     }
 }
@@ -92,22 +92,22 @@ BOOL Sequencer::Stop()
     return TRUE;
 }
 
-void Sequencer::StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD dwInstance,
-                           DWORD dwParam1, DWORD dwParam2)
+void Sequencer::StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstance,
+    DWORD_PTR dwParam1, DWORD_PTR dwParam2)
 {
     if (uMsg != MOM_DONE)
         return;
 
-    MidiStream *pStream = (MidiStream *)dwInstance;
+    const auto pStream = reinterpret_cast<MidiStream*>(dwInstance);
     ASSERT(pStream != NULL);
 
-    Sequencer *pThis = pStream->GetSequencer();
+    auto pThis = pStream->GetSequencer();
     ASSERT(pThis != NULL);
 
     // Unprepare the midi header
     ::midiOutUnprepareHeader(
-        (HMIDIOUT)hMidiStream,
-        (LPMIDIHDR)dwParam1,
+        reinterpret_cast<HMIDIOUT>(hMidiStream),
+        reinterpret_cast<LPMIDIHDR>(dwParam1),
         sizeof(MIDIHDR));
 
     pThis->m_state = Stopped;
