@@ -30,16 +30,6 @@ static UINT indicators[] = {
     ID_INDICATOR_SCRL,
 };
 
-// CMainFrame construction/destruction
-
-CMainFrame::CMainFrame()
-{
-}
-
-CMainFrame::~CMainFrame()
-{
-}
-
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
     if (CFrameWndEx::OnCreate(lpCreateStruct) == -1)
@@ -119,17 +109,16 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 LRESULT CMainFrame::OnToolbarCreateNew(WPARAM wp, LPARAM lp)
 {
-    LRESULT lres = CFrameWndEx::OnToolbarCreateNew(wp, lp);
+    auto lres = CFrameWndEx::OnToolbarCreateNew(wp, lp);
     if (lres == 0) {
         return 0;
     }
 
-    CMFCToolBar* pUserToolbar = (CMFCToolBar*)lres;
+    auto pUserToolbar = reinterpret_cast<CMFCToolBar*>(lres);
     ASSERT_VALID(pUserToolbar);
 
-    BOOL bNameValid;
     CString strCustomize;
-    bNameValid = strCustomize.LoadString(IDS_TOOLBAR_CUSTOMIZE);
+    auto bNameValid = strCustomize.LoadString(IDS_TOOLBAR_CUSTOMIZE);
     ASSERT(bNameValid);
 
     pUserToolbar->EnableCustomizeButton(TRUE, ID_VIEW_CUSTOMIZE, strCustomize);
@@ -153,7 +142,7 @@ void CMainFrame::RecalcLayout(BOOL bNotify)
     CFrameWndEx::RecalcLayout(bNotify);
 }
 
-void CMainFrame::ResizeFrame(void)
+void CMainFrame::ResizeFrame()
 {
     RepositionBars(0, 0xffff, AFX_IDW_PANE_FIRST);
 

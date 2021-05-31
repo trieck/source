@@ -8,8 +8,6 @@ BEGIN_MESSAGE_MAP(SettingsPane, CPaneDialog)
         ON_MESSAGE(WM_INITDIALOG, SettingsPane::HandleInitDialog)
 END_MESSAGE_MAP()
 
-extern CDrumSequencerApp theApp;
-
 void SettingsPane::DoDataExchange(CDataExchange* pDX)
 {
     CPaneDialog::DoDataExchange(pDX);
@@ -28,7 +26,7 @@ LRESULT SettingsPane::HandleInitDialog(WPARAM wParam, LPARAM lParam)
     ASSERT(IsWindow(m_tempo));
     ASSERT(IsWindow(m_spin));
 
-    auto bpm = theApp.tempo();
+    auto bpm = theApp.Tempo();
     ASSERT(bpm >= m_lowerLimit && bpm <= m_upperLimit);
 
     m_spin.SetBuddy(&m_tempo);
@@ -46,22 +44,23 @@ void SettingsPane::OnUpDownTempo(NMHDR* pNMHDR, LRESULT* pResult)
 {
     const auto pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 
-    if (pNMHDR->hwndFrom == m_spin.m_hWnd) {
-        auto newValue = pNMUpDown->iPos + pNMUpDown->iDelta;
-        if (newValue < m_lowerLimit || newValue > m_upperLimit) {
-            *pResult = 1; // invalid
-            return;
-        }
-
-        theApp.setTempo(newValue);
-
-        CString str;
-        str.Format(_T("%d"), newValue);
-
-        m_tempo.SetWindowText(str);
-
-        *pResult = 0;
-    } else {
+    if (pNMHDR->hwndFrom != m_spin.m_hWnd) {
         *pResult = -1; // don't know you
+        return;
     }
+
+    auto newValue = pNMUpDown->iPos + pNMUpDown->iDelta;
+    if (newValue < m_lowerLimit || newValue > m_upperLimit) {
+        *pResult = 1; // invalid
+        return;
+    }
+
+    theApp.SetTempo(newValue);
+
+    CString str;
+    str.Format(_T("%d"), newValue);
+
+    m_tempo.SetWindowText(str);
+
+    *pResult = 0;
 }

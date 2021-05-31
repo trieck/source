@@ -8,7 +8,7 @@
 #ifndef __MIDIDEVS_H__
 #define __MIDIDEVS_H__
 
-#include "midicommon.h"
+#include "StdAfx.h"
 #include "mididev.h"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -16,16 +16,14 @@ class MidiDevices
 {
 public:
     // Construction / Destruction
-    MidiDevices();
-    virtual ~MidiDevices();
+    MidiDevices() = default;
+    virtual ~MidiDevices() = default;
 
     // Interface
     virtual UINT Count() const = 0;
-    virtual MidiDevice * GetDevice(UINT) const = 0;
-
-protected:
-    // Implementation
+    virtual MidiDevice* GetDevice(UINT) const = 0;
 };
+
 /////////////////////////////////////////////////////////////////////////////
 
 #endif // __MIDIDEVS_H__

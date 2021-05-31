@@ -1,22 +1,14 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-//	MIDIDEV.CPP : MIDI device module
+//  MIDIDEV.CPP : MIDI device module
 //
-//	Copyright(c) 2011, Thomas A. Rieck, All Rights Reserved
+//  Copyright(c) 2011, Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
 #include "mididev.h"
 
 /////////////////////////////////////////////////////////////////////////////
-MidiDevice::MidiDevice()
-{
-    m_handle = nullptr;
-    m_id = 0;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-MidiDevice::~MidiDevice()
+MidiDevice::MidiDevice() : m_handle(nullptr), m_id(0)
 {
 }
-

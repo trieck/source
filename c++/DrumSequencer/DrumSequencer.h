@@ -1,4 +1,3 @@
-
 // DrumSequencer.h : main header file for the DrumSequencer application
 //
 #pragma once
@@ -17,32 +16,32 @@ class CDrumSequencerApp : public CWinAppEx
 {
 public:
     CDrumSequencerApp();
-    virtual ~CDrumSequencerApp();
+    virtual ~CDrumSequencerApp() = default;
 
-// Overrides
-public:
-    virtual BOOL InitInstance();
-    void setTempo(short bpm);
-    short tempo() const;
+    // Overrides
+    BOOL InitInstance() override;
+    void SetTempo(short bpm);
+    short Tempo() const;
 
     // Implementation
-    UINT  m_nAppLook;
-    BOOL  m_bHiColorIcons;
+    UINT m_nAppLook{};
+    BOOL m_bHiColorIcons{};
 
-    virtual void PreLoadState();
-    virtual void LoadCustomState();
-    virtual void SaveCustomState();
+    void PreLoadState() override;
+    void LoadCustomState() override;
+    void SaveCustomState() override;
 
     afx_msg void OnAppAbout();
-    DECLARE_MESSAGE_MAP()
+DECLARE_MESSAGE_MAP()
 private:
     Sequencer m_sequencer;
 public:
-    virtual int ExitInstance();
+    int ExitInstance() override;
+    BOOL Play(const Sequence& sequence);
+
     afx_msg void OnSequencerStop();
-    BOOL Play(const Sequence & sequence);
-    afx_msg void OnUpdateSequencerPlay(CCmdUI *pCmdUI);
-    afx_msg void OnUpdateSequencerStop(CCmdUI *pCmdUI);
+    afx_msg void OnUpdateSequencerPlay(CCmdUI* pCmdUI);
+    afx_msg void OnUpdateSequencerStop(CCmdUI* pCmdUI);
 };
 
 extern CDrumSequencerApp theApp;

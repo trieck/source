@@ -10,24 +10,15 @@
 class CMainFrame : public CFrameWndEx
 {
 protected: // create from serialization only
-    CMainFrame();
+    CMainFrame() = default;
 DECLARE_DYNCREATE(CMainFrame)
 
-    // Attributes
-public:
-
-    // Operations
-public:
-
-    // Overrides
-public:
     BOOL PreCreateWindow(CREATESTRUCT& cs) override;
     BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE,
-                   CWnd* pParentWnd = nullptr, CCreateContext* pContext = nullptr) override;
+                   CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL) override;
 
     // Implementation
-public:
-    virtual ~CMainFrame();
+    virtual ~CMainFrame() = default;
 #ifdef _DEBUG
     void AssertValid() const override;
     void Dump(CDumpContext& dc) const override;
@@ -41,15 +32,12 @@ protected: // control bar embedded members
     CMFCToolBarImages m_UserImages;
 
     // Generated message map functions
-protected:
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
     afx_msg LRESULT OnToolbarCreateNew(WPARAM wp, LPARAM lp);
 DECLARE_MESSAGE_MAP()
 public:
     void RecalcLayout(BOOL bNotify = TRUE) override;
-    void ResizeFrame(void);
+    void ResizeFrame();
     void AdjustClientArea() override;
-    void AdjustDockingLayout(HDWP hdwp = nullptr) override;
-//    virtual BOOL OnCmdMsg(UINT nID, int nCode, void *pExtra,
-//                          AFX_CMDHANDLERINFO *pHandlerInfo);
+    void AdjustDockingLayout(HDWP hdwp = NULL) override;
 };

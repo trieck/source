@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "Sequencer.h"
+#include "midicommon.h"
 #include "outputdevs.h"
 #include "resource.h"
 #include "miditime.h"
@@ -65,14 +66,19 @@ BOOL Sequencer::Play(const Sequence& sequence)
     m_buffer.Encode(sequence);
 
     auto result = m_pStream->Stop();
-    if (result != MMSYSERR_NOERROR)
+    if (result != MMSYSERR_NOERROR) {
         return FALSE;
+    }
+
     result = m_pStream->Out(m_buffer);
-    if (result != MMSYSERR_NOERROR)
+    if (result != MMSYSERR_NOERROR) {
         return FALSE;
+    }
+
     result = m_pStream->Restart();
-    if (result != MMSYSERR_NOERROR)
+    if (result != MMSYSERR_NOERROR) {
         return FALSE;
+    }
 
     m_state = Playing;
 
@@ -84,17 +90,18 @@ BOOL Sequencer::Stop()
     ASSERT(m_pStream != NULL);
     ASSERT(m_pStream->IsOpen());
 
-    if (m_pStream->Stop() != MMSYSERR_NOERROR)
+    if (m_pStream->Stop() != MMSYSERR_NOERROR) {
         return FALSE;
+    }
 
     m_state = Stopped;
 
     return TRUE;
 }
 
-short Sequencer::tempo() const
+short Sequencer::Tempo() const
 {
-    // Get the tempo property
+    // Get the Tempo property
     MIDIPROPTEMPO prop{};
     prop.cbStruct = sizeof(MIDIPROPTEMPO);
 
@@ -108,10 +115,10 @@ short Sequencer::tempo() const
     return bpm;
 }
 
-void Sequencer::setTempo(short bpm)
+void Sequencer::SetTempo(short bpm)
 {
-    // Set the tempo property
-    MIDIPROPTEMPO prop{};
+    // Set the Tempo property
+    MIDIPROPTEMPO prop;
     prop.cbStruct = sizeof(MIDIPROPTEMPO);
     prop.dwTempo = MidiTime::BPMToMicroseconds(bpm);
 
@@ -123,10 +130,11 @@ void Sequencer::setTempo(short bpm)
 }
 
 void Sequencer::StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstance,
-                           DWORD_PTR dwParam1, DWORD_PTR dwParam2)
+                           DWORD_PTR dwParam1, DWORD_PTR /*dwParam2*/)
 {
-    if (uMsg != MOM_DONE)
+    if (uMsg != MOM_DONE) {
         return;
+    }
 
     const auto pStream = reinterpret_cast<MidiStream*>(dwInstance);
     ASSERT(pStream != NULL);
@@ -135,7 +143,7 @@ void Sequencer::StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstanc
     ASSERT(pThis != NULL);
 
     // Unprepare the midi header
-    ::midiOutUnprepareHeader(
+    midiOutUnprepareHeader(
         reinterpret_cast<HMIDIOUT>(hMidiStream),
         reinterpret_cast<LPMIDIHDR>(dwParam1),
         sizeof(MIDIHDR));

@@ -124,9 +124,6 @@
     <ClCompile Include="mididev.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mididevs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="midimessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

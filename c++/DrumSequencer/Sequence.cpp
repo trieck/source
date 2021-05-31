@@ -14,27 +14,23 @@ const BYTE SEQ_MARKER[3] = {
 
 // MIDI instruments
 const BYTE INSTRUMENTS[Sequence::NINSTRUMENTS] = {
-    42,	// closed hi-hat
-    44,	// pedal hi-hat
-    46,	// open hi-hat
-    49,	// crash cymbal
-    51,	// ride cymbal
-    38,	// acoustic snare
-    50,	// hi tom
-    48,	// hi-mid tom
-    45,	// low tom
-    36	// bass drum1
+    42, // closed hi-hat
+    44, // pedal hi-hat
+    46, // open hi-hat
+    49, // crash cymbal
+    51, // ride cymbal
+    38, // acoustic snare
+    50, // hi tom
+    48, // hi-mid tom
+    45, // low tom
+    36  // bass drum1
 };
 
 ANON_END
 
-Sequence::Sequence(void)
+Sequence::Sequence()
 {
     Clear();
-}
-
-Sequence::~Sequence(void)
-{
 }
 
 void Sequence::ToggleSub(const CPoint& pt)
@@ -60,7 +56,7 @@ BYTE Sequence::GetInstrument(int i) const
     return INSTRUMENTS[i];
 }
 
-void Sequence::Clear(void)
+void Sequence::Clear()
 {
     memset(&m_beats, 0, sizeof(m_beats));
 }

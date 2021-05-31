@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "BeatGrid.h"
 
-constexpr auto COLOR_GRID  = RGB(0xc0, 0xc0, 0xc0);
+constexpr auto COLOR_GRID = RGB(0xc0, 0xc0, 0xc0);
 constexpr auto COLOR_BKGND = RGB(0xEE, 0xEE, 0xFF);
 
 const COLORREF INST_COLORS[Sequence::NINSTRUMENTS] = {
@@ -17,7 +17,7 @@ const COLORREF INST_COLORS[Sequence::NINSTRUMENTS] = {
     RGB(112, 48, 160)
 };
 
-BeatGrid::BeatGrid(void)
+BeatGrid::BeatGrid()
 {
     m_bkgBrush.CreateSolidBrush(COLOR_BKGND);
     m_thinPen.CreatePen(PS_SOLID, 0, COLOR_GRID);
@@ -26,7 +26,7 @@ BeatGrid::BeatGrid(void)
     CreateBitmap();
 }
 
-BeatGrid::~BeatGrid(void)
+BeatGrid::~BeatGrid()
 {
 }
 
@@ -46,7 +46,7 @@ void BeatGrid::Draw(CDC* pDC)
     m_MemDC.SelectObject(pOldBitmap);
 }
 
-void BeatGrid::CreateBitmap(void)
+void BeatGrid::CreateBitmap()
 {
     CRect rcRegion;
     rcRegion.right = rcRegion.left + CX_GRID;
@@ -70,15 +70,15 @@ void BeatGrid::CreateBitmap(void)
     PaintBitmap();
 }
 
-void BeatGrid::PaintBitmap(void)
+void BeatGrid::PaintBitmap()
 {
     CRect rcBoard;
     m_Region.GetRgnBox(rcBoard);
 
     CBitmap* pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
 
-    CBrush* pOldBrush = static_cast<CBrush*>(m_MemDC.SelectObject(&m_bkgBrush));
-    CPen* pOldPen = static_cast<CPen*>(m_MemDC.SelectObject(&m_thinPen));
+    auto pOldBrush = static_cast<CBrush*>(m_MemDC.SelectObject(&m_bkgBrush));
+    auto pOldPen = static_cast<CPen*>(m_MemDC.SelectObject(&m_thinPen));
 
     m_MemDC.Rectangle(rcBoard);
 

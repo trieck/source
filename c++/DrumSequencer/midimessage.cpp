@@ -32,9 +32,9 @@ MidiMessage::~MidiMessage()
 /////////////////////////////////////////////////////////////////////////////
 MidiMessage::operator DWORD() const
 {
-    DWORD data = m_velocity << 16;  // velocity
-    data |= m_data << 8;            // midi data
-    data |= m_status;               // status
+    DWORD data = m_velocity << 16; // velocity
+    data |= m_data << 8; // midi data
+    data |= m_status; // status
 
     return data;
 }

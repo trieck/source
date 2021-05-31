@@ -8,8 +8,6 @@
 #ifndef __MIDIDEV_H__
 #define __MIDIDEV_H__
 
-#include "midicommon.h"
-
 /////////////////////////////////////////////////////////////////////////////
 class MidiDevice
 {
@@ -17,7 +15,7 @@ protected:
     // Construction / Destruction
     MidiDevice();
 public:
-    virtual ~MidiDevice();
+    virtual ~MidiDevice() = default;
 
     // Interface
     virtual MMRESULT Open() = 0;

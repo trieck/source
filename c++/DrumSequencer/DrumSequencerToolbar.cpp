@@ -4,14 +4,10 @@
 #include "stdafx.h"
 #include "DrumSequencerToolbar.h"
 
-
-// DrumSequencerToolbar
-
 IMPLEMENT_DYNAMIC(DrumSequencerToolbar, CMFCToolBar)
 
 DrumSequencerToolbar::DrumSequencerToolbar()
 {
-
 }
 
 DrumSequencerToolbar::~DrumSequencerToolbar()
@@ -20,9 +16,9 @@ DrumSequencerToolbar::~DrumSequencerToolbar()
 
 void DrumSequencerToolbar::OnAfterFloat()
 {
-    CWnd *pWnd = AfxGetMainWnd();
+    auto pWnd = AfxGetMainWnd();
     if (pWnd->IsKindOf(RUNTIME_CLASS(CFrameWnd))) {
-        ((CFrameWnd*)pWnd)->RecalcLayout();
+        dynamic_cast<CFrameWnd*>(pWnd)->RecalcLayout();
     }
 
     CMFCToolBar::OnAfterFloat();
@@ -30,9 +26,9 @@ void DrumSequencerToolbar::OnAfterFloat()
 
 void DrumSequencerToolbar::OnAfterDock(CBasePane* pBar, LPCRECT lpRect, AFX_DOCK_METHOD dockMethod)
 {
-    CWnd *pWnd = AfxGetMainWnd();
+    auto pWnd = AfxGetMainWnd();
     if (pWnd->IsKindOf(RUNTIME_CLASS(CFrameWnd))) {
-        ((CFrameWnd*)pWnd)->RecalcLayout();
+        dynamic_cast<CFrameWnd*>(pWnd)->RecalcLayout();
     }
 
     CMFCToolBar::OnAfterDock(pBar, lpRect, dockMethod);
@@ -40,9 +36,3 @@ void DrumSequencerToolbar::OnAfterDock(CBasePane* pBar, LPCRECT lpRect, AFX_DOCK
 
 BEGIN_MESSAGE_MAP(DrumSequencerToolbar, CMFCToolBar)
 END_MESSAGE_MAP()
-
-
-
-// DrumSequencerToolbar message handlers
-
-

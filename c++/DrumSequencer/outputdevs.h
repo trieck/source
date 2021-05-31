@@ -15,17 +15,15 @@ class OutputDevices : public MidiDevices
 {
 public:
     // Construction / Destruction
-    OutputDevices();
-    virtual ~OutputDevices();
+    OutputDevices() = default;
+    virtual ~OutputDevices() = default;
 
     // Interface
-    UINT Count() const;
-    MidiDevice * GetDevice(UINT) const;
-    MidiDevice * GetStream(UINT) const;
-
-protected:
-    // Implementation
+    UINT Count() const override;
+    MidiDevice* GetDevice(UINT) const override;
+    MidiDevice* GetStream(UINT) const;
 };
+
 /////////////////////////////////////////////////////////////////////////////
 
 #endif // __OUTPUTDEVS_H__

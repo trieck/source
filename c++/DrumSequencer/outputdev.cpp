@@ -1,15 +1,15 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-//	OUTPUTDEV.CPP : Output device module
+//  OUTPUTDEV.CPP : Output device module
 //
-//	Copyright(c) 2011, Thomas A. Rieck, All Rights Reserved
+//  Copyright(c) 2011, Thomas A. Rieck, All Rights Reserved
 //
 
 #include "stdafx.h"
 #include "outputdev.h"
 
 /////////////////////////////////////////////////////////////////////////////
-OutputDevice::OutputDevice(LPMIDIOUTCAPS pmidicaps, UINT id)
+OutputDevice::OutputDevice(LPMIDIOUTCAPS pmidicaps, UINT id) : MIDIOUTCAPS{}
 {
     wMid = pmidicaps->wMid;
     wPid = pmidicaps->wPid;
@@ -24,11 +24,6 @@ OutputDevice::OutputDevice(LPMIDIOUTCAPS pmidicaps, UINT id)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-OutputDevice::~OutputDevice()
-{
-}
-
-/////////////////////////////////////////////////////////////////////////////
 MMRESULT OutputDevice::Close()
 {
     // This is a no op
@@ -38,10 +33,9 @@ MMRESULT OutputDevice::Close()
 /////////////////////////////////////////////////////////////////////////////
 CString OutputDevice::GetErrorText(MMRESULT error)
 {
-    TCHAR buffer[MAXERRORLENGTH + 1];
-    buffer[0] = '\0';
+    TCHAR buffer[MAXERRORLENGTH + 1]{};
 
-    ::midiOutGetErrorText(error, buffer, sizeof(buffer));
+    midiOutGetErrorText(error, buffer, sizeof(buffer));
 
     return buffer;
 }

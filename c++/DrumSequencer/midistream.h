@@ -14,7 +14,7 @@
 typedef void (*PFNCALLBACK)(HMIDISTRM, UINT, DWORD_PTR, DWORD_PTR, DWORD_PTR);
 typedef CList<PFNCALLBACK, PFNCALLBACK> HookChain;
 
-class Sequencer;	// forward declarations
+class Sequencer; // forward declarations
 
 /////////////////////////////////////////////////////////////////////////////
 class MidiStream : public OutputDevice
@@ -36,13 +36,13 @@ public:
     MMRESULT Out(LPMIDIHDR);
     MMRESULT Restart();
     MMRESULT Stop() const;
-    MMRESULT ShortMessage(const MidiMessage &) const;
+    MMRESULT ShortMessage(const MidiMessage&) const;
 
     BOOL RegisterHook(PFNCALLBACK);
     BOOL RevokeHook(PFNCALLBACK);
 
-    void SetSequencer(Sequencer *pSeq);
-    Sequencer *GetSequencer() const;
+    void SetSequencer(Sequencer* pSeq);
+    Sequencer* GetSequencer() const;
 
 protected:
     static void CALLBACK MidiStreamProc(
@@ -57,14 +57,16 @@ protected:
     {
         return static_cast<HMIDISTRM>(m_handle);
     }
+
     HMIDIOUT GetOutputHandle() const
     {
         return static_cast<HMIDIOUT>(m_handle);
     }
 
     HookChain m_HookChain;
-    Sequencer *m_pSequencer;	// sequencer that owns this stream
+    Sequencer* m_pSequencer; // sequencer that owns this stream
 };
+
 /////////////////////////////////////////////////////////////////////////////
 
 #endif // __MIDISTREAM_H__

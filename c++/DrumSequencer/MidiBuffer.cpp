@@ -1,12 +1,13 @@
 #include "StdAfx.h"
 
 #include "MidiBuffer.h"
+#include "midicommon.h"
 #include "midimessage.h"
 #include "miditime.h"
 
 ANON_BEGIN
-    void noteOn(LPSTR* stream, BYTE data, BYTE velocity, Duration delta);
-    void noteOff(LPSTR* stream, BYTE data, Duration delta);
+    void noteOn(PMIDISHORTEVENT* stream, BYTE data, BYTE velocity, Duration delta);
+    void noteOff(PMIDISHORTEVENT* stream, BYTE data, Duration delta);
 ANON_END
 
 MidiBuffer::MidiBuffer() : m_header({})
@@ -44,7 +45,8 @@ void MidiBuffer::Encode(const Sequence& seq)
         Alloc(size);
     }
 
-    auto pdata = m_header.lpData;
+    auto pdata = reinterpret_cast<PMIDISHORTEVENT>(m_header.lpData);
+
     m_header.dwBytesRecorded = 0;
 
     for (auto i = 0; i < Sequence::NSUBS; i++) {
@@ -69,20 +71,9 @@ void MidiBuffer::Encode(const Sequence& seq)
 
 ANON_BEGIN
 
-    void tempo(LPSTR* stream, int bpm)
+    void noteOn(PMIDISHORTEVENT* stream, BYTE data, BYTE velocity, Duration delta)
     {
-        const auto microseconds = MidiTime::BPMToMicroseconds(bpm);
-
-        MIDISHORTEVENT event = {};
-        event.event = TEMPO_CHANGE(microseconds);
-
-        memcpy(*stream, &event, sizeof(MIDISHORTEVENT));
-        *stream += sizeof(MIDISHORTEVENT);
-    }
-
-    void noteOn(LPSTR* stream, BYTE data, BYTE velocity, Duration delta)
-    {
-        MIDISHORTEVENT event = {};
+        MIDISHORTEVENT event{};
 
         MidiMessage message;
         message.SetData(data);
@@ -90,15 +81,14 @@ ANON_BEGIN
         message.SetVelocity(velocity);
 
         event.delta = MidiTime::DurationToTicks(delta);
-        event.event = message;
+        event.event = std::move(message);
 
-        memcpy(*stream, &event, sizeof(MIDISHORTEVENT));
-        *stream += sizeof(MIDISHORTEVENT);
+        *(*stream)++ = event;
     }
 
-    void noteOff(LPSTR* stream, BYTE data, Duration delta)
+    void noteOff(PMIDISHORTEVENT* stream, BYTE data, Duration delta)
     {
-        MIDISHORTEVENT event = {};
+        MIDISHORTEVENT event{};
 
         MidiMessage message;
         message.SetData(data);
@@ -106,10 +96,9 @@ ANON_BEGIN
         message.SetVelocity(0);
 
         event.delta = MidiTime::DurationToTicks(delta);
-        event.event = message;
+        event.event = std::move(message);
 
-        memcpy(*stream, &event, sizeof(MIDISHORTEVENT));
-        *stream += sizeof(MIDISHORTEVENT);
+        *(*stream)++ = event;
     }
 
 ANON_END

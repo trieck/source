@@ -1,4 +1,3 @@
-
 // DrumSequencerDoc.cpp : implementation of the CDrumSequencerDoc class
 //
 
@@ -75,7 +74,7 @@ void CDrumSequencerDoc::InitializeSearchContent()
 {
     CString strSearchContent;
     // Set search contents from document's data.
-    // The content parts should be separated by ";"
+// The content parts should be separated by ";"
 
     // For example:  strSearchContent = _T("point;rectangle;circle;ole object;");
     SetSearchContent(strSearchContent);
@@ -118,7 +117,7 @@ void CDrumSequencerDoc::ToggleSub(const CPoint& pt)
 {
     m_sequence.ToggleSub(pt);
     SetModifiedFlag();
-    UpdateAllViews(NULL, MAKELONG(pt.x, pt.y), &m_sequence);
+    UpdateAllViews(nullptr, MAKELONG(pt.x, pt.y), &m_sequence);
 }
 
 void CDrumSequencerDoc::DeleteContents()
@@ -129,19 +128,19 @@ void CDrumSequencerDoc::DeleteContents()
 }
 
 BEGIN_MESSAGE_MAP(CDrumSequencerDoc, CDocument)
-    ON_COMMAND(ID_SEQUENCER_PLAY, &CDrumSequencerDoc::OnSequencerPlay)
-    ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, &CDrumSequencerDoc::OnUpdateFileSave)
+        ON_COMMAND(ID_SEQUENCER_PLAY, &CDrumSequencerDoc::OnSequencerPlay)
+        ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, &CDrumSequencerDoc::OnUpdateFileSave)
 END_MESSAGE_MAP()
 
 void CDrumSequencerDoc::OnSequencerPlay()
 {
-    auto *pApp = dynamic_cast<CDrumSequencerApp*>(AfxGetApp());
+    auto* pApp = dynamic_cast<CDrumSequencerApp*>(AfxGetApp());
     ASSERT_VALID(pApp);
 
     pApp->Play(m_sequence);
 }
 
-void CDrumSequencerDoc::OnUpdateFileSave(CCmdUI *pCmdUI)
+void CDrumSequencerDoc::OnUpdateFileSave(CCmdUI* pCmdUI)
 {
     pCmdUI->Enable(IsModified());
 }

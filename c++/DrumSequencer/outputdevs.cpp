@@ -11,39 +11,31 @@
 #include "MidiStream.h"
 
 /////////////////////////////////////////////////////////////////////////////
-OutputDevices::OutputDevices()
-{
-}
-
-/////////////////////////////////////////////////////////////////////////////
-OutputDevices::~OutputDevices()
-{
-}
-
-/////////////////////////////////////////////////////////////////////////////
 UINT OutputDevices::Count() const
 {
-    return ::midiOutGetNumDevs();
+    return midiOutGetNumDevs();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-MidiDevice * OutputDevices::GetDevice(UINT device) const
+MidiDevice* OutputDevices::GetDevice(UINT device) const
 {
     MIDIOUTCAPS caps;
-    auto result = ::midiOutGetDevCaps(device, &caps, sizeof(MIDIOUTCAPS));
-    if (result != MMSYSERR_NOERROR)
+    auto result = midiOutGetDevCaps(device, &caps, sizeof(MIDIOUTCAPS));
+    if (result != MMSYSERR_NOERROR) {
         return nullptr;
+    }
 
     return new MidiOutput(&caps, device);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-MidiDevice * OutputDevices::GetStream(UINT device) const
+MidiDevice* OutputDevices::GetStream(UINT device) const
 {
     MIDIOUTCAPS caps;
-    MMRESULT result = ::midiOutGetDevCaps(device, &caps, sizeof(MIDIOUTCAPS));
-    if (result != MMSYSERR_NOERROR)
+    auto result = midiOutGetDevCaps(device, &caps, sizeof(MIDIOUTCAPS));
+    if (result != MMSYSERR_NOERROR) {
         return nullptr;
+    }
 
     return new MidiStream(&caps, device);
 }

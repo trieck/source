@@ -1,8 +1,8 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-//	OUTPUTDEV.H : MIDI output device module
+//  OUTPUTDEV.H : MIDI output device module
 //
-//	Copyright(c) 2011, Thomas A. Rieck, All Rights Reserved
+//  Copyright(c) 2011, Thomas A. Rieck, All Rights Reserved
 //
 
 #ifndef __OUTPUTDEV_H__
@@ -19,7 +19,7 @@ protected:
     // Construction / Destruction
     OutputDevice(LPMIDIOUTCAPS, UINT);
 public:
-    virtual ~OutputDevice();
+    virtual ~OutputDevice() = default;
 
     // Interface
     WORD GetMid() const
@@ -37,7 +37,7 @@ public:
         return vDriverVersion;
     }
 
-    CString GetProduct () const
+    CString GetProduct() const
     {
         return szPname;
     }
@@ -79,6 +79,7 @@ public:
 
     // Implementation
 };
+
 /////////////////////////////////////////////////////////////////////////////
 
 #endif // __OUTPUTDEV_H__

@@ -1,4 +1,3 @@
-
 // stdafx.h : include file for standard system include files,
 // or project specific include files that are used frequently,
 // but are changed infrequently
@@ -42,6 +41,7 @@
 #endif
 #endif
 
-#define ANON_BEGIN	namespace {
-#define ANON_END	}
+#include <mmeapi.h>
 
+#define ANON_BEGIN  namespace {
+#define ANON_END    }

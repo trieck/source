@@ -26,8 +26,8 @@ private:
     CBitmap m_Bitmap;
 
 public:
-    void CreateBitmap(void);
-    void PaintBitmap(void);
+    void CreateBitmap();
+    void PaintBitmap();
     static void GetBoundingRect(CRect & rc);
     static void GetDimensions(CRect &rc);
     static COLORREF GetInstColor(int i);

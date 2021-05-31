@@ -1,8 +1,8 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-//	MIDISTREAM.CPP : MIDI stream module
+//  MIDISTREAM.CPP : MIDI stream module
 //
-//	Copyright(c) 2011, Thomas A. Rieck, All Rights Reserved
+//  Copyright(c) 2011, Thomas A. Rieck, All Rights Reserved
 //
 
 #include "StdAfx.h"
@@ -72,9 +72,10 @@ MMRESULT MidiStream::Out(LPMIDIHDR pMidiHdr)
     ASSERT(pMidiHdr != NULL);
 
     // Prepare the header
-    MMRESULT result = midiOutPrepareHeader(static_cast<HMIDIOUT>(m_handle), pMidiHdr, sizeof(MIDIHDR));
-    if (result != MMSYSERR_NOERROR)
+    auto result = midiOutPrepareHeader(static_cast<HMIDIOUT>(m_handle), pMidiHdr, sizeof(MIDIHDR));
+    if (result != MMSYSERR_NOERROR) {
         return result;
+    }
 
     // Output the header
     result = midiStreamOut(*this, pMidiHdr, sizeof(MIDIHDR));
@@ -105,8 +106,8 @@ MMRESULT MidiStream::Stop() const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void MidiStream::MidiStreamProc(HMIDISTRM hMidiStream, UINT uMsg, 
-    DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2)
+void MidiStream::MidiStreamProc(HMIDISTRM hMidiStream, UINT uMsg,
+                                DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2)
 {
     auto This = reinterpret_cast<MidiStream*>(dwInstance);
     ASSERT(This != NULL);
@@ -136,8 +137,9 @@ BOOL MidiStream::RegisterHook(PFNCALLBACK pfnCallBack)
     ASSERT_VALID(&m_HookChain);
 
     // Don't allow duplicates in the hook chain
-    if (m_HookChain.Find(pfnCallBack) != nullptr)
+    if (m_HookChain.Find(pfnCallBack) != nullptr) {
         return FALSE;
+    }
 
     return m_HookChain.AddTail(pfnCallBack) != nullptr;
 }
