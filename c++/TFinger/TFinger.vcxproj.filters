@@ -158,5 +158,7 @@
     <ClInclude Include="TFinger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TFingerDoc.h" />
+    <ClInclude Include="TFingerView.h" />
   </ItemGroup>
 </Project>

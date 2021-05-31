@@ -186,7 +186,6 @@
     <None Include="res\DrumSequencer.ico" />
     <None Include="res\DrumSequencer.rc2" />
     <None Include="res\DrumSequencerDoc.ico" />
-    <None Include="res\Toolbar.bmp" />
     <None Include="res\Toolbar256.bmp" />
     <None Include="UserImages.bmp" />
   </ItemGroup>

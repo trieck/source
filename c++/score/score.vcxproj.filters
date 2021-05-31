@@ -1,0 +1,356 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{ab81901a-a64d-449f-9c0d-92d501110fc8}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{14b35aa3-f34f-47b4-9b91-9ad8230ea059}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{b07f8fcc-19c1-4be2-b3bc-df6f75f196fa}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="beats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dblebuff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="inputdev.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="inputdevs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="keysig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="keysigdg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="measqueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="measure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mididev.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mididevs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="midimessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="midiout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="midistream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="miditime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="neptune.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="note.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="notelist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="outputdev.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="outputdevs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RegKey.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="staff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TempoDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="timesignature.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolboxDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="baseinc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="beats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dblebuff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inputdev.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inputdevs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="keynotes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="keysig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="keysigdg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="measqueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="measure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="midicommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mididev.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mididevs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="midimessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="midiout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="midistream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="miditime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="neptune.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="note.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="notelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="outputdev.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="outputdevs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RegKey.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sequence.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="staff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TempoDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="timesignature.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolboxDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\16not.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\32not.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\8note.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\erasenot.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\flat.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\halfnote.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\natural.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\qnote.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\score.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\score.reg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\sharp.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\wholenot.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\16not.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\32not.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\8note.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\default.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\flat.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\halfnote.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\idr_main.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\keya.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\keyaflat.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\keybflat.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\keycflat.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\keycshar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\keycsharp.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\keydflat.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\keyeflat.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\keyf.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\keyfsharp.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\keygflat.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\mainfram.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\natural.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\qnote.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\sharp.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\trebleclef.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\wholenot.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\instuments.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="score.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

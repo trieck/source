@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A3351C2C-70D9-46C2-BD9F-4149695A5825}</ProjectGuid>
+    <SccProjectName>"$/score", GQEAAAAA</SccProjectName>
+    <SccLocalPath>.</SccLocalPath>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>16.0.31320.204</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release/score.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\Release/score.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>bin\score.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ProgramDatabaseFile>.\Release/score.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release/score.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/score.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\Debug/score.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>bin\score.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/score.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug/score.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="beats.cpp" />
+    <ClCompile Include="DataEngine.cpp" />
+    <ClCompile Include="dblebuff.cpp" />
+    <ClCompile Include="inputdev.cpp" />
+    <ClCompile Include="inputdevs.cpp" />
+    <ClCompile Include="keysig.cpp" />
+    <ClCompile Include="keysigdg.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="measqueue.cpp" />
+    <ClCompile Include="measure.cpp" />
+    <ClCompile Include="mididev.cpp" />
+    <ClCompile Include="mididevs.cpp" />
+    <ClCompile Include="midimessage.cpp" />
+    <ClCompile Include="midiout.cpp" />
+    <ClCompile Include="midistream.cpp" />
+    <ClCompile Include="miditime.cpp" />
+    <ClCompile Include="neptune.cpp" />
+    <ClCompile Include="note.cpp" />
+    <ClCompile Include="notelist.cpp" />
+    <ClCompile Include="outputdev.cpp" />
+    <ClCompile Include="outputdevs.cpp" />
+    <ClCompile Include="RegKey.cpp" />
+    <ClCompile Include="score.cpp" />
+    <ClCompile Include="ScoreDoc.cpp" />
+    <ClCompile Include="ScoreView.cpp" />
+    <ClCompile Include="sequence.cpp" />
+    <ClCompile Include="SettingsDlg.cpp" />
+    <ClCompile Include="staff.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TempoDlg.cpp" />
+    <ClCompile Include="timesignature.cpp" />
+    <ClCompile Include="ToolboxDlg.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="baseinc.h" />
+    <ClInclude Include="beats.h" />
+    <ClInclude Include="common.h" />
+    <ClInclude Include="DataEngine.h" />
+    <ClInclude Include="dblebuff.h" />
+    <ClInclude Include="inputdev.h" />
+    <ClInclude Include="inputdevs.h" />
+    <ClInclude Include="keynotes.h" />
+    <ClInclude Include="keysig.h" />
+    <ClInclude Include="keysigdg.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="measqueue.h" />
+    <ClInclude Include="measure.h" />
+    <ClInclude Include="midicommon.h" />
+    <ClInclude Include="mididev.h" />
+    <ClInclude Include="mididevs.h" />
+    <ClInclude Include="midimessage.h" />
+    <ClInclude Include="midiout.h" />
+    <ClInclude Include="midistream.h" />
+    <ClInclude Include="miditime.h" />
+    <ClInclude Include="neptune.h" />
+    <ClInclude Include="note.h" />
+    <ClInclude Include="notelist.h" />
+    <ClInclude Include="outputdev.h" />
+    <ClInclude Include="outputdevs.h" />
+    <ClInclude Include="RegKey.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="score.h" />
+    <ClInclude Include="ScoreDoc.h" />
+    <ClInclude Include="ScoreView.h" />
+    <ClInclude Include="sequence.h" />
+    <ClInclude Include="SettingsDlg.h" />
+    <ClInclude Include="staff.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="TempoDlg.h" />
+    <ClInclude Include="timesignature.h" />
+    <ClInclude Include="tool.h" />
+    <ClInclude Include="ToolboxDlg.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\16not.cur" />
+    <None Include="res\32not.cur" />
+    <None Include="res\8note.cur" />
+    <None Include="res\erasenot.cur" />
+    <None Include="res\flat.cur" />
+    <None Include="res\halfnote.cur" />
+    <None Include="res\natural.cur" />
+    <None Include="res\qnote.cur" />
+    <None Include="res\score.rc2" />
+    <None Include="res\score.reg" />
+    <None Include="res\sharp.cur" />
+    <None Include="res\wholenot.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\16not.ico" />
+    <Image Include="res\32not.ico" />
+    <Image Include="res\8note.ico" />
+    <Image Include="res\default.ico" />
+    <Image Include="res\flat.ico" />
+    <Image Include="res\halfnote.ico" />
+    <Image Include="res\idr_main.ico" />
+    <Image Include="res\keya.bmp" />
+    <Image Include="res\keyaflat.bmp" />
+    <Image Include="res\keybflat.bmp" />
+    <Image Include="res\keycflat.bmp" />
+    <Image Include="res\keycshar.bmp" />
+    <Image Include="res\keycsharp.bmp" />
+    <Image Include="res\keydflat.bmp" />
+    <Image Include="res\keyeflat.bmp" />
+    <Image Include="res\keyf.bmp" />
+    <Image Include="res\keyfsharp.bmp" />
+    <Image Include="res\keygflat.bmp" />
+    <Image Include="res\mainfram.bmp" />
+    <Image Include="res\natural.ico" />
+    <Image Include="res\qnote.ico" />
+    <Image Include="res\sharp.ico" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\trebleclef.bmp" />
+    <Image Include="res\wholenot.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\instuments.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="score.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
