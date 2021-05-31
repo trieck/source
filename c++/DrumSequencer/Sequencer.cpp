@@ -1,9 +1,9 @@
 #include "StdAfx.h"
-#include "Sequencer.h"
 #include "midicommon.h"
+#include "miditime.h"
 #include "outputdevs.h"
 #include "resource.h"
-#include "miditime.h"
+#include "Sequencer.h"
 
 Sequencer::Sequencer() : m_pStream(nullptr), m_state(Stopped)
 {
@@ -63,14 +63,20 @@ BOOL Sequencer::Play(const Sequence& sequence)
     ASSERT(m_pStream != NULL);
     ASSERT(m_pStream->IsOpen());
 
-    m_buffer.Encode(sequence);
+    m_front.Encode(sequence);
+    m_back.Encode(sequence);
 
     auto result = m_pStream->Stop();
     if (result != MMSYSERR_NOERROR) {
         return FALSE;
     }
 
-    result = m_pStream->Out(m_buffer);
+    result = m_pStream->Out(m_front);
+    if (result != MMSYSERR_NOERROR) {
+        return FALSE;
+    }
+
+    result = m_pStream->Out(m_back);
     if (result != MMSYSERR_NOERROR) {
         return FALSE;
     }
@@ -148,5 +154,13 @@ void Sequencer::StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstanc
         reinterpret_cast<LPMIDIHDR>(dwParam1),
         sizeof(MIDIHDR));
 
-    pThis->m_state = Stopped;
+    if (pThis->m_state == Playing) {
+        // Queue more data if still playing
+        // Determine whether we need to use the front or back buffer
+        if (pThis->m_completed++ % 2 == 0) {
+            pThis->m_pStream->Out(pThis->m_front);
+        } else {
+            pThis->m_pStream->Out(pThis->m_back);
+        }
+    }
 }

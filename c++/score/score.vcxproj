@@ -165,7 +165,6 @@
     <ClCompile Include="notelist.cpp" />
     <ClCompile Include="outputdev.cpp" />
     <ClCompile Include="outputdevs.cpp" />
-    <ClCompile Include="RegKey.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="ScoreDoc.cpp" />
     <ClCompile Include="ScoreView.cpp" />
@@ -206,7 +205,6 @@
     <ClInclude Include="notelist.h" />
     <ClInclude Include="outputdev.h" />
     <ClInclude Include="outputdevs.h" />
-    <ClInclude Include="RegKey.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="ScoreDoc.h" />

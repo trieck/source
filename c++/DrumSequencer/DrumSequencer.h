@@ -38,6 +38,7 @@ private:
 public:
     int ExitInstance() override;
     BOOL Play(const Sequence& sequence);
+    BOOL Stop();
 
     afx_msg void OnSequencerStop();
     afx_msg void OnUpdateSequencerPlay(CCmdUI* pCmdUI);

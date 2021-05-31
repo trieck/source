@@ -10,7 +10,6 @@
 #include "SettingsDlg.h"
 #include "OutputDevs.h"
 #include "MidiMessage.h"
-#include "regkey.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -479,12 +478,12 @@ CString GetRegValue(LPCTSTR pkey, LPCTSTR pvalue)
 
     // Determine the size of the needed buffer
     DWORD dwCount = 0;
-    if (key.GetValue((LPTSTR)NULL, pvalue, &dwCount) != ERROR_SUCCESS)
+    if (key.QueryStringValue(pvalue, nullptr, &dwCount) != ERROR_SUCCESS)
         return "";
 
     // Now grab the data
     CString value;
-    key.GetValue(value.GetBuffer(dwCount), pvalue, &dwCount);
+    key.QueryStringValue(pvalue, value.GetBuffer(dwCount), &dwCount);
 
     value.ReleaseBuffer(dwCount);
 
@@ -511,7 +510,7 @@ LONG GetRegValue(LPCTSTR pkey, LPCTSTR pvalue, LPDWORD pdwValue)
     if (lRtn != ERROR_SUCCESS)
         return lRtn;
 
-    return key.GetValue(pdwValue, pvalue);
+    return key.QueryDWORDValue(pvalue, *pdwValue);
 }
 
 //
@@ -532,7 +531,7 @@ LONG SetRegValue(LPCTSTR pkey, LPCTSTR pvaluename, LPCTSTR pvalue)
     if (lRtn != ERROR_SUCCESS)
         return lRtn;
 
-    return key.SetValue(pvalue, pvaluename);
+    return key.SetStringValue(pvalue, pvaluename);
 }
 
 //
@@ -552,7 +551,7 @@ LONG SetRegValue(LPCTSTR pkey, LPCTSTR pvaluename, DWORD value)
     if (lRtn != ERROR_SUCCESS)
         return lRtn;
 
-    return key.SetValue(value, pvaluename);
+    return key.SetDWORDValue(pvaluename, value);
 }
 
 

@@ -34,6 +34,8 @@ BOOL CDrumSequencerDoc::OnNewDocument()
     if (!CDocument::OnNewDocument())
         return FALSE;
 
+    theApp.Stop();
+
     m_sequence.Clear();
 
     return TRUE;

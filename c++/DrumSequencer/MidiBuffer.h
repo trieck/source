@@ -7,11 +7,20 @@ class MidiBuffer
 {
 public:
     // Construction / Destruction
-    MidiBuffer();
+    MidiBuffer() = default;
     virtual ~MidiBuffer();
 
+    // Not copyable, but movable
+    MidiBuffer(const MidiBuffer&) = delete;
+    MidiBuffer& operator = (const MidiBuffer&) = delete;
+
+    MidiBuffer(MidiBuffer&& rhs) noexcept;
+    MidiBuffer& operator = (MidiBuffer&& rhs) noexcept;
+
     // Interface
-    operator MIDIHDR* ()
+    void Encode(const Sequence& seq);
+
+    operator PMIDIHDR ()
     {
         return &m_header;
     }
@@ -22,8 +31,6 @@ protected:
     void Free();
 
 private:
-    MIDIHDR m_header;
-public:
-    void Encode(const Sequence & seq);
+    MIDIHDR m_header{};
 };
 

@@ -153,9 +153,14 @@ BOOL CDrumSequencerApp::Play(const Sequence& sequence)
     return m_sequencer.Play(sequence);
 }
 
+BOOL CDrumSequencerApp::Stop()
+{
+    return m_sequencer.Stop();
+}
+
 void CDrumSequencerApp::OnSequencerStop()
 {
-    m_sequencer.Stop();
+    (void)Stop();
 }
 
 void CDrumSequencerApp::OnUpdateSequencerPlay(CCmdUI* pCmdUI)

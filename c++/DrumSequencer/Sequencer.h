@@ -1,8 +1,8 @@
 #pragma once
 
 #include "midistream.h"
-#include "MidiBuffer.h"
 #include "Sequence.h"
+#include "MidiBuffer.h"
 
 enum SequencerState
 {
@@ -27,9 +27,10 @@ public:
     void SetTempo(short bpm);
 
 private:
+    MidiBuffer m_front, m_back;
     MidiStream* m_pStream;
-    MidiBuffer m_buffer;
     SequencerState m_state;
+    UINT m_completed = 0;
 
     static void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1,
                            DWORD_PTR dwParam2);

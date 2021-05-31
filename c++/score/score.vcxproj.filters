@@ -78,9 +78,6 @@
     <ClCompile Include="outputdevs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RegKey.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="score.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -186,9 +183,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="outputdevs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RegKey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">

@@ -10,10 +10,6 @@ ANON_BEGIN
     void noteOff(PMIDISHORTEVENT* stream, BYTE data, Duration delta);
 ANON_END
 
-MidiBuffer::MidiBuffer() : m_header({})
-{
-}
-
 MidiBuffer::~MidiBuffer()
 {
     Free();
@@ -35,6 +31,20 @@ void MidiBuffer::Free()
     memset(&m_header, 0, sizeof(MIDIHDR));
 }
 
+MidiBuffer::MidiBuffer(MidiBuffer&& rhs) noexcept : m_header(rhs.m_header)
+{
+    rhs.m_header.lpData = nullptr;
+}
+
+MidiBuffer& MidiBuffer::operator=(MidiBuffer&& rhs) noexcept
+{
+    m_header = rhs.m_header;
+
+    rhs.m_header.lpData = nullptr;
+
+    return *this;
+}
+
 void MidiBuffer::Encode(const Sequence& seq)
 {
     // Determine the size of the buffer needed
@@ -50,7 +60,7 @@ void MidiBuffer::Encode(const Sequence& seq)
     m_header.dwBytesRecorded = 0;
 
     for (auto i = 0; i < Sequence::NSUBS; i++) {
-        auto delta = i == 0 ? EmptyNote : SixteenthNote;
+        auto delta = SixteenthNote;
         for (auto j = 0; j < Sequence::NINSTRUMENTS; j++) {
             const auto instrument = seq.GetInstrument(j);
 
