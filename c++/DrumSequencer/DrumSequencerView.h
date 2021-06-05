@@ -16,18 +16,7 @@ DECLARE_DYNCREATE(CDrumSequencerView)
     BOOL PreCreateWindow(CREATESTRUCT& cs) override;
 protected:
     BOOL OnPreparePrinting(CPrintInfo* pInfo) override;
-    void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo) override;
-    void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo) override;
 
-    // Implementation
-public:
-
-#ifdef _DEBUG
-    void AssertValid() const override;
-    void Dump(CDumpContext& dc) const override;
-#endif
-
-protected:
 DECLARE_MESSAGE_MAP()
 private:
     BeatGrid m_grid;

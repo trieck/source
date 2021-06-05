@@ -101,6 +101,9 @@
     <ClInclude Include="SettingsPane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NumEdit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DrumSequencer.cpp">
@@ -158,6 +161,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SettingsPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NumEdit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

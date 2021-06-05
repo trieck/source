@@ -75,27 +75,27 @@ void BeatGrid::PaintBitmap()
     CRect rcBoard;
     m_Region.GetRgnBox(rcBoard);
 
-    CBitmap* pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
+    auto* pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
 
     auto pOldBrush = static_cast<CBrush*>(m_MemDC.SelectObject(&m_bkgBrush));
     auto pOldPen = static_cast<CPen*>(m_MemDC.SelectObject(&m_thinPen));
 
     m_MemDC.Rectangle(rcBoard);
 
-    int cx = rcBoard.Width() / Sequence::NSUBS;
-    int cy = rcBoard.Height() / Sequence::NINSTRUMENTS;
+    auto cx = rcBoard.Width() / Sequence::NSUBS;
+    auto cy = rcBoard.Height() / Sequence::NINSTRUMENTS;
 
     CPoint ptStart(rcBoard.left + cx, rcBoard.top);
     m_MemDC.MoveTo(ptStart);
 
     // Draw vertical lines
-    for (int i = 1; ptStart.x < rcBoard.right; i++) {
+    for (auto i = 1; ptStart.x < rcBoard.right; ++i) {
         if (i % Sequence::RESOLUTION == 0) {
             m_MemDC.SelectObject(&m_thickPen);
         } else {
             m_MemDC.SelectObject(&m_thinPen);
         }
-        CPoint ptEnd = CPoint(ptStart.x, rcBoard.bottom - 1);
+        auto ptEnd = CPoint(ptStart.x, rcBoard.bottom - 1);
         m_MemDC.LineTo(ptEnd);
         m_MemDC.MoveTo(ptStart.x += cx, ptStart.y);
     }
@@ -105,8 +105,9 @@ void BeatGrid::PaintBitmap()
     // Draw horizontal lines
     ptStart = CPoint(rcBoard.left, rcBoard.top + cy);
     m_MemDC.MoveTo(ptStart);
+
     while (ptStart.y < rcBoard.bottom) {
-        CPoint ptEnd = CPoint(rcBoard.right - 1, ptStart.y);
+        auto ptEnd = CPoint(rcBoard.right - 1, ptStart.y);
         m_MemDC.LineTo(ptEnd);
         m_MemDC.MoveTo(ptStart.x, ptStart.y += cy);
     }

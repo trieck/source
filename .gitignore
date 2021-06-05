@@ -162,3 +162,7 @@ $RECYCLE.BIN/
 *.status
 *.exe
 ylwrap
+*.db-shm
+*.db-wal
+.vscode/
+

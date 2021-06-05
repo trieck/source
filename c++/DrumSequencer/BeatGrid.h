@@ -35,4 +35,3 @@ public:
     CPoint GetSubdivision(const CPoint& pt);
     void GetBeatRect(int x, int y, CRect& rc);
 };
-

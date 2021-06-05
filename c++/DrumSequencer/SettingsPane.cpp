@@ -6,6 +6,7 @@
 BEGIN_MESSAGE_MAP(SettingsPane, CPaneDialog)
         ON_NOTIFY(UDN_DELTAPOS, IDC_SP_TEMPO, SettingsPane::OnUpDownTempo)
         ON_MESSAGE(WM_INITDIALOG, SettingsPane::HandleInitDialog)
+        ON_WM_CHAR()
 END_MESSAGE_MAP()
 
 void SettingsPane::DoDataExchange(CDataExchange* pDX)
@@ -29,13 +30,14 @@ LRESULT SettingsPane::HandleInitDialog(WPARAM wParam, LPARAM lParam)
     auto bpm = theApp.Tempo();
     ASSERT(bpm >= m_lowerLimit && bpm <= m_upperLimit);
 
+    m_tempo.SetLimitText(3);
+    m_tempo.setRange(m_lowerLimit, m_upperLimit);
+
     m_spin.SetBuddy(&m_tempo);
     m_spin.SetRange(m_lowerLimit, m_upperLimit);
-    m_spin.SetPos(bpm);
 
-    CString strTempo;
-    strTempo.Format(_T("%d"), bpm);
-    m_tempo.SetWindowText(strTempo);
+    m_spin.SetPos(bpm);
+    m_tempo.setValue(bpm);
 
     return TRUE;
 }
@@ -55,12 +57,24 @@ void SettingsPane::OnUpDownTempo(NMHDR* pNMHDR, LRESULT* pResult)
         return;
     }
 
+    m_tempo.setValue(newValue);
     theApp.SetTempo(newValue);
 
-    CString str;
-    str.Format(_T("%d"), newValue);
-
-    m_tempo.SetWindowText(str);
-
     *pResult = 0;
+}
+
+void SettingsPane::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+    if (nChar == VK_RETURN) {
+        // enter a new tempo
+        auto newTempo = m_tempo.value();
+        if (newTempo >= m_lowerLimit && newTempo <= m_upperLimit) {
+            if (theApp.Tempo() != newTempo) {
+                m_spin.SetPos(newTempo);
+                theApp.SetTempo(newTempo);
+            }
+        }
+    } else {
+        CPaneDialog::OnChar(nChar, nRepCnt, nFlags);
+    }
 }

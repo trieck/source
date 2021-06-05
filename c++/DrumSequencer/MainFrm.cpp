@@ -125,17 +125,6 @@ LRESULT CMainFrame::OnToolbarCreateNew(WPARAM wp, LPARAM lp)
     return lres;
 }
 
-BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext)
-{
-    // base class does the real work
-
-    if (!CFrameWndEx::LoadFrame(nIDResource, dwDefaultStyle, pParentWnd, pContext)) {
-        return FALSE;
-    }
-
-    return TRUE;
-}
-
 void CMainFrame::RecalcLayout(BOOL bNotify)
 {
     ResizeFrame();
@@ -201,8 +190,8 @@ void CMainFrame::ResizeFrame()
         rc.bottom -= rcStatus.Height();
     }
 
-    DWORD style = GetStyle();
-    DWORD dwExStyle = GetExStyle() | WS_EX_CLIENTEDGE;
+    auto style = GetStyle();
+    auto dwExStyle = GetExStyle() | WS_EX_CLIENTEDGE;
     AdjustWindowRectEx(&rc, style, TRUE, dwExStyle);
 
     SetWindowPos(nullptr, 0, 0, rc.Width(), rc.Height(),

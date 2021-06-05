@@ -14,8 +14,6 @@ protected: // create from serialization only
 DECLARE_DYNCREATE(CMainFrame)
 
     BOOL PreCreateWindow(CREATESTRUCT& cs) override;
-    BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE,
-                   CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL) override;
 
     // Implementation
     virtual ~CMainFrame() = default;

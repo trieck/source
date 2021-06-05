@@ -2,11 +2,6 @@
 //
 
 #include "stdafx.h"
-// SHARED_HANDLERS can be defined in an ATL project implementing preview, thumbnail
-// and search filter handlers and allows sharing of document code with that project.
-#ifndef SHARED_HANDLERS
-#endif
-
 #include "DrumSequencerDoc.h"
 #include "DrumSequencerView.h"
 
@@ -14,13 +9,11 @@
 #define new DEBUG_NEW
 #endif
 
-
 // CDrumSequencerView
 
 IMPLEMENT_DYNCREATE(CDrumSequencerView, CView)
 
 BEGIN_MESSAGE_MAP(CDrumSequencerView, CView)
-        // Standard printing commands
         ON_WM_LBUTTONDOWN()
         ON_WM_ERASEBKGND()
         ON_WM_CREATE()
@@ -59,6 +52,7 @@ void CDrumSequencerView::OnDraw(CDC* pDC)
 
     DrawInstruments(pDC);
     m_grid.Draw(pDC);
+
     DrawBeats(pDC, pDoc->GetSequence());
 }
 
@@ -70,26 +64,7 @@ BOOL CDrumSequencerView::OnPreparePrinting(CPrintInfo* pInfo)
     return DoPreparePrinting(pInfo);
 }
 
-void CDrumSequencerView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-}
-
-void CDrumSequencerView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-}
-
-// CDrumSequencerView diagnostics
-
 #ifdef _DEBUG
-void CDrumSequencerView::AssertValid() const
-{
-    CView::AssertValid();
-}
-
-void CDrumSequencerView::Dump(CDumpContext& dc) const
-{
-    CView::Dump(dc);
-}
 
 CDrumSequencerDoc* CDrumSequencerView::GetDocument() const // non-debug version is inline
 {
@@ -97,9 +72,6 @@ CDrumSequencerDoc* CDrumSequencerView::GetDocument() const // non-debug version 
     return dynamic_cast<CDrumSequencerDoc*>(m_pDocument);
 }
 #endif //_DEBUG
-
-
-// CDrumSequencerView message handlers
 
 void CDrumSequencerView::OnLButtonDown(UINT nFlags, CPoint point)
 {
