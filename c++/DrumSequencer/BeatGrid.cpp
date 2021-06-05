@@ -35,7 +35,7 @@ void BeatGrid::Draw(CDC* pDC)
     CRect rc;
     pDC->GetClipBox(rc);
 
-    CBitmap* pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
+    auto* pOldBitmap = m_MemDC.SelectObject(&m_Bitmap);
 
     CRect aRect(rc);
     aRect.OffsetRect(-CX_OFFSET, -CY_OFFSET);

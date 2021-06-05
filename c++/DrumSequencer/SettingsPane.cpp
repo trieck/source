@@ -9,6 +9,16 @@ BEGIN_MESSAGE_MAP(SettingsPane, CPaneDialog)
         ON_WM_CHAR()
 END_MESSAGE_MAP()
 
+BOOL SettingsPane::Create(CWnd* pParentWnd)
+{
+    return CPaneDialog::Create(_T(""),
+                               pParentWnd,
+                               FALSE /* bGripper */,
+                               MAKEINTRESOURCE(IDD_SETTINGS),
+                               WS_CHILD | WS_VISIBLE | CBRS_TOP,
+                               ID_SETTINGS_PANE);
+}
+
 void SettingsPane::DoDataExchange(CDataExchange* pDX)
 {
     CPaneDialog::DoDataExchange(pDX);

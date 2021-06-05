@@ -28,7 +28,7 @@ BEGIN_MESSAGE_MAP(CDrumSequencerApp, CWinAppEx)
         ON_UPDATE_COMMAND_UI(ID_SEQUENCER_STOP, &CDrumSequencerApp::OnUpdateSequencerStop)
 END_MESSAGE_MAP()
 
-// CDrumSequencerApp construction
+static auto constexpr DEFAULT_TEMPO = 120;
 
 CDrumSequencerApp::CDrumSequencerApp()
 {
@@ -53,8 +53,11 @@ BOOL CDrumSequencerApp::InitInstance()
 
     EnableTaskbarInteraction(FALSE);
 
-    SetRegistryKey(_T("Local AppWizard-Generated Applications"));
+    SetRegistryKey(_T("Rieck Enterprises"));
     LoadStdProfileSettings(4); // Load standard INI file options (including MRU)
+
+    auto tempo = GetProfileInt(_T("Settings"), _T("Tempo"), DEFAULT_TEMPO);
+    m_sequencer.SetTempo(tempo);
 
     InitContextMenuManager();
     InitKeyboardManager();
@@ -143,6 +146,8 @@ void CDrumSequencerApp::SaveCustomState()
 
 int CDrumSequencerApp::ExitInstance()
 {
+    WriteProfileInt(_T("Settings"), _T("Tempo"), m_sequencer.Tempo());
+
     m_sequencer.Close();
 
     return CWinAppEx::ExitInstance();

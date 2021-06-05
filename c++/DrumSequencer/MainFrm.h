@@ -26,6 +26,7 @@ protected: // control bar embedded members
     DrumSequencerMenubar m_wndMenuBar;
     DrumSequencerToolbar m_wndToolBar;
     SettingsPane m_wndSettingsPane;
+
     CMFCStatusBar m_wndStatusBar;
     CMFCToolBarImages m_UserImages;
 

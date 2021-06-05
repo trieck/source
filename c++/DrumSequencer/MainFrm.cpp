@@ -25,9 +25,6 @@ END_MESSAGE_MAP()
 
 static UINT indicators[] = {
     ID_SEPARATOR, // status line indicator
-    ID_INDICATOR_CAPS,
-    ID_INDICATOR_NUM,
-    ID_INDICATOR_SCRL,
 };
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -52,11 +49,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
         return -1; // fail to create
     }
 
-    if (!m_wndSettingsPane.Create(
-        nullptr, this, FALSE,
-        MAKEINTRESOURCE(IDD_SETTINGS),
-        WS_CHILD | WS_VISIBLE | CBRS_TOP,
-        ID_SETTINGS_PANE)) {
+    if (!m_wndSettingsPane.Create(this)) {
         TRACE0("Failed to create settings bar\n");
         return -1; // fail to create
     }
