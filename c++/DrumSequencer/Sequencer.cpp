@@ -5,7 +5,7 @@
 #include "resource.h"
 #include "Sequencer.h"
 
-Sequencer::Sequencer() : m_pStream(nullptr), m_state(Stopped), m_workerThread(nullptr)
+Sequencer::Sequencer() : m_workerThread(nullptr), m_pStream(nullptr), m_state(Stopped)
 {
 }
 
@@ -154,19 +154,22 @@ UINT Sequencer::ThreadProc(LPVOID pParam)
 
     SetEvent(pThis->m_threadEvent); // initialized
 
-    HANDLE handles[] = {pThis->m_frontEvent, pThis->m_backEvent, pThis->m_shutdownEvent};
+    HANDLE handles[] = {pThis->m_doneEvent, pThis->m_shutdownEvent};
 
+    auto completed = 0;
     auto bRunning = true;
+
     while (bRunning) {
-        auto result = WaitForMultipleObjects(3, handles, FALSE, INFINITE);
+        auto result = WaitForMultipleObjects(sizeof(handles) / sizeof(HANDLE), handles, FALSE, INFINITE);
         switch (result) {
         case WAIT_OBJECT_0 + 0:
-            pThis->m_pStream->Out(pThis->m_front);
+            if (completed++ % 2 == 0) {
+                pThis->m_pStream->Out(pThis->m_front);
+            } else {
+                pThis->m_pStream->Out(pThis->m_back);
+            }
             break;
         case WAIT_OBJECT_0 + 1:
-            pThis->m_pStream->Out(pThis->m_back);
-            break;
-        case WAIT_OBJECT_0 + 2:
             bRunning = false;
             break;
         default:
@@ -195,15 +198,5 @@ void Sequencer::StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstanc
         reinterpret_cast<LPMIDIHDR>(pMidiHdr),
         sizeof(MIDIHDR));
 
-    if (pThis->m_state == Playing) {
-        // Queue more data if still playing
-        // Determine whether we need to use the front or back buffer
-        auto result = InterlockedIncrement(&pThis->m_completed);
-
-        if (result % 2 != 0) {
-            pThis->m_frontEvent.SetEvent();
-        } else {
-            pThis->m_backEvent.SetEvent();
-        }
-    }
+    pThis->m_doneEvent.SetEvent();
 }

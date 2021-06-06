@@ -29,11 +29,10 @@ public:
 
 private:
     MidiBuffer m_front, m_back;
-    CEvent m_threadEvent, m_shutdownEvent, m_frontEvent, m_backEvent;
+    CEvent m_threadEvent, m_shutdownEvent, m_doneEvent;
     CWinThread* m_workerThread;
     MidiStream* m_pStream;
     SequencerState m_state;
-    UINT m_completed = 0;
 
     static void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstance, DWORD_PTR pMidiHdr,
                            DWORD_PTR dwParam2);
