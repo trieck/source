@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 MidiStream::MidiStream(LPMIDIOUTCAPS pmidicaps, UINT id)
-    : OutputDevice(pmidicaps, id), m_pSequencer(nullptr)
+    : OutputDevice(pmidicaps, id)
 {
 }
 
@@ -21,7 +21,7 @@ MidiStream::~MidiStream()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-MMRESULT MidiStream::Open()
+MMRESULT MidiStream::Open(MidiCallback callback, LPVOID dwParam)
 {
     Close();
 
@@ -29,8 +29,8 @@ MMRESULT MidiStream::Open()
         reinterpret_cast<HMIDISTRM*>(&m_handle),
         &m_id,
         1 /* reserved */,
-        reinterpret_cast<DWORD_PTR>(MidiStreamProc),
-        reinterpret_cast<DWORD_PTR>(this),
+        reinterpret_cast<DWORD_PTR>(callback),
+        reinterpret_cast<DWORD_PTR>(dwParam),
         CALLBACK_FUNCTION);
 }
 
@@ -40,6 +40,7 @@ MMRESULT MidiStream::Close()
     MMRESULT result = MMSYSERR_INVALHANDLE;
 
     if (m_handle != nullptr) {
+        (void)Stop();
         result = midiStreamClose(*this);
         m_handle = nullptr;
     }
@@ -106,70 +107,9 @@ MMRESULT MidiStream::Stop() const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void MidiStream::MidiStreamProc(HMIDISTRM hMidiStream, UINT uMsg,
-                                DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2)
-{
-    auto This = reinterpret_cast<MidiStream*>(dwInstance);
-    ASSERT(This != NULL);
-
-    // Iterate through the hook chain
-    auto pos = This->m_HookChain.GetHeadPosition();
-    while (pos != nullptr) {
-        const auto pfnCallBack = This->m_HookChain.GetNext(pos);
-        ASSERT(pfnCallBack != NULL);
-
-        (*pfnCallBack)(hMidiStream, uMsg, dwInstance, dwParam1, dwParam2);
-    }
-}
-
-/////////////////////////////////////////////////////////////////////////////
 MMRESULT MidiStream::ShortMessage(const MidiMessage& message) const
 {
     ASSERT(*this != NULL);
 
     return midiOutShortMsg(GetOutputHandle(), message);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-BOOL MidiStream::RegisterHook(PFNCALLBACK pfnCallBack)
-{
-    ASSERT(pfnCallBack != NULL);
-    ASSERT_VALID(&m_HookChain);
-
-    // Don't allow duplicates in the hook chain
-    if (m_HookChain.Find(pfnCallBack) != nullptr) {
-        return FALSE;
-    }
-
-    return m_HookChain.AddTail(pfnCallBack) != nullptr;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-BOOL MidiStream::RevokeHook(PFNCALLBACK pfnCallBack)
-{
-    ASSERT(pfnCallBack != NULL);
-    ASSERT_VALID(&m_HookChain);
-
-    auto pos = m_HookChain.GetHeadPosition();
-    while (pos != nullptr) {
-        if (m_HookChain.GetAt(pos) == pfnCallBack) {
-            m_HookChain.RemoveAt(pos);
-            return TRUE;
-        }
-        m_HookChain.GetNext(pos);
-    }
-
-    return FALSE;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-void MidiStream::SetSequencer(Sequencer* pSeq)
-{
-    m_pSequencer = pSeq;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-Sequencer* MidiStream::GetSequencer() const
-{
-    return m_pSequencer;
 }

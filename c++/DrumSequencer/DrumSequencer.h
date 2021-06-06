@@ -37,6 +37,7 @@ private:
     Sequencer m_sequencer;
 public:
     int ExitInstance() override;
+    BOOL IsPlaying() const;
     BOOL Play(const Sequence& sequence);
     BOOL Stop();
 

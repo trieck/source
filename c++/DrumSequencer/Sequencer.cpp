@@ -5,7 +5,7 @@
 #include "resource.h"
 #include "Sequencer.h"
 
-Sequencer::Sequencer() : m_pStream(nullptr), m_state(Stopped)
+Sequencer::Sequencer() : m_pStream(nullptr), m_state(Stopped), m_workerThread(nullptr)
 {
 }
 
@@ -22,18 +22,23 @@ BOOL Sequencer::Initialize()
 {
     ASSERT(m_pStream == NULL);
 
+    CWaitCursor cursor;
+    m_workerThread = AfxBeginThread(ThreadProc, this);
+    auto dwRet = WaitForSingleObject(m_threadEvent, INFINITE); // wait forever to setup
+    if (dwRet != WAIT_OBJECT_0) {
+        AfxMessageBox(IDS_COULDNOTCREATETHREAD);
+        return FALSE;
+    }
+
     // Set the output stream to the midi mapper
-    m_pStream = dynamic_cast<MidiStream*>(OutputDevices().GetStream(MIDI_MAPPER));
+    m_pStream = dynamic_cast<MidiStream*>(OutputDevices().GetDevice(MIDI_MAPPER));
     if (m_pStream == nullptr) {
         AfxMessageBox(IDS_COULDNOTOPENMIDIMAPPER);
         return FALSE;
     }
 
-    m_pStream->SetSequencer(this);
-    m_pStream->RegisterHook(StreamProc);
-
     // Open the output device
-    const auto result = m_pStream->Open();
+    const auto result = m_pStream->Open(StreamProc, this);
     if (result != MMSYSERR_NOERROR) {
         AfxMessageBox(OutputDevice::GetErrorText(result));
         return FALSE;
@@ -54,6 +59,8 @@ BOOL Sequencer::Initialize()
 void Sequencer::Close() const
 {
     if (m_pStream != nullptr) {
+        SetEvent(m_shutdownEvent);
+        WaitForSingleObject(m_workerThread, INFINITE); // wait forever to shutdown
         m_pStream->Close();
     }
 }
@@ -135,32 +142,68 @@ void Sequencer::SetTempo(short bpm)
     }
 }
 
+bool Sequencer::HasStream()
+{
+    return m_pStream != nullptr;
+}
+
+UINT Sequencer::ThreadProc(LPVOID pParam)
+{
+    auto pThis = reinterpret_cast<Sequencer*>(pParam);
+    ASSERT(pThis);
+
+    SetEvent(pThis->m_threadEvent); // initialized
+
+    HANDLE handles[] = {pThis->m_frontEvent, pThis->m_backEvent, pThis->m_shutdownEvent};
+
+    auto bRunning = true;
+    while (bRunning) {
+        auto result = WaitForMultipleObjects(3, handles, FALSE, INFINITE);
+        switch (result) {
+        case WAIT_OBJECT_0 + 0:
+            pThis->m_pStream->Out(pThis->m_front);
+            break;
+        case WAIT_OBJECT_0 + 1:
+            pThis->m_pStream->Out(pThis->m_back);
+            break;
+        case WAIT_OBJECT_0 + 2:
+            bRunning = false;
+            break;
+        default:
+            break;
+        }
+    }
+
+    return 0;
+}
+
 void Sequencer::StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstance,
-                           DWORD_PTR dwParam1, DWORD_PTR /*dwParam2*/)
+                           DWORD_PTR pMidiHdr, DWORD_PTR dwParam2)
 {
     if (uMsg != MOM_DONE) {
         return;
     }
 
-    const auto pStream = reinterpret_cast<MidiStream*>(dwInstance);
-    ASSERT(pStream != NULL);
+    // DO NOT call any multimedia functions from this function
 
-    auto pThis = pStream->GetSequencer();
+    const auto pThis = reinterpret_cast<Sequencer*>(dwInstance);
     ASSERT(pThis != NULL);
 
     // Unprepare the midi header
     midiOutUnprepareHeader(
         reinterpret_cast<HMIDIOUT>(hMidiStream),
-        reinterpret_cast<LPMIDIHDR>(dwParam1),
+        reinterpret_cast<LPMIDIHDR>(pMidiHdr),
         sizeof(MIDIHDR));
 
     if (pThis->m_state == Playing) {
         // Queue more data if still playing
         // Determine whether we need to use the front or back buffer
-        if (pThis->m_completed++ % 2 == 0) {
-            pThis->m_pStream->Out(pThis->m_front);
+        auto result = InterlockedIncrement(&pThis->m_completed);
+
+        if (result % 2 != 0) {
+            pThis->m_frontEvent.SetEvent();
         } else {
-            pThis->m_pStream->Out(pThis->m_back);
+            pThis->m_backEvent.SetEvent();
         }
     }
 }

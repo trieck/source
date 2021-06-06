@@ -11,7 +11,7 @@
 #include "mididev.h"
 
 /////////////////////////////////////////////////////////////////////////////
-class OutputDevice : public MidiDevice, private MIDIOUTCAPS
+class OutputDevice : public MidiDevice, MIDIOUTCAPS
 {
     friend class OutputDevices;
 
@@ -74,8 +74,8 @@ public:
 
     static CString GetErrorText(MMRESULT);
 
-    MMRESULT Open() override = 0;
-    MMRESULT Close() override;
+    MMRESULT Open(MidiCallback, LPVOID = nullptr) override = 0;
+    MMRESULT Close() override = 0;
 
     // Implementation
 };

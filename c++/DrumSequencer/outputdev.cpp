@@ -24,13 +24,6 @@ OutputDevice::OutputDevice(LPMIDIOUTCAPS pmidicaps, UINT id) : MIDIOUTCAPS{}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-MMRESULT OutputDevice::Close()
-{
-    // This is a no op
-    return MMSYSERR_NOERROR;
-}
-
-/////////////////////////////////////////////////////////////////////////////
 CString OutputDevice::GetErrorText(MMRESULT error)
 {
     TCHAR buffer[MAXERRORLENGTH + 1]{};

@@ -2,12 +2,7 @@
 //
 
 #include "stdafx.h"
-// SHARED_HANDLERS can be defined in an ATL project implementing preview, thumbnail
-// and search filter handlers and allows sharing of document code with that project.
-#ifndef SHARED_HANDLERS
 #include "DrumSequencer.h"
-#endif
-
 #include "DrumSequencerDoc.h"
 #include "resource.h"
 
@@ -72,6 +67,7 @@ void CDrumSequencerDoc::DeleteContents()
 BEGIN_MESSAGE_MAP(CDrumSequencerDoc, CDocument)
         ON_COMMAND(ID_SEQUENCER_PLAY, &CDrumSequencerDoc::OnSequencerPlay)
         ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, &CDrumSequencerDoc::OnUpdateFileSave)
+        ON_COMMAND(ID_TOGGLE_PLAY, &CDrumSequencerDoc::OnTogglePlay)
 END_MESSAGE_MAP()
 
 void CDrumSequencerDoc::OnSequencerPlay()
@@ -82,4 +78,13 @@ void CDrumSequencerDoc::OnSequencerPlay()
 void CDrumSequencerDoc::OnUpdateFileSave(CCmdUI* pCmdUI)
 {
     pCmdUI->Enable(IsModified());
+}
+
+void CDrumSequencerDoc::OnTogglePlay()
+{
+    if (theApp.IsPlaying()) {
+        theApp.Stop();
+    } else {
+        theApp.Play(m_sequence);
+    }
 }

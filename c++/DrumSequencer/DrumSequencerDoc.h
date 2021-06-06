@@ -21,6 +21,7 @@ DECLARE_DYNCREATE(CDrumSequencerDoc)
     }
 
     void ToggleSub(const CPoint& pt);
+
 private:
     Sequence m_sequence;
 public:
@@ -28,4 +29,5 @@ public:
 DECLARE_MESSAGE_MAP()
     afx_msg void OnSequencerPlay();
     afx_msg void OnUpdateFileSave(CCmdUI* pCmdUI);
+    afx_msg void OnTogglePlay();
 };

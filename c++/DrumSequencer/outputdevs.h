@@ -21,7 +21,6 @@ public:
     // Interface
     UINT Count() const override;
     MidiDevice* GetDevice(UINT) const override;
-    MidiDevice* GetStream(UINT) const;
 };
 
 /////////////////////////////////////////////////////////////////////////////

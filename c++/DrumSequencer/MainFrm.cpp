@@ -21,6 +21,7 @@ const UINT uiLastUserToolBarId = uiFirstUserToolBarId + iMaxUserToolbars - 1;
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
         ON_WM_CREATE()
         ON_REGISTERED_MESSAGE(AFX_WM_CREATETOOLBAR, &CMainFrame::OnToolbarCreateNew)
+        ON_WM_CHAR()
 END_MESSAGE_MAP()
 
 static UINT indicators[] = {

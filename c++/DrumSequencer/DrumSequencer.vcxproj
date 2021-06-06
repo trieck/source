@@ -202,7 +202,6 @@
     <ClInclude Include="mididev.h" />
     <ClInclude Include="mididevs.h" />
     <ClInclude Include="midimessage.h" />
-    <ClInclude Include="midiout.h" />
     <ClInclude Include="midistream.h" />
     <ClInclude Include="miditime.h" />
     <ClInclude Include="NumEdit.h" />
@@ -226,7 +225,6 @@
     <ClCompile Include="MidiBuffer.cpp" />
     <ClCompile Include="mididev.cpp" />
     <ClCompile Include="midimessage.cpp" />
-    <ClCompile Include="midiout.cpp" />
     <ClCompile Include="midistream.cpp" />
     <ClCompile Include="miditime.cpp" />
     <ClCompile Include="NumEdit.cpp" />

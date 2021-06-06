@@ -146,11 +146,17 @@ void CDrumSequencerApp::SaveCustomState()
 
 int CDrumSequencerApp::ExitInstance()
 {
-    WriteProfileInt(_T("Settings"), _T("Tempo"), m_sequencer.Tempo());
-
-    m_sequencer.Close();
+    if (m_sequencer.HasStream()) {
+        WriteProfileInt(_T("Settings"), _T("Tempo"), m_sequencer.Tempo());
+        m_sequencer.Close();
+    }
 
     return CWinAppEx::ExitInstance();
+}
+
+BOOL CDrumSequencerApp::IsPlaying() const
+{
+    return m_sequencer.IsPlaying();
 }
 
 BOOL CDrumSequencerApp::Play(const Sequence& sequence)
