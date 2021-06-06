@@ -148,8 +148,9 @@ int CDrumSequencerApp::ExitInstance()
 {
     if (m_sequencer.HasStream()) {
         WriteProfileInt(_T("Settings"), _T("Tempo"), m_sequencer.Tempo());
-        m_sequencer.Close();
     }
+
+    m_sequencer.Close();
 
     return CWinAppEx::ExitInstance();
 }

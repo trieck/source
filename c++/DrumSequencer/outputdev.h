@@ -74,7 +74,7 @@ public:
 
     static CString GetErrorText(MMRESULT);
 
-    MMRESULT Open(MidiCallback, LPVOID = nullptr) override = 0;
+    MMRESULT Open(DWORD_PTR dwCallback, DWORD_PTR dwInstance, DWORD fdwOpen) override = 0;
     MMRESULT Close() override = 0;
 
     // Implementation

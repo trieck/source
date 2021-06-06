@@ -23,17 +23,17 @@ public:
     virtual ~MidiStream();
 
     // Interface
-    MMRESULT Open(MidiCallback callback, LPVOID dwParam = nullptr) override;
+    MMRESULT Open(DWORD_PTR dwCallback, DWORD_PTR dwInstance, DWORD fdwOpen) override;
     MMRESULT Close() override;
 
-    MMRESULT Position(LPMMTIME) const;
-    MMRESULT Property(LPBYTE, DWORD) const;
+    MMRESULT Position(LPMMTIME);
+    MMRESULT Property(LPBYTE, DWORD);
     MMRESULT Out(LPMIDIHDR);
+    MMRESULT Unprepare(LPMIDIHDR);
     MMRESULT Restart();
-    MMRESULT Stop() const;
-    MMRESULT ShortMessage(const MidiMessage&) const;
+    MMRESULT Stop();
+    MMRESULT ShortMessage(const MidiMessage&);
 
-protected:
     operator HMIDISTRM() const
     {
         return static_cast<HMIDISTRM>(m_handle);
@@ -43,6 +43,9 @@ protected:
     {
         return static_cast<HMIDIOUT>(m_handle);
     }
+
+private:
+    CCriticalSection m_cs;
 };
 
 /////////////////////////////////////////////////////////////////////////////

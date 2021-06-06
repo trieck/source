@@ -4,6 +4,7 @@
 #include "outputdevs.h"
 #include "resource.h"
 #include "Sequencer.h"
+#include "LockGuard.h"
 
 Sequencer::Sequencer() : m_workerThread(nullptr), m_pStream(nullptr), m_state(Stopped)
 {
@@ -12,19 +13,15 @@ Sequencer::Sequencer() : m_workerThread(nullptr), m_pStream(nullptr), m_state(St
 Sequencer::~Sequencer()
 {
     Close();
-    if (m_pStream != nullptr) {
-        delete m_pStream;
-        m_pStream = nullptr;
-    }
 }
 
 BOOL Sequencer::Initialize()
 {
     ASSERT(m_pStream == NULL);
 
-    CWaitCursor cursor;
     m_workerThread = AfxBeginThread(ThreadProc, this);
-    auto dwRet = WaitForSingleObject(m_threadEvent, INFINITE); // wait forever to setup
+    auto dwRet = WaitForSingleObject(m_threadEvent, INFINITE);
+    // wait forever to setup
     if (dwRet != WAIT_OBJECT_0) {
         AfxMessageBox(IDS_COULDNOTCREATETHREAD);
         return FALSE;
@@ -37,8 +34,8 @@ BOOL Sequencer::Initialize()
         return FALSE;
     }
 
-    // Open the output device
-    const auto result = m_pStream->Open(StreamProc, this);
+    const auto result = m_pStream->Open(m_workerThread->m_nThreadID,
+                                        reinterpret_cast<DWORD_PTR>(this), CALLBACK_THREAD);
     if (result != MMSYSERR_NOERROR) {
         AfxMessageBox(OutputDevice::GetErrorText(result));
         return FALSE;
@@ -56,12 +53,18 @@ BOOL Sequencer::Initialize()
     return TRUE;
 }
 
-void Sequencer::Close() const
+void Sequencer::Close()
 {
     if (m_pStream != nullptr) {
-        SetEvent(m_shutdownEvent);
-        WaitForSingleObject(m_workerThread, INFINITE); // wait forever to shutdown
+        LockGuard lock(m_cs);
         m_pStream->Close();
+        delete m_pStream;
+        m_pStream = nullptr;
+    }
+
+    if (m_workerThread != nullptr) {
+        WaitForSingleObject(m_workerThread->m_hThread, INFINITE); // wait forever to shutdown
+        m_workerThread = nullptr;
     }
 }
 
@@ -152,51 +155,35 @@ UINT Sequencer::ThreadProc(LPVOID pParam)
     auto pThis = reinterpret_cast<Sequencer*>(pParam);
     ASSERT(pThis);
 
-    SetEvent(pThis->m_threadEvent); // initialized
+    MSG msg;
+    PeekMessage(&msg, nullptr, WM_USER, WM_USER, PM_NOREMOVE); // force creation of message queue
 
-    HANDLE handles[] = {pThis->m_doneEvent, pThis->m_shutdownEvent};
+    SetEvent(pThis->m_threadEvent); // indicate we are ready
 
     auto completed = 0;
-    auto bRunning = true;
+    auto running = true;
 
-    while (bRunning) {
-        auto result = WaitForMultipleObjects(sizeof(handles) / sizeof(HANDLE), handles, FALSE, INFINITE);
-        switch (result) {
-        case WAIT_OBJECT_0 + 0:
-            if (completed++ % 2 == 0) {
-                pThis->m_pStream->Out(pThis->m_front);
-            } else {
-                pThis->m_pStream->Out(pThis->m_back);
+    while (running && GetMessage(&msg, nullptr, MM_MOM_OPEN, MM_MOM_DONE) > 0) {
+        LockGuard lock(pThis->m_cs);
+        switch (msg.message) {
+        case MM_MOM_DONE:
+            if (pThis->m_pStream != nullptr) {
+                pThis->m_pStream->Unprepare(reinterpret_cast<LPMIDIHDR>(msg.lParam));
+
+                // front or back buffer?
+                if (completed++ % 2 == 0) {
+                    pThis->m_pStream->Out(pThis->m_front);
+                } else {
+                    pThis->m_pStream->Out(pThis->m_back);
+                }
             }
             break;
-        case WAIT_OBJECT_0 + 1:
-            bRunning = false;
-            break;
+        case MM_MOM_CLOSE:
+            running = false;
         default:
             break;
         }
     }
 
     return 0;
-}
-
-void Sequencer::StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstance,
-                           DWORD_PTR pMidiHdr, DWORD_PTR dwParam2)
-{
-    if (uMsg != MOM_DONE) {
-        return;
-    }
-
-    // DO NOT call any multimedia functions from this function
-
-    const auto pThis = reinterpret_cast<Sequencer*>(dwInstance);
-    ASSERT(pThis != NULL);
-
-    // Unprepare the midi header
-    midiOutUnprepareHeader(
-        reinterpret_cast<HMIDIOUT>(hMidiStream),
-        reinterpret_cast<LPMIDIHDR>(pMidiHdr),
-        sizeof(MIDIHDR));
-
-    pThis->m_doneEvent.SetEvent();
 }

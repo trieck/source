@@ -19,7 +19,7 @@ public:
     BOOL Initialize();
     BOOL IsPlaying() const;
 
-    void Close() const;
+    void Close();
     BOOL Play(const Sequence& sequence);
     BOOL Stop();
 
@@ -28,14 +28,12 @@ public:
     bool HasStream();
 
 private:
-    MidiBuffer m_front, m_back;
-    CEvent m_threadEvent, m_shutdownEvent, m_doneEvent;
+    CCriticalSection m_cs;
+    CEvent m_threadEvent;
     CWinThread* m_workerThread;
+    MidiBuffer m_front, m_back;
     MidiStream* m_pStream;
     SequencerState m_state;
-
-    static void StreamProc(HMIDISTRM hMidiStream, UINT uMsg, DWORD_PTR dwInstance, DWORD_PTR pMidiHdr,
-                           DWORD_PTR dwParam2);
 
     static UINT __cdecl ThreadProc(LPVOID pParam);
 };

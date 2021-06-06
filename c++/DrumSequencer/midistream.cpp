@@ -8,6 +8,8 @@
 #include "StdAfx.h"
 #include "midistream.h"
 
+#include "LockGuard.h"
+
 /////////////////////////////////////////////////////////////////////////////
 MidiStream::MidiStream(LPMIDIOUTCAPS pmidicaps, UINT id)
     : OutputDevice(pmidicaps, id)
@@ -21,22 +23,28 @@ MidiStream::~MidiStream()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-MMRESULT MidiStream::Open(MidiCallback callback, LPVOID dwParam)
+MMRESULT MidiStream::Open(DWORD_PTR dwCallback, DWORD_PTR dwInstance, DWORD fdwOpen)
 {
+    LockGuard lock(m_cs);
+
     Close();
 
-    return midiStreamOpen(
+    auto result = midiStreamOpen(
         reinterpret_cast<HMIDISTRM*>(&m_handle),
         &m_id,
         1 /* reserved */,
-        reinterpret_cast<DWORD_PTR>(callback),
-        reinterpret_cast<DWORD_PTR>(dwParam),
-        CALLBACK_FUNCTION);
+        dwCallback,
+        dwInstance,
+        fdwOpen);
+
+    return result;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 MMRESULT MidiStream::Close()
 {
+    LockGuard lock(m_cs);
+
     MMRESULT result = MMSYSERR_INVALHANDLE;
 
     if (m_handle != nullptr) {
@@ -49,21 +57,28 @@ MMRESULT MidiStream::Close()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-MMRESULT MidiStream::Position(LPMMTIME pmmt) const
+MMRESULT MidiStream::Position(LPMMTIME pmmt)
 {
     ASSERT(*this != NULL);
     ASSERT(pmmt != NULL);
 
-    return midiStreamPosition(*this, pmmt, sizeof(MMTIME));
+    LockGuard lock(m_cs);
+    auto result = midiStreamPosition(*this, pmmt, sizeof(MMTIME));
+
+    return result;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-MMRESULT MidiStream::Property(LPBYTE ppropdata, DWORD property) const
+MMRESULT MidiStream::Property(LPBYTE ppropdata, DWORD property)
 {
     ASSERT(*this != NULL);
     ASSERT(ppropdata != NULL);
 
-    return midiStreamProperty(*this, ppropdata, property);
+    LockGuard lock(m_cs);
+
+    auto result = midiStreamProperty(*this, ppropdata, property);
+
+    return result;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -71,6 +86,8 @@ MMRESULT MidiStream::Out(LPMIDIHDR pMidiHdr)
 {
     ASSERT(*this != NULL);
     ASSERT(pMidiHdr != NULL);
+
+    LockGuard lock(m_cs);
 
     // Prepare the header
     auto result = midiOutPrepareHeader(static_cast<HMIDIOUT>(m_handle), pMidiHdr, sizeof(MIDIHDR));
@@ -81,13 +98,23 @@ MMRESULT MidiStream::Out(LPMIDIHDR pMidiHdr)
     // Output the header
     result = midiStreamOut(*this, pMidiHdr, sizeof(MIDIHDR));
     if (result != MMSYSERR_NOERROR) {
-        midiOutUnprepareHeader(static_cast<HMIDIOUT>(m_handle), pMidiHdr, sizeof(MIDIHDR));
+        Unprepare(pMidiHdr);
         return result;
     }
 
-    // The midi header will be unprepared in the MidiStreamProc callback function
-
     return MMSYSERR_NOERROR;
+}
+
+MMRESULT MidiStream::Unprepare(LPMIDIHDR pMidiHdr)
+{
+    ASSERT(*this != NULL);
+    ASSERT(pMidiHdr != NULL);
+
+    LockGuard lock(m_cs);
+
+    auto result = midiOutUnprepareHeader(static_cast<HMIDIOUT>(m_handle), pMidiHdr, sizeof(MIDIHDR));
+
+    return result;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -95,21 +122,33 @@ MMRESULT MidiStream::Restart()
 {
     ASSERT(*this != NULL);
 
-    return midiStreamRestart(*this);
+    LockGuard lock(m_cs);
+
+    auto result = midiStreamRestart(*this);
+
+    return result;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-MMRESULT MidiStream::Stop() const
+MMRESULT MidiStream::Stop()
 {
     ASSERT(*this != NULL);
 
-    return midiStreamStop(*this);
+    LockGuard lock(m_cs);
+
+    auto result = midiStreamStop(*this);
+
+    return result;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-MMRESULT MidiStream::ShortMessage(const MidiMessage& message) const
+MMRESULT MidiStream::ShortMessage(const MidiMessage& message)
 {
     ASSERT(*this != NULL);
 
-    return midiOutShortMsg(GetOutputHandle(), message);
+    LockGuard lock(m_cs);
+
+    auto result = midiOutShortMsg(GetOutputHandle(), message);
+
+    return result;
 }

@@ -196,6 +196,7 @@
     <ClInclude Include="DrumSequencerMenubar.h" />
     <ClInclude Include="DrumSequencerToolbar.h" />
     <ClInclude Include="DrumSequencerView.h" />
+    <ClInclude Include="LockGuard.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MidiBuffer.h" />
     <ClInclude Include="midicommon.h" />

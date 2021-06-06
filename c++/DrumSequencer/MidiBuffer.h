@@ -12,15 +12,15 @@ public:
 
     // Not copyable, but movable
     MidiBuffer(const MidiBuffer&) = delete;
-    MidiBuffer& operator = (const MidiBuffer&) = delete;
+    MidiBuffer& operator =(const MidiBuffer&) = delete;
 
     MidiBuffer(MidiBuffer&& rhs) noexcept;
-    MidiBuffer& operator = (MidiBuffer&& rhs) noexcept;
+    MidiBuffer& operator =(MidiBuffer&& rhs) noexcept;
 
     // Interface
     void Encode(const Sequence& seq);
 
-    operator PMIDIHDR ()
+    operator PMIDIHDR()
     {
         return &m_header;
     }
@@ -33,4 +33,3 @@ protected:
 private:
     MIDIHDR m_header{};
 };
-

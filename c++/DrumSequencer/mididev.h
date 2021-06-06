@@ -8,8 +8,6 @@
 #ifndef __MIDIDEV_H__
 #define __MIDIDEV_H__
 
-using MidiCallback = void (*)(HMIDISTRM, UINT, DWORD_PTR, DWORD_PTR, DWORD_PTR);
-
 /////////////////////////////////////////////////////////////////////////////
 class MidiDevice
 {
@@ -20,7 +18,7 @@ public:
     virtual ~MidiDevice() = default;
 
     // Interface
-    virtual MMRESULT Open(MidiCallback, LPVOID = nullptr) = 0;
+    virtual MMRESULT Open(DWORD_PTR dwCallback, DWORD_PTR dwInstance, DWORD fdwOpen) = 0;
     virtual MMRESULT Close() = 0;
 
     UINT GetDeviceID() const
@@ -33,6 +31,7 @@ protected:
     HANDLE m_handle;
     UINT m_id;
 };
+
 /////////////////////////////////////////////////////////////////////////////
 
 #endif // __MIDIDEV_H__
