@@ -68,6 +68,8 @@ BEGIN_MESSAGE_MAP(CDrumSequencerDoc, CDocument)
         ON_COMMAND(ID_SEQUENCER_PLAY, &CDrumSequencerDoc::OnSequencerPlay)
         ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, &CDrumSequencerDoc::OnUpdateFileSave)
         ON_COMMAND(ID_TOGGLE_PLAY, &CDrumSequencerDoc::OnTogglePlay)
+        ON_COMMAND(ID_REENCODE_FRONT, &CDrumSequencerDoc::OnReencodeFront)
+        ON_COMMAND(ID_REENCODE_BACK, &CDrumSequencerDoc::OnReencodeBack)
 END_MESSAGE_MAP()
 
 void CDrumSequencerDoc::OnSequencerPlay()
@@ -87,4 +89,14 @@ void CDrumSequencerDoc::OnTogglePlay()
     } else {
         theApp.Play(m_sequence);
     }
+}
+
+void CDrumSequencerDoc::OnReencodeFront()
+{
+    theApp.OutFront(m_sequence);
+}
+
+void CDrumSequencerDoc::OnReencodeBack()
+{
+    theApp.OutBack(m_sequence);
 }

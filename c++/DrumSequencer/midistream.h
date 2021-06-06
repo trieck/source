@@ -31,6 +31,7 @@ public:
     MMRESULT Out(LPMIDIHDR);
     MMRESULT Unprepare(LPMIDIHDR);
     MMRESULT Restart();
+    MMRESULT Reset();
     MMRESULT Stop();
     MMRESULT ShortMessage(const MidiMessage&);
 

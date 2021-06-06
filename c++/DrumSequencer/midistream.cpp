@@ -130,11 +130,25 @@ MMRESULT MidiStream::Restart()
 }
 
 /////////////////////////////////////////////////////////////////////////////
+MMRESULT MidiStream::Reset()
+{
+    ASSERT(*this != NULL);
+
+    LockGuard lock(m_cs);
+
+    auto result = midiOutReset(GetOutputHandle());
+
+    return result;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 MMRESULT MidiStream::Stop()
 {
     ASSERT(*this != NULL);
 
     LockGuard lock(m_cs);
+
+    (void)Reset();
 
     auto result = midiStreamStop(*this);
 

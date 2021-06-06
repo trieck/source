@@ -21,6 +21,8 @@ public:
 
     void Close();
     BOOL Play(const Sequence& sequence);
+    BOOL OutFront(const Sequence& sequence);
+    BOOL OutBack(const Sequence& sequence);
     BOOL Stop();
 
     short Tempo() const;

@@ -4,6 +4,7 @@
 #include "outputdevs.h"
 #include "resource.h"
 #include "Sequencer.h"
+#include "DrumSequencer.h"
 #include "LockGuard.h"
 
 Sequencer::Sequencer() : m_workerThread(nullptr), m_pStream(nullptr), m_state(Stopped)
@@ -101,6 +102,44 @@ BOOL Sequencer::Play(const Sequence& sequence)
     return TRUE;
 }
 
+BOOL Sequencer::OutFront(const Sequence& sequence)
+{
+    ASSERT(m_pStream != NULL);
+    ASSERT(m_pStream->IsOpen());
+
+    if (!IsPlaying()) {
+        return FALSE;
+    }
+
+    m_front.Encode(sequence);
+    
+    auto result = m_pStream->Out(m_front);
+    if (result != MMSYSERR_NOERROR) {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+BOOL Sequencer::OutBack(const Sequence& sequence)
+{
+    ASSERT(m_pStream != NULL);
+    ASSERT(m_pStream->IsOpen());
+
+    if (!IsPlaying()) {
+        return FALSE;
+    }
+
+    m_back.Encode(sequence);
+
+    auto result = m_pStream->Out(m_back);
+    if (result != MMSYSERR_NOERROR) {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
 BOOL Sequencer::Stop()
 {
     ASSERT(m_pStream != NULL);
@@ -170,11 +209,13 @@ UINT Sequencer::ThreadProc(LPVOID pParam)
             if (pThis->m_pStream != nullptr) {
                 pThis->m_pStream->Unprepare(reinterpret_cast<LPMIDIHDR>(msg.lParam));
 
+                auto hWnd = theApp.m_pMainWnd->GetSafeHwnd();
+
                 // front or back buffer?
                 if (completed++ % 2 == 0) {
-                    pThis->m_pStream->Out(pThis->m_front);
+                    PostMessage(hWnd, WM_COMMAND, ID_REENCODE_FRONT, 0);
                 } else {
-                    pThis->m_pStream->Out(pThis->m_back);
+                    PostMessage(hWnd, WM_COMMAND, ID_REENCODE_BACK, 0);
                 }
             }
             break;

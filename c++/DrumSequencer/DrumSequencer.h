@@ -39,6 +39,8 @@ public:
     int ExitInstance() override;
     BOOL IsPlaying() const;
     BOOL Play(const Sequence& sequence);
+    BOOL OutFront(const Sequence& sequence);
+    BOOL OutBack(const Sequence& sequence);
     BOOL Stop();
 
     afx_msg void OnSequencerStop();

@@ -165,6 +165,16 @@ BOOL CDrumSequencerApp::Play(const Sequence& sequence)
     return m_sequencer.Play(sequence);
 }
 
+BOOL CDrumSequencerApp::OutFront(const Sequence& sequence)
+{
+    return m_sequencer.OutFront(sequence);
+}
+
+BOOL CDrumSequencerApp::OutBack(const Sequence& sequence)
+{
+    return m_sequencer.OutBack(sequence);
+}
+
 BOOL CDrumSequencerApp::Stop()
 {
     return m_sequencer.Stop();
