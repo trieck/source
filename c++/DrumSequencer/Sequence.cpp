@@ -6,14 +6,14 @@ IMPLEMENT_SERIAL(Sequence, CObject, VERSIONABLE_SCHEMA)
 ANON_BEGIN
 
 // sequence file marker
-const BYTE SEQ_MARKER[3] = {
+constexpr BYTE SEQ_MARKER[3] = {
     'S',
     'E',
     'Q'
 };
 
 // MIDI instruments
-const BYTE INSTRUMENTS[Sequence::NINSTRUMENTS] = {
+constexpr BYTE INSTRUMENTS[Sequence::NINSTRUMENTS] = {
     42, // closed hi-hat
     44, // pedal hi-hat
     46, // open hi-hat
@@ -23,7 +23,7 @@ const BYTE INSTRUMENTS[Sequence::NINSTRUMENTS] = {
     50, // hi tom
     48, // hi-mid tom
     45, // low tom
-    36  // bass drum1
+    36 // bass drum1
 };
 
 ANON_END
@@ -66,9 +66,9 @@ void Sequence::Serialize(CArchive& ar)
     BYTE buffer[3];
 
     if (ar.IsStoring()) {
-        ar << SEQ_MARKER[0];   // 'S'
-        ar << SEQ_MARKER[1];   // 'E'
-        ar << SEQ_MARKER[2];   // 'Q'
+        ar << SEQ_MARKER[0]; // 'S'
+        ar << SEQ_MARKER[1]; // 'E'
+        ar << SEQ_MARKER[2]; // 'Q'
 
         ar.Write(&m_beats, sizeof(m_beats));
 
@@ -84,4 +84,3 @@ void Sequence::Serialize(CArchive& ar)
         }
     }
 }
-

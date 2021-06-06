@@ -7,6 +7,7 @@ BEGIN_MESSAGE_MAP(NumEdit, CEdit)
         ON_WM_GETDLGCODE()
         ON_MESSAGE(WM_PASTE, OnPaste)
         ON_MESSAGE(WM_CONTEXTMENU, OnContextMenu)
+        ON_WM_KILLFOCUS()
         //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -42,8 +43,8 @@ void NumEdit::setValue(int val)
 
     if (val > m_maxValue) {
         val = m_maxValue;
-
     }
+
     CString str;
     str.Format(_T("%d"), val);
 
@@ -64,6 +65,7 @@ void NumEdit::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (nChar == VK_RETURN) {
         setValue();
+        SetSel(0, -1, FALSE);
         GetParent()->SendMessage(WM_CHAR, nChar, MAKELPARAM(nRepCnt, nFlags));
     } else {
         CEdit::OnChar(nChar, nRepCnt, nFlags);
@@ -78,4 +80,13 @@ UINT NumEdit::OnGetDlgCode()
 void NumEdit::setValue()
 {
     setValue(value());
+}
+
+void NumEdit::OnKillFocus(CWnd* pNewWnd)
+{
+    CEdit::OnKillFocus(pNewWnd);
+
+    setValue();
+    SetSel(0, -1, FALSE);
+    (void)GetParent()->SendMessage(WM_CHAR, VK_RETURN, 0);
 }

@@ -20,14 +20,14 @@ void MidiBuffer::Alloc(UINT nSize)
     Free();
     m_header.dwBufferLength = nSize;
     m_header.dwBytesRecorded = 0;
-    m_header.lpData = new CHAR[nSize];
+    m_header.lpData = static_cast<LPSTR>(GlobalAlloc(GPTR, nSize));
     if (m_header.lpData == nullptr)
         AfxThrowMemoryException();
 }
 
 void MidiBuffer::Free()
 {
-    delete [] m_header.lpData;
+    GlobalFree(m_header.lpData);
     memset(&m_header, 0, sizeof(MIDIHDR));
 }
 

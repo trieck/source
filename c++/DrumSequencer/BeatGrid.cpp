@@ -143,7 +143,7 @@ CPoint BeatGrid::GetSubdivision(const CPoint& pt)
 {
     CPoint sub;
 
-    CPoint aPoint(pt);
+    auto aPoint(pt);
     aPoint.x -= CX_OFFSET;
     aPoint.y -= CY_OFFSET;
 

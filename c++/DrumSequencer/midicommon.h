@@ -20,6 +20,6 @@ typedef struct MIDISHORTEVENT
 #define PROGRAM_CHANGE(c)   (0xC9 | (c))
 #define TEMPO_CHANGE(t)     (((DWORD)MEVT_TEMPO << 24) | (t))
 
-constexpr auto DEFAULT_PPQN = 96;
+constexpr auto DEFAULT_PPQN = 4;
 
 #endif // __MIDICOMMON_H__

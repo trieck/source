@@ -17,6 +17,8 @@ BEGIN_MESSAGE_MAP(CDrumSequencerView, CView)
         ON_WM_LBUTTONDOWN()
         ON_WM_ERASEBKGND()
         ON_WM_CREATE()
+        ON_WM_MOUSEMOVE()
+        ON_WM_LBUTTONUP()
 END_MESSAGE_MAP()
 
 #define BKGND_COLOR RGB(0xEE, 0xEE, 0xEE)
@@ -72,18 +74,6 @@ CDrumSequencerDoc* CDrumSequencerView::GetDocument() const // non-debug version 
     return dynamic_cast<CDrumSequencerDoc*>(m_pDocument);
 }
 #endif //_DEBUG
-
-void CDrumSequencerView::OnLButtonDown(UINT nFlags, CPoint point)
-{
-    auto pDoc = GetDocument();
-
-    if (m_grid.PointOnGrid(point)) {
-        const auto sub = m_grid.GetSubdivision(point);
-        pDoc->ToggleSub(sub);
-    }
-
-    CView::OnLButtonDown(nFlags, point);
-}
 
 BOOL CDrumSequencerView::OnEraseBkgnd(CDC* pDC)
 {
@@ -172,4 +162,35 @@ void CDrumSequencerView::DrawBeats(CDC* pDC, Sequence* pSeq)
             }
         }
     }
+}
+
+
+void CDrumSequencerView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+    auto pDoc = GetDocument();
+
+    if (m_grid.PointOnGrid(point)) {
+        auto sub = m_grid.GetSubdivision(point);
+        if (sub != m_activeSub) {
+            m_activeSub = sub;
+            pDoc->ToggleSub(sub);
+        }
+    }
+
+    CView::OnLButtonDown(nFlags, point);
+}
+
+void CDrumSequencerView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+    m_activeSub = {-1, -1};
+    CView::OnLButtonUp(nFlags, point);
+}
+
+void CDrumSequencerView::OnMouseMove(UINT nFlags, CPoint point)
+{
+    if ((nFlags & MK_LBUTTON) == MK_LBUTTON) {
+        OnLButtonDown(nFlags, point);
+    }
+
+    CView::OnMouseMove(nFlags, point);
 }

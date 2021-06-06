@@ -22,6 +22,7 @@ private:
     BeatGrid m_grid;
     CBrush m_bkgndBrush;
     CFont m_font;
+    CPoint m_activeSub{-1, -1};
 public:
     afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
     afx_msg BOOL OnEraseBkgnd(CDC* pDC);
@@ -29,6 +30,8 @@ public:
     void DrawInstruments(CDC* pDC);
     void OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pHint*/) override;
     void DrawBeats(CDC* pDC, Sequence* pSeq);
+    afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+    afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // debug version in DrumSequencerView.cpp

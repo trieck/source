@@ -26,4 +26,6 @@ DECLARE_MESSAGE_MAP()
 
     void setValue();
     int m_minValue, m_maxValue;
+public:
+    afx_msg void OnKillFocus(CWnd* pNewWnd);
 };
