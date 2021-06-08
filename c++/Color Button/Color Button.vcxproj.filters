@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Color Button.cpp">
+    <ClCompile Include="ColorButtonApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ColorButtonCtl.cpp">
@@ -41,7 +41,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Color Button.h">
+    <ClInclude Include="ColorButtonApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ColorButtonCtl.h">
