@@ -44,7 +44,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     // prevent the menu bar from taking the focus on activation
     CMFCPopupMenu::SetForceMenuFocus(FALSE);
 
-    if (!m_wndToolBar.CreateEx(this, WS_CHILD | WS_VISIBLE) ||
+    if (!m_wndToolBar.Create(this) ||
         !m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) {
         TRACE0("Failed to create toolbar\n");
         return -1; // fail to create
