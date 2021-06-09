@@ -221,6 +221,7 @@ UINT Sequencer::ThreadProc(LPVOID pParam)
             break;
         case MM_MOM_CLOSE:
             running = false;
+            break;
         default:
             break;
         }

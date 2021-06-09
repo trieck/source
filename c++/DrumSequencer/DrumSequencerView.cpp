@@ -92,18 +92,11 @@ int CDrumSequencerView::OnCreate(LPCREATESTRUCT lpCreateStruct)
     if (!m_bkgndBrush.CreateSolidBrush(BKGND_COLOR))
         return -1;
 
-    const CClientDC dc(this);
-
     // Create the font
-    LOGFONT lf;
-    memset(&lf, 0, sizeof(LOGFONT));
-    _tcscpy(lf.lfFaceName, _T("Verdana"));
-    lf.lfWeight = FW_NORMAL;
-    lf.lfCharSet = DEFAULT_CHARSET;
-    lf.lfHeight = -MulDiv(7, dc.GetDeviceCaps(LOGPIXELSY), 72);
-
-    if (!m_font.CreateFontIndirect(&lf))
+    CClientDC dc(this);
+    if (!m_font.CreatePointFont(70, _T("Verdana"), &dc)) {
         return -1;
+    }
 
     return 0;
 }
