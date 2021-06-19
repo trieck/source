@@ -1,17 +1,12 @@
 /*----------------------------------------
-	Module	:	CAPP.H
-	Date	: 	07/15/1997
-	Purpose	:	Generic Window App Class
+    Module	:	CAPP.H
+    Date	: 	07/15/1997
+    Purpose	:	Generic Window App Class
 ----------------------------------------*/
 
-#ifndef _CAPP_H_
-#define _CAPP_H_
+#pragma once
 
-#include <windows.h>
-#include <commctrl.h>
-#include <TCHAR.H>
 
-#include "olemac.h"
 #include "interfac.h"
 
 #define SZSTREAM	_T("MyStream")
@@ -25,30 +20,30 @@ BOOL CALLBACK DlgProc(HWND hWnd, UINT message,
                       WPARAM wParam, LPARAM lParam);
 
 class CAdviseSink;
-typedef class CAdviseSink *PCAdviseSink;
+typedef class CAdviseSink* PCAdviseSink;
 
 class CApp
 {
-    friend	LRESULT APIENTRY MainWndProc(HWND, UINT, WPARAM, LPARAM);
-    friend	LRESULT APIENTRY ClientProc(HWND, UINT, WPARAM, LPARAM);
-    friend	BOOL CALLBACK DlgProc(HWND, UINT, WPARAM, LPARAM);
-    friend	class CAdviseSink;
+    friend LRESULT APIENTRY MainWndProc(HWND, UINT, WPARAM, LPARAM);
+    friend LRESULT APIENTRY ClientProc(HWND, UINT, WPARAM, LPARAM);
+    friend BOOL CALLBACK DlgProc(HWND, UINT, WPARAM, LPARAM);
+    friend class CAdviseSink;
 
 protected:
-    HINSTANCE		m_hInst;
-    HWND			m_hWndFrame;
-    HWND			m_hWndClient;
-    HWND			m_hWndChild;
-    HWND			m_hWndStatus;
-    INT				m_nCmdShow;
-    TCHAR			m_szClassName[_MAX_PATH];
-    BOOL			m_bInitialized;
-    BOOL			m_bExe;
-    LPUNKNOWN		m_pIUnknown;
-    PCAdviseSink	m_pIAdviseSink;
-    LPDATAOBJECT	m_pIDataObject;
-    DWORD			m_cRef;		// reference count
-    DWORD			m_dwConn;	// advisory connection
+    HINSTANCE m_hInst;
+    HWND m_hWndFrame;
+    HWND m_hWndClient;
+    HWND m_hWndChild;
+    HWND m_hWndStatus;
+    INT m_nCmdShow;
+    TCHAR m_szClassName[_MAX_PATH];
+    BOOL m_bInitialized;
+    BOOL m_bExe;
+    LPUNKNOWN m_pIUnknown;
+    PCAdviseSink m_pIAdviseSink;
+    LPDATAOBJECT m_pIDataObject;
+    DWORD m_cRef; // reference count
+    DWORD m_dwConn; // advisory connection
 public:
     CApp(HINSTANCE hInstance, INT nCmdShow);
     ~CApp();
@@ -76,24 +71,23 @@ typedef CApp* PAPP;
 class CAdviseSink : public IAdviseSink
 {
 protected:
-    ULONG               m_cRef;
-    PAPP                m_pApp;
+    ULONG m_cRef;
+    PAPP m_pApp;
 
 public:
-    CAdviseSink(PAPP);
-    ~CAdviseSink();
+    explicit CAdviseSink(PAPP);
+    virtual ~CAdviseSink() = default;
 
     // IUnknown members
-    STDMETHODIMP QueryInterface(REFIID, PPVOID);
-    STDMETHODIMP_(ULONG) AddRef();
-    STDMETHODIMP_(ULONG) Release();
+    STDMETHODIMP QueryInterface(REFIID, PPVOID) override;
+    STDMETHODIMP_(ULONG) AddRef() override;
+    STDMETHODIMP_(ULONG) Release() override;
 
     // IAdviseSink members
-    STDMETHODIMP_(VOID)  OnDataChange(LPFORMATETC, LPSTGMEDIUM);
-    STDMETHODIMP_(VOID)  OnViewChange(DWORD, LONG);
-    STDMETHODIMP_(VOID)  OnRename(LPMONIKER);
-    STDMETHODIMP_(VOID)  OnSave();
-    STDMETHODIMP_(VOID)  OnClose();
+    STDMETHODIMP_(VOID) OnDataChange(LPFORMATETC, LPSTGMEDIUM) override;
+    STDMETHODIMP_(VOID) OnViewChange(DWORD, LONG) override;
+    STDMETHODIMP_(VOID) OnRename(LPMONIKER) override;
+    STDMETHODIMP_(VOID) OnSave() override;
+    STDMETHODIMP_(VOID) OnClose() override;
 };
 
-#endif // _CAPP_H_

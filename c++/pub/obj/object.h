@@ -1,8 +1,8 @@
 /*-----------------------------------
-	Module	:	OBJECT.H
-	Date	:	07/19/1997
-	Purpose	:	Implementation of the
-				IDrawObject interface
+    Module	:	OBJECT.H
+    Date	:	07/19/1997
+    Purpose	:	Implementation of the
+                IDrawObject interface
 ------------------------------------*/
 
 #ifndef _OBJECT_H_
@@ -10,8 +10,8 @@
 
 #include <windows.h>
 #include <TCHAR.H>
-#include "..\olemac.h"
-#include "..\interfac.h"
+#include "../olemac.h"
+#include "../interfac.h"
 
 // object rendering
 typedef struct tagRendering {
@@ -23,7 +23,7 @@ typedef struct tagRendering {
 // function for destroying object
 typedef void (*PFNDESTROYED)(void);
 
-BOOL SetKeyAndValue(LPTSTR pszKey, LPTSTR pszSubkey, LPTSTR pszValue);
+BOOL SetKeyAndValue(LPCTSTR pszKey, LPCTSTR pszSubkey, LPCTSTR pszValue);
 
 // forward declarations
 class CImpIPersistStream;
@@ -48,13 +48,13 @@ protected:
     PCImpIDataObject	m_pImpIDataObject;		// Data Object pointer
     PCImpIViewObject2	m_pImpIViewObject2;		// View Object pointer
     LPDATAADVISEHOLDER	m_pIDataAdviseHolder;	// Data Advise Holder pointer
-    CLSID				m_clsID;
+    CLSID				m_clsID{};
     BOOL				m_fDirty;
     PRENDERING			m_pRender;				// Object rendering pointer
     LPSTGMEDIUM			m_pSTM;
 public:
     CDrawObject(LPUNKNOWN, PFNDESTROYED);
-    ~CDrawObject();
+    virtual ~CDrawObject();
     BOOL		Init();
 
 protected:
@@ -80,11 +80,11 @@ typedef CDrawObject *PCDrawObject;
 class CImpIPersistStream : public IPersistStream
 {
 protected:
+    DWORD			m_cRef = 0;
     PCDrawObject	m_pObj;
-    DWORD			m_cRef;
 public:
     CImpIPersistStream(PCDrawObject);
-    ~CImpIPersistStream();
+    virtual ~CImpIPersistStream();
 
     // IUnknown members
     STDMETHODIMP         QueryInterface(REFIID, PPVOID);
@@ -104,11 +104,11 @@ public:
 class CImpIDataObject : public IDataObject
 {
 protected:
+    DWORD			m_cRef = 0;
     PCDrawObject	m_pObj;			// back pointer to main object
-    DWORD			m_cRef;
 public:
     CImpIDataObject(PCDrawObject);
-    ~CImpIDataObject();
+    virtual ~CImpIDataObject();
 
     // IUnknown members
     STDMETHODIMP			QueryInterface(REFIID, PPVOID);
@@ -130,11 +130,11 @@ public:
 class CImpIViewObject2 : public IViewObject
 {
 protected:
+    ULONG			m_cRef = 0;
     PCDrawObject	m_pObj;		// back pointer to main object
-    ULONG			m_cRef;
 public:
     CImpIViewObject2(PCDrawObject);
-    ~CImpIViewObject2();
+    virtual ~CImpIViewObject2();
 
     // IUnknown members
     STDMETHODIMP			QueryInterface(REFIID, PPVOID);
@@ -159,11 +159,11 @@ public:
 class CDrawClassFactory : public IClassFactory
 {
 protected:
-    ULONG           m_cRef;
+    ULONG           m_cRef =0;
 
 public:
     CDrawClassFactory();
-    ~CDrawClassFactory();
+    virtual ~CDrawClassFactory() = default;
 
     // IUnknown members
     STDMETHODIMP         QueryInterface(REFIID, PPVOID);

@@ -1,25 +1,25 @@
 /*-----------------------------------------
-	Module	:	OBJECT.CPP
-	Date	:	07/19/1997
-	Purpose	:	Public DLL OLE Component
-				for Drawing
+    Module	:	OBJECT.CPP
+    Date	:	07/19/1997
+    Purpose	:	Public DLL OLE Component
+                for Drawing
 ------------------------------------------*/
 
-#include <windows.h>
+#include "pch.h"
 #include <initguid.h>
 #include "object.h"
 
 // Count number of objects and number of locks.
-ULONG       g_cObj	= 0;
-ULONG       g_cLock	= 0;
-HINSTANCE	g_hInst = NULL;
+ULONG g_cObj = 0;
+ULONG g_cLock = 0;
+HINSTANCE g_hInst = nullptr;
 
 BOOL WINAPI DllMain(HINSTANCE hInstance, ULONG ulReason
                     , LPVOID pvReserved)
 {
     if (DLL_PROCESS_DETACH == ulReason)
         return TRUE;
-    else if (DLL_PROCESS_ATTACH != ulReason)
+    if (DLL_PROCESS_ATTACH != ulReason)
         return TRUE;
 
     g_hInst = hInstance;
@@ -28,28 +28,21 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, ULONG ulReason
 
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, PPVOID ppv)
 {
-    HRESULT             hr;
-    CDrawClassFactory *pObj;
-
     if (CLSID_DrawObject != rclsid)
         return ResultFromScode(E_FAIL);
 
-    pObj = new CDrawClassFactory();
+    auto pObj = new CDrawClassFactory();
 
-    if (!pObj)
-        return ResultFromScode(E_OUTOFMEMORY);
+    auto hr = pObj->QueryInterface(riid, ppv);
 
-    hr = pObj->QueryInterface(riid, ppv);
+    pObj->Release();
 
-    if (FAILED(hr))
-        delete pObj;
-
-    return (hr);
+    return hr;
 }
 
 STDAPI DllCanUnloadNow()
 {
-    SCODE   sc;
+    SCODE sc;
 
     sc = (!g_cObj && !g_cLock) ? S_OK : S_FALSE;
     return ResultFromScode(sc);
@@ -57,10 +50,10 @@ STDAPI DllCanUnloadNow()
 
 STDAPI DllRegisterServer()
 {
-    OLECHAR     szTemp[128];
-    TCHAR		szID[128];
-    TCHAR       szCLSID[128];
-    TCHAR       szModule[512];
+    OLECHAR szTemp[128];
+    TCHAR szID[128];
+    TCHAR szCLSID[128];
+    TCHAR szModule[512];
 
     StringFromGUID2(CLSID_DrawObject, szTemp, 128);
     lstrcpy(szCLSID, _T("CLSID\\"));
@@ -74,40 +67,43 @@ STDAPI DllRegisterServer()
     lstrcat(szCLSID, szID);
 
     // Create ProgID keys
-    SetKeyAndValue(_T("DrawObject1.0"), NULL
-                   , _T("Drawing Object"));
-    SetKeyAndValue(_T("DrawObject1.0"), _T("CLSID"), szID);
+    auto result = SetKeyAndValue(_T("DrawObject1.0"), nullptr
+                                 , _T("Drawing Object"));
+    result = result && SetKeyAndValue(_T("DrawObject1.0"), _T("CLSID"), szID);
 
     // Create VersionIndependentProgID keys
-    SetKeyAndValue(_T("DrawObject"), NULL
-                   , _T("Drawing Object"));
-    SetKeyAndValue(_T("DrawObject"), _T("CurVer")
-                   , _T("DrawObject1.0"));
-    SetKeyAndValue(_T("DrawObject"), _T("CLSID"), szID);
+    result = result && SetKeyAndValue(_T("DrawObject"), nullptr
+                                      , _T("Drawing Object"));
+    result = result && SetKeyAndValue(_T("DrawObject"), _T("CurVer")
+                                      , _T("DrawObject1.0"));
+    result = result && SetKeyAndValue(_T("DrawObject"), _T("CLSID"), szID);
 
     // Create entries under CLSID
-    SetKeyAndValue(szCLSID, NULL, _T("Drawing Object"));
-    SetKeyAndValue(szCLSID, _T("ProgID"), _T("DrawObject1.0"));
-    SetKeyAndValue(szCLSID, _T("VersionIndependentProgID")
-                   , _T("DrawObject"));
-    SetKeyAndValue(szCLSID, _T("NotInsertable"), NULL);
+    result = result && SetKeyAndValue(szCLSID, nullptr, _T("Drawing Object"));
+    result = result && SetKeyAndValue(szCLSID, _T("ProgID"), _T("DrawObject1.0"));
+    result = result && SetKeyAndValue(szCLSID, _T("VersionIndependentProgID")
+                                      , _T("DrawObject"));
+    result = result && SetKeyAndValue(szCLSID, _T("NotInsertable"), nullptr);
 
-    SetKeyAndValue(szCLSID, _T("DataFormats\\GetSet\\0"), _T("3,1,32,3"));
+    result = result && SetKeyAndValue(szCLSID, _T("DataFormats\\GetSet\\0"), _T("3,1,32,3"));
 
     GetModuleFileName(g_hInst, szModule
-                      , sizeof(szModule)/sizeof(TCHAR));
+                      , sizeof(szModule) / sizeof(TCHAR));
 
-    SetKeyAndValue(szCLSID, _T("InprocServer32"), szModule);
+    result = result && SetKeyAndValue(szCLSID, _T("InprocServer32"), szModule);
+    if (!result) {
+        return E_FAIL;
+    }
 
     return NOERROR;
 }
 
 STDAPI DllUnregisterServer()
 {
-    OLECHAR     wszTemp[128];
-    TCHAR		szID[128];
-    TCHAR       szCLSID[128];
-    TCHAR       szTemp[256];
+    OLECHAR wszTemp[128];
+    TCHAR szID[128];
+    TCHAR szCLSID[128];
+    TCHAR szTemp[256];
 
     StringFromGUID2(CLSID_DrawObject, wszTemp, 128);
     lstrcpy(szCLSID, _T("CLSID\\"));
@@ -152,11 +148,10 @@ STDAPI DllUnregisterServer()
     return NOERROR;
 }
 
-BOOL SetKeyAndValue(LPTSTR pszKey, LPTSTR pszSubkey
-                    , LPTSTR pszValue)
+BOOL SetKeyAndValue(LPCTSTR pszKey, LPCTSTR pszSubkey, LPCTSTR pszValue)
 {
-    HKEY        hKey;
-    TCHAR       szKey[256];
+    HKEY hKey;
+    TCHAR szKey[256];
 
     lstrcpy(szKey, pszKey);
 
@@ -165,17 +160,25 @@ BOOL SetKeyAndValue(LPTSTR pszKey, LPTSTR pszSubkey
         lstrcat(szKey, pszSubkey);
     }
 
-    if (ERROR_SUCCESS != RegCreateKeyEx(HKEY_CLASSES_ROOT
-                                        , szKey, 0, NULL, REG_OPTION_NON_VOLATILE
-                                        , KEY_ALL_ACCESS, NULL, &hKey, NULL))
+    auto result = RegCreateKeyEx(HKEY_CLASSES_ROOT,
+                                 szKey, 0, nullptr, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, nullptr, &hKey, nullptr);
+    if (result != ERROR_SUCCESS) {
         return FALSE;
-
-    if (pszValue) {
-        RegSetValueEx(hKey, NULL, 0, REG_SZ, (BYTE *)pszValue
-                      , (lstrlen(pszValue)+1) * sizeof(TCHAR));
     }
 
-    RegCloseKey(hKey);
+    if (pszValue) {
+        result = RegSetValueEx(hKey, nullptr, 0, REG_SZ, (BYTE*)pszValue, (lstrlen(pszValue) + 1) * sizeof(TCHAR));
+        if (result != ERROR_SUCCESS) {
+            RegCloseKey(hKey);
+            return FALSE;
+        }
+    }
+
+    result = RegCloseKey(hKey);
+    if (result != ERROR_SUCCESS) {
+        return FALSE;
+    }
+
     return TRUE;
 }
 
@@ -185,78 +188,68 @@ void ObjectDestroyed()
     g_cObj--;
 }
 
-CDrawClassFactory :: CDrawClassFactory()
-{
-    m_cRef=0L;
-
-}
-
-CDrawClassFactory :: ~CDrawClassFactory()
+CDrawClassFactory::CDrawClassFactory() : m_cRef(1)
 {
 }
 
-STDMETHODIMP CDrawClassFactory :: QueryInterface(REFIID riid
-        , PPVOID ppv)
+STDMETHODIMP CDrawClassFactory::QueryInterface(REFIID riid
+                                               , PPVOID ppv)
 {
-    *ppv=NULL;
+    *ppv = nullptr;
 
     if (IID_IUnknown == riid || IID_IClassFactory == riid)
-        *ppv=this;
+        *ppv = this;
 
     if (*ppv) {
-        ((LPUNKNOWN)*ppv)->AddRef();
+        static_cast<LPUNKNOWN>(*ppv)->AddRef();
         return NOERROR;
     }
 
     return ResultFromScode(E_NOINTERFACE);
 }
 
-STDMETHODIMP_(ULONG) CDrawClassFactory :: AddRef()
+STDMETHODIMP_(ULONG) CDrawClassFactory::AddRef()
 {
-    return ++m_cRef;
+    return InterlockedIncrement(&m_cRef);
 }
 
-STDMETHODIMP_(ULONG) CDrawClassFactory :: Release()
+STDMETHODIMP_(ULONG) CDrawClassFactory::Release()
 {
-    if (0L != --m_cRef)
-        return m_cRef;
+    if (InterlockedDecrement(&m_cRef) == 0) {
+        delete this;
+        return 0;
+    }
 
-    delete this;
-    return 0L;
+    return m_cRef;
 }
 
-STDMETHODIMP CDrawClassFactory :: CreateInstance(LPUNKNOWN pUnkOuter
-        , REFIID riid, PPVOID ppvObj)
+STDMETHODIMP CDrawClassFactory::CreateInstance(LPUNKNOWN pUnkOuter
+                                               , REFIID riid, PPVOID ppvObj)
 {
-    PCDrawObject	pObj;
-    HRESULT         hr;
-
-    *ppvObj = NULL;
-    hr = ResultFromScode(E_OUTOFMEMORY);
+    *ppvObj = nullptr;
 
     // Verify that a controlling unknown asks for IUnknown
-    if (NULL != pUnkOuter && IID_IUnknown != riid)
+    if (nullptr != pUnkOuter && IID_IUnknown != riid)
         return ResultFromScode(CLASS_E_NOAGGREGATION);
 
     // Create the object passing function to notify on destruction.
-    pObj = new CDrawObject(pUnkOuter, ObjectDestroyed);
+    auto pObj = new CDrawObject(pUnkOuter, ObjectDestroyed);
 
-    if (!pObj)
-        return hr;
+    auto hr = S_OK;
 
-    if (pObj->Init())
+    if (pObj->Init()) {
         hr = pObj->QueryInterface(riid, ppvObj);
+        if (SUCCEEDED(hr)) {
+            g_cObj++;
+        }
+    }
 
-    // Kill the object if initial creation or Init failed.
-    if (FAILED(hr))
-        delete pObj;
-    else
-        g_cObj++;
+    pObj->Release();
 
     return hr;
 }
 
-STDMETHODIMP CDrawClassFactory :: LockServer(BOOL fLock)
+STDMETHODIMP CDrawClassFactory::LockServer(BOOL fLock)
 {
     if (fLock)
         g_cLock++;
@@ -266,39 +259,38 @@ STDMETHODIMP CDrawClassFactory :: LockServer(BOOL fLock)
     return NOERROR;
 }
 
-CDrawObject :: CDrawObject(LPUNKNOWN pUnkOuter, PFNDESTROYED pfnDestroy)
+CDrawObject::CDrawObject(LPUNKNOWN pUnkOuter, PFNDESTROYED pfnDestroy) : m_cRef(1)
 {
-    m_cRef					= 0;
-    m_fDirty				= FALSE;
-    m_pRender				= NULL;
-    m_pSTM					= NULL;
-    m_pImpIPersistStream	= NULL;
-    m_pImpIDataObject		= NULL;
-    m_pImpIViewObject2		= NULL;
-    m_pIDataAdviseHolder	= NULL;
-    m_pUnkOuter				= pUnkOuter;
-    m_pfnDestroy			= pfnDestroy;
-    m_clsID					= CLSID_DrawObject;
+    m_fDirty = FALSE;
+    m_pRender = nullptr;
+    m_pSTM = nullptr;
+    m_pImpIPersistStream = nullptr;
+    m_pImpIDataObject = nullptr;
+    m_pImpIViewObject2 = nullptr;
+    m_pIDataAdviseHolder = nullptr;
+    m_pUnkOuter = pUnkOuter;
+    m_pfnDestroy = pfnDestroy;
+    m_clsID = CLSID_DrawObject;
 }
 
-STDMETHODIMP CDrawObject :: Randomize()
+STDMETHODIMP CDrawObject::Randomize()
 {
-    m_pRender->aRect.left	= rand() % m_pRender->aBoundsRect.right;
-    m_pRender->aRect.top	= rand() % m_pRender->aBoundsRect.bottom;
-    m_pRender->aRect.right	= rand() % m_pRender->aBoundsRect.right;
-    m_pRender->aRect.bottom	= rand() % m_pRender->aBoundsRect.bottom;
+    m_pRender->aRect.left = rand() % m_pRender->aBoundsRect.right;
+    m_pRender->aRect.top = rand() % m_pRender->aBoundsRect.bottom;
+    m_pRender->aRect.right = rand() % m_pRender->aBoundsRect.right;
+    m_pRender->aRect.bottom = rand() % m_pRender->aBoundsRect.bottom;
 
     RenderData();
 
     // inform advise sink of data change
     if (m_pIDataAdviseHolder)
         m_pIDataAdviseHolder->SendOnDataChange
-        (m_pImpIDataObject, DVASPECT_CONTENT, ADVF_NODATA);
+            (m_pImpIDataObject, DVASPECT_CONTENT, ADVF_NODATA);
 
     return NOERROR;
 }
 
-STDMETHODIMP CDrawObject :: SetBounds(LPRECT prcBounds)
+STDMETHODIMP CDrawObject::SetBounds(LPRECT prcBounds)
 {
     if (!prcBounds)
         return ResultFromScode(E_POINTER);
@@ -310,12 +302,12 @@ STDMETHODIMP CDrawObject :: SetBounds(LPRECT prcBounds)
     // inform advise sink of data change
     if (m_pIDataAdviseHolder)
         m_pIDataAdviseHolder->SendOnDataChange
-        (m_pImpIDataObject, DVASPECT_CONTENT, ADVF_NODATA);
+            (m_pImpIDataObject, DVASPECT_CONTENT, ADVF_NODATA);
 
     return NOERROR;
 }
 
-STDMETHODIMP CDrawObject :: GetColor(LPCOLORREF pColor)
+STDMETHODIMP CDrawObject::GetColor(LPCOLORREF pColor)
 {
     if (!pColor)
         return E_POINTER;
@@ -325,7 +317,7 @@ STDMETHODIMP CDrawObject :: GetColor(LPCOLORREF pColor)
     return NOERROR;
 }
 
-STDMETHODIMP CDrawObject :: SetColor(COLORREF lColor)
+STDMETHODIMP CDrawObject::SetColor(COLORREF lColor)
 {
     m_pRender->aColor = lColor;
 
@@ -334,30 +326,18 @@ STDMETHODIMP CDrawObject :: SetColor(COLORREF lColor)
     // inform advise sink of data change
     if (m_pIDataAdviseHolder)
         m_pIDataAdviseHolder->SendOnDataChange
-        (m_pImpIDataObject, DVASPECT_CONTENT, ADVF_NODATA);
+            (m_pImpIDataObject, DVASPECT_CONTENT, ADVF_NODATA);
 
     return NOERROR;
 }
 
-CDrawObject :: ~CDrawObject()
+CDrawObject::~CDrawObject()
 {
     // Free allocated memory
-    if (m_pRender) delete m_pRender;
-
-    if (m_pSTM) {
-        ReleaseStgMedium(m_pSTM);
-        delete m_pSTM;
-    }
-
-    // Release implemented interface
-    // and object pointers
-    DeleteInterfaceImp(m_pImpIPersistStream);
-    DeleteInterfaceImp(m_pImpIDataObject);
-    DeleteInterfaceImp(m_pImpIViewObject2)
-    ReleaseInterface(m_pIDataAdviseHolder);
+    delete m_pRender;
 }
 
-BOOL CDrawObject :: Init()
+BOOL CDrawObject::Init()
 {
     m_pRender = new RENDERING;
     if (!m_pRender)
@@ -368,34 +348,26 @@ BOOL CDrawObject :: Init()
         return FALSE;
 
     // initialize data members
-    m_pRender->aColor		= 0L;
+    m_pRender->aColor = 0L;
 
-    m_pSTM->tymed			= TYMED_MFPICT;
-    m_pSTM->hGlobal			= 0;
-    m_pSTM->pUnkForRelease	= NULL;
+    m_pSTM->tymed = TYMED_MFPICT;
+    m_pSTM->hGlobal = nullptr;
+    m_pSTM->pUnkForRelease = nullptr;
 
     // Create implemented interface objects
     m_pImpIPersistStream = new CImpIPersistStream(this);
-    if (!m_pImpIPersistStream)
-        return FALSE;
-
     m_pImpIDataObject = new CImpIDataObject(this);
-    if (!m_pImpIDataObject)
-        return FALSE;
-
     m_pImpIViewObject2 = new CImpIViewObject2(this);
-    if (!m_pImpIViewObject2)
-        return FALSE;
 
     return TRUE;
 }
 
-STDMETHODIMP CDrawObject :: QueryInterface(REFIID riid, PPVOID ppv)
+STDMETHODIMP CDrawObject::QueryInterface(REFIID riid, PPVOID ppv)
 {
-    *ppv=NULL;
+    *ppv = nullptr;
 
     if (riid == IID_IUnknown || riid == IID_IDrawObject)
-        *ppv=this;
+        *ppv = this;
 
     if (riid == IID_IPersistStream)
         *ppv = m_pImpIPersistStream;
@@ -407,30 +379,59 @@ STDMETHODIMP CDrawObject :: QueryInterface(REFIID riid, PPVOID ppv)
         *ppv = m_pImpIViewObject2;
 
     if (*ppv) {
-        ((LPUNKNOWN)*ppv)->AddRef();
+        static_cast<LPUNKNOWN>(*ppv)->AddRef();
         return NOERROR;
     }
+
     return ResultFromScode(E_NOINTERFACE);
 }
 
-STDMETHODIMP_(ULONG) CDrawObject :: AddRef()
+STDMETHODIMP_(ULONG) CDrawObject::AddRef()
 {
-    return ++m_cRef;
+    return InterlockedIncrement(&m_cRef);
 }
 
-STDMETHODIMP_(ULONG) CDrawObject :: Release()
+STDMETHODIMP_(ULONG) CDrawObject::Release()
 {
-    if (0L!=--m_cRef)
-        return m_cRef;
+    if (InterlockedDecrement(&m_cRef) == 0) {
+        if (m_pfnDestroy)
+            (*m_pfnDestroy)();
 
-    if (m_pfnDestroy)
-        (*m_pfnDestroy)();
+        if (m_pSTM) {
+            ReleaseStgMedium(m_pSTM);
+            delete m_pSTM;
+            m_pSTM = nullptr;
+        }
 
-    delete this;
-    return 0;
+        if (m_pImpIPersistStream != nullptr) {
+            m_pImpIPersistStream->Release();
+            m_pImpIPersistStream = nullptr;
+        }
+
+        if (m_pIDataAdviseHolder != nullptr) {
+            m_pIDataAdviseHolder->Release();
+            m_pIDataAdviseHolder = nullptr;
+        }
+
+        if (m_pImpIDataObject != nullptr) {
+            m_pImpIDataObject->Release();
+            m_pImpIDataObject = nullptr;
+        }
+
+        if (m_pImpIViewObject2 != nullptr) {
+            m_pImpIViewObject2->Release();
+            m_pImpIViewObject2 = nullptr;
+        }
+
+        delete this;
+
+        return 0;
+    }
+
+    return m_cRef;
 }
 
-HRESULT CDrawObject :: RenderData()
+HRESULT CDrawObject::RenderData()
 {
     if (!RenderMetafile())
         return ResultFromScode(STG_E_MEDIUMFULL);
@@ -438,17 +439,17 @@ HRESULT CDrawObject :: RenderData()
     return NOERROR;
 }
 
-BOOL CDrawObject :: RenderMetafile()
+BOOL CDrawObject::RenderMetafile()
 {
-    HDC				hDC;
-    HMETAFILE		hMF;
-    HGLOBAL			hMem;
-    LPMETAFILEPICT	pMF;
+    HDC hDC;
+    HMETAFILE hMF;
+    HGLOBAL hMem;
+    LPMETAFILEPICT pMF;
 
     // Create a memory metafile and return its handle.
-    hDC = (HDC)CreateMetaFile(NULL);
+    hDC = static_cast<HDC>(CreateMetaFile(nullptr));
 
-    hMF = NULL;
+    hMF = nullptr;
 
     if (hDC) {
         Draw(hDC);
@@ -465,39 +466,39 @@ BOOL CDrawObject :: RenderMetafile()
         return FALSE;
     }
 
-    pMF = (LPMETAFILEPICT)GlobalLock(hMem);
+    pMF = static_cast<LPMETAFILEPICT>(GlobalLock(hMem));
 
-    pMF->hMF	= hMF;
-    pMF->mm		= MM_ANISOTROPIC;
-    pMF->xExt	= 1024;
-    pMF->yExt	= 1024;
+    pMF->hMF = hMF;
+    pMF->mm = MM_ANISOTROPIC;
+    pMF->xExt = 1024;
+    pMF->yExt = 1024;
 
     GlobalUnlock(hMem);
 
     ReleaseStgMedium(m_pSTM);
 
-    m_pSTM->hGlobal				= hMem;
-    m_pSTM->tymed				= TYMED_MFPICT;
-    m_pSTM->pUnkForRelease		= NULL;
+    m_pSTM->hGlobal = hMem;
+    m_pSTM->tymed = TYMED_MFPICT;
+    m_pSTM->pUnkForRelease = nullptr;
 
     return TRUE;
 }
 
-VOID CDrawObject :: Draw (HDC hDC)
+VOID CDrawObject::Draw(HDC hDC)
 {
-    HPEN	hPen, hPenOld;
-    HBRUSH	hBrush, hBrushOld;
+    HPEN hPen, hPenOld;
+    HBRUSH hBrush, hBrushOld;
 
-    hPen		= CreatePen(PS_SOLID, 2, GetSysColor(COLOR_3DLIGHT));
-    hBrush		= CreateSolidBrush(m_pRender->aColor);
+    hPen = CreatePen(PS_SOLID, 2, GetSysColor(COLOR_3DLIGHT));
+    hBrush = CreateSolidBrush(m_pRender->aColor);
 
-    hPenOld		= (HPEN)SelectObject(hDC, hPen);
-    hBrushOld	= (HBRUSH)SelectObject(hDC, hBrush);
+    hPenOld = static_cast<HPEN>(SelectObject(hDC, hPen));
+    hBrushOld = static_cast<HBRUSH>(SelectObject(hDC, hBrush));
 
     SetMapMode(hDC, MM_ANISOTROPIC);
-    SetWindowExtEx(hDC, 1024, 1024, NULL);
+    SetWindowExtEx(hDC, 1024, 1024, nullptr);
     SetViewportExtEx(hDC, m_pRender->aBoundsRect.right - m_pRender->aBoundsRect.left,
-                     m_pRender->aBoundsRect.bottom - m_pRender->aBoundsRect.top, NULL);
+                     m_pRender->aBoundsRect.bottom - m_pRender->aBoundsRect.top, nullptr);
 
     Rectangle(hDC,
               m_pRender->aRect.left,

@@ -9,14 +9,14 @@ DEFINE_GUID(IID_IDrawObject,
 DEFINE_GUID(CLSID_DrawObject,
             0x60f75e71, 0x39, 0x11d1, 0xb1, 0xc9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0);
 
-typedef void ** PPVOID;
+typedef void** PPVOID;
 
 DECLARE_INTERFACE_(IDrawObject, IUnknown)
 {
     // IUnknown members
-    STDMETHOD(QueryInterface) (THIS_ REFIID, PPVOID) PURE;
-    STDMETHOD_(ULONG,AddRef)  (THIS) PURE;
-    STDMETHOD_(ULONG,Release) (THIS) PURE;
+    STDMETHOD(QueryInterface)(THIS_ REFIID, PPVOID) override PURE;
+    STDMETHOD_(ULONG, AddRef)(THIS) override PURE;
+    STDMETHOD_(ULONG, Release)(THIS) override PURE;
 
     // IDrawObject members
     STDMETHOD(Randomize)(THIS) PURE;
@@ -25,6 +25,6 @@ DECLARE_INTERFACE_(IDrawObject, IUnknown)
     STDMETHOD(GetColor)(THIS_ LPCOLORREF) PURE;
 };
 
-typedef IDrawObject *PDRAWOBJECT;
+typedef IDrawObject* PDRAWOBJECT;
 
 #endif // _INTERFAC_H_
