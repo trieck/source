@@ -1,0 +1,8 @@
+LIBRARY         DrawObject
+EXPORTS
+                DllMain             @1
+                DllGetClassObject   PRIVATE
+                DllCanUnloadNow     PRIVATE
+                DllRegisterServer   PRIVATE
+                DllUnregisterServer PRIVATE
+                DllInstall          PRIVATE

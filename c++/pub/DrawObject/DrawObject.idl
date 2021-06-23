@@ -1,0 +1,32 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+    object,
+    uuid(f206ac00-005c-11d1-b1c9-000000000000),
+    nonextensible,
+    pointer_default(unique)
+] interface IDrawObject : IUnknown
+{
+    HRESULT Load([in] BSTR filename);
+    HRESULT Randomize();
+    HRESULT SetBounds([in] LPRECT bounds);
+    HRESULT SetColor([in] COLORREF color);
+    HRESULT GetColor([in, out] LPCOLORREF pColor);
+};
+
+[
+    uuid(2ca2144e-a652-4c19-87a7-3794258f37a9),
+    version(1.0)
+] library DrawObjectLib
+{
+    importlib("stdole2.tlb");
+    [
+        uuid(60f75e71-0039-11d1-b1c9-000000000000)
+    ] coclass DrawObject
+    {
+        [default] interface IDrawObject;
+    };
+};
+import "shobjidl.idl";
+
