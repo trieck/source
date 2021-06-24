@@ -8,11 +8,11 @@ import "ocidl.idl";
     pointer_default(unique)
 ] interface IDrawObject : IUnknown
 {
+    HRESULT GetColor([in, out] LPCOLORREF pColor);
     HRESULT Load([in] BSTR filename);
     HRESULT Randomize();
     HRESULT SetBounds([in] LPRECT bounds);
     HRESULT SetColor([in] COLORREF color);
-    HRESULT GetColor([in, out] LPCOLORREF pColor);
 };
 
 [

@@ -16,11 +16,5 @@ BEGIN_MSG_MAP(PubApp)
     void Release();
 
 private:
-    HRESULT Advise();
-    HRESULT Unadvise();
-
-    CComPtr<IAdviseSink> m_pAdviseSink;
     CComPtr<IDrawObject> m_pDraw;
-
-    DWORD m_dwConn = 0;
 };

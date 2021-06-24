@@ -26,31 +26,32 @@ BEGIN_COM_MAP(AdviseSink)
     {
         return S_OK;
     }
+
+    void SetRenderTarget(HWND hWnd)
+    {
+        m_hWndTarget = hWnd;
+    }
+
+private:
+    HWND m_hWndTarget = nullptr;
 };
 
 inline void AdviseSink::OnDataChange(FORMATETC* pFormatetc, STGMEDIUM* pStgmed)
 {
+    if (pFormatetc == nullptr || pStgmed == nullptr || m_hWndTarget == nullptr) {
+        return;
+    }
+
     if (!(pFormatetc->dwAspect == DVASPECT_CONTENT && pFormatetc->cfFormat == CF_ENHMETAFILE)) {
         return;
     }
 
-    // HDC hDC;
-    // RECT aRect;
+    CClientDC dc(m_hWndTarget);
 
+    CRect rc;
+    dc.GetClipBox(rc);
 
-    // hDC = GetDC(m_pApp->m_hWndClient);
-    //
-    // GetClientRect(m_pApp->m_hWndClient, &aRect);
-    //
-    // // Redraw object
-    // OleDraw(m_pApp->m_pIUnknown,
-    //     DVASPECT_CONTENT,
-    //     hDC,
-    //     &aRect);
-    //
-    // ReleaseDC(m_pApp->m_hWndClient, hDC);
-    //
-    // m_pApp->UpdateControls();
+    InvalidateRect(m_hWndTarget, rc, FALSE);
 }
 
 inline void AdviseSink::OnViewChange(DWORD dwAspect, LONG lindex)

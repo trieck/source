@@ -155,6 +155,10 @@ inline HRESULT CDrawObject::Load(LPSTREAM pStream)
 
 STDMETHODIMP CDrawObject::Randomize()
 {
+    if (m_rendering.rcBounds.IsRectEmpty()) {
+        return E_UNEXPECTED;
+    }
+
     m_rendering.rc.left = rand() % m_rendering.rcBounds.right;
     m_rendering.rc.top = rand() % m_rendering.rcBounds.bottom;
     m_rendering.rc.right = m_rendering.rc.left + rand() % (m_rendering.rcBounds.right - m_rendering.rc.left);
@@ -187,6 +191,25 @@ STDMETHODIMP CDrawObject::SetColor(COLORREF color)
     return hr;
 }
 
+void CDrawObject::BoundsToHIMETRIC(CRect& dest) const
+{
+    // Convert coordinates to .01-mm units.
+
+    auto hDC = GetDC(nullptr);
+
+    auto horzMM = GetDeviceCaps(hDC, HORZSIZE);
+    auto vertMM = GetDeviceCaps(hDC, VERTSIZE);
+    auto horzPels = GetDeviceCaps(hDC, HORZRES);
+    auto vertPels = GetDeviceCaps(hDC, VERTRES);
+
+    dest.left = (m_rendering.rcBounds.left * horzMM * 100) / horzPels;
+    dest.top = (m_rendering.rcBounds.top * vertMM * 100) / vertPels;
+    dest.right = (m_rendering.rcBounds.right * horzMM * 100) / horzPels;
+    dest.bottom = (m_rendering.rcBounds.bottom * vertMM * 100) / vertPels;
+
+    ReleaseDC(nullptr, hDC);
+}
+
 STDMETHODIMP CDrawObject::GetColor(LPCOLORREF pColor)
 {
     if (!pColor) {
@@ -200,7 +223,14 @@ STDMETHODIMP CDrawObject::GetColor(LPCOLORREF pColor)
 
 HRESULT CDrawObject::SetData()
 {
-    auto hDC = CreateEnhMetaFile(nullptr, nullptr, &m_rendering.rcBounds, nullptr);
+    if (m_rendering.rcBounds.IsRectEmpty() || m_rendering.rc.IsRectEmpty()) {
+        return E_UNEXPECTED;
+    }
+
+    CRect rc;
+    BoundsToHIMETRIC(rc);
+
+    auto hDC = CreateEnhMetaFile(nullptr, nullptr, &rc, nullptr);
     if (hDC == nullptr) {
         return E_FAIL;
     }
@@ -241,11 +271,6 @@ void CDrawObject::Draw(HDC hDC)
     auto hPenOld = static_cast<HPEN>(SelectObject(hDC, hPen));
     auto hBrushOld = static_cast<HBRUSH>(SelectObject(hDC, hBrush));
 
-    // SetMapMode(hDC, MM_ANISOTROPIC);
-    // SetWindowExtEx(hDC, 1024, 1024, nullptr);
-    // SetViewportExtEx(hDC, m_rendering.rcBounds.right - m_rendering.rcBounds.left,
-    //                  m_rendering.rcBounds.bottom - m_rendering.rcBounds.top, nullptr);
-
     Rectangle(hDC, m_rendering.rc.left, m_rendering.rc.top, m_rendering.rc.right, m_rendering.rc.bottom);
 
     SelectObject(hDC, hBrushOld);
@@ -257,7 +282,7 @@ void CDrawObject::Draw(HDC hDC)
 
 HRESULT CDrawObject::Draw(DWORD dwAspect, LONG /*lindex*/, LPVOID /*pvAspect*/, DVTARGETDEVICE* /*ptd*/,
                           HDC /*hicTargetDev*/, HDC hDC, LPCRECTL prcBounds, LPCRECTL /*prcWBounds*/,
-                          BOOL (CALLBACK* /*pfnContinue*/)(DWORD), DWORD /*dwContinue*/)
+                          BOOL (CALLBACK* /*pfnContinue*/)(ULONG_PTR), DWORD_PTR /*dwContinue*/)
 {
     if (!(hDC && prcBounds)) {
         return E_POINTER;
@@ -274,7 +299,7 @@ HRESULT CDrawObject::Draw(DWORD dwAspect, LONG /*lindex*/, LPVOID /*pvAspect*/, 
 
     FORMATETC fe;
     fe.cfFormat = CF_ENHMETAFILE;
-    fe.dwAspect = DVASPECT_CONTENT;
+    fe.dwAspect = dwAspect;
     fe.ptd = nullptr;
     fe.tymed = TYMED_ENHMF;
     fe.lindex = -1;

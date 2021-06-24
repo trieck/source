@@ -30,5 +30,5 @@
             return TRUE; \
     }
 
-#define WM_SETSTATUS    (WM_USER+1)
-#define WM_REDRAWCLIENT (WM_SETSTATUS+1)
+#define WM_SETSTATUS        (WM_USER+1)
+#define WM_OBJECT_CREATED   (WM_SETSTATUS+1)

@@ -7,9 +7,9 @@ BEGIN_MSG_MAP(ComponentDlg)
         MESSAGE_HANDLER(WM_DRAWITEM, OnDrawItem)
         MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
         MESSAGE_HANDLER(WM_HSCROLL, OnHScroll)
-        COMMAND_HANDLER2(IDC_CREATE, BN_CLICKED, OnCreate)
-        COMMAND_HANDLER2(IDC_DRAW, BN_CLICKED, OnDraw)
-        COMMAND_HANDLER2(IDC_LOAD, BN_CLICKED, OnLoad)
+        COMMAND_HANDLER2(IDC_CREATE, BN_CLICKED, OnCreateObject)
+        COMMAND_HANDLER2(IDC_DRAW, BN_CLICKED, OnDrawObject)
+        COMMAND_HANDLER2(IDC_LOAD, BN_CLICKED, OnLoadObject)
         COMMAND_HANDLER2(IDC_EXIT, BN_CLICKED, OnExit)
     END_MSG_MAP()
 
@@ -26,7 +26,7 @@ BEGIN_MSG_MAP(ComponentDlg)
         auto hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDR_MAINFRAME));
         ATLASSERT(hIcon);
 
-        SetClassLong(*this, GCL_HICON, reinterpret_cast<LONG>(hIcon));
+        SetClassLongPtr(*this, GCLP_HICON, reinterpret_cast<LONG_PTR>(hIcon));
 
         SendMessage(hWndTrack, TBM_SETRANGE, TRUE, MAKELONG(0, 255));
 
@@ -82,44 +82,50 @@ BEGIN_MSG_MAP(ComponentDlg)
         _Module.Release(); // FIXME!!!
 
         bHandled = TRUE;
+
         return 0;
     }
 
-    void OnCreate()
+    void OnCreateObject()
     {
+        auto parent = GetParent();
+
         CComPtr<IDrawObject> pDrawObject;
         auto hr = _Module.CreateObject(pDrawObject);
         if (SUCCEEDED(hr)) {
-            CRect rc;
-            GetParent().GetClientRect(rc);
-            pDrawObject->SetBounds(rc);
+            auto hWndTrack = GetDlgItem(IDC_COLORSLIDE);
+            ATLASSERT(hWndTrack);
 
-            GetParent().SendMessage(WM_SETSTATUS, IDS_CREATESUCCEED);
+            auto value = SendMessage(hWndTrack, TBM_GETPOS, 0, 0);
+            pDrawObject->SetColor(RGB(value, 0, value));
+
+            parent.SendMessage(WM_OBJECT_CREATED);
+            parent.SendMessage(WM_SETSTATUS, IDS_CREATESUCCEED);
         } else {
-            GetParent().SendMessage(WM_SETSTATUS, IDS_CREATEFAILED);
+            parent.SendMessage(WM_SETSTATUS, IDS_CREATEFAILED);
         }
     }
 
-    void OnDraw()
+    void OnDrawObject()
     {
         auto pDrawObject = _Module.GetDrawObject();
         if (pDrawObject) {
             pDrawObject->Randomize();
-            GetParent().SendMessage(WM_REDRAWCLIENT, 0, 0);
         } else {
             GetParent().SendMessage(WM_SETSTATUS, IDS_NOOBJECT);
         }
     }
 
-    void OnLoad()
+    void OnLoadObject()
     {
+        auto parent = GetParent();
         auto pDrawObject = _Module.GetDrawObject();
         if (pDrawObject) {
             auto hr = pDrawObject->Load(CComBSTR(R"(object.dat)"));
             auto message = SUCCEEDED(hr) ? IDS_LOAD : IDS_NOLOAD;
-            GetParent().SendMessage(WM_SETSTATUS, message);
+            parent.SendMessage(WM_SETSTATUS, message);
         } else {
-            GetParent().SendMessage(WM_SETSTATUS, IDS_NOOBJECT);
+            parent.SendMessage(WM_SETSTATUS, IDS_NOOBJECT);
         }
     }
 

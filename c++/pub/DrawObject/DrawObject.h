@@ -27,6 +27,9 @@ BEGIN_COM_MAP(CDrawObject)
 
     HRESULT FinalConstruct()
     {
+        m_fDirty = FALSE;
+        m_rendering = {};
+
         auto pOuter = GetControllingUnknown();
         auto hr = ComCreator::CreateAgg<DataObject>(pOuter, m_pDataObject);
         if (FAILED(hr)) {
@@ -52,8 +55,8 @@ BEGIN_COM_MAP(CDrawObject)
 
     // IViewObject members
     STDMETHODIMP Draw(DWORD, LONG, LPVOID, DVTARGETDEVICE*,
-                      HDC, HDC, LPCRECTL, LPCRECTL, BOOL (CALLBACK*)(DWORD),
-                      DWORD) override;
+                      HDC, HDC, LPCRECTL, LPCRECTL, BOOL (CALLBACK*)(ULONG_PTR),
+                      DWORD_PTR) override;
     STDMETHODIMP GetColorSet(DWORD, LONG, LPVOID, DVTARGETDEVICE*,
                              HDC, LPLOGPALETTE*) override;
     STDMETHODIMP Freeze(DWORD, LONG, LPVOID, LPDWORD) override;
@@ -62,20 +65,21 @@ BEGIN_COM_MAP(CDrawObject)
     STDMETHODIMP GetAdvise(LPDWORD, LPDWORD, LPADVISESINK*) override;
 
     // IDrawObject methods
+    STDMETHOD(GetColor)(LPCOLORREF pColor) override;
     STDMETHOD(Load)(BSTR filename) override;
     STDMETHOD(Randomize)() override;
     STDMETHOD(SetBounds)(LPRECT bounds) override;
     STDMETHOD(SetColor)(COLORREF color) override;
-    STDMETHOD(GetColor)(LPCOLORREF pColor) override;
 private:
     HRESULT SetData();
     void Draw(HDC hDC);
+    void BoundsToHIMETRIC(CRect& dest) const;
 
     // object rendering
     typedef struct tagRendering
     {
-        RECT rc{};
-        RECT rcBounds{};
+        CRect rc{};
+        CRect rcBounds{};
         COLORREF color = 0;
     } RENDERING, *PRENDERING;
 

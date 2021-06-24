@@ -15,11 +15,11 @@ class MainFrame : public MainFrameImpl, public CMessageFilter
 public:
     DECLARE_FRAME_WND_CLASS_EX(nullptr, IDR_MAINFRAME, CS_NOCLOSE, COLOR_WINDOW)
 
-BEGIN_MSG_MAP(MainFrame)
+    BEGIN_MSG_MAP(MainFrame)
         MESSAGE_HANDLER(WM_CREATE, OnCreate)
         MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
         MESSAGE_HANDLER(WM_SETSTATUS, OnSetStatus)
-        MESSAGE_HANDLER(WM_REDRAWCLIENT, OnRedrawClient)
+        MESSAGE_HANDLER(WM_OBJECT_CREATED, OnObjectCreated)
         CHAIN_MSG_MAP(MainFrameImpl)
     END_MSG_MAP()
 
@@ -73,7 +73,7 @@ BEGIN_MSG_MAP(MainFrame)
     {
         TCHAR buffer[256] = {};
 
-        auto result = LoadString(_Module.m_hInstResource, wParam, buffer, sizeof(buffer));
+        auto result = LoadString(_Module.m_hInstResource, static_cast<UINT>(wParam), buffer, sizeof(buffer));
         if (result > 0) {
             buffer[result] = _T('\0');
             ::SetWindowText(m_hWndStatusBar, buffer);
@@ -84,13 +84,13 @@ BEGIN_MSG_MAP(MainFrame)
         return 0;
     }
 
-    LRESULT OnRedrawClient(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& bHandled)
+    LRESULT OnObjectCreated(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& bHandled)
     {
-        bHandled = TRUE;
+        m_view.SendMessage(WM_OBJECT_CREATED);
 
-        m_view.Invalidate();
+        bHandled = FALSE;
 
-        return 0;
+        return 1;
     }
 
 private:
