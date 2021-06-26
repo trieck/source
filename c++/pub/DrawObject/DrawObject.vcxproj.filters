@@ -50,6 +50,9 @@
     <ClInclude Include="ComCreator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DrawUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DrawObject.rc">

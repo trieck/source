@@ -1,9 +1,10 @@
 #pragma once
 
 #include "DrawObject_i.h"
+#include "DrawUtil.h"
 
 class ATL_NO_VTABLE DataObject :
-    public CComObjectRootEx<CComSingleThreadModel>,
+    public CComObjectRoot,
     public IDataObject
 {
 public:
@@ -44,11 +45,15 @@ BEGIN_COM_MAP(DataObject)
 
 private:
     CComPtr<IDataAdviseHolder> m_pDataAdviseHolder;
-    STGMEDIUM m_stg{};
+    AutoStgMedium m_stg;
 };
 
 inline HRESULT DataObject::GetData(LPFORMATETC pFEIn, LPSTGMEDIUM pSTM)
 {
+    if (!(m_stg.tymed == TYMED_ENHMF && m_stg.hEnhMetaFile != nullptr)) {
+        return E_FAIL;
+    }
+
     if (!(pFEIn && pSTM)) {
         return E_POINTER;
     }
@@ -61,9 +66,14 @@ inline HRESULT DataObject::GetData(LPFORMATETC pFEIn, LPSTGMEDIUM pSTM)
         return DATA_E_FORMATETC;
     }
 
-    pSTM->tymed = TYMED_ENHMF;
-    pSTM->hGlobal = m_stg.hGlobal;
-    pSTM->pUnkForRelease = nullptr;
+    auto hEnhMetaFile = CopyEnhMetaFile(m_stg.hEnhMetaFile, nullptr);
+    if (hEnhMetaFile == nullptr) {
+        return HRESULT_FROM_WIN32(GetLastError());
+    }
+
+	pSTM->tymed = TYMED_ENHMF;
+    pSTM->hEnhMetaFile = hEnhMetaFile;
+    pSTM->pUnkForRelease = nullptr; // caller responsible for freeing
 
     return S_OK;
 }
@@ -92,7 +102,7 @@ inline HRESULT DataObject::QueryGetData(LPFORMATETC pFE)
 
 inline HRESULT DataObject::SetData(LPFORMATETC pFE, LPSTGMEDIUM pSTM, BOOL fRelease)
 {
-    // We have to remain responsible for the data.
+    // We have to remain responsible for the data
     if (!fRelease) {
         return E_FAIL;
     }
@@ -110,15 +120,15 @@ inline HRESULT DataObject::SetData(LPFORMATETC pFE, LPSTGMEDIUM pSTM, BOOL fRele
     }
 
     // Release storage
-    ReleaseStgMedium(&m_stg);
+    m_stg.Release();
 
     m_stg.tymed = TYMED_ENHMF;
-    m_stg.hEnhMetaFile = pSTM->hEnhMetaFile;
+    m_stg.hEnhMetaFile = pSTM->hEnhMetaFile;    // don't copy; we own this
 
     auto hr = S_OK;
 
     if (m_pDataAdviseHolder) {
-        hr = m_pDataAdviseHolder->SendOnDataChange(this, DVASPECT_CONTENT, ADVF_NODATA);
+        hr = m_pDataAdviseHolder->SendOnDataChange(this, DVASPECT_CONTENT, 0);
     }
 
     return hr;

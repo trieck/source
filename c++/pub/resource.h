@@ -6,6 +6,9 @@
 #define IDC_STATUS                      102
 #define IDR_MAINFRAME                   103
 #define IDS_OK                          104
+#define IDS_RANDOMIZED                  105
+#define IDS_CANTRANDOMIZE               106
+#define IDS_CANTDRAW                    107
 #define IDC_CREATE                      1000
 #define IDC_EXIT                        1001
 #define IDC_DRAW                        1002

@@ -41,9 +41,6 @@
     <ClInclude Include="ComponentDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AdviseSink.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ClientWnd.h">
       <Filter>Header Files</Filter>
     </ClInclude>

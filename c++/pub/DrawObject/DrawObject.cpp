@@ -63,6 +63,10 @@ STDAPI DllInstall(BOOL bInstall, _In_opt_ LPCWSTR pszCmdLine)
 
 inline HRESULT CDrawObject::GetClassID(LPCLSID pClsID)
 {
+    if (!pClsID) {
+        return E_POINTER;
+    }
+
     *pClsID = CLSID_DrawObject;
 
     return S_OK;
@@ -71,6 +75,48 @@ inline HRESULT CDrawObject::GetClassID(LPCLSID pClsID)
 inline HRESULT CDrawObject::IsDirty()
 {
     return m_fDirty ? S_OK : S_FALSE;
+}
+
+STDMETHODIMP CDrawObject::Save(LPCWSTR filename)
+{
+    if (!filename) {
+        return E_POINTER;
+    }
+
+    CComPtr<IStorage> pStorage;
+    auto hr = StgCreateDocfile(filename, STGM_DIRECT | STGM_WRITE
+        | STGM_CREATE | STGM_DIRECT | STGM_SHARE_EXCLUSIVE, 0, &pStorage);
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    // Mark this as one of our class
+    hr = WriteClassStg(pStorage, CLSID_DrawObject);
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    CComBSTR bstrType(CLSID_DrawObject);
+    hr = WriteFmtUserTypeStg(pStorage, CF_ENHMETAFILE, bstrType);
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    CComPtr<IStream> pStream;
+    hr = pStorage->CreateStream(STREAM, STGM_DIRECT | STGM_CREATE 
+        | STGM_WRITE | STGM_SHARE_EXCLUSIVE, 0, 0, &pStream);
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    CComQIPtr<IPersistStream> pPersist(GetUnknown());
+    if (pPersist == nullptr) {
+        return E_NOINTERFACE;
+    }
+
+    hr = pPersist->Save(pStream, TRUE);
+
+    return hr;
 }
 
 inline HRESULT CDrawObject::Save(LPSTREAM pStream, BOOL fClearDirty)
@@ -99,7 +145,12 @@ inline HRESULT CDrawObject::GetSizeMax(ULARGE_INTEGER*)
     return E_NOTIMPL;
 }
 
-STDMETHODIMP CDrawObject::Load(BSTR filename)
+STDMETHODIMP CDrawObject::HasData()
+{
+    return m_hasData ? S_OK : S_FALSE;
+}
+
+STDMETHODIMP CDrawObject::Load(LPCWSTR filename)
 {
     if (!filename) {
         return E_POINTER;
@@ -134,7 +185,7 @@ inline HRESULT CDrawObject::Load(LPSTREAM pStream)
         return E_POINTER;
     }
 
-    CComQIPtr<IDataObject> pDataObject(this->GetUnknown());
+    CComQIPtr<IDataObject> pDataObject(GetUnknown());
     if (pDataObject == nullptr) {
         return E_FAIL;
     }
@@ -159,10 +210,16 @@ STDMETHODIMP CDrawObject::Randomize()
         return E_UNEXPECTED;
     }
 
-    m_rendering.rc.left = rand() % m_rendering.rcBounds.right;
-    m_rendering.rc.top = rand() % m_rendering.rcBounds.bottom;
-    m_rendering.rc.right = m_rendering.rc.left + rand() % (m_rendering.rcBounds.right - m_rendering.rc.left);
-    m_rendering.rc.bottom = m_rendering.rc.top + rand() % (m_rendering.rcBounds.bottom - m_rendering.rc.top);
+    auto width = m_rendering.rcBounds.right - m_rendering.rcBounds.left;
+    auto height = m_rendering.rcBounds.bottom - m_rendering.rcBounds.top;
+
+    m_rendering.rc.left = rand() % width / 2;
+    m_rendering.rc.top = rand() % height / 2;
+
+    m_rendering.rc.right = m_rendering.rc.left + width / 2;
+    m_rendering.rc.bottom = m_rendering.rc.top + height / 2;
+
+    m_rendering.type = rand() % 3;
 
     auto hr = SetData();
 
@@ -191,25 +248,6 @@ STDMETHODIMP CDrawObject::SetColor(COLORREF color)
     return hr;
 }
 
-void CDrawObject::BoundsToHIMETRIC(CRect& dest) const
-{
-    // Convert coordinates to .01-mm units.
-
-    auto hDC = GetDC(nullptr);
-
-    auto horzMM = GetDeviceCaps(hDC, HORZSIZE);
-    auto vertMM = GetDeviceCaps(hDC, VERTSIZE);
-    auto horzPels = GetDeviceCaps(hDC, HORZRES);
-    auto vertPels = GetDeviceCaps(hDC, VERTRES);
-
-    dest.left = (m_rendering.rcBounds.left * horzMM * 100) / horzPels;
-    dest.top = (m_rendering.rcBounds.top * vertMM * 100) / vertPels;
-    dest.right = (m_rendering.rcBounds.right * horzMM * 100) / horzPels;
-    dest.bottom = (m_rendering.rcBounds.bottom * vertMM * 100) / vertPels;
-
-    ReleaseDC(nullptr, hDC);
-}
-
 STDMETHODIMP CDrawObject::GetColor(LPCOLORREF pColor)
 {
     if (!pColor) {
@@ -227,10 +265,10 @@ HRESULT CDrawObject::SetData()
         return E_UNEXPECTED;
     }
 
-    CRect rc;
-    BoundsToHIMETRIC(rc);
+    auto rcHiMetric(m_rendering.rcBounds);
+    PixelToHimetric(rcHiMetric);
 
-    auto hDC = CreateEnhMetaFile(nullptr, nullptr, &rc, nullptr);
+    auto hDC = CreateEnhMetaFile(nullptr, nullptr, &rcHiMetric, nullptr);
     if (hDC == nullptr) {
         return E_FAIL;
     }
@@ -242,7 +280,7 @@ HRESULT CDrawObject::SetData()
         return E_FAIL;
     }
 
-    CComQIPtr<IDataObject> pDataObject(this->GetUnknown());
+    CComQIPtr<IDataObject> pDataObject(GetUnknown());
     if (pDataObject == nullptr) {
         return E_NOINTERFACE;
     }
@@ -260,6 +298,8 @@ HRESULT CDrawObject::SetData()
 
     auto hr = pDataObject->SetData(&fe, &stg, TRUE);
 
+    m_hasData = SUCCEEDED(hr);
+
     return hr;
 }
 
@@ -271,7 +311,25 @@ void CDrawObject::Draw(HDC hDC)
     auto hPenOld = static_cast<HPEN>(SelectObject(hDC, hPen));
     auto hBrushOld = static_cast<HBRUSH>(SelectObject(hDC, hBrush));
 
-    Rectangle(hDC, m_rendering.rc.left, m_rendering.rc.top, m_rendering.rc.right, m_rendering.rc.bottom);
+    if (m_rendering.type == 0) {
+        // rectangle
+        Rectangle(hDC, m_rendering.rc.left, m_rendering.rc.top, m_rendering.rc.right, m_rendering.rc.bottom);
+    } else if (m_rendering.type == 1) {
+        // ellipse
+        Ellipse(hDC, m_rendering.rc.left, m_rendering.rc.top, m_rendering.rc.right, m_rendering.rc.bottom);
+    } else if (m_rendering.type == 2) {
+        // triangle
+        POINT pts[] = {
+            { m_rendering.rc.left + ((m_rendering.rc.right - m_rendering.rc.left) / 2), m_rendering.rc.top },
+            { m_rendering.rc.left, m_rendering.rc.bottom },
+            { m_rendering.rc.right, m_rendering.rc.bottom },
+            { m_rendering.rc.left + ((m_rendering.rc.right - m_rendering.rc.left) / 2), m_rendering.rc.top }
+        };
+
+        Polygon(hDC, pts, sizeof(pts) / sizeof(POINT));
+    } else {
+        ATLASSERT(0); // invalid
+    }
 
     SelectObject(hDC, hBrushOld);
     SelectObject(hDC, hPenOld);
@@ -292,7 +350,7 @@ HRESULT CDrawObject::Draw(DWORD dwAspect, LONG /*lindex*/, LPVOID /*pvAspect*/, 
         return E_FAIL;
     }
 
-    CComQIPtr<IDataObject> pDataObject(this->GetUnknown());
+    CComQIPtr<IDataObject> pDataObject(GetUnknown());
     if (pDataObject == nullptr) {
         return E_NOINTERFACE;
     }
@@ -304,17 +362,24 @@ HRESULT CDrawObject::Draw(DWORD dwAspect, LONG /*lindex*/, LPVOID /*pvAspect*/, 
     fe.tymed = TYMED_ENHMF;
     fe.lindex = -1;
 
-    STGMEDIUM stg{};
+    AutoStgMedium stg{};
     auto hr = pDataObject->GetData(&fe, &stg);
     if (FAILED(hr)) {
         return hr;
     }
 
-    CRect rc(prcBounds->left, prcBounds->top, prcBounds->right, prcBounds->bottom);
+    ENHMETAHEADER header;
+    if (!GetEnhMetaFileHeader(stg.hEnhMetaFile, sizeof(ENHMETAHEADER), &header)) {
+        return HRESULT_FROM_WIN32(GetLastError());
+    }
 
-    auto result = PlayEnhMetaFile(hDC, stg.hEnhMetaFile, &rc);
+    CRect rcBounds(prcBounds->left, prcBounds->top, prcBounds->right, prcBounds->bottom);
 
-    return result ? S_OK : S_FALSE;
+    auto result = PlayEnhMetaFile(hDC, stg.hEnhMetaFile, &rcBounds);
+
+    hr = result ? S_OK : HRESULT_FROM_WIN32(GetLastError());
+
+    return hr;
 }
 
 HRESULT CDrawObject::GetColorSet(DWORD, LONG, LPVOID, DVTARGETDEVICE*, HDC, LPLOGPALETTE*)

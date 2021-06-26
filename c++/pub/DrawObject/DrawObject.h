@@ -6,7 +6,7 @@
 #include "resource.h"
 
 class ATL_NO_VTABLE CDrawObject :
-    public CComObjectRootEx<CComSingleThreadModel>,
+    public CComObjectRoot,
     public CComCoClass<CDrawObject, &CLSID_DrawObject>,
     public IPersistStream,
     public IViewObject,
@@ -27,7 +27,9 @@ BEGIN_COM_MAP(CDrawObject)
 
     HRESULT FinalConstruct()
     {
-        m_fDirty = FALSE;
+        srand(GetTickCount());
+
+        m_fDirty = m_hasData = FALSE;
         m_rendering = {};
 
         auto pOuter = GetControllingUnknown();
@@ -66,14 +68,15 @@ BEGIN_COM_MAP(CDrawObject)
 
     // IDrawObject methods
     STDMETHOD(GetColor)(LPCOLORREF pColor) override;
-    STDMETHOD(Load)(BSTR filename) override;
+    STDMETHOD(HasData)() override;
+    STDMETHOD(Load)(LPCWSTR filename) override;
     STDMETHOD(Randomize)() override;
+    STDMETHOD(Save)(LPCWSTR filename) override;
     STDMETHOD(SetBounds)(LPRECT bounds) override;
     STDMETHOD(SetColor)(COLORREF color) override;
 private:
     HRESULT SetData();
     void Draw(HDC hDC);
-    void BoundsToHIMETRIC(CRect& dest) const;
 
     // object rendering
     typedef struct tagRendering
@@ -81,11 +84,13 @@ private:
         CRect rc{};
         CRect rcBounds{};
         COLORREF color = 0;
+        UINT type = 0;
     } RENDERING, *PRENDERING;
 
     CComPtr<IUnknown> m_pDataObject;
     RENDERING m_rendering;
     BOOL m_fDirty = FALSE;
+    BOOL m_hasData = FALSE;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(DrawObject), CDrawObject)

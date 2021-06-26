@@ -24,19 +24,19 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Dialog
 //
 
-IDD_COMPONENT DIALOGEX 0, 0, 111, 142
+IDD_COMPONENT DIALOGEX 0, 0, 115, 142
 STYLE DS_SETFONT | WS_POPUP | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "Public Component"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    PUSHBUTTON      "&Create",IDC_CREATE,7,7,97,14
-    PUSHBUTTON      "E&xit",IDC_EXIT,7,120,97,14
-    PUSHBUTTON      "&Draw Object",IDC_DRAW,7,23,97,14
-    PUSHBUTTON      "&Load",IDC_LOAD,7,55,97,14
-    PUSHBUTTON      "&Save",IDC_SAVE,7,70,97,14
-    CONTROL         "Slider1",IDC_COLORSLIDE,"msctls_trackbar32",TBS_TOP | TBS_NOTICKS | WS_TABSTOP,7,89,97,12
-    CONTROL         "",IDC_COLOR,"Static",SS_OWNERDRAW | SS_SUNKEN,7,105,97,11
-    PUSHBUTTON      "C&opy",IDC_COPY,7,39,97,14
+    PUSHBUTTON      "&Create",IDC_CREATE,7,7,101,14
+    PUSHBUTTON      "E&xit",IDC_EXIT,7,121,101,14
+    PUSHBUTTON      "&Draw Object",IDC_DRAW,7,23,101,14
+    PUSHBUTTON      "&Load",IDC_LOAD,7,55,101,14
+    PUSHBUTTON      "&Save",IDC_SAVE,7,70,101,14
+    CONTROL         "Slider1",IDC_COLORSLIDE,"msctls_trackbar32",TBS_TOP | TBS_NOTICKS | WS_TABSTOP,7,89,101,12
+    CONTROL         "",IDC_COLOR,"Static",SS_OWNERDRAW | SS_SUNKEN,7,105,101,11
+    PUSHBUTTON      "C&opy",IDC_COPY,7,39,101,14
 END
 
 
@@ -51,9 +51,9 @@ BEGIN
     IDD_COMPONENT, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 104
+        RIGHTMARGIN, 108
         TOPMARGIN, 7
-        BOTTOMMARGIN, 134
+        BOTTOMMARGIN, 135
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -169,6 +169,9 @@ STRINGTABLE
 BEGIN
     IDR_MAINFRAME           "Public Component"
     IDS_OK                  "OK"
+    IDS_RANDOMIZED          "Object randomized."
+    IDS_CANTRANDOMIZE       "Failed to randomize object."
+    IDS_CANTDRAW            "Object drawing failed."
 END
 
 #endif    // English (United States) resources

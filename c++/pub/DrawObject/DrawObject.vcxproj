@@ -234,6 +234,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ComCreator.h" />
+    <ClInclude Include="DrawUtil.h" />
     <ClInclude Include="DataObject.h" />
     <ClInclude Include="DrawObjectModule.h" />
     <ClInclude Include="DrawObject_i.h" />

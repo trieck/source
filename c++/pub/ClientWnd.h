@@ -1,14 +1,23 @@
 #pragma once
-#include "AdviseSink.h"
+#include "DrawUtil.h"
 
 extern PubApp _Module;
 
 using ClientWndTraits = CWinTraits<WS_OVERLAPPED | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_EX_CLIENTEDGE>;
 
-class ClientWnd : public CWindowImpl<ClientWnd, CWindow, ClientWndTraits>, CMessageFilter
+class ClientWnd :
+    public CWindowImpl<ClientWnd, CWindow, ClientWndTraits>,
+    public CMessageFilter,
+    public CComObjectRoot,
+    public IAdviseSink
 {
 public:
+    DECLARE_PROTECT_FINAL_CONSTRUCT()
     DECLARE_WND_CLASS(NULL)
+
+BEGIN_COM_MAP(ClientWnd)
+            COM_INTERFACE_ENTRY(IAdviseSink)
+    END_COM_MAP()
 
 BEGIN_MSG_MAP(ClientWnd)
         MESSAGE_HANDLER(WM_CREATE, OnCreate)
@@ -17,6 +26,62 @@ BEGIN_MSG_MAP(ClientWnd)
         MESSAGE_HANDLER(WM_OBJECT_CREATED, OnObjectCreated)
         MSG_WM_PAINT2(OnPaint)
     END_MSG_MAP()
+
+    ClientWnd()
+    {
+        InternalAddRef();
+    }
+
+    void FinalRelease()
+    {
+        Unadvise();
+    }
+
+    // IAdviseSink members
+    void __stdcall OnDataChange(FORMATETC* pFormatetc, STGMEDIUM* pStgmed) override
+    {
+        if (pFormatetc == nullptr || pStgmed == nullptr) {
+            return;
+        }
+
+        if (!(pFormatetc->dwAspect == DVASPECT_CONTENT && pFormatetc->cfFormat == CF_ENHMETAFILE)) {
+            return;
+        }
+
+        if (pStgmed->tymed != TYMED_ENHMF) {
+            return;
+        }
+
+        ENHMETAHEADER header;
+        if (!GetEnhMetaFileHeader(pStgmed->hEnhMetaFile, sizeof(ENHMETAHEADER), &header)) {
+            return;
+        }
+
+        CRect rc(header.rclFrame.left,
+            header.rclFrame.top,
+            header.rclFrame.right,
+            header.rclFrame.bottom);
+
+        HimetricToPixel(rc);
+
+        InvalidateRect(&rc, TRUE);
+    }
+
+    void __stdcall OnViewChange(DWORD dwAspect, LONG lindex) override
+    {
+    }
+
+    void __stdcall OnRename(IMoniker* pmk) override
+    {
+    }
+
+    void __stdcall OnSave() override
+    {
+    }
+
+    void __stdcall OnClose() override
+    {
+    }
 
     BOOL PreTranslateMessage(MSG* pMsg) override
     {
@@ -27,21 +92,9 @@ BEGIN_MSG_MAP(ClientWnd)
 
     LRESULT OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
     {
-        bHandled = TRUE;
+        bHandled = FALSE;
 
-        using AdviseSinkObject = CComObject<AdviseSink>;
-
-        AdviseSinkObject* pSink;
-        auto hr = AdviseSinkObject::CreateInstance(&pSink);
-        if (FAILED(hr)) {
-            return -1;
-        }
-
-        pSink->SetRenderTarget(*this);
-
-        m_pAdviseSink = pSink;
-
-        return 0;
+        return 1;
     }
 
     LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
@@ -49,9 +102,7 @@ BEGIN_MSG_MAP(ClientWnd)
         Unadvise();
 
         bHandled = TRUE;
-
-        m_pAdviseSink.Release();
-
+        
         return 0;
     }
 
@@ -84,20 +135,22 @@ BEGIN_MSG_MAP(ClientWnd)
                   PATCOPY);
 
         auto pDrawObject = _Module.GetDrawObject();
-        if (pDrawObject) {
-            OleDraw(pDrawObject, DVASPECT_CONTENT, dc.m_ps.hdc, &dc.m_ps.rcPaint);
+        if (pDrawObject && pDrawObject->HasData() == S_OK) {
+            auto hr = OleDraw(pDrawObject, DVASPECT_CONTENT, dc.m_ps.hdc, &dc.m_ps.rcPaint);
+            if (FAILED(hr)) {
+                GetParent().SendMessage(WM_SETSTATUS, IDS_CANTDRAW);
+            }
         }
 
         dc.SelectBrush(hOldBrush);
         DeleteObject(hBrush);
     }
 
-    LRESULT OnObjectCreated(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& bHandled)
+    LRESULT OnObjectCreated(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
     {
-        Advise();
-
         auto pDrawObject = _Module.GetDrawObject();
         if (pDrawObject) {
+            Advise();
             CRect rc;
             GetClientRect(rc);
             pDrawObject->SetBounds(rc);
@@ -115,11 +168,11 @@ private:
         Unadvise();
 
         auto pDrawObject = _Module.GetDrawObject();
-        if (!(m_pAdviseSink && pDrawObject)) {
+        if (!pDrawObject) {
             return E_POINTER;
         }
 
-        FORMATETC fe{};
+        FORMATETC fe;
         fe.cfFormat = CF_ENHMETAFILE;
         fe.dwAspect = DVASPECT_CONTENT;
         fe.ptd = nullptr;
@@ -131,7 +184,7 @@ private:
             return E_NOINTERFACE;
         }
 
-        auto hr = pDataObject->DAdvise(&fe, ADVF_NODATA, m_pAdviseSink, &m_dwConn);
+        auto hr = pDataObject->DAdvise(&fe, 0, this, &m_dwConn);
 
         return hr;
     }
@@ -155,6 +208,5 @@ private:
         return hr;
     }
 
-    CComPtr<IAdviseSink> m_pAdviseSink;
     DWORD m_dwConn = 0;
 };

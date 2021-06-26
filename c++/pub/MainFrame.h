@@ -15,7 +15,7 @@ class MainFrame : public MainFrameImpl, public CMessageFilter
 public:
     DECLARE_FRAME_WND_CLASS_EX(nullptr, IDR_MAINFRAME, CS_NOCLOSE, COLOR_WINDOW)
 
-    BEGIN_MSG_MAP(MainFrame)
+BEGIN_MSG_MAP(MainFrame)
         MESSAGE_HANDLER(WM_CREATE, OnCreate)
         MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
         MESSAGE_HANDLER(WM_SETSTATUS, OnSetStatus)
@@ -28,7 +28,11 @@ public:
         if (MainFrameImpl::PreTranslateMessage(pMsg))
             return TRUE;
 
-        return m_view.PreTranslateMessage(pMsg);
+        if (m_pView) {
+            return m_pView->PreTranslateMessage(pMsg);
+        }
+
+        return FALSE;
     }
 
     LRESULT OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
@@ -42,13 +46,23 @@ public:
             return -1;
         }
 
-        m_hWndClient = m_view.Create(m_hWnd, nullptr, nullptr,
-                                     WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+        auto hr = CComObject<ClientWnd>::CreateInstance(&m_pView);
+        if (FAILED(hr)) {
+            return -1;
+        }
+
+        m_hWndClient = m_pView->Create(m_hWnd, nullptr, nullptr,
+                                       WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
         if (m_hWndClient == nullptr) {
             return -1;
         }
 
-        if (!m_dlg.Create(m_hWnd, reinterpret_cast<LPARAM>(this))) {
+        hr = CComObject<ComponentDlg>::CreateInstance(&m_pDlg);
+        if (FAILED(hr)) {
+            return -1;
+        }
+
+        if (!m_pDlg->Create(m_hWnd, reinterpret_cast<LPARAM>(this))) {
             return -1;
         }
 
@@ -86,7 +100,9 @@ public:
 
     LRESULT OnObjectCreated(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& bHandled)
     {
-        m_view.SendMessage(WM_OBJECT_CREATED);
+        if (m_pView) {
+            m_pView->SendMessage(WM_OBJECT_CREATED);
+        }
 
         bHandled = FALSE;
 
@@ -94,6 +110,6 @@ public:
     }
 
 private:
-    ClientWnd m_view;
-    ComponentDlg m_dlg;
+    CComPtr<CComObject<ClientWnd>> m_pView;
+    CComPtr<CComObject<ComponentDlg>> m_pDlg;
 };
