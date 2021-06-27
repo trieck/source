@@ -1,0 +1,23 @@
+HKCR
+{
+    NoRemove CLSID
+    {
+        ForceRemove {60f75e71-0039-11d1-b1c9-000000000000} = s 'DrawObject class'
+        {
+            ForceRemove Programmable
+            InprocServer32 = s '%MODULE%'
+            {
+                val ThreadingModel = s 'Apartment'
+            }
+            TypeLib = s '2ca2144e-a652-4c19-87a7-3794258f37a9'
+            Version = s '1.0'
+            DataFormats
+            {
+                GetSet
+                {
+                    0 = s '3,1,32,3'
+                }
+            }
+        }
+    }
+}

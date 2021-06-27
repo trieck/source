@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -13,34 +13,30 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_COMPONENT DIALOG DISCARDABLE  0, 0, 95, 142
-STYLE WS_POPUP | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CAPTION | 
-    WS_SYSMENU
+IDD_COMPONENT DIALOGEX 0, 0, 115, 142
+STYLE DS_SETFONT | WS_POPUP | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "Public Component"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    PUSHBUTTON      "&Create",IDC_CREATE,7,7,81,14
-    PUSHBUTTON      "E&xit",IDC_EXIT,7,120,81,14
-    PUSHBUTTON      "&Draw Object",IDC_DRAW,7,23,81,14
-    PUSHBUTTON      "&Load",IDC_LOAD,7,55,81,14
-    PUSHBUTTON      "&Save",IDC_SAVE,7,70,81,14
-    CONTROL         "Slider1",IDC_COLORSLIDE,"msctls_trackbar32",TBS_TOP | 
-                    TBS_NOTICKS | WS_TABSTOP,7,89,81,12
-    CONTROL         "",IDC_COLOR,"Static",SS_SIMPLE | SS_SUNKEN,7,105,81,11
-    PUSHBUTTON      "C&opy",IDC_COPY,7,39,81,14
+    PUSHBUTTON      "&Create",IDC_CREATE,7,7,101,14
+    PUSHBUTTON      "E&xit",IDC_EXIT,7,121,101,14
+    PUSHBUTTON      "&Draw Object",IDC_DRAW,7,23,101,14
+    PUSHBUTTON      "&Load",IDC_LOAD,7,55,101,14
+    PUSHBUTTON      "&Save",IDC_SAVE,7,70,101,14
+    CONTROL         "Slider1",IDC_COLORSLIDE,"msctls_trackbar32",TBS_TOP | TBS_NOTICKS | WS_TABSTOP,7,89,101,12
+    CONTROL         "",IDC_COLOR,"Static",SS_OWNERDRAW | SS_SUNKEN,7,105,101,11
+    PUSHBUTTON      "C&opy",IDC_COPY,7,39,101,14
 END
 
 
@@ -50,14 +46,14 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_COMPONENT, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 88
+        RIGHTMARGIN, 108
         TOPMARGIN, 7
-        BOTTOMMARGIN, 134
+        BOTTOMMARGIN, 135
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -69,18 +65,18 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "\r\n"
     "\0"
@@ -96,9 +92,9 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_MAIN                ICON    DISCARDABLE     "main.ico"
+IDR_MAINFRAME           ICON                    "main.ico"
 
-#ifndef _MAC
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -121,15 +117,15 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "Comments", "OLE Public Component Client\0"
-            VALUE "CompanyName", "Rieck Enterprises\0"
-            VALUE "FileDescription", "Pub\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "Pub\0"
-            VALUE "LegalCopyright", "Copyright © 1997\0"
-            VALUE "OriginalFilename", "Pub.exe\0"
-            VALUE "ProductName", "  Pub\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "Comments", "OLE Public Component Client"
+            VALUE "CompanyName", "Rieck Enterprises"
+            VALUE "FileDescription", "Pub"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "Pub"
+            VALUE "LegalCopyright", "Copyright © 1997"
+            VALUE "OriginalFilename", "Pub.exe"
+            VALUE "ProductName", "  Pub"
+            VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -138,7 +134,16 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_COMPONENT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -146,7 +151,7 @@ END
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_CREATESUCCEED       "Object Creation succeeded."
     IDS_CREATEFAILED        "Object Creation failed."
@@ -160,7 +165,16 @@ BEGIN
     IDS_COPYSUCCEED         "Object copied successfully."
 END
 
-#endif    // English (U.S.) resources
+STRINGTABLE
+BEGIN
+    IDR_MAINFRAME           "Public Component"
+    IDS_OK                  "OK"
+    IDS_RANDOMIZED          "Object randomized."
+    IDS_CANTRANDOMIZE       "Failed to randomize object."
+    IDS_CANTDRAW            "Object drawing failed."
+END
+
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

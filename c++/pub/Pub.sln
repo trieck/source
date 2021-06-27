@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pub", "Pub.vcxproj", "{D0A0
 		{1856A4C9-E51A-4149-9606-09FDD86FA676} = {1856A4C9-E51A-4149-9606-09FDD86FA676}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "obj", "obj\obj.vcxproj", "{1856A4C9-E51A-4149-9606-09FDD86FA676}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrawObject", "DrawObject\DrawObject.vcxproj", "{1856A4C9-E51A-4149-9606-09FDD86FA676}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,12 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D0A0F11B-58D5-8D71-EEFA-621C4C4965D6}.Debug|Win32.ActiveCfg = Debug|Win32
 		{D0A0F11B-58D5-8D71-EEFA-621C4C4965D6}.Debug|Win32.Build.0 = Debug|Win32
-		{D0A0F11B-58D5-8D71-EEFA-621C4C4965D6}.Debug|x64.ActiveCfg = Debug|Win32
+		{D0A0F11B-58D5-8D71-EEFA-621C4C4965D6}.Debug|x64.ActiveCfg = Debug|x64
+		{D0A0F11B-58D5-8D71-EEFA-621C4C4965D6}.Debug|x64.Build.0 = Debug|x64
 		{D0A0F11B-58D5-8D71-EEFA-621C4C4965D6}.Release|Win32.ActiveCfg = Release|Win32
 		{D0A0F11B-58D5-8D71-EEFA-621C4C4965D6}.Release|Win32.Build.0 = Release|Win32
-		{D0A0F11B-58D5-8D71-EEFA-621C4C4965D6}.Release|x64.ActiveCfg = Release|Win32
+		{D0A0F11B-58D5-8D71-EEFA-621C4C4965D6}.Release|x64.ActiveCfg = Release|x64
+		{D0A0F11B-58D5-8D71-EEFA-621C4C4965D6}.Release|x64.Build.0 = Release|x64
 		{1856A4C9-E51A-4149-9606-09FDD86FA676}.Debug|Win32.ActiveCfg = Debug|Win32
 		{1856A4C9-E51A-4149-9606-09FDD86FA676}.Debug|Win32.Build.0 = Debug|Win32
 		{1856A4C9-E51A-4149-9606-09FDD86FA676}.Debug|x64.ActiveCfg = Debug|x64

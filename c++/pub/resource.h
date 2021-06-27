@@ -1,10 +1,14 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
-// Used by Pub.rc
+// Microsoft Visual C++ generated include file.
+// Used by pub.rc
 //
 #define IDD_COMPONENT                   101
 #define IDC_STATUS                      102
-#define IDI_MAIN                        103
+#define IDR_MAINFRAME                   103
+#define IDS_OK                          104
+#define IDS_RANDOMIZED                  105
+#define IDS_CANTRANDOMIZE               106
+#define IDS_CANTDRAW                    107
 #define IDC_CREATE                      1000
 #define IDC_EXIT                        1001
 #define IDC_DRAW                        1002
@@ -25,7 +29,7 @@
 #define IDS_COPYSUCCEED                 4010
 
 // Next default values for new objects
-//
+// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        104

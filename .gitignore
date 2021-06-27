@@ -165,5 +165,5 @@ ylwrap
 *.db-shm
 *.db-wal
 .vscode/
+.vs/
 
-/c++/.vs
