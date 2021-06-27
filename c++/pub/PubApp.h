@@ -18,3 +18,5 @@ BEGIN_MSG_MAP(PubApp)
 private:
     CComPtr<IDrawObject> m_pDraw;
 };
+
+extern PubApp theApp;

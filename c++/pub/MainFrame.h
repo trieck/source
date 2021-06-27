@@ -10,7 +10,7 @@ typedef CWinTraits<WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |
 class MainFrame;
 using MainFrameImpl = CFrameWindowImpl<MainFrame, CWindow, CMainFrameTraits>;
 
-class MainFrame : public MainFrameImpl, public CMessageFilter
+class MainFrame final : public MainFrameImpl, public CMessageFilter
 {
 public:
     DECLARE_FRAME_WND_CLASS_EX(nullptr, IDR_MAINFRAME, CS_NOCLOSE, COLOR_WINDOW)
@@ -37,7 +37,7 @@ BEGIN_MSG_MAP(MainFrame)
 
     LRESULT OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
     {
-        auto* pLoop = _Module.GetMessageLoop();
+        auto* pLoop = theApp.GetMessageLoop();
         ATLASSERT(pLoop != NULL);
         pLoop->AddMessageFilter(this);
 
@@ -73,8 +73,10 @@ BEGIN_MSG_MAP(MainFrame)
 
     LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
     {
+        theApp.Release();   // is there any other way?
+
         // unregister message filtering and idle updates
-        auto pLoop = _Module.GetMessageLoop();
+        auto pLoop = theApp.GetMessageLoop();
         ATLASSERT(pLoop != NULL);
         pLoop->RemoveMessageFilter(this);
 
@@ -87,7 +89,7 @@ BEGIN_MSG_MAP(MainFrame)
     {
         TCHAR buffer[256] = {};
 
-        auto result = LoadString(_Module.m_hInstResource, static_cast<UINT>(wParam), buffer, sizeof(buffer));
+        auto result = LoadString(theApp.m_hInstResource, static_cast<UINT>(wParam), buffer, sizeof(buffer));
         if (result > 0) {
             buffer[result] = _T('\0');
             ::SetWindowText(m_hWndStatusBar, buffer);

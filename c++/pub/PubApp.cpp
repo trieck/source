@@ -33,7 +33,7 @@ int PubApp::Run()
 
     auto result = theLoop.Run();
 
-    Release();
+    RemoveMessageLoop();
 
     Term();
 

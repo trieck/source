@@ -6,18 +6,18 @@
 #include "pch.h"
 #include "PubApp.h"
 
-PubApp _Module;
+PubApp theApp;
 
-int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR /*lpstrCmdLine*/, int /*nCmdShow*/)
+int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPTSTR /*lpstrCmdLine*/, int /*nCmdShow*/)
 {
-    int result;
+    int result{};
 
     try {
-        if (!_Module.Init()) {
+        if (!theApp.Init()) {
             return 1;
         }
 
-        result = _Module.Run();
+        result = theApp.Run();
     } catch (std::exception& e) {
         ATLTRACE2("%s\n", e.what());
         return 1;

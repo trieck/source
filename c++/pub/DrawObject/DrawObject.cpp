@@ -311,13 +311,13 @@ void CDrawObject::Draw(HDC hDC)
     auto hPenOld = static_cast<HPEN>(SelectObject(hDC, hPen));
     auto hBrushOld = static_cast<HBRUSH>(SelectObject(hDC, hBrush));
 
-    if (m_rendering.type == 0) {
+    if (m_rendering.type == DRAWOBJECTTYPE_RECTANGLE) {
         // rectangle
         Rectangle(hDC, m_rendering.rc.left, m_rendering.rc.top, m_rendering.rc.right, m_rendering.rc.bottom);
-    } else if (m_rendering.type == 1) {
+    } else if (m_rendering.type == DRAWOBJECTTYPE_ELLIPSE) {
         // ellipse
         Ellipse(hDC, m_rendering.rc.left, m_rendering.rc.top, m_rendering.rc.right, m_rendering.rc.bottom);
-    } else if (m_rendering.type == 2) {
+    } else if (m_rendering.type == DRAWOBJECTTYPE_TRIANGLE) {
         // triangle
         POINT pts[] = {
             { m_rendering.rc.left + ((m_rendering.rc.right - m_rendering.rc.left) / 2), m_rendering.rc.top },

@@ -2,15 +2,9 @@
 
 class ComponentDlg :
     public CDialogImpl<ComponentDlg>,
-    public CComObjectRoot,
-    public IAdviseSink
+    public AdvisableSink
 {
 public:
-    DECLARE_PROTECT_FINAL_CONSTRUCT()
-BEGIN_COM_MAP(ComponentDlg)
-            COM_INTERFACE_ENTRY(IAdviseSink)
-    END_COM_MAP()
-
 BEGIN_MSG_MAP(ComponentDlg)
         MSG_WM_INITDIALOG(OnInitDialog)
         MESSAGE_HANDLER(WM_DRAWITEM, OnDrawItem)
@@ -25,16 +19,6 @@ BEGIN_MSG_MAP(ComponentDlg)
     END_MSG_MAP()
 
     enum { IDD = IDD_COMPONENT };
-
-    ComponentDlg()
-    {
-        InternalAddRef();
-    }
-
-    void FinalRelease()
-    {
-        Unadvise();
-    }
 
     // IAdviseSink members
     void __stdcall OnDataChange(FORMATETC* pFormatetc, STGMEDIUM* pStgmed) override
@@ -52,22 +36,6 @@ BEGIN_MSG_MAP(ComponentDlg)
         }
 
         UpdateControls();
-    }
-
-    void __stdcall OnViewChange(DWORD dwAspect, LONG lindex) override
-    {
-    }
-
-    void __stdcall OnRename(IMoniker* pmk) override
-    {
-    }
-
-    void __stdcall OnSave() override
-    {
-    }
-
-    void __stdcall OnClose() override
-    {
     }
 
     BOOL OnInitDialog(CWindow /*wndFocus*/, LPARAM /*lInitParam*/)
@@ -117,7 +85,7 @@ BEGIN_MSG_MAP(ComponentDlg)
             ::InvalidateRect(hWndColor, nullptr, TRUE);
 
             // Set object color and redraw it
-            auto pDrawObject = _Module.GetDrawObject();
+            auto pDrawObject = theApp.GetDrawObject();
             if (pDrawObject) {
                 pDrawObject->SetColor(RGB(value, 0, value));
             }
@@ -128,7 +96,10 @@ BEGIN_MSG_MAP(ComponentDlg)
 
     LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
     {
-        _Module.Release(); // FIXME!!!
+        auto pDrawObject = theApp.GetDrawObject();
+        if (pDrawObject) {
+            Unadvise(pDrawObject);
+        }
 
         bHandled = TRUE;
 
@@ -140,9 +111,9 @@ BEGIN_MSG_MAP(ComponentDlg)
         auto parent = GetParent();
 
         CComPtr<IDrawObject> pDrawObject;
-        auto hr = _Module.CreateObject(pDrawObject);
+        auto hr = theApp.CreateObject(pDrawObject);
         if (SUCCEEDED(hr)) {
-            Advise();
+            Advise(pDrawObject);
             auto hWndTrack = GetDlgItem(IDC_COLORSLIDE);
             ATLASSERT(hWndTrack);
 
@@ -159,7 +130,7 @@ BEGIN_MSG_MAP(ComponentDlg)
     void OnDrawObject()
     {
         auto parent = GetParent();
-        auto pDrawObject = _Module.GetDrawObject();
+        auto pDrawObject = theApp.GetDrawObject();
         if (pDrawObject) {
             auto hr = pDrawObject->Randomize();
             if (SUCCEEDED(hr)) {
@@ -180,7 +151,7 @@ BEGIN_MSG_MAP(ComponentDlg)
     void OnLoadObject()
     {
         auto parent = GetParent();
-        auto pDrawObject = _Module.GetDrawObject();
+        auto pDrawObject = theApp.GetDrawObject();
         if (pDrawObject) {
             auto hr = pDrawObject->Load(CComBSTR(R"(object.dat)"));
             auto message = SUCCEEDED(hr) ? IDS_LOAD : IDS_NOLOAD;
@@ -193,7 +164,7 @@ BEGIN_MSG_MAP(ComponentDlg)
     void OnSaveObject()
     {
         auto parent = GetParent();
-        auto pDrawObject = _Module.GetDrawObject();
+        auto pDrawObject = theApp.GetDrawObject();
         if (pDrawObject) {
             auto hr = pDrawObject->Save(CComBSTR(R"(object.dat)"));
             auto message = SUCCEEDED(hr) ? IDS_SAVE : IDS_NOSAVE;
@@ -211,7 +182,7 @@ BEGIN_MSG_MAP(ComponentDlg)
 private:
     void UpdateControls()
     {
-        auto pDrawObject = _Module.GetDrawObject();
+        auto pDrawObject = theApp.GetDrawObject();
         if (pDrawObject) {
             COLORREF lColor;
             auto hr = pDrawObject->GetColor(&lColor);
@@ -225,51 +196,4 @@ private:
             }
         }
     }
-
-    HRESULT Advise()
-    {
-        Unadvise();
-
-        auto pDrawObject = _Module.GetDrawObject();
-        if (!pDrawObject) {
-            return E_POINTER;
-        }
-
-        FORMATETC fe;
-        fe.cfFormat = CF_ENHMETAFILE;
-        fe.dwAspect = DVASPECT_CONTENT;
-        fe.ptd = nullptr;
-        fe.tymed = TYMED_ENHMF;
-        fe.lindex = -1;
-
-        CComQIPtr<IDataObject> pDataObject(pDrawObject);
-        if (pDataObject == nullptr) {
-            return E_NOINTERFACE;
-        }
-
-        auto hr = pDataObject->DAdvise(&fe, 0, this, &m_dwConn);
-
-        return hr;
-    }
-
-    HRESULT Unadvise()
-    {
-        auto pDrawObject = _Module.GetDrawObject();
-        if (!pDrawObject) {
-            return E_POINTER;
-        }
-
-        CComQIPtr<IDataObject> pDataObject(pDrawObject);
-        if (pDataObject == nullptr) {
-            return E_NOINTERFACE;
-        }
-
-        auto hr = pDataObject->DUnadvise(m_dwConn);
-
-        m_dwConn = 0;
-
-        return hr;
-    }
-
-    DWORD m_dwConn = 0;
 };

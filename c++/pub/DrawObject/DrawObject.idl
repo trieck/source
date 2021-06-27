@@ -8,6 +8,15 @@ import "ocidl.idl";
     pointer_default(unique)
 ] interface IDrawObject : IUnknown
 {
+    typedef [unique] IDrawObject* LPDRAWOBJECT;
+
+    typedef enum tagDRAWOBJECTTYPE
+    {
+        DRAWOBJECTTYPE_RECTANGLE = 0,
+        DRAWOBJECTTYPE_ELLIPSE = 1,
+        DRAWOBJECTTYPE_TRIANGLE = 2
+    } DRAWOBJECTTYPE;
+
     HRESULT GetColor([in, out] LPCOLORREF pColor);
     HRESULT HasData();
     HRESULT Load([in] LPCWSTR filename);
