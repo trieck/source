@@ -5,7 +5,12 @@
 
 bool PubApp::Init()
 {
-    auto hr = CAppModule::Init(nullptr, ModuleHelper::GetModuleInstance());
+    auto hr = OleInitialize(nullptr);
+    if (FAILED(hr)) {
+        return FALSE;
+    }
+
+    hr = CAppModule::Init(nullptr, ModuleHelper::GetModuleInstance());
     if (FAILED(hr)) {
         return false;
     }
@@ -34,6 +39,10 @@ int PubApp::Run()
     auto result = theLoop.Run();
 
     RemoveMessageLoop();
+
+    OleFlushClipboard();
+    Release();
+    OleUninitialize();
 
     Term();
 

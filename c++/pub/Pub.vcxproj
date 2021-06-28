@@ -86,16 +86,16 @@
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>DrawObject;C:\WTL\Include;$(IncludePath)</IncludePath>
+    <IncludePath>DrawObject;$(INCLUDE)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>DrawObject;c:\WTL\Include;$(IncludePath)</IncludePath>
+    <IncludePath>DrawObject;$(INCLUDE)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>DrawObject;D:\WTL\Include;$(IncludePath)</IncludePath>
+    <IncludePath>DrawObject;$(INCLUDE)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>DrawObject;D:\WTL\Include;$(IncludePath)</IncludePath>
+    <IncludePath>DrawObject;$(INCLUDE)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>

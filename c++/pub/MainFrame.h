@@ -73,8 +73,6 @@ BEGIN_MSG_MAP(MainFrame)
 
     LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
     {
-        theApp.Release();   // is there any other way?
-
         // unregister message filtering and idle updates
         auto pLoop = theApp.GetMessageLoop();
         ATLASSERT(pLoop != NULL);

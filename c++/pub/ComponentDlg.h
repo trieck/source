@@ -145,7 +145,23 @@ BEGIN_MSG_MAP(ComponentDlg)
 
     void OnCopyObject()
     {
-        ATLASSERT(FALSE);
+        auto parent = GetParent();
+        auto pDrawObject = theApp.GetDrawObject();
+        if (pDrawObject) {
+            CComQIPtr<IDataObject> pData(pDrawObject);
+            if (!pData) {
+                parent.SendMessage(WM_SETSTATUS, IDS_COPYFAIL);
+            } else {
+                auto hr = OleSetClipboard(pData);
+                if (FAILED(hr)) {
+                    parent.SendMessage(WM_SETSTATUS, IDS_COPYFAIL);
+                } else {
+                    parent.SendMessage(WM_SETSTATUS, IDS_COPYSUCCEED);
+                }
+            }
+        } else {
+            parent.SendMessage(WM_SETSTATUS, IDS_NOOBJECT);
+        }
     }
 
     void OnLoadObject()
