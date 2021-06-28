@@ -19,15 +19,15 @@ DECLARE_GET_CONTROLLING_UNKNOWN()
 DECLARE_NOT_AGGREGATABLE(CDrawObject)
 
 BEGIN_COM_MAP(CDrawObject)
-            COM_INTERFACE_ENTRY(IViewObject)
-            COM_INTERFACE_ENTRY(IPersistStream)
-            COM_INTERFACE_ENTRY(IDrawObject)
-            COM_INTERFACE_ENTRY_AGGREGATE(IID_IDataObject, m_pDataObject)
+        COM_INTERFACE_ENTRY(IViewObject)
+        COM_INTERFACE_ENTRY(IPersistStream)
+        COM_INTERFACE_ENTRY(IDrawObject)
+        COM_INTERFACE_ENTRY_AGGREGATE(IID_IDataObject, m_pDataObject)
     END_COM_MAP()
 
     HRESULT FinalConstruct()
     {
-        srand(GetTickCount());
+        srand(static_cast<int>(GetTickCount64()));
 
         m_fDirty = m_hasData = FALSE;
         m_rendering = {};

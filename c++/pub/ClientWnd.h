@@ -17,6 +17,7 @@ BEGIN_MSG_MAP(ClientWnd)
         MESSAGE_HANDLER(WM_SIZE, OnSize)
         MESSAGE_HANDLER(WM_OBJECT_CREATED, OnObjectCreated)
         MSG_WM_PAINT2(OnPaint)
+        MSG_WM_ERASEBKGND(OnEraseBkgnd)
     END_MSG_MAP()
 
     // IAdviseSink members
@@ -46,7 +47,17 @@ BEGIN_MSG_MAP(ClientWnd)
 
         HimetricToPixel(rc);
 
+        CRect rcSave(rc);
+
+        if (rc != m_rc && !m_rc.IsRectEmpty()) {
+            rc.UnionRect(rc, m_rc);
+        }
+
+        rc.InflateRect(2, 2);
+
         InvalidateRect(&rc, TRUE);
+
+        m_rc = rcSave;
     }
 
     BOOL PreTranslateMessage(MSG* pMsg) override
@@ -56,6 +67,10 @@ BEGIN_MSG_MAP(ClientWnd)
 
     LRESULT OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
     {
+        if (!m_brush.CreateSolidBrush(RGB(255, 255, 240))) {
+            return -1;
+        }
+
         bHandled = FALSE;
 
         return 1;
@@ -91,16 +106,27 @@ BEGIN_MSG_MAP(ClientWnd)
         return 0;
     }
 
-    void OnPaint(CPaintDC& dc)
+    LRESULT OnEraseBkgnd(HDC hDC)
     {
-        auto hBrush = GetSysColorBrush(COLOR_WINDOW);
-        auto hOldBrush = dc.SelectBrush(hBrush);
+        CDCHandle dc(hDC);
 
-        dc.PatBlt(dc.m_ps.rcPaint.left, dc.m_ps.rcPaint.top,
-                  dc.m_ps.rcPaint.right - dc.m_ps.rcPaint.left,
-                  dc.m_ps.rcPaint.bottom - dc.m_ps.rcPaint.top,
+        CRect rc;
+        dc.GetClipBox(rc);
+
+        auto hOldBrush = dc.SelectBrush(m_brush);
+
+        dc.PatBlt(rc.left, rc.top,
+                  rc.Width(),
+                  rc.Height(),
                   PATCOPY);
 
+        dc.SelectBrush(hOldBrush);
+
+        return 1;
+    }
+
+    void OnPaint(CPaintDC& dc)
+    {
         auto pDrawObject = theApp.GetDrawObject();
         if (pDrawObject && pDrawObject->HasData() == S_OK) {
             auto hr = OleDraw(pDrawObject, DVASPECT_CONTENT, dc.m_ps.hdc, &dc.m_ps.rcPaint);
@@ -108,9 +134,6 @@ BEGIN_MSG_MAP(ClientWnd)
                 GetParent().SendMessage(WM_SETSTATUS, IDS_CANTDRAW);
             }
         }
-
-        dc.SelectBrush(hOldBrush);
-        DeleteObject(hBrush);
     }
 
     LRESULT OnObjectCreated(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
@@ -121,11 +144,14 @@ BEGIN_MSG_MAP(ClientWnd)
             CRect rc;
             GetClientRect(rc);
             pDrawObject->SetBounds(rc);
-            Invalidate();
         }
 
         bHandled = TRUE;
 
         return 0;
     }
+
+private:
+    CRect m_rc;
+    CBrush m_brush;
 };

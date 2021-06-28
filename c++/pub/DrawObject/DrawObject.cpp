@@ -85,7 +85,7 @@ STDMETHODIMP CDrawObject::Save(LPCWSTR filename)
 
     CComPtr<IStorage> pStorage;
     auto hr = StgCreateDocfile(filename, STGM_DIRECT | STGM_WRITE
-        | STGM_CREATE | STGM_DIRECT | STGM_SHARE_EXCLUSIVE, 0, &pStorage);
+                               | STGM_CREATE | STGM_DIRECT | STGM_SHARE_EXCLUSIVE, 0, &pStorage);
     if (FAILED(hr)) {
         return hr;
     }
@@ -103,8 +103,8 @@ STDMETHODIMP CDrawObject::Save(LPCWSTR filename)
     }
 
     CComPtr<IStream> pStream;
-    hr = pStorage->CreateStream(STREAM, STGM_DIRECT | STGM_CREATE 
-        | STGM_WRITE | STGM_SHARE_EXCLUSIVE, 0, 0, &pStream);
+    hr = pStorage->CreateStream(STREAM, STGM_DIRECT | STGM_CREATE
+                                | STGM_WRITE | STGM_SHARE_EXCLUSIVE, 0, 0, &pStream);
     if (FAILED(hr)) {
         return hr;
     }
@@ -234,18 +234,18 @@ STDMETHODIMP CDrawObject::SetBounds(LPRECT bounds)
 
     m_rendering.rcBounds = *bounds;
 
-    auto hr = SetData();
+    (void)SetData();
 
-    return hr;
+    return S_OK;
 }
 
 STDMETHODIMP CDrawObject::SetColor(COLORREF color)
 {
     m_rendering.color = color;
 
-    auto hr = SetData();
+    (void)SetData();
 
-    return hr;
+    return S_OK;
 }
 
 STDMETHODIMP CDrawObject::GetColor(LPCOLORREF pColor)
@@ -265,7 +265,7 @@ HRESULT CDrawObject::SetData()
         return E_UNEXPECTED;
     }
 
-    auto rcHiMetric(m_rendering.rcBounds);
+    auto rcHiMetric(m_rendering.rc);
     PixelToHimetric(rcHiMetric);
 
     auto hDC = CreateEnhMetaFile(nullptr, nullptr, &rcHiMetric, nullptr);
@@ -320,10 +320,10 @@ void CDrawObject::Draw(HDC hDC)
     } else if (m_rendering.type == DRAWOBJECTTYPE_TRIANGLE) {
         // triangle
         POINT pts[] = {
-            { m_rendering.rc.left + ((m_rendering.rc.right - m_rendering.rc.left) / 2), m_rendering.rc.top },
-            { m_rendering.rc.left, m_rendering.rc.bottom },
-            { m_rendering.rc.right, m_rendering.rc.bottom },
-            { m_rendering.rc.left + ((m_rendering.rc.right - m_rendering.rc.left) / 2), m_rendering.rc.top }
+            {m_rendering.rc.left + ((m_rendering.rc.right - m_rendering.rc.left) / 2), m_rendering.rc.top},
+            {m_rendering.rc.left, m_rendering.rc.bottom},
+            {m_rendering.rc.right, m_rendering.rc.bottom},
+            {m_rendering.rc.left + ((m_rendering.rc.right - m_rendering.rc.left) / 2), m_rendering.rc.top}
         };
 
         Polygon(hDC, pts, sizeof(pts) / sizeof(POINT));
@@ -368,14 +368,7 @@ HRESULT CDrawObject::Draw(DWORD dwAspect, LONG /*lindex*/, LPVOID /*pvAspect*/, 
         return hr;
     }
 
-    ENHMETAHEADER header;
-    if (!GetEnhMetaFileHeader(stg.hEnhMetaFile, sizeof(ENHMETAHEADER), &header)) {
-        return HRESULT_FROM_WIN32(GetLastError());
-    }
-
-    CRect rcBounds(prcBounds->left, prcBounds->top, prcBounds->right, prcBounds->bottom);
-
-    auto result = PlayEnhMetaFile(hDC, stg.hEnhMetaFile, &rcBounds);
+    auto result = PlayEnhMetaFile(hDC, stg.hEnhMetaFile, &m_rendering.rc);
 
     hr = result ? S_OK : HRESULT_FROM_WIN32(GetLastError());
 
