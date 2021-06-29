@@ -144,6 +144,7 @@ BEGIN_MSG_MAP(ClientWnd)
             CRect rc;
             GetClientRect(rc);
             pDrawObject->SetBounds(rc);
+            Invalidate();
         }
 
         bHandled = TRUE;

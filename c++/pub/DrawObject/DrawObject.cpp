@@ -390,7 +390,7 @@ HRESULT CDrawObject::Unfreeze(DWORD)
     return E_NOTIMPL;
 }
 
-HRESULT CDrawObject::SetAdvise(DWORD, DWORD, LPADVISESINK)
+HRESULT CDrawObject::SetAdvise(DWORD aspects, DWORD advf, LPADVISESINK pSink)
 {
     return E_NOTIMPL;
 }
