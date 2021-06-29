@@ -43,12 +43,12 @@ BEGIN
         BEGIN
             VALUE "Comments", "Public OLE Component"
             VALUE "CompanyName", "Rieck Enterprises"
-            VALUE "FileDescription", "obj"
+            VALUE "FileDescription", "Draw Object"
             VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "obj"
-            VALUE "LegalCopyright", "Copyright © 1997"
-            VALUE "OriginalFilename", "obj.dll"
-            VALUE "ProductName", "obj"
+            VALUE "InternalName", "Draw Object"
+            VALUE "LegalCopyright", "Copyright ©1997-2021"
+            VALUE "OriginalFilename", "DrawObject.dll"
+            VALUE "ProductName", "Draw Object"
             VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
@@ -76,11 +76,12 @@ BEGIN
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
-    "\r\n"
+    "1 TYPELIB ""DrawObject.tlb""\r\n"
     "\0"
 END
+
 
 #endif    // APSTUDIO_INVOKED
 
@@ -102,6 +103,7 @@ IDR_DRAWOBJECT          REGISTRY                "DrawObject.rgs"
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
+1 TYPELIB "DrawObject.tlb"
 
 
 /////////////////////////////////////////////////////////////////////////////
