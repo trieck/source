@@ -5,6 +5,7 @@
 #include <atltypes.h>
 #include <atlapp.h>
 #include <atlwin.h>
+#include <atlscrl.h>
 #include <atlcrack.h>
 #include <atlframe.h>
 #include <exception>
@@ -32,3 +33,4 @@
 
 #define WM_SETSTATUS            (WM_USER+1)
 #define WM_OBJECT_CREATED       (WM_SETSTATUS+1)
+#define WM_OBJECT_DESTROYED     (WM_OBJECT_CREATED+1)

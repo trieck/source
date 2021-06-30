@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "PubApp.h"
 #include "MainFrame.h"
-#include "DrawObject_i.h"
 
 bool PubApp::Init()
 {

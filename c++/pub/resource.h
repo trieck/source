@@ -12,6 +12,7 @@
 #define IDC_CREATE                      1000
 #define IDC_EXIT                        1001
 #define IDC_DRAW                        1002
+#define IDC_DESTROY                     1003
 #define IDC_LOAD                        1006
 #define IDC_SAVE                        1007
 #define IDC_COPY                        1008

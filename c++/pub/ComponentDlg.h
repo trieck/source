@@ -2,6 +2,9 @@
 
 class ComponentDlg :
     public CDialogImpl<ComponentDlg>,
+    public CUpdateUI<ComponentDlg>,
+    public CMessageFilter,
+    public CIdleHandler,
     public AdvisableSink
 {
 public:
@@ -11,14 +14,46 @@ BEGIN_MSG_MAP(ComponentDlg)
         MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
         MESSAGE_HANDLER(WM_HSCROLL, OnHScroll)
         COMMAND_HANDLER2(IDC_CREATE, BN_CLICKED, OnCreateObject)
+        COMMAND_HANDLER2(IDC_DESTROY, BN_CLICKED, OnDestroyObject)
         COMMAND_HANDLER2(IDC_DRAW, BN_CLICKED, OnDrawObject)
         COMMAND_HANDLER2(IDC_COPY, BN_CLICKED, OnCopyObject)
         COMMAND_HANDLER2(IDC_LOAD, BN_CLICKED, OnLoadObject)
         COMMAND_HANDLER2(IDC_SAVE, BN_CLICKED, OnSaveObject)
         COMMAND_HANDLER2(IDC_EXIT, BN_CLICKED, OnExit)
+        CHAIN_MSG_MAP(CUpdateUI<ComponentDlg>)
     END_MSG_MAP()
 
+    BEGIN_UPDATE_UI_MAP(ComponentDlg)
+        UPDATE_ELEMENT(IDC_CREATE, UPDUI_CHILDWINDOW)
+        UPDATE_ELEMENT(IDC_DESTROY, UPDUI_CHILDWINDOW)
+        UPDATE_ELEMENT(IDC_DRAW, UPDUI_CHILDWINDOW)
+        UPDATE_ELEMENT(IDC_COPY, UPDUI_CHILDWINDOW)
+        UPDATE_ELEMENT(IDC_LOAD, UPDUI_CHILDWINDOW)
+        UPDATE_ELEMENT(IDC_SAVE, UPDUI_CHILDWINDOW)
+    END_UPDATE_UI_MAP()
+
     enum { IDD = IDD_COMPONENT };
+
+    BOOL PreTranslateMessage(MSG* pMsg) override
+    {
+        return CWindow::IsDialogMessage(pMsg);
+    }
+
+    BOOL OnIdle() override
+    {
+        auto pDrawObject = theApp.GetDrawObject();
+
+        UIEnable(IDC_CREATE, pDrawObject == nullptr);
+        UIEnable(IDC_DESTROY, pDrawObject != nullptr);
+        UIEnable(IDC_DRAW, pDrawObject != nullptr);
+        UIEnable(IDC_COPY, pDrawObject != nullptr);
+        UIEnable(IDC_LOAD, pDrawObject != nullptr);
+        UIEnable(IDC_SAVE, pDrawObject != nullptr);
+
+        UIUpdateChildWindows();
+
+        return TRUE;
+    }
 
     // IAdviseSink members
     void __stdcall OnDataChange(FORMATETC* pFormatetc, STGMEDIUM* pStgmed) override
@@ -40,6 +75,10 @@ BEGIN_MSG_MAP(ComponentDlg)
 
     BOOL OnInitDialog(CWindow /*wndFocus*/, LPARAM /*lInitParam*/)
     {
+        auto* pLoop = theApp.GetMessageLoop();
+        pLoop->AddMessageFilter(this);
+        pLoop->AddIdleHandler(this);
+
         auto hInstance = ModuleHelper::GetResourceInstance();
         ATLASSERT(hInstance);
 
@@ -49,6 +88,8 @@ BEGIN_MSG_MAP(ComponentDlg)
         SetClassLongPtr(*this, GCLP_HICON, reinterpret_cast<LONG_PTR>(hIcon));
 
         SendDlgItemMessage(IDC_COLORSLIDE, TBM_SETRANGE, TRUE, MAKELONG(0, 255));
+
+        UIAddChildWindowContainer(m_hWnd);
 
         return TRUE;
     }
@@ -101,6 +142,10 @@ BEGIN_MSG_MAP(ComponentDlg)
             Unadvise(pDrawObject);
         }
 
+        auto* pLoop = theApp.GetMessageLoop();
+        pLoop->RemoveIdleHandler(this);
+        pLoop->RemoveMessageFilter(this);
+
         bHandled = TRUE;
 
         return 0;
@@ -125,6 +170,16 @@ BEGIN_MSG_MAP(ComponentDlg)
         } else {
             parent.SendMessage(WM_SETSTATUS, IDS_CREATEFAILED);
         }
+    }
+
+    void OnDestroyObject()
+    {
+        auto parent = GetParent();
+
+        theApp.Release();
+
+        parent.SendMessage(WM_OBJECT_DESTROYED);
+        parent.SendMessage(WM_SETSTATUS, IDS_OK);
     }
 
     void OnDrawObject()
@@ -169,7 +224,13 @@ BEGIN_MSG_MAP(ComponentDlg)
         auto parent = GetParent();
         auto pDrawObject = theApp.GetDrawObject();
         if (pDrawObject) {
-            auto hr = pDrawObject->Load(CComBSTR(R"(object.dat)"));
+            CComQIPtr<IPersistFile> pFile(pDrawObject);
+            if (!pFile) {
+                parent.SendMessage(WM_SETSTATUS, IDS_INOSUPPORT);
+                return;
+            }
+
+            auto hr = pFile->Load(L"object.dat", STGM_DIRECT | STGM_READ | STGM_SHARE_EXCLUSIVE);
             auto message = SUCCEEDED(hr) ? IDS_LOAD : IDS_NOLOAD;
             parent.SendMessage(WM_SETSTATUS, message);
         } else {
@@ -182,7 +243,13 @@ BEGIN_MSG_MAP(ComponentDlg)
         auto parent = GetParent();
         auto pDrawObject = theApp.GetDrawObject();
         if (pDrawObject) {
-            auto hr = pDrawObject->Save(CComBSTR(R"(object.dat)"));
+            CComQIPtr<IPersistFile> pFile(pDrawObject);
+            if (!pFile) {
+                parent.SendMessage(WM_SETSTATUS, IDS_INOSUPPORT);
+                return;
+            }
+
+            auto hr = pFile->Save(L"object.dat", TRUE);
             auto message = SUCCEEDED(hr) ? IDS_SAVE : IDS_NOSAVE;
             parent.SendMessage(WM_SETSTATUS, message);
         } else {

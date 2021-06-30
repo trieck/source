@@ -4,7 +4,7 @@
 
 using ClientWndTraits = CWinTraits<WS_OVERLAPPED | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_EX_CLIENTEDGE>;
 
-class ClientWnd : public CWindowImpl<ClientWnd, CWindow, ClientWndTraits>,
+class ClientWnd : public CScrollWindowImpl<ClientWnd, CWindow, ClientWndTraits>,
                   public AdvisableSink,
                   public CMessageFilter
 {
@@ -16,6 +16,7 @@ BEGIN_MSG_MAP(ClientWnd)
         MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
         MESSAGE_HANDLER(WM_SIZE, OnSize)
         MESSAGE_HANDLER(WM_OBJECT_CREATED, OnObjectCreated)
+        MESSAGE_HANDLER(WM_OBJECT_DESTROYED, OnObjectDestroyed)
         MSG_WM_PAINT2(OnPaint)
         MSG_WM_ERASEBKGND(OnEraseBkgnd)
     END_MSG_MAP()
@@ -146,6 +147,15 @@ BEGIN_MSG_MAP(ClientWnd)
             pDrawObject->SetBounds(rc);
             Invalidate();
         }
+
+        bHandled = TRUE;
+
+        return 0;
+    }
+
+    LRESULT OnObjectDestroyed(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
+    {
+        Invalidate();
 
         bHandled = TRUE;
 

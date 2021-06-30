@@ -77,15 +77,25 @@ inline HRESULT CDrawObject::IsDirty()
     return m_fDirty ? S_OK : S_FALSE;
 }
 
-STDMETHODIMP CDrawObject::Save(LPCWSTR filename)
+STDMETHODIMP CDrawObject::SaveCompleted(LPCOLESTR pszFileName)
 {
-    if (!filename) {
+    return E_NOTIMPL;
+}
+
+STDMETHODIMP CDrawObject::GetCurFile(LPOLESTR* ppszFileName)
+{
+    return E_NOTIMPL;
+}
+
+STDMETHODIMP CDrawObject::Save(LPCOLESTR pszFileName, BOOL fRemember)
+{
+    if (!pszFileName) {
         return E_POINTER;
     }
 
     CComPtr<IStorage> pStorage;
-    auto hr = StgCreateDocfile(filename, STGM_DIRECT | STGM_WRITE
-                               | STGM_CREATE | STGM_DIRECT | STGM_SHARE_EXCLUSIVE, 0, &pStorage);
+    auto hr = StgCreateDocfile(pszFileName, STGM_DIRECT | STGM_WRITE | STGM_CREATE | STGM_SHARE_EXCLUSIVE, 0,
+                               &pStorage);
     if (FAILED(hr)) {
         return hr;
     }
@@ -150,26 +160,25 @@ STDMETHODIMP CDrawObject::HasData()
     return m_hasData ? S_OK : S_FALSE;
 }
 
-STDMETHODIMP CDrawObject::Load(LPCWSTR filename)
+STDMETHODIMP CDrawObject::Load(LPCOLESTR pszFileName, DWORD dwMode)
 {
-    if (!filename) {
+    if (!pszFileName) {
         return E_POINTER;
     }
 
-    auto hr = StgIsStorageFile(filename);
+    auto hr = StgIsStorageFile(pszFileName);
     if (FAILED(hr)) {
         return hr;
     }
 
     CComPtr<IStorage> pStorage;
-    hr = StgOpenStorage(filename, nullptr, STGM_DIRECT | STGM_READ | STGM_SHARE_EXCLUSIVE,
-                        nullptr, 0, &pStorage);
+    hr = StgOpenStorage(pszFileName, nullptr, dwMode, nullptr, 0, &pStorage);
     if (FAILED(hr)) {
         return hr;
     }
 
     CComPtr<IStream> pStream;
-    hr = pStorage->OpenStream(STREAM, nullptr, STGM_DIRECT | STGM_READ | STGM_SHARE_EXCLUSIVE, 0, &pStream);
+    hr = pStorage->OpenStream(STREAM, nullptr, dwMode, 0, &pStream);
     if (FAILED(hr)) {
         return hr;
     }

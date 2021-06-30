@@ -24,19 +24,20 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Dialog
 //
 
-IDD_COMPONENT DIALOGEX 0, 0, 115, 142
+IDD_COMPONENT DIALOGEX 0, 0, 115, 151
 STYLE DS_SETFONT | WS_POPUP | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "Public Component"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     PUSHBUTTON      "&Create",IDC_CREATE,7,7,101,14
-    PUSHBUTTON      "E&xit",IDC_EXIT,7,121,101,14
-    PUSHBUTTON      "&Draw Object",IDC_DRAW,7,23,101,14
-    PUSHBUTTON      "&Load",IDC_LOAD,7,55,101,14
-    PUSHBUTTON      "&Save",IDC_SAVE,7,70,101,14
-    CONTROL         "Slider1",IDC_COLORSLIDE,"msctls_trackbar32",TBS_TOP | TBS_NOTICKS | WS_TABSTOP,7,89,101,12
-    CONTROL         "",IDC_COLOR,"Static",SS_OWNERDRAW | SS_SUNKEN,7,105,101,11
-    PUSHBUTTON      "C&opy",IDC_COPY,7,39,101,14
+    PUSHBUTTON      "Destroy",IDC_DESTROY,7,23,101,14
+    PUSHBUTTON      "&Draw Object",IDC_DRAW,7,39,101,14
+    PUSHBUTTON      "C&opy",IDC_COPY,7,55,101,14
+    PUSHBUTTON      "&Load",IDC_LOAD,7,71,101,14
+    PUSHBUTTON      "&Save",IDC_SAVE,7,87,101,14
+    CONTROL         "Slider1",IDC_COLORSLIDE,"msctls_trackbar32",TBS_TOP | TBS_NOTICKS | WS_TABSTOP,7,103,101,12
+    CONTROL         "",IDC_COLOR,"Static",SS_OWNERDRAW | SS_SUNKEN,7,117,101,11
+    PUSHBUTTON      "E&xit",IDC_EXIT,7,130,101,14
 END
 
 
@@ -53,7 +54,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 108
         TOPMARGIN, 7
-        BOTTOMMARGIN, 135
+        BOTTOMMARGIN, 144
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -122,9 +123,9 @@ BEGIN
             VALUE "FileDescription", "Pub"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "Pub"
-            VALUE "LegalCopyright", "Copyright © 1997"
+            VALUE "LegalCopyright", "Copyright ©1997-2021"
             VALUE "OriginalFilename", "Pub.exe"
-            VALUE "ProductName", "  Pub"
+            VALUE "ProductName", " Pub"
             VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END

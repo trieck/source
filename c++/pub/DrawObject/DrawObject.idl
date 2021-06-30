@@ -19,8 +19,6 @@ import "ocidl.idl";
 
     HRESULT GetColor([in, out] LPCOLORREF pColor);
     HRESULT HasData();
-    HRESULT Load([in] LPCWSTR filename);
-    HRESULT Save([in] LPCWSTR filename);
     HRESULT Randomize();
     HRESULT SetBounds([in] LPRECT bounds);
     HRESULT SetColor([in] COLORREF color);

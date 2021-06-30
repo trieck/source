@@ -20,6 +20,7 @@ BEGIN_MSG_MAP(MainFrame)
         MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
         MESSAGE_HANDLER(WM_SETSTATUS, OnSetStatus)
         MESSAGE_HANDLER(WM_OBJECT_CREATED, OnObjectCreated)
+        MESSAGE_HANDLER(WM_OBJECT_DESTROYED, OnObjectDestroyed)
         CHAIN_MSG_MAP(MainFrameImpl)
     END_MSG_MAP()
 
@@ -102,6 +103,17 @@ BEGIN_MSG_MAP(MainFrame)
     {
         if (m_pView) {
             m_pView->SendMessage(WM_OBJECT_CREATED);
+        }
+
+        bHandled = FALSE;
+
+        return 1;
+    }
+
+    LRESULT OnObjectDestroyed(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& bHandled)
+    {
+        if (m_pView) {
+            m_pView->SendMessage(WM_OBJECT_DESTROYED);
         }
 
         bHandled = FALSE;

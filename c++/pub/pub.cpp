@@ -10,7 +10,7 @@ PubApp theApp;
 
 int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPTSTR /*lpstrCmdLine*/, int /*nCmdShow*/)
 {
-    int result{};
+    int result;
 
     try {
         if (!theApp.Init()) {
@@ -18,8 +18,8 @@ int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPTST
         }
 
         result = theApp.Run();
-    } catch (std::exception& e) {
-        ATLTRACE2("%s\n", e.what());
+    } catch (const std::exception& e) {
+        ATLTRACE(_T("%s\n"), e.what());
         return 1;
     }
 

@@ -8,6 +8,7 @@
 class ATL_NO_VTABLE CDrawObject :
     public CComObjectRoot,
     public CComCoClass<CDrawObject, &CLSID_DrawObject>,
+    public IPersistFile,
     public IPersistStream,
     public IViewObject,
     public IDrawObject
@@ -20,6 +21,7 @@ DECLARE_NOT_AGGREGATABLE(CDrawObject)
 
 BEGIN_COM_MAP(CDrawObject)
         COM_INTERFACE_ENTRY(IViewObject)
+        COM_INTERFACE_ENTRY(IPersistFile)
         COM_INTERFACE_ENTRY(IPersistStream)
         COM_INTERFACE_ENTRY(IDrawObject)
         COM_INTERFACE_ENTRY_AGGREGATE(IID_IDataObject, m_pDataObject)
@@ -47,31 +49,36 @@ BEGIN_COM_MAP(CDrawObject)
     }
 
     // IPersist members
-    STDMETHODIMP GetClassID(LPCLSID) override;
+    STDMETHOD(GetClassID)(LPCLSID) override;
+
+    // IPersistFile members
+    STDMETHOD(IsDirty)() override;
+    STDMETHOD(Load)(LPCOLESTR pszFileName, DWORD dwMode) override;
+    STDMETHOD(Save)(LPCOLESTR pszFileName, BOOL fRemember) override;
+    STDMETHOD(SaveCompleted)(LPCOLESTR pszFileName) override;
+    STDMETHOD(GetCurFile)(LPOLESTR* ppszFileName) override;
 
     // IPersistStream members
-    STDMETHODIMP IsDirty() override;
-    STDMETHODIMP Load(LPSTREAM) override;
-    STDMETHODIMP Save(LPSTREAM, BOOL) override;
-    STDMETHODIMP GetSizeMax(ULARGE_INTEGER*) override;
+    // STDMETHOD (IsDirty()) override;
+    STDMETHOD(Load)(LPSTREAM) override;
+    STDMETHOD(Save)(LPSTREAM, BOOL) override;
+    STDMETHOD(GetSizeMax)(ULARGE_INTEGER*) override;
 
     // IViewObject members
-    STDMETHODIMP Draw(DWORD, LONG, LPVOID, DVTARGETDEVICE*,
-                      HDC, HDC, LPCRECTL, LPCRECTL, BOOL (CALLBACK*)(ULONG_PTR),
-                      DWORD_PTR) override;
-    STDMETHODIMP GetColorSet(DWORD, LONG, LPVOID, DVTARGETDEVICE*,
-                             HDC, LPLOGPALETTE*) override;
-    STDMETHODIMP Freeze(DWORD, LONG, LPVOID, LPDWORD) override;
-    STDMETHODIMP Unfreeze(DWORD) override;
-    STDMETHODIMP SetAdvise(DWORD, DWORD, LPADVISESINK) override;
-    STDMETHODIMP GetAdvise(LPDWORD, LPDWORD, LPADVISESINK*) override;
+    STDMETHOD(Draw)(DWORD, LONG, LPVOID, DVTARGETDEVICE*,
+                    HDC, HDC, LPCRECTL, LPCRECTL, BOOL (CALLBACK*)(ULONG_PTR),
+                    DWORD_PTR) override;
+    STDMETHOD(GetColorSet)(DWORD, LONG, LPVOID, DVTARGETDEVICE*,
+                           HDC, LPLOGPALETTE*) override;
+    STDMETHOD(Freeze)(DWORD, LONG, LPVOID, LPDWORD) override;
+    STDMETHOD(Unfreeze)(DWORD) override;
+    STDMETHOD(SetAdvise)(DWORD, DWORD, LPADVISESINK) override;
+    STDMETHOD(GetAdvise)(LPDWORD, LPDWORD, LPADVISESINK*) override;
 
     // IDrawObject methods
     STDMETHOD(GetColor)(LPCOLORREF pColor) override;
     STDMETHOD(HasData)() override;
-    STDMETHOD(Load)(LPCWSTR filename) override;
     STDMETHOD(Randomize)() override;
-    STDMETHOD(Save)(LPCWSTR filename) override;
     STDMETHOD(SetBounds)(LPRECT bounds) override;
     STDMETHOD(SetColor)(COLORREF color) override;
 private:
