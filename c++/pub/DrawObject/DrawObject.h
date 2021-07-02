@@ -59,7 +59,6 @@ BEGIN_COM_MAP(CDrawObject)
     STDMETHOD(GetCurFile)(LPOLESTR* ppszFileName) override;
 
     // IPersistStream members
-    // STDMETHOD (IsDirty()) override;
     STDMETHOD(Load)(LPSTREAM) override;
     STDMETHOD(Save)(LPSTREAM, BOOL) override;
     STDMETHOD(GetSizeMax)(ULARGE_INTEGER*) override;

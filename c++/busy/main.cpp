@@ -1,5 +1,3 @@
-
-
 // main.cpp
 #include <windows.h>
 #include <windowsx.h>
@@ -7,6 +5,7 @@
 #include <process.h>
 #include <time.h>
 #include "resource.h"
+
 static INT_PTR CALLBACK DialogProc(HWND hWnd, UINT uMsg,
                                    WPARAM wParam, LPARAM lParam);
 static BOOL onInit(HWND hWnd, HWND hWndFocus, LPARAM lParam);
@@ -25,11 +24,14 @@ static BOOL setOutputFont(HWND hWnd);
 #define COLOR_BLACK RGB(0, 0, 0)
 #define COLOR_GREEN	RGB(0, 255, 0)
 #define COLOR_PINK	RGB(255, 200, 200)
-typedef struct {
-    HBRUSH dlgBrush;	// dialog brush
-    HBRUSH outBrush;	// output brush
-    HANDLE hEvent;		// event object
+
+typedef struct
+{
+    HBRUSH dlgBrush; // dialog brush
+    HBRUSH outBrush; // output brush
+    HANDLE hEvent; // event object
 } WNDDATA, *LPWNDDATA;
+
 /////////////////////////////////////////////////////////////////////////////
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                      LPTSTR lpCmdLine, int nShowCmd)
@@ -44,8 +46,10 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                              NULL, (DLGPROC)DialogProc);
     if (hDlg == NULL)
         return 1;
+
     ShowWindow(hDlg, nShowCmd);
     UpdateWindow(hDlg);
+
     while (GetMessage(&msg, NULL, 0, 0) > 0) {
         if (!TranslateAccelerator(hDlg, hAccel, &msg))
             TranslateMessage(&msg);
@@ -53,6 +57,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     }
     return msg.wParam;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 INT_PTR CALLBACK DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam,
                             LPARAM lParam)
@@ -78,6 +83,7 @@ INT_PTR CALLBACK DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam,
     }
     return FALSE;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void onCommand(HWND hWnd, int id, HWND hWndCtl, UINT codeNotify)
 {
@@ -92,6 +98,7 @@ void onCommand(HWND hWnd, int id, HWND hWndCtl, UINT codeNotify)
         break;
     }
 }
+
 /////////////////////////////////////////////////////////////////////////////
 BOOL onInit(HWND hWnd, HWND hWndFocus, LPARAM lParam)
 {
@@ -124,6 +131,7 @@ BOOL onInit(HWND hWnd, HWND hWndFocus, LPARAM lParam)
     }
     return TRUE;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 HBRUSH onColor(HWND hWnd, HDC hDC, HWND hWndChild, int type)
 {
@@ -138,6 +146,7 @@ HBRUSH onColor(HWND hWnd, HDC hDC, HWND hWndChild, int type)
         return pdata->dlgBrush;
     }
 }
+
 /////////////////////////////////////////////////////////////////////////////
 BOOL centerWindow(HWND hWnd, HWND hWndParent)
 {
@@ -154,6 +163,7 @@ BOOL centerWindow(HWND hWnd, HWND hWndParent)
     pt.y -= height / 2;
     return MoveWindow(hWnd, pt.x, pt.y, width, height, FALSE);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void progressProc(LPVOID param)
 {
@@ -189,6 +199,7 @@ void progressProc(LPVOID param)
     ReleaseDC(hWnd, hDC);
     DeleteObject(hBrush);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void outputProc(LPVOID param)
 {
@@ -206,7 +217,7 @@ void outputProc(LPVOID param)
     SetTextColor(hDC, COLOR_GREEN);
     HFONT hOldFont = (HFONT)SelectObject(hDC, hFont);
     time_t old = time(NULL);
-    const char *poutput = output;
+    const char* poutput = output;
     for (;;) {
         DWORD rtn = WaitForSingleObject(hEvent, 10);
         if (rtn == WAIT_FAILED || rtn == WAIT_OBJECT_0)
@@ -225,11 +236,13 @@ void outputProc(LPVOID param)
     ReleaseDC(hWnd, hDC);
     DeleteObject(hBrush);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void onClose(HWND hWnd)
 {
     DestroyWindow(hWnd);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void onDestroy(HWND hWnd)
 {
@@ -248,6 +261,7 @@ void onDestroy(HWND hWnd)
 
     PostQuitMessage(0);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 BOOL setMessageFont(HWND hWnd)
 {
@@ -255,26 +269,27 @@ BOOL setMessageFont(HWND hWnd)
     int height = -MulDiv(8, GetDeviceCaps(hDC, LOGPIXELSY), 72);
     ReleaseDC(hWnd, hDC);
     HFONT hFont = CreateFont(height,
-                             0,						/* width */
-                             0,						/* escapement */
-                             0,						/* orientation */
-                             FW_BOLD,				/* weight */
-                             0,						/* italic */
-                             0,						/* underline */
-                             0,						/* strikeout */
-                             DEFAULT_CHARSET,		/* character set */
-                             OUT_DEFAULT_PRECIS,		/* output precision */
-                             CLIP_CHARACTER_PRECIS,	/* clip precision */
-                             DEFAULT_QUALITY,		/* quality */
+                             0, /* width */
+                             0, /* escapement */
+                             0, /* orientation */
+                             FW_BOLD, /* weight */
+                             0, /* italic */
+                             0, /* underline */
+                             0, /* strikeout */
+                             DEFAULT_CHARSET, /* character set */
+                             OUT_DEFAULT_PRECIS, /* output precision */
+                             CLIP_CHARACTER_PRECIS, /* clip precision */
+                             DEFAULT_QUALITY, /* quality */
                              DEFAULT_PITCH |
-                             FF_DONTCARE,			/* pitch and family */
-                             _T("Tahoma")			/* face name */
-                            );
+                             FF_DONTCARE, /* pitch and family */
+                             _T("Tahoma") /* face name */
+    );
     if (hFont == NULL)
         return FALSE;
     SendMessage(hWnd, WM_SETFONT, (WPARAM)hFont, (LPARAM)TRUE);
     return TRUE;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 BOOL setOutputFont(HWND hWnd)
 {
@@ -282,26 +297,27 @@ BOOL setOutputFont(HWND hWnd)
     int height = -MulDiv(8, GetDeviceCaps(hDC, LOGPIXELSY), 72);
     ReleaseDC(hWnd, hDC);
     HFONT hFont = CreateFont(height,
-                             0,						/* width */
-                             0,						/* escapement */
-                             0,						/* orientation */
-                             FW_DONTCARE,			/* weight */
-                             0,						/* italic */
-                             0,						/* underline */
-                             0,						/* strikeout */
-                             DEFAULT_CHARSET,		/* character set */
-                             OUT_DEFAULT_PRECIS,		/* output precision */
-                             CLIP_CHARACTER_PRECIS,	/* clip precision */
-                             DEFAULT_QUALITY,		/* quality */
+                             0, /* width */
+                             0, /* escapement */
+                             0, /* orientation */
+                             FW_DONTCARE, /* weight */
+                             0, /* italic */
+                             0, /* underline */
+                             0, /* strikeout */
+                             DEFAULT_CHARSET, /* character set */
+                             OUT_DEFAULT_PRECIS, /* output precision */
+                             CLIP_CHARACTER_PRECIS, /* clip precision */
+                             DEFAULT_QUALITY, /* quality */
                              DEFAULT_PITCH |
-                             FF_DONTCARE,			/* pitch and family */
-                             _T("Courier New")		/* face name */
-                            );
+                             FF_DONTCARE, /* pitch and family */
+                             _T("Courier New") /* face name */
+    );
     if (hFont == NULL)
         return FALSE;
     SendMessage(hWnd, WM_SETFONT, (WPARAM)hFont, (LPARAM)TRUE);
     return TRUE;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 void onExpand(HWND hWnd)
 {
