@@ -6,8 +6,6 @@
 #undef _ATL_MIN_CRT
 #endif
 
-#define _WTL_FORWARD_DECLARE_CSTRING
-
 #include <atlbase.h>
 #include <atlapp.h>
 #include <atlstr.h>
@@ -19,6 +17,7 @@
 #include <atlctrls.h>
 #include <atldlgs.h>
 #include <atlctrlw.h>
+#include <shellapi.h>
 #include <atlctrlx.h>
 #include <atlsplit.h>
 #include <atltypes.h>
