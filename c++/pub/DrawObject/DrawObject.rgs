@@ -20,4 +20,14 @@ HKCR
             }
         }
     }
+
+    NoRemove Interface
+    {
+        ForceRemove {f206ac00-005c-11d1-b1c9-000000000000} = s 'IDrawObject'
+        {
+            ProxyStubClsid32 = s '{00000320-0000-0000-C000-000000000046}'
+            {
+            }
+        }
+    }
 }
