@@ -18,6 +18,11 @@ HKCR
                     0 = s '3,1,32,3'
                 }
             }
+            'Implemented Categories'
+            {
+                {0DE86A56-2BAA-11CF-A229-00AA003D7352}
+                {0DE86A54-2BAA-11CF-A229-00AA003D7352}
+            }
         }
     }
 

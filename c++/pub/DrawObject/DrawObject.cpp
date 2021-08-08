@@ -94,7 +94,7 @@ STDMETHODIMP CDrawObject::Save(LPCOLESTR pszFileName, BOOL fRemember)
     }
 
     CComPtr<IStorage> pStorage;
-    auto hr = StgCreateDocfile(pszFileName, STGM_DIRECT | STGM_WRITE | STGM_CREATE | STGM_SHARE_EXCLUSIVE, 0,
+    auto hr = StgCreateDocfile(pszFileName, STGM_WRITE | STGM_CREATE | STGM_SHARE_EXCLUSIVE, 0,
                                &pStorage);
     if (FAILED(hr)) {
         return hr;
@@ -113,8 +113,7 @@ STDMETHODIMP CDrawObject::Save(LPCOLESTR pszFileName, BOOL fRemember)
     }
 
     CComPtr<IStream> pStream;
-    hr = pStorage->CreateStream(STREAM, STGM_DIRECT | STGM_CREATE
-                                | STGM_WRITE | STGM_SHARE_EXCLUSIVE, 0, 0, &pStream);
+    hr = pStorage->CreateStream(STREAM, STGM_CREATE | STGM_SIMPLE | STGM_WRITE | STGM_SHARE_EXCLUSIVE, 0, 0, &pStream);
     if (FAILED(hr)) {
         return hr;
     }
@@ -170,6 +169,8 @@ STDMETHODIMP CDrawObject::Load(LPCOLESTR pszFileName, DWORD dwMode)
     if (FAILED(hr)) {
         return hr;
     }
+
+    dwMode |= STGM_SHARE_EXCLUSIVE;
 
     CComPtr<IStorage> pStorage;
     hr = StgOpenStorage(pszFileName, nullptr, dwMode, nullptr, 0, &pStorage);
@@ -329,10 +330,10 @@ void CDrawObject::Draw(HDC hDC)
     } else if (m_rendering.type == DRAWOBJECTTYPE_TRIANGLE) {
         // triangle
         POINT pts[] = {
-            {m_rendering.rc.left + ((m_rendering.rc.right - m_rendering.rc.left) / 2), m_rendering.rc.top},
-            {m_rendering.rc.left, m_rendering.rc.bottom},
-            {m_rendering.rc.right, m_rendering.rc.bottom},
-            {m_rendering.rc.left + ((m_rendering.rc.right - m_rendering.rc.left) / 2), m_rendering.rc.top}
+            { m_rendering.rc.left + ((m_rendering.rc.right - m_rendering.rc.left) / 2), m_rendering.rc.top },
+            { m_rendering.rc.left, m_rendering.rc.bottom },
+            { m_rendering.rc.right, m_rendering.rc.bottom },
+            { m_rendering.rc.left + ((m_rendering.rc.right - m_rendering.rc.left) / 2), m_rendering.rc.top }
         };
 
         Polygon(hDC, pts, sizeof(pts) / sizeof(POINT));

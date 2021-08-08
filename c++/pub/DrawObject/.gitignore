@@ -1,3 +1,5 @@
 DrawObject_i.*
 DrawObject_p.c
+dlldata.c
+
 
