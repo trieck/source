@@ -230,7 +230,7 @@ BEGIN_MSG_MAP(ComponentDlg)
                 return;
             }
 
-            auto hr = pFile->Load(L"object.dat", STGM_DIRECT | STGM_READ | STGM_SHARE_EXCLUSIVE);
+            auto hr = pFile->Load(L"object.dat", STGM_READ | STGM_SHARE_EXCLUSIVE);
             auto message = SUCCEEDED(hr) ? IDS_LOAD : IDS_NOLOAD;
             parent.SendMessage(WM_SETSTATUS, message);
         } else {

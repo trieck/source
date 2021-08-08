@@ -9,6 +9,7 @@ class ATL_NO_VTABLE CDrawObject :
     public CComObjectRoot,
     public CComCoClass<CDrawObject, &CLSID_DrawObject>,
     public IPersistFile,
+    public IPersistStorage,
     public IPersistStream,
     public IViewObject,
     public IDrawObject
@@ -22,10 +23,13 @@ DECLARE_NOT_AGGREGATABLE(CDrawObject)
 BEGIN_COM_MAP(CDrawObject)
         COM_INTERFACE_ENTRY(IViewObject)
         COM_INTERFACE_ENTRY(IPersistFile)
+        COM_INTERFACE_ENTRY(IPersistStorage)
         COM_INTERFACE_ENTRY(IPersistStream)
         COM_INTERFACE_ENTRY(IDrawObject)
         COM_INTERFACE_ENTRY_AGGREGATE(IID_IDataObject, m_pDataObject)
     END_COM_MAP()
+
+    virtual ~CDrawObject() = default;
 
     HRESULT FinalConstruct()
     {
@@ -57,6 +61,13 @@ BEGIN_COM_MAP(CDrawObject)
     STDMETHOD(Save)(LPCOLESTR pszFileName, BOOL fRemember) override;
     STDMETHOD(SaveCompleted)(LPCOLESTR pszFileName) override;
     STDMETHOD(GetCurFile)(LPOLESTR* ppszFileName) override;
+
+    // IPersistStorage members
+    STDMETHOD(HandsOffStorage)() override;
+    STDMETHOD(InitNew)(LPSTORAGE) override;
+    STDMETHOD(Load)(LPSTORAGE) override;
+    STDMETHOD(Save)(LPSTORAGE, BOOL) override;
+    STDMETHOD(SaveCompleted)(LPSTORAGE) override;
 
     // IPersistStream members
     STDMETHOD(Load)(LPSTREAM) override;

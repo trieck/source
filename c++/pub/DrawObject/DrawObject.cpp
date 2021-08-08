@@ -77,31 +77,55 @@ inline HRESULT CDrawObject::IsDirty()
     return m_fDirty ? S_OK : S_FALSE;
 }
 
-STDMETHODIMP CDrawObject::SaveCompleted(LPCOLESTR pszFileName)
+HRESULT CDrawObject::SaveCompleted(LPCOLESTR pszFileName)
 {
     return E_NOTIMPL;
 }
 
-STDMETHODIMP CDrawObject::GetCurFile(LPOLESTR* ppszFileName)
+HRESULT CDrawObject::GetCurFile(LPOLESTR* ppszFileName)
 {
     return E_NOTIMPL;
 }
 
-STDMETHODIMP CDrawObject::Save(LPCOLESTR pszFileName, BOOL fRemember)
+HRESULT CDrawObject::HandsOffStorage()
 {
-    if (!pszFileName) {
+    return S_OK;
+}
+
+HRESULT CDrawObject::InitNew(LPSTORAGE pStorage)
+{
+    if (!pStorage) {
         return E_POINTER;
     }
 
-    CComPtr<IStorage> pStorage;
-    auto hr = StgCreateDocfile(pszFileName, STGM_WRITE | STGM_CREATE | STGM_SHARE_EXCLUSIVE, 0,
-                               &pStorage);
+    return S_OK;
+}
+
+HRESULT CDrawObject::Load(LPSTORAGE pStorage)
+{
+    if (!pStorage) {
+        return E_POINTER;
+    }
+    
+    CComPtr<IStream> pStream;
+    auto hr = pStorage->OpenStream(STREAM, nullptr, STGM_READ | STGM_SHARE_EXCLUSIVE, 0, &pStream);
     if (FAILED(hr)) {
         return hr;
     }
 
+    hr = Load(pStream);
+
+    return hr;
+}
+
+HRESULT CDrawObject::Save(LPSTORAGE pStorage, BOOL fSameAsLoad)
+{
+    if (!pStorage) {
+        return E_POINTER;
+    }
+
     // Mark this as one of our class
-    hr = WriteClassStg(pStorage, CLSID_DrawObject);
+    auto hr = WriteClassStg(pStorage, CLSID_DrawObject);
     if (FAILED(hr)) {
         return hr;
     }
@@ -118,17 +142,39 @@ STDMETHODIMP CDrawObject::Save(LPCOLESTR pszFileName, BOOL fRemember)
         return hr;
     }
 
-    CComQIPtr<IPersistStream> pPersist(GetUnknown());
-    if (pPersist == nullptr) {
-        return E_NOINTERFACE;
-    }
-
-    hr = pPersist->Save(pStream, TRUE);
+    hr = Save(pStream, TRUE);
 
     return hr;
 }
 
-inline HRESULT CDrawObject::Save(LPSTREAM pStream, BOOL fClearDirty)
+HRESULT CDrawObject::SaveCompleted(LPSTORAGE pStorage)
+{
+    if (!pStorage) {
+        return E_POINTER;
+    }
+
+    return S_OK;
+}
+
+HRESULT CDrawObject::Save(LPCOLESTR pszFileName, BOOL fRemember)
+{
+    if (!pszFileName) {
+        return E_POINTER;
+    }
+
+    CComPtr<IStorage> pStorage;
+    auto hr = StgCreateDocfile(pszFileName, STGM_WRITE | STGM_CREATE | STGM_SHARE_EXCLUSIVE, 0,
+                               &pStorage);
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    hr = Save(pStorage, fRemember);
+
+    return hr;
+}
+
+HRESULT CDrawObject::Save(LPSTREAM pStream, BOOL fClearDirty)
 {
     if (!pStream) {
         return E_POINTER;
@@ -144,22 +190,22 @@ inline HRESULT CDrawObject::Save(LPSTREAM pStream, BOOL fClearDirty)
         return STG_E_WRITEFAULT;
     }
 
-    m_fDirty = fClearDirty;
+    m_fDirty = !fClearDirty;
 
     return S_OK;
 }
 
-inline HRESULT CDrawObject::GetSizeMax(ULARGE_INTEGER*)
+HRESULT CDrawObject::GetSizeMax(ULARGE_INTEGER*)
 {
     return E_NOTIMPL;
 }
 
-STDMETHODIMP CDrawObject::HasData()
+HRESULT CDrawObject::HasData()
 {
     return m_hasData ? S_OK : S_FALSE;
 }
 
-STDMETHODIMP CDrawObject::Load(LPCOLESTR pszFileName, DWORD dwMode)
+HRESULT CDrawObject::Load(LPCOLESTR pszFileName, DWORD dwMode)
 {
     if (!pszFileName) {
         return E_POINTER;
@@ -178,18 +224,12 @@ STDMETHODIMP CDrawObject::Load(LPCOLESTR pszFileName, DWORD dwMode)
         return hr;
     }
 
-    CComPtr<IStream> pStream;
-    hr = pStorage->OpenStream(STREAM, nullptr, dwMode, 0, &pStream);
-    if (FAILED(hr)) {
-        return hr;
-    }
-
-    hr = Load(pStream);
+    hr = Load(pStorage);
 
     return hr;
 }
 
-inline HRESULT CDrawObject::Load(LPSTREAM pStream)
+HRESULT CDrawObject::Load(LPSTREAM pStream)
 {
     if (!pStream) {
         return E_POINTER;
@@ -214,7 +254,7 @@ inline HRESULT CDrawObject::Load(LPSTREAM pStream)
     return S_OK;
 }
 
-STDMETHODIMP CDrawObject::Randomize()
+HRESULT CDrawObject::Randomize()
 {
     if (m_rendering.rcBounds.IsRectEmpty()) {
         return E_UNEXPECTED;
@@ -236,7 +276,7 @@ STDMETHODIMP CDrawObject::Randomize()
     return hr;
 }
 
-STDMETHODIMP CDrawObject::SetBounds(LPRECT bounds)
+HRESULT CDrawObject::SetBounds(LPRECT bounds)
 {
     if (!bounds) {
         return E_POINTER;
@@ -249,7 +289,7 @@ STDMETHODIMP CDrawObject::SetBounds(LPRECT bounds)
     return S_OK;
 }
 
-STDMETHODIMP CDrawObject::SetColor(COLORREF color)
+HRESULT CDrawObject::SetColor(COLORREF color)
 {
     m_rendering.color = color;
 
@@ -258,7 +298,7 @@ STDMETHODIMP CDrawObject::SetColor(COLORREF color)
     return S_OK;
 }
 
-STDMETHODIMP CDrawObject::GetColor(LPCOLORREF pColor)
+HRESULT CDrawObject::GetColor(LPCOLORREF pColor)
 {
     if (!pColor) {
         return E_POINTER;
