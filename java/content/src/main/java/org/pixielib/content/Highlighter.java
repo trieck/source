@@ -29,10 +29,10 @@ public class Highlighter extends XMLEventHandlerImpl {
         inFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);
     }
 
-    private QueryTerms terms;
-    private Writer writer;
-    private XMLStreamWriter stream;
-    private IndexFields fields;
+    private final QueryTerms terms;
+    private final Writer writer;
+    private final XMLStreamWriter stream;
+    private final IndexFields fields;
     private String field = "";   // current element seen during parsing
 
     private Highlighter(QueryTerms terms, IndexFields fields) throws XMLStreamException {

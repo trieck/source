@@ -108,13 +108,12 @@ public class ODBClient {
         return response.getString(Protocol.KEY_RESPONSE_MSG);
     }
 
-    String createString(String poolid, String val) throws IOException,
-            UnknownHostException {
+    String createString(String poolid, String val) throws IOException {
         return createObject(poolid, new BEString(val));
     }
 
     String createString(String poolid, String key, String val)
-            throws IOException, UnknownHostException {
+            throws IOException {
         return createObject(poolid, key, new BEString(val));
     }
 
@@ -138,8 +137,7 @@ public class ODBClient {
         checkError(response);
     }
 
-    BEObject getObject(String poolid, String objectid) throws IOException,
-            UnknownHostException {
+    BEObject getObject(String poolid, String objectid) throws IOException {
 
         final BEDictionary request = new BEDictionary();
         request.set(Protocol.KEY_REQUEST_FNC, Protocol.FNC_GET);
@@ -152,19 +150,18 @@ public class ODBClient {
         return response.get(Protocol.KEY_RESPONSE_MSG);
     }
 
-    String getString(String poolid, String objectid) throws IOException,
-            UnknownHostException {
+    String getString(String poolid, String objectid) throws IOException {
 
         final BEObject object = getObject(poolid, objectid);
         if (object.getType() != BEObject.BET_STRING) {
             return "";
         }
 
-        return ((BEString) object).toString();
+        return object.toString();
     }
 
     void setObject(String poolid, String objectid, BEObject val)
-            throws IOException, UnknownHostException {
+            throws IOException {
 
         final BEDictionary request = new BEDictionary();
         request.set(Protocol.KEY_REQUEST_FNC, Protocol.FNC_SET);
@@ -177,7 +174,7 @@ public class ODBClient {
     }
 
     void setString(String poolid, String objectid, String val)
-            throws IOException, UnknownHostException {
+            throws IOException {
         setObject(poolid, objectid, new BEString(val));
     }
 

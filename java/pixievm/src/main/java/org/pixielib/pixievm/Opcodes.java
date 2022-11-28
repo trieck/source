@@ -52,7 +52,7 @@ public class Opcodes {
     private static final int AM_R16_M16 = 1 << 11;
     private static final int AM_R16_IMM16 = 1 << 12;
     /* Addressing modes */
-    private static final int MODES[] = {AM_IMPLIED, AM_R8, AM_M8, AM_IMM8,
+    private static final int[] MODES = {AM_IMPLIED, AM_R8, AM_M8, AM_IMM8,
             AM_R16, AM_M16, AM_IMM16, AM_R8_R8, AM_R8_IMM8, AM_R16_R16,
             AM_M16_R16, AM_R16_M16, AM_R16_IMM16};
     /* Many instructions support this general form */

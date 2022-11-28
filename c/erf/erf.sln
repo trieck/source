@@ -1,20 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31727.386
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "erf", "erf.vcxproj", "{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Win32 = Debug|Win32
-		Release|Win32 = Release|Win32
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Debug|Win32.ActiveCfg = Debug|Win32
-		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Debug|Win32.Build.0 = Debug|Win32
-		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Release|Win32.ActiveCfg = Release|Win32
-		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Release|Win32.Build.0 = Release|Win32
+		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Debug|x64.ActiveCfg = Debug|x64
+		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Debug|x64.Build.0 = Debug|x64
+		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Debug|x86.ActiveCfg = Debug|Win32
+		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Debug|x86.Build.0 = Debug|Win32
+		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Release|x64.ActiveCfg = Release|x64
+		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Release|x64.Build.0 = Release|x64
+		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Release|x86.ActiveCfg = Release|Win32
+		{167DDC25-E3A3-4CD0-8D84-53F7210AF4AD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F7FD178-5FC9-48BE-80F3-FE25320CD01C}
 	EndGlobalSection
 EndGlobal

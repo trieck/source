@@ -9,7 +9,7 @@ public class ConcordMerge {
     private static final int NWAY = 100;                    // number of ways to merge
     private static final String TERM_EOF = "\uFFFF";        // EOF indicator
     private DataOutputStream out;                           // output stream for merge
-    private ConcordRecord[] records;                        // concordance records for least
+    private final ConcordRecord[] records;                        // concordance records for least
     private int pass;                                       // countdown of pass number
 
     public ConcordMerge() {

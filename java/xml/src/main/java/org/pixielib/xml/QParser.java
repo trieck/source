@@ -256,12 +256,11 @@ public abstract class QParser {
 
         int c;
         while ((c = read()) != -1) {
-            switch (c) {
-                case '<':   // tag
-                    unget(c);
-                    return value.toString();
-                default:
-                    value.append((char) c);
+            if (c == '<') {   // tag
+                unget(c);
+                return value.toString();
+            } else {
+                value.append((char) c);
             }
         }
 

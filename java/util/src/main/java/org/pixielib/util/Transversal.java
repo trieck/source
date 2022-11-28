@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Transversal {
 
-    private List<Integer> A;        // cardinality of sets
+    private final List<Integer> A;        // cardinality of sets
     private int C;                  // cardinality
     private int[][] combinations;
     private int[] t;                // temp array during construction

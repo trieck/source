@@ -13,7 +13,7 @@ public class Board implements Cloneable, Iterable<Board> {
     public static final int COLOR_NOUGHT = -1;
 
     private static final Vectors VECTORS = Vectors.instance();
-    private final int rep[][]; // board representation
+    private final int[][] rep; // board representation
     private List<Board> children; // child nodes
     private int node_rep; // representation of node in game tree
 

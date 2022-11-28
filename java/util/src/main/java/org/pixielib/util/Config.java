@@ -3,7 +3,7 @@ package org.pixielib.util;
 import java.util.ResourceBundle;
 
 public class Config {
-    private ResourceBundle bundle;
+    private final ResourceBundle bundle;
 
     public Config(String name) {
         bundle = ResourceBundle.getBundle(name);

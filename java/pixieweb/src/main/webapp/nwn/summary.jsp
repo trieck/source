@@ -21,15 +21,15 @@
 
     context.setTempCookie("SearchQuery",
         String.format("title=%s&user=%s&message=%s&start=%d", 
-        	context.encode(title), 
-        	context.encode(user), 
-        	context.encode(message), 
+        	Context.encode(title),
+        	Context.encode(user),
+        	Context.encode(message),
         	nstart));
 
     String ModifyLink = String.format("search.jsp?title=%s&user=%s&message=%s", 
-    	context.encode(title),
-    	context.encode(user),
-    	context.encode(message));
+    	Context.encode(title),
+    	Context.encode(user),
+    	Context.encode(message));
 
 	String dbquery = "";
 	if (title.length() > 0) {

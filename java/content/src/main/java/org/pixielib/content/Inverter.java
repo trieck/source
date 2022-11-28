@@ -13,7 +13,7 @@ public class Inverter {
 
     private InverterRecs records;   // hash table of records
     private int count;              // number of records in table
-    private int size;               // size of hash table, should be prime
+    private final int size;               // size of hash table, should be prime
 
     public Inverter() {
         size = (int) Prime.prime(MAX_COUNT);

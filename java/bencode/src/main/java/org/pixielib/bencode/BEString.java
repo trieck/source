@@ -76,10 +76,7 @@ public class BEString extends BEObject implements Comparable<BEString> {
             return false;
         }
         final BEString other = (BEString) obj;
-        if (!Arrays.equals(data, other.data)) {
-            return false;
-        }
-        return true;
+        return Arrays.equals(data, other.data);
     }
 
     public int compareTo(BEString rhs) {
@@ -90,8 +87,8 @@ public class BEString extends BEObject implements Comparable<BEString> {
         final int len1 = length();
         final int len2 = rhs.length();
         int n = Math.min(len1, len2);
-        final byte v1[] = data;
-        final byte v2[] = rhs.data;
+        final byte[] v1 = data;
+        final byte[] v2 = rhs.data;
         int i = 0, j = 0;
 
         while (n-- != 0) {

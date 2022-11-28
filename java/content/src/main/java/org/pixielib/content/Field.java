@@ -2,7 +2,7 @@ package org.pixielib.content;
 
 public class Field {
 
-    private String name;     // field name
+    private final String name;     // field name
     private int word_count;  // current word count
 
     public Field(String name) {

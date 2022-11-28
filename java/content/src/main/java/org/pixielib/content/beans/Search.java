@@ -15,10 +15,10 @@ import java.io.IOException;
 public class Search extends Product {
 
     private static final XPathFactory factory = XPathFactory.newInstance();
-    private int start;            // starting record
-    private int pagesize;   // page size
+    private final int start;            // starting record
+    private final int pagesize;   // page size
     private long queryTime;    // query time
-    private Config config;
+    private final Config config;
 
     private Search(String product, String db, String query, int start, String style) {
         super(product, db, query, style);
@@ -88,26 +88,23 @@ public class Search extends Product {
 
                 queryTime = Long.parseLong(element.getAttribute("query-time"));
             } catch (NumberFormatException e) {
-                ;
             }
         }
     }
 
     private String getSearchUrl() throws IOException {
-        StringBuilder url = new StringBuilder();
 
-        url.append(getContentURI());
-        url.append("function=search&query=");
-        url.append(Context.encode(getQuery()));
-        url.append("&db=");
-        url.append(getDatabase());
+        String url = getContentURI() +
+                "function=search&query=" +
+                Context.encode(getQuery()) +
+                "&db=" +
+                getDatabase() +
+                "&start=" +
+                start +
+                "&count=" +
+                pagesize;
 
-        url.append("&start=");
-        url.append(start);
-        url.append("&count=");
-        url.append(pagesize);
-
-        return url.toString();
+        return url;
     }
 
     /**

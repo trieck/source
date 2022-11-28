@@ -34,11 +34,7 @@ public class TicTacToe {
             return true;
         }
 
-        if (checkDraw()) {
-            return true;
-        }
-
-        return false;
+        return checkDraw();
     }
 
     private boolean checkWinner() {

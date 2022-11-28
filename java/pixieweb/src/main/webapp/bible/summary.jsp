@@ -19,9 +19,9 @@
 
 	context.setTempCookie("SearchQuery",
 					String.format("db=%s&query=%s&start=%d",
-					db, context.encode(query), nstart));
+					db, Context.encode(query), nstart));
 
-	String ModifyLink = String.format("search.jsp?db=%s&query=%s", db, context.encode(query));
+	String ModifyLink = String.format("search.jsp?db=%s&query=%s", db, Context.encode(query));
 
 	String dbquery = String.format("text[%s]", query);
 	Search search = Search.DatabaseSearch("bible", db, dbquery, nstart, style);

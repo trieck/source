@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class Detail extends Product {
 
-    private String docid;
+    private final String docid;
 
     private Detail(String prod, String db, String docid, String query, String style) {
         super(prod, db, query, style);
@@ -50,16 +50,15 @@ public class Detail extends Product {
     }
 
     private String getSearchUrl() throws IOException {
-        StringBuilder url = new StringBuilder();
 
-        url.append(getContentURI());
-        url.append("function=getdoc&query=");
-        url.append(Context.encode(getQuery()));
-        url.append("&db=");
-        url.append(getDatabase());
-        url.append("&docid=");
-        url.append(docid);
+        String url = getContentURI() +
+                "function=getdoc&query=" +
+                Context.encode(getQuery()) +
+                "&db=" +
+                getDatabase() +
+                "&docid=" +
+                docid;
 
-        return url.toString();
+        return url;
     }
 }

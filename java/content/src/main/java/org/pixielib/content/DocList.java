@@ -6,7 +6,7 @@ import java.util.List;
 
 public class DocList {
 
-    private List<Long> documents = new ArrayList<>();
+    private final List<Long> documents = new ArrayList<>();
 
     public DocList() {
     }

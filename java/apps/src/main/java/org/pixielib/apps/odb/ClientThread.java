@@ -41,7 +41,6 @@ public class ClientThread implements Runnable {
                     odb.destroyObject(poolid, key);
                 }
             } catch (final IOException e) {
-                ;
             }
 
             try {

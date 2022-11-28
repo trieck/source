@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Jumble {
 
-    private Concordance concordance;
+    private final Concordance concordance;
 
     public Jumble() throws IOException {
         concordance = Concordance.getInstance();
@@ -28,7 +28,7 @@ public class Jumble {
                 System.out.println(it.next());
             }
         } catch (IOException e) {
-            System.err.println(e);
+            System.err.println(e.toString());
             System.exit(1);
         }
     }
@@ -37,15 +37,10 @@ public class Jumble {
 
         List<String> solutions = new ArrayList<String>();
 
-        WordPerms wp = new WordPerms(word);
-
-        String perm = wp.getFirstPerm();
-
-        do {
-            if (concordance.lookup(perm)) {
-                solutions.add(perm);
-            }
-        } while ((perm = wp.getNextPerm(perm)) != null);
+        var values = concordance.lookup(word);
+        if (values != null) {
+            solutions.addAll(values);
+        }
 
         return solutions;
     }

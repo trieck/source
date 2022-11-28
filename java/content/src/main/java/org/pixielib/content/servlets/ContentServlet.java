@@ -24,12 +24,11 @@ public class ContentServlet extends HttpServlet {
      * * @return the xml document
      */
     private static String xmlerror(String error) {
-        StringBuilder output = new StringBuilder();
-        output.append("<?xml version=\"1.0\"?>");
-        output.append("<error><![CDATA[ ");
-        output.append(error);
-        output.append(" ]]></error>");
-        return output.toString();
+        String output = "<?xml version=\"1.0\"?>" +
+                "<error><![CDATA[ " +
+                error +
+                " ]]></error>";
+        return output;
     }
 
     @Override

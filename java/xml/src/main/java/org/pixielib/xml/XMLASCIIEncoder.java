@@ -3,6 +3,7 @@ package org.pixielib.xml;
 import org.pixielib.io.FileUtil;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +49,7 @@ public class XMLASCIIEncoder {
         String contents = FileUtil.readFile(file.getCanonicalPath());
         contents = NOT_ASCII.matcher(contents).replaceAll("");
 
-        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), "US-ASCII");
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.US_ASCII);
         writer.write(contents);
         writer.flush();
         writer.close();

@@ -38,7 +38,7 @@ public class WebUtils {
                 case '&':
                     if (processed.get(name.toString()) == null) {
                         if (output.length() > 0) output.append('&');
-                        output.append(name.toString());
+                        output.append(name);
                         output.append('=');
                         values = table.get(name.toString());
                         if (values != null && values.length > 0) {
@@ -61,7 +61,7 @@ public class WebUtils {
 
         if (processed.get(name.toString()) == null) {
             if (output.length() > 0) output.append('&');
-            output.append(name.toString());
+            output.append(name);
             output.append('=');
             values = table.get(name.toString());
             if (values != null && values.length > 0) {
@@ -94,7 +94,7 @@ public class WebUtils {
      */
     private static Hashtable<String, String[]> parseQueryString(String s)
             throws IllegalArgumentException {
-        String valArray[];
+        String[] valArray;
 
         if (s == null) {
             throw new IllegalArgumentException();
@@ -111,11 +111,11 @@ public class WebUtils {
                 val = "";
             } else {
                 key = Context.decode(pair.substring(0, pos));
-                val = Context.decode(pair.substring(pos + 1, pair.length()));
+                val = Context.decode(pair.substring(pos + 1));
             }
 
             if (ht.containsKey(key)) {
-                String oldVals[] = ht.get(key);
+                String[] oldVals = ht.get(key);
                 valArray = new String[oldVals.length + 1];
                 System.arraycopy(oldVals, 0, valArray, 0, oldVals.length);
                 valArray[oldVals.length] = val;

@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class IndexFields {
 
-    private Set<String> fields;
+    private final Set<String> fields;
 
     public IndexFields(String db) throws IOException {
         fields = new TreeSet<>();

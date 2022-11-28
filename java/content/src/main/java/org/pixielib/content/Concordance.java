@@ -9,7 +9,7 @@ import java.util.List;
 public class Concordance {
 
     private final List<String> tempfiles = new ArrayList<>(); // temporary files
-    private Inverter block = new Inverter();
+    private final Inverter block = new Inverter();
 
     public Concordance() {
     }

@@ -2,7 +2,7 @@ package org.pixielib.content;
 
 public class DocID {
 
-    private long docid;  // document identifier
+    private final long docid;  // document identifier
 
     public DocID(long docid) {
         this.docid = docid;

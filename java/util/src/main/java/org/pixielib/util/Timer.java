@@ -5,8 +5,8 @@ import java.text.MessageFormat;
 
 public class Timer {
 
-    private long start;
-    private DecimalFormat df = new DecimalFormat("#00");
+    private final long start;
+    private final DecimalFormat df = new DecimalFormat("#00");
 
     public Timer() {
         start = System.currentTimeMillis();
@@ -24,9 +24,7 @@ public class Timer {
         try {
             Thread.sleep(Integer.parseInt(args[0]));
         } catch (InterruptedException ignored) {
-            ;
         } catch (NumberFormatException e) {
-            ;
         }
 
         System.out.println(t);
@@ -50,13 +48,13 @@ public class Timer {
 
         if (hours != 0) {
             output.append(MessageFormat.format("{0}:{1}:{2} hours",
-                    new Object[]{df.format(hours), df.format(minutes), df.format(seconds)}));
+                    df.format(hours), df.format(minutes), df.format(seconds)));
         } else if (minutes != 0) {
             output.append(MessageFormat.format("{0}:{1} minutes",
-                    new Object[]{df.format(minutes), df.format(seconds)}));
+                    df.format(minutes), df.format(seconds)));
         } else {
             output.append(MessageFormat.format("{0}:{1} seconds",
-                    new Object[]{df.format(seconds), df.format(hundreths)}));
+                    df.format(seconds), df.format(hundreths)));
         }
 
         return output.toString();

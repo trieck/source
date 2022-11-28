@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class GraphView extends JComponent implements MouseListener {
 
@@ -215,16 +216,10 @@ public class GraphView extends JComponent implements MouseListener {
                 return false;
             }
 
-            final Fill fill = (Fill) o;
-
             if (color != fill.color) {
                 return false;
             }
-            if (pt != null ? !pt.equals(fill.pt) : fill.pt != null) {
-                return false;
-            }
-
-            return true;
+            return Objects.equals(pt, fill.pt);
         }
 
         @Override

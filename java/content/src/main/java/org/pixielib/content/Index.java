@@ -9,8 +9,8 @@ import java.util.Iterator;
 public class Index {
 
     public static final int MAGIC_NO = 0xc001d00d;  // file magic number
-    private Repository repos;                       // content repository
-    private Concordance concord;                    // term concordance
+    private final Repository repos;                       // content repository
+    private final Concordance concord;                    // term concordance
 
     public Index() throws IOException {
         concord = new Concordance();

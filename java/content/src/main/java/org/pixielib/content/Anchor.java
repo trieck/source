@@ -22,7 +22,7 @@ public class Anchor implements Comparable<Anchor> {
     public static final byte FIELDNUM_BITS = 10;
     public static final byte WORDNUM_BITS = 16;
 
-    private long anchorid;
+    private final long anchorid;
 
     public Anchor(long anchorid) {
         this.anchorid = anchorid;

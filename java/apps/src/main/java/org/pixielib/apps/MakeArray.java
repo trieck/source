@@ -22,14 +22,14 @@ public class MakeArray {
                     System.out.print(", ");
                 }
                 if ((i % 8) == 0) {
-                    System.out.println("");
+                    System.out.println();
                 }
                 System.out.print(x);
             }
             is.close();
             System.out.println("\n};");
         } catch (final IOException ioe) {
-            System.err.println(ioe.toString());
+            System.err.println(ioe);
             System.exit(-1);
         }
     }

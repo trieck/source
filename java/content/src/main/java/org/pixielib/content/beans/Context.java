@@ -149,7 +149,7 @@ public class Context implements Serializable {
         try {
             nrtn = Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            ; // not a number
+            // not a number
         }
 
         return nrtn;
@@ -170,7 +170,7 @@ public class Context implements Serializable {
         try {
             nrtn = Float.parseFloat(value);
         } catch (NumberFormatException e) {
-            ; // not a number
+            // not a number
         }
 
         return nrtn;

@@ -23,12 +23,10 @@ public class CompilerException extends Exception {
      * @return the exception message
      */
     private static String getMessage(int code) {
-        switch (code) {
-            case CE_NAN:
-                return "A number was expected and not found.";
-            default:
-                return "Unknown error.";
+        if (code == CE_NAN) {
+            return "A number was expected and not found.";
         }
+        return "Unknown error.";
     }
 
 }

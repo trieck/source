@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 public class AnchorList {
 
-    private ArrayList<Long> anchors = new ArrayList<>();
+    private final ArrayList<Long> anchors = new ArrayList<>();
 
     public AnchorList() {
     }

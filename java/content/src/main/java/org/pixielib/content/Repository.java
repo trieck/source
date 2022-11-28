@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Repository {
 
     private static Repository instance;
-    private Config config;
+    private final Config config;
 
     private Repository() throws IOException {
         config = new Config("content");
@@ -28,7 +28,7 @@ public class Repository {
     public File getPath() throws IOException {
         String repos = config.getProperty("content.repos");
         if (repos.length() == 0) {
-            throw new IOException(String.format("content.repos not set."));
+            throw new IOException("content.repos not set.");
         }
 
         File dir = new File(repos);

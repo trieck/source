@@ -106,7 +106,7 @@ public class BEEncoder {
     }
 
     private void writeRawInt(long l) throws IOException {
-        final String s = new String("" + l);
+        final String s = "" + l;
         writeBytes(s.getBytes());
     }
 

@@ -133,7 +133,6 @@ public class Parser {
         try {
             in.unread(curr);
         } catch (final IOException ioe) {
-            ;
         }
     }
 
@@ -146,7 +145,6 @@ public class Parser {
         try {
             c = in.read();
         } catch (final IOException ioe) {
-            ;
         }
 
         return c == EOF ? EOS : (char) c;
@@ -192,7 +190,7 @@ public class Parser {
     }
 
     private interface Machine {
-        public void dump(PrintWriter writer);
+        void dump(PrintWriter writer);
     }
 
     /**
@@ -209,11 +207,11 @@ public class Parser {
             final char[] A = {'a', 'b'};
             SIGMA = new TreeSet<Character>();
             for (final char element : A) {
-                SIGMA.add(new Character(element));
+                SIGMA.add(element);
             }
         }
 
-        protected int a[][]; /* adjacency matrix */
+        protected int[][] a; /* adjacency matrix */
         protected int state; /* current state during construction */
         private TreeSet<Integer> accept; /* set of accepting states */
 
@@ -240,7 +238,7 @@ public class Parser {
             final Iterator<?> it = getAlphabet();
             while (it.hasNext()) {
                 final Character C = (Character) it.next();
-                if (C.charValue() == c) {
+                if (C == c) {
                     return true;
                 }
             }
@@ -261,11 +259,11 @@ public class Parser {
         }
 
         protected void addAcceptingState(int s) {
-            accept.add(new Integer(s));
+            accept.add(s);
         }
 
         protected boolean isAcceptingState(int s) {
-            return accept.contains(new Integer(s));
+            return accept.contains(s);
         }
 
         /**
@@ -375,7 +373,7 @@ public class Parser {
                 }
 
                 if (left.isAcceptingState(i)) {
-                    A.add(new Integer(state));
+                    A.add(Integer.valueOf(state));
                     a[state][1] = EPSILON;
                 }
 
@@ -415,7 +413,7 @@ public class Parser {
                 }
 
                 if (left.isAcceptingState(i)) {
-                    A.add(new Integer(state));
+                    A.add(Integer.valueOf(state));
                 }
 
                 for (j = 0; j <= left.state; j++) {
@@ -433,7 +431,7 @@ public class Parser {
                 }
 
                 if (right.isAcceptingState(i)) {
-                    A.add(new Integer(state));
+                    A.add(Integer.valueOf(state));
                 }
 
                 for (j = 0; j <= right.state; j++) {
@@ -495,9 +493,7 @@ public class Parser {
                 while (it.hasNext()) {
                     final char a = ((Character) it.next()).charValue();
                     final DFAState U = closure(move(T, a));
-                    if (!Dstates.contains(U)) {
-                        Dstates.add(U);
-                    }
+                    Dstates.add(U);
 
                     // DTran[T, a] := U
                 }
@@ -527,7 +523,7 @@ public class Parser {
          */
         private DFAState closure(int s) {
             final DFAState input = new DFAState();
-            input.states.add(new Integer(s));
+            input.states.add(Integer.valueOf(s));
             return closure(input);
         }
 
@@ -545,7 +541,7 @@ public class Parser {
                 final int t = (st.pop()).intValue();
                 for (int u = 0; u < nfa.states(); u++) {
                     if (nfa.isEdge(t, u, EPSILON)) {
-                        final Integer U = new Integer(u);
+                        final Integer U = Integer.valueOf(u);
                         if (!ds.states.contains(U)) {
                             ds.states.add(U);
                             st.push(U);
@@ -569,10 +565,8 @@ public class Parser {
                 final int s = ((Integer) it.next()).intValue();
                 for (int i = 0; i < nfa.states(); i++) {
                     if (nfa.isEdge(s, i, a)) {
-                        final Integer t = new Integer(i);
-                        if (!ds.states.contains(t)) {
-                            ds.states.add(t);
-                        }
+                        final Integer t = Integer.valueOf(i);
+                        ds.states.add(t);
                     }
                 }
             }

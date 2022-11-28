@@ -12,10 +12,10 @@ import java.io.IOException;
 
 public abstract class Product {
 
-    private String product;     // product
-    private String db;          // database
-    private String query;       // query
-    private String style;       // style
+    private final String product;     // product
+    private final String db;          // database
+    private final String query;       // query
+    private final String style;       // style
     private int count;          // search record count
     private Document results;   // results XML document
 

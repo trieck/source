@@ -170,9 +170,7 @@ public class Machine {
         try {
             exec(compiler.compile(input));
         } catch (final CompilerException ce) {
-            ;
         } catch (final MachineException me) {
-            ;
         }
     }
 

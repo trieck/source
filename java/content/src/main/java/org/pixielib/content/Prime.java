@@ -6,7 +6,7 @@ public class Prime {
     // The delta table generates primes just less than a power of two. A prime
     // number is calculated by subtracting its delta value from its
     // corresponding power of two.
-    private static final short delta[] = {
+    private static final short[] delta = {
             0, 0, 1, 3, 3, 1, 3, 1,
             5, 3, 3, 9, 3, 1, 3, 19,
             15, 1, 5, 1, 3, 9, 3, 15,

@@ -46,7 +46,7 @@ public class BEDictionary extends BEObject {
         if (object == null || object.getType() != BEObject.BET_STRING) {
             return "";
         }
-        return ((BEString) object).toString();
+        return object.toString();
     }
 
     public long getInt(String k) {

@@ -10,8 +10,8 @@ import java.io.Reader;
 public abstract class Tokenizer {
     private static final int BUFFER_SIZE = 8192;    // push-back reader buffer size
 
-    private PushbackReader reader;  // underlying push-back reader
-    private StringBuilder buffer;   // token buffer
+    private final PushbackReader reader;  // underlying push-back reader
+    private final StringBuilder buffer;   // token buffer
 
     public Tokenizer(Reader r) {
         reader = new PushbackReader(r, BUFFER_SIZE);

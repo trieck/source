@@ -28,7 +28,6 @@ public class Search {
             try {
                 nrecs = Integer.parseInt(args[2]);
             } catch (NumberFormatException e) {
-                ;
             }
         }
 

@@ -17,7 +17,7 @@ import java.nio.channels.FileChannel;
 
 public class Content {
 
-    private Repository repos;
+    private final Repository repos;
 
     public Content() throws IOException {
         repos = Repository.getInstance();

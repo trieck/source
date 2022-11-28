@@ -11,12 +11,12 @@ import java.util.Stack;
 
 public class XMLIndexer extends QParser {
 
-    private Repository repos;       // repository instance
+    private final Repository repos;       // repository instance
     private Index index;            // index instance
     private int filenum;            // current file number while indexing
     private int rec_offset;         // record offset into current file
     private int field_num;          // current top-level field number
-    private Stack<Field> elements;  // stack of fields while indexing
+    private final Stack<Field> elements;  // stack of fields while indexing
     private IndexFields fields;     // set of top-level fields for indexing
 
     public XMLIndexer() throws IOException {

@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class QueryTerms extends Query {
 
-    private Set<String> terms = new HashSet<>();  // terms used in query
+    private final Set<String> terms = new HashSet<>();  // terms used in query
 
     public QueryTerms(String query) throws IOException {
         super();
