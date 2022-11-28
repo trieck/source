@@ -15,7 +15,7 @@ CString GetProfileString(LPCSTR section, LPCSTR entry);
 int GetProfileInt(LPCSTR section, LPCSTR entry);
 BOOL SetProfileString(LPCSTR section, LPCSTR entry, LPCSTR value);
 BOOL SetProfileInt(LPCSTR section, LPCSTR entry, int value);
-int GetTextWidth(CWnd *pWnd, LPCSTR str);
+int GetTextWidth(CWnd* pWnd, LPCSTR str);
 CString Comma(UINT);
 
 /////////////////////////////////////////////////////////////////////////////

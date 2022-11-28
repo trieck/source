@@ -17,39 +17,36 @@ protected: // create from serialization only
     HexView();
     DECLARE_DYNCREATE(HexView)
 
-// Attributes
-public:
+    // Attributes
     HexDoc* GetDocument() const;
 
-// Operations
-public:
+    // Operations
     void Update();
 
-// Overrides
+    // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(HexView)
-public:
-    virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-    virtual void OnInitialUpdate();
-    virtual void OnPrepareDC(CDC* pDC, CPrintInfo* pInfo = NULL);
+    void OnDraw(CDC* pDC) override; // overridden to draw this view
+    BOOL PreCreateWindow(CREATESTRUCT& cs) override;
+    void OnInitialUpdate() override;
+    auto OnPrepareDC(CDC* pDC, CPrintInfo* pInfo) -> void override;
 protected:
-    virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+    void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) override;
     //}}AFX_VIRTUAL
 
-// Implementation
+    // Implementation
 public:
-    virtual ~HexView();
+    ~HexView() override;
 #ifdef _DEBUG
-    virtual void AssertValid() const;
-    virtual void Dump(CDumpContext& dc) const;
+    void AssertValid() const override;
+    void Dump(CDumpContext& dc) const override;
 #endif
 
 protected:
-    void Render(CDC *pDC, LPCBYTE pdata, UINT size);
+    void Render(CDC* pDC, LPCBYTE pdata, UINT size);
     int FormatLine(UINT line, LPSTR buffer, LPCBYTE pdata, UINT size) const;
-    void DrawGridLine(CDC *pDC, int vpos, int xextent);
-    BOOL GetCellByPoint(CPoint pt, int & row, int & col) const;
+    void DrawGridLine(CDC* pDC, int vpos, int xextent);
+    BOOL GetCellByPoint(CPoint pt, int& row, int& col) const;
     BOOL NavigateCell(UINT nChar);
     void UpdateCell();
     BOOL PrevCell();
@@ -59,14 +56,13 @@ protected:
     void InvalidateCell(BOOL eraseChar = TRUE);
     void RepositionCell();
     void SetSizes();
-    void GetCellPos(int & row, int & col) const;
+    void GetCellPos(int& row, int& col) const;
     void SetCellPos(int row, int col);
-    void GetCellRect(CRect & rc) const;
-    void GetCellByPos(int row, int col, CRect & rc) const;
+    void GetCellRect(CRect& rc) const;
+    void GetCellByPos(int row, int col, CRect& rc) const;
     void ScrollToCell();
 
-// Generated message map functions
-protected:
+    // Generated message map functions
     //{{AFX_MSG(HexView)
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
     afx_msg void OnViewGrid();
@@ -96,12 +92,14 @@ private:
     int m_nDocHeight;
     int m_nDocWidth;
     BOOL m_grid;
-    COLORREF m_color;	// text color
+    COLORREF m_color; // text color
     HexEdit m_edit;
     UINT m_ActiveCell;
     CPoint m_ScrollPos;
 
     friend class HexEdit;
+public:
+    afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 };
 
 /////////////////////////////////////////////////////////////////////////////

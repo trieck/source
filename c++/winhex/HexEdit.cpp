@@ -27,8 +27,7 @@ HexEdit::HexEdit()
 }
 
 HexEdit::~HexEdit()
-{
-}
+= default;
 
 
 BEGIN_MESSAGE_MAP(HexEdit, CEdit)
@@ -81,9 +80,10 @@ int HexEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
 BOOL HexEdit::PreTranslateMessage(MSG* pMsg)
 {
     if (pMsg->message == WM_CHAR) {
-        char c = pMsg->wParam;
-        if (!isxdigit(c))
-            return TRUE;	// don't dispatch
+        char c = static_cast<char>(pMsg->wParam);
+        if (!isxdigit(c)) {
+            return TRUE; // don't dispatch
+        }
     }
 
     return CEdit::PreTranslateMessage(pMsg);
@@ -118,7 +118,7 @@ void HexEdit::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 
     CEdit::OnChar(nChar, nRepCnt, nFlags);
 
-    HexView * pView = (HexView*)GetParent();
+    auto pView = dynamic_cast<HexView*>(GetParent());
     ASSERT_VALID(pView);
 
     pView->SendMessage(WM_CHAR, nChar, MAKELPARAM(nRepCnt, nFlags));
@@ -126,7 +126,7 @@ void HexEdit::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void HexEdit::OnMaxtext()
 {
-    HexView * pView = (HexView*)GetParent();
+    auto pView = dynamic_cast<HexView*>(GetParent());
     ASSERT_VALID(pView);
 
     // move to the next cell

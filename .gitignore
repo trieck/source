@@ -168,3 +168,6 @@ ylwrap
 .vs/
 packages/
 
+.idea
+*.class
+classes

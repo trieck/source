@@ -9,7 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-typedef const unsigned char* LPCBYTE;
+using LPCBYTE = const unsigned char*;
 
 class HexDoc : public CDocument
 {
@@ -17,47 +17,40 @@ protected: // create from serialization only
     HexDoc();
     DECLARE_DYNCREATE(HexDoc)
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+    // Attributes
+    // Operations
+    // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(HexDoc)
-public:
-    virtual BOOL OnNewDocument();
-    virtual void Serialize(CArchive& ar);
-    virtual void DeleteContents();
-    virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
-    virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
+    BOOL OnNewDocument() override;
+    void Serialize(CArchive& ar) override;
+    void DeleteContents() override;
+    BOOL OnOpenDocument(LPCTSTR lpszPathName) override;
+    BOOL OnSaveDocument(LPCTSTR lpszPathName) override;
     //}}AFX_VIRTUAL
 
-// Implementation
-public:
-    virtual ~HexDoc();
+    // Implementation
+    ~HexDoc() override;
 #ifdef _DEBUG
-    virtual void AssertValid() const;
-    virtual void Dump(CDumpContext& dc) const;
+    void AssertValid() const override;
+    void Dump(CDumpContext& dc) const override;
 #endif
     LPCBYTE GetData() const;
     UINT GetDataSize() const;
     void SetData(UINT offset, BYTE data);
 protected:
-    void Load(CArchive & ar);
-    void Save(CArchive & ar);
+    void Load(CArchive& ar);
+    void Save(CArchive& ar);
     void UpdateHexView();
 
-// Generated message map functions
-protected:
+    // Generated message map functions
     //{{AFX_MSG(HexDoc)
     afx_msg void OnUpdateFileSave(CCmdUI* pCmdUI);
     afx_msg void OnUpdateDocumentSize(CCmdUI* pCmdUI);
     //}}AFX_MSG
     DECLARE_MESSAGE_MAP()
 private:
-    BYTE *m_pdata;
+    BYTE* m_pdata;
     UINT m_nsize;
 };
 

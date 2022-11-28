@@ -20,7 +20,7 @@ IMPLEMENT_DYNCREATE(HexDoc, CDocument)
 
 HexDoc::HexDoc()
 {
-    m_pdata = NULL;
+    m_pdata = nullptr;
     m_nsize = 0UL;
 }
 
@@ -32,8 +32,7 @@ BOOL HexDoc::OnNewDocument()
 }
 
 HexDoc::~HexDoc()
-{
-}
+= default;
 
 BEGIN_MESSAGE_MAP(HexDoc, CDocument)
     //{{AFX_MSG_MAP(HexDoc)
@@ -64,40 +63,40 @@ void HexDoc::Serialize(CArchive& ar)
 {
     if (ar.IsLoading())
         Load(ar);
-    else Save(ar);
+    else
+        Save(ar);
 }
 
-void HexDoc::Load(CArchive & ar)
+void HexDoc::Load(CArchive& ar)
 {
     ASSERT(m_pdata == NULL);
     ASSERT(m_nsize == 0);
 
-    CFile *pFile = ar.GetFile();
-    int nlen = (int)pFile->GetLength();
+    CFile* pFile = ar.GetFile();
+    int nlen = static_cast<int>(pFile->GetLength());
 
     m_pdata = new BYTE[nlen];
-    if (m_pdata == NULL)
+    if (m_pdata == nullptr)
         AfxThrowMemoryException();
 
     try {
         m_nsize = ar.Read(m_pdata, nlen);
-    } catch (CFileException *E) {
+    } catch (CFileException* /*E*/) {
         delete [] m_pdata;
-        m_pdata = NULL;
+        m_pdata = nullptr;
         m_nsize = 0UL;
-        throw E;
+        throw;
     }
 }
 
-void HexDoc::Save(CArchive & ar)
+void HexDoc::Save(CArchive& ar)
 {
     ASSERT(m_pdata != NULL);
 
     try {
         ar.Write(m_pdata, m_nsize);
-    } catch (CFileException *E) {
-        throw E;
-        return;
+    } catch (CFileException* /*E*/) {
+        throw;
     }
 
     SetModifiedFlag(FALSE);
@@ -108,9 +107,9 @@ void HexDoc::Save(CArchive & ar)
 
 void HexDoc::DeleteContents()
 {
-    if (m_pdata != NULL) {
+    if (m_pdata != nullptr) {
         delete [] m_pdata;
-        m_pdata = NULL;
+        m_pdata = nullptr;
     }
 
     m_nsize = 0UL;
@@ -127,7 +126,7 @@ void HexDoc::SetData(UINT offset, BYTE data)
 
     SetModifiedFlag();
 
-    UpdateAllViews(NULL, offset, this);
+    UpdateAllViews(nullptr, offset, this);
 }
 
 void HexDoc::OnUpdateFileSave(CCmdUI* pCmdUI)
@@ -146,7 +145,7 @@ void HexDoc::OnUpdateDocumentSize(CCmdUI* pCmdUI)
 
     pCmdUI->SetText(str);
 
-    CStatusBar* pBar = (CStatusBar*)pCmdUI->m_pOther;
+    auto pBar = dynamic_cast<CStatusBar*>(pCmdUI->m_pOther);
     ASSERT_VALID(pBar);
 
     UINT id, style;
@@ -180,10 +179,9 @@ void HexDoc::UpdateHexView()
         return;
 
     POSITION pos = GetFirstViewPosition();
-    if (pos != NULL) {
-        HexView * pView = (HexView*)GetNextView(pos);
-        if (pView != NULL)
+    if (pos != nullptr) {
+        auto pView = dynamic_cast<HexView*>(GetNextView(pos));
+        if (pView != nullptr)
             pView->Update();
     }
 }
-

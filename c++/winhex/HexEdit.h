@@ -7,39 +7,39 @@
 // HexEdit.h : header file
 //
 
-typedef struct {
+using charStruct = struct
+{
     UINT nChar;
     UINT nRepCnt;
     UINT nFlags;
-} charStruct;
+};
 
 /////////////////////////////////////////////////////////////////////////////
 // HexEdit window
 
 class HexEdit : public CEdit
 {
-// Construction
+    // Construction
 public:
     HexEdit();
 
-// Attributes
+    // Attributes
 public:
-
-// Operations
+    // Operations
 public:
     void SetTextColor(COLORREF clrText);
     void SetBkColor(COLORREF clrBkgnd);
 
-// Overrides
+    // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(HexEdit)
 public:
-    virtual BOOL PreTranslateMessage(MSG* pMsg);
+    BOOL PreTranslateMessage(MSG* pMsg) override;
     //}}AFX_VIRTUAL
 
-// Implementation
+    // Implementation
 public:
-    virtual ~HexEdit();
+    ~HexEdit() override;
 
     // Generated message map functions
 protected:
@@ -57,7 +57,7 @@ private:
     COLORREF m_clrText;
     COLORREF m_clrBkgnd;
     CBrush m_brBkgnd;
-    charStruct m_LastChar;
+    charStruct m_LastChar{};
 };
 
 /////////////////////////////////////////////////////////////////////////////

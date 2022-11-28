@@ -24,14 +24,14 @@ class HexApp : public CWinApp
 public:
     HexApp();
 
-// Overrides
+    // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(HexApp)
 public:
-    virtual BOOL InitInstance();
+    BOOL InitInstance() override;
     //}}AFX_VIRTUAL
 
-// Implementation
+    // Implementation
     //{{AFX_MSG(HexApp)
     afx_msg void OnAppAbout();
     //}}AFX_MSG

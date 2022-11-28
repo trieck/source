@@ -44,14 +44,12 @@ BOOL HexApp::InitInstance()
     // Change the registry key under which our settings are stored.
     SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
-    LoadStdProfileSettings();  // Load standard INI file options (including MRU)
+    LoadStdProfileSettings(); // Load standard INI file options (including MRU)
 
-    // Register document templates
-    CSingleDocTemplate* pDocTemplate;
-    pDocTemplate = new CSingleDocTemplate(
+    CSingleDocTemplate* pDocTemplate = new CSingleDocTemplate(
         IDR_MAINFRAME,
         RUNTIME_CLASS(HexDoc),
-        RUNTIME_CLASS(MainFrame),       // main SDI frame window
+        RUNTIME_CLASS(MainFrame), // main SDI frame window
         RUNTIME_CLASS(HexView));
     AddDocTemplate(pDocTemplate);
 
@@ -77,18 +75,19 @@ class AboutDlg : public CDialog
 public:
     AboutDlg();
 
-// Dialog Data
+    // Dialog Data
     //{{AFX_DATA(AboutDlg)
     enum { IDD = IDD_ABOUTBOX };
+
     //}}AFX_DATA
 
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(AboutDlg)
 protected:
-    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+    void DoDataExchange(CDataExchange* pDX) override; // DDX/DDV support
     //}}AFX_VIRTUAL
 
-// Implementation
+    // Implementation
 protected:
     //{{AFX_MSG(AboutDlg)
     // No message handlers
@@ -96,7 +95,7 @@ protected:
     DECLARE_MESSAGE_MAP()
 };
 
-AboutDlg::AboutDlg() : CDialog(AboutDlg::IDD)
+AboutDlg::AboutDlg() : CDialog(IDD)
 {
     //{{AFX_DATA_INIT(AboutDlg)
     //}}AFX_DATA_INIT

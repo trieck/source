@@ -13,14 +13,14 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#define LINESIZE 16
-#define MAXCOL LINESIZE - 1
-#define BUFFSIZE 81
-#define DATAOFFSET 13
-#define DATALEN 47
-#define CHAROFFSET 5
-#define INVALID_CELL (UINT)-1
-#define COLOR_SILVER PALETTERGB(0xc0, 0xc0, 0xc0)
+constexpr auto LINESIZE = 16;
+constexpr auto MAXCOL = LINESIZE - 1;
+constexpr auto BUFFSIZE = 81;
+constexpr auto DATAOFFSET = 13;
+constexpr auto DATALEN = 47;
+constexpr auto CHAROFFSET = 5;
+constexpr UINT INVALID_CELL = static_cast<UINT>(-1);
+constexpr auto COLOR_SILVER = PALETTERGB(0xc0, 0xc0, 0xc0);
 
 /////////////////////////////////////////////////////////////////////////////
 // HexView
@@ -44,6 +44,7 @@ BEGIN_MESSAGE_MAP(HexView, CView)
     ON_WM_DESTROY()
     ON_WM_CHAR()
     //}}AFX_MSG_MAP
+    ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -67,8 +68,7 @@ HexView::HexView()
 }
 
 HexView::~HexView()
-{
-}
+= default;
 
 BOOL HexView::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -86,14 +86,14 @@ void HexView::OnDraw(CDC* pDC)
     ASSERT_VALID(pDoc);
 
     LPCBYTE pdata = pDoc->GetData();
-    if (pdata != NULL) {
-        CFont * pOldFont = pDC->SelectObject(&m_font);
+    if (pdata != nullptr) {
+        CFont* pOldFont = pDC->SelectObject(&m_font);
         Render(pDC, pdata, pDoc->GetDataSize());
         pDC->SelectObject(pOldFont);
     }
 }
 
-void HexView::Render(CDC *pDC, LPCBYTE pdata, UINT size)
+void HexView::Render(CDC* pDC, LPCBYTE pdata, UINT size)
 {
     ASSERT_VALID(pDC);
     ASSERT(pdata != NULL);
@@ -116,17 +116,18 @@ void HexView::Render(CDC *pDC, LPCBYTE pdata, UINT size)
     }
 }
 
-void HexView::DrawGridLine(CDC *pDC, int vpos, int xextent)
+void HexView::DrawGridLine(CDC* pDC, int vpos, int xextent)
 {
     ASSERT_VALID(pDC);
 
-    CPen * pOldPen = pDC->SelectObject(&m_gridpen);
+    CPen* pOldPen = pDC->SelectObject(&m_gridpen);
 
     pDC->MoveTo(0, vpos);
     pDC->LineTo(xextent, vpos);
 
     pDC->SelectObject(pOldPen);
 }
+
 /////////////////////////////////////////////////////////////////////////////
 // HexView diagnostics
 
@@ -144,7 +145,7 @@ void HexView::Dump(CDumpContext& dc) const
 HexDoc* HexView::GetDocument() const // non-debug version is inline
 {
     ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(HexDoc)));
-    return (HexDoc*)m_pDocument;
+    return static_cast<HexDoc*>(m_pDocument);
 }
 #endif //_DEBUG
 
@@ -153,9 +154,10 @@ HexDoc* HexView::GetDocument() const // non-debug version is inline
 
 void HexView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
-    if (pHint != NULL && m_ActiveCell != INVALID_CELL)
+    if (pHint != nullptr && m_ActiveCell != INVALID_CELL)
         InvalidateCell();
-    else Invalidate();
+    else
+        Invalidate();
 }
 
 void HexView::OnInitialUpdate()
@@ -165,7 +167,7 @@ void HexView::OnInitialUpdate()
 
     if (nsize == 0) {
         m_ActiveCell = INVALID_CELL;
-        m_edit.SetWindowPos(NULL, 0, 0, 0, 0, SW_HIDE);
+        m_edit.SetWindowPos(nullptr, 0, 0, 0, 0, SW_HIDE);
         SetFocus();
         SetSizes();
     } else {
@@ -244,12 +246,13 @@ int HexView::FormatLine(UINT line, LPSTR buffer, LPCBYTE pdata, UINT size) const
     for (unsigned n = 0; n < size; n++) {
         if (isprint(pdata[n]))
             pbuffer[n] = pdata[n];
-        else pbuffer[n] = '.';
+        else
+            pbuffer[n] = '.';
     }
 
     pbuffer[size] = '\0';
 
-    return (pbuffer + size) - buffer;
+    return static_cast<int>((pbuffer + size) - buffer);
 }
 
 void HexView::OnViewGrid()
@@ -264,7 +267,7 @@ void HexView::OnUpdateViewGrid(CCmdUI* pCmdUI)
     pCmdUI->SetCheck(m_grid);
 }
 
-void HexView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void HexView::OnVScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* /*pScrollBar*/)
 {
     int pos = m_ScrollPos.y;
     int orig = pos;
@@ -295,7 +298,7 @@ void HexView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
         info.cbSize = sizeof(SCROLLINFO);
         info.fMask = SIF_TRACKPOS;
         GetScrollInfo(SB_VERT, &info);
-        pos = (int)info.nTrackPos;
+        pos = info.nTrackPos;
         break;
     case SB_PAGEDOWN:
         if (pos >= nMaxPos)
@@ -311,7 +314,7 @@ void HexView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
     int delta = pos - orig;
     if (delta == 0)
-        return;	// no change
+        return; // no change
 
     ScrollWindow(0, -delta);
     SetScrollPos(SB_VERT, m_ScrollPos.y = pos);
@@ -319,7 +322,7 @@ void HexView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
     UpdateWindow();
 }
 
-void HexView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void HexView::OnHScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* /*pScrollBar*/)
 {
     int pos = m_ScrollPos.x;
     int orig = pos;
@@ -350,7 +353,7 @@ void HexView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
         info.cbSize = sizeof(SCROLLINFO);
         info.fMask = SIF_TRACKPOS;
         GetScrollInfo(SB_HORZ, &info);
-        pos = (int)info.nTrackPos;
+        pos = info.nTrackPos;
         break;
     case SB_PAGEDOWN:
         if (pos >= nMaxPos)
@@ -366,7 +369,7 @@ void HexView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
     int delta = pos - orig;
     if (delta == 0)
-        return;	// no change
+        return; // no change
 
     ScrollWindow(-delta, 0);
     SetScrollPos(SB_HORZ, m_ScrollPos.x = pos);
@@ -383,7 +386,8 @@ void HexView::OnSize(UINT nType, int cx, int cy)
         nScrollMax = m_nDocHeight;
         m_nYPageSize = cy;
         m_ScrollPos.y = min(m_ScrollPos.y, m_nDocHeight - m_nYPageSize);
-    } else nScrollMax = m_ScrollPos.y = m_nYPageSize = 0;
+    } else
+        nScrollMax = m_ScrollPos.y = m_nYPageSize = 0;
 
     SCROLLINFO si;
     si.fMask = SIF_PAGE | SIF_RANGE | SIF_POS;
@@ -398,7 +402,8 @@ void HexView::OnSize(UINT nType, int cx, int cy)
         nScrollMax = m_nDocWidth;
         m_nXPageSize = cx;
         m_ScrollPos.x = min(m_ScrollPos.x, m_nDocWidth - m_nXPageSize);
-    } else nScrollMax = m_ScrollPos.x = m_nXPageSize = 0;
+    } else
+        nScrollMax = m_ScrollPos.x = m_nXPageSize = 0;
 
     si.nMax = nScrollMax;
     si.nPos = m_ScrollPos.x;
@@ -432,7 +437,7 @@ void HexView::OnFont()
 
     cf.lStructSize = sizeof(CHOOSEFONT);
     cf.Flags = CF_INITTOLOGFONTSTRUCT |
-               CF_SCREENFONTS | CF_EFFECTS | CF_FIXEDPITCHONLY;
+        CF_SCREENFONTS | CF_EFFECTS | CF_FIXEDPITCHONLY;
     cf.lpLogFont = &lf;
     cf.hwndOwner = *this;
     cf.rgbColors = m_color;
@@ -472,7 +477,7 @@ void HexView::OnLButtonDown(UINT nFlags, CPoint point)
     SetCellPos(row, col);
 }
 
-BOOL HexView::GetCellByPoint(CPoint pt, int & row, int & col) const
+BOOL HexView::GetCellByPoint(CPoint pt, int& row, int& col) const
 {
     UINT nsize = GetDocument()->GetDataSize();
 
@@ -519,7 +524,8 @@ void HexView::UpdateCell()
     WORD data;
     if (sscanf(str, "%hx", &data) == -1)
         InvalidateCell(FALSE);
-    else GetDocument()->SetData(m_ActiveCell, (BYTE)data);
+    else
+        GetDocument()->SetData(m_ActiveCell, static_cast<BYTE>(data));
     m_edit.SetModify(FALSE);
 }
 
@@ -527,7 +533,7 @@ void HexView::SetSizes()
 {
     CClientDC dc(this);
 
-    CFont *pOldFont = dc.SelectObject(&m_font);
+    CFont* pOldFont = dc.SelectObject(&m_font);
 
     TEXTMETRIC tm;
     dc.GetTextMetrics(&tm);
@@ -540,8 +546,7 @@ void HexView::SetSizes()
 
     m_ScrollPos = CPoint(0, 0);
 
-    SCROLLINFO si;
-    memset(&si, 0, sizeof(SCROLLINFO));
+    SCROLLINFO si = {};
     si.fMask = SIF_RANGE | SIF_POS;
     si.nMin = 0;
     si.nMax = m_nDocHeight;
@@ -562,7 +567,7 @@ BOOL HexView::OnEraseBkgnd(CDC* pDC)
     CRect rc;
     pDC->GetClipBox(rc);
 
-    CBrush *pOldBrush = pDC->SelectObject(&m_bgBrush);
+    CBrush* pOldBrush = pDC->SelectObject(&m_bgBrush);
 
     pDC->PatBlt(rc.left, rc.top, rc.Width(), rc.Height(), PATCOPY);
 
@@ -573,8 +578,7 @@ BOOL HexView::OnEraseBkgnd(CDC* pDC)
 
 void HexView::OnBackgroundColor()
 {
-    CHOOSECOLOR cc;
-    memset(&cc, 0, sizeof(CHOOSECOLOR));
+    CHOOSECOLOR cc = {};
 
     LOGBRUSH lb;
     m_bgBrush.GetLogBrush(&lb);
@@ -629,7 +633,7 @@ BOOL HexView::PrevCell()
     ASSERT(m_ActiveCell != INVALID_CELL);
 
     if (m_ActiveCell == 0)
-        return FALSE;	// first cell
+        return FALSE; // first cell
 
     int row, col;
 
@@ -637,7 +641,8 @@ BOOL HexView::PrevCell()
     if (col == 0) {
         col = MAXCOL;
         row--;
-    } else col--;
+    } else
+        col--;
 
     SetCellPos(row, col);
 
@@ -650,7 +655,7 @@ BOOL HexView::NextCell()
 
     UINT nsize = GetDocument()->GetDataSize();
     if (m_ActiveCell == nsize - 1)
-        return FALSE;	// last cell
+        return FALSE; // last cell
 
     int row, col;
 
@@ -658,7 +663,8 @@ BOOL HexView::NextCell()
     if (col == MAXCOL) {
         col = 0;
         row++;
-    } else col++;
+    } else
+        col++;
 
     SetCellPos(row, col);
 
@@ -673,7 +679,7 @@ BOOL HexView::PrevRow()
     GetCellPos(row, col);
 
     if (row == 0)
-        return FALSE;	// first row
+        return FALSE; // first row
 
     SetCellPos(--row, col);
 
@@ -691,7 +697,7 @@ BOOL HexView::NextRow()
 
     UINT cell = ++row * LINESIZE + col;
     if (cell >= nsize)
-        return FALSE;	// invalid cell
+        return FALSE; // invalid cell
 
     SetCellPos(row, col);
 
@@ -701,7 +707,7 @@ BOOL HexView::NextRow()
 void HexView::InvalidateCell(BOOL eraseChar)
 {
     if (m_ActiveCell == INVALID_CELL)
-        return;	// nothing to repaint
+        return; // nothing to repaint
 
     CRect rc;
     GetCellRect(rc);
@@ -709,11 +715,12 @@ void HexView::InvalidateCell(BOOL eraseChar)
 
     InvalidateRect(rc);
 
-    if (eraseChar) {	// erase corresponding character
-        int col = (rc.left + m_ScrollPos.x - (DATAOFFSET * m_cxChar)) /
-                  rc.Width();
+    if (eraseChar) {
+        // erase corresponding character
+        int col = (rc.left + m_ScrollPos.x - DATAOFFSET * m_cxChar) /
+            rc.Width();
         int cx = (DATAOFFSET + DATALEN + CHAROFFSET) * m_cxChar +
-                 (m_cxChar * col) - m_ScrollPos.x;
+            m_cxChar * col - m_ScrollPos.x;
 
         CRect rcChar;
         rcChar.left = cx;
@@ -735,7 +742,7 @@ void HexView::RepositionCell()
     SetCellPos(row, col);
 }
 
-void HexView::GetCellPos(int & row, int & col) const
+void HexView::GetCellPos(int& row, int& col) const
 {
     ASSERT(m_ActiveCell != INVALID_CELL);
 
@@ -743,7 +750,7 @@ void HexView::GetCellPos(int & row, int & col) const
     col = m_ActiveCell - (row * LINESIZE);
 }
 
-void HexView::GetCellRect(CRect & rc) const
+void HexView::GetCellRect(CRect& rc) const
 {
     m_edit.GetWindowRect(rc);
     ScreenToClient(rc);
@@ -764,9 +771,10 @@ void HexView::SetCellPos(int row, int col)
 
     if (m_edit.GetModify()) {
         UpdateCell();
-    } else InvalidateCell(FALSE);
+    } else
+        InvalidateCell(FALSE);
 
-    m_edit.SetWindowPos(NULL, rc.left, rc.top,
+    m_edit.SetWindowPos(nullptr, rc.left, rc.top,
                         rc.Width(), rc.Height(), SWP_SHOWWINDOW);
 
     LPCBYTE pdata = GetDocument()->GetData();
@@ -827,17 +835,17 @@ void HexView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
     CView::OnChar(nChar, nRepCnt, nFlags);
 }
 
-void HexView::GetCellByPos(int row, int col, CRect & rc) const
+void HexView::GetCellByPos(int row, int col, CRect& rc) const
 {
     ASSERT(row < (m_nDocHeight / m_cyChar));
     ASSERT(col < LINESIZE);
 
     rc.SetRectEmpty();
 
-    rc.left = (DATAOFFSET * m_cxChar) + (m_cxChar * 3 * col) - m_ScrollPos.x;
+    rc.left = DATAOFFSET * m_cxChar + m_cxChar * 3 * col - m_ScrollPos.x;
     rc.top = m_cyChar * row - m_ScrollPos.y;
-    rc.right = rc.left + (m_cxChar * 3);
-    rc.bottom = rc.top + m_cyChar - 1;	// gridline
+    rc.right = rc.left + m_cxChar * 3;
+    rc.bottom = rc.top + m_cyChar - 1; // gridline
 }
 
 BOOL HexView::NavigateCell(UINT nChar)
@@ -874,7 +882,7 @@ void HexView::ScrollToCell()
     ASSERT(m_ActiveCell != INVALID_CELL);
 
     CClientDC dc(this);
-    OnPrepareDC(&dc);
+    OnPrepareDC(&dc, nullptr);
 
     CRect rc, rcCell;
 
@@ -892,7 +900,7 @@ void HexView::ScrollToCell()
     dummy.UnionRect(rc, rcCell);
 
     if (dummy == rc)
-        return;	// no need to scroll
+        return; // no need to scroll
 
     // for horizontal scrolling we must calculate a scroll position
     // the default line size is only size of character width
@@ -901,16 +909,27 @@ void HexView::ScrollToCell()
     if (dummy.bottom > rc.bottom) {
         SendMessage(WM_VSCROLL, MAKEWPARAM(SB_LINEDOWN, 0), NULL);
         return;
-    } else if (dummy.top < rc.top) {
+    }
+    if (dummy.top < rc.top) {
         SendMessage(WM_VSCROLL, MAKEWPARAM(SB_LINEUP, 0), NULL);
         return;
-    } else if (dummy.left < rc.left) {
+    }
+    if (dummy.left < rc.left) {
         cx -= m_cxChar * 3;
     } else if (dummy.right > rc.right) {
         cx += m_cxChar * 3;
     }
 
     ScrollWindow(-(cx - m_ScrollPos.x), 0);
-    SetScrollPos(SB_HORZ, m_ScrollPos.x=cx);
+    SetScrollPos(SB_HORZ, m_ScrollPos.x = cx);
     UpdateWindow();
+}
+
+BOOL HexView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+    UINT code = zDelta < 0 ? SB_LINEDOWN : SB_LINEUP;
+
+    OnVScroll(code, 0, nullptr);
+
+    return 0;
 }

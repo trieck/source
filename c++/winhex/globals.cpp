@@ -19,7 +19,7 @@ CString GetProfileString(LPCSTR section, LPCSTR entry)
     CHAR buffer[256];
     buffer[0] = '\0';
 
-    GetPrivateProfileString(section, entry, "", buffer, sizeof(buffer), GetProfilePath());
+    GetPrivateProfileString(section, entry, "", buffer, sizeof buffer, GetProfilePath());
 
     return buffer;
 }
@@ -59,7 +59,7 @@ BOOL SetProfileInt(LPCSTR section, LPCSTR entry, int value)
 CString GetProfilePath()
 {
     CHAR module[MAX_PATH + _MAX_FNAME + 1];
-    GetModuleFileName(NULL, module, MAX_PATH + _MAX_FNAME);
+    GetModuleFileName(nullptr, module, MAX_PATH + _MAX_FNAME);
 
     CString ininame = module;
     int nPosition = ininame.ReverseFind('.');
@@ -74,22 +74,22 @@ CString GetProfilePath()
     return ininame;
 }
 
-int GetTextWidth(CWnd *pWnd, LPCSTR str)
+int GetTextWidth(CWnd* pWnd, LPCSTR str)
 {
     ASSERT_VALID(pWnd);
     ASSERT(IsWindow(*pWnd));
     ASSERT(str != NULL);
 
-    CDC * pDC = pWnd->GetDC();
+    CDC* pDC = pWnd->GetDC();
     ASSERT_VALID(pDC);
 
-    CFont * pFont = pWnd->GetFont();
+    CFont* pFont = pWnd->GetFont();
     ASSERT_VALID(pFont);
 
-    CFont * pOldFont = pDC->SelectObject(pFont);
+    CFont* pOldFont = pDC->SelectObject(pFont);
 
     SIZE sz;
-    ::GetTextExtentPoint32(*pDC, str, strlen(str), &sz);
+    ::GetTextExtentPoint32(*pDC, str, static_cast<int>(strlen(str)), &sz);
 
     pDC->SelectObject(pOldFont);
 
@@ -106,12 +106,12 @@ CString Comma(UINT i)
     int n = input.GetLength();
 
     for (int j = n - 1, k = 1; j >= 0; j--, k++) {
-        output += input[(int)j];
+        output += input[j];
         if (k % 3 == 0 && j > 0 && j < n - 1)
             output += ',';
     }
 
-    strrev(output.GetBuffer(output.GetLength()));
+    _strrev(output.GetBuffer(output.GetLength()));
     output.ReleaseBuffer();
 
     return output;
