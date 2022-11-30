@@ -20,14 +20,17 @@
  */
 #include "common.h"
 #include "extern.h"
-typedef struct _extern {
-    char *name;					/* name of external */
-    struct _extern *next;		/* next external */
+
+typedef struct _extern
+{
+    char* name;           /* name of external */
+    struct _extern* next; /* next external */
 } Extern;
-static Extern *externals;		/* external list */
-extern int lineno;				/* current line number */
-static Extern *extern_alloc(void);
-static Extern *extern_lookup(const char *name);
+
+static Extern* externals; /* external list */
+extern int lineno;        /* current line number */
+static Extern* extern_alloc(void);
+static Extern* extern_lookup(const char* name);
 
 /*
  * initialize externals list
@@ -40,9 +43,9 @@ void extern_init(void)
 /*
  * allocate an external
  */
-Extern *extern_alloc(void)
+Extern* extern_alloc(void)
 {
-    Extern *pextern = (Extern *) malloc(sizeof(Extern));
+    Extern* pextern = malloc(sizeof(Extern));
     memset(pextern, 0, sizeof(Extern));
     return pextern;
 }
@@ -52,9 +55,9 @@ Extern *extern_alloc(void)
  */
 void extern_free(void)
 {
-    Extern *pextern = externals;
+    Extern* pextern = externals;
     while (pextern != NULL) {
-        Extern *pnext = pextern->next;
+        Extern* pnext = pextern->next;
 
         if (pextern->name != NULL)
             free(pextern->name);
@@ -68,9 +71,9 @@ void extern_free(void)
 /*
  * insert an external declaration
  */
-void extern_insert(const char *name)
+void extern_insert(const char* name)
 {
-    Extern *pextern = extern_lookup(name);
+    Extern* pextern = extern_lookup(name);
     if (pextern != NULL) {
         warning("external declaration %s already declared at line %d.\n",
                 name, lineno);
@@ -87,9 +90,9 @@ void extern_insert(const char *name)
 /*
  * lookup external by name
  */
-Extern *extern_lookup(const char *name)
+Extern* extern_lookup(const char* name)
 {
-    Extern *pextern = externals;
+    Extern* pextern = externals;
     while (pextern != NULL) {
         if (pextern->name && strcmp(pextern->name, name) == 0)
             return pextern;

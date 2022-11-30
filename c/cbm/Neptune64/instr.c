@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include "common.h"
 #include "instr.h"
+
 /*
  * array of all supported operations
  */
@@ -87,635 +88,690 @@ const byte ops[] = {
     0x9A,
     0x98
 };
+
 const instr adc = {
-    NULL, 		/* acc */
-    &ops[0], 	/* imm */
-    &ops[1],	/* zpg */
-    &ops[2],	/* zpx */
-    NULL,		/* zpy */
-    &ops[3],	/* abs */
-    &ops[4],	/* abx */
-    &ops[5],	/* aby */
-    NULL,		/* imp */
-    NULL,		/* rel */
-    &ops[6],	/* idx */
-    &ops[7],	/* idy */
-};
-const instr and = {
-    NULL,		/* acc */
-    &ops[8],	/* imm */
-    &ops[9],	/* zpg */
-    &ops[10],	/* zpx */
-    NULL,		/* zpy */
-    &ops[11],	/* abs */
-    &ops[12],	/* abx */
-    &ops[13],	/* aby */
-    NULL,		/* imp */
-    NULL,		/* rel */
-    &ops[14],	/* idx */
-    &ops[15],	/* idy */
-};
-const instr asl = {
-    &ops[16],	/* acc */
-    NULL,		/* imm */
-    &ops[17],	/* zpg */
-    &ops[18],	/* zpx */
-    NULL,		/* zpy */
-    &ops[19],	/* abs */
-    &ops[20]	/* abx */
-};
-const instr bcc = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    NULL,		/* imp */
-    &ops[21]	/* rel */
-};
-const instr bcs = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    NULL,		/* imp */
-    &ops[22]	/* rel */
-};
-const instr beq = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    NULL,		/* imp */
-    &ops[23]	/* rel */
-};
-const instr bit = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    &ops[24],	/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    &ops[25]	/* abs */
-};
-const instr bmi = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    NULL,		/* imp */
-    &ops[26]	/* rel */
-};
-const instr bne = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    NULL,		/* imp */
-    &ops[27]	/* rel */
-};
-const instr bpl = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    NULL,		/* imp */
-    &ops[28]	/* rel */
-};
-const instr Brk = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    &ops[29]	/* imp */
-};
-const instr bvc = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    NULL,		/* imp */
-    &ops[30]	/* rel */
-};
-const instr bvs = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    NULL,		/* imp */
-    &ops[31]	/* rel */
-};
-const instr clc = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    &ops[32]	/* imp */
-};
-const instr cld = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    &ops[33]	/* imp */
-};
-const instr cli = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    &ops[34]	/* imp */
-};
-const instr clv = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    &ops[35]	/* imp */
-};
-const instr cmp = {
-    NULL, 		/* acc */
-    &ops[36], 	/* imm */
-    &ops[37],	/* zpg */
-    &ops[38],	/* zpx */
-    NULL,		/* zpy */
-    &ops[39],	/* abs */
-    &ops[40],	/* abx */
-    &ops[41],	/* aby */
-    NULL,		/* imp */
-    NULL,		/* rel */
-    &ops[42],	/* idx */
-    &ops[43],	/* idy */
-};
-const instr cpx = {
-    NULL, 		/* acc */
-    &ops[44], 	/* imm */
-    &ops[45],	/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    &ops[46],	/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    NULL,		/* imp */
-    NULL,		/* rel */
-    NULL,		/* idx */
-    NULL,		/* idy */
-};
-const instr cpy = {
-    NULL, 		/* acc */
-    &ops[47], 	/* imm */
-    &ops[48],	/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    &ops[49],	/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    NULL,		/* imp */
-    NULL,		/* rel */
-    NULL,		/* idx */
-    NULL,		/* idy */
-};
-const instr dec = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    &ops[50],	/* zpg */
-    &ops[51],	/* zpx */
-    NULL,		/* zpy */
-    &ops[52],	/* abs */
-    &ops[53]	/* abx */
-};
-const instr dex = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    &ops[54]	/* imp */
-};
-const instr dey = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    &ops[55]	/* imp */
-};
-const instr eor = {
-    NULL, 		/* acc */
-    &ops[56], 	/* imm */
-    &ops[57],	/* zpg */
-    &ops[58],	/* zpx */
-    NULL,		/* zpy */
-    &ops[59],	/* abs */
-    &ops[60],	/* abx */
-    &ops[61],	/* aby */
-    NULL,		/* imp */
-    NULL,		/* rel */
-    &ops[62],	/* idx */
-    &ops[63]	/* idy */
-};
-const instr inc = {
-    NULL, 		/* acc */
-    NULL,	 	/* imm */
-    &ops[64],	/* zpg */
-    &ops[65],	/* zpx */
-    NULL,		/* zpy */
-    &ops[66],	/* abs */
-    &ops[67]	/* abx */
-};
-const instr inx = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    &ops[68]	/* imp */
-};
-const instr iny = {
-    NULL,		/* acc */
-    NULL,		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL, 		/* aby */
-    &ops[69]	/* imp */
-};
-const instr jmp = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    &ops[70],	/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    NULL,		/* imp */
-    NULL,		/* rel */
-    NULL,		/* idx */
-    NULL,		/* idy */
-    &ops[71]	/* ind */
-};
-const instr jsr = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    &ops[72]	/* abs */
-};
-const instr lda = {
-    NULL, 		/* acc */
-    &ops[73], 	/* imm */
-    &ops[74],	/* zpg */
-    &ops[75],	/* zpx */
-    NULL,		/* zpy */
-    &ops[76],	/* abs */
-    &ops[77],	/* abx */
-    &ops[78],	/* aby */
-    NULL,		/* imp */
-    NULL,		/* rel */
-    &ops[79],	/* idx */
-    &ops[80]	/* idy */
-};
-const instr ldx = {
-    NULL, 		/* acc */
-    &ops[81], 	/* imm */
-    &ops[82],	/* zpg */
-    NULL,		/* zpx */
-    &ops[83],	/* zpy */
-    &ops[84],	/* abs */
-    NULL,		/* abx */
-    &ops[85]	/* aby */
-};
-const instr ldy = {
-    NULL, 		/* acc */
-    &ops[86], 	/* imm */
-    &ops[87],	/* zpg */
-    &ops[88],	/* zpx */
-    NULL,		/* zpy */
-    &ops[89],	/* abs */
-    &ops[90]	/* abx */
-};
-const instr lsr = {
-    &ops[91], 	/* acc */
-    NULL, 		/* imm */
-    &ops[92],	/* zpg */
-    &ops[93],	/* zpx */
-    NULL,		/* zpy */
-    &ops[94],	/* abs */
-    &ops[95]	/* abx */
-};
-const instr nop = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[96]	/* imp */
-};
-const instr ora = {
-    NULL, 		/* acc */
-    &ops[97], 	/* imm */
-    &ops[98],	/* zpg */
-    &ops[99],	/* zpx */
-    NULL,		/* zpy */
-    &ops[100],	/* abs */
-    &ops[101],	/* abx */
-    &ops[102],	/* aby */
-    NULL,		/* imp */
-    NULL,		/* rel */
-    &ops[103],	/* idx */
-    &ops[104]	/* idy */
-};
-const instr pha = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[105]	/* imp */
-};
-const instr php = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[106]	/* imp */
-};
-const instr pla = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[107]	/* imp */
-};
-const instr plp = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[108]	/* imp */
-};
-const instr rol = {
-    &ops[109], 	/* acc */
-    NULL, 		/* imm */
-    &ops[110],	/* zpg */
-    &ops[111],	/* zpx */
-    NULL,		/* zpy */
-    &ops[112],	/* abs */
-    &ops[113]	/* abx */
-};
-const instr ror = {
-    &ops[114], 	/* acc */
-    NULL, 		/* imm */
-    &ops[115],	/* zpg */
-    &ops[116],	/* zpx */
-    NULL,		/* zpy */
-    &ops[117],	/* abs */
-    &ops[118]	/* abx */
-};
-const instr rti = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[119]	/* imp */
-};
-const instr rts = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[120]	/* imp */
-};
-const instr sbc = {
-    NULL, 		/* acc */
-    &ops[121], 	/* imm */
-    &ops[122],	/* zpg */
-    &ops[123],	/* zpx */
-    NULL,		/* zpy */
-    &ops[124],	/* abs */
-    &ops[125],	/* abx */
-    &ops[126],	/* aby */
-    NULL,		/* imp */
-    NULL,		/* rel */
-    &ops[127],	/* idx */
-    &ops[128]	/* idy */
-};
-const instr sec = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[129]	/* imp */
-};
-const instr sed = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[130]	/* imp */
-};
-const instr sei = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[131]	/* imp */
-};
-const instr sta = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    &ops[132],	/* zpg */
-    &ops[133],	/* zpx */
-    NULL,		/* zpy */
-    &ops[134],	/* abs */
-    &ops[135],	/* abx */
-    &ops[136],	/* aby */
-    NULL,		/* imp */
-    NULL,		/* rel */
-    &ops[137],	/* idx */
-    &ops[138]	/* idy */
-};
-const instr stx = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    &ops[139],	/* zpg */
-    &ops[140],	/* zpx */
-    NULL,		/* zpy */
-    &ops[141]	/* abs */
-};
-const instr sty = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    &ops[142],	/* zpg */
-    &ops[143],	/* zpx */
-    NULL,		/* zpy */
-    &ops[144]	/* abs */
-};
-const instr tax = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[145]	/* imp */
-};
-const instr tay = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[146]	/* imp */
-};
-const instr tsx = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[147]	/* imp */
-};
-const instr txa = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[148]	/* imp */
-};
-const instr txs = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[149]	/* imp */
-};
-const instr tya = {
-    NULL, 		/* acc */
-    NULL, 		/* imm */
-    NULL,		/* zpg */
-    NULL,		/* zpx */
-    NULL,		/* zpy */
-    NULL,		/* abs */
-    NULL,		/* abx */
-    NULL,		/* aby */
-    &ops[150]	/* imp */
+    NULL,    /* acc */
+    &ops[0], /* imm */
+    &ops[1], /* zpg */
+    &ops[2], /* zpx */
+    NULL,    /* zpy */
+    &ops[3], /* abs */
+    &ops[4], /* abx */
+    &ops[5], /* aby */
+    NULL,    /* imp */
+    NULL,    /* rel */
+    &ops[6], /* idx */
+    &ops[7], /* idy */
 };
 
+const instr and = {
+    NULL,     /* acc */
+    &ops[8],  /* imm */
+    &ops[9],  /* zpg */
+    &ops[10], /* zpx */
+    NULL,     /* zpy */
+    &ops[11], /* abs */
+    &ops[12], /* abx */
+    &ops[13], /* aby */
+    NULL,     /* imp */
+    NULL,     /* rel */
+    &ops[14], /* idx */
+    &ops[15], /* idy */
+};
+
+const instr asl = {
+    &ops[16], /* acc */
+    NULL,     /* imm */
+    &ops[17], /* zpg */
+    &ops[18], /* zpx */
+    NULL,     /* zpy */
+    &ops[19], /* abs */
+    &ops[20]  /* abx */
+};
+
+const instr bcc = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    NULL,    /* imp */
+    &ops[21] /* rel */
+};
+
+const instr bcs = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    NULL,    /* imp */
+    &ops[22] /* rel */
+};
+
+const instr beq = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    NULL,    /* imp */
+    &ops[23] /* rel */
+};
+
+const instr bit = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    &ops[24], /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    &ops[25]  /* abs */
+};
+
+const instr bmi = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    NULL,    /* imp */
+    &ops[26] /* rel */
+};
+
+const instr bne = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    NULL,    /* imp */
+    &ops[27] /* rel */
+};
+
+const instr bpl = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    NULL,    /* imp */
+    &ops[28] /* rel */
+};
+
+const instr Brk = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    &ops[29] /* imp */
+};
+
+const instr bvc = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    NULL,    /* imp */
+    &ops[30] /* rel */
+};
+
+const instr bvs = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    NULL,    /* imp */
+    &ops[31] /* rel */
+};
+
+const instr clc = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    &ops[32] /* imp */
+};
+
+const instr cld = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    &ops[33] /* imp */
+};
+
+const instr cli = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    &ops[34] /* imp */
+};
+
+const instr clv = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    &ops[35] /* imp */
+};
+
+const instr cmp = {
+    NULL,     /* acc */
+    &ops[36], /* imm */
+    &ops[37], /* zpg */
+    &ops[38], /* zpx */
+    NULL,     /* zpy */
+    &ops[39], /* abs */
+    &ops[40], /* abx */
+    &ops[41], /* aby */
+    NULL,     /* imp */
+    NULL,     /* rel */
+    &ops[42], /* idx */
+    &ops[43], /* idy */
+};
+
+const instr cpx = {
+    NULL,     /* acc */
+    &ops[44], /* imm */
+    &ops[45], /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    &ops[46], /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    NULL,     /* imp */
+    NULL,     /* rel */
+    NULL,     /* idx */
+    NULL,     /* idy */
+};
+
+const instr cpy = {
+    NULL,     /* acc */
+    &ops[47], /* imm */
+    &ops[48], /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    &ops[49], /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    NULL,     /* imp */
+    NULL,     /* rel */
+    NULL,     /* idx */
+    NULL,     /* idy */
+};
+
+const instr dec = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    &ops[50], /* zpg */
+    &ops[51], /* zpx */
+    NULL,     /* zpy */
+    &ops[52], /* abs */
+    &ops[53]  /* abx */
+};
+
+const instr dex = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    &ops[54] /* imp */
+};
+
+const instr dey = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    &ops[55] /* imp */
+};
+
+const instr eor = {
+    NULL,     /* acc */
+    &ops[56], /* imm */
+    &ops[57], /* zpg */
+    &ops[58], /* zpx */
+    NULL,     /* zpy */
+    &ops[59], /* abs */
+    &ops[60], /* abx */
+    &ops[61], /* aby */
+    NULL,     /* imp */
+    NULL,     /* rel */
+    &ops[62], /* idx */
+    &ops[63]  /* idy */
+};
+
+const instr inc = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    &ops[64], /* zpg */
+    &ops[65], /* zpx */
+    NULL,     /* zpy */
+    &ops[66], /* abs */
+    &ops[67]  /* abx */
+};
+
+const instr inx = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    &ops[68] /* imp */
+};
+
+const instr iny = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    &ops[69] /* imp */
+};
+
+const instr jmp = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    &ops[70], /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    NULL,     /* imp */
+    NULL,     /* rel */
+    NULL,     /* idx */
+    NULL,     /* idy */
+    &ops[71]  /* ind */
+};
+
+const instr jsr = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    &ops[72] /* abs */
+};
+
+const instr lda = {
+    NULL,     /* acc */
+    &ops[73], /* imm */
+    &ops[74], /* zpg */
+    &ops[75], /* zpx */
+    NULL,     /* zpy */
+    &ops[76], /* abs */
+    &ops[77], /* abx */
+    &ops[78], /* aby */
+    NULL,     /* imp */
+    NULL,     /* rel */
+    &ops[79], /* idx */
+    &ops[80]  /* idy */
+};
+
+const instr ldx = {
+    NULL,     /* acc */
+    &ops[81], /* imm */
+    &ops[82], /* zpg */
+    NULL,     /* zpx */
+    &ops[83], /* zpy */
+    &ops[84], /* abs */
+    NULL,     /* abx */
+    &ops[85]  /* aby */
+};
+
+const instr ldy = {
+    NULL,     /* acc */
+    &ops[86], /* imm */
+    &ops[87], /* zpg */
+    &ops[88], /* zpx */
+    NULL,     /* zpy */
+    &ops[89], /* abs */
+    &ops[90]  /* abx */
+};
+
+const instr lsr = {
+    &ops[91], /* acc */
+    NULL,     /* imm */
+    &ops[92], /* zpg */
+    &ops[93], /* zpx */
+    NULL,     /* zpy */
+    &ops[94], /* abs */
+    &ops[95]  /* abx */
+};
+
+const instr nop = {
+    NULL,    /* acc */
+    NULL,    /* imm */
+    NULL,    /* zpg */
+    NULL,    /* zpx */
+    NULL,    /* zpy */
+    NULL,    /* abs */
+    NULL,    /* abx */
+    NULL,    /* aby */
+    &ops[96] /* imp */
+};
+
+const instr ora = {
+    NULL,      /* acc */
+    &ops[97],  /* imm */
+    &ops[98],  /* zpg */
+    &ops[99],  /* zpx */
+    NULL,      /* zpy */
+    &ops[100], /* abs */
+    &ops[101], /* abx */
+    &ops[102], /* aby */
+    NULL,      /* imp */
+    NULL,      /* rel */
+    &ops[103], /* idx */
+    &ops[104]  /* idy */
+};
+
+const instr pha = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[105] /* imp */
+};
+
+const instr php = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[106] /* imp */
+};
+
+const instr pla = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[107] /* imp */
+};
+
+const instr plp = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[108] /* imp */
+};
+
+const instr rol = {
+    &ops[109], /* acc */
+    NULL,      /* imm */
+    &ops[110], /* zpg */
+    &ops[111], /* zpx */
+    NULL,      /* zpy */
+    &ops[112], /* abs */
+    &ops[113]  /* abx */
+};
+
+const instr ror = {
+    &ops[114], /* acc */
+    NULL,      /* imm */
+    &ops[115], /* zpg */
+    &ops[116], /* zpx */
+    NULL,      /* zpy */
+    &ops[117], /* abs */
+    &ops[118]  /* abx */
+};
+
+const instr rti = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[119] /* imp */
+};
+
+const instr rts = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[120] /* imp */
+};
+
+const instr sbc = {
+    NULL,      /* acc */
+    &ops[121], /* imm */
+    &ops[122], /* zpg */
+    &ops[123], /* zpx */
+    NULL,      /* zpy */
+    &ops[124], /* abs */
+    &ops[125], /* abx */
+    &ops[126], /* aby */
+    NULL,      /* imp */
+    NULL,      /* rel */
+    &ops[127], /* idx */
+    &ops[128]  /* idy */
+};
+
+const instr sec = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[129] /* imp */
+};
+
+const instr sed = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[130] /* imp */
+};
+
+const instr sei = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[131] /* imp */
+};
+
+const instr sta = {
+    NULL,      /* acc */
+    NULL,      /* imm */
+    &ops[132], /* zpg */
+    &ops[133], /* zpx */
+    NULL,      /* zpy */
+    &ops[134], /* abs */
+    &ops[135], /* abx */
+    &ops[136], /* aby */
+    NULL,      /* imp */
+    NULL,      /* rel */
+    &ops[137], /* idx */
+    &ops[138]  /* idy */
+};
+
+const instr stx = {
+    NULL,      /* acc */
+    NULL,      /* imm */
+    &ops[139], /* zpg */
+    &ops[140], /* zpx */
+    NULL,      /* zpy */
+    &ops[141]  /* abs */
+};
+
+const instr sty = {
+    NULL,      /* acc */
+    NULL,      /* imm */
+    &ops[142], /* zpg */
+    &ops[143], /* zpx */
+    NULL,      /* zpy */
+    &ops[144]  /* abs */
+};
+
+const instr tax = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[145] /* imp */
+};
+
+const instr tay = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[146] /* imp */
+};
+
+const instr tsx = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[147] /* imp */
+};
+
+const instr txa = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[148] /* imp */
+};
+
+const instr txs = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[149] /* imp */
+};
+
+const instr tya = {
+    NULL,     /* acc */
+    NULL,     /* imm */
+    NULL,     /* zpg */
+    NULL,     /* zpx */
+    NULL,     /* zpy */
+    NULL,     /* abs */
+    NULL,     /* abx */
+    NULL,     /* aby */
+    &ops[150] /* imp */
+};

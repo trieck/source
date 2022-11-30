@@ -34,6 +34,7 @@
  * addressing mode.
  */
 typedef const byte * instr[MODES];
+
 extern const instr adc;
 extern const instr and;
 extern const instr asl;
@@ -90,5 +91,5 @@ extern const instr tsx;
 extern const instr txa;
 extern const instr txs;
 extern const instr tya;
-#endif /*  __INSTR_H__ */
 
+#endif /*  __INSTR_H__ */

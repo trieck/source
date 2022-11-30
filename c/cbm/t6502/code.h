@@ -20,12 +20,16 @@
  */
 #ifndef __CODE_H__
 #define __CODE_H__
+
 #include "opcodes.h"
+
 /***************************************************************************/
+void set_base(word base);
 void code(addrmode mode, byte);
 void write_byte(byte);
 void write_code(void);
 void resolve(void);
 word getmem(void);
 /***************************************************************************/
+
 #endif							/* __CODE_H__ */

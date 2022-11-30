@@ -24,17 +24,21 @@
  */
 #ifndef __SYMBOL_H__
 #define __SYMBOL_H__
+
 /* symbol table entry */
 typedef struct Symbol {
-    char *name;
-    const instr *instr;
-    struct Symbol *next;
+    char* name;
+    const instr* instr;
+    struct Symbol* next;
 } Symbol;
+
 typedef Symbol * PSYMBOL;
 typedef PSYMBOL * SymbolTable;
+
 SymbolTable symalloc(void);
 void symfree(SymbolTable);
 void syminit(SymbolTable);
-PSYMBOL lookup(SymbolTable, const char *name);
-PSYMBOL opinsert(SymbolTable, const char *name, const instr *instr);
+PSYMBOL lookup(SymbolTable, const char* name);
+PSYMBOL opinsert(SymbolTable, const char* name, const instr* instr);
+
 #endif /* __SYMBOL_H__ */

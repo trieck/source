@@ -32,9 +32,11 @@
 
 #ifndef __MEM_H__
 #define __MEM_H__
+
 /***************************************************************************/
 byte fetch_byte(word address);
 void store_byte(word address, byte b);
 void mem_init(void);
 /***************************************************************************/
+
 #endif /* __MEM_H__ */

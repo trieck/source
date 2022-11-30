@@ -23,14 +23,16 @@
  */
 #include "common.h"
 #include "parser.h"
+
 /*
  * get the next token from the input string
  */
-Token gettok(const char **ppin)
+Token gettok(const char** ppin)
 {
     Token tok;
     const char* pin = *ppin;
     memset(&tok, 0, sizeof(Token));
+
     for (;;) {
         switch (*pin) {
         case '\0':
@@ -48,10 +50,10 @@ Token gettok(const char **ppin)
                 *ppin = pin;
                 return tok;
             }
-            tok.type = *pin;
+            tok.type = (TokenType)*pin;
             tok.value[0] = *(*ppin)++;
             return tok;
-        case ' ':		/* white space */
+        case ' ': /* white space */
         case '\t':
         case '\r':
         case '\n':
@@ -62,22 +64,23 @@ Token gettok(const char **ppin)
             }
             (*ppin)++; /* eat white */
             break;
-        default:
+        default: {
             if (isxdigit(*pin)) {
                 while (isxdigit(*pin))
                     pin++;
                 tok.type = NUM;
                 continue;
-            } else if (isalpha(*pin)) {
+            }
+            if (isalpha(*pin)) {
                 while (isalpha(*pin))
                     pin++;
                 tok.type = STR;
                 continue;
-            } else {
-                tok.type = UNDEF;
-                tok.value[0] = *(*ppin)++;
-                return tok;
             }
+            tok.type = UNDEF;
+            tok.value[0] = *(*ppin)++;
+            return tok;
+        }
         }
         pin++;
     }

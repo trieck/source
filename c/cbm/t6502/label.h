@@ -20,16 +20,21 @@
  */
 #ifndef __LABEL_H__
 #define __LABEL_H__
-typedef struct label {
-    char *name;					/* label name */
-    const byte *mem;			/* memory location encountered */
-    struct label *next;			/* next symbol to resolve in list */
-    int isrel;					/* is this a relative branch fix-up */
+
+typedef struct label
+{
+    char* name;         /* label name */
+    const byte* mem;    /* memory location encountered */
+    struct label* next; /* next symbol to resolve in list */
+    int isrel;          /* is this a relative branch fix-up */
 } label;
-typedef label *LabelTable;
+
+typedef label* LabelTable;
+
 /***************************************************************************/
 void labelfree(LabelTable);
-label *labelinsert(LabelTable * table, const char *name, const byte * mem,
+label* labelinsert(LabelTable* table, const char* name, const byte* mem,
                    int isrel);
 /***************************************************************************/
+
 #endif							/* __LABEL_H__ */

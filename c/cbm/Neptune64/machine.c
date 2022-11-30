@@ -29,7 +29,11 @@
 #include "video.h"
 #include "opcodes.h"
 #include "cia.h"
-int err = 0;	/* indicates an error during execution */
+
+// ReSharper disable CppParameterNeverUsed
+
+int err = 0; /* indicates an error during execution */
+
 /*
  * initialize machine
  */
@@ -40,22 +44,20 @@ void machine_init(void)
     cia_init();
     vic_init();
 }
+
 /*
  * step the machine
  */
-void machine_step(const word *addr)
+void machine_step(const word* addr)
 {
-    byte i;
-    const Instr *pi;
-
     if (NULL != addr)
         cpu.pc = *addr;
     /* disassemble the instruction */
     disassemble_instr(cpu.pc);
     /* fetch the instruction */
-    i = fetch_byte(cpu.pc);
+    byte i = fetch_byte(cpu.pc);
 
-    pi = instructions[i];
+    const Instr* pi = instructions[i];
     if (NULL == pi) {
         warning("unrecognized instruction \"$%.2x\" at $%.4hx.\n",
                 i, cpu.pc);
@@ -65,6 +67,7 @@ void machine_step(const word *addr)
     /* execute the instruction */
     (*pi->fnc)();
 }
+
 void machine_go(const word addr)
 {
     /* FIXME: this used to work */

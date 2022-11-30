@@ -42,14 +42,14 @@ static int isrel(void);
 static int isidx(void);
 static int isidy(void);
 static int isind(void);
-static int op(const word addr, const instr *i);
+static int op(word addr, const instr* i);
 static Token lookahead(void);
 static void cleanup(void);
-const char **ppin;			/* pointer to the current input */
-int assemmode = 0;			/* are we in assembler mode ? */
-word assemc = 0;			/* counter used during assembly */
-static SymbolTable symbols;	/* symbol table of opcodes */
-#define ISZADDR(x) (x < 0x100)
+const char** ppin;          /* pointer to the current input */
+int assemmode = 0;          /* are we in assembler mode ? */
+word assemc = 0;            /* counter used during assembly */
+static SymbolTable symbols; /* symbol table of opcodes */
+#define ISZADDR(x) ((x) < 0x100)
 /*
  * initialize the assembler module
  */
@@ -61,18 +61,17 @@ void assem_init(void)
         error("could not allocate symbol table.\n");
     syminit(symbols);
 }
+
 /*
  * assemble input
  */
-void assemble(const char **ppinput)
+void assemble(const char** ppinput)
 {
-    PSYMBOL sym;
     word address;
     const char *usage = "usage: a address [opcode][operands]\n";
-    Token tok;
     ppin = ppinput;
     assemmode = 0;
-    tok = gettok(ppin);
+    Token tok = gettok(ppin);
     if (NUM != tok.type) {
         warning(usage);
         return;
@@ -85,43 +84,42 @@ void assemble(const char **ppinput)
         return;
     }
 
-    sym = lookup(symbols, tok.value);
+    PSYMBOL sym = lookup(symbols, tok.value);
     if (NULL == sym) {
         warning("unrecognized opcode [%s].\n", tok.value);
         return;
     }
     assemmode = op(address, sym->instr);
 }
+
 /*
  * assemble input in assembly mode
  */
-void assemble_inmode(const char **ppinput)
+void assemble_inmode(const char** ppinput)
 {
-    PSYMBOL sym;
-    Token tok;
     word address = assemc;
     const char *usage = "usage: opcode [operands]\n";
     ppin = ppinput;
     assemmode = 0;
-    tok = gettok(ppin);
+    Token tok = gettok(ppin);
     if ('\0' == tok.value[0])
-        return;	/* clean exit from assembly mode */
+        return; /* clean exit from assembly mode */
     if (UNDEF == tok.type) {
         warning(usage);
         return;
     }
-    sym = lookup(symbols, tok.value);
+    PSYMBOL sym = lookup(symbols, tok.value);
     if (NULL == sym) {
         warning("unrecognized opcode [%s].\n", tok.value);
         return;
     }
     assemmode = op(address, sym->instr);
 }
-int op(const word addr, const instr *i)
+
+int op(const word addr, const instr* i)
 {
-    int mode;
-    for (mode = 0; mode < MODES; mode++) {
-        const byte *opcode = (*i)[mode];
+    for (int mode = 0; mode < MODES; mode++) {
+        const byte* opcode = (*i)[mode];
         if (opcode && ismode(mode)) {
             assemc = code(addr, mode, *opcode);
             return 1;
@@ -130,6 +128,7 @@ int op(const word addr, const instr *i)
     warning("invalid addressing mode.\n");
     return 0;
 }
+
 /*
  * does the input match the specified mode
  */
@@ -165,6 +164,7 @@ int ismode(addrmode mode)
     }
     return 0;
 }
+
 /*
  * does the current input match the accumulator addressing mode
  */
@@ -173,29 +173,29 @@ int isacc(void)
     Token tok = lookahead();
     return tok.value[0] == '\0';
 }
+
 /*
  * does the current input match the immediate addressing mode
  */
 int isimm(void)
 {
     word operand;
-    Token tok1, tok2;
-    const char *psave = *ppin;
-    tok1 = gettok(&psave);
-    tok2 = gettok(&psave);
+    const char* psave = *ppin;
+    Token tok1 = gettok(&psave);
+    Token tok2 = gettok(&psave);
     if (tok1.type != POUND)
         return 0;
     return sscanf(tok2.value, "%hx", &operand) == 1 && ISZADDR(operand);
 }
+
 /*
  * does the current input match the zero page addressing mode
  */
 int iszpg(void)
 {
     word operand;
-    const char *psave = *ppin;
-    Token tok;
-    tok = gettok(&psave);
+    const char* psave = *ppin;
+    Token tok = gettok(&psave);
     if (tok.type != NUM)
         return 0;
     sscanf(tok.value, "%hx", &operand);
@@ -205,15 +205,15 @@ int iszpg(void)
         return 0;
     return ISZADDR(operand);
 }
+
 /*
  * does the current input match the zero page, x addressing mode
  */
 int iszpx(void)
 {
     word operand;
-    const char *psave = *ppin;
-    Token tok;
-    tok = gettok(&psave);
+    const char* psave = *ppin;
+    Token tok = gettok(&psave);
     if (tok.type != NUM)
         return 0;
     sscanf(tok.value, "%hx", &operand);
@@ -226,15 +226,15 @@ int iszpx(void)
         return 0;
     return ISZADDR(operand);
 }
+
 /*
  * does the current input match the zero page, y addressing mode
  */
 int iszpy(void)
 {
     word operand;
-    const char *psave = *ppin;
-    Token tok;
-    tok = gettok(&psave);
+    const char* psave = *ppin;
+    Token tok = gettok(&psave);
     if (tok.type != NUM)
         return 0;
     sscanf(tok.value, "%hx", &operand);
@@ -247,15 +247,15 @@ int iszpy(void)
         return 0;
     return ISZADDR(operand);
 }
+
 /*
  * does the current input match the absolute addressing mode
  */
 int isabs(void)
 {
     word operand;
-    const char *psave = *ppin;
-    Token tok;
-    tok = gettok(&psave);
+    const char* psave = *ppin;
+    Token tok = gettok(&psave);
     if (tok.type != NUM)
         return 0;
     sscanf(tok.value, "%hx", &operand);
@@ -264,15 +264,15 @@ int isabs(void)
     tok = gettok(&psave);
     return tok.value[0] == '\0';
 }
+
 /*
  * does the current input match the absolute, x addressing mode
  */
 int isabx(void)
 {
     word operand;
-    const char *psave = *ppin;
-    Token tok;
-    tok = gettok(&psave);
+    const char* psave = *ppin;
+    Token tok = gettok(&psave);
     if (tok.type != NUM)
         return 0;
     sscanf(tok.value, "%hx", &operand);
@@ -287,15 +287,15 @@ int isabx(void)
         return 0;
     return 1;
 }
+
 /*
  * does the current input match the absolute, y addressing mode
  */
 int isaby(void)
 {
     word operand;
-    const char *psave = *ppin;
-    Token tok;
-    tok = gettok(&psave);
+    const char* psave = *ppin;
+    Token tok = gettok(&psave);
     if (tok.type != NUM)
         return 0;
     sscanf(tok.value, "%hx", &operand);
@@ -310,15 +310,15 @@ int isaby(void)
         return 0;
     return 1;
 }
+
 /*
  * does the current input match the indirect addressing mode
  */
 int isind(void)
 {
-    Token tok;
     word operand;
-    const char *psave = *ppin;
-    tok = gettok(&psave);
+    const char* psave = *ppin;
+    Token tok = gettok(&psave);
     if (tok.type != LPAREN)
         return 0;
     tok = gettok(&psave);
@@ -332,16 +332,16 @@ int isind(void)
         return 0;
     return 1;
 }
+
 /*
  * does the current input match the indirect, x addressing mode
  */
 int isidx(void)
 {
-    Token tok;
     word operand;
-    const char *psave = *ppin;
+    const char* psave = *ppin;
 
-    tok = gettok(&psave);
+    Token tok = gettok(&psave);
     if (tok.type != LPAREN)
         return 0;
 
@@ -361,15 +361,15 @@ int isidx(void)
         return 0;
     return ISZADDR(operand);
 }
+
 /*
  * does the current input match the indirect, y addressing mode
  */
 int isidy(void)
 {
-    Token tok;
     word operand;
-    const char *psave = *ppin;
-    tok = gettok(&psave);
+    const char* psave = *ppin;
+    Token tok = gettok(&psave);
     if (tok.type != LPAREN)
         return 0;
 
@@ -389,6 +389,7 @@ int isidy(void)
 
     return ISZADDR(operand);
 }
+
 /*
  * does the current input match the implied mode
  */
@@ -397,30 +398,34 @@ int isimp(void)
     Token tok = lookahead();
     return tok.value[0] == '\0';
 }
+
 /*
  * does the current input match the relative addressing mode
  */
 int isrel(void)
 {
     word operand;
-    const char *psave = *ppin;
-    Token tok;
-    tok = gettok(&psave);
+    const char* psave = *ppin;
+    Token tok = gettok(&psave);
     if (tok.type != NUM)
         return 0;
+
     sscanf(tok.value, "%hx", &operand);
     if (ISZADDR(operand))
         return 0;
+
     return 1;
 }
+
 /*
  * lookahead to next token
  */
 Token lookahead(void)
 {
-    const char ** dummy = ppin;
+    const char** dummy = ppin;
     return gettok(dummy);
 }
+
 /*
  * perform cleanup
  */

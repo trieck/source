@@ -23,6 +23,7 @@
  */
 #ifndef __ASSEM_H__
 #define __ASSEM_H__
+
 /*
  * initialize the assembler
  */
@@ -30,10 +31,10 @@ void assem_init(void);
 /*
  * assemble input
  */
-void assemble(const char **);
+void assemble(const char**);
 /*
  * assemble input in assembly mode
  */
-void assemble_inmode(const char **);
-#endif /* __ASSEM_H__ */
+void assemble_inmode(const char**);
 
+#endif /* __ASSEM_H__ */

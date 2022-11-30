@@ -23,9 +23,11 @@
  */
 #ifndef __MACHINE_H__
 #define __MACHINE_H__
+
 /***************************************************************************/
 void machine_init(void);
-void machine_go(const word addr);
-void machine_step(const word *addr);
+void machine_go(word addr);
+void machine_step(const word* addr);
 /***************************************************************************/
+
 #endif /* __MACHINE_H__ */

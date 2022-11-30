@@ -25,7 +25,7 @@
 
 #define MODES 13
 
-typedef const byte *Instr[MODES];
+typedef const byte* Instr[MODES];
 extern const byte opcodes[];
 extern const Instr adc;
 extern const Instr and;

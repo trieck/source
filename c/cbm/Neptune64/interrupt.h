@@ -23,6 +23,8 @@
  */
 #ifndef __INTERRUPT_H__
 #define __INTERRUPT_H__
+
 #define HANDLE_IRQ	1
 #define HANDLE_NMI	2
+
 #endif /* __INTERRUPT_H__ */

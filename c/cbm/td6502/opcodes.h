@@ -10,9 +10,11 @@
 /*
  * instruction structure
  */
-typedef struct {
-    const char **name;
+typedef struct
+{
+    const char** name;
     addrmode mode;
 } Instr;
+
 extern const Instr* instructions[INSTRUCTIONS];
 #endif // __OPCODES_H__

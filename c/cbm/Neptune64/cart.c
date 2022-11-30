@@ -23,26 +23,34 @@
  */
 #include "common.h"
 #include "cart.h"
+
 export_t export;
+
+// ReSharper disable CppParameterNeverUsed
+
 byte read_roml(word addr)
 {
     /* FIXME: implement this */
     return 0;
 }
+
 byte read_romh(word addr)
 {
     /* FIXME: implement this */
     return 0;
 }
+
 void store_roml(word addr, byte value)
 {
     /* FIXME: implement this */
 }
+
 byte read_ultimax_a000_bfff(word addr)
 {
     /* FIXME: implement this */
     return 0;
 }
+
 void store_ultimax_a000_bfff(word addr, byte value)
 {
     /* FIXME : implement this */

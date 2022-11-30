@@ -20,9 +20,11 @@
  */
 #ifndef __EXTERN_H__
 #define __EXTERN_H__
+
 /***************************************************************************/
 void extern_init(void);
 void extern_free(void);
-void extern_insert(const char *name);
+void extern_insert(const char* name);
 /***************************************************************************/
+
 #endif							/* __EXTERN_H__ */

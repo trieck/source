@@ -7,51 +7,57 @@
 #include "common.h"
 #include "opcodes.h"
 #include "code.h"
+
 static void cleanup(void);
 static void usage(void);
-static void disassemble(const char *filename);
+static void disassemble(const char* filename);
 static void printpc(void);
-extern word pc;						/* program counter */
-FILE *fp = NULL;					/* input file */
-const char *log_file_name = NULL;	/* stderr */
+
+extern word pc;                   /* program counter */
+FILE* fp = NULL;                  /* input file */
+const char* log_file_name = NULL; /* stderr */
+
 /*
  * main entry point
  */
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     if (argc < 2)
         usage();
+
     atexit(cleanup);
 
-    argc--;
-    argv++;
-    disassemble(argv[0]);
+    disassemble(argv[1]);
+
     return 0;
 }
+
 /*
  * disassemble the file
  */
-void disassemble(const char *filename)
+void disassemble(const char* filename)
 {
     int N;
-    const Instr *p;
+
     fp = fopen(filename, "rb");
     if (NULL == fp)
         error("unable to open file '%s'.\n", filename);
+
     /* first two bytes are the load address */
     if (!fread(&pc, sizeof(word), 1, fp))
         error("unable to retrieve load address.\n");
 
     while ((N = getc(fp)) != EOF) {
         printpc();
-        p = instructions[N];
+        const Instr* p = instructions[N];
         printf("%.2x", N);
         instruction(p);
         printf("\n");
     }
+
     fclose(fp);
-    fp = NULL;
 }
+
 /*
  * display program counter
  */
@@ -59,6 +65,7 @@ void printpc(void)
 {
     printf("0x%.4x\t", pc);
 }
+
 /*
  * clean up routine
  */
@@ -69,6 +76,7 @@ void cleanup(void)
         fp = NULL;
     }
 }
+
 /*
  * print usage
  */

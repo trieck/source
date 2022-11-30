@@ -24,4 +24,4 @@
 
 #include "common.h"
 #include "interrupt.h"
-int pending_interrupt = 0;	/* an interrupt is pending */
+int pending_interrupt = 0; /* an interrupt is pending */

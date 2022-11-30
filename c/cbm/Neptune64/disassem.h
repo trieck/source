@@ -23,6 +23,8 @@
  */
 #ifndef __DISASSEM_H__
 #define __DISASSEM_H__
-void disassemble(const char **ppin);
-void disassemble_instr(const word addr);
+
+void disassemble(const char** ppin);
+void disassemble_instr(word addr);
+
 #endif /* __DISASSEM_H__ */

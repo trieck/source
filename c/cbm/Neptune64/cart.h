@@ -23,12 +23,16 @@
  */
 #ifndef __CART_H__
 #define __CART_H__
+
 /* expansion port signals */
-typedef struct {
+typedef struct
+{
     byte exrom;
     byte game;
 } export_t;
+
 extern export_t export;
+
 /***************************************************************************/
 byte read_roml(word addr);
 void store_roml(word addr, byte value);
@@ -36,4 +40,5 @@ byte read_romh(word addr);
 byte read_ultimax_a000_bfff(word addr);
 void store_ultimax_a000_bfff(word addr, byte value);
 /***************************************************************************/
+
 #endif /* __CART_H__ */

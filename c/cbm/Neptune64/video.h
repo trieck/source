@@ -24,6 +24,7 @@
 
 #ifndef __VIDEO_H__
 #define __VIDEO_H__
+
 /***************************************************************************/
 void vic_init(void);
 byte vic_read(word address);
@@ -31,4 +32,5 @@ void vic_store(word address, byte b);
 byte colorram_read(word address);
 void colorram_store(word address, byte b);
 /***************************************************************************/
+
 #endif /* __VIDEO_H__ */

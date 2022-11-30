@@ -24,10 +24,11 @@
  */
 #include "common.h"
 #include "util.h"
+
 /* strdup is non-ANSI compliant? */
-char *strcopy(const char *source)
+char* strcopy(const char* source)
 {
-    char *dest = (char *)malloc(strlen(source) + 1);
+    char* dest = malloc(strlen(source) + 1);
     strcpy(dest, source);
     return dest;
 }

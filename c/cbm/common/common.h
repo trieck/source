@@ -33,33 +33,43 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#if defined(_MSC_VER) || defined (__BORLANDC__)
-#include <io.h>
-#else
-#include <unistd.h>
-#endif
-typedef unsigned short word;
-typedef unsigned char byte;
-#define lobyte(w) ((byte)(w))
-#define hibyte(w) ((byte)(((word)(w) >> 8) & 0xff))
-/* addressing modes */
-typedef enum {
-    acc,	/* accumulator */
-    imm,	/* immediate */
-    zpg,	/* zero page */
-    zpx,	/* zero page, x */
-    zpy,	/* zero page, y */
-    absl,	/* absolute */
-    abx,	/* absolute, x */
-    aby,	/* absolute, y */
-    imp,	/* implied */
-    rel,	/* relative */
-    idx,	/* indirect x */
-    idy,	/* indirect y */
-    ind		/* indirect */
-} addrmode;
 #include "log.h"
 #include "util.h"
+
+typedef unsigned short word;
+typedef unsigned char byte;
+
+#define lobyte(w) ((byte)(w))
+#define hibyte(w) ((byte)(((word)(w) >> 8) & 0xff))
+
+/* addressing modes */
+typedef enum
+{
+    acc,
+    /* accumulator */
+    imm,
+    /* immediate */
+    zpg,
+    /* zero page */
+    zpx,
+    /* zero page, x */
+    zpy,
+    /* zero page, y */
+    absl,
+    /* absolute */
+    abx,
+    /* absolute, x */
+    aby,
+    /* absolute, y */
+    imp,
+    /* implied */
+    rel,
+    /* relative */
+    idx,
+    /* indirect x */
+    idy,
+    /* indirect y */
+    ind /* indirect */
+} addrmode;
+
 #endif /* __COMMON_H__ */
-
-

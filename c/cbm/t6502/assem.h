@@ -20,8 +20,11 @@
  */
 #ifndef __ASSEM_H__
 #define __ASSEM_H__
+
 #define MAXTOK 256
-typedef enum {
+
+typedef enum
+{
     UNDEF = 0,
     LITERAL,
     STR,
@@ -32,14 +35,20 @@ typedef enum {
     POUND = '#',
     SEMI = ';',
     QUOTE = '\'',
-    PSEUDO = '.'
+    PSEUDO = '.',
+    BASE = '*',
+    EQUAL = '='
 } TokenType;
-typedef struct {
+
+typedef struct
+{
     TokenType type;
     char value[MAXTOK];
 } Token;
+
 /***************************************************************************/
-void assemble();
-Token gettok(const char **ppinput);
+void assemble(void);
+Token gettok(const char** ppin);
 /***************************************************************************/
-#endif							/* __ASSEM_H__ */
+
+#endif  /* __ASSEM_H__ */

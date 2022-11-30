@@ -24,6 +24,7 @@
  */
 #ifndef __6510_H__
 #define __6510_H__
+
 #define NEG_FLAG			0x80
 #define OVERFLOW_FLAG		0x40
 #define BRK_FLAG			0x10
@@ -31,6 +32,7 @@
 #define INT_DISABLE_FLAG	0x04
 #define ZERO_FLAG			0x02
 #define CARRY_FLAG			0x01
+
 #define get_neg_flag() 					\
 	((cpu.sr & NEG_FLAG) >> 7)
 #define get_overflow_flag()				\
@@ -45,18 +47,23 @@
 	((cpu.sr & ZERO_FLAG) >> 1)
 #define get_carry_flag()				\
 	(cpu.sr & CARRY_FLAG)
-typedef struct {
-    word pc;	/* program counter */
-    byte sp;	/* stack pointer */
-    byte a;		/* accumulator */
-    byte x;		/* x register */
-    byte y;		/* y register */
-    byte sr;	/* status register */
+
+typedef struct
+{
+    word pc; /* program counter */
+    byte sp; /* stack pointer */
+    byte a;  /* accumulator */
+    byte x;  /* x register */
+    byte y;  /* y register */
+    byte sr; /* status register */
 } Cpu;
+
 extern Cpu cpu;
+
 /***************************************************************************/
 void cpu_run(void);
 byte pop(void);
 void push(byte c);
 /***************************************************************************/
+
 #endif /* __6510_H__ */

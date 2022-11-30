@@ -21,8 +21,12 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307  USA.
  */
+
 #include "common.h"
 #include "sid.h"
+
+// ReSharper disable CppParameterNeverUsed
+
 /*
  * read a byte from sid
  */
@@ -30,10 +34,10 @@ byte sid_read(word address)
 {
     return 0;
 }
+
 /*
  * store a byte at sid
  */
 void sid_store(word address, byte value)
 {
 }
-

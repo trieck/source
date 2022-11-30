@@ -24,6 +24,7 @@
 #ifndef __PARSER_H__
 #define __PARSER_H__
 /* lexical token types */
+
 typedef enum {
     UNDEF = 0,
     STR,
@@ -33,10 +34,14 @@ typedef enum {
     COMMA = ',',
     POUND = '#'
 } TokenType;
+
 #define MAXTOK 80
+
 typedef struct {
     TokenType type;
     char value[MAXTOK];
 } Token;
-Token gettok(const char **ppin);
+
+Token gettok(const char** ppin);
+
 #endif /* __PARSER_H__ */

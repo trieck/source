@@ -26,7 +26,7 @@ static LabelTable labelalloc(void);
  */
 LabelTable labelalloc(void)
 {
-    label *table = (LabelTable) malloc(sizeof(label));
+    label* table = malloc(sizeof(label));
     memset(table, 0, sizeof(label));
     return table;
 }
@@ -37,7 +37,7 @@ LabelTable labelalloc(void)
 void labelfree(LabelTable table)
 {
     while (table != NULL) {
-        label *psave = table->next;
+        label* psave = table->next;
         free(table->name);
         free(table);
         table = psave;
@@ -47,11 +47,11 @@ void labelfree(LabelTable table)
 /*
  * insert a label
  */
-label *labelinsert(LabelTable * table, const char *name,
-                   const byte * mem, int isrel)
+label* labelinsert(LabelTable* table, const char* name,
+                   const byte* mem, int isrel)
 {
     /* insert at front of list */
-    label *pthis = labelalloc();
+    label* pthis = labelalloc();
     pthis->name = strcopy(name);
     pthis->mem = mem;
     pthis->next = *table;

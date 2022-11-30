@@ -24,19 +24,22 @@
 #include "common.h"
 #include "instr.h"
 #include "symbol.h"
+
 #define TBLSIZE 1103
+
 static void freesymbol(PSYMBOL);
-static unsigned hash (const char *key);
+static unsigned hash(const char* key);
+
 /*
  * allocate symbol table
  */
 SymbolTable symalloc()
 {
-    SymbolTable table;
-    table = (PSYMBOL *)malloc(sizeof(PSYMBOL) * TBLSIZE);
+    SymbolTable table = malloc(sizeof(PSYMBOL) * TBLSIZE);
     memset(table, 0, sizeof(PSYMBOL) * TBLSIZE);
     return table;
 }
+
 /*
  * initialize symbol table
  */
@@ -100,29 +103,28 @@ void syminit(SymbolTable table)
     opinsert(table, "txs", &txs);
     opinsert(table, "tya", &tya);
 }
+
 /*
  * free symbol table
  */
 void symfree(SymbolTable table)
 {
-    int i;
-    for (i = 0; i < TBLSIZE; i++) {
+    for (int i = 0; i < TBLSIZE; i++) {
         PSYMBOL ps = table[i];
         if (ps != NULL)
             freesymbol(ps);
     }
     free(table);
 }
+
 /*
  * insert opcode
  */
-PSYMBOL opinsert(SymbolTable table, const char *name, const instr *instr)
+PSYMBOL opinsert(SymbolTable table, const char* name, const instr* instr)
 {
-    PSYMBOL ps;
-    unsigned int index;
+    PSYMBOL ps = malloc(sizeof(Symbol));
 
-    ps = (Symbol *)malloc(sizeof(Symbol));
-    index = hash(name);
+    unsigned int index = hash(name);
 
     ps->name = strcopy(name);
     ps->instr = instr;
@@ -132,21 +134,22 @@ PSYMBOL opinsert(SymbolTable table, const char *name, const instr *instr)
 
     return ps;
 }
+
 /*
  * lookup entry in symbol table
  */
-PSYMBOL lookup(SymbolTable table, const char *name)
+PSYMBOL lookup(SymbolTable table, const char* name)
 {
-    unsigned int index;
-    PSYMBOL ps;
-    index = hash(name);
-    for (ps = table[index]; ps != NULL; ps = ps->next) {
+    unsigned int index = hash(name);
+    for (PSYMBOL ps = table[index]; ps != NULL; ps = ps->next) {
         if (strcmp(ps->name, name) == 0)
             return ps;
     }
     return NULL;
 }
+
 /* Helper functions */
+
 /*
  * free a symbol
  */
@@ -159,14 +162,15 @@ void freesymbol(PSYMBOL ps)
         ps = next;
     }
 }
+
 /*
  * hash function
  */
-unsigned int hash (const char * p)
+unsigned int hash(const char* key)
 {
     unsigned n = 0;
-    while (*p) {
-        n = (n << 1) ^ toupper(*p++);
+    while (*key) {
+        n = n << 1 ^ toupper(*key++);
     }
     n %= TBLSIZE;
 

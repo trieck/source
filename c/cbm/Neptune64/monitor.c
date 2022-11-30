@@ -29,19 +29,20 @@
 #include "parser.h"
 #include "mem.h"
 #include "machine.h"
+
 static void dump(void);
 static void go(void);
-static void gountil(void);
 static void help(void);
 static void printregs(void);
 static void process_input(void);
 static void step(void);
-static const char *pinput = NULL;	/* pointer to current input */
-extern int assemmode;				/* are we in assembly mode ? */
-extern word assemc;					/* counter used during assembly */
-static void monitor_dump(const word *start,
-                         const word *end);
+static const char* pinput = NULL; /* pointer to current input */
+extern int assemmode;             /* are we in assembly mode ? */
+extern word assemc;               /* counter used during assembly */
+static void monitor_dump(const word* start,
+                         const word* end);
 #define BUFFSIZE 256
+
 /*
  * initialize the monitor
  */
@@ -51,12 +52,14 @@ void monitor_init(void)
     /* initialize the assembler */
     assem_init();
 }
+
 /*
  * reclaim monitor resources
  */
 void monitor_term(void)
 {
 }
+
 /*
  * run the monitor
  */
@@ -79,6 +82,7 @@ void monitor_run(void)
         fflush(stdout);
     }
 }
+
 /*
  * print the machine registers
  */
@@ -104,6 +108,7 @@ void printregs(void)
 
     printf("ADDR AC XR YR SP 01 NV-BDIZC\n%s\n", buffer);
 }
+
 /*
  * process the current input option
  */
@@ -130,53 +135,56 @@ void process_input(void)
     } else if (strcmp(t.value, "z") == 0) {
         cpu_run();
     } else if (t.type == UNDEF) {
-        return;
     } else {
         warning("unknown option specified.\n");
     }
 }
+
 /*
  * step the monitor
  */
 void step(void)
 {
-    const char *usage = "usage: s [address]\n";
     word addr;
-    const word *paddr = NULL;
-    Token tok;
-    tok = gettok(&pinput);
+    const word* paddr = NULL;
+    Token tok = gettok(&pinput);
     if (NUM == tok.type) {
         sscanf(tok.value, "%hx", &addr);
         paddr = &addr;
     }
     machine_step(paddr);
 }
+
 /*
  * execute the machine
  */
 void go(void)
 {
-    const char *usage = "usage: g address\n";
+    const char* usage = "usage: g address\n";
     word addr;
-    Token tok;
-    tok = gettok(&pinput);
+
+    Token tok = gettok(&pinput);
     if (NUM != tok.type) {
         warning(usage);
         return;
     }
+
     sscanf(tok.value, "%hx", &addr);
     machine_go(addr);
 }
+
 /*
  * dump memory
  */
 void dump(void)
 {
     word starta, enda;
-    word *pstart = 0, *pend = 0;
-    const char *usage = "usage: m [start] [end]\n";
+    word* pstart = NULL,* pend = NULL;
+    const char*usage = "usage: m [start] [end]\n";
+
     Token start = gettok(&pinput);
     Token end = gettok(&pinput);
+
     if (UNDEF != start.type && NUM != start.type) {
         warning(usage);
         return;
@@ -195,11 +203,12 @@ void dump(void)
     }
     monitor_dump(pstart, pend);
 }
+
 /*
  * dump memory
  */
-void monitor_dump(const word *start,
-                  const word *end)
+void monitor_dump(const word* start,
+                  const word* end)
 {
     /*
      * this is a hack; rewrite this
@@ -208,7 +217,7 @@ void monitor_dump(const word *start,
     const int LINESIZE = 16;
     const int LINES = 9;
     static word pc;
-    static initialized;
+    static int initialized;
 
     if (!initialized) {
         pc = cpu.pc;
@@ -223,22 +232,26 @@ void monitor_dump(const word *start,
         for (j = 0; j < LINESIZE; j++) {
             byte b = fetch_byte((word)(pc + j));
             printf("%.2x", b);
-            if (end && (word)(pc + j) == *end) break;
-            if (j != LINESIZE - 1) putchar(' ');
+            if (end && (word)(pc + j) == *end)
+                break;
+            if (j != LINESIZE - 1)
+                putchar(' ');
         }
 
         do {
-            putchar (' ');
-            putchar (' ');
-            putchar (' ');
+            putchar(' ');
+            putchar(' ');
+            putchar(' ');
         } while (++j < LINESIZE);
 
         for (j = 0; j < LINESIZE; j++) {
             byte b = fetch_byte((word)(pc + j));
             if (isprint(b))
                 putchar(b);
-            else putchar('.');
-            if (end && (word)(pc + j) == *end) break;
+            else
+                putchar('.');
+            if (end && (word)(pc + j) == *end)
+                break;
         }
 
         putchar('\n');
@@ -246,14 +259,15 @@ void monitor_dump(const word *start,
 
     } while (NULL == end ? ++i < LINES : pc != *end);
 }
+
 /*
  * command help
  */
 void help(void)
 {
     printf("a   assemble\td   disassemble\n"
-           "g   go\t\tm   memory\n"
-           "r   registers\ts   step\n"
-           "x   exit\tz   run the cpu\n"
-           "?   help\n");
+        "g   go\t\tm   memory\n"
+        "r   registers\ts   step\n"
+        "x   exit\tz   run the cpu\n"
+        "?   help\n");
 }

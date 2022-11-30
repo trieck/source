@@ -21,31 +21,43 @@
 #ifndef __SYMBOL_H__
 #define __SYMBOL_H__
 #define TBLSIZE 1103
-typedef enum {
-    opcode,						/* machine opcode */
-    kentry,						/* kernel jump table entry */
-    lentry						/* label entry */
+
+typedef enum
+{
+    opcode,
+    /* machine opcode */
+    kentry,
+    /* kernel jump table entry */
+    lentry /* label entry */
 } Type;
+
 /* Symbol structure */
-typedef struct Symbol {
-    char *name;
+typedef struct Symbol
+{
+    char* name;
     Type type;
-    union {
-        const Instr *instr;
+
+    union
+    {
+        const Instr* instr;
         word kjmp;
         word mem;
     } u;
-    struct Symbol *next;
+
+    struct Symbol* next;
 } Symbol;
-typedef Symbol *PSYMBOL;
-typedef PSYMBOL *SymbolTable;
+
+typedef Symbol* PSYMBOL;
+typedef PSYMBOL* SymbolTable;
+
 /***************************************************************************/
 SymbolTable symalloc(void);
 void symfree(SymbolTable);
 void syminit(SymbolTable);
-PSYMBOL symlookup(SymbolTable, const char *name);
-PSYMBOL opinsert(SymbolTable, const char *name, const Instr * instr);
-PSYMBOL kinsert(SymbolTable, const char *name, const word kjmp);
-PSYMBOL linsert(SymbolTable, const char *name, word pmem);
+PSYMBOL symlookup(SymbolTable, const char* name);
+PSYMBOL opinsert(SymbolTable, const char* name, const Instr* instr);
+PSYMBOL kinsert(SymbolTable, const char* name, word kjmp);
+PSYMBOL linsert(SymbolTable, const char* name, word pmem);
 /***************************************************************************/
+
 #endif							/* __SYMBOL_H__ */

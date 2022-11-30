@@ -23,6 +23,7 @@
  */
 #ifndef __CIA_H__
 #define __CIA_H__
+
 /***************************************************************************/
 void cia_init(void);
 byte cia1_read(word address);
@@ -30,4 +31,5 @@ void cia1_store(word address, byte value);
 byte cia2_read(word address);
 void cia2_store(word address, byte value);
 /***************************************************************************/
+
 #endif /* __CIA_H__ */

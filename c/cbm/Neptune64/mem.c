@@ -30,25 +30,32 @@
  *
  */
 
+// ReSharper disable CppParameterNeverUsed
+
 #include "common.h"
 #include "mem.h"
 #include "video.h"
 #include "cia.h"
 #include "sid.h"
 #include "cart.h"
+
+#include <io.h>
+
 #define RAM_SIZE			0x10000
 #define KERNAL_ROM_SIZE		0x2000
 #define BASIC_ROM_SIZE		0x2000
 #define CHARGEN_ROM_SIZE	0x1000
 #define CONFIGURATIONS 		0x20
 #define PAGES 				0x100
+
 static byte ram[RAM_SIZE];
 static byte basic_rom[BASIC_ROM_SIZE];
 static byte kernal_rom[KERNAL_ROM_SIZE];
 static byte chargen_rom[CHARGEN_ROM_SIZE];
-extern const char *kernal_name;
-extern const char *basic_name;
-extern const char *chargen_name;
+extern const char* kernal_name;
+extern const char* basic_name;
+extern const char* chargen_name;
+
 /*
  * current memory configuration
  *
@@ -58,25 +65,31 @@ extern const char *chargen_name;
  *
  */
 static word mem_config;
-static struct {
+
+static struct
+{
     byte data;
     byte dir;
     byte data_out;
 } pport;
+
 typedef byte (*read_func_ptr_t)(word address);
 typedef void (*store_func_ptr_t)(word address, byte b);
+
 /* current read and write function pointers */
-static read_func_ptr_t *read_func_ptr;
-static store_func_ptr_t *write_func_ptr;
+static read_func_ptr_t* read_func_ptr;
+static store_func_ptr_t* write_func_ptr;
 /* memory read and write tables */
 static store_func_ptr_t mem_write_tab[CONFIGURATIONS][PAGES];
 static read_func_ptr_t mem_read_tab[CONFIGURATIONS][PAGES];
+
 /* ROM load routines */
-static void load_rom(const char *filename, byte *pb, word size);
+static void load_rom(const char* filename, byte* pb, word size);
 static void load_kernal(void);
 static void load_basic(void);
 static void load_chargen(void);
 static void initialize_memory(void);
+
 /* memory access routines */
 static byte read_zero(word addr);
 static void store_zero(word addr, byte value);
@@ -91,6 +104,7 @@ static void io1_store(word addr, byte value);
 static byte io2_read(word addr);
 static void io2_store(word addr, byte value);
 static void config_changed(void);
+
 /*
  * read from basic ROM
  */
@@ -98,6 +112,7 @@ byte basic_read(word addr)
 {
     return basic_rom[addr & 0x1fff];
 }
+
 /*
  * read from kernal ROM
  */
@@ -105,6 +120,7 @@ byte kernal_read(word addr)
 {
     return kernal_rom[addr & 0x1fff];
 }
+
 /*
  * read from chargen ROM
  */
@@ -112,6 +128,7 @@ byte chargen_read(word addr)
 {
     return chargen_rom[addr & 0xfff];
 }
+
 /*
  * fetch a byte from memory
  * located at address
@@ -121,6 +138,7 @@ byte fetch_byte(word address)
     /* FIXME: implement this */
     return (*read_func_ptr[address >> 8])(address);
 }
+
 /*
  * store a byte to memory
  * located at address
@@ -130,6 +148,7 @@ void store_byte(word address, byte b)
     /* FIXME: implement this */
     (*write_func_ptr[address >> 8])(address, b);
 }
+
 /*
  * initialize memory
  */
@@ -140,40 +159,42 @@ void mem_init(void)
     load_chargen();
     initialize_memory();
 }
+
 #if defined(_MSC_VER) || defined(__BORLANDC__)
-#define OPENFLAGS O_RDONLY | O_BINARY
+#define OPENFLAGS (O_RDONLY | O_BINARY)
 #else
 #define OPENFLAGS O_RDONLY
 #endif
+
 /*
  * generalized routine for loading a
  * ROM image into memory
  */
-void load_rom(const char *filename, byte *pb, word size)
+void load_rom(const char* filename, byte* pb, word size)
 {
     struct stat st;
-    int fd, n;
 
-    fd = open(filename, OPENFLAGS);
+    int fd = _open(filename, OPENFLAGS);
     if (-1 == fd)
         error("unable to open ROM image \"%s\".\n", filename);
 
     fstat(fd, &st);
     if (size != st.st_size) {
-        close(fd);
+        _close(fd);
         error("ROM image \"%s\" is wrong size; expected %d bytes, "
               "found %d bytes.\n", filename, size, st.st_size);
     }
 
-    n = read(fd, pb, size);
+    int n = _read(fd, pb, size);
     if (size != n) {
-        close(fd);
+        _close(fd);
         error("error reading ROM image \"%s\"; expected %d bytes, "
               "read %d bytes.\n", filename, size, n);
     }
 
-    close(fd);
+    _close(fd);
 }
+
 /*
  * load kernal image into memory
  */
@@ -181,6 +202,7 @@ void load_kernal(void)
 {
     load_rom(kernal_name, kernal_rom, KERNAL_ROM_SIZE);
 }
+
 /*
  * load basic image into memory
  */
@@ -188,6 +210,7 @@ void load_basic(void)
 {
     load_rom(basic_name, basic_rom, BASIC_ROM_SIZE);
 }
+
 /*
  * load chargen image into memory
  */
@@ -195,6 +218,7 @@ void load_chargen(void)
 {
     load_rom(chargen_name, chargen_rom, CHARGEN_ROM_SIZE);
 }
+
 /*
  * initialize memory
  */
@@ -203,28 +227,32 @@ void initialize_memory(void)
     int i, j;
 
     /* IO is enabled at memory configs 5, 6, 7 and Ultimax */
-    int io_config[CONFIGURATIONS] = { 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1,
-                                      1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1
-                                    };
+    int io_config[CONFIGURATIONS] = {
+        0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1
+    };
 
     /* ROML is enabled at memory configs 11, 15, 27, 31 and Ultimax */
-    int roml_config[CONFIGURATIONS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
-                                        1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1
-                                      };
+    int roml_config[CONFIGURATIONS] = {
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1
+    };
 
     /* ROMH is enabled at memory configs 10, 11, 14, 15, 26, 27, 30, 31
        and Ultimax.  */
-    int romh_config[CONFIGURATIONS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                        1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1
-                                      };
+    int romh_config[CONFIGURATIONS] = {
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1
+    };
 
     /* ROMH is mapped to $A000-$BFFF at memory configs 10, 11, 14, 15, 26,
        27, 30, 31.  If Ultimax is enabled it is mapped to $E000-$FFFF.  */
-    int romh_mapping[CONFIGURATIONS] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                         0xe0, 0xe0, 0xe0, 0xe0, 0xe0, 0xe0, 0xe0,
-                                         0x00, 0xa0, 0xa0, 0x00, 0x00, 0xa0, 0xa0
-                                       };
+    int romh_mapping[CONFIGURATIONS] = {
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0xe0, 0xe0, 0xe0, 0xe0, 0xe0, 0xe0, 0xe0,
+        0x00, 0xa0, 0xa0, 0x00, 0x00, 0xa0, 0xa0
+    };
 
     for (i = 0; i < CONFIGURATIONS; i++) {
         mem_write_tab[i][0] = store_zero;
@@ -329,7 +357,7 @@ void initialize_memory(void)
     /* Setup ROMH at $A000-$BFFF and $E000-$FFFF */
     for (j = 0; j < CONFIGURATIONS; j++) {
         if (romh_config[j]) {
-            for (i = romh_mapping[j]; i <= (romh_mapping[j] + 0x1f); i++) {
+            for (i = romh_mapping[j]; i <= romh_mapping[j] + 0x1f; i++) {
                 mem_read_tab[j][i] = read_romh;
             }
         }
@@ -344,6 +372,7 @@ void initialize_memory(void)
 
     config_changed();
 }
+
 /*
  * read memory on zero page
  */
@@ -351,6 +380,7 @@ byte read_zero(word addr)
 {
     return ram[addr & 0xff];
 }
+
 /*
  * write memory to zero page
  */
@@ -383,6 +413,7 @@ byte ram_read(word addr)
 {
     return ram[addr];
 }
+
 /*
  * store RAM
  */
@@ -390,6 +421,7 @@ void ram_store(word addr, byte value)
 {
     ram[addr] = value;
 }
+
 /*
  * read ROML
  */
@@ -398,33 +430,39 @@ byte read_roml(word addr)
     /* FIXME: implement this */
     return 0;
 }
+
 byte io1_read(word addr)
 {
     /* FIXME: implement this */
     return 0;
 }
+
 void io1_store(word addr, byte value)
 {
     /* FIXME: implement this */
 }
+
 byte io2_read(word addr)
 {
     /* FIXME: implement this */
     return 0;
 }
+
 void io2_store(word addr, byte value)
 {
     /* FIXME: implement this */
 }
+
 /*
  * memory configuration change
  */
 void config_changed(void)
 {
-    mem_config = (((~pport.dir | pport.data) & 0x7) | (export.exrom << 3)
-                  | (export.game << 4));
+    mem_config = (word)(((~pport.dir | pport.data) & 0x7) | export.exrom << 3
+        | export.game << 4);
+
     pport.data_out = (pport.data_out & ~pport.dir)
                      | (pport.data & pport.dir);
-    ram[1] = ((pport.data | ~pport.dir) & (pport.data_out | 0x17));
+    ram[1] = (pport.data | ~pport.dir) & (pport.data_out | 0x17);
     ram[0] = pport.dir;
 }

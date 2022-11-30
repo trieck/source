@@ -28,10 +28,10 @@
 static void cleanup(void);
 static void init(void);
 static void notice(void);
-const char *kernal_name = "kernal";
-const char *basic_name = "basic";
-const char *chargen_name = "chargen";
-const char *log_file_name = NULL;
+const char* kernal_name = "kernal";
+const char* basic_name = "basic";
+const char* chargen_name = "chargen";
+const char* log_file_name = NULL;
 /*
  * main entry point
  */
@@ -42,6 +42,7 @@ int main(void)
     monitor_run();
     return 0;
 }
+
 /*
  * initialization
  */
@@ -54,20 +55,22 @@ void init(void)
     /* initialize the monitor */
     monitor_init();
 }
+
 /*
  * main entry point
  */
 void cleanup(void)
 {
 }
+
 /*
  * copyright notice
  */
 void notice(void)
 {
     printf("\nNeptune64 version 0.0.1, Copyright (c) 2001 Thomas A. Rieck\n"
-           "Neptune64 comes with ABSOLUTELY NO WARRANTY.\n"
-           "This is free software, and you are welcome to redistribute it\n"
-           "under certain conditions.\n"
-          );
+        "Neptune64 comes with ABSOLUTELY NO WARRANTY.\n"
+        "This is free software, and you are welcome to redistribute it\n"
+        "under certain conditions.\n"
+    );
 }

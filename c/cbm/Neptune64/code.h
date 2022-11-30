@@ -23,5 +23,7 @@
  */
 #ifndef __CODE_H__
 #define __CODE_H__
+
 word code(word start, addrmode mode, byte opcode);
+
 #endif /* __CODE_H__ */

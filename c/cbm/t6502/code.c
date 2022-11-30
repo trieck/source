@@ -25,7 +25,7 @@
 #include "label.h"
 #include "symbol.h"
 
-#define MEMSIZE	4096
+#define MEMSIZE	65536
 
 static void putmem(int ncount, ...);
 static void acccode(byte);
@@ -42,14 +42,17 @@ static void idxcode(byte);
 static void idycode(byte);
 static void indcode(byte);
 
+static word base_address = -1;
+
 static byte memory[MEMSIZE];
-static byte *pmem = memory;
-extern SymbolTable table;		/* symbol table of kernel entries / opcodes */
-extern LabelTable labels;		/* symbol table of labels */
-extern Token token;				/* current token */
-extern const char *pinput;		/* pointer to current input */
-extern const char *infile;		/* input file name */
-extern int lineno;				/* current line number */
+static byte* pmem = memory;
+
+extern SymbolTable table;  /* symbol table of kernel entries / opcodes */
+extern LabelTable labels;  /* symbol table of labels */
+extern Token token;        /* current token */
+extern const char* pinput; /* pointer to current input */
+extern const char* infile; /* input file name */
+extern int lineno;         /* current line number */
 
 void putmem(int ncount, ...)
 {
@@ -75,16 +78,21 @@ void write_byte(byte b)
  */
 void write_code(void)
 {
-    FILE *fpout;
-    const byte *pmemory;
-    char outfile[256], *pout;
+    char outfile[_MAX_PATH];
     strcpy(outfile, infile);
-    pout = strrchr(outfile, '.');
+
+    char* pout = strrchr(outfile, '.');
     strcpy(++pout, "o");
-    fpout = fopen(outfile, "wb");
+
+    FILE* fpout = fopen(outfile, "wb");
     if (fpout == NULL)
         error("unable to open output file %s.\n", outfile);
-    pmemory = memory;
+
+    /* write base address */
+    fwrite(&base_address, sizeof(word), 1, fpout);
+
+    /* write code */
+    const byte* pmemory = memory;
     for (; pmemory < pmem; pmemory++) {
         fputc(*pmemory, fpout);
     }
@@ -93,10 +101,22 @@ void write_code(void)
 }
 
 /*
+ * set base address for assembly
+ */
+void set_base(word base)
+{
+    base_address = base;
+}
+
+/*
  * in memory code generation
  */
 void code(addrmode mode, byte opcode)
 {
+    if (base_address == (word)-1) {
+        error("base address must be specified.\n");
+    }
+
     switch (mode) {
     case acc:
         acccode(opcode);
@@ -139,6 +159,7 @@ void code(addrmode mode, byte opcode)
         break;
     }
 }
+
 void acccode(byte opcode)
 {
     putmem(1, opcode);
@@ -147,8 +168,8 @@ void acccode(byte opcode)
 void immcode(byte opcode)
 {
     word operand;
-    token = gettok(&pinput);	/* '#' */
-    token = gettok(&pinput);	/* operand */
+    token = gettok(&pinput); /* '#' */
+    token = gettok(&pinput); /* operand */
     sscanf(token.value, "%hx", &operand);
     putmem(2, opcode, operand);
 }
@@ -166,8 +187,8 @@ void zpxcode(byte opcode)
     word operand;
     token = gettok(&pinput);
     sscanf(token.value, "%hx", &operand);
-    token = gettok(&pinput);	/* ',' */
-    token = gettok(&pinput);	/* 'x' */
+    token = gettok(&pinput); /* ',' */
+    token = gettok(&pinput); /* 'x' */
     putmem(2, opcode, operand);
 }
 
@@ -176,8 +197,8 @@ void zpycode(byte opcode)
     word operand;
     token = gettok(&pinput);
     sscanf(token.value, "%hx", &operand);
-    token = gettok(&pinput);	/* ',' */
-    token = gettok(&pinput);	/* 'y' */
+    token = gettok(&pinput); /* ',' */
+    token = gettok(&pinput); /* 'y' */
     putmem(2, opcode, operand);
 }
 
@@ -186,14 +207,16 @@ void abscode(byte opcode)
     word operand = 0;
     PSYMBOL psym;
     token = gettok(&pinput);
-    if (token.type == PSEUDO) {	/* label */
+    if (token.type == PSEUDO) {
+        /* label */
         token = gettok(&pinput);
         psym = symlookup(table, token.value);
         if (psym == NULL)
             labelinsert(&labels, token.value, pmem + 1, 0);
         else
             operand = psym->u.mem;
-    } else if (token.type == STR) {	/* kernel jump */
+    } else if (token.type == STR) {
+        /* kernel jump */
         psym = symlookup(table, token.value);
         if (psym == NULL)
             error("undefined kernel jump found at line %d.\n", lineno);
@@ -207,58 +230,55 @@ void abscode(byte opcode)
 void abxcode(byte opcode)
 {
     word operand = 0;
-    PSYMBOL psym;
     token = gettok(&pinput);
     if (token.type == PSEUDO) {
         token = gettok(&pinput);
-        psym = symlookup(table, token.value);
+        PSYMBOL psym = symlookup(table, token.value);
         if (psym == NULL)
             labelinsert(&labels, token.value, pmem + 1, 0);
         else
             operand = psym->u.mem;
     } else
         sscanf(token.value, "%hx", &operand);
-    token = gettok(&pinput);	/* ',' */
-    token = gettok(&pinput);	/* 'x' */
+    token = gettok(&pinput); /* ',' */
+    token = gettok(&pinput); /* 'x' */
     putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 
 void abycode(byte opcode)
 {
     word operand = 0;
-    PSYMBOL psym;
     token = gettok(&pinput);
     if (token.type == PSEUDO) {
         token = gettok(&pinput);
-        psym = symlookup(table, token.value);
+        PSYMBOL psym = symlookup(table, token.value);
         if (psym == NULL)
             labelinsert(&labels, token.value, pmem + 1, 0);
         else
             operand = psym->u.mem;
     } else
         sscanf(token.value, "%hx", &operand);
-    token = gettok(&pinput);	/* ',' */
-    token = gettok(&pinput);	/* 'y' */
+    token = gettok(&pinput); /* ',' */
+    token = gettok(&pinput); /* 'y' */
     putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 
 void indcode(byte opcode)
 {
     word operand = 0;
-    PSYMBOL psym;
-    token = gettok(&pinput);	/* '(' */
+    token = gettok(&pinput); /* '(' */
 
     token = gettok(&pinput);
     if (token.type == PSEUDO) {
         token = gettok(&pinput);
-        psym = symlookup(table, token.value);
+        PSYMBOL psym = symlookup(table, token.value);
         if (psym == NULL)
             labelinsert(&labels, token.value, pmem + 1, 0);
         else
             operand = psym->u.mem;
     } else
         sscanf(token.value, "%hx", &operand);
-    token = gettok(&pinput);	/* ')' */
+    token = gettok(&pinput); /* ')' */
     putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 
@@ -270,11 +290,10 @@ void impcode(byte opcode)
 void relcode(byte opcode)
 {
     word operand = 0;
-    PSYMBOL psym;
     token = gettok(&pinput);
     if (token.type == PSEUDO) {
         token = gettok(&pinput);
-        psym = symlookup(table, token.value);
+        PSYMBOL psym = symlookup(table, token.value);
         if (psym == NULL)
             labelinsert(&labels, token.value, pmem + 1, 1);
         else
@@ -289,13 +308,13 @@ void idxcode(byte opcode)
 {
     word operand;
 
-    token = gettok(&pinput);	/* '(' */
+    token = gettok(&pinput); /* '(' */
 
     token = gettok(&pinput);
     sscanf(token.value, "%hx", &operand);
-    token = gettok(&pinput);	/* ',' */
-    token = gettok(&pinput);	/* 'x' */
-    token = gettok(&pinput);	/* ')' */
+    token = gettok(&pinput); /* ',' */
+    token = gettok(&pinput); /* 'x' */
+    token = gettok(&pinput); /* ')' */
     putmem(2, opcode, operand);
 }
 
@@ -303,35 +322,44 @@ void idycode(byte opcode)
 {
     word operand;
 
-    token = gettok(&pinput);	/* '(' */
+    token = gettok(&pinput); /* '(' */
 
     token = gettok(&pinput);
     sscanf(token.value, "%hx", &operand);
-    token = gettok(&pinput);	/* ')' */
-    token = gettok(&pinput);	/* ',' */
-    token = gettok(&pinput);	/* 'y' */
+    token = gettok(&pinput); /* ')' */
+    token = gettok(&pinput); /* ',' */
+    token = gettok(&pinput); /* 'y' */
 
     putmem(2, opcode, operand);
 }
+
 void resolve(void)
 {
-    label *plabels = labels;
-    while (plabels != NULL) {
-        Symbol *psym = symlookup(table, plabels->name);
+    label* label = labels;
+    while (label != NULL) {
+        Symbol* psym = symlookup(table, label->name);
         if (psym == NULL)
-            error("label \"%s\" was not defined.\n", plabels->name);
+            error("label \"%s\" was not defined.\n", label->name);
+
         /* determine if this is a relative branch fix-up */
-        if (plabels->isrel) {
-            word mem = (word) (plabels->mem + 1 - memory);
-            memory[plabels->mem - memory] = (byte) (psym->u.mem - mem);
+        if (label->isrel) {
+            size_t loffset = label->mem - memory;
+            size_t soffset = psym->u.mem - base_address;
+            byte branch = (byte)(soffset - loffset - 1);
+            memory[label->mem - memory] = branch;
         } else {
-            memory[plabels->mem - memory] = lobyte(psym->u.mem);
-            memory[plabels->mem - memory + 1] = hibyte(psym->u.mem);
+            memory[label->mem - memory] = lobyte(psym->u.mem);
+            memory[label->mem - memory + 1] = hibyte(psym->u.mem);
         }
-        plabels = plabels->next;
+        label = label->next;
     }
 }
+
 word getmem(void)
 {
-    return (word) (pmem - memory);
+    word offset = (word)(pmem - &memory[0]);
+
+    word address = base_address + offset;
+
+    return address;
 }

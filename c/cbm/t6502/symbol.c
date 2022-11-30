@@ -22,16 +22,17 @@
 #include "common.h"
 #include "opcodes.h"
 #include "symbol.h"
+
 /* Helper functions */
 static void freesymbol(PSYMBOL);
-static unsigned hash(const char *);
+static unsigned hash(const char*);
+
 /*
  * allocate symbol table
  */
 SymbolTable symalloc()
 {
-    SymbolTable table;
-    table = (PSYMBOL *) malloc(sizeof(PSYMBOL) * TBLSIZE);
+    SymbolTable table = malloc(sizeof(PSYMBOL) * TBLSIZE);
     memset(table, 0, sizeof(PSYMBOL) * TBLSIZE);
     return table;
 }
@@ -144,8 +145,7 @@ void syminit(SymbolTable table)
  */
 void symfree(SymbolTable table)
 {
-    int i;
-    for (i = 0; i < TBLSIZE; i++) {
+    for (int i = 0; i < TBLSIZE; i++) {
         PSYMBOL ps = table[i];
         if (ps != NULL)
             freesymbol(ps);
@@ -156,13 +156,10 @@ void symfree(SymbolTable table)
 /*
  * insert opcode
  */
-PSYMBOL opinsert(SymbolTable table, const char *name, const Instr * instr)
+PSYMBOL opinsert(SymbolTable table, const char* name, const Instr* instr)
 {
-    PSYMBOL ps;
-    unsigned int index;
-
-    ps = (Symbol *) malloc(sizeof(Symbol));
-    index = hash(name);
+    PSYMBOL ps = malloc(sizeof(Symbol));
+    unsigned int index = hash(name);
 
     ps->name = strcopy(name);
     ps->type = opcode;
@@ -177,13 +174,10 @@ PSYMBOL opinsert(SymbolTable table, const char *name, const Instr * instr)
 /*
  * insert kernel jump table entry
  */
-PSYMBOL kinsert(SymbolTable table, const char *name, const word kjmp)
+PSYMBOL kinsert(SymbolTable table, const char* name, const word kjmp)
 {
-    PSYMBOL ps;
-    unsigned int index;
-
-    ps = (Symbol *) malloc(sizeof(Symbol));
-    index = hash(name);
+    PSYMBOL ps = malloc(sizeof(Symbol));
+    unsigned int index = hash(name);
 
     ps->name = strcopy(name);
     ps->type = kentry;
@@ -198,13 +192,10 @@ PSYMBOL kinsert(SymbolTable table, const char *name, const word kjmp)
 /*
  * insert a label
  */
-PSYMBOL linsert(SymbolTable table, const char *name, word pmem)
+PSYMBOL linsert(SymbolTable table, const char* name, word pmem)
 {
-    PSYMBOL ps;
-    unsigned int index;
-
-    ps = (Symbol *) malloc(sizeof(Symbol));
-    index = hash(name);
+    PSYMBOL ps = malloc(sizeof(Symbol));
+    unsigned int index = hash(name);
 
     ps->name = strcopy(name);
     ps->type = lentry;
@@ -219,11 +210,10 @@ PSYMBOL linsert(SymbolTable table, const char *name, word pmem)
 /*
  * lookup entry in symbol table
  */
-PSYMBOL symlookup(SymbolTable table, const char *name)
+PSYMBOL symlookup(SymbolTable table, const char* name)
 {
-    unsigned int index;
-    PSYMBOL ps = NULL;
-    index = hash(name);
+    PSYMBOL ps;
+    unsigned int index = hash(name);
     for (ps = table[index]; ps != NULL; ps = ps->next) {
         if (strcmp(ps->name, name) == 0)
             break;
@@ -248,11 +238,11 @@ void freesymbol(PSYMBOL ps)
 /*
  * hash function
  */
-unsigned int hash(const char *p)
+unsigned int hash(const char* key)
 {
     unsigned n = 0;
-    while (*p) {
-        n = (n << 1) ^ toupper(*p++);
+    while (*key) {
+        n = n << 1 ^ toupper(*key++);
     }
     n %= TBLSIZE;
 

@@ -11,31 +11,37 @@
 #include "extern.h"
 #include "assem.h"
 #include "code.h"
+
 static void init(void);
 static void cleanup(void);
 static void usage(void);
-LabelTable labels;				/* symbol table for resolving labels */
-SymbolTable table;				/* symbol table of opcodes */
-const char *infile;				/* input file name */
-const char *log_file_name = NULL;	/* stderr */
+LabelTable labels;                /* symbol table for resolving labels */
+SymbolTable table;                /* symbol table of opcodes */
+const char* infile;               /* input file name */
+const char* log_file_name = NULL; /* stderr */
+
 /*
  * main entry point
  */
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     if (argc < 2)
         usage();
-    argc--;
+
     argv++;
     infile = argv[0];
 
     atexit(cleanup);
+
     /* initialize data structures */
     init();
+
     /* assemble the input file */
     assemble();
+
     /* write the generated program */
     write_code();
+
     return 0;
 }
 
@@ -59,7 +65,7 @@ void init(void)
  */
 void cleanup(void)
 {
-    extern FILE *fpin;
+    extern FILE* fpin;
     /* free the symbol table */
     if (table != NULL) {
         symfree(table);
