@@ -20,21 +20,21 @@
 .nextl  .byte $00       ; end of program
         .byte $00
 
-        jmp start	; must be @ $120d
+        jmp start       ; must be @ $120d
 
 .title
         .byte 'vic pencil'
         .byte $0
 
 .start
-        lda #$02
+        lda #$02    ; red character
         sta $0286
-        lda #$19
+        lda #$19    ; white border, rvs, white background
         sta $900f
-        lda #$93
+        lda #$93    ; clear screen
         jsr $ffd2
         lda #<title
         ldy #>title
-        jsr $cb1e
+        jsr $cb1e   ; output title
         rts
     
