@@ -24,12 +24,13 @@
 #include "opcodes.h"
 
 /***************************************************************************/
-void set_base(word base);
 void code(addrmode mode, byte);
+void resolve(void);
+void set_base(word base);
 void write_byte(byte);
 void write_code(void);
-void resolve(void);
 word getmem(void);
+byte get_byte(int offset);
 /***************************************************************************/
 
 #endif							/* __CODE_H__ */

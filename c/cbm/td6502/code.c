@@ -92,7 +92,7 @@ void immediate(const Instr* p)
     byte b;
     if (!getbyte(b))
         return; /* EOF */
-    printf(" %.2x\t\t%s\t#%.2x", b, *p->name, b);
+    printf(" %.2x\t\t%s\t#$%.2x", b, *p->name, b);
     pc += 2; /* opcode, value */
 }
 

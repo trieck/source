@@ -37,7 +37,10 @@ typedef enum
     QUOTE = '\'',
     PSEUDO = '.',
     BASE = '*',
-    EQUAL = '='
+    EQUAL = '=',
+    LT = '<',
+    GT = '>',
+    DOLLAR = '$'
 } TokenType;
 
 typedef struct
@@ -49,6 +52,7 @@ typedef struct
 /***************************************************************************/
 void assemble(void);
 Token gettok(const char** ppin);
+Token lookahead(void);
 /***************************************************************************/
 
 #endif  /* __ASSEM_H__ */

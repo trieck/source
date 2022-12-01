@@ -26,8 +26,8 @@
 #include "extern.h"
 
 #define MAXLINE		1024
-#define ISZADDR(x)	((x) < 0x100)
-#define ISSTR(c)	(isalpha(c) || (c) == '_')
+#define ISBYTE(x)	((x) < 0x100)
+#define ISSTR(c)	(isalnum(c) || (c) == '_')
 
 extern const char* infile; /* input file name */
 extern SymbolTable table;  /* symbol table */
@@ -35,10 +35,12 @@ const char* pinput = NULL; /* pointer to current input */
 Token token;               /* current token */
 FILE* fpin = NULL;         /* input file pointer */
 int lineno = 0;            /* current line number */
+
 static void parse(void);
-static Token lookahead(void);
 static void op(const Symbol*);
 static int ismode(addrmode mode);
+static int isword(const char** ppin);
+static int isbyte(const char** ppin);
 static int isacc(void);
 static int isimm(void);
 static int iszpg(void);
@@ -74,12 +76,14 @@ void assemble(void)
     fpin = fopen(infile, "r");
     if (fpin == NULL)
         error("unable to open file %s.\n", infile);
+
     for (lineno = 1; fgets(line, MAXLINE, fpin); lineno++) {
         pinput = line;
         parse();
     }
 
     fclose(fpin);
+
     fpin = NULL;
 
     /* resolve labels */
@@ -100,11 +104,12 @@ void parse(void)
         case NUM:
         case STR:
             psymbol = symlookup(table, token.value);
-            if (psymbol && psymbol->type == opcode)
+            if (psymbol && psymbol->type == opcode) {
                 op(psymbol);
-            else
+            } else {
                 error("unexpected token \"%s\""
-                      " found at line %d.\n", token.value, lineno);
+                    " found at line %d.\n", token.value, lineno);
+            }
             break;
         case BASE:
             base();
@@ -180,6 +185,30 @@ int ismode(addrmode mode)
     return 0;
 }
 
+int isword(const char** ppin)
+{
+    Token tok = gettok(ppin);
+    if (tok.type == NUM) {
+        word operand;
+        return sscanf(tok.value, "%hx", &operand) == 1;
+    }
+
+    return tok.type == STR; // label or kernal entry
+}
+
+int isbyte(const char** ppin)
+{
+    Token tok = gettok(ppin);
+    if (tok.type == NUM) {
+        word operand;
+        return sscanf(tok.value, "%hx", &operand) == 1 && ISBYTE(operand);
+    } if (tok.type == LT || tok.type == GT) {
+        return isword(ppin);
+    }
+
+    return 0;
+}
+
 int isacc(void)
 {
     Token tok = lookahead();
@@ -188,167 +217,138 @@ int isacc(void)
 
 int isimm(void)
 {
-    word operand;
     const char* psave = pinput;
-    Token tok1 = gettok(&psave);
-    Token tok2 = gettok(&psave);
-    if (tok1.type != POUND)
-        return 0;
 
-    return sscanf(tok2.value, "%hx", &operand) == 1 && ISZADDR(operand);
+    Token tok1 = gettok(&psave);
+    if (tok1.type != POUND) {
+        return 0;
+    }
+
+    return isbyte(&psave);
 }
 
 int iszpg(void)
 {
-    word operand;
     const char* psave = pinput;
+    if (!isbyte(&psave)) {
+        return 0;
+    }
+
     Token tok = gettok(&psave);
-    if (tok.type != NUM)
+    if (tok.value[0] != '\0' && tok.type != SEMI) {
         return 0;
+    }
 
-    sscanf(tok.value, "%hx", &operand);
-
-    tok = gettok(&psave);
-    if (tok.value[0] != '\0' && tok.type != SEMI)
-        return 0;
-
-    return ISZADDR(operand);
+    return 1;
 }
 
 int iszpx(void)
 {
-    word operand;
     const char* psave = pinput;
+
+    if (!isbyte(&psave)) {
+        return 0;
+    }
+
     Token tok = gettok(&psave);
-    if (tok.type != NUM)
-        return 0;
-    sscanf(tok.value, "%hx", &operand);
-
-    tok = gettok(&psave);
-    if (tok.type != COMMA)
-        return 0;
-
-    tok = gettok(&psave);
-    if (tok.value[0] != 'x' && tok.value[0] != 'X')
-        return 0;
-
-    return ISZADDR(operand);
-}
-
-int iszpy(void)
-{
-    word operand;
-    const char* psave = pinput;
-    Token tok = gettok(&psave);
-    if (tok.type != NUM)
-        return 0;
-    sscanf(tok.value, "%hx", &operand);
-
-    tok = gettok(&psave);
-    if (tok.type != COMMA)
-        return 0;
-    tok = gettok(&psave);
-    if (tok.value[0] != 'y' && tok.value[0] != 'Y')
-        return 0;
-
-    return ISZADDR(operand);
-}
-
-int isabs(void)
-{
-    word operand;
-    const char* psave = pinput;
-    Token tok = gettok(&psave);
-    switch (tok.type) {
-    case NUM: /* absolute address */
-        sscanf(tok.value, "%hx", &operand);
-        if (ISZADDR(operand))
-            return 0;
-        break;
-    case PSEUDO: /* label */
-        (void)gettok(&psave);
-        break;
-    case STR: /* kernel jump table entry */
-        break;
-    default:
+    if (tok.type != COMMA) {
         return 0;
     }
 
     tok = gettok(&psave);
+    if (tok.value[0] != 'x' && tok.value[0] != 'X') {
+        return 0;
+    }
+
+    return 1;
+}
+
+int iszpy(void)
+{
+    const char* psave = pinput;
+    if (!isbyte(&psave)) {
+        return 0;
+    }
+
+    Token tok = gettok(&psave);
+    if (tok.type != COMMA) {
+        return 0;
+    }
+
+    tok = gettok(&psave);
+    if (tok.value[0] != 'y' && tok.value[0] != 'Y') {
+        return 0;
+    }
+
+    return 1;
+}
+
+int isabs(void)
+{
+    const char* psave = pinput;
+
+    if (!isword(&psave)) {
+        return 0;
+    }
+
+    Token tok = gettok(&psave);
 
     return tok.value[0] == '\0' || tok.type == SEMI;
 }
 
 int isabx(void)
 {
-    word operand;
     const char* psave = pinput;
-    Token tok = gettok(&psave);
-    if (tok.type != NUM && tok.type != PSEUDO)
-        return 0;
 
-    if (tok.type == NUM) {
-        sscanf(tok.value, "%hx", &operand);
-        if (ISZADDR(operand))
-            return 0;
-    } else {
-        (void)gettok(&psave);
+    if (!isword(&psave)) {
+        return 0;
+    }
+
+    Token tok = gettok(&psave);
+    if (tok.type != COMMA) {
+        return 0;
     }
 
     tok = gettok(&psave);
-    if (tok.type != COMMA)
+    if (tok.value[0] != 'x' && tok.value[0] != 'X') {
         return 0;
-
-    tok = gettok(&psave);
-    if (tok.value[0] != 'x' && tok.value[0] != 'X')
-        return 0;
+    }
 
     return 1;
 }
 
 int isaby(void)
 {
-    word operand;
     const char* psave = pinput;
-    Token tok = gettok(&psave);
-    if (tok.type != NUM && tok.type != PSEUDO)
-        return 0;
 
-    if (tok.type == NUM) {
-        sscanf(tok.value, "%hx", &operand);
-        if (ISZADDR(operand))
-            return 0;
-    } else {
-        gettok(&psave);
+    if (!isword(&psave)) {
+        return 0;
+    }
+
+    Token tok = gettok(&psave);
+    if (tok.type != COMMA) {
+        return 0;
     }
 
     tok = gettok(&psave);
-    if (tok.type != COMMA)
+    if (tok.value[0] != 'y' && tok.value[0] != 'Y') {
         return 0;
+    }
 
-    tok = gettok(&psave);
-    if (tok.value[0] != 'y' && tok.value[0] != 'Y')
-        return 0;
     return 1;
 }
 
 int isind(void)
 {
-    word operand;
     const char* psave = pinput;
-    Token tok = gettok(&psave);
-    if (tok.type != LPAREN)
-        return 0;
-    tok = gettok(&psave);
-    if (tok.type != PSEUDO && tok.type != NUM)
-        return 0;
 
-    if (tok.type == NUM) {
-        sscanf(tok.value, "%hx", &operand);
-        if (ISZADDR(operand))
-            return 0;
-    } else {
-        gettok(&psave);
+    Token tok = gettok(&psave);
+    if (tok.type != LPAREN) {
+        return 0;
+    }
+
+    if (!isword(&psave)) {
+        return 0;
     }
 
     tok = gettok(&psave);
@@ -366,16 +366,10 @@ int isimp(void)
 
 int isrel(void)
 {
-    word operand;
     const char* psave = pinput;
-    Token tok = gettok(&psave);
-    if (tok.type != NUM && tok.type != PSEUDO)
-        return 0;
 
-    if (tok.type == NUM) {
-        sscanf(tok.value, "%hx", &operand);
-        if (ISZADDR(operand))
-            return 0;
+    if (!isword(&psave)) {
+        return 0;
     }
 
     return 1;
@@ -383,57 +377,63 @@ int isrel(void)
 
 int isidx(void)
 {
-    word operand;
     const char* psave = pinput;
 
     Token tok = gettok(&psave);
     if (tok.type != LPAREN)
         return 0;
 
-    tok = gettok(&psave);
-    if (tok.type != NUM)
+    if (!isbyte(&psave)) {
         return 0;
-
-    sscanf(tok.value, "%hx", &operand);
+    }
 
     tok = gettok(&psave);
-    if (tok.type != COMMA)
+    if (tok.type != COMMA) {
         return 0;
+    }
 
     tok = gettok(&psave);
-    if (tok.value[0] != 'x' && tok.value[0] != 'X')
+    if (tok.value[0] != 'x' && tok.value[0] != 'X') {
         return 0;
+    }
 
     tok = gettok(&psave);
-    if (tok.type != RPAREN)
+    if (tok.type != RPAREN) {
         return 0;
+    }
 
-    return ISZADDR(operand);
+    return 1;
 }
 
 int isidy(void)
 {
-    word operand;
     const char* psave = pinput;
+
     Token tok = gettok(&psave);
-    if (tok.type != LPAREN)
+    if (tok.type != LPAREN) {
         return 0;
+    }
+
+    if (!isbyte(&psave)) {
+        return 0;
+    }
 
     tok = gettok(&psave);
-    if (tok.type != NUM)
+    if (tok.type != RPAREN) {
         return 0;
-    sscanf(tok.value, "%hx", &operand);
-    tok = gettok(&psave);
-    if (tok.type != RPAREN)
-        return 0;
-    tok = gettok(&psave);
-    if (tok.type != COMMA)
-        return 0;
-    tok = gettok(&psave);
-    if (tok.value[0] != 'y' && tok.value[0] != 'Y')
-        return 0;
+    }
 
-    return ISZADDR(operand);
+    tok = gettok(&psave);
+    if (tok.type != COMMA) {
+        return 0;
+    }
+
+    tok = gettok(&psave);
+    if (tok.value[0] != 'y' && tok.value[0] != 'Y') {
+        return 0;
+    }
+
+    return 1;
 }
 
 void base(void)
@@ -484,21 +484,28 @@ void pseudo(void)
  */
 void defbyte(void)
 {
-    word operand;
+    byte b;
     char buffer[MAXTOK];
     const char* pbuffer = buffer;
 
-    token = gettok(&pinput);
+    Token tok = lookahead();
 
-    switch (token.type) {
+    switch (tok.type) {
     case LITERAL: /* sequence of bytes */
+        token = gettok(&pinput);
         escape(token.value, buffer, MAXTOK);
         while (*pbuffer)
             write_byte(*pbuffer++);
         break;
     case NUM: /* single numeric byte */
-        sscanf(token.value, "%hx", &operand);
-        write_byte(lobyte(operand));
+        token = gettok(&pinput);
+        sscanf(token.value, "%hhx", &b);
+        write_byte(b);
+        break;
+    case LT:
+    case GT:
+        b = get_byte(0);
+        write_byte(b);
         break;
     default:
         error("expected numeric at byte definition"
@@ -539,7 +546,9 @@ Token gettok(const char** ppin)
 {
     Token tok;
     const char* pin = *ppin;
+
     memset(&tok, 0, sizeof(Token));
+
     for (;;) {
         switch (*pin) {
         case '\0':
@@ -549,11 +558,13 @@ Token gettok(const char** ppin)
             }
             return tok;
         case BASE:
-        case EQUAL:
-        case LPAREN:
-        case RPAREN:
         case COMMA:
+        case EQUAL:
+        case GT:
+        case LPAREN:
+        case LT:
         case POUND:
+        case RPAREN:
         case SEMI:
             if (pin > *ppin) {
                 strncpy(tok.value, *ppin, pin - *ppin);
@@ -599,13 +610,19 @@ Token gettok(const char** ppin)
             }
             (*ppin)++; /* eat white */
             break;
-        default: {
-            if (isxdigit(*pin)) {
+        case DOLLAR:
+            if (isxdigit(*(pin + 1))) {
+                pin++;
+                (*ppin)++;
                 while (isxdigit(*pin))
                     pin++;
                 tok.type = NUM;
                 continue;
             }
+            tok.type = (TokenType)*pin;
+            tok.value[0] = *(*ppin)++;
+            return tok;
+        default: {
             if (ISSTR(*pin)) {
                 while (ISSTR(*pin))
                     pin++;
@@ -620,6 +637,7 @@ Token gettok(const char** ppin)
         pin++;
     }
 }
+
 
 /*
  * escape string literal

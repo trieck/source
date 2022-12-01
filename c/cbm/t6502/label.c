@@ -48,14 +48,16 @@ void labelfree(LabelTable table)
  * insert a label
  */
 label* labelinsert(LabelTable* table, const char* name,
-                   const byte* mem, int isrel)
+                   const byte* mem, label_type type)
 {
     /* insert at front of list */
-    label* pthis = labelalloc();
-    pthis->name = strcopy(name);
-    pthis->mem = mem;
-    pthis->next = *table;
-    pthis->isrel = isrel;
-    *table = pthis;
-    return pthis;
+    label* label = labelalloc();
+    label->name = strcopy(name);
+    label->mem = mem;
+    label->next = *table;
+    label->type = type;
+
+    *table = label;
+
+    return label;
 }

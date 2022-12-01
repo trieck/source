@@ -21,12 +21,20 @@
 #ifndef __LABEL_H__
 #define __LABEL_H__
 
+typedef enum 
+{
+    REG = 0,    /* regular old label */
+    REL,        /* relative branch fix up */
+    LO,         /* lo-byte address label */
+    HI,         /* hi-byte address label */
+}  label_type;
+
 typedef struct label
 {
     char* name;         /* label name */
-    const byte* mem;    /* memory location encountered */
+    const byte* mem;    /* memory location encountered, maybe unknown */
     struct label* next; /* next symbol to resolve in list */
-    int isrel;          /* is this a relative branch fix-up */
+    label_type type;    /* label type */
 } label;
 
 typedef label* LabelTable;
@@ -34,7 +42,7 @@ typedef label* LabelTable;
 /***************************************************************************/
 void labelfree(LabelTable);
 label* labelinsert(LabelTable* table, const char* name, const byte* mem,
-                   int isrel);
+                   label_type type);
 /***************************************************************************/
 
 #endif							/* __LABEL_H__ */

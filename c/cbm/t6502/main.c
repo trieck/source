@@ -66,11 +66,13 @@ void init(void)
 void cleanup(void)
 {
     extern FILE* fpin;
+
     /* free the symbol table */
     if (table != NULL) {
         symfree(table);
         table = NULL;
     }
+
     /* free the label table */
     if (labels != NULL) {
         labelfree(labels);

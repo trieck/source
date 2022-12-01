@@ -41,9 +41,9 @@ static void relcode(byte);
 static void idxcode(byte);
 static void idycode(byte);
 static void indcode(byte);
+static word get_address(label_type type, int offset);
 
 static word base_address = -1;
-
 static byte memory[MEMSIZE];
 static byte* pmem = memory;
 
@@ -56,6 +56,10 @@ extern int lineno;         /* current line number */
 
 void putmem(int ncount, ...)
 {
+    if (base_address == (word)-1) {
+        error("base address must be specified.\n");
+    }
+
     va_list arglist;
     va_start(arglist, ncount);
     while (ncount--) {
@@ -113,10 +117,6 @@ void set_base(word base)
  */
 void code(addrmode mode, byte opcode)
 {
-    if (base_address == (word)-1) {
-        error("base address must be specified.\n");
-    }
-
     switch (mode) {
     case acc:
         acccode(opcode);
@@ -167,118 +167,75 @@ void acccode(byte opcode)
 
 void immcode(byte opcode)
 {
-    word operand;
     token = gettok(&pinput); /* '#' */
-    token = gettok(&pinput); /* operand */
-    sscanf(token.value, "%hx", &operand);
+    
+    byte operand = get_byte(1);
+
     putmem(2, opcode, operand);
 }
 
 void zpgcode(byte opcode)
 {
-    word operand;
-    token = gettok(&pinput);
-    sscanf(token.value, "%hx", &operand);
+    byte operand = get_byte(1);
+
     putmem(2, opcode, operand);
 }
 
 void zpxcode(byte opcode)
 {
-    word operand;
-    token = gettok(&pinput);
-    sscanf(token.value, "%hx", &operand);
+    byte operand = get_byte(1);
+
     token = gettok(&pinput); /* ',' */
     token = gettok(&pinput); /* 'x' */
+
     putmem(2, opcode, operand);
 }
 
 void zpycode(byte opcode)
 {
-    word operand;
-    token = gettok(&pinput);
-    sscanf(token.value, "%hx", &operand);
+    byte operand = get_byte(1);
+
     token = gettok(&pinput); /* ',' */
     token = gettok(&pinput); /* 'y' */
+
     putmem(2, opcode, operand);
 }
 
 void abscode(byte opcode)
 {
-    word operand = 0;
-    PSYMBOL psym;
-    token = gettok(&pinput);
-    if (token.type == PSEUDO) {
-        /* label */
-        token = gettok(&pinput);
-        psym = symlookup(table, token.value);
-        if (psym == NULL)
-            labelinsert(&labels, token.value, pmem + 1, 0);
-        else
-            operand = psym->u.mem;
-    } else if (token.type == STR) {
-        /* kernel jump */
-        psym = symlookup(table, token.value);
-        if (psym == NULL)
-            error("undefined kernel jump found at line %d.\n", lineno);
-        operand = psym->u.mem;
-    } else
-        sscanf(token.value, "%hx", &operand);
-
+    word operand = get_address(REG, 1);
+    
     putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 
 void abxcode(byte opcode)
 {
-    word operand = 0;
-    token = gettok(&pinput);
-    if (token.type == PSEUDO) {
-        token = gettok(&pinput);
-        PSYMBOL psym = symlookup(table, token.value);
-        if (psym == NULL)
-            labelinsert(&labels, token.value, pmem + 1, 0);
-        else
-            operand = psym->u.mem;
-    } else
-        sscanf(token.value, "%hx", &operand);
+    word operand = get_address(REG, 1);
+
     token = gettok(&pinput); /* ',' */
     token = gettok(&pinput); /* 'x' */
+
     putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 
 void abycode(byte opcode)
 {
-    word operand = 0;
-    token = gettok(&pinput);
-    if (token.type == PSEUDO) {
-        token = gettok(&pinput);
-        PSYMBOL psym = symlookup(table, token.value);
-        if (psym == NULL)
-            labelinsert(&labels, token.value, pmem + 1, 0);
-        else
-            operand = psym->u.mem;
-    } else
-        sscanf(token.value, "%hx", &operand);
+    word operand = get_address(REG, 1);
+
     token = gettok(&pinput); /* ',' */
     token = gettok(&pinput); /* 'y' */
+
     putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 
 void indcode(byte opcode)
 {
-    word operand = 0;
-    token = gettok(&pinput); /* '(' */
+    gettok(&pinput); /* '(' */
 
-    token = gettok(&pinput);
-    if (token.type == PSEUDO) {
-        token = gettok(&pinput);
-        PSYMBOL psym = symlookup(table, token.value);
-        if (psym == NULL)
-            labelinsert(&labels, token.value, pmem + 1, 0);
-        else
-            operand = psym->u.mem;
-    } else
-        sscanf(token.value, "%hx", &operand);
-    token = gettok(&pinput); /* ')' */
+    word operand = get_address(REG, 1);
+
+    gettok(&pinput); /* ')' */
+
     putmem(3, opcode, lobyte(operand), hibyte(operand));
 }
 
@@ -289,43 +246,30 @@ void impcode(byte opcode)
 
 void relcode(byte opcode)
 {
-    word operand = 0;
-    token = gettok(&pinput);
-    if (token.type == PSEUDO) {
-        token = gettok(&pinput);
-        PSYMBOL psym = symlookup(table, token.value);
-        if (psym == NULL)
-            labelinsert(&labels, token.value, pmem + 1, 1);
-        else
-            operand = psym->u.mem;
-    } else
-        sscanf(token.value, "%hx", &operand);
+    word operand = get_address(REL, 1);
 
     putmem(2, opcode, operand - (getmem() + 2));
 }
 
 void idxcode(byte opcode)
 {
-    word operand;
-
     token = gettok(&pinput); /* '(' */
 
-    token = gettok(&pinput);
-    sscanf(token.value, "%hx", &operand);
+    byte operand = get_byte(1);
+
     token = gettok(&pinput); /* ',' */
     token = gettok(&pinput); /* 'x' */
     token = gettok(&pinput); /* ')' */
+
     putmem(2, opcode, operand);
 }
 
 void idycode(byte opcode)
 {
-    word operand;
-
     token = gettok(&pinput); /* '(' */
 
-    token = gettok(&pinput);
-    sscanf(token.value, "%hx", &operand);
+    byte operand = get_byte(1);
+
     token = gettok(&pinput); /* ')' */
     token = gettok(&pinput); /* ',' */
     token = gettok(&pinput); /* 'y' */
@@ -338,16 +282,20 @@ void resolve(void)
     label* label = labels;
     while (label != NULL) {
         Symbol* psym = symlookup(table, label->name);
-        if (psym == NULL)
+        if (psym == NULL) {
             error("label \"%s\" was not defined.\n", label->name);
+        }
 
-        /* determine if this is a relative branch fix-up */
-        if (label->isrel) {
+        if (label->type == REL) {    /* relative branch fix up*/
             size_t loffset = label->mem - memory;
             size_t soffset = psym->u.mem - base_address;
             byte branch = (byte)(soffset - loffset - 1);
             memory[label->mem - memory] = branch;
-        } else {
+        } else if (label->type == LO) { /* lo-byte fix-up */
+            memory[label->mem - memory] = lobyte(psym->u.mem);
+        } else if (label->type == HI) { /* hi-byte fix-up */
+            memory[label->mem - memory] = hibyte(psym->u.mem);
+        } else if (label->type == REG) { /* regular */
             memory[label->mem - memory] = lobyte(psym->u.mem);
             memory[label->mem - memory + 1] = hibyte(psym->u.mem);
         }
@@ -360,6 +308,57 @@ word getmem(void)
     word offset = (word)(pmem - &memory[0]);
 
     word address = base_address + offset;
+
+    return address;
+}
+
+byte get_byte(int offset)
+{
+    byte b = 0;
+
+    token = gettok(&pinput);
+    if (token.type == NUM) {
+        int rc = sscanf(token.value, "%hhx", &b);
+        if (rc == 0 || rc == EOF) {
+            error("unexpected token \"%s\""
+                " found at line %d.\n", token.value, lineno);
+        }
+    } else if (token.type == LT) {
+        word address = get_address(LO, offset);
+        b = lobyte(address);
+    } else if (token.type == GT) {
+        word address = get_address(HI, offset);
+        b = hibyte(address);
+    } else {
+        error("unexpected token \"%s\""
+            " found at line %d.\n", token.value, lineno);
+    }
+
+    return b;
+}
+
+word get_address(label_type type, int offset)
+{
+    word address = 0;
+
+    token = gettok(&pinput);
+    if (token.type == STR) {
+        PSYMBOL psym = symlookup(table, token.value);
+        if (psym != NULL) {
+            address = psym->u.mem;
+        } else { // assume an as-of-yet undefined label
+            labelinsert(&labels, token.value, pmem + offset, type);
+        }
+    } else if (token.type == NUM) {
+        int rc = sscanf(token.value, "%hx", &address);
+        if (rc == 0 || rc == EOF) {
+            error("unexpected token \"%s\""
+                " found at line %d.\n", token.value, lineno);
+        }
+    } else {
+        error("unexpected token \"%s\""
+            " found at line %d.\n", token.value, lineno);
+    }
 
     return address;
 }
