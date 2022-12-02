@@ -21,38 +21,8 @@
 #ifndef __ASSEM_H__
 #define __ASSEM_H__
 
-#define MAXTOK 256
-
-typedef enum
-{
-    UNDEF = 0,
-    LITERAL,
-    STR,
-    NUM,
-    LPAREN = '(',
-    RPAREN = ')',
-    COMMA = ',',
-    POUND = '#',
-    SEMI = ';',
-    QUOTE = '\'',
-    PSEUDO = '.',
-    BASE = '*',
-    EQUAL = '=',
-    LT = '<',
-    GT = '>',
-    DOLLAR = '$'
-} TokenType;
-
-typedef struct
-{
-    TokenType type;
-    char value[MAXTOK];
-} Token;
-
 /***************************************************************************/
 void assemble(void);
-Token gettok(const char** ppin);
-Token lookahead(void);
 /***************************************************************************/
 
 #endif  /* __ASSEM_H__ */

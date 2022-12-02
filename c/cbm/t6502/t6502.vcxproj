@@ -21,7 +21,9 @@
     <ClInclude Include="extern.h" />
     <ClInclude Include="label.h" />
     <ClInclude Include="opcodes.h" />
+    <ClInclude Include="petscii.h" />
     <ClInclude Include="symbol.h" />
+    <ClInclude Include="token.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="assem.c" />
@@ -30,7 +32,9 @@
     <ClCompile Include="label.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="opcodes.c" />
+    <ClCompile Include="petscii.c" />
     <ClCompile Include="symbol.c" />
+    <ClCompile Include="token.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

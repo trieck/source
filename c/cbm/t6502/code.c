@@ -24,6 +24,7 @@
 #include "assem.h"
 #include "label.h"
 #include "symbol.h"
+#include "token.h"
 
 #define MEMSIZE	65536
 
