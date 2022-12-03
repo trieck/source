@@ -27,9 +27,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // HexApp construction
 
-HexApp::HexApp()
-{
-}
+HexApp::HexApp() = default;
 
 /////////////////////////////////////////////////////////////////////////////
 // The one and only HexApp object
@@ -41,12 +39,16 @@ HexApp theApp;
 
 BOOL HexApp::InitInstance()
 {
+    if (!AfxOleInit()) {
+        return FALSE;
+    }
+
     // Change the registry key under which our settings are stored.
     SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
     LoadStdProfileSettings(); // Load standard INI file options (including MRU)
 
-    CSingleDocTemplate* pDocTemplate = new CSingleDocTemplate(
+    auto pDocTemplate = new CSingleDocTemplate(
         IDR_MAINFRAME,
         RUNTIME_CLASS(HexDoc),
         RUNTIME_CLASS(MainFrame), // main SDI frame window
@@ -60,6 +62,7 @@ BOOL HexApp::InitInstance()
     // Dispatch commands specified on the command line
     if (!ProcessShellCommand(cmdInfo))
         return FALSE;
+
     m_pMainWnd->ShowWindow(SW_SHOW);
     m_pMainWnd->UpdateWindow();
 
@@ -88,7 +91,6 @@ protected:
     //}}AFX_VIRTUAL
 
     // Implementation
-protected:
     //{{AFX_MSG(AboutDlg)
     // No message handlers
     //}}AFX_MSG
@@ -123,3 +125,10 @@ void HexApp::OnAppAbout()
 
 /////////////////////////////////////////////////////////////////////////////
 // HexApp message handlers
+
+int HexApp::ExitInstance()
+{
+    AfxOleTerm();
+
+    return CWinApp::ExitInstance();
+}

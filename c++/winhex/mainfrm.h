@@ -16,9 +16,7 @@ protected: // create from serialization only
     DECLARE_DYNCREATE(MainFrame)
 
     // Attributes
-public:
     // Operations
-public:
     // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(MainFrame)
@@ -26,7 +24,6 @@ public:
     //}}AFX_VIRTUAL
 
     // Implementation
-public:
     ~MainFrame() override;
 #ifdef _DEBUG
     void AssertValid() const override;
@@ -38,11 +35,11 @@ protected: // control bar embedded members
     CToolBar m_wndToolBar;
 
     // Generated message map functions
-protected:
     //{{AFX_MSG(MainFrame)
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
     //}}AFX_MSG
     DECLARE_MESSAGE_MAP()
+    //    afx_msg void OnDropFiles(HDROP hDropInfo);
 };
 
 /////////////////////////////////////////////////////////////////////////////

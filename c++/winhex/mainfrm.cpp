@@ -21,6 +21,7 @@ BEGIN_MESSAGE_MAP(MainFrame, CFrameWnd)
     //{{AFX_MSG_MAP(MainFrame)
     ON_WM_CREATE()
     //}}AFX_MSG_MAP
+//    ON_WM_DROPFILES()
 END_MESSAGE_MAP()
 
 static UINT indicators[] = {
@@ -31,13 +32,9 @@ static UINT indicators[] = {
 /////////////////////////////////////////////////////////////////////////////
 // MainFrame construction/destruction
 
-MainFrame::MainFrame()
-{
-}
+MainFrame::MainFrame() = default;
 
-MainFrame::~MainFrame()
-{
-}
+MainFrame::~MainFrame() = default;
 
 int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
@@ -97,3 +94,11 @@ void MainFrame::Dump(CDumpContext& dc) const
 
 /////////////////////////////////////////////////////////////////////////////
 // MainFrame message handlers
+
+
+//void MainFrame::OnDropFiles(HDROP hDropInfo)
+//{
+    // TODO: Add your message handler code here and/or call default
+
+//    CFrameWnd::OnDropFiles(hDropInfo);
+//}

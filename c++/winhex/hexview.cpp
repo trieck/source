@@ -67,8 +67,7 @@ HexView::HexView()
     m_ScrollPos = CPoint(0, 0);
 }
 
-HexView::~HexView()
-= default;
+HexView::~HexView() = default;
 
 BOOL HexView::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -108,7 +107,7 @@ void HexView::Render(CDC* pDC, LPCBYTE pdata, UINT size)
     static char buffer[BUFFSIZE + 1];
     for (int n = nstart; n <= nend; n++) {
         int nlength = min(LINESIZE, size - (n * LINESIZE));
-        int j = FormatLine(n, buffer, pdata + (n * LINESIZE), nlength);
+        int j = FormatLine(n, buffer, pdata + static_cast<ptrdiff_t>(n * LINESIZE), nlength);
         pDC->TextOut(0, n * m_cyChar, buffer, j);
 
         if (m_grid)
@@ -145,7 +144,7 @@ void HexView::Dump(CDumpContext& dc) const
 HexDoc* HexView::GetDocument() const // non-debug version is inline
 {
     ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(HexDoc)));
-    return static_cast<HexDoc*>(m_pDocument);
+    return dynamic_cast<HexDoc*>(m_pDocument);
 }
 #endif //_DEBUG
 
@@ -163,7 +162,7 @@ void HexView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 void HexView::OnInitialUpdate()
 {
     UINT nsize = GetDocument()->GetDataSize();
-    m_nLinesTotal = (nsize + LINESIZE - 1) / LINESIZE;
+    m_nLinesTotal = static_cast<int>((nsize + LINESIZE - 1) / LINESIZE);
 
     if (nsize == 0) {
         m_ActiveCell = INVALID_CELL;
@@ -183,11 +182,12 @@ int HexView::OnCreate(LPCREATESTRUCT lpCreateStruct)
     if (CView::OnCreate(lpCreateStruct) == -1)
         return -1;
 
+    VERIFY(m_DropTarget.Register(this));
+
     CClientDC dc(this);
 
     // Create the font
-    LOGFONT lf;
-    memset(&lf, 0, sizeof(LOGFONT));
+    LOGFONT lf = {};
     strcpy(lf.lfFaceName, GetProfileString("font", "FaceName"));
     lf.lfItalic = GetProfileInt("font", "Italic");
     lf.lfWeight = GetProfileInt("font", "Bold") == 1 ? FW_BOLD : FW_NORMAL;
@@ -245,7 +245,7 @@ int HexView::FormatLine(UINT line, LPSTR buffer, LPCBYTE pdata, UINT size) const
 
     for (unsigned n = 0; n < size; n++) {
         if (isprint(pdata[n]))
-            pbuffer[n] = pdata[n];
+            pbuffer[n] = static_cast<char>(pdata[n]);
         else
             pbuffer[n] = '.';
     }
@@ -432,8 +432,7 @@ void HexView::OnFont()
     LOGFONT lf;
     m_font.GetLogFont(&lf);
 
-    CHOOSEFONT cf;
-    memset(&cf, 0, sizeof(CHOOSEFONT));
+    CHOOSEFONT cf = {};
 
     cf.lStructSize = sizeof(CHOOSEFONT);
     cf.Flags = CF_INITTOLOGFONTSTRUCT |
@@ -461,7 +460,7 @@ void HexView::OnFont()
     Invalidate();
 }
 
-void HexView::OnLButtonDown(UINT nFlags, CPoint point)
+void HexView::OnLButtonDown(UINT /*nFlags*/, CPoint point)
 {
     if (GetDocument()->GetDataSize() == 0) {
         Default();
@@ -746,8 +745,8 @@ void HexView::GetCellPos(int& row, int& col) const
 {
     ASSERT(m_ActiveCell != INVALID_CELL);
 
-    row = m_ActiveCell / LINESIZE;
-    col = m_ActiveCell - (row * LINESIZE);
+    row = static_cast<int>(m_ActiveCell) / LINESIZE;
+    col = static_cast<int>(m_ActiveCell) - (row * LINESIZE);
 }
 
 void HexView::GetCellRect(CRect& rc) const
@@ -761,18 +760,16 @@ void HexView::SetCellPos(int row, int col)
     ASSERT(row < (m_nDocHeight / m_cyChar));
     ASSERT(col < LINESIZE);
 
-    UINT nsize = GetDocument()->GetDataSize();
     UINT cell = row * LINESIZE + col;
-
-    ASSERT(cell < nsize);
 
     CRect rc;
     GetCellByPos(row, col, rc);
 
     if (m_edit.GetModify()) {
         UpdateCell();
-    } else
+    } else {
         InvalidateCell(FALSE);
+    }
 
     m_edit.SetWindowPos(nullptr, rc.left, rc.top,
                         rc.Width(), rc.Height(), SWP_SHOWWINDOW);
@@ -805,13 +802,11 @@ void HexView::Update()
 
 void HexView::OnDestroy()
 {
-    CView::OnDestroy();
-
     if (m_bgBrush.m_hObject) {
         LOGBRUSH lb;
         m_bgBrush.GetLogBrush(&lb);
-        SetProfileInt("colors", "TextColor", m_color);
-        SetProfileInt("colors", "BackgroundColor", lb.lbColor);
+        SetProfileInt("colors", "TextColor", static_cast<int>(m_color));
+        SetProfileInt("colors", "BackgroundColor", static_cast<int>(lb.lbColor));
     }
 
     if (m_font.m_hObject) {
@@ -825,6 +820,8 @@ void HexView::OnDestroy()
         SetProfileInt("font", "Bold", lf.lfWeight >= FW_BOLD ? 1 : 0);
         SetProfileInt("font", "Italic", lf.lfItalic);
     }
+
+    CView::OnDestroy();
 }
 
 void HexView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -899,7 +896,7 @@ void HexView::ScrollToCell()
     CRect dummy;
     dummy.UnionRect(rc, rcCell);
 
-    if (dummy == rc)
+    if (dummy.EqualRect(rc))
         return; // no need to scroll
 
     // for horizontal scrolling we must calculate a scroll position
@@ -925,11 +922,61 @@ void HexView::ScrollToCell()
     UpdateWindow();
 }
 
-BOOL HexView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+BOOL HexView::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 {
     UINT code = zDelta < 0 ? SB_LINEDOWN : SB_LINEUP;
 
     OnVScroll(code, 0, nullptr);
 
     return 0;
+}
+
+
+BOOL HexView::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint point)
+{
+    if (pDataObject == nullptr || !pDataObject->IsDataAvailable(CF_HDROP)) {
+        return FALSE;
+    }
+
+    STGMEDIUM medium;
+    FORMATETC fmte = {
+        CF_HDROP,
+        static_cast<DVTARGETDEVICE*>(nullptr),
+        DVASPECT_CONTENT,
+        -1,
+        TYMED_HGLOBAL
+    };
+
+    if (!pDataObject->GetData(CF_HDROP, &medium, &fmte)) {
+        return FALSE;
+    }
+
+    auto hDrop = static_cast<HDROP>(medium.hGlobal);
+
+    auto cFiles = DragQueryFile(hDrop, static_cast<UINT>(-1), nullptr, 0);
+    if (cFiles != 1) {
+        return FALSE;
+    }
+
+    char szFile[MAX_PATH];
+    DragQueryFile(hDrop, 0, szFile, sizeof(szFile));
+
+    if (medium.pUnkForRelease) {
+        medium.pUnkForRelease->Release();
+    } else {
+        GlobalFree(medium.hGlobal);
+    }
+
+    AfxGetApp()->OpenDocumentFile(szFile);
+
+    return TRUE;
+}
+
+DROPEFFECT HexView::OnDragOver(COleDataObject* pDataObject, DWORD dwKeyState, CPoint point)
+{
+    if (!pDataObject->IsDataAvailable(CF_HDROP)) {
+        return DROPEFFECT_NONE;
+    }
+
+    return DROPEFFECT_COPY;
 }

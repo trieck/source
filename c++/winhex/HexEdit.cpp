@@ -57,7 +57,7 @@ void HexEdit::SetTextColor(COLORREF clrText)
     m_clrText = clrText;
 }
 
-HBRUSH HexEdit::CtlColor(CDC* pDC, UINT nCtlColor)
+HBRUSH HexEdit::CtlColor(CDC* pDC, UINT /*nCtlColor*/)
 {
     ASSERT_VALID(pDC);
 

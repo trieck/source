@@ -10,6 +10,7 @@
 #endif // _MSC_VER > 1000
 
 #include "HexEdit.h"
+#include <afxole.h>
 
 class HexView : public CView
 {
@@ -29,9 +30,12 @@ protected: // create from serialization only
     void OnDraw(CDC* pDC) override; // overridden to draw this view
     BOOL PreCreateWindow(CREATESTRUCT& cs) override;
     void OnInitialUpdate() override;
-    auto OnPrepareDC(CDC* pDC, CPrintInfo* pInfo) -> void override;
+    void OnPrepareDC(CDC* pDC, CPrintInfo* pInfo) override;
 protected:
     void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) override;
+    DROPEFFECT OnDragOver(COleDataObject* pDataObject, DWORD dwKeyState, CPoint point) override;
+    BOOL OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint point) override;
+
     //}}AFX_VIRTUAL
 
     // Implementation
@@ -78,6 +82,8 @@ protected:
     afx_msg void OnSetFocus(CWnd* pOldWnd);
     afx_msg void OnDestroy();
     afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
+    afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+
     //}}AFX_MSG
     DECLARE_MESSAGE_MAP()
 private:
@@ -96,10 +102,9 @@ private:
     HexEdit m_edit;
     UINT m_ActiveCell;
     CPoint m_ScrollPos;
+    COleDropTarget m_DropTarget;
 
     friend class HexEdit;
-public:
-    afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -107,7 +112,7 @@ public:
 #ifndef _DEBUG  // debug version in hexview.cpp
 inline HexDoc* HexView::GetDocument() const
 {
-    return (HexDoc*)m_pDocument;
+    return dynamic_cast<HexDoc*>(m_pDocument);
 }
 #endif
 

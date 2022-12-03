@@ -27,8 +27,8 @@ public:
     // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(HexApp)
-public:
     BOOL InitInstance() override;
+    int ExitInstance() override;
     //}}AFX_VIRTUAL
 
     // Implementation

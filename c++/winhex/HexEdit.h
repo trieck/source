@@ -24,21 +24,17 @@ public:
     HexEdit();
 
     // Attributes
-public:
     // Operations
-public:
     void SetTextColor(COLORREF clrText);
     void SetBkColor(COLORREF clrBkgnd);
 
     // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(HexEdit)
-public:
     BOOL PreTranslateMessage(MSG* pMsg) override;
     //}}AFX_VIRTUAL
 
     // Implementation
-public:
     ~HexEdit() override;
 
     // Generated message map functions
