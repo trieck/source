@@ -1,5 +1,5 @@
 /*
- *	EXTERN.H : external declarations
+ * 	FIXUP.H	: fixups table
  *
  * 	Copyright (C) 2001 Thomas A. Rieck <trieck@bellsouth.net>
  *
@@ -18,13 +18,35 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307  USA.
  */
-#ifndef __EXTERN_H__
-#define __EXTERN_H__
+
+#pragma once
+#include "common.h"
+
+typedef enum
+{
+    FIXUP_REG = 0,
+    /* regular old fixup */
+    FIXUP_BRANCH,
+    /* relative branch fix up */
+    FIXUP_LO,
+    /* lo-byte address fixup */
+    FIXUP_HI,
+    /* hi-byte address fixup */
+} fixup_type;
+
+typedef struct fixup
+{
+    char* name;         /* fixup name */
+    word mem;           /* memory location */
+    struct fixup* next; /* next symbol to resolve in list */
+    fixup_type type;    /* fixup type */
+    int lineno;         /* line number where fixup was generated */
+} fixup;
+
+typedef fixup* FixupTable;
 
 /***************************************************************************/
-void extern_init(void);
-void extern_free(void);
-void extern_insert(const char* name);
+void fixupfree(FixupTable);
+fixup* fixupinsert(FixupTable* table, const char* name, word mem,
+                   fixup_type type);
 /***************************************************************************/
-
-#endif							/* __EXTERN_H__ */

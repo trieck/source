@@ -18,19 +18,37 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307  USA.
  */
-#ifndef __CODE_H__
-#define __CODE_H__
+#pragma once
 
+#include "common.h"
 #include "opcodes.h"
 
 /***************************************************************************/
-void code(addrmode mode, byte);
-void resolve(void);
-void set_base(word base);
-void write_byte(byte);
+void abs_code(const Instr* instr, word operand);
+void abx_code(const Instr* instr, word operand);
+void aby_code(const Instr* instr, word operand);
+void branch_fixup(const char* name);
+void byte_code(byte value);
+void decl_hibyte_fixup(const char* name);
+void decl_lobyte_fixup(const char* name);
+void declword_fixup(const char* name);
+void defbase(word address);
+void deflabel(const char* name);
+void idx_code(const Instr* instr, byte operand);
+void idy_code(const Instr* instr, byte operand);
+void imm_code(const Instr* instr, byte operand);
+void imp_acc_code(const Instr* instr);
+void ind_code(const Instr* instr, word operand);
+void op_fixup(const char* name);
+void op_hibyte_fixup(const char* name);
+void op_lobyte_fixup(const char* name);
+void rel_code(const Instr* instr, word operand);
+void resolve_fixups(void);
+void text_code(const char* value);
+void word_code(word value);
 void write_code(void);
-word getmem(void);
-byte get_byte(int offset);
+void zp_code(const Instr* instr, byte operand);
+void zpx_code(const Instr* instr, byte operand);
+void zpy_code(const Instr* instr, byte operand);
+void ztext_code(const char* value);
 /***************************************************************************/
-
-#endif							/* __CODE_H__ */

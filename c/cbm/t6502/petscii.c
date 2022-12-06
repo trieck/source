@@ -1,3 +1,24 @@
+/*
+ *	 PETSCII.C : PETSCII/ASCII conversion
+ *
+ * 	Copyright (C) 2001-2022 Thomas A. Rieck <trieck@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+ *  02111-1307  USA.
+ */
+
 #include "petscii.h"
 
 static const unsigned char ASCII2PETSCII[256] = {
@@ -19,11 +40,7 @@ static const unsigned char ASCII2PETSCII[256] = {
     0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7, 0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff
 };
 
-char* ascii2petscii(char* output, const char* input, size_t size)
+char ascii2petscii(char input)
 {
-    for (size_t i = 0; i < size; ++i) {
-        output[i] = (char)ASCII2PETSCII[(unsigned char)input[i]];
-    }
-
-    return output;
+    return (char)ASCII2PETSCII[(unsigned char)input];
 }

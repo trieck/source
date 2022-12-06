@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Scanner Files">
+      <UniqueIdentifier>{ef609566-866e-44fa-8c9a-ce44efe132c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Grammar Files">
+      <UniqueIdentifier>{d0098907-b176-4bc5-837e-9e62b1dc556d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test Files">
+      <UniqueIdentifier>{02cc940a-10e5-474c-900a-4a2cce1151d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="assem.h">
@@ -21,10 +30,7 @@
     <ClInclude Include="code.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="extern.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="label.h">
+    <ClInclude Include="fixup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="opcodes.h">
@@ -33,10 +39,10 @@
     <ClInclude Include="symbol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="token.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="petscii.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,10 +53,7 @@
     <ClCompile Include="code.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="extern.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="label.c">
+    <ClCompile Include="fixup.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.c">
@@ -62,11 +65,27 @@
     <ClCompile Include="symbol.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="token.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="petscii.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="scanner.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="parser.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="scanner.l">
+      <Filter>Scanner Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="grammar.y">
+      <Filter>Grammar Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test.s">
+      <Filter>Test Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

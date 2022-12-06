@@ -10,12 +10,12 @@
 ;
     *= $1000
 
-.hextable
-        .byte '0123456789abcdef'
+hextable
+        .text '0123456789abcdef'
 
 ; output word in a,x in hexadecimal
 
-.outhex 
+outhex
         pha             ; remember hi byte
         txa     
         pha             ; remember lo byte
@@ -45,18 +45,17 @@
         
         rts
     
-.outlo  and #$0f
+outlo   and #$0f
         jmp out
         
-.outhi  and #$f0
+outhi   and #$f0
         lsr
         lsr
         lsr
         lsr
         
-.out    tax
+out     tax
         lda hextable, x
         jsr $ffd2
-        
+
         rts
-        

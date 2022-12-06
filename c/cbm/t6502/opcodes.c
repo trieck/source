@@ -24,7 +24,7 @@
 #include "opcodes.h"
 
 const byte opcodes[] = {
-    0x69, 0x65, 0x75, 0x6D, 0x7D, 0x79, 0x61, 0x71,
+    0x69, 0x65, 0x75, 0x6D, 0x7D, 0x79, 0x61, 0x71, 
     0x29, 0x25, 0x35, 0x2D, 0x3D, 0x39, 0x21, 0x31,
     0x0A, 0x06, 0x16, 0x0E, 0x1E,
     0x90,
@@ -81,6 +81,7 @@ const byte opcodes[] = {
     0x9A,
     0x98
 };
+
 const Instr adc = {
     NULL,        /* acc */
     &opcodes[0], /* imm */
@@ -95,6 +96,7 @@ const Instr adc = {
     &opcodes[6], /* idx */
     &opcodes[7], /* idy */
 };
+
 const Instr and = {
     NULL,         /* acc */
     &opcodes[8],  /* imm */
@@ -109,6 +111,7 @@ const Instr and = {
     &opcodes[14], /* idx */
     &opcodes[15], /* idy */
 };
+
 const Instr asl = {
     &opcodes[16], /* acc */
     NULL,         /* imm */
@@ -118,6 +121,7 @@ const Instr asl = {
     &opcodes[19], /* abs */
     &opcodes[20]  /* abx */
 };
+
 const Instr bcc = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -130,6 +134,7 @@ const Instr bcc = {
     NULL,        /* imp */
     &opcodes[21] /* rel */
 };
+
 const Instr bcs = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -142,6 +147,7 @@ const Instr bcs = {
     NULL,        /* imp */
     &opcodes[22] /* rel */
 };
+
 const Instr beq = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -154,6 +160,7 @@ const Instr beq = {
     NULL,        /* imp */
     &opcodes[23] /* rel */
 };
+
 const Instr bit = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -162,6 +169,7 @@ const Instr bit = {
     NULL,         /* zpy */
     &opcodes[25]  /* abs */
 };
+
 const Instr bmi = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -174,6 +182,7 @@ const Instr bmi = {
     NULL,        /* imp */
     &opcodes[26] /* rel */
 };
+
 const Instr bne = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -186,6 +195,7 @@ const Instr bne = {
     NULL,        /* imp */
     &opcodes[27] /* rel */
 };
+
 const Instr bpl = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -198,6 +208,7 @@ const Instr bpl = {
     NULL,        /* imp */
     &opcodes[28] /* rel */
 };
+
 const Instr Brk = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -209,6 +220,7 @@ const Instr Brk = {
     NULL,        /* aby */
     &opcodes[29] /* imp */
 };
+
 const Instr bvc = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -221,6 +233,7 @@ const Instr bvc = {
     NULL,        /* imp */
     &opcodes[30] /* rel */
 };
+
 const Instr bvs = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -233,6 +246,7 @@ const Instr bvs = {
     NULL,        /* imp */
     &opcodes[31] /* rel */
 };
+
 const Instr clc = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -244,6 +258,7 @@ const Instr clc = {
     NULL,        /* aby */
     &opcodes[32] /* imp */
 };
+
 const Instr cld = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -255,6 +270,7 @@ const Instr cld = {
     NULL,        /* aby */
     &opcodes[33] /* imp */
 };
+
 const Instr cli = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -266,6 +282,7 @@ const Instr cli = {
     NULL,        /* aby */
     &opcodes[34] /* imp */
 };
+
 const Instr clv = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -277,6 +294,7 @@ const Instr clv = {
     NULL,        /* aby */
     &opcodes[35] /* imp */
 };
+
 const Instr cmp = {
     NULL,         /* acc */
     &opcodes[36], /* imm */
@@ -291,6 +309,7 @@ const Instr cmp = {
     &opcodes[42], /* idx */
     &opcodes[43], /* idy */
 };
+
 const Instr cpx = {
     NULL,         /* acc */
     &opcodes[44], /* imm */
@@ -305,6 +324,7 @@ const Instr cpx = {
     NULL,         /* idx */
     NULL,         /* idy */
 };
+
 const Instr cpy = {
     NULL,         /* acc */
     &opcodes[47], /* imm */
@@ -319,6 +339,7 @@ const Instr cpy = {
     NULL,         /* idx */
     NULL,         /* idy */
 };
+
 const Instr dec = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -328,6 +349,7 @@ const Instr dec = {
     &opcodes[52], /* abs */
     &opcodes[53]  /* abx */
 };
+
 const Instr dex = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -339,6 +361,7 @@ const Instr dex = {
     NULL,        /* aby */
     &opcodes[54] /* imp */
 };
+
 const Instr dey = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -350,6 +373,7 @@ const Instr dey = {
     NULL,        /* aby */
     &opcodes[55] /* imp */
 };
+
 const Instr eor = {
     NULL,         /* acc */
     &opcodes[56], /* imm */
@@ -364,6 +388,7 @@ const Instr eor = {
     &opcodes[62], /* idx */
     &opcodes[63]  /* idy */
 };
+
 const Instr inc = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -373,6 +398,7 @@ const Instr inc = {
     &opcodes[66], /* abs */
     &opcodes[67]  /* abx */
 };
+
 const Instr inx = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -384,6 +410,7 @@ const Instr inx = {
     NULL,        /* aby */
     &opcodes[68] /* imp */
 };
+
 const Instr iny = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -395,6 +422,7 @@ const Instr iny = {
     NULL,        /* aby */
     &opcodes[69] /* imp */
 };
+
 const Instr jmp = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -410,6 +438,7 @@ const Instr jmp = {
     NULL,         /* idy */
     &opcodes[71]  /* ind */
 };
+
 const Instr jsr = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -418,6 +447,7 @@ const Instr jsr = {
     NULL,        /* zpy */
     &opcodes[72] /* abs */
 };
+
 const Instr lda = {
     NULL,         /* acc */
     &opcodes[73], /* imm */
@@ -432,6 +462,7 @@ const Instr lda = {
     &opcodes[79], /* idx */
     &opcodes[80]  /* idy */
 };
+
 const Instr ldx = {
     NULL,         /* acc */
     &opcodes[81], /* imm */
@@ -442,6 +473,7 @@ const Instr ldx = {
     NULL,         /* abx */
     &opcodes[85]  /* aby */
 };
+
 const Instr ldy = {
     NULL,         /* acc */
     &opcodes[86], /* imm */
@@ -451,6 +483,7 @@ const Instr ldy = {
     &opcodes[89], /* abs */
     &opcodes[90]  /* abx */
 };
+
 const Instr lsr = {
     &opcodes[91], /* acc */
     NULL,         /* imm */
@@ -460,6 +493,7 @@ const Instr lsr = {
     &opcodes[94], /* abs */
     &opcodes[95]  /* abx */
 };
+
 const Instr nop = {
     NULL,        /* acc */
     NULL,        /* imm */
@@ -471,6 +505,7 @@ const Instr nop = {
     NULL,        /* aby */
     &opcodes[96] /* imp */
 };
+
 const Instr ora = {
     NULL,          /* acc */
     &opcodes[97],  /* imm */
@@ -485,6 +520,7 @@ const Instr ora = {
     &opcodes[103], /* idx */
     &opcodes[104]  /* idy */
 };
+
 const Instr pha = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -496,6 +532,7 @@ const Instr pha = {
     NULL,         /* aby */
     &opcodes[105] /* imp */
 };
+
 const Instr php = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -507,6 +544,7 @@ const Instr php = {
     NULL,         /* aby */
     &opcodes[106] /* imp */
 };
+
 const Instr pla = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -518,6 +556,7 @@ const Instr pla = {
     NULL,         /* aby */
     &opcodes[107] /* imp */
 };
+
 const Instr plp = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -529,6 +568,7 @@ const Instr plp = {
     NULL,         /* aby */
     &opcodes[108] /* imp */
 };
+
 const Instr rol = {
     &opcodes[109], /* acc */
     NULL,          /* imm */
@@ -538,6 +578,7 @@ const Instr rol = {
     &opcodes[112], /* abs */
     &opcodes[113]  /* abx */
 };
+
 const Instr ror = {
     &opcodes[114], /* acc */
     NULL,          /* imm */
@@ -547,6 +588,7 @@ const Instr ror = {
     &opcodes[117], /* abs */
     &opcodes[118]  /* abx */
 };
+
 const Instr rti = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -558,6 +600,7 @@ const Instr rti = {
     NULL,         /* aby */
     &opcodes[119] /* imp */
 };
+
 const Instr rts = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -569,6 +612,7 @@ const Instr rts = {
     NULL,         /* aby */
     &opcodes[120] /* imp */
 };
+
 const Instr sbc = {
     NULL,          /* acc */
     &opcodes[121], /* imm */
@@ -583,6 +627,7 @@ const Instr sbc = {
     &opcodes[127], /* idx */
     &opcodes[128]  /* idy */
 };
+
 const Instr sec = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -594,6 +639,7 @@ const Instr sec = {
     NULL,         /* aby */
     &opcodes[129] /* imp */
 };
+
 const Instr sed = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -605,6 +651,7 @@ const Instr sed = {
     NULL,         /* aby */
     &opcodes[130] /* imp */
 };
+
 const Instr sei = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -616,6 +663,7 @@ const Instr sei = {
     NULL,         /* aby */
     &opcodes[131] /* imp */
 };
+
 const Instr sta = {
     NULL,          /* acc */
     NULL,          /* imm */
@@ -630,6 +678,7 @@ const Instr sta = {
     &opcodes[137], /* idx */
     &opcodes[138]  /* idy */
 };
+
 const Instr stx = {
     NULL,          /* acc */
     NULL,          /* imm */
@@ -638,6 +687,7 @@ const Instr stx = {
     NULL,          /* zpy */
     &opcodes[141]  /* abs */
 };
+
 const Instr sty = {
     NULL,          /* acc */
     NULL,          /* imm */
@@ -646,6 +696,7 @@ const Instr sty = {
     NULL,          /* zpy */
     &opcodes[144]  /* abs */
 };
+
 const Instr tax = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -657,6 +708,7 @@ const Instr tax = {
     NULL,         /* aby */
     &opcodes[145] /* imp */
 };
+
 const Instr tay = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -668,6 +720,7 @@ const Instr tay = {
     NULL,         /* aby */
     &opcodes[146] /* imp */
 };
+
 const Instr tsx = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -679,6 +732,7 @@ const Instr tsx = {
     NULL,         /* aby */
     &opcodes[147] /* imp */
 };
+
 const Instr txa = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -690,6 +744,7 @@ const Instr txa = {
     NULL,         /* aby */
     &opcodes[148] /* imp */
 };
+
 const Instr txs = {
     NULL,         /* acc */
     NULL,         /* imm */
@@ -701,6 +756,7 @@ const Instr txs = {
     NULL,         /* aby */
     &opcodes[149] /* imp */
 };
+
 const Instr tya = {
     NULL,         /* acc */
     NULL,         /* imm */

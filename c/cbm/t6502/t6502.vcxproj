@@ -18,23 +18,49 @@
   <ItemGroup>
     <ClInclude Include="assem.h" />
     <ClInclude Include="code.h" />
-    <ClInclude Include="extern.h" />
-    <ClInclude Include="label.h" />
+    <ClInclude Include="fixup.h" />
     <ClInclude Include="opcodes.h" />
+    <ClInclude Include="parser.h" />
     <ClInclude Include="petscii.h" />
     <ClInclude Include="symbol.h" />
-    <ClInclude Include="token.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="assem.c" />
     <ClCompile Include="code.c" />
-    <ClCompile Include="extern.c" />
-    <ClCompile Include="label.c" />
+    <ClCompile Include="fixup.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="opcodes.c" />
+    <ClCompile Include="parser.c" />
     <ClCompile Include="petscii.c" />
+    <ClCompile Include="scanner.c" />
     <ClCompile Include="symbol.c" />
-    <ClCompile Include="token.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="scanner.l">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">win_flex -o scanner.c %(FullPath)</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating Fast Lexical Analyzer from %(FullPath)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">scanner.c</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">win_flex -o scanner.c %(FullPath)</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating Fast Lexical Analyzer from %(FullPath)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">scanner.c</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="grammar.y">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">win_bison -v -d -y %(FullPath) -o parser.c</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating Parser from %(FullPath)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">parser.c;parser.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">win_bison -v -d -y %(FullPath) -o parser.c</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating Parser from %(FullPath)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">parser.c;parser.h;%(Outputs)</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test.s" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -69,17 +95,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <CustomBuildAfterTargets>Link</CustomBuildAfterTargets>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <CustomBuildAfterTargets>Link</CustomBuildAfterTargets>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -94,6 +114,9 @@
       <Message>Copying target...</Message>
       <Outputs>$(SolutionDir)\bin\$(TargetFileName)</Outputs>
     </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>del $(SolutionDir)\bin\$(TargetFileName)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -101,7 +124,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -118,6 +141,9 @@
       <Message>Copying target...</Message>
       <Outputs>$(SolutionDir)\bin\$(TargetFileName)</Outputs>
     </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>del $(SolutionDir)\bin\$(TargetFileName)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

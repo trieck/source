@@ -1,5 +1,5 @@
 /*
- * 	LABEL.C : label table
+ * 	FIXUP.C : fixups table
  *
  * 	Copyright (C) 2001 Thomas A. Rieck <trieck@bellsouth.net>
  *
@@ -19,25 +19,29 @@
  *  02111-1307  USA.
  */
 #include "common.h"
-#include "label.h"
-static LabelTable labelalloc(void);
+#include "fixup.h"
+
+extern int yylineno;
+
+static FixupTable fixupalloc(void);
+
 /*
- * allocate a label
+ * allocate a fixup
  */
-LabelTable labelalloc(void)
+FixupTable fixupalloc(void)
 {
-    label* table = malloc(sizeof(label));
-    memset(table, 0, sizeof(label));
+    fixup* table = malloc(sizeof(fixup));
+    memset(table, 0, sizeof(fixup));
     return table;
 }
 
 /*
- * free a label
+ * free a fixup
  */
-void labelfree(LabelTable table)
+void fixupfree(FixupTable table)
 {
     while (table != NULL) {
-        label* psave = table->next;
+        fixup* psave = table->next;
         free(table->name);
         free(table);
         table = psave;
@@ -45,19 +49,20 @@ void labelfree(LabelTable table)
 }
 
 /*
- * insert a label
+ * insert a fixup
  */
-label* labelinsert(LabelTable* table, const char* name,
-                   const byte* mem, label_type type)
+fixup* fixupinsert(FixupTable* table, const char* name,
+                   word mem, fixup_type type)
 {
     /* insert at front of list */
-    label* label = labelalloc();
-    label->name = strcopy(name);
-    label->mem = mem;
-    label->next = *table;
-    label->type = type;
+    fixup* fixup = fixupalloc();
+    fixup->name = strcopy(name);
+    fixup->mem = mem;
+    fixup->type = type;
+    fixup->lineno = yylineno;
+    fixup->next = *table;
+    
+    *table = fixup;
 
-    *table = label;
-
-    return label;
+    return fixup;
 }

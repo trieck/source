@@ -1,5 +1,5 @@
 /*
- *	ASSEM.H : assembler
+ *	 ASSEM.H : assembler
  *
  * 	Copyright (C) 2001 Thomas A. Rieck <trieck@bellsouth.net>
  *
@@ -18,11 +18,12 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307  USA.
  */
+
 #ifndef __ASSEM_H__
 #define __ASSEM_H__
 
 /***************************************************************************/
-void assemble(void);
+int assemble(void);
 /***************************************************************************/
 
 #endif  /* __ASSEM_H__ */

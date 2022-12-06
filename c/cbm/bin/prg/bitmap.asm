@@ -17,38 +17,39 @@
         
 ;
 ; clear bitmap screen
-        lda #$0      ; starting number, 2000h        
+        lda #$0     ; starting number, 2000h        
         sta $fb
         lda #$20
         sta $fc
         
-        lda #$40     ; destination number, 3f40h
+        lda #$40    ; destination number, 3f40h
         sta $fd
         lda #$3f
         sta $fe
         
-.loop   sec     
-        lda $fb      ; compare low order bytes
+loop    sec
+        lda $fb     ; compare low order bytes
         sbc $fd
-        sta $d7      ; d7h is temp buffer
+        sta $d7     ; d7h is temp buffer
         
-        lda $fc      ; compare high order bytes
+        lda $fc     ; compare high order bytes
         sbc $fe      
         
         ora $d7
-        beq fin    ; first number = second number
+        beq fin     ; first number = second number
         
-        lda #$0      ; put zero at address
+        lda #$0     ; put zero at address
         ldy #$0
         sta ($fb), y
         
-        inc $fb      ; increment low order byte
+        inc $fb     ; increment low order byte
         beq next 
         jmp loop
         
-.next   inc $fc          ; increment high order byte
+next   inc $fc      ; increment high order byte
         jmp loop
-.fin
+fin
+
 ;
 ; set color to cyan and black
 ;
@@ -61,8 +62,7 @@
         sta $fd
         lda #$7
         sta $fe
-
-.loop2
+loop2
         sec
         lda $fb      ; compare low order bytes
         sbc $fd
@@ -72,7 +72,7 @@
         sbc $fe      
         
         ora $d7
-        beq fin2   ; first number = second number
+        beq fin2    ; first number = second number
         
         lda #$3      ; put 3 at address
         ldy #$0
@@ -82,15 +82,14 @@
         beq next2
         jmp loop2
         
-.next2  inc $fc      ; increment high order byte
+next2   inc $fc      ; increment high order byte
         jmp loop2
-.fin2
+fin2
 ; clear bitmap mode
 ;
         lda $d011    ; clear bit 5 in VIC-II control register
         and #$df 
         sta $d011
-;       
-; exit
+
         rts
-        
+

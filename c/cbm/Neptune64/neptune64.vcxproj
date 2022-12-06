@@ -68,6 +68,9 @@
       <Message>Copying target...</Message>
       <Outputs>$(SolutionDir)\bin\$(TargetFileName)</Outputs>
     </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>del $(SolutionDir)\bin\$(TargetFileName)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -92,6 +95,9 @@
       <Message>Copying target...</Message>
       <Outputs>$(SolutionDir)\bin\$(TargetFileName)</Outputs>
     </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>del $(SolutionDir)\bin\$(TargetFileName)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectReference Include="..\common\common.vcxproj">

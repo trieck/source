@@ -23,10 +23,27 @@
 #ifndef __OPCODES_H__
 #define __OPCODES_H__
 
-#define MODES 13
+#define NMODES 13
 
-typedef const byte* Instr[MODES];
-extern const byte opcodes[];
+typedef enum
+{
+    ACC = 0,
+    IMM,
+    ZPG,
+    ZPX,
+    ZPY,
+    ABS,
+    ABX,
+    ABY,
+    IMP,
+    REL,
+    IDX,
+    IDY,
+    IND
+} MODES;
+
+typedef const byte* Instr[NMODES];
+
 extern const Instr adc;
 extern const Instr and;
 extern const Instr asl;

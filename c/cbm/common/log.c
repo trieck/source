@@ -27,10 +27,7 @@
 #include "log.h"
 
 #define BUFFERSIZE 1024
-
-static void write_log_entry(const char* entry);
-extern const char* log_file_name;
-
+   
 /*
  * log error and exit
  */
@@ -46,7 +43,7 @@ void error(const char* format, ...)
     vsprintf(buffer, fmtbuff, arglist);
     va_end(arglist);
 
-    write_log_entry(buffer);
+    fputs(buffer, stderr);
 
     exit(1);
 }
@@ -63,32 +60,6 @@ void warning(const char* format, ...)
     vsprintf(buffer, format, arglist);
     va_end(arglist);
 
-    write_log_entry(buffer);
+    fputs(buffer, stderr);
 }
 
-/*
- * append log file entry record
- */
-void write_log_entry(const char* entry)
-{
-    if (NULL != log_file_name) {
-        char tmpbuf[128];
-        time_t ltime;
-
-        FILE* fp = fopen(log_file_name, "a");
-        if (NULL == fp)
-            return; /* could not open log file */
-
-        time(&ltime);
-        struct tm* today = localtime(&ltime);
-
-        /* format current time as string */
-        strftime(tmpbuf, sizeof tmpbuf,
-                 "%m/%d/%Y %H:%M:%S", today);
-
-        fprintf(fp, "%s %s", tmpbuf, entry);
-
-        fclose(fp);
-    } else
-        fputs(entry, stderr);
-}

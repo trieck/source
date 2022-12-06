@@ -21,39 +21,23 @@
 #include "common.h"
 #include "code.h"
 #include "opcodes.h"
-#include "assem.h"
-#include "label.h"
+#include "fixup.h"
 #include "symbol.h"
-#include "token.h"
+#include "petscii.h"
 
 #define MEMSIZE	65536
 
+extern int yyerror(const char* s);
 static void putmem(int ncount, ...);
-static void acccode(byte);
-static void immcode(byte);
-static void zpgcode(byte);
-static void zpxcode(byte);
-static void zpycode(byte);
-static void abscode(byte);
-static void abxcode(byte);
-static void abycode(byte);
-static void impcode(byte);
-static void relcode(byte);
-static void idxcode(byte);
-static void idycode(byte);
-static void indcode(byte);
-static word get_address(label_type type, int offset);
 
 static word base_address = -1;
 static byte memory[MEMSIZE];
 static byte* pmem = memory;
 
 extern SymbolTable table;  /* symbol table of kernel entries / opcodes */
-extern LabelTable labels;  /* symbol table of labels */
-extern Token token;        /* current token */
-extern const char* pinput; /* pointer to current input */
+extern FixupTable fixups;  /* symbol table of fixups */
 extern const char* infile; /* input file name */
-extern int lineno;         /* current line number */
+extern int yylineno;       /* current line number */
 
 void putmem(int ncount, ...)
 {
@@ -64,7 +48,8 @@ void putmem(int ncount, ...)
     va_list arglist;
     va_start(arglist, ncount);
     while (ncount--) {
-        *pmem++ = va_arg(arglist, int);
+        byte value = va_arg(arglist, byte);
+        *pmem++ = value;
     }
 
     va_end(arglist);
@@ -87,11 +72,12 @@ void write_code(void)
     strcpy(outfile, infile);
 
     char* pout = strrchr(outfile, '.');
-    strcpy(++pout, "o");
+    strcpy(++pout, "prg");
 
     FILE* fpout = fopen(outfile, "wb");
-    if (fpout == NULL)
+    if (fpout == NULL) {
         error("unable to open output file %s.\n", outfile);
+    }
 
     /* write base address */
     fwrite(&base_address, sizeof(word), 1, fpout);
@@ -105,202 +91,45 @@ void write_code(void)
     fclose(fpout);
 }
 
-/*
- * set base address for assembly
- */
-void set_base(word base)
+void resolve_fixups(void)
 {
-    base_address = base;
-}
-
-/*
- * in memory code generation
- */
-void code(addrmode mode, byte opcode)
-{
-    switch (mode) {
-    case acc:
-        acccode(opcode);
-        break;
-    case imm:
-        immcode(opcode);
-        break;
-    case zpg:
-        zpgcode(opcode);
-        break;
-    case zpx:
-        zpxcode(opcode);
-        break;
-    case zpy:
-        zpycode(opcode);
-        break;
-    case absl:
-        abscode(opcode);
-        break;
-    case abx:
-        abxcode(opcode);
-        break;
-    case aby:
-        abycode(opcode);
-        break;
-    case imp:
-        impcode(opcode);
-        break;
-    case rel:
-        relcode(opcode);
-        break;
-    case idx:
-        idxcode(opcode);
-        break;
-    case idy:
-        idycode(opcode);
-        break;
-    case ind:
-        indcode(opcode);
-        break;
-    }
-}
-
-void acccode(byte opcode)
-{
-    putmem(1, opcode);
-}
-
-void immcode(byte opcode)
-{
-    token = gettok(&pinput); /* '#' */
-    
-    byte operand = get_byte(1);
-
-    putmem(2, opcode, operand);
-}
-
-void zpgcode(byte opcode)
-{
-    byte operand = get_byte(1);
-
-    putmem(2, opcode, operand);
-}
-
-void zpxcode(byte opcode)
-{
-    byte operand = get_byte(1);
-
-    token = gettok(&pinput); /* ',' */
-    token = gettok(&pinput); /* 'x' */
-
-    putmem(2, opcode, operand);
-}
-
-void zpycode(byte opcode)
-{
-    byte operand = get_byte(1);
-
-    token = gettok(&pinput); /* ',' */
-    token = gettok(&pinput); /* 'y' */
-
-    putmem(2, opcode, operand);
-}
-
-void abscode(byte opcode)
-{
-    word operand = get_address(REG, 1);
-    
-    putmem(3, opcode, lobyte(operand), hibyte(operand));
-}
-
-void abxcode(byte opcode)
-{
-    word operand = get_address(REG, 1);
-
-    token = gettok(&pinput); /* ',' */
-    token = gettok(&pinput); /* 'x' */
-
-    putmem(3, opcode, lobyte(operand), hibyte(operand));
-}
-
-void abycode(byte opcode)
-{
-    word operand = get_address(REG, 1);
-
-    token = gettok(&pinput); /* ',' */
-    token = gettok(&pinput); /* 'y' */
-
-    putmem(3, opcode, lobyte(operand), hibyte(operand));
-}
-
-void indcode(byte opcode)
-{
-    gettok(&pinput); /* '(' */
-
-    word operand = get_address(REG, 1);
-
-    gettok(&pinput); /* ')' */
-
-    putmem(3, opcode, lobyte(operand), hibyte(operand));
-}
-
-void impcode(byte opcode)
-{
-    putmem(1, opcode);
-}
-
-void relcode(byte opcode)
-{
-    word operand = get_address(REL, 1);
-
-    putmem(2, opcode, operand - (getmem() + 2));
-}
-
-void idxcode(byte opcode)
-{
-    token = gettok(&pinput); /* '(' */
-
-    byte operand = get_byte(1);
-
-    token = gettok(&pinput); /* ',' */
-    token = gettok(&pinput); /* 'x' */
-    token = gettok(&pinput); /* ')' */
-
-    putmem(2, opcode, operand);
-}
-
-void idycode(byte opcode)
-{
-    token = gettok(&pinput); /* '(' */
-
-    byte operand = get_byte(1);
-
-    token = gettok(&pinput); /* ')' */
-    token = gettok(&pinput); /* ',' */
-    token = gettok(&pinput); /* 'y' */
-
-    putmem(2, opcode, operand);
-}
-
-void resolve(void)
-{
-    label* label = labels;
-    while (label != NULL) {
-        Symbol* psym = symlookup(table, label->name);
-        if (psym == NULL) {
-            error("label \"%s\" was not defined.\n", label->name);
+    fixup* fixup = fixups;
+    while (fixup != NULL) {
+        PSYMBOL sym = symlookup(table, fixup->name);
+        if (sym == NULL) {
+            error("label \"%s\" was not defined near line %d.\n",
+                fixup->name, fixup->lineno);
         }
 
-        if (label->type == REL) {    /* relative branch fix up*/
-            size_t loffset = label->mem - memory;
-            size_t soffset = psym->u.mem - base_address;
-            byte branch = (byte)(soffset - loffset - 1);
-            memory[label->mem - memory] = branch;
-        } else if (label->type == LO) { /* lo-byte fix-up */
-            memory[label->mem - memory] = lobyte(psym->u.mem);
-        } else if (label->type == HI) { /* hi-byte fix-up */
-            memory[label->mem - memory] = hibyte(psym->u.mem);
-        } else if (label->type == REG) { /* regular */
-            memory[label->mem - memory] = lobyte(psym->u.mem);
-            memory[label->mem - memory + 1] = hibyte(psym->u.mem);
+        word symvalue = symevalword(table, fixup->name);
+
+        word offset = fixup->mem - base_address;
+
+        switch (fixup->type) {
+        case FIXUP_REG:
+            memory[offset] = lobyte(symvalue);
+            memory[offset + 1] = hibyte(symvalue);
+            break;
+        case FIXUP_BRANCH:
+            /* relative branch fix up*/
+            size_t soffset = symvalue - base_address;
+            byte branch = (byte)(soffset - offset - 1);
+            memory[offset] = branch;
+            break;
+        case FIXUP_LO:
+            /* lo-byte fix-up */
+            memory[offset] = lobyte(symvalue);
+            break;
+        case FIXUP_HI:
+            /* hi-byte fix-up */
+            memory[offset] = hibyte(symvalue);
+            break;
+        default:
+            error("unknown fixup type.");
+            break;
         }
-        label = label->next;
+
+        fixup = fixup->next;
     }
 }
 
@@ -313,53 +142,211 @@ word getmem(void)
     return address;
 }
 
-byte get_byte(int offset)
+void defbase(word address)
 {
-    byte b = 0;
-
-    token = gettok(&pinput);
-    if (token.type == NUM) {
-        int rc = sscanf(token.value, "%hhx", &b);
-        if (rc == 0 || rc == EOF) {
-            error("unexpected token \"%s\""
-                " found at line %d.\n", token.value, lineno);
-        }
-    } else if (token.type == LT) {
-        word address = get_address(LO, offset);
-        b = lobyte(address);
-    } else if (token.type == GT) {
-        word address = get_address(HI, offset);
-        b = hibyte(address);
-    } else {
-        error("unexpected token \"%s\""
-            " found at line %d.\n", token.value, lineno);
+    if (base_address != (word)- 1) {
+        error("cannot redefine base address near line %d.\n", yylineno);
     }
 
-    return b;
+    base_address = address;
+
+    fncinsert(table, "*", getmem);
 }
 
-word get_address(label_type type, int offset)
+void deflabel(const char* name)
 {
-    word address = 0;
-
-    token = gettok(&pinput);
-    if (token.type == STR) {
-        PSYMBOL psym = symlookup(table, token.value);
-        if (psym != NULL) {
-            address = psym->u.mem;
-        } else { // assume an as-of-yet undefined label
-            labelinsert(&labels, token.value, pmem + offset, type);
-        }
-    } else if (token.type == NUM) {
-        int rc = sscanf(token.value, "%hx", &address);
-        if (rc == 0 || rc == EOF) {
-            error("unexpected token \"%s\""
-                " found at line %d.\n", token.value, lineno);
-        }
-    } else {
-        error("unexpected token \"%s\""
-            " found at line %d.\n", token.value, lineno);
+    if (base_address == (word)-1) {
+        error("base address must be specified near line %d.\n", yylineno);
     }
 
-    return address;
+    wordinsert(table, name, getmem());
+}
+
+void byte_code(byte value)
+{
+    putmem(1, value);
+}
+
+void decl_hibyte_fixup(const char* name)
+{
+    fixupinsert(&fixups, name, getmem(), FIXUP_HI);
+}
+
+void decl_lobyte_fixup(const char* name)
+{
+    fixupinsert(&fixups, name, getmem(), FIXUP_LO);
+}
+
+void declword_fixup(const char* name)
+{
+    fixupinsert(&fixups, name, getmem(), FIXUP_REG);
+}
+
+void word_code(word value)
+{
+    putmem(2, lobyte(value), hibyte(value));
+}
+
+void text_code(const char* value)
+{
+    while (*value) {
+        byte p = ascii2petscii(*value++);
+        putmem(1, p);
+    }
+}
+
+void ztext_code(const char* value)
+{
+    text_code(value);
+    putmem(1, 0);
+}
+
+void imp_acc_code(const Instr* instr)
+{
+    const byte* opcode = (*instr)[IMP];
+    if (opcode == NULL) {
+        opcode = (*instr)[ACC]; // try accumulator mode
+    }
+
+    if (opcode == NULL) {
+        error("instruction does not support addressing mode near line %d.\n", yylineno);
+    }
+
+    putmem(1, *opcode);
+}
+
+void imm_code(const Instr* instr, byte operand)
+{
+    const byte* opcode = (*instr)[IMM];
+    if (opcode == NULL) {
+        error("instruction does not support immediate addressing near line %d.\n", yylineno);
+    }
+
+    putmem(2, *opcode, operand);
+}
+
+void zp_code(const Instr* instr, byte operand)
+{
+    const byte* opcode = (*instr)[ZPG];
+    if (opcode == NULL) {
+        error("instruction does not support zero-page addressing near line %d.\n", yylineno);
+    }
+
+    putmem(2, *opcode, operand);
+}
+
+void zpx_code(const Instr* instr, byte operand)
+{
+    const byte* opcode = (*instr)[ZPX];
+    if (opcode == NULL) {
+        error("instruction does not support zero-page, x addressing near line %d.\n", yylineno);
+    }
+
+    putmem(2, *opcode, operand);
+}
+
+void zpy_code(const Instr* instr, byte operand)
+{
+    const byte* opcode = (*instr)[ZPY];
+    if (opcode == NULL) {
+        error("instruction does not support zero-page, y addressing near line %d.\n", yylineno);
+    }
+
+    putmem(2, *opcode, operand);
+}
+
+void abs_code(const Instr* instr, word operand)
+{
+    const byte* opcode = (*instr)[ABS];
+    if (opcode == NULL) {
+        error("instruction does not support absolute addressing near line %d.\n", yylineno);
+    }
+
+    putmem(3, *opcode, lobyte(operand), hibyte(operand));
+}
+
+void rel_code(const Instr* instr, word operand)
+{
+    const byte* opcode = (*instr)[REL];
+    if (opcode == NULL) {
+        error("instruction does not support relative addressing near line %d.\n", yylineno);
+    }
+
+    int offset = operand - (getmem() + 2);
+
+    putmem(2, *opcode, offset);
+}
+
+void abx_code(const Instr* instr, word operand)
+{
+    const byte* opcode = (*instr)[ABX];
+    if (opcode == NULL) {
+        error("instruction does not support absolute, x addressing near line %d.\n", yylineno);
+    }
+
+    putmem(3, *opcode, lobyte(operand), hibyte(operand));
+}
+
+void aby_code(const Instr* instr, word operand)
+{
+    const byte* opcode = (*instr)[ABY];
+    if (opcode == NULL) {
+        error("instruction does not support absolute, y addressing near line %d.\n", yylineno);
+    }
+
+    putmem(3, *opcode, lobyte(operand), hibyte(operand));
+}
+
+void branch_fixup(const char* name)
+{
+    // an operator fix-up is one byte past the operator
+    fixupinsert(&fixups, name, getmem() + 1, FIXUP_BRANCH);
+}
+
+void idx_code(const Instr* instr, byte operand)
+{
+    const byte* opcode = (*instr)[IDX];
+    if (opcode == NULL) {
+        error("instruction does not support indexed-indirect addressing near line %d.\n", yylineno);
+    }
+
+    putmem(2, *opcode, operand);
+}
+
+void idy_code(const Instr* instr, byte operand)
+{
+    const byte* opcode = (*instr)[IDY];
+    if (opcode == NULL) {
+        error("instruction does not support indirect-indexed addressing near line %d.\n", yylineno);
+    }
+
+    putmem(2, *opcode, operand);
+}
+
+void ind_code(const Instr* instr, word operand)
+{
+    const byte* opcode = (*instr)[IND];
+    if (opcode == NULL) {
+        error("instruction does not support indirect addressing near line %d.\n", yylineno);
+    }
+
+    putmem(3, *opcode, lobyte(operand), hibyte(operand));
+}
+
+void op_fixup(const char* name)
+{
+    // an operator fix-up is one byte past the operator
+    fixupinsert(&fixups, name, getmem() + 1, FIXUP_REG);
+}
+
+void op_lobyte_fixup(const char* name)
+{
+    // an operator fix-up is one byte past the operator
+    fixupinsert(&fixups, name, getmem() + 1, FIXUP_LO);
+}
+
+void op_hibyte_fixup(const char* name)
+{
+    // an operator fix-up is one byte past the operator
+    fixupinsert(&fixups, name, getmem() + 1, FIXUP_HI);
 }

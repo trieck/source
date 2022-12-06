@@ -8,7 +8,7 @@
 
 ; initialization routine
 ;
-.init   lda #$a          ; background and border, light red
+init    lda #$a          ; background and border, light red
         sta $d020
         sta $d021
         lda #$2          ; text color, dark red
@@ -18,5 +18,3 @@
         lda #$e          ; switch to lowercase
         jsr chrout      
         rts
-            
-            
