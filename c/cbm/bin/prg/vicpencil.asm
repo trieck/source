@@ -8,12 +8,16 @@
 status      = $90
 rvs         = $c7
 pntr        = $d3
+garbfl      = $0f
+length      = $41
 
 prtstr      = $cb1e
 prtfix      = $ddcd
 warmbas     = $e467
 cclrch      = $ffcc
 kmsgshow    = $f1e6
+reslst      = $c09e
+tbuffer     = $033c
 
 ;---------------------------------------
 ; basic program declaration
@@ -66,6 +70,7 @@ m1      .ztext 'initializing...'
 m2      .ztext 'validating...'
 m6      .ztext 'start:'
 m7      .ztext 'end  :'
+m8      .ztext 'filename:'
 
 dprmpt  .ztext 'drive:'
 prspc   .ztext 'press space'
@@ -123,19 +128,22 @@ me1
         jsr getchar     ; get character
         cmp #$49        ; is it "i"?
         beq me2         ; initialize
+        cmp #$4c        ; is it "l"?
+        beq me3          ; listing
         cmp #$4d        ; is it "m"?
-        beq me3         ; memory dump
+        beq me4         ; memory dump
         cmp #$56        ; is it "v"?
-        beq me4         ; validate
+        beq me5         ; validate
         cmp #$2a        ; is it "*"?
-        beq me5         ; directory
+        beq me6         ; directory
         cmp #$58        ; is it "x"?
         beq end
         jmp me1
 me2     jmp initd       ; initialize
-me3     jmp dump        ; memory dump
-me4     jmp valid       ; validate disk
-me5     jmp dir         ; directory
+me3     jmp list        ; listing
+me4     jmp dump        ; memory dump
+me5     jmp valid       ; validate disk
+me6     jmp dir         ; directory
         jmp prmenu      ; menu
 end
         jmp warmbas     ; basic warm start
@@ -429,6 +437,60 @@ gc1
         rts
 
 ;---------------------------------------
+; get string input
+; pointer to store string in .a,.x
+;---------------------------------------
+getstr
+        sta $fb         ; set up buffer
+        stx $fc         ; pointer
+
+        lda pntr        ; minimum column
+        sta $fd
+
+        ldy #$00        ; initialize index
+        sty length
+gs1
+        jsr getchar
+        cmp #$0d        ; return
+        beq gs4
+
+        cmp #$14        ; backspace
+        bne gs2
+
+        ldx pntr        ; current column
+        cpx $fd         ; min column
+        beq gs1
+
+        ldy length
+        dey
+        sty length
+        jsr chrout
+        jmp gs1
+gs2
+        jsr isprnt      ; is character
+        bcs gs1         ; printable?
+
+        ldx pntr        ; current column
+        cpx #$27        ; max column
+        bcs gs1
+gs3
+        ldy length
+        sta ($fb),y     ; store character
+        iny
+        sty length
+        jsr chrout
+        jmp gs1
+gs4
+        lda #$00        ; store terminator
+        ldy length
+        sta ($fb),y
+
+        lda $fb         ; restore regs
+        ldx $fc
+
+        rts
+
+;---------------------------------------
 ; validate a disk
 ;---------------------------------------
 valid
@@ -562,12 +624,11 @@ dirclean
 ; memory dump
 ;---------------------------------------
 dump                    ; memory dump
+        jsr getstart    ; get start addr.
+        jsr getdest     ; get dest. addr.
 
         lda #$93        ; clear screen
         jsr chrout
-
-        jsr getstart    ; get start addr.
-        jsr getdest     ; get dest. addr.
 
         jsr loline      ; lower line sep.
 
@@ -659,6 +720,148 @@ du4
 
         jsr waitsp      ; wait for space
         jmp prmenu      ; memory menu
+
+;---------------------------------------
+; list a program
+;---------------------------------------
+list                    ; list a program
+        jsr getdrive    ; get drive
+        jsr chrout      ; print return
+
+        lda #<m8
+        ldy #>m8
+        jsr prtstr      ; print m8
+
+        lda #<tbuffer   ; get filename
+        ldx #>tbuffer
+        jsr getstr
+
+        lda #$93        ; clear screen
+        jsr chrout
+
+        lda #$00
+        sty garbfl      ; init quote mode
+
+        jsr loline      ; lower line sep.
+
+        jsr cmdopen     ; open cmd. ch.
+        bcc l7
+        jmp lio         ; i/o error
+l7
+        lda length      ; len. of file
+        ldx #<tbuffer   ; filename
+        ldy #>tbuffer
+        jsr fopen       ; open file
+        bcc l9
+l8
+        jmp lio         ; i/o error
+l9
+        ldx filenum     ; file number
+        jsr chkin       ; open channel
+        jsr chrin       ; discard load
+        jsr chrin       ; address
+        lda status      ; check status
+        beq l10
+        jmp lerr
+l10
+        ldx $028d       ; check for shift
+        bne l10
+        ldx $91         ; check for stop
+        cpx #$fe
+        bne l23
+        jmp lclean
+l23
+        jsr chrin       ; line link
+        sta $fb
+        jsr chrin
+        ora $fb
+        bne l22
+        jmp lclean      ; no more lines
+l22
+        jsr chrin       ; line #
+        tax
+        jsr chrin
+        jsr prtfix      ; print line #
+
+        lda #$20        ; print space
+        jsr chrout
+l12
+        lda status
+        bne lclean      ; eof
+
+        jsr chrin       ; read token or
+                        ; character
+
+        beq l15         ; end of line
+        bpl l14         ; character
+
+        bit garbfl      ; quote mode
+        bmi l14
+
+        cmp #$ff
+        beq l14
+
+        sec             ; keyword
+        sbc #$7f        ; table offset+1
+        tax
+        ldy #$ff
+l16
+        dex             ; traverse table
+        beq l18         ; print keyword
+l17
+        iny             ; read keyword
+        lda reslst,y
+        bpl l17
+        bmi l16
+l18                     ; print keyword
+        iny
+        lda reslst,y
+        bmi l19
+        jsr chrout
+        bne l18
+l19
+        and #$7f        ; strip high bit
+l14
+        jmp lprint      ; print character
+l15
+        lda #$00        ; end of line
+        sta garbfl      ; turn off quote
+
+        lda #$0d        ; print new line
+        jsr chrout
+        jmp l10
+lprint
+        cmp #$a2        ; shifted-quote
+        beq l21
+
+        jsr isprnt      ; only print
+        bcc l21         ; non-printable
+        ldx garbfl      ; chars in quote
+        bpl l12         ; mode
+l21
+        jsr chrout      ; print it
+
+        and #$7f
+        cmp #$22        ; is it quote?
+        bne l12
+l20
+        lda garbfl      ; toggle quote
+        eor #$ff        ; mode
+        sta garbfl
+        jmp l12
+lerr
+        jsr diskerr     ; print disk error
+        jmp lclean
+lio
+        jsr ioerr       ; drive i/o error
+lclean
+        jsr fclose      ; close file
+        jsr cmdclose    ; close cmd. ch.
+
+        jsr upline      ; upper line sep.
+
+        jsr waitsp      ; wait for space
+        jmp prmenu      ; menu
 
 ;---------------------------------------
 ; get drive
