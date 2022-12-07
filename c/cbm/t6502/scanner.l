@@ -18,6 +18,7 @@ extern SymbolTable table;
 
 comment             ;.*
 div                 \/
+decnum              [0-9]+
 hexbyte             \$[a-fA-F0-9]{1,2}
 hexword             \$[a-fA-F0-9]{3,4}
 hibyte              >
@@ -39,6 +40,23 @@ y_index             ,[ ]*[yY]
 {newline}           {
     yyless(1);
     return yytext[0];
+}
+
+{decnum} {
+    word w;
+    if (sscanf(yytext, "%hd", &w) != 1) {
+        yyerror("invalid number");
+        return 0;
+    }
+
+    if (w < 256) {
+        yylval.byte_value = lobyte(w);
+        return BYTE;
+    }
+
+    yylval.word_value = w;
+
+    return WORD;
 }
 
 {hexbyte} {

@@ -124,9 +124,15 @@ declbyte:   byte
 
 word_expr:  word_prim       
         |   word_expr PLUS word_expr        { $$ = $1 + $3; }
+        |   byte PLUS word_expr             { $$ = $1 + $3; }
+        |   word_expr PLUS byte             { $$ = $1 + $3; }
         |   word_expr MINUS word_expr       { $$ = $1 - $3; }
+        |   word_expr MINUS byte            { $$ = $1 - $3; }
         |   word_expr MULT word_expr        { $$ = $1 * $3; }
+        |   word_expr MULT byte             { $$ = $1 * $3; }
+        |   byte MULT word_expr             { $$ = $1 * $3; }
         |   word_expr DIV word_expr         { $$ = $1 / $3; }
+        |   word_expr DIV byte              { $$ = $1 / $3; }
             ;
 
 word_prim:  word
