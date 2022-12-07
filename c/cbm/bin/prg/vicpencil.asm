@@ -5,13 +5,15 @@
 ;
         *= $1200
 
-rvs     = $c7
-status  = $90
+status      = $90
+rvs         = $c7
+pntr        = $d3
 
-prtstr  = $cb1e
-prtfix  = $ddcd
-warmbas = $e467
-cclrch  = $ffcc
+prtstr      = $cb1e
+prtfix      = $ddcd
+warmbas     = $e467
+cclrch      = $ffcc
+kmsgshow    = $f1e6
 
 ;---------------------------------------
 ; basic program declaration
@@ -60,16 +62,30 @@ menu
         .byte $0d
         .ztext 'x - exit'
 
+m1      .ztext 'initializing...'
+m2      .ztext 'validating...'
+m6      .ztext 'start:'
+m7      .ztext 'end  :'
+
 dprmpt  .ztext 'drive:'
 prspc   .ztext 'press space'
 
 dirname  .text '$0'
 dirlen   = *-dirname
 
+initnm   .text 'i0'
+initlen  = *-initnm
+
+valname  .text 'v0'
+vallen   = *-valname
+
 drive   .byte $08       ; current drive#
 cols    .byte $0        ; number of columns
 rows    .byte $0        ; number of rows
 filenum .byte $01       ; open file number
+
+saddr   .word $0000     ; start addr.
+daddr   .word $0000     ; dest. addr.
 
 ;---------------------------------------
 ; code
@@ -105,24 +121,87 @@ prmenu                  ; print the menu
 
 me1
         jsr getchar     ; get character
+        cmp #$49        ; is it "i"?
+        beq me2         ; initialize
+        cmp #$4d        ; is it "m"?
+        beq me3         ; memory dump
+        cmp #$56        ; is it "v"?
+        beq me4         ; validate
         cmp #$2a        ; is it "*"?
-        beq me2         ; directory
+        beq me5         ; directory
         cmp #$58        ; is it "x"?
         beq end
         jmp me1
-me2     jmp dir         ; directory
+me2     jmp initd       ; initialize
+me3     jmp dump        ; memory dump
+me4     jmp valid       ; validate disk
+me5     jmp dir         ; directory
         jmp prmenu      ; menu
 end
         jmp warmbas     ; basic warm start
 
 ;---------------------------------------
+; is character in .a printable
+;---------------------------------------
+isprnt
+        cmp #$20        ; < 32
+        bcc ip1
+
+        cmp #$80        ; < 128
+        bcc ip3
+
+        cmp #$a0        ; < 160
+        bcc ip1
+ip3
+        clc             ; printable
+        jmp ip2
+ip1
+        sec             ; non-printable
+ip2
+        rts
+
+;---------------------------------------
+; print integer in .a, x in hexadecimal
+;---------------------------------------
+hexint
+        jsr hexbyte
+        txa
+        jsr hexbyte
+        rts
+
+;---------------------------------------
+; print byte in .a in hexadecimal
+;---------------------------------------
+hexbyte
+        sta $fb
+
+        lsr
+        lsr
+        lsr
+        lsr
+        jsr prhexz
+        lda $fb
+prhex
+        and #$0f
+prhexz
+        ora #$30
+        cmp #$3a
+        bcc cout
+        adc #$06
+cout
+        jsr chrout
+
+        lda $fb
+        rts
+
+;---------------------------------------
 ; lower line separator
 ;---------------------------------------
 loline
-         jsr prnret     ; print return
+        jsr prnret      ; print return
 
-         lda #$b9       ; lower line sep.
-         ldx cols       ; # of cols.
+        lda #$b9        ; lower line sep.
+        ldx cols        ; # of cols.
 
 ll1
          jsr chrout     ; print sep.
@@ -149,15 +228,175 @@ ul1
 ; print return conditionally
 ;---------------------------------------
 prnret
-         lda $d7        ; last character printed
+        lda $d7         ; last character printed
 
-         cmp #$0d       ; is it return?
-         beq pr1
+        cmp #$0d        ; is it return?
+        beq pr1
 
-         lda #$0d       ; print return
-         jsr chrout
+        lda #$0d        ; print return
+        jsr chrout
 pr1
-         rts
+        rts
+
+;---------------------------------------
+; check for hex digit in .a
+; index stored to .y
+;---------------------------------------
+ishex
+        pha             ; save char
+
+        cmp #$30        ; < 48
+        bcc ih2
+
+        cmp #$3a        ; < 58
+        bcc ih1
+
+        cmp #$41        ; < 65
+        bcc ih2
+
+        cmp #$47        ; < 71
+        bcs ih2
+
+ih1
+        sec             ; hex digit
+        sbc #$30        ; store idx to .y
+        cmp #$11
+        bcc ih4
+        sbc #$07
+ih4
+        tay
+        clc
+        jmp ih3
+ih2
+        sec             ; non-hex
+ih3
+        pla             ; restore char
+        rts
+
+;---------------------------------------
+; get starting address
+;---------------------------------------
+getstart                ; get start addr.
+        lda #$0d
+        jsr chrout      ; print return
+        lda #<m6
+        ldy #>m6
+        jsr prtstr      ; print m6
+
+        lda #$00        ; reinitialize
+        sta saddr
+        sta saddr+1
+
+        lda #<saddr     ; set up pointer
+        ldx #>saddr
+        jsr getaddr
+
+        rts
+
+;---------------------------------------
+; get destination address
+;---------------------------------------
+getdest                 ; get dest. addr.
+        lda #$0d
+        jsr chrout      ; print return
+        lda #<m7
+        ldy #>m7
+        jsr prtstr      ; print m7
+
+        lda #$00        ; reinitialize
+        sta daddr
+        sta daddr+1
+
+        lda #<daddr     ; set up pointer
+        ldx #>daddr
+        jsr getaddr
+
+        rts
+
+;---------------------------------------
+; get address
+; address to store is in .a, .x
+;---------------------------------------
+getaddr                 ; get address
+
+        sta $fb         ; store pointer
+        stx $fc
+
+        lda #$30        ; initialize to
+        jsr chrout      ; zeros
+        jsr chrout
+        jsr chrout
+        jsr chrout
+        jmp gabk
+
+ga1
+        jsr getchar
+        cmp #$0d
+        beq gadone
+        jsr ishex
+        bcs ga1
+        jsr chrout      ; print it
+
+        tya             ; index of char
+        asl             ; multiply by 16
+        asl             ; for hi-nybble
+        asl
+        asl
+
+        ldy #$01        ; hi-byte
+        sta ($fb),y     ; store hi-nybble
+ga2
+        jsr getchar
+        cmp #$0d        ; is it return
+        beq gadone
+        jsr ishex
+        bcs ga2
+        jsr chrout      ; print it
+
+        tya             ; index of char
+        ldy #$01        ; hi-byte
+        ora ($fb),y     ; store lo-nybble
+        sta ($fb),y     ; of hi-byte
+ga3
+        jsr getchar
+        cmp #$0d        ; is it return
+        beq gadone
+        jsr ishex
+        bcs ga3
+        jsr chrout      ; print it
+
+        tya             ; index of char
+        asl             ; multiply by 16
+        asl             ; for hi-nybble
+        asl
+        asl
+        ldy #$00        ; lo-byte
+        sta ($fb),y
+
+ga4
+        jsr getchar
+        cmp #$0d        ; is it return
+        beq gadone
+        jsr ishex
+        bcs ga4
+        jsr chrout      ; print it
+
+        tya             ; index of char
+        ldy #$00        ; lo-byte
+        ora ($fb),y     ; store lo-nybble
+        sta ($fb),y     ; of lo-byte
+gabk
+        lda #$9d        ; bkspace
+        jsr chrout
+        jsr chrout
+        jsr chrout
+        jsr chrout
+        jmp ga1
+
+gadone
+        lda $fb         ; restore pointer
+        ldx $fc
+        rts
 
 ;---------------------------------------
 ; get character from keyboard
@@ -190,6 +429,62 @@ gc1
         rts
 
 ;---------------------------------------
+; validate a disk
+;---------------------------------------
+valid
+         jsr getdrive   ; get drive
+
+         jsr loline     ; lower line sep.
+
+         lda #<m2
+         ldy #>m2
+         jsr prtstr     ; print m2
+
+         lda #<vallen   ; len. of filename
+         ldx #<valname  ; filename
+         ldy #>valname
+         jsr cmdopen2   ; open cmd. ch.
+         bcc valclean
+valio
+         jsr ioerr      ; drive i/o error
+
+valclean
+         jsr cmdclose   ; close cmd. ch.
+
+         jsr upline     ; upper line sep.
+
+         jsr waitsp     ; wait for space
+         jmp prmenu     ; file menu
+
+;---------------------------------------
+; initialize a drive
+;---------------------------------------
+initd
+         jsr getdrive   ; get drive
+
+         jsr loline     ; lower line sep.
+
+         lda #<m1
+         ldy #>m1
+         jsr prtstr     ; print m1
+
+         lda #<initlen  ; len. of filename
+         ldx #<initnm   ; filename
+         ldy #>initnm
+         jsr cmdopen2   ; open cmd. ch.
+         bcc initclean
+initio
+         jsr ioerr      ; drive i/o error
+
+initclean
+         jsr cmdclose   ; close cmd. ch.
+
+         jsr upline     ; upper line sep.
+
+         jsr waitsp     ; wait for space
+         jmp prmenu     ; menu
+
+;---------------------------------------
 ; directory
 ;---------------------------------------
 dir                     ; directory
@@ -208,7 +503,6 @@ dir2
         ldy #>dirname
         jsr fopen
         bcc dir4
-dir5
         jmp dirio       ; i/o error
 dir4
         ldx filenum     ; file number
@@ -218,8 +512,7 @@ dir4
         jsr chrin       ; address
         lda status      ; check status
         bne direrr
-
-dir6    
+dir6
         jsr chrin       ; discard line
         jsr chrin       ; link
         jsr chrin       ; retrieve number
@@ -236,14 +529,14 @@ dir6
                         ; .a, .x
         lda #$20        ; print space
         jsr chrout      ; after blocks
+
         jsr chrin
 dir7
         jsr chrout
 
-dir8    ldx $028d       ; check for shift
+dir8    lda $028d       ; check for shift
         bne dir8
-        ldx $91         ; check for stop
-        cpx #$7f
+        jsr stop        ; check for stop
         beq dirclean
         jsr chrin
         bne dir7
@@ -264,6 +557,108 @@ dirclean
 
         jsr waitsp    ; wait for space
         jmp prmenu    ; menu
+
+;---------------------------------------
+; memory dump
+;---------------------------------------
+dump                    ; memory dump
+
+        lda #$93        ; clear screen
+        jsr chrout
+
+        jsr getstart    ; get start addr.
+        jsr getdest     ; get dest. addr.
+
+        jsr loline      ; lower line sep.
+
+du1
+        lda saddr       ; set up pointers
+        sta $03
+        lda saddr+1
+        sta $04
+        lda daddr
+        sta $05
+        lda daddr+1
+        sta $06
+
+        ldy #$00        ; init. index
+        sty $07         ; new line counter
+du2
+        lda $028d       ; check for shift
+        bne du2
+        jsr stop        ; check for stop
+        beq du4
+
+        lda $07         ; check nl counter
+        bne du3
+
+        lda $03         ; print line
+        sta $02
+        tya
+        ora $02
+        tax
+
+        lda $04
+        jsr hexint
+
+        lda #$3a        ; print :
+        jsr chrout
+
+        lda #$20        ; print space
+        jsr chrout
+
+        lda #$00
+        sta rvs         ; init reverse
+du3
+        lda ($03),y     ; print byte
+        jsr hexbyte
+
+        lda rvs         ; toggle reverse
+        eor #$1
+        sta rvs
+
+        clc             ; compare
+        lda $03
+        sta $02
+        tya
+        adc $02
+
+        sec
+        sbc $05
+        sta $02
+
+        lda $04
+        sbc $06
+        ora $02
+        beq du4         ; done
+
+        iny             ; next byte
+        inc $07         ; increment
+        lda $07         ; new line counter
+        cmp #$08        ; 8 bytes per
+        bne du5         ; line
+
+        lda #$00        ; reset new line
+        sta $07         ; counter
+du5
+        clc
+        lda $03
+        sta $02
+        tya
+        adc $02
+        beq du7
+        jmp du2
+du7
+
+        lda #$00        ; next page
+        sta $03
+        inc $04
+        jmp du2
+du4
+        jsr upline      ; upper line sep.
+
+        jsr waitsp      ; wait for space
+        jmp prmenu      ; memory menu
 
 ;---------------------------------------
 ; get drive
@@ -311,59 +706,73 @@ gd5
 ;---------------------------------------
 ; wait for space
 ;---------------------------------------
-waitsp                ; wait for space
-         lda #$01
-         sta $c7      ; enable rev.
-         lda #<prspc
-         ldy #>prspc
-         jsr prtstr
-         lda #$00
-         sta $c7      ; disable rev.
+waitsp                  ; wait for space
+        lda #$01
+        sta $c7         ; enable rev.
+        lda #<prspc
+        ldy #>prspc
+        jsr prtstr
+        lda #$00
+        sta $c7         ; disable rev.
 
-wsp1     jsr getin
-         cmp #$20     ; space
-         bne wsp1
-         rts
+wsp1     
+        jsr getin
+        cmp #$20        ; space
+        bne wsp1
+        rts
 
 ;---------------------------------------
 ; disk error
 ;---------------------------------------
 diskerr
-         ldx #$0f     ; open channel
-         jsr chkin    ; for input
+        ldx #$0f        ; open channel
+        jsr chkin       ; for input
 de1
-         jsr chrin
-         ldx status
-         bne de2
-         jsr chrout
-         jmp de1
+        jsr chrin
+        ldx status
+        bne de2
+        jsr chrout
+        jmp de1
 de2
-         rts
+        rts
 
 ;---------------------------------------
 ; i/o error
 ;---------------------------------------
 ioerr
-         ldy #$01     ; move past cr.
-         pha
-         jsr $f12f    ; print i/o err.#
-         pla
-         ora #$30     ; make err. ascii
-         jsr chrout   ; print it
-         rts
+        ldy #$01        ; move past cr.
+        pha
+        jsr kmsgshow    ; print i/o err.#
+        pla
+        ora #$30        ; make err. ascii
+        jsr chrout      ; print it
+        rts
 
 ;---------------------------------------
 ; open command channel
 ;---------------------------------------
 cmdopen
-         lda #$00     ; len. of file
-         jsr setnam   ; set filename
-         lda #$0f     ; command channel
-         ldx drive    ; device number
-         tay          ; secondary addr.
-         jsr setlfs   ; set file params
-         jsr open     ; open
-         rts
+        lda #$00        ; len. of file
+        jsr setnam      ; set filename
+        lda #$0f        ; command channel
+        ldx drive       ; device number
+        tay             ; secondary addr.
+        jsr setlfs      ; set file params
+        jsr open        ; open
+        rts
+
+;---------------------------------------
+; open command channel
+; .a,.x,.y set for filename
+;---------------------------------------
+cmdopen2
+        jsr setnam      ; set filename
+        lda #$0f        ; command channel
+        ldx drive       ; device number
+        tay             ; secondary addr.
+        jsr setlfs      ; set file params.
+        jsr open        ; open
+        rts
 
 ;---------------------------------------
 ; open file
@@ -372,27 +781,27 @@ cmdopen
 ; msb of filename in .y
 ;---------------------------------------
 fopen
-         jsr setnam   ; set filename
-         lda filenum  ; file number
-         ldx drive    ; device number
-         ldy #$00     ; secondary addr.
-         jsr setlfs   ; set file params
-         jsr open     ; open file
-         rts
+        jsr setnam      ; set filename
+        lda filenum     ; file number
+        ldx drive       ; device number
+        ldy #$00        ; secondary addr.
+        jsr setlfs      ; set file params
+        jsr open        ; open file
+        rts
 
 ;---------------------------------------
 ; close file
 ;---------------------------------------
 fclose
-         lda filenum
-         jsr close    ; close file
-         rts
+        lda filenum
+        jsr close       ; close file
+        rts
 
 ;---------------------------------------
 ; close command channel
 ;---------------------------------------
 cmdclose
-         lda #$0f     ; close command
-         jsr close    ; channel
-         jsr cclrch   ; close channels
-         rts
+        lda #$0f        ; close command
+        jsr close       ; channel
+        jsr cclrch      ; close channels
+        rts
