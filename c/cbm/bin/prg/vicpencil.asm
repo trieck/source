@@ -9,7 +9,13 @@ status      = $90
 rvs         = $c7
 pntr        = $d3
 garbfl      = $0f
+
+format      = $40
 length      = $41
+lmnem       = $42
+rmnem       = $43
+pcl         = $44
+pch         = $45
 
 prtstr      = $cb1e
 prtfix      = $ddcd
@@ -92,6 +98,91 @@ filenum .byte $01       ; open file number
 saddr   .word $0000     ; start addr.
 daddr   .word $0000     ; dest. addr.
 
+fmt1
+; fmt1 bytes: xxxxxxy0 instrs
+; if y=0 then right half byte
+; if y=1 then left half byte
+; x=index
+
+        .byte $04,$20,$54,$30,$0d
+        .byte $80,$04,$90,$03,$22
+        .byte $54,$33,$0d,$80,$04
+        .byte $90,$04,$20,$54,$33
+        .byte $0d,$80,$04,$90,$04
+        .byte $20,$54,$3b,$0d,$80
+        .byte $04,$90,$00,$22,$44
+        .byte $33,$0d,$c8,$44,$00
+        .byte $11,$22,$44,$33,$0d
+        .byte $c8,$44,$a9,$01,$22
+        .byte $44,$33,$0d,$80,$04
+        .byte $90,$01,$22,$44,$33
+        .byte $0d,$80,$04,$90
+; zzxxxy01 instrs
+        .byte $26,$31,$87,$9a
+
+fmt2
+        .byte $00    ; err
+        .byte $21    ; imm
+        .byte $81    ; z-page
+        .byte $82    ; abs
+        .byte $00    ; implied
+        .byte $00    ; accumulator
+        .byte $59    ; (zpag,x)
+        .byte $4d    ; (zpag),y
+        .byte $91    ; zpag,x
+        .byte $92    ; abs,x
+        .byte $86    ; abs,y
+        .byte $4a    ; (abs)
+        .byte $85    ; zpag,y
+        .byte $9d    ; relative
+
+char1
+        .text ',),#($'
+char2
+        .ztext 'y'
+        .ztext 'x$$'
+
+; mneml is of form:
+; (a) xxxxx000
+; (b) xxxyy100
+; (c) 1xxx1010
+; (d) xxxyyy10
+; (e) xxxyyy01
+; (x=index)
+mneml
+        .byte $1c,$8a,$1c,$23,$5d,$8b
+        .byte $1b,$a1,$9d,$8a,$1d,$23
+        .byte $9d,$8b,$1d,$a1,$00,$29
+        .byte $19,$ae,$69,$a8,$19,$23
+        .byte $24,$53,$1b,$23,$24,$53
+        .byte $19,$a1 ; (a) format
+                   ;     above
+        .byte $00,$1a,$5b,$5b,$a5,$69
+        .byte $24,$24 ; (b) format
+        .byte $ae,$ae,$a8,$ad,$29,$00
+        .byte $7c,$00 ; (c) format
+        .byte $15,$9c,$6d,$9c,$a5,$69
+        .byte $29,$53 ; (d) format
+        .byte $84,$13,$34,$11,$a5,$69
+        .byte $23,$a0 ; (e) format
+
+mnemr
+        .byte $d8,$62,$5a,$48,$26,$62
+        .byte $94,$88,$54,$44,$c8,$54
+        .byte $68,$44,$e8,$94,$00,$b4
+        .byte $08,$84,$74,$b4,$28,$6e
+        .byte $74,$f4,$cc,$4a,$72,$f2
+        .byte $a4,$8a ; (a) format
+        .byte $00,$aa,$a2,$a2,$74,$74
+        .byte $74,$72 ; (b) format
+        .byte $44,$68,$b2,$32,$b2,$00
+        .byte $22,$00 ; (c) format
+        .byte $1a,$1a,$26,$26,$72,$72
+        .byte $88,$c8 ; (d) format
+        .byte $c4,$ca,$26,$48,$44,$44
+        .byte $a2,$c8 ; (e) format
+        .byte $ff,$ff,$ff
+
 ;---------------------------------------
 ; code
 ;---------------------------------------
@@ -126,27 +217,308 @@ prmenu                  ; print the menu
 
 me1
         jsr getchar     ; get character
+        cmp #$44        ; is it "d"?
+        beq me2         ; disassemble
         cmp #$49        ; is it "i"?
-        beq me2         ; initialize
+        beq me3         ; initialize
         cmp #$4c        ; is it "l"?
-        beq me3          ; listing
+        beq me4          ; listing
         cmp #$4d        ; is it "m"?
-        beq me4         ; memory dump
+        beq me5         ; memory dump
         cmp #$56        ; is it "v"?
-        beq me5         ; validate
+        beq me6         ; validate
         cmp #$2a        ; is it "*"?
-        beq me6         ; directory
+        beq me7         ; directory
         cmp #$58        ; is it "x"?
         beq end
         jmp me1
-me2     jmp initd       ; initialize
-me3     jmp list        ; listing
-me4     jmp dump        ; memory dump
-me5     jmp valid       ; validate disk
-me6     jmp dir         ; directory
+me2     jmp disass      ; disassemble
+me3     jmp initd       ; initialize
+me4     jmp list        ; listing
+me5     jmp dump        ; memory dump
+me6     jmp valid       ; validate disk
+me7     jmp dir         ; directory
         jmp prmenu      ; menu
 end
         jmp warmbas     ; basic warm start
+
+;---------------------------------------
+; Disassembler
+;
+; Adapted from "A 6502 CPU Disassembler"
+; By Steve Wozniak and Allen Baum
+; Dr. Dobbs Journal, Sept. 1976
+;---------------------------------------
+disass
+        jsr getstart    ; get start addr.
+        jsr getdest     ; get dest. addr.
+
+        lda #$93        ; clear screen
+        jsr chrout
+
+        jsr loline      ; lower line sep.
+        
+        lda saddr       ; set up pointers
+        sta pcl
+        lda saddr+1
+        sta pch
+        lda daddr
+        sta $05
+        lda daddr+1
+        sta $06
+dis1
+        lda $028d       ; check for shift
+        bne dis1
+        lda $91         ; check for stop
+        cmp #$fe
+        beq dis2
+
+        jsr instdsp
+        jsr pcadj
+        sta pcl
+        sty pch
+        jsr prnret
+
+        lda pch         ; compare high
+        cmp $06         ; bytes
+        bcc dis1        ; pch < ($06)
+        bne dis2        ; pch > ($06)
+
+        lda pcl         ; compare low
+        cmp $05         ; bytes
+        bcc dis1        ; pcl < ($05)
+        beq dis1        ; pcl = ($05)
+dis2
+        jsr upline      ; upper line sep.
+
+        jsr waitsp      ; wait for space
+        jmp prmenu      ; memory menu
+
+scrn2
+        bcc rtmskz      ; if even, use
+                        ; lo half
+        lsr
+        lsr
+        lsr
+        lsr
+rtmskz
+        and #$0f        ; mask 4-bits
+        rts
+insds1
+        ldx pcl         ; print pcl,h
+        ldy pch
+        jsr pryx2
+
+        lda #$00
+        sta rvs
+        
+        ldx #$0
+        lda (pcl,x)     ; get opcode
+insds2
+        tay
+        lsr             ; even/odd test
+        bcc ieven
+        ror             ; bit 1 test
+        bcs err         ; xxxxxx11 invalid
+                        ; opcode
+        and #$87        ; mask bits
+                        ; 10000111 for
+                        ; addr. mode
+ieven
+        lsr             ; lsb into carry
+                        ; for l/r test
+        tax
+        lda fmt1,x      ; get format index
+                        ; byte
+        jsr scrn2       ; r/l h-byte on
+                        ; carry
+        bne getfmt
+err
+        ldy #$80        ; substitute $80
+                        ; for invalid ops
+        lda #$00        ; set print format
+                        ; index to 0
+getfmt
+        tax
+        lda fmt2,x      ; index into print
+                        ; format table
+        sta format      ; save for adr
+                        ; field formatting
+        and #$03        ; mask for 2-bit
+                        ; length
+                        ; 0=1 byte, 1=2
+                        ; byte, 2=3 byte
+        sta length
+        tya             ; opcode
+        and #$8f        ; mask for
+                        ; 1xxx1010 test
+        tax             ; save it
+        tya             ; opcode to .a
+        ldy #$03
+        cpx #$8a
+        beq mnndx3
+mnndx1
+        lsr
+        bcc mnndx3      ; form index into
+                        ; mnemonic table
+        lsr
+mnndx2
+        lsr             ; 1) 1XXX1010 =>
+        ora #$20        ;     00101XXX
+        dey             ; 2) XXXYYY01 =>
+        bne mnndx2      ;     00111XXX
+        iny             ; 3) XXXYYY10 =>
+                        ;     00110XXX
+                        ; 4) XXXYY100 =>
+                        ;     00100XXX
+                        ; 5) XXXXX000 =>
+                        ;     000XXXXX
+mnndx3
+        dey
+        bne mnndx1
+        rts
+        .byte $ff,$ff,$ff
+
+instdsp
+        jsr insds1      ; get format, len
+                        ; bytes
+        pha             ; save mnemonic
+                        ; table index        
+prntop
+        lda rvs         ; toggle reverse
+        eor #$1
+        sta rvs
+
+        lda (pcl),y
+
+        jsr hexbyte
+        cpy length      ; print inst
+                        ; (1-3 bytes)
+        iny             ; in a 12 char.
+                        ; field
+        bcc prntop
+
+        lda #$0
+        sta rvs
+prntbl2
+        iny             ; char count for
+        cpy #$04        ; mnemonic print
+        bcs prntbl3
+
+        ldx# $02
+        jsr prbl2
+        bcc prntbl2
+
+prntbl3
+        ldx #$03
+        pla             ; recover mnemonic
+                        ; index
+        tay
+        lda mneml,y
+        sta lmnem       ; fetch 3-char
+                        ; mnemonic
+        lda mnemr,y     ; (packed in 2
+                        ; bytes)
+        sta rmnem
+
+prmn1
+        lda #$00
+        ldy #$05
+prmn2
+        asl rmnem       ; shift 5 bits
+        rol lmnem       ; of character
+        rol             ; into .a
+                        ; (clears carry)
+        dey
+        bne prmn2
+        adc #$3f        ; add "?" offset
+
+
+        jsr chrout      ; output a char
+                        ; of mnem.
+        dex
+        bne prmn1
+
+        ldy length
+        ldx #$06        ; cnt for 6 format
+                        ; bits
+pradr1
+        cpx #$03
+        beq pradr5      ; if x=3 then addr
+pradr2
+        asl format
+        bcc pradr3
+        lda char1-1,x
+        jsr chrout
+        lda char2-1,x
+        beq pradr3
+        jsr chrout
+pradr3
+        dex
+        bne pradr1
+        rts
+pradr4
+        dey
+        bmi pradr2
+        jsr hexbyte
+pradr5
+        lda format
+        cmp #$e8        ; handle rel adr
+                        ; mode
+        lda (pcl),y     ; special (print
+                        ;  target not
+        bcc pradr4      ;  offset)
+reladr
+        jsr pcadj3
+        tax             ; pcl,pch+offset
+                        ; +1 to a,y
+        inx
+        bne prntyx      ; +1 to y,x
+        iny
+prntyx
+        tya
+prntax
+        jsr hexbyte     ; output target
+                        ; adr of branch
+                        ; and return
+prntx
+        txa
+        jmp hexbyte
+prblnk
+        ldx #$01        ; blank count
+prbl2
+        lda #$20        ; load a space
+prbl3
+        jsr chrout
+        dex
+        bne prbl2       ; loop until
+                        ; count=0
+        rts
+pcadj
+        sec             ; 0=1-byte
+pcadj2                  ; 1=2-byte
+        lda length      ; 2=3-byte
+pcadj3
+        ldy pch
+        tax             ; test displacment
+                        ; sign
+        bpl pcadj4      ; for rel branch
+        dey             ; extend neg by
+                        ; decr pch
+pcadj4
+        adc pcl      
+        bcc rts2        ; pcl+length
+                        ; (or displ)+1
+                        ; to a
+        iny             ; carry into y
+                        ; (pch)
+rts2
+        rts
+
+pryx2
+        jsr prntyx
+        lda #$3a        ; print :
+        jmp chrout
 
 ;---------------------------------------
 ; is character in .a printable

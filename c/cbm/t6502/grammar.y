@@ -32,8 +32,8 @@ int yyerror(const char *s);
 %token <sym> OPCODE BYTE_ID WORD_ID
 %token <sym> GRP1_OP GRP2_OP GRP3_OP GRP3_BRANCH_OP OTHER_OP
 
-%type <word_value> word_expr word_prim word opword brword declword
-%type <byte_value> byte opbyte declbyte
+%type <word_value> word_expr word_prim word opword brword declwords declword
+%type <byte_value> byte opbyte declbytes declbyte
 
 %right UNDEF OPCODE STAR
 %right  '='
@@ -80,22 +80,22 @@ deflabel:   UNDEF  {
             }
             ;
 
-instr:      OPCODE                          { imp_acc_code($1->u.instr); }
-        |   OPCODE '#' opbyte               { imm_code($1->u.instr, $3); }
-        |   OPCODE opbyte                   { zp_code($1->u.instr, $2); }
-        |   OPCODE opbyte X_INDEX           { zpx_code($1->u.instr, $2); }
-        |   OPCODE opbyte Y_INDEX           { zpy_code($1->u.instr, $2); }
-        |   OPCODE opword                   { abs_code($1->u.instr, $2); }
-        |   OPCODE opword X_INDEX           { abx_code($1->u.instr, $2); }
-        |   OPCODE opword Y_INDEX           { aby_code($1->u.instr, $2); }
-        |   OPCODE '(' opbyte X_INDEX ')'   { idx_code($1->u.instr, $3); }
-        |   OPCODE '(' opbyte ')' Y_INDEX   { idy_code($1->u.instr, $3); }
-        |   OPCODE '(' opword ')'           { ind_code($1->u.instr, $3); }
-        |   GRP3_BRANCH_OP brword           { rel_code($1->u.instr, $2); }
+instr:      OPCODE                              { imp_acc_code($1->u.instr); }
+        |   OPCODE '#' opbyte                   { imm_code($1->u.instr, $3); }
+        |   OPCODE opbyte                       { zp_code($1->u.instr, $2); }
+        |   OPCODE opbyte X_INDEX               { zpx_code($1->u.instr, $2); }
+        |   OPCODE opbyte Y_INDEX               { zpy_code($1->u.instr, $2); }
+        |   OPCODE opword                       { abs_code($1->u.instr, $2); }
+        |   OPCODE opword X_INDEX               { abx_code($1->u.instr, $2); }
+        |   OPCODE opword Y_INDEX               { aby_code($1->u.instr, $2); }
+        |   OPCODE '(' opbyte X_INDEX ')'       { idx_code($1->u.instr, $3); }
+        |   OPCODE '(' opbyte ')' Y_INDEX       { idy_code($1->u.instr, $3); }
+        |   OPCODE '(' opword ')'               { ind_code($1->u.instr, $3); }
+        |   GRP3_BRANCH_OP brword               { rel_code($1->u.instr, $2); }
             ;
 
-pseudo:     DECL_BYTE declbyte              { byte_code($2); }
-        |   DECL_WORD declword              { word_code($2); }
+pseudo:     DECL_BYTE declbytes
+        |   DECL_WORD declwords
         |   DECL_TEXT STRING                { text_code($2); }
         |   DECL_ZTEXT STRING               { ztext_code($2); }
             ;
@@ -108,18 +108,26 @@ opword:     word_expr
         |   UNDEF                           { op_fixup($1); $$ = 0;}
             ;
 
-declword:   word_expr
-        |   UNDEF                           { declword_fixup($1); $$ = 0; }
-            ;
-
 opbyte:     byte  
         |   LOBYTE UNDEF                    { op_lobyte_fixup($2); $$ = 0; }
         |   HIBYTE UNDEF                    { op_hibyte_fixup($2); $$ = 0; }
             ;
 
-declbyte:   byte  
-        |   LOBYTE UNDEF                    { decl_lobyte_fixup($2); $$ = 0; }
-        |   HIBYTE UNDEF                    { decl_hibyte_fixup($2); $$ = 0; }
+declwords:  declword
+        |   declwords ',' declword
+            ;
+
+declword:   word_expr                       { word_code($1); $$ = $1; }
+        |   UNDEF                           { declword_fixup($1); word_code(0); $$ = 0; }
+            ;
+
+declbytes:  declbyte
+        |   declbytes ',' declbyte
+            ;
+
+declbyte:   byte                            { byte_code($1); $$ = 1; }
+        |   LOBYTE UNDEF                    { decl_lobyte_fixup($2); byte_code(0); $$ = 0; }
+        |   HIBYTE UNDEF                    { decl_hibyte_fixup($2); byte_code(0); $$ = 0; }
             ;
 
 word_expr:  word_prim       

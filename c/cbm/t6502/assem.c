@@ -32,6 +32,9 @@ extern FILE* yyin;         /* input file pointer */
 int assemble(void)
 {
     yyin = fopen(infile, "r");
+    if (yyin == NULL) {
+        error("unable to open file %s.\n", infile);
+    }
 
     int nret;
     if ((nret = yyparse()) != 0)
