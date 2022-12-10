@@ -17,13 +17,14 @@ rmnem       = $43
 pcl         = $44
 pch         = $45
 
+chkout      = $ffc9
 prtstr      = $cb1e
 prtfix      = $ddcd
-warmbas     = $e467
-cclrch      = $ffcc
+clrch       = $ffcc
 kmsgshow    = $f1e6
 reslst      = $c09e
 tbuffer     = $033c
+break       = $fed2
 
 ;---------------------------------------
 ; basic program declaration
@@ -62,7 +63,7 @@ menu
         .byte $0d
         .text 'l - list program'
         .byte $0d
-        .text 'm - view/edit memory'
+        .text 'm - view memory'
         .byte $0d
         .text 'r - read disk block'
         .byte $0d
@@ -77,9 +78,12 @@ m2      .ztext 'validating...'
 m6      .ztext 'start:'
 m7      .ztext 'end  :'
 m8      .ztext 'filename:'
+m11     .ztext 'track,sector:'
 
 dprmpt  .ztext 'drive:'
 prspc   .ztext 'press space'
+
+hextbl  .text '0123456789abcdef'
 
 dirname  .text '$0'
 dirlen   = *-dirname
@@ -89,6 +93,15 @@ initlen  = *-initnm
 
 valname  .text 'v0'
 vallen   = *-valname
+
+daname   .text '#'
+dalen    = *-daname
+
+readcmd  .text 'u1:2,0,'
+rtrack   .text '00,'
+rsector  .text '00'
+rcmdlen  = *-readcmd
+        .byte $0
 
 drive   .byte $08       ; current drive#
 cols    .byte $0        ; number of columns
@@ -222,13 +235,15 @@ me1
         cmp #$49        ; is it "i"?
         beq me3         ; initialize
         cmp #$4c        ; is it "l"?
-        beq me4          ; listing
+        beq me4         ; listing
         cmp #$4d        ; is it "m"?
         beq me5         ; memory dump
-        cmp #$56        ; is it "v"?
-        beq me6         ; validate
+        cmp #$52        ; is it "r"?
+        beq me6         ; read block
+        cmp #$56        ; is it "v"?        
+        beq me7         ; validate
         cmp #$2a        ; is it "*"?
-        beq me7         ; directory
+        beq me8         ; directory
         cmp #$58        ; is it "x"?
         beq end
         jmp me1
@@ -236,11 +251,12 @@ me2     jmp disass      ; disassemble
 me3     jmp initd       ; initialize
 me4     jmp list        ; listing
 me5     jmp dump        ; memory dump
-me6     jmp valid       ; validate disk
-me7     jmp dir         ; directory
+me6     jmp rblock      ; read block
+me7     jmp valid       ; validate disk
+me8     jmp dir         ; directory
         jmp prmenu      ; menu
 end
-        jmp warmbas     ; basic warm start
+        jmp break     ; basic warm restart
 
 ;---------------------------------------
 ; Disassembler
@@ -1236,6 +1252,178 @@ lclean
         jmp prmenu      ; menu
 
 ;---------------------------------------
+; read a block
+;---------------------------------------
+rblock
+        jsr getdrive    ; get drive
+        jsr chrout      ; print return
+
+        lda #<m11
+        ldy #>m11
+        jsr prtstr      ; print m11
+
+        lda #<tbuffer
+        ldx #>tbuffer
+
+        jsr getstr      ; get t/s
+
+        ldy #$2c        ; find index of ,
+        jsr instr
+        bcc rb7
+        jmp rbdone      ; not found
+
+rb7
+        lda #$20        ; initialize t/s
+        sta rtrack      ; buffers with
+        sta rtrack+1    ; spaces
+        sta rtrack+2
+        sta rsector
+        sta rsector+1
+
+        lda #<rtrack    ; set up target
+        sta $fd         ; pointer
+        lda #>rtrack
+        sta $fe
+
+        lda #$05        ; max t/s buffer len.
+        sta length
+
+        ldx #$00        ; init. indices
+        ldy #$00
+        sty $03         ; source index
+        sty $04         ; dest. index
+rb5
+        ldy $03         ; load source idx
+        lda ($fb),y
+        beq rb6         ; terminator
+
+        iny             ; increment and
+        sty $03         ; save source idx
+
+        jsr isdec       ; is decimal?
+        bcc rbd
+        
+        cmp #$2c        ; is it a comma?
+        bne rb5
+rbd
+        ldy $04         ; dest. index
+        cpy length
+        beq rb6         ; done copying
+        sta ($fd),y     ; copy
+
+        iny             ; increment and
+        sty $04         ; save dest. idx
+
+        jmp rb5         ; keep looping
+rb6
+        lda $04         ; ensure we copied
+        cmp #$01        ; at least one
+        bcs rbe         ; byte
+        jmp rbdone
+
+rbe
+        lda #$93        ; clear screen
+        jsr chrout
+
+        jsr loline      ; lower line sep.
+
+        lda #$00        ; initialize
+        sta $07         ; and n/l counter
+        sta $08         ; and lineno counter
+
+        lda #$20        ; print 2 spaces
+        jsr chrout
+        jsr chrout
+
+rb8
+        ldx #$0
+rb9
+        lda hextbl, x
+        jsr chrout
+        inx
+        cpx #$10
+        bne rb9
+
+        jsr cmdopen     ; open cmd. ch
+        bcs rbio        ; i/o error
+
+        lda #<dalen     ; len of filename
+        ldx #<daname    ; direct access
+        ldy #>daname    ; filename
+        jsr fopen       ; open file
+        bcs rbio
+
+        ldx #$0f        ; command channel
+        jsr chkout      ; set channel out
+
+        ldx #$00
+        ldy rcmdlen
+
+rb1
+        lda readcmd,x   ; loop until last
+        jsr chrout      ; character sent
+        inx
+        dey
+        bne rb1
+
+        jsr clrch       ; restore channel
+        ldx filenum
+        jsr chkin       ; set channel in
+
+rbc
+        jsr $cad7       ; print cr/lf
+
+        lda $08         ; which 16-byte block
+        tax
+        lda hextbl, x
+        jsr chrout
+
+        lda #$20        ; print space
+        jsr chrout
+
+rb2
+        jsr chrin
+        ldx status
+        bne rbclean
+
+        jsr isprnt
+        bcc rbb
+rba
+        lda #$08
+        sta $0286       ; gray char
+
+        lda #$2e        ; non-printable
+                        ; use a period 
+rbb 
+        jsr chrout
+
+        lda #$02        ; red char
+        sta $0286       
+
+        inc $07         ; increment n/l counter
+        lda $07
+        cmp #$10
+        bne rb2
+
+        lda #$00        ; reset n/l counter
+        sta $07
+
+        inc $08         ; increment lineno
+
+        jmp rbc
+rbio
+        jsr ioerr       ; drive i/o error
+rbclean
+        jsr fclose      ; close file
+        jsr cmdclose    ; close cmd. ch.
+        jsr upline      ; upper line sep.
+
+        jsr waitsp      ; wait for space
+
+rbdone
+        jmp prmenu      ; menu
+
+;---------------------------------------
 ; get drive
 ;---------------------------------------
 getdrive                ; get drive
@@ -1276,6 +1464,63 @@ gd4
         sta drive       ; reset drive #
         jmp gd1
 gd5
+        rts
+
+;---------------------------------------
+; find index of character in a string
+; string pointer in .a,.x
+; character to find in .y
+; index returned in .y
+; .c set if not found
+;---------------------------------------
+instr
+        sta $fb         ; set up pointer
+        stx $fc
+
+        sty $02         ; store char
+        ldy #$00        ; init index
+
+ins1
+        lda ($fb),y
+        beq ins3        ; terminator
+
+        cmp $02
+        beq ins4        ; found it
+
+        iny
+        bne ins1        ; keep looping
+ins3
+        sec             ; not found
+        jmp ins2
+ins4
+        clc             ; found
+ins2
+        lda $fb         ; restore regs
+        ldx $fc
+        rts
+
+;---------------------------------------
+; check for decimal digit in .a
+; index stored to .y
+;---------------------------------------
+isdec
+        pha             ; save char
+
+        cmp #$30        ; < 48
+        bcc id2
+
+        cmp #$3a        ; < 58
+        bcc id1
+id2
+        sec             ; non-decimal
+        jmp id3
+id1
+        sec             ; store idx to .y
+        sbc #$30
+        tay
+        clc             ; decimal
+id3
+        pla             ; restore char
         rts
 
 ;---------------------------------------
@@ -1378,5 +1623,5 @@ fclose
 cmdclose
         lda #$0f        ; close command
         jsr close       ; channel
-        jsr cclrch      ; close channels
+        jsr clrch       ; close channels
         rts

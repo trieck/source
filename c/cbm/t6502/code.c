@@ -113,8 +113,13 @@ void resolve_fixups(void)
         case FIXUP_BRANCH:
             /* relative branch fix up*/
             size_t soffset = symvalue - base_address;
-            byte branch = (byte)(soffset - offset - 1);
-            memory[offset] = branch;
+            int branch = (int)(soffset - offset - 1);
+            if (branch > 127 || branch < -128) {
+                error("label \"%s\" branch out of range near line %d.\n",
+                    fixup->name, fixup->lineno);
+            }
+
+            memory[offset] = (byte)branch;
             break;
         case FIXUP_LO:
             /* lo-byte fix-up */
@@ -272,9 +277,16 @@ void rel_code(const Instr* instr, word operand)
         error("instruction does not support relative addressing near line %d.\n", yylineno);
     }
 
-    int offset = operand - (getmem() + 2);
+    if (operand == 0) {
+        putmem(2, *opcode, 0);
+    } else {
+        int offset = operand - (getmem() + 2);
+        if (offset > 127 || offset < -128) {
+            error("relative branch out of range near line %d.\n", yylineno);
+        }
 
-    putmem(2, *opcode, offset);
+        putmem(2, *opcode, offset);
+    }
 }
 
 void abx_code(const Instr* instr, word operand)
