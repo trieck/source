@@ -97,7 +97,11 @@ vallen   = *-valname
 daname   .text '#'
 dalen    = *-daname
 
-readcmd  .text 'u1:2,0,'
+cmdch    = $0f          ; command channel
+filenum  = $05          ; open file number
+secaddr  = $05          ; secondary address
+
+readcmd  .text 'u1:5,0,'
 rtrack   .text '00,'
 rsector  .text '00'
 rcmdlen  = *-readcmd
@@ -106,7 +110,6 @@ rcmdlen  = *-readcmd
 drive   .byte $08       ; current drive#
 cols    .byte $0        ; number of columns
 rows    .byte $0        ; number of rows
-filenum .byte $01       ; open file number
 
 saddr   .word $0000     ; start addr.
 daddr   .word $0000     ; dest. addr.
@@ -955,7 +958,7 @@ dir2
         bcc dir4
         jmp dirio       ; i/o error
 dir4
-        ldx filenum     ; file number
+        ldx #filenum    ; file number
         jsr chkin       ; open channel
 
         jsr chrin       ; discard load
@@ -1144,7 +1147,7 @@ l7
 l8
         jmp lio         ; i/o error
 l9
-        ldx filenum     ; file number
+        ldx #filenum    ; file number
         jsr chkin       ; open channel
         jsr chrin       ; discard load
         jsr chrin       ; address
@@ -1344,32 +1347,25 @@ rb9
         cpx #$10
         bne rb9
 
-        jsr cmdopen     ; open cmd. ch
-        bcs rbio        ; i/o error
+        jsr $cad7       ; print 2 cr/lf
 
         lda #<dalen     ; len of filename
         ldx #<daname    ; direct access
         ldy #>daname    ; filename
-        jsr fopen       ; open file
-        bcs rbio
-
-        ldx #$0f        ; command channel
-        jsr chkout      ; set channel out
-
-        ldx #$00
-        ldy rcmdlen
-
-rb1
-        lda readcmd,x   ; loop until last
-        jsr chrout      ; character sent
-        inx
-        dey
-        bne rb1
-
-        jsr clrch       ; restore channel
-        ldx filenum
+        jsr fopen2      ; open file
+        bcc rbh
+        jmp rbio
+rbh
+        lda #<rcmdlen   ; len of filename
+        ldx #<readcmd   ; filename
+        ldy #>readcmd
+        jsr cmdopen2    ; open cmd. ch
+        bcc rbj
+        jmp rbio        ; i/o error
+rbj
+        ldx #filenum
         jsr chkin       ; set channel in
-
+        bcs rbio
 rbc
         jsr $cad7       ; print cr/lf
 
@@ -1383,9 +1379,6 @@ rbc
 
 rb2
         jsr chrin
-        ldx status
-        bne rbclean
-
         jsr isprnt
         bcc rbb
 rba
@@ -1395,10 +1388,29 @@ rba
         lda #$2e        ; non-printable
                         ; use a period 
 rbb 
+        cmp #$20        ; is it a space
+        beq rbg
+
+        cmp #$a0        ; or shifted space
+        bne rbf
+
+        ldx #$03        ; cyan char
+        stx $0286       
+rbg
+        ldx #$01        ; reverse on
+        stx rvs
+rbf
         jsr chrout
+
+        lda #$00        ; reverse off
+        sta rvs
 
         lda #$02        ; red char
         sta $0286       
+
+        lda status      ; is this eof?
+        and #$40
+        bne rbclean
 
         inc $07         ; increment n/l counter
         lda $07
@@ -1411,6 +1423,10 @@ rbb
         inc $08         ; increment lineno
 
         jmp rbc
+
+rberr
+        jsr diskerr     ; print disk error
+        jmp rbclean
 rbio
         jsr ioerr       ; drive i/o error
 rbclean
@@ -1545,7 +1561,7 @@ wsp1
 ; disk error
 ;---------------------------------------
 diskerr
-        ldx #$0f        ; open channel
+        ldx #cmdch      ; open channel
         jsr chkin       ; for input
 de1
         jsr chrin
@@ -1574,7 +1590,7 @@ ioerr
 cmdopen
         lda #$00        ; len. of file
         jsr setnam      ; set filename
-        lda #$0f        ; command channel
+        lda #cmdch      ; command channel
         ldx drive       ; device number
         tay             ; secondary addr.
         jsr setlfs      ; set file params
@@ -1587,7 +1603,7 @@ cmdopen
 ;---------------------------------------
 cmdopen2
         jsr setnam      ; set filename
-        lda #$0f        ; command channel
+        lda #cmdch      ; command channel
         ldx drive       ; device number
         tay             ; secondary addr.
         jsr setlfs      ; set file params.
@@ -1602,9 +1618,24 @@ cmdopen2
 ;---------------------------------------
 fopen
         jsr setnam      ; set filename
-        lda filenum     ; file number
+        lda #filenum    ; file number
         ldx drive       ; device number
-        ldy #$00        ; secondary addr.
+        ldy #$0         ; secondary addr.
+        jsr setlfs      ; set file params
+        jsr open        ; open file
+        rts
+
+;---------------------------------------
+; open file with secondary address
+; length of filename in .a
+; lsb of filename in .x
+; msb of filename in .y
+;---------------------------------------
+fopen2
+        jsr setnam      ; set filename
+        lda #filenum    ; file number
+        ldx drive       ; device number
+        ldy #secaddr    ; secondary addr.
         jsr setlfs      ; set file params
         jsr open        ; open file
         rts
@@ -1613,7 +1644,7 @@ fopen
 ; close file
 ;---------------------------------------
 fclose
-        lda filenum
+        lda #filenum
         jsr close       ; close file
         rts
 
@@ -1621,7 +1652,7 @@ fclose
 ; close command channel
 ;---------------------------------------
 cmdclose
-        lda #$0f        ; close command
+        lda #cmdch      ; close command
         jsr close       ; channel
         jsr clrch       ; close channels
         rts
