@@ -65,6 +65,8 @@ menu
         .byte $0d
         .text 'm - view memory'
         .byte $0d
+        .text 'n - any directory'
+        .byte $0d
         .text 'r - read disk block'
         .byte $0d
         .text 'v - validate disk'
@@ -107,9 +109,21 @@ rsector  .text '00'
 rcmdlen  = *-readcmd
         .byte $0
 
+dircmd  .ztext 'u1:5,0,'
+dtrack  .byte $00
+dsector .byte $00
+
+drtype  .text 'm-r'
+        .byte $33        ; 65531
+        .byte $ff
+drtyplen = *-drtype
+
+bptrcmd .ztext 'b-p:5,'
+buffptr .byte $00
+
 drive   .byte $08       ; current drive#
-cols    .byte $0        ; number of columns
-rows    .byte $0        ; number of rows
+cols    .byte $00       ; number of columns
+rows    .byte $00       ; number of rows
 
 saddr   .word $0000     ; start addr.
 daddr   .word $0000     ; dest. addr.
@@ -241,12 +255,14 @@ me1
         beq me4         ; listing
         cmp #$4d        ; is it "m"?
         beq me5         ; memory dump
+        cmp #$4e        ; is it "n"?
+        beq me6         ; any directory
         cmp #$52        ; is it "r"?
-        beq me6         ; read block
+        beq me7         ; read block
         cmp #$56        ; is it "v"?        
-        beq me7         ; validate
+        beq me8         ; validate
         cmp #$2a        ; is it "*"?
-        beq me8         ; directory
+        beq me9         ; directory
         cmp #$58        ; is it "x"?
         beq end
         jmp me1
@@ -254,12 +270,13 @@ me2     jmp disass      ; disassemble
 me3     jmp initd       ; initialize
 me4     jmp list        ; listing
 me5     jmp dump        ; memory dump
-me6     jmp rblock      ; read block
-me7     jmp valid       ; validate disk
-me8     jmp dir         ; directory
+me6     jmp anydir      ; any directory
+me7     jmp rblock      ; read block
+me8     jmp valid       ; validate disk
+me9     jmp dir         ; directory
         jmp prmenu      ; menu
 end
-        jmp break     ; basic warm restart
+        jmp break       ; basic warm restart
 
 ;---------------------------------------
 ; Disassembler
@@ -938,6 +955,170 @@ initclean
          jmp prmenu     ; menu
 
 ;---------------------------------------
+; any-directory
+;---------------------------------------
+anydir
+        jsr getdrive    ; get drive
+        lda #$93        ; clear screen
+        jsr chrout
+        jsr loline      ; lower line sep.
+
+        lda #$12        ; track 18 default
+        sta dtrack
+
+        lda #$01        ; sector 1
+        sta dsector
+
+        lda #<drtyplen  ; len of filename
+        ldx #<drtype    ; filename
+        ldy #>drtype
+        jsr cmdopen2    ; open cmd. ch
+        bcc ad1
+        jmp adio        ; i/o error
+ad1
+        ldx #cmdch
+        jsr chkin       ; set channel in
+        bcc ad8
+        jmp adio
+ad8
+        jsr chrin
+        ldx status      ; check status
+        beq ad10
+        jmp aderr
+ad10 
+        cmp #$6c        ; 1581 drive
+        bne ad2
+
+        lda #$28        ; track 40
+        sta dtrack
+        lda #$03        ; sector 3
+        sta dsector
+ad2
+        lda #<dalen     ; len of filename
+        ldx #<daname    ; direct access
+        ldy #>daname    ; filename
+        jsr fopen2      ; open file
+        bcc ad3
+        jmp adio
+
+ad3
+        lda #$05        ; buffer pointer
+        sta buffptr
+        
+        ldx #cmdch
+        jsr chkout      ; set command channel for output
+        ldx status      ; check status
+        beq ad13
+        jmp aderr
+ad13 
+        lda #<dircmd
+        ldy #>dircmd
+        jsr prtstr
+
+        lda #$0
+        ldx dtrack      ; track
+        jsr prtfix
+
+        lda #$2c        ; comma
+        jsr chrout
+
+        lda #$0         ; sector
+        ldx dsector
+        jsr prtfix
+ad5
+        jsr clrch
+
+        ldx #filenum    ; file number
+        jsr chkin       ; open channel
+
+        jsr chrin       ; next track
+        sta dtrack
+
+        jsr chrin       ; next sector
+        sta dsector
+
+        lda status      ; check status
+        bne aderr
+        
+        lda #$0         ; file counter per directory block
+        sta $fb 
+ad12
+        ldx #cmdch
+        jsr chkout      ; set command channel for output
+
+        lda #<bptrcmd   ; set buffer pointer
+        ldy #>bptrcmd
+        jsr prtstr
+
+        lda #$0
+        ldx buffptr
+        jsr prtfix
+ad7
+        jsr clrch
+
+        ldx #filenum    ; file number
+        jsr chkin
+
+        ldy #$10        ; max filename length
+ad9
+        lda $028d       ; check for shift
+        bne ad9
+        jsr stop        ; check for stop
+        beq adclean
+
+        jsr chrin       ; next character
+        beq ad15
+
+        cmp #$a0        ; shifted space
+        bne ad11
+
+        ldx #$01        ; reverse on
+        stx rvs
+ad11
+        jsr chrout
+        ldx #$00
+        stx rvs
+
+        dey
+        bne ad9
+
+        lda #$0d        ; return
+        jsr chrout
+
+ad15
+        clc             ; increment buffer pointer
+        lda #$20
+        adc buffptr
+        sta buffptr
+
+        inc $fb        ; incremement file counter 
+        lda $fb
+        cmp #$08
+        beq ad14
+
+        jmp ad12
+
+ad14        
+        lda dtrack
+        beq adclean     ; no more entries
+
+        jmp ad3         ; next track/sector
+aderr
+        jsr diskerr     ; print disk error
+        jmp adclean
+
+adio
+        jsr ioerr       ; drive i/o error
+adclean
+        jsr fclose      ; close file
+        jsr cmdclose    ; close cmd. ch.
+
+        jsr upline      ; upper line sep.
+
+        jsr waitsp      ; wait for space
+        jmp prmenu      ; menu
+
+;---------------------------------------
 ; directory
 ;---------------------------------------
 dir                     ; directory
@@ -1432,6 +1613,10 @@ rbio
 rbclean
         jsr fclose      ; close file
         jsr cmdclose    ; close cmd. ch.
+
+        jsr $cad7       ; print cr/lf
+        jsr $cad7       ; print cr/lf
+        
         jsr upline      ; upper line sep.
 
         jsr waitsp      ; wait for space
