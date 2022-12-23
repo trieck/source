@@ -5,17 +5,17 @@
 ;
         *= $1200
 
-status      = $90
-rvs         = $c7
-pntr        = $d3
-garbfl      = $0f
 
+garbfl      = $0f
 format      = $40
 length      = $41
 lmnem       = $42
 rmnem       = $43
 pcl         = $44
 pch         = $45
+status      = $90
+rvs         = $c7
+pntr        = $d3
 
 chkout      = $ffc9
 prtstr      = $cb1e
@@ -127,6 +127,20 @@ rows    .byte $00       ; number of rows
 
 saddr   .word $0000     ; start addr.
 daddr   .word $0000     ; dest. addr.
+
+deltyp  .ztext 'del'
+seqtyp  .ztext 'seq'
+prgtyp  .ztext 'prg'
+usrtyp  .ztext 'usr'
+reltyp  .ztext 'rel'
+cbmtyp  .ztext 'cbm'
+
+ftyptr  .word deltyp
+        .word seqtyp
+        .word prgtyp
+        .word usrtyp
+        .word reltyp
+        .word cbmtyp
 
 fmt1
 ; fmt1 bytes: xxxxxxy0 instrs
@@ -589,14 +603,14 @@ hexint
 ; print byte in .a in hexadecimal
 ;---------------------------------------
 hexbyte
-        sta $fb
+        sta $53
 
         lsr
         lsr
         lsr
         lsr
         jsr prhexz
-        lda $fb
+        lda $53
 prhex
         and #$0f
 prhexz
@@ -607,7 +621,7 @@ prhexz
 cout
         jsr chrout
 
-        lda $fb
+        lda $53
         rts
 
 ;---------------------------------------
@@ -969,6 +983,11 @@ anydir
         lda #$01        ; sector 1
         sta dsector
 
+        lda #<ftyptr     ; setup file type pointer
+        sta $fd
+        lda #>ftyptr
+        sta $fe
+
         lda #<drtyplen  ; len of filename
         ldx #<drtype    ; filename
         ldy #>drtype
@@ -1002,9 +1021,9 @@ ad2
         jmp adio
 
 ad3
-        lda #$05        ; buffer pointer
+        lda #$02        ; initial buffer pointer
         sta buffptr
-        
+
         ldx #cmdch
         jsr chkout      ; set command channel for output
         ldx status      ; check status
@@ -1038,24 +1057,28 @@ ad5
         sta dsector
 
         lda status      ; check status
-        bne aderr
+        beq ad16
+        jmp aderr
         
+ad16
         lda #$0         ; file counter per directory block
         sta $fb 
 ad12
-        ldx #cmdch
-        jsr chkout      ; set command channel for output
+        jsr bufferptr   ; set buffer pointer for file entry
 
-        lda #<bptrcmd   ; set buffer pointer
-        ldy #>bptrcmd
-        jsr prtstr
+        ldx #filenum    ; file number
+        jsr chkin
 
-        lda #$0
-        ldx buffptr
-        jsr prtfix
+        jsr chrin       ; file type
+        sta $fc
+
+        jsr chrin       ; track of first data block
+        beq ad15
+
+        jsr chrin       ; sector of first data block
+
 ad7
         jsr clrch
-
         ldx #filenum    ; file number
         jsr chkin
 
@@ -1082,22 +1105,49 @@ ad11
         dey
         bne ad9
 
+        lda $fc         ; file type
+        and #$07        
+        asl             ; setup pointer index
+        tay
+
+        lda ($fd), y
+        pha
+        iny
+        lda ($fd), y
+        tay
+        pla 
+        jsr prtstr
+
+        clc             ; increment buffer pointer
+        lda #$1c        ; by 28
+        adc buffptr
+        sta buffptr
+        jsr bufferptr
+
+        ldx #filenum
+        jsr chkin
+        jsr chrin       ; lo byte of number of blocks
+        ldx #$01
+        sta rvs
+        jsr hexbyte
+        lda #$00
+        sta rvs
+
         lda #$0d        ; return
         jsr chrout
 
 ad15
-        clc             ; increment buffer pointer
-        lda #$20
-        adc buffptr
-        sta buffptr
-
-        inc $fb        ; incremement file counter 
+        inc $fb         ; increment file counter 
         lda $fb
         cmp #$08
         beq ad14
 
-        jmp ad12
+        clc             ; increment buffer pointer
+        lda #$04        ; by 4
+        adc buffptr
+        sta buffptr
 
+        jmp ad12        ; next file entry
 ad14        
         lda dtrack
         beq adclean     ; no more entries
@@ -1823,6 +1873,26 @@ fopen2
         ldy #secaddr    ; secondary addr.
         jsr setlfs      ; set file params
         jsr open        ; open file
+        rts
+
+;---------------------------------------
+; set buffer pointer within a block
+; byte to position in buffptr
+; command channel must be opened
+;---------------------------------------
+bufferptr
+        ldx #cmdch
+        jsr chkout      ; set command channel for output
+
+        lda #<bptrcmd   ; set buffer pointer
+        ldy #>bptrcmd
+        jsr prtstr
+
+        lda #$0
+        ldx buffptr
+        jsr prtfix
+
+        jsr clrch
         rts
 
 ;---------------------------------------
