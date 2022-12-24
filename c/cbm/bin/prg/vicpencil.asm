@@ -5,7 +5,6 @@
 ;
         *= $1200
 
-
 garbfl      = $0f
 format      = $40
 length      = $41
@@ -48,7 +47,25 @@ nextl
 ; data declarations
 ;---------------------------------------
 title
-        .text 'vic pencil'
+        .byte $90
+        .text 'v'
+        .byte $1c
+        .text 'i'
+        .byte $9f
+        .text 'c '
+        .byte $9c
+        .text 'p'
+        .byte $1e
+        .text 'e'
+        .byte $1f
+        .text 'n'
+        .byte $90
+        .text 'c'
+        .byte $1c
+        .text 'i'
+        .byte $9f
+        .text 'l'
+        .byte $1c
         .byte $0d
         .byte $0d
         .byte $0
@@ -64,8 +81,6 @@ menu
         .text 'l - list program'
         .byte $0d
         .text 'm - view memory'
-        .byte $0d
-        .text 'n - any directory'
         .byte $0d
         .text 'r - read disk block'
         .byte $0d
@@ -103,20 +118,20 @@ cmdch    = $0f          ; command channel
 filenum  = $05          ; open file number
 secaddr  = $05          ; secondary address
 
-readcmd  .text 'u1:5,0,'
-rtrack   .text '00,'
-rsector  .text '00'
-rcmdlen  = *-readcmd
-        .byte $0
+rdbcmd   .text 'u1:5,0,'
+rdbtrack .text '00,'
+rdbsectr .text '00'
+rcmdlen  = *-rdbcmd
 
-dircmd  .ztext 'u1:5,0,'
-dtrack  .byte $00
-dsector .byte $00
+rdcmd   .ztext 'u1:5,0,'
+rdtrack .byte $00
+rdsectr .byte $00
 
-drtype  .text 'm-r'
-        .byte $33        ; 65531
+drtread .text 'm-r'     ; directory type
+        .byte $33       ; 65531
         .byte $ff
-drtyplen = *-drtype
+drtyplen = *-drtread
+drtype  .byte $00
 
 bptrcmd .ztext 'b-p:5,'
 buffptr .byte $00
@@ -233,7 +248,7 @@ mnemr
 start
         lda #$02        ; red character
         sta $0286
-        lda #$19        ; white border, rvs, white background
+        lda #$19        ; white border, not inverted, white background
         sta $900f
         lda #$e
         jsr $e742       ; lowercase
@@ -269,14 +284,12 @@ me1
         beq me4         ; listing
         cmp #$4d        ; is it "m"?
         beq me5         ; memory dump
-        cmp #$4e        ; is it "n"?
-        beq me6         ; any directory
         cmp #$52        ; is it "r"?
-        beq me7         ; read block
+        beq me6         ; read block
         cmp #$56        ; is it "v"?        
-        beq me8         ; validate
+        beq me7         ; validate
         cmp #$2a        ; is it "*"?
-        beq me9         ; directory
+        beq me8         ; directory
         cmp #$58        ; is it "x"?
         beq end
         jmp me1
@@ -284,10 +297,9 @@ me2     jmp disass      ; disassemble
 me3     jmp initd       ; initialize
 me4     jmp list        ; listing
 me5     jmp dump        ; memory dump
-me6     jmp anydir      ; any directory
-me7     jmp rblock      ; read block
-me8     jmp valid       ; validate disk
-me9     jmp dir         ; directory
+me6     jmp rblock      ; read block
+me7     jmp valid       ; validate disk
+me8     jmp anydir      ; directory
         jmp prmenu      ; menu
 end
         jmp break       ; basic warm restart
@@ -591,6 +603,21 @@ ip2
         rts
 
 ;---------------------------------------
+; if character in .a is printable
+; print it, otherwise print a space
+;---------------------------------------
+prtosp
+        sta $53
+        jsr isprnt
+        bcc prt2
+
+        lda #$20
+prt2
+        jsr chrout
+        lda $53
+        rts
+
+;---------------------------------------
 ; print integer in .a, x in hexadecimal
 ;---------------------------------------
 hexint
@@ -659,10 +686,22 @@ ul1
 ;---------------------------------------
 prnret
         lda $d7         ; last character printed
-
         cmp #$0d        ; is it return?
         beq pr1
 
+        lda pntr        ; current column
+        cmp #$16        ; last column?
+        beq pr1
+
+        cmp #$2c        ; last column?
+        beq pr1
+
+        cmp #$40        ; last column?
+        beq pr1
+
+        cmp #$56        ; last column?
+        beq pr1
+        
         lda #$0d        ; print return
         jsr chrout
 pr1
@@ -969,7 +1008,7 @@ initclean
          jmp prmenu     ; menu
 
 ;---------------------------------------
-; any-directory
+; Display directory for *any* CBM drive
 ;---------------------------------------
 anydir
         jsr getdrive    ; get drive
@@ -978,19 +1017,22 @@ anydir
         jsr loline      ; lower line sep.
 
         lda #$12        ; track 18 default
-        sta dtrack
+        sta rdtrack
 
-        lda #$01        ; sector 1
-        sta dsector
+        lda #$00        ; directory header sector
+        sta rdsectr
 
-        lda #<ftyptr     ; setup file type pointer
+        lda #$90        ; initial buffer pointer
+        sta buffptr
+
+        lda #<ftyptr    ; setup file type pointer
         sta $fd
         lda #>ftyptr
         sta $fe
 
         lda #<drtyplen  ; len of filename
-        ldx #<drtype    ; filename
-        ldy #>drtype
+        ldx #<drtread   ; filename
+        ldy #>drtread
         jsr cmdopen2    ; open cmd. ch
         bcc ad1
         jmp adio        ; i/o error
@@ -1005,13 +1047,16 @@ ad8
         beq ad10
         jmp aderr
 ad10 
+        sta drtype      ; store drive type
         cmp #$6c        ; 1581 drive
         bne ad2
 
         lda #$28        ; track 40
-        sta dtrack
-        lda #$03        ; sector 3
-        sta dsector
+        sta rdtrack
+
+        lda #$04        ; initial buffer pointer
+        sta buffptr
+       
 ad2
         lda #<dalen     ; len of filename
         ldx #<daname    ; direct access
@@ -1021,65 +1066,108 @@ ad2
         jmp adio
 
 ad3
-        lda #$02        ; initial buffer pointer
-        sta buffptr
-
-        ldx #cmdch
-        jsr chkout      ; set command channel for output
+        jsr readts      ; read track/sector
         ldx status      ; check status
-        beq ad13
+        beq ad5
         jmp aderr
-ad13 
-        lda #<dircmd
-        ldy #>dircmd
-        jsr prtstr
 
-        lda #$0
-        ldx dtrack      ; track
-        jsr prtfix
-
-        lda #$2c        ; comma
-        jsr chrout
-
-        lda #$0         ; sector
-        ldx dsector
-        jsr prtfix
 ad5
-        jsr clrch
+        ldx #filenum    ; file number
+        jsr chkin       ; open channel
+
+        jsr chrin       ; next track
+        sta rdtrack
+
+        jsr chrin       ; next sector
+        sta rdsectr
+
+        lda status      ; check status
+        beq ad16
+        jmp aderr
+
+ad16
+        jsr bufferptr   ; set buffer pointer to disk name
+
+        ldx #filenum    ; file number
+        jsr chkin
+
+        ldy #$00
+ad17
+        jsr chrin
+        cmp #$a0        ; shifted space
+        bne ad18
+
+        ldx #$01        ; reverse on
+        stx rvs
+ad18
+        jsr chrout
+        ldx #$00
+        stx rvs
+
+        iny
+        cpy #$12
+        bne ad17
+
+        jsr chrin       ; disk id
+        jsr prtosp
+        jsr chrin
+        jsr prtosp
+        jsr chrin
+
+        lda #$01
+        sta rvs
+        jsr chrin       ; dos type
+        jsr prtosp
+        jsr chrin
+        jsr prtosp
+        
+        ldy #$16
+ad22
+        lda #$20
+        jsr chrout
+        dey
+        bne ad22
+        
+        lda #$00
+        sta rvs
+ad19
+        jsr readts
+        lda status      ; check status
+        beq ad20
+        jmp aderr
+ad20
+        lda #$0         ; file counter per directory block
+        sta $fb 
 
         ldx #filenum    ; file number
         jsr chkin       ; open channel
 
         jsr chrin       ; next track
-        sta dtrack
+        sta rdtrack
 
         jsr chrin       ; next sector
-        sta dsector
+        sta rdsectr
 
         lda status      ; check status
-        beq ad16
+        beq ad21
         jmp aderr
-        
-ad16
-        lda #$0         ; file counter per directory block
-        sta $fb 
+ad21
+        lda #$02
+        sta buffptr
 ad12
         jsr bufferptr   ; set buffer pointer for file entry
 
-        ldx #filenum    ; file number
+        ldx #filenum
         jsr chkin
 
         jsr chrin       ; file type
         sta $fc
 
         jsr chrin       ; track of first data block
-        beq ad15
-
         jsr chrin       ; sector of first data block
-
 ad7
         jsr clrch
-        ldx #filenum    ; file number
+        ldx #filenum
         jsr chkin
 
         ldy #$10        ; max filename length
@@ -1099,6 +1187,7 @@ ad9
         stx rvs
 ad11
         jsr chrout
+         
         ldx #$00
         stx rvs
 
@@ -1124,18 +1213,17 @@ ad11
         sta buffptr
         jsr bufferptr
 
-        ldx #filenum
-        jsr chkin
-        jsr chrin       ; lo byte of number of blocks
-        ldx #$01
+        lda #$01
         sta rvs
-        jsr hexbyte
+        lda #$20
+        jsr chrout
         lda #$00
         sta rvs
 
-        lda #$0d        ; return
-        jsr chrout
-
+        ldx #filenum
+        jsr chkin
+        jsr chrin       ; lo byte of number of blocks
+        jsr hexbyte
 ad15
         inc $fb         ; increment file counter 
         lda $fb
@@ -1148,11 +1236,11 @@ ad15
         sta buffptr
 
         jmp ad12        ; next file entry
-ad14        
-        lda dtrack
+ad14
+        lda rdtrack     ; next track
         beq adclean     ; no more entries
 
-        jmp ad3         ; next track/sector
+        jmp ad19        ; next track/sector
 aderr
         jsr diskerr     ; print disk error
         jmp adclean
@@ -1167,80 +1255,6 @@ adclean
 
         jsr waitsp      ; wait for space
         jmp prmenu      ; menu
-
-;---------------------------------------
-; directory
-;---------------------------------------
-dir                     ; directory
-        jsr getdrive    ; get drive
-        lda #$93        ; clear screen
-        jsr chrout
-        jsr loline      ; lower line sep.
-
-        jsr cmdopen     ; open cmd. ch.
-        bcc dir2
-dir3
-        jmp dirio       ; i/o error
-dir2
-        lda #<dirlen    ; len. of file
-        ldx #<dirname   ; filename
-        ldy #>dirname
-        jsr fopen
-        bcc dir4
-        jmp dirio       ; i/o error
-dir4
-        ldx #filenum    ; file number
-        jsr chkin       ; open channel
-
-        jsr chrin       ; discard load
-        jsr chrin       ; address
-        lda status      ; check status
-        bne direrr
-dir6
-        jsr chrin       ; discard line
-        jsr chrin       ; link
-        jsr chrin       ; retrieve number
-                        ; of blocks used
-        sta $fc         ; store to zero
-        jsr chrin       ; page in low,
-                        ; high format
-        sta $fb        
-        lda status      ; read i/o status
-        bne dirclean    ; eof
-        lda $fb         ; retrieve number
-        ldx $fc         ; of blocks
-        jsr prtfix      ; output int in
-                        ; .a, .x
-        lda #$20        ; print space
-        jsr chrout      ; after blocks
-
-        jsr chrin
-dir7
-        jsr chrout
-
-dir8    lda $028d       ; check for shift
-        bne dir8
-        jsr stop        ; check for stop
-        beq dirclean
-        jsr chrin
-        bne dir7
-        lda #$0d
-        jsr chrout     ; print return
-        jmp dir6
-direrr
-        jsr diskerr    ; print disk error
-        jmp dirclean
-
-dirio
-        jsr ioerr     ; drive i/o error
-dirclean
-        jsr fclose    ; close file
-        jsr cmdclose  ; close cmd. ch.
-
-        jsr upline    ; upper line sep.
-
-        jsr waitsp    ; wait for space
-        jmp prmenu    ; menu
 
 ;---------------------------------------
 ; memory dump
@@ -1508,15 +1522,15 @@ rblock
 
 rb7
         lda #$20        ; initialize t/s
-        sta rtrack      ; buffers with
-        sta rtrack+1    ; spaces
-        sta rtrack+2
-        sta rsector
-        sta rsector+1
+        sta rdbtrack    ; buffers with
+        sta rdbtrack+1  ; spaces
+        sta rdbtrack+2
+        sta rdbsectr
+        sta rdbsectr+1
 
-        lda #<rtrack    ; set up target
+        lda #<rdbtrack  ; set up target
         sta $fd         ; pointer
-        lda #>rtrack
+        lda #>rdbtrack
         sta $fe
 
         lda #$05        ; max t/s buffer len.
@@ -1588,8 +1602,8 @@ rb9
         jmp rbio
 rbh
         lda #<rcmdlen   ; len of filename
-        ldx #<readcmd   ; filename
-        ldy #>readcmd
+        ldx #<rdbcmd    ; filename
+        ldy #>rdbcmd
         jsr cmdopen2    ; open cmd. ch
         bcc rbj
         jmp rbio        ; i/o error
@@ -1890,6 +1904,34 @@ bufferptr
 
         lda #$0
         ldx buffptr
+        jsr prtfix
+
+        jsr clrch
+        rts
+
+;---------------------------------------
+; read track/sector
+; track to read in rdtrack
+; sector to read in rdsectr
+; command channel must be opened
+;---------------------------------------
+readts
+        ldx #cmdch
+        jsr chkout      ; set command channel for output
+
+        lda #<rdcmd
+        ldy #>rdcmd
+        jsr prtstr
+
+        lda #$0
+        ldx rdtrack     ; track
+        jsr prtfix
+
+        lda #$2c        ; comma
+        jsr chrout
+
+        lda #$0         ; sector
+        ldx rdsectr
         jsr prtfix
 
         jsr clrch
