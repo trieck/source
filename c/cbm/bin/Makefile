@@ -5,10 +5,10 @@ OBJECTS = \
     prg\blink.prg \
     prg\color.prg \
     prg\loop.prg \
+    prg\scroll-up-down.prg \
     prg\util.prg \
-    prg\vicpencil.prg
+	prg\plot.prg
 
- 
 all: $(OBJECTS)
 .asm.prg:
     t6502 $<
