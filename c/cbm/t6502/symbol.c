@@ -54,8 +54,8 @@ void syminit(SymbolTable table)
     opinsert(table, "bne", &bne, GRP3_BRANCH_OP);
     opinsert(table, "bpl", &bpl, GRP3_BRANCH_OP);
     opinsert(table, "brk", &Brk, GRP3_OP);
-    opinsert(table, "bvc", &bvc, GRP3_OP);
-    opinsert(table, "bvs", &bvs, GRP3_OP);
+    opinsert(table, "bvc", &bvc, GRP3_BRANCH_OP);
+    opinsert(table, "bvs", &bvs, GRP3_BRANCH_OP);
     opinsert(table, "clc", &clc, GRP3_OP);
     opinsert(table, "cld", &cld, GRP3_OP);
     opinsert(table, "cli", &cli, GRP3_OP);

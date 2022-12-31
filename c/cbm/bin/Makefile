@@ -7,7 +7,9 @@ OBJECTS = \
     prg\loop.prg \
     prg\scroll-up-down.prg \
     prg\util.prg \
-	prg\plot.prg
+    prg\plot.prg \
+    prg\txt2scr.prg
+
 
 all: $(OBJECTS)
 .asm.prg:
