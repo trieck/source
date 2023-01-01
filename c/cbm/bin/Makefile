@@ -8,8 +8,9 @@ OBJECTS = \
     prg\scroll-up-down.prg \
     prg\util.prg \
     prg\plot.prg \
-    prg\txt2scr.prg
-
+    prg\txt2scr.prg \
+    prg\p2sc.prg \
+    prg\cpyscr.prg
 
 all: $(OBJECTS)
 .asm.prg:
