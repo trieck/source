@@ -10,7 +10,7 @@ OBJECTS = \
     prg\plot.prg \
     prg\txt2scr.prg \
     prg\p2sc.prg \
-    prg\cpyscr.prg
+    prg\editor.prg
 
 all: $(OBJECTS)
 .asm.prg:
