@@ -77,11 +77,31 @@ egetkey
             cmp #$03        ; stop
             beq edone
             cmp #$11        ; cursor down
-            beq crsrdwn
-            cmp #$91
-            beq crsrup      ; cursor up
+            beq k1
+            cmp #$91        ; cursor up
+            beq k2
+            cmp #$1d        ; cursor right
+            beq k3
+            cmp #$9d        ; cursor left
+            beq k4
+            cmp #$13        ; home
+            beq k5
+            cmp #$93        ; clear
+            beq k6
             bne egetkey
+k1          jmp crsrdwn
+k2          jmp crsrup
+k3          jmp crsrrt
+k4          jmp crsrlt
+k5          jmp home
+k6          jmp top
 
+edone
+            rts
+
+;---------------------------------------
+; Cursor down
+;---------------------------------------
 crsrdwn     
             ldy $d3         ; column
             ldx $d6         ; row
@@ -91,7 +111,7 @@ crsrdwn
             bcc crd1
             beq crd1
 
-            jsr scrldown
+            jsr scrldown    ; scroll down
 
             ldy $d3         ; column
             ldx #$16        ; set max row
@@ -100,6 +120,9 @@ crd1
             jsr plot
             jmp egetkey
 
+;---------------------------------------
+; Cursor up
+;---------------------------------------
 crsrup     
             ldy $d3         ; column
             ldx $d6         ; row
@@ -108,7 +131,7 @@ crsrup
             cpx #$00        ; min row
             bpl cru1
             
-            jsr scrlup
+            jsr scrlup      ; scroll up
             
             ldy $d3         ; column
             ldx #$00        ; set min row
@@ -116,9 +139,107 @@ cru1
             clc             ; set cursor
             jsr plot
             jmp egetkey
-edone
+
+;---------------------------------------
+; Cursor right
+;---------------------------------------
+crsrrt
+            ldy $d3         ; column
+            ldx $d6         ; row
+            iny             ; next column
+
+            jsr endofline
+crr1            
+            clc             ; set cursor
+            jsr plot
+            jmp egetkey
+
+;---------------------------------------
+; Cursor left
+;---------------------------------------
+crsrlt
+            ldy $d3         ; column
+            ldx $d6         ; row
+            dey             ; prev column
+
+            cpy #$00        ; min column
+            bpl crl1
+
+            cpx #$00        ; min row
+            bne crl2
+
+            jsr scrlup      ; scroll up
+            ldx #$01        ; min row before decrement
+crl2
+            ldy #$15        ; max column
+            dex             ; previous row
+
+crl1
+            clc             ; set cursor
+            jsr plot
+            jmp egetkey
+
+;---------------------------------------
+; Handle end of line condition
+; By scrolling if necessary
+;
+; .X contains row# $00-$16
+; .Y contains col# $00-$15
+; .Y contains >= $16, if end of line
+;
+; On return, 
+; .X contains the row#
+; .Y contains the col#
+;---------------------------------------
+endofline
+            cpy #$15        ; max column
+            bcc eoldone
+            beq eoldone
+
+            ldy #$00        ; set min column
+
+            inx             ; next row
+            cpx #$16        ; max row
+            bcc eoldone
+            beq eoldone
+
+            jsr scrldown    ; scroll down
+
+            ldy #$00        ; set min column
+            ldx $d6         ; row
+eoldone
             rts
 
+;---------------------------------------
+; Home cursor
+;---------------------------------------
+home
+            ldx #$00        ; min row
+            ldy #$00        ; min column
+
+            clc             ; set cursor
+            jsr plot
+            jmp egetkey
+
+;---------------------------------------
+; Top of document
+;---------------------------------------
+top
+            lda #<membuff   ; initialize memory pointer
+            sta pmembuf
+
+            ldx #>membuff
+            stx pmembuf+1
+
+            lda pmembuf
+            ldx pmembuf+1
+            jsr cpyscr
+
+            jmp home
+
+;---------------------------------------
+; Scroll Down
+;---------------------------------------
 scrldown
             lda pmembuf     ; low byte of first number
             ldy pmembuf+1   ; high byte of first number
@@ -141,10 +262,12 @@ scdok2
             lda pmembuf
             ldx pmembuf+1
             jsr cpyscr      ; copy new screen
-
 scddone
             rts
 
+;---------------------------------------
+; Scroll Up
+;---------------------------------------
 scrlup      
             lda pmembuf     ; low byte of first number
             ldy pmembuf+1   ; high byte of first number
